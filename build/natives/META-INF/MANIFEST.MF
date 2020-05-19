@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.2
+Created-By: 10.0.2+13 ("Oracle Corporation")
+Specification-Title: Lightweight Java Game Library - Core
+Specification-Version: 3.2.1
+Specification-Vendor: lwjgl.org
+Implementation-Title: lwjgl
+Implementation-Version: build 12
+Implementation-Vendor: lwjgl.org
+Multi-Release: true
+
