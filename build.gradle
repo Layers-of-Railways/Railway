@@ -90,7 +90,7 @@ configurations.all {
 
 shadowJar {
     configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.grimmauld.createintegration.repack.registrate'
+    relocate 'com.tterrag.registrate', 'com.railwayteam.railwaymod.repack.registrate'
 }
 
 
