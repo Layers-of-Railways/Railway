@@ -1,9 +1,19 @@
 package com.railwayteam.railways;
 
-public class RegistryEntries {
-	/*@ObjectHolder("createintegration:dynamo")
-    public static Dynamo DYNAMO;
+import com.railwayteam.railways.blocks.WayPointBlock;
+import com.railwayteam.railways.items.WayPointToolItem;
 
+import net.minecraftforge.registries.ObjectHolder;
+
+public class RegistryEntries {
+	@ObjectHolder(Railways.MODID + ":" + WayPointBlock.name)
+    public static WayPointBlock WAY_POINT_BLOCK;
+	
+	@ObjectHolder(Railways.MODID + ":" + WayPointToolItem.name)
+    public static WayPointToolItem WAY_POINT_TOOL;
+	
+
+	/*
     @ObjectHolder("createintegration:dynamo")
     public static TileEntityType<DynamoTile> DYNAMO_TILE;
 

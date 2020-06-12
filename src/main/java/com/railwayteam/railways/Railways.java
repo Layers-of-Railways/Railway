@@ -3,17 +3,24 @@ package com.railwayteam.railways;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.railwayteam.railways.blocks.WayPointBlock;
+import com.railwayteam.railways.items.WayPointToolItem;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -39,20 +46,28 @@ public class Railways {
         
         Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
         Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+        
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(Railways::clientInit);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
     	setup.init();
     	
-    	
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
+    
+    public static ResourceLocation createResourceLocation(String name) {
+		return new ResourceLocation(MODID, name);
+	}
+    
+    public static void clientInit(FMLClientSetupEvent event) {
+        RenderTypeLookup.setRenderLayer(RegistryEntries.WAY_POINT_BLOCK, RenderType.getCutoutMipped());
+    }
+    
+    
 
     
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
-        LOGGER.info("HELLO from server starting");
     }
 
     
@@ -64,7 +79,8 @@ public class Railways {
             LOGGER.info("items registering");
             Item.Properties properties = new Item.Properties().group(ModSetup.itemGroup);
 
-            // event.getRegistry().register(new BlockItem(RegistryEntries.DYNAMO, properties).setRegistryName("dynamo")); //   EXAMPLE!
+            event.getRegistry().register(new BlockItem(RegistryEntries.WAY_POINT_BLOCK, properties).setRegistryName(WayPointBlock.name));
+            event.getRegistry().register(new WayPointToolItem(properties));
             
             LOGGER.info("finished items registering");
         }
@@ -73,7 +89,7 @@ public class Railways {
         @SuppressWarnings("unused")
         public static void registerBlocks(final RegistryEvent.Register<Block> event) {
             LOGGER.info("blocks registering");
-            // event.getRegistry().register(new Dynamo());	// EXAMPLE!
+            event.getRegistry().register(new WayPointBlock());
             LOGGER.info("finished blocks registering");
 
         }
