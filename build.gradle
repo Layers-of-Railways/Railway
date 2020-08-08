@@ -17,7 +17,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
-
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
@@ -29,7 +28,7 @@ apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Co
 
 version = '1.15.2-0.1.0'
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'railwaymod'
+archivesBaseName = 'railways'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -43,7 +42,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                railwaymod {
+                railways {
                     source sourceSets.main
                 }
             }
@@ -57,7 +56,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                railwaymod {
+                railways {
                     source sourceSets.main
                 }
             }
@@ -69,13 +68,23 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'railwaymod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'railways', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
+
+            environment 'target', 'fmluserdevdata'
 
             mods {
-                railwaymod {
+                railways {
                     source sourceSets.main
                 }
             }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/generated/resources'
         }
     }
 }
@@ -90,7 +99,7 @@ configurations.all {
 
 shadowJar {
     configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.railwayteam.railwaymod.repack.registrate'
+    relocate 'com.tterrag.registrate', 'com.railwayteam.railways.repack.registrate'
 }
 
 
@@ -116,15 +125,15 @@ dependencies {
 	
   	// implementation fg.deobf("mezz.jei:jei-1.14.4:6.0.0.26")
 	
-	// def registrate = "com.tterrag.registrate:Registrate:MC1.14.4-0.0.3.40"
-    // implementation fg.deobf(registrate)
-    // shade registrate
-	}
+	def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+    implementation fg.deobf(registrate)
+    shade registrate
+}
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "railwaymod",
+                "Specification-Title": "railways",
                 "Specification-Vendor": "grimmauld",
                 "Specification-Version": "1",
                 "Implementation-Title": project.name,
@@ -141,14 +150,13 @@ task deobfJar(type: Jar) {
 }
 
 build.dependsOn deobfJar
-
+build.dependsOn shadowJar
 
 def reobfFile = file("$buildDir/reobfJar/output.jar")
 def reobfArtifact = artifacts.add('default', reobfFile) {
     type 'jar'
     builtBy 'reobfJar'
 }
-
 
 artifacts {
     archives deobfJar
