@@ -2,32 +2,27 @@ package com.railwayteam.railways.blocks;
 
 import javax.annotation.Nonnull;
 
-import com.railwayteam.railways.Railways;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.datafix.fixes.EntityItemFrameFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
-import static net.minecraft.block.WallSkullBlock.FACING;
-
-
 public class WayPointBlock extends Block{
 	public static final String name = "waypoint";
 
+	// default constructor probably isn't necessary, but it's here for legacy reasons.
 	public WayPointBlock() {
-		super(Properties.from(Blocks.OAK_FENCE)
-				.hardnessAndResistance(5.0f, 6.0f) //Can redo later
-				//Add more Later
-		);
-		setRegistryName(Railways.createResourceLocation(name));
+		this(Properties.from(Blocks.OAK_FENCE));
+	}
+
+	// Registrate will always use this constructor, and properties are set inline during registration
+	public WayPointBlock (Properties properties) {
+		super(properties);
 	}
 	
 	@Override

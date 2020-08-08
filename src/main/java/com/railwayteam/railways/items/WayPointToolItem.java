@@ -9,6 +9,5 @@ public class WayPointToolItem extends Item{
 	
 	public WayPointToolItem(Properties properties) {
 		super(properties);
-		setRegistryName(Railways.createResourceLocation(name));
 	}
 }

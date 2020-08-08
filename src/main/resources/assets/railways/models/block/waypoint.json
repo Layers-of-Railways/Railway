@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "railways:marker",
+		"2": "railways:block/waypoint",
 		"particle": "minecraft:block/oak_planks"
 	},
 	"elements": [
