@@ -97,6 +97,7 @@ public class WayPointToolItem extends Item{
 		int stepZ = delta.getZ()==0 ? 0 : Math.abs(delta.getZ())/delta.getZ();
 		int slot  = 0;
 		ItemStack stack = null;
+		boolean zig = (stepZ==0); // zig = stepX, zag = stepZ
 		BlockPos step = new BlockPos(start.getX(), start.getY(), start.getZ());
 
 		// now it's time to iterate
@@ -155,10 +156,8 @@ public class WayPointToolItem extends Item{
 			if (!valid || (slot == player.inventory.getSizeInventory() && stack.isEmpty())) break;
 
 			// otherwise step to the next iteration
-			if (stepX==0) {
-				step = step.add(0,0,stepZ);
-			}
-			else step = step.add(stepX,0,0);
+			step = step.add(zig ? stepX : 0, 0, zig ? 0 : stepZ);
+			if (stepX == stepZ) zig = !zig;
 		}
 		return step.equals(end); // false if we failed early for whatever reason
 	}
