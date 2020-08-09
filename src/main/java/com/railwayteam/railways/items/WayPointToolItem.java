@@ -152,7 +152,7 @@ public class WayPointToolItem extends Item{
 				}
 			}
 			// escape if we can't get any more
-			if (slot == player.inventory.getSizeInventory() && stack.isEmpty()) break;
+			if (!valid || (slot == player.inventory.getSizeInventory() && stack.isEmpty())) break;
 
 			// otherwise step to the next iteration
 			if (stepX==0) {
