@@ -30,8 +30,10 @@ public class WayPointToolItem extends Item{
 
 	private static String MSG_RESET   = "Selection reset.";
 	private static String MSG_VALID   = "Valid connection with slope: "; // Y-delta is appended to this
-	private static String MSG_INVALID = "Invalid connection.";
-	
+	private static String MSG_INVALID = "Invalid connection!";
+	private static String MSG_TOOLONG = "Track segment too long for one run!";
+	private static int MAX_TRACK_SEG_LEN = 64;
+
 	public WayPointToolItem(Properties properties) {
 		super(properties);
 	}
@@ -93,6 +95,11 @@ public class WayPointToolItem extends Item{
 
 		// let's figure out the direction to iterate
 		Vec3i delta = end.subtract(start);
+
+		if (Math.abs(delta.getX()) + Math.abs(delta.getZ()) > MAX_TRACK_SEG_LEN) {
+			player.sendMessage(new StringTextComponent(MSG_TOOLONG));
+			return false;
+		}
 		int stepX = delta.getX()==0 ? 0 : Math.abs(delta.getX())/delta.getX();
 		int stepZ = delta.getZ()==0 ? 0 : Math.abs(delta.getZ())/delta.getZ();
 		int slot  = 0;
@@ -102,16 +109,19 @@ public class WayPointToolItem extends Item{
 
 		// now it's time to iterate
 		while (!step.equals(end)) {
-			// first, check if we're making a valid path
-			boolean valid = false;
-
-			if (player.world.getBlockState(step).getBlock() instanceof WayPointBlock) {
-				valid = true;
-				player.world.addEntity(
-				  new ItemEntity(player.world, step.getX(), step.getY(), step.getZ(),
-					  new ItemStack(ModSetup.R_BLOCK_WAYPOINT.get(), 1))
-				);
+			// make sure we have tracks available
+			if ((stack == null || stack.isEmpty()) && !player.isCreative()) {
+				while (slot < player.inventory.getSizeInventory()) {
+					ItemStack check = player.inventory.getStackInSlot(slot);
+					if (ItemTags.getCollection().getOrCreate(ItemTags.RAILS.getId()).contains(check.getItem())) {
+						stack = check;
+						break;
+					}
+					slot++;
+				}
 			}
+
+			// check if we're making a valid path
 			// logic:
 			// if next block is air:
 			//   start checking down. if next down block is air:
@@ -120,6 +130,17 @@ public class WayPointToolItem extends Item{
 			// else check up:
 			//   if next up block is air:
 			//     valid
+			boolean valid = false;
+
+			if (player.world.getBlockState(step).getBlock() instanceof WayPointBlock) {
+				valid = true;
+				if (!player.isCreative()) {
+					player.world.addEntity(
+					  new ItemEntity(player.world, step.getX(), step.getY(), step.getZ(),
+					    new ItemStack(ModSetup.R_BLOCK_WAYPOINT.get(), 1))
+					);
+				}
+			}
 			else if (player.world.isAirBlock(step)) {
 				if (player.world.isAirBlock(step.add(0,-1,0))) {
 					if (!player.world.isAirBlock(step.add(0,-2,0))) {
@@ -135,21 +156,10 @@ public class WayPointToolItem extends Item{
 			}
 			// validation done, get a rail from the player's inventory
 			if (valid) {
-				if (stack == null || stack.isEmpty()) {
-					while (slot < player.inventory.getSizeInventory()) {
-						ItemStack check = player.inventory.getStackInSlot(slot);
-						if (ItemTags.getCollection().getOrCreate(ItemTags.RAILS.getId()).contains(check.getItem())) {
-							stack = check;
-							break;
-						}
-						slot++;
-					}
-				}
 				// we got a rail, let's place it
-				if (stack.getCount() > 0) {
-					//	player.sendMessage(new StringTextComponent("DEBUG: placed at " + step.toString()));
+				if (player.isCreative() || stack.getCount() > 0) {
 					player.world.setBlockState(step, Blocks.RAIL.getDefaultState(), Constants.BlockFlags.BLOCK_UPDATE);
-					stack.setCount(stack.getCount() - 1);
+					if (!player.isCreative()) stack.setCount(stack.getCount() - 1);
 				}
 			}
 			// escape if we can't get any more
@@ -157,7 +167,7 @@ public class WayPointToolItem extends Item{
 
 			// otherwise step to the next iteration
 			step = step.add(zig ? stepX : 0, 0, zig ? 0 : stepZ);
-			if (stepX == stepZ) zig = !zig;
+			if (Math.abs(stepX) == Math.abs(stepZ)) zig = !zig;
 		}
 		return step.equals(end); // false if we failed early for whatever reason
 	}
