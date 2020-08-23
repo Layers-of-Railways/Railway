@@ -44,9 +44,7 @@ public class WayPointBlock extends Block{
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.or(VoxelShapes.create(7.0f/16, 0, 7.0f/16, 9.0f/16, 12.0f/16, 9.0f/16), VoxelShapes.create(7.5f/16, 6.5f/16, 0, 8.5f/16, 11.5f/16, 7f/16));
-
-
-		
+		return VoxelShapes.or(VoxelShapes.create(7.0f/16, 0, 7.0f/16, 9.0f/16, 12.0f/16, 9.0f/16),
+		       VoxelShapes.create(7.5f/16, 6.5f/16, 0, 8.5f/16, 11.5f/16, 7f/16));
 	}
 }

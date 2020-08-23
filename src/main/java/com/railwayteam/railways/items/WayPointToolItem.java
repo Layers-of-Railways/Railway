@@ -3,7 +3,6 @@ package com.railwayteam.railways.items;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.blocks.WayPointBlock;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.RailBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -13,16 +12,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.eventbus.api.Event;
-
-import static net.minecraftforge.eventbus.api.Event.Result.DEFAULT;
-import static net.minecraftforge.eventbus.api.Event.Result.DENY;
 
 public class WayPointToolItem extends Item{
 	public static final String name      = "waypoint_manager";
@@ -68,11 +61,11 @@ public class WayPointToolItem extends Item{
 				if (first != null && !first.equals(pos)) {
 					// do connection check
 					Vec3i diff = pos.subtract(first);
-					player.sendMessage(new StringTextComponent(diff.toString()));
+				//	player.sendMessage(new StringTextComponent(diff.toString()));
 					// straight line or 45* diagonal
 					if (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ())) {
 						float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
-						player.sendMessage(new StringTextComponent(MSG_VALID + String.format("%.2f.",slope)));
+					//	player.sendMessage(new StringTextComponent(MSG_VALID + String.format("%.2f.",slope)));
 						context.getItem().setTag(null);
 						// this is where we'd fire the event to build a track connection...
 						// TODO: fire track path connection event stuff
