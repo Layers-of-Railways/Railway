@@ -55,6 +55,7 @@ public class Railways {
     
     public static void clientInit(FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
+        setup.registerRenderers();
     }
 
     @SubscribeEvent

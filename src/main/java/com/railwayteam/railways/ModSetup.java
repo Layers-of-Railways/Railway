@@ -1,13 +1,23 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.blocks.WayPointBlock;
+import com.railwayteam.railways.entities.SteadyMinecartEntity;
+import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.items.WayPointToolItem;
+
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.client.renderer.entity.MinecartRenderer;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import com.tterrag.registrate.Registrate;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ModSetup {
   public static ItemGroup itemGroup = new ItemGroup(Railways.MODID) {
@@ -21,6 +31,8 @@ public class ModSetup {
   public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
+
+  public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
 
   public void init() {
   }
@@ -43,5 +55,14 @@ public class ModSetup {
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
       .register();
+
+    R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
+      .lang("Steady Minecart")
+      .register();
+  }
+
+  @OnlyIn(value=Dist.CLIENT)
+  public static void registerRenderers () {
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
   }
 }
