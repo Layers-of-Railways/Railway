@@ -43,6 +43,8 @@ public class Railways {
       FMLJavaModLoadingContext.get().getModEventBus().addListener(Railways::clientInit);
       railwayRegistrar = Registrate.create(Railways.MODID);
       setup.register(railwayRegistrar);
+
+      RailwaysPacketHandler.register();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
