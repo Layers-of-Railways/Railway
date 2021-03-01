@@ -31,9 +31,9 @@ public class SteadyMinecartEntity extends MinecartEntity {
 
   @Override
   public void setMotion(Vec3d motionIn) {
-    storedSpeed = motionIn.length() - lockedSpeed;
-    if (storedSpeed > 0) {
-      motionIn = motionIn.normalize().scale(lockedSpeed);
+    double mag = horizontalMag(motionIn);
+    if ((Math.abs(motionIn.getX()) > lockedSpeed) || (Math.abs(motionIn.getZ()) > lockedSpeed)) {
+      motionIn = motionIn.mul(lockedSpeed/mag, 1, lockedSpeed/mag);
     }
     super.setMotion(motionIn);
   }

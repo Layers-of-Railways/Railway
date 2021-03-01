@@ -3,12 +3,13 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.blocks.WayPointBlock;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.entities.TrackEntity;
+import com.railwayteam.railways.entities.TrackRenderer;
 import com.railwayteam.railways.items.WayPointToolItem;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.client.renderer.entity.MinecartRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemGroup;
@@ -33,6 +34,7 @@ public class ModSetup {
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
+  public static RegistryEntry<EntityType<TrackEntity>> R_ENTITY_TRACK;
 
   public void init() {
   }
@@ -59,10 +61,14 @@ public class ModSetup {
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")
       .register();
+    R_ENTITY_TRACK      = reg.entity(TrackEntity.name, TrackEntity::new, EntityClassification.MISC)
+      .lang("Track Segment")
+      .register();
   }
 
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_TRACK.get(), TrackRenderer::new);
   }
 }
