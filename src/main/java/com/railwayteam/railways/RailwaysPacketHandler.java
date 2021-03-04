@@ -1,10 +1,11 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.packets.CustomPacketCartSchedule;
+import com.railwayteam.railways.packets.CustomPacketStationList;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -18,14 +19,15 @@ public class RailwaysPacketHandler {
   public static final ResourceLocation CHANNEL_NAME = new ResourceLocation(Railways.MODID, "cart-update");
   public static SimpleChannel channel;
 
-  private static final CustomPacketRegistrar<CustomPacketCartSchedule> cprCartSchedule =
-    new CustomPacketRegistrar<>(CustomPacketCartSchedule.class, CustomPacketCartSchedule::new);
+  private static final CustomPacketRegistrar<CustomPacketStationList> cprCartSchedule =
+    new CustomPacketRegistrar<>(CustomPacketStationList.class, CustomPacketStationList::new);
 
   public static void register () {
-    channel = NetworkRegistry.ChannelBuilder.named(CHANNEL_NAME)
-      .serverAcceptedVersions(s->true)
-      .clientAcceptedVersions(s->true)
-      .networkProtocolVersion( ()->PROTOCOL_VERSION).simpleChannel();
+  //  channel = NetworkRegistry.ChannelBuilder.named(CHANNEL_NAME)
+  //    .serverAcceptedVersions(s->true)
+  //    .clientAcceptedVersions(s->true)
+  //    .networkProtocolVersion( ()->PROTOCOL_VERSION).simpleChannel();
+    channel = NetworkRegistry.newSimpleChannel(CHANNEL_NAME, ()->PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
     cprCartSchedule.register();
   }
@@ -50,7 +52,8 @@ public class RailwaysPacketHandler {
     }
 
     public void register () {
-      channel.messageBuilder(type, index++).encoder(encoder).decoder(decoder).consumer(handler).add();
+    //  channel.messageBuilder(type, index++).encoder(encoder).decoder(decoder).consumer(handler).add();
+      channel.registerMessage(index++, type, encoder, decoder, handler);
     }
   }
 }

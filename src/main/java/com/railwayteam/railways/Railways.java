@@ -1,6 +1,8 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.tterrag.registrate.Registrate;
+import net.minecraftforge.eventbus.api.IEventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,43 +26,52 @@ public class Railways {
 	public static final String MODID = "railways";
 	public static final String VERSION = "0.1.0";
 	public static Railways instance;
-    private static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static ModSetup setup = new ModSetup();
-    public static Registrate railwayRegistrar;
+  static final Logger LOGGER = LogManager.getLogger(MODID);
+  public static ModSetup setup = new ModSetup();
+  public static Registrate railwayRegistrar;
+  public static IEventBus MOD_EVENT_BUS;
 
-    public Railways() {
-    	instance = this;
-    	
-    	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-      ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
-    	
-      FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-      MinecraftForge.EVENT_BUS.register(this);
-        
-      Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
-      Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
-        
-      FMLJavaModLoadingContext.get().getModEventBus().addListener(Railways::clientInit);
-      railwayRegistrar = Registrate.create(Railways.MODID);
-      setup.register(railwayRegistrar);
+  private RailwaysEventHandler eventHandler;
 
-      RailwaysPacketHandler.register();
+  public Railways() {
+  	instance = this;
+
+  	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+
+    MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+
+    MOD_EVENT_BUS.addListener(this::setup);
+    MinecraftForge.EVENT_BUS.register(this);
+    eventHandler = new RailwaysEventHandler();
+    MinecraftForge.EVENT_BUS.register(eventHandler);
+
+    Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
+    Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+
+    MOD_EVENT_BUS.addListener(Railways::clientInit);
+
+    railwayRegistrar = Registrate.create(Railways.MODID);
+    setup.register(railwayRegistrar);
+
+    MOD_EVENT_BUS.register(CapabilitySetup.class);
+  }
+
+  private void setup(final FMLCommonSetupEvent event) {
+    setup.init();
+    RailwaysPacketHandler.register();
     }
 
-    private void setup(final FMLCommonSetupEvent event) {
-    	setup.init();
-    }
-    
-    public static ResourceLocation createResourceLocation(String name) {
+  public static ResourceLocation createResourceLocation(String name) {
 		return new ResourceLocation(MODID, name);
 	}
-    
-    public static void clientInit(FMLClientSetupEvent event) {
-        RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
-        setup.registerRenderers();
-    }
 
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
-    }
+  public static void clientInit(FMLClientSetupEvent event) {
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
+    setup.registerRenderers();
+  }
+
+  @SubscribeEvent
+  public void onServerStarting(FMLServerStartingEvent event) {
+  }
 }
