@@ -1,6 +1,8 @@
 232b7b9a747e186457fe0798cda63c2decba74a1 assets/railways/blockstates/waypoint.json
-2df83aa9b6a5a7480a3e5c7dd5df80c8b90c6190 assets/railways/lang/en_ud.json
-e58c835d231a46479b1271f38e772b35ae298d06 assets/railways/lang/en_us.json
+ba4397f61bbdf173bfd9a32b097499763bb3b43c assets/railways/lang/en_ud.json
+c64f9f67f3cee2559291e526654acef76865ef83 assets/railways/lang/en_us.json
 70592629bba15d88757038e0e0065a30e2d54713 assets/railways/models/item/waypoint.json
 4d5615eebfbf51017641686eb015bdd656b9ee75 assets/railways/models/item/waypoint_manager.json
+a6ad25241858d9581f2603d725000c4cd1b61d1d data/minecraft/tags/blocks/rails.json
+73a7aa6a7c1d5606eebefa3ba3b14d5791e36a5f data/railways/loot_tables/blocks/station_sensor.json
 a67463ded4b3d9d47969501efb02c89418a6b66e data/railways/loot_tables/blocks/waypoint.json

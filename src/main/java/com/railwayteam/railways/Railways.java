@@ -2,7 +2,16 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +29,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.util.function.Supplier;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -60,7 +71,7 @@ public class Railways {
   private void setup(final FMLCommonSetupEvent event) {
     setup.init();
     RailwaysPacketHandler.register();
-    }
+  }
 
   public static ResourceLocation createResourceLocation(String name) {
 		return new ResourceLocation(MODID, name);
@@ -68,6 +79,7 @@ public class Railways {
 
   public static void clientInit(FMLClientSetupEvent event) {
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
     setup.registerRenderers();
   }
 

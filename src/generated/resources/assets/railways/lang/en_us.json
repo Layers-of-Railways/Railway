@@ -1,5 +1,8 @@
 {
+  "block.railways.station_sensor": "Station Sensor",
   "block.railways.waypoint": "Waypoint",
+  "entity.railways.steadycart": "Steady Minecart",
+  "entity.railways.track": "Track Segment",
   "item.railways.waypoint_manager": "Waypoint Tool",
   "itemGroup.railways": "railways"
 }
