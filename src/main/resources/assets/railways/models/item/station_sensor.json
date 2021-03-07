@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "minecraft:block/detector_rail"
+        "layer0": "railways:block/station_sensor_on"
     }
 }
