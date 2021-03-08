@@ -3,6 +3,7 @@
   "block.railways.waypoint": "Waypoint",
   "entity.railways.steadycart": "Steady Minecart",
   "entity.railways.track": "Track Segment",
+  "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",
   "itemGroup.railways": "railways"
 }

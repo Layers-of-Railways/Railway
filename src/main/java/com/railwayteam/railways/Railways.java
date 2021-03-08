@@ -5,6 +5,7 @@ import com.tterrag.registrate.Registrate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
@@ -66,6 +67,8 @@ public class Railways {
     setup.register(railwayRegistrar);
 
     MOD_EVENT_BUS.register(CapabilitySetup.class);
+
+    MOD_EVENT_BUS.addGenericListener(ContainerType.class, Containers::register);
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -81,6 +84,7 @@ public class Railways {
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
     setup.registerRenderers();
+    Containers.registerScreenFactories();
   }
 
   @SubscribeEvent

@@ -3,7 +3,6 @@ package com.railwayteam.railways.packets;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysPacketHandler;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
-import io.netty.util.AttributeKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
@@ -11,30 +10,38 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class CustomPacketStationList extends RailwaysPacketHandler.CustomPacketBase {
   private int id;
-  private String msg;
+  private List<String> stations;
 
-  public CustomPacketStationList() {
-    this(0, "");
-  }
+  //public CustomPacketStationList() { this(0, ""); }
+  public CustomPacketStationList() { this(0, new ArrayList<String>()); }
 
-  public CustomPacketStationList (int id, String entry) {
+  public CustomPacketStationList (int id, List<String> stations) {
     this.id = id;
-    msg = entry;
+    this.stations = stations;
   }
 
   public CustomPacketStationList (PacketBuffer buffer) {
     id = buffer.readInt();
-    msg = buffer.readString();
+    int len = buffer.readInt();
+    if (stations == null) stations = new ArrayList<String>();
+    for (int i=0; i<len; i++) {
+      this.stations.add(buffer.readString());
+    }
   }
 
   @Override
   public void write (PacketBuffer buf) {
     buf.writeInt(id);
-    buf.writeString(msg);
+    buf.writeInt(stations.size());
+    for (String station : stations) {
+      buf.writeString(station);
+    }
   }
 
   @Override
@@ -45,11 +52,13 @@ public class CustomPacketStationList extends RailwaysPacketHandler.CustomPacketB
       Entity target = Minecraft.getInstance().player.world.getEntityByID(id);
       if (target instanceof MinecartEntity) {
         target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {
-          capability.setEntry(msg);
+          for (String station : stations) {
+            capability.add(station);
+          }
         });
-        LogManager.getLogger(Railways.MODID).debug("handled packet: success");
-      } else {
-        LogManager.getLogger(Railways.MODID).debug("handled packet: not minecart");
+    //    LogManager.getLogger(Railways.MODID).debug("handled packet: success");
+    //  } else {
+    //    LogManager.getLogger(Railways.MODID).debug("handled packet: not minecart");
       }
     });
     ctx.setPacketHandled(true);

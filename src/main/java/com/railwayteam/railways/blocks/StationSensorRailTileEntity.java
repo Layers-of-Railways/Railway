@@ -13,11 +13,11 @@ public class StationSensorRailTileEntity extends TileEntity {
     super(typeIn);
   }
 
-  void setStation (String value) {
+  public void setStation (String value) {
     station = value;
     markDirty();
   }
-  String getStation () { return station; }
+  public String getStation () { return station; }
 
   @Override
   public CompoundNBT write(CompoundNBT compound) {

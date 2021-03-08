@@ -1,8 +1,8 @@
 package com.railwayteam.railways.capabilities;
 
 import com.railwayteam.railways.Railways;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -34,7 +34,7 @@ public class StationListProvider implements ICapabilitySerializable<INBT> {
 
   @Override
   public void deserializeNBT (INBT nbt) {
-    if (nbt.getType() != StringNBT.TYPE) {
+    if (nbt.getType() != CompoundNBT.TYPE) {
       LogManager.getLogger(Railways.MODID).debug("wrong NBT Type on deserialize!");
       return;
     }

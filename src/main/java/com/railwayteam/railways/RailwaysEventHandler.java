@@ -20,6 +20,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.util.Iterator;
+
 @Mod.EventBusSubscriber(modid=Railways.MODID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public class RailwaysEventHandler {
   @SubscribeEvent
@@ -33,18 +35,22 @@ public class RailwaysEventHandler {
     // else process it
     if (player.isSneaking()) {
       // just check it, don't assign
-      if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("station: " + list.getEntry()));
+      if (eis.getSide().isClient()) {
+        player.sendMessage(new StringTextComponent("stations:"));
+        Iterator<String> iter = list.iterate();
+        while (iter.hasNext()) player.sendMessage(new StringTextComponent("  " + iter.next()));
+      }
     } else {
       // assign to it
       String candidate = player.getDisplayName().getFormattedText();
-      if (list.getEntry().equals(candidate)) {
+      if (list.contains(candidate)) {
         if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("station already assigned"));
         return;
       }
-      list.setEntry(candidate);
+      list.add(candidate);
       if (eis.getSide().isServer()) {
-        RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with (()->target), new CustomPacketStationList(target.getEntityId(), candidate));
-        Railways.LOGGER.debug("sent update packet");
+        RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with (()->target), new CustomPacketStationList(target.getEntityId(), list.copy()));
+        Railways.LOGGER.debug("sent update packet for list: " + list.copy().get(0));
       }
       if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("assigned station: " + candidate));
     }
@@ -63,9 +69,10 @@ public class RailwaysEventHandler {
   public void onPlayerTrackEntity (final PlayerEvent.StartTracking pe) {
     pe.getTarget().getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability ->
       RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with(
-        pe::getTarget), new CustomPacketStationList(pe.getTarget().getEntityId(), capability.getEntry())
+        pe::getTarget), new CustomPacketStationList(pe.getTarget().getEntityId(), capability.copy())
       )
     );
+  //  Railways.LOGGER.debug("sent tracking packet");
   }
 
   @SubscribeEvent

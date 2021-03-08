@@ -7,6 +7,7 @@ import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.entities.TrackEntity;
 import com.railwayteam.railways.entities.TrackRenderer;
+import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -16,6 +17,7 @@ import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -43,6 +45,7 @@ public class ModSetup {
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
+  public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
   public static RegistryEntry<EntityType<TrackEntity>> R_ENTITY_TRACK;
@@ -80,6 +83,10 @@ public class ModSetup {
 
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
+      .register();
+
+    R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
+      .lang("Station Editor")
       .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
