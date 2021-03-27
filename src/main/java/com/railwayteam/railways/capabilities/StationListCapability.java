@@ -24,6 +24,7 @@ public class StationListCapability {
   public void    remove   (String station) { stations.remove(station); }
   public void    clear    ()               { stations.clear(); }
   public Iterator<String> iterate ()       { return stations.iterator(); }
+  public int     length   ()               { return stations.size(); }
   public ArrayList<String> copy ()         {
     ArrayList<String> ret = new ArrayList<String>();
     for (String station : stations) ret.add(station);

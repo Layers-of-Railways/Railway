@@ -1,5 +1,7 @@
 {
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
+  "block.railways.track_diagonal": "\u029E\u0254\u0250\u0279\u27D8 \u05DF\u0250uob\u0250\u0131\u15E1 \u01DDb\u0279\u0250\uA780",
+  "block.railways.track_straight": "\u029E\u0254\u0250\u0279\u27D8 \u0287\u0265b\u0131\u0250\u0279\u0287S \u01DDb\u0279\u0250\uA780",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",
   "entity.railways.track": "\u0287u\u01DD\u026Fb\u01DDS \u029E\u0254\u0250\u0279\u27D8",

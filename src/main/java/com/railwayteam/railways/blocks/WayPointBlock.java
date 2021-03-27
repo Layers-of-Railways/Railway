@@ -12,7 +12,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
-public class WayPointBlock extends Block{
+public class WayPointBlock extends Block {
 	public static final String name = "waypoint";
 
 	// default constructor probably isn't necessary, but it's here for legacy reasons.

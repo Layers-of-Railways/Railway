@@ -1,8 +1,6 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.blocks.StationSensorRailBlock;
-import com.railwayteam.railways.blocks.StationSensorRailTileEntity;
-import com.railwayteam.railways.blocks.WayPointBlock;
+import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.entities.TrackEntity;
@@ -17,7 +15,6 @@ import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -41,6 +38,8 @@ public class ModSetup {
   // we cache Registry entries in case other mod components need a convenient reference (including Registrate itself)
   public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
   public static BlockEntry<StationSensorRailBlock> R_BLOCK_STATION_SENSOR;
+  public static BlockEntry<LargeTrackStraightBlock> R_BLOCK_LARGE_STRAIGHT;
+  public static BlockEntry<LargeTrackDiagonalBlock> R_BLOCK_LARGE_DIAGONAL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -67,6 +66,20 @@ public class ModSetup {
       .simpleItem()     // nothing special about the item right now
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
+
+    R_BLOCK_LARGE_STRAIGHT = reg.block(LargeTrackStraightBlock.name, LargeTrackStraightBlock::new)
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
+      .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
+      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
+      .lang("Large Straight Track")
+      .register();
+
+    R_BLOCK_LARGE_DIAGONAL = reg.block(LargeTrackDiagonalBlock.name, LargeTrackDiagonalBlock::new)
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
+      .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
+      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
+      .lang("Large Diagonal Track")
+      .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
       .initialProperties(()->Blocks.DETECTOR_RAIL)

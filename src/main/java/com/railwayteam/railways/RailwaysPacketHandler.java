@@ -2,6 +2,7 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.packets.CustomPacketStationList;
 
+import com.railwayteam.railways.packets.CustomPacketUpdateOrders;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
@@ -22,6 +23,9 @@ public class RailwaysPacketHandler {
   private static final CustomPacketRegistrar<CustomPacketStationList> cprCartSchedule =
     new CustomPacketRegistrar<>(CustomPacketStationList.class, CustomPacketStationList::new);
 
+  private static final CustomPacketRegistrar<CustomPacketUpdateOrders> cprStationOrders =
+    new CustomPacketRegistrar<>(CustomPacketUpdateOrders.class, CustomPacketUpdateOrders::new);
+
   public static void register () {
   //  channel = NetworkRegistry.ChannelBuilder.named(CHANNEL_NAME)
   //    .serverAcceptedVersions(s->true)
@@ -30,6 +34,7 @@ public class RailwaysPacketHandler {
     channel = NetworkRegistry.newSimpleChannel(CHANNEL_NAME, ()->PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
     cprCartSchedule.register();
+    cprStationOrders.register();
   }
 
   public static abstract class CustomPacketBase {

@@ -1,5 +1,7 @@
 {
   "block.railways.station_sensor": "Station Sensor",
+  "block.railways.track_diagonal": "Large Diagonal Track",
+  "block.railways.track_straight": "Large Straight Track",
   "block.railways.waypoint": "Waypoint",
   "entity.railways.steadycart": "Steady Minecart",
   "entity.railways.track": "Track Segment",

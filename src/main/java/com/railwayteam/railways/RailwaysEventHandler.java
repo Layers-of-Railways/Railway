@@ -2,15 +2,13 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.*;
 
+import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketDirection;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -29,6 +27,7 @@ public class RailwaysEventHandler {
     PlayerEntity player = eis.getPlayer();
     Entity target = eis.getTarget();
     if (!(target instanceof MinecartEntity)) return;
+    if (player.getHeldItemMainhand().getItem() instanceof StationEditorItem) return;
     // else is minecart
     StationListCapability list = target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).orElse(null);
     if (list == null) return;
