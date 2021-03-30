@@ -1,10 +1,9 @@
 {
+  "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DDbn\u0250\u2141 \u01DDp\u0131M",
+  "block.railways.large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DDbn\u0250\u2141 \u01DDp\u0131M",
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
-  "block.railways.track_diagonal": "\u029E\u0254\u0250\u0279\u27D8 \u05DF\u0250uob\u0250\u0131\u15E1 \u01DDb\u0279\u0250\uA780",
-  "block.railways.track_straight": "\u029E\u0254\u0250\u0279\u27D8 \u0287\u0265b\u0131\u0250\u0279\u0287S \u01DDb\u0279\u0250\uA780",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",
-  "entity.railways.track": "\u0287u\u01DD\u026Fb\u01DDS \u029E\u0254\u0250\u0279\u27D8",
   "item.railways.station_editor_tool": "\u0279o\u0287\u0131p\u018E uo\u0131\u0287\u0250\u0287S",
   "item.railways.waypoint_manager": "\u05DFoo\u27D8 \u0287u\u0131od\u028E\u0250M",
   "itemGroup.railways": "s\u028E\u0250\u028D\u05DF\u0131\u0250\u0279"

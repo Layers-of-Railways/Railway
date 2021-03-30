@@ -3,8 +3,6 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
-import com.railwayteam.railways.entities.TrackEntity;
-import com.railwayteam.railways.entities.TrackRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
 
@@ -23,6 +21,7 @@ import com.tterrag.registrate.Registrate;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 
@@ -38,8 +37,8 @@ public class ModSetup {
   // we cache Registry entries in case other mod components need a convenient reference (including Registrate itself)
   public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
   public static BlockEntry<StationSensorRailBlock> R_BLOCK_STATION_SENSOR;
-  public static BlockEntry<LargeTrackStraightBlock> R_BLOCK_LARGE_STRAIGHT;
-  public static BlockEntry<LargeTrackDiagonalBlock> R_BLOCK_LARGE_DIAGONAL;
+  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_STRAIGHT;
+  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_DIAGONAL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -47,7 +46,7 @@ public class ModSetup {
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
-  public static RegistryEntry<EntityType<TrackEntity>> R_ENTITY_TRACK;
+  //public static RegistryEntry<EntityType<TrackEntity>> R_ENTITY_TRACK;
 
   public void init() {
   }
@@ -67,18 +66,20 @@ public class ModSetup {
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
 
-    R_BLOCK_LARGE_STRAIGHT = reg.block(LargeTrackStraightBlock.name, LargeTrackStraightBlock::new)
+    R_BLOCK_LARGE_STRAIGHT = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
-      .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
-      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
-      .lang("Large Straight Track")
+      .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+        return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
+      }))
+      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_s"))).build()
+      .lang("Wide Gauge Track")
       .register();
 
-    R_BLOCK_LARGE_DIAGONAL = reg.block(LargeTrackDiagonalBlock.name, LargeTrackDiagonalBlock::new)
+    R_BLOCK_LARGE_DIAGONAL = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
-      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
-      .lang("Large Diagonal Track")
+      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_l"))).build()
+      .lang("Wide Gauge Switch")
       .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
@@ -105,14 +106,10 @@ public class ModSetup {
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")
       .register();
-    R_ENTITY_TRACK      = reg.entity(TrackEntity.name, TrackEntity::new, EntityClassification.MISC)
-      .lang("Track Segment")
-      .register();
   }
 
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
-    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_TRACK.get(), TrackRenderer::new);
   }
 }

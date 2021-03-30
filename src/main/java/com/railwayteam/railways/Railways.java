@@ -27,7 +27,7 @@ public class Railways {
 	public static final String MODID = "railways";
 	public static final String VERSION = "0.1.0";
 	public static Railways instance;
-  static final Logger LOGGER = LogManager.getLogger(MODID);
+  public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();
   public static Registrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;

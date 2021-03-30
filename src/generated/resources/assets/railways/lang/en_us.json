@@ -1,10 +1,9 @@
 {
+  "block.railways.large_switch": "Wide Gauge Switch",
+  "block.railways.large_track": "Wide Gauge Track",
   "block.railways.station_sensor": "Station Sensor",
-  "block.railways.track_diagonal": "Large Diagonal Track",
-  "block.railways.track_straight": "Large Straight Track",
   "block.railways.waypoint": "Waypoint",
   "entity.railways.steadycart": "Steady Minecart",
-  "entity.railways.track": "Track Segment",
   "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",
   "itemGroup.railways": "railways"
