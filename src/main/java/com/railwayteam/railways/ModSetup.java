@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import com.tterrag.registrate.Registrate;
 
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.IProperty;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,7 +48,6 @@ public class ModSetup {
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
-  //public static RegistryEntry<EntityType<TrackEntity>> R_ENTITY_TRACK;
 
   public void init() {
   }
@@ -78,6 +79,10 @@ public class ModSetup {
     R_BLOCK_LARGE_DIAGONAL = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
+      //.blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(IProperty<I> ignored))
+      //.blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+      //  return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
+      //}))
       .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_l"))).build()
       .lang("Wide Gauge Switch")
       .register();

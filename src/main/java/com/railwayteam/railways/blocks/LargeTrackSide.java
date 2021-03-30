@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public enum LargeTrackSide implements IStringSerializable {
   NORTH_SOUTHWEST(    Util.Vector.NORTH,     Util.Vector.SOUTHWEST),
@@ -40,6 +41,16 @@ public enum LargeTrackSide implements IStringSerializable {
     return this.name;
   }
 
+  // needed for Switch tracks
+  /*
+  public static Collection<LargeTrackSide> getNonStraight () {
+    ArrayList<LargeTrackSide> allowed = new ArrayList<LargeTrackSide>();
+    for (LargeTrackSide state : values()) {
+      if (!state.isStraight()) allowed.add(state);
+    }
+    return allowed;
+  } //*/
+
   public boolean isCardinal () {
     return this == NORTH_SOUTH || this == EAST_WEST;
   }
@@ -70,7 +81,13 @@ public enum LargeTrackSide implements IStringSerializable {
   } // */
 
   public static LargeTrackSide findValidStateFrom(Vec3d a) {
-    return findValidStateFrom(a, a.scale(-1)); // try to find a straight track
+    // try to find a straight track
+    a = a.normalize();
+    for (LargeTrackSide side : values()) {
+      if (!side.isStraight()) continue;
+      if (side.offsets[0].equals(a) || side.offsets[1].equals(a)) return side;
+    }
+    return NORTH_SOUTH;
   }
 
   public static LargeTrackSide findValidStateFrom(Vec3d a, Vec3d b) {

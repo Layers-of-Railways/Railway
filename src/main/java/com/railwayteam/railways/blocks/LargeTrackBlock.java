@@ -1,6 +1,7 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.Util;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
@@ -11,13 +12,15 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class LargeTrackBlock extends Block {
   public static final String name = "large_track";
@@ -40,9 +43,24 @@ public class LargeTrackBlock extends Block {
     return checkForConnections(stateIn, worldIn, currentPos);
   }
 
+  @Override
+  public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
+    Block corner;
+    for (int z=-1; z<2; z++) {
+      for (int x=-1; x<2; x++) {
+        if (x==0 || z==0) continue;
+        corner = worldIn.getBlockState(pos.add(x,0,z)).getBlock();
+        if (corner instanceof LargeTrackBlock) {
+          worldIn.setBlockState(pos.add(x,0,z), ((LargeTrackBlock)corner).checkForConnections(state,worldIn,pos.add(x,0,z)));
+        }
+      }
+    }
+  }
+
   private BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos) {
     BlockPos other = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-    ArrayList<Vec3d> directions = new ArrayList<Vec3d>();
+    ArrayList<Vec3d> directions = new ArrayList<>();
   //  Railways.LOGGER.debug("Checking around " + other.toString());
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
