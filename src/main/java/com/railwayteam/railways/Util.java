@@ -1,6 +1,6 @@
 package com.railwayteam.railways;
 
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 public class Util {
   public enum Vector {
@@ -13,12 +13,34 @@ public class Util {
     SOUTHWEST(-1, 0,  1, "sw"),
     SOUTHEAST( 1, 0,  1, "se");
 
-    public Vec3d value;
+    public Vec3i value;
     public String name;
 
     private Vector(int x, int y, int z, String name) {
-      value = new Vec3d(x, y, z).normalize();
+      value = new Vec3i(x, y, z);
       this.name = name;
     }
+
+    public Vector getOpposite () {
+      return getOpposite(this);
+    }
+
+    public static Vector getOpposite (Vector in) {
+      switch (in) {
+        case NORTH: return SOUTH;
+        case SOUTH: return NORTH;
+        case EAST:  return WEST;
+        case WEST:  return EAST;
+        case NORTHWEST: return SOUTHEAST;
+        case NORTHEAST: return SOUTHWEST;
+        case SOUTHWEST: return NORTHEAST;
+        case SOUTHEAST: return NORTHWEST;
+      }
+      return SOUTH; // should never get here
+    }
+  }
+
+  public static Vec3i opposite (Vec3i in) {
+    return new Vec3i (in.getX()*-1, in.getY()*-1, in.getZ()*-1);
   }
 }

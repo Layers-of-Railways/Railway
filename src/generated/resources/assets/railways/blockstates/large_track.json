@@ -1,39 +1,39 @@
 {
   "variants": {
-    "side=n_sw": {
+    "bigtrack=n_sw": {
       "model": "railways:block/wide_gauge/large_track_n_sw"
     },
-    "side=n_s": {
+    "bigtrack=n_s": {
       "model": "railways:block/wide_gauge/large_track_n_s"
     },
-    "side=n_se": {
+    "bigtrack=n_se": {
       "model": "railways:block/wide_gauge/large_track_n_se"
     },
-    "side=e_nw": {
+    "bigtrack=e_nw": {
       "model": "railways:block/wide_gauge/large_track_e_nw"
     },
-    "side=e_w": {
+    "bigtrack=e_w": {
       "model": "railways:block/wide_gauge/large_track_e_w"
     },
-    "side=e_sw": {
+    "bigtrack=e_sw": {
       "model": "railways:block/wide_gauge/large_track_e_sw"
     },
-    "side=s_ne": {
+    "bigtrack=s_ne": {
       "model": "railways:block/wide_gauge/large_track_s_ne"
     },
-    "side=s_nw": {
+    "bigtrack=s_nw": {
       "model": "railways:block/wide_gauge/large_track_s_nw"
     },
-    "side=w_se": {
+    "bigtrack=w_se": {
       "model": "railways:block/wide_gauge/large_track_w_se"
     },
-    "side=w_ne": {
+    "bigtrack=w_ne": {
       "model": "railways:block/wide_gauge/large_track_w_ne"
     },
-    "side=ne_sw": {
+    "bigtrack=ne_sw": {
       "model": "railways:block/wide_gauge/large_track_ne_sw"
     },
-    "side=nw_se": {
+    "bigtrack=nw_se": {
       "model": "railways:block/wide_gauge/large_track_nw_se"
     }
   }

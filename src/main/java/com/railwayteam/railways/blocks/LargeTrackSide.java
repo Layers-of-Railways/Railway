@@ -1,14 +1,10 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.Util;
-import net.minecraft.client.renderer.Vector3d;
-import net.minecraft.util.Direction;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public enum LargeTrackSide implements IStringSerializable {
   NORTH_SOUTHWEST(    Util.Vector.NORTH,     Util.Vector.SOUTHWEST),
@@ -25,10 +21,10 @@ public enum LargeTrackSide implements IStringSerializable {
   NORTHWEST_SOUTHEAST(Util.Vector.NORTHWEST, Util.Vector.SOUTHEAST);
 
   private final String name;
-  private final Vec3d[] offsets;
+  private final Vec3i[] offsets;
   private LargeTrackSide (Util.Vector dir1, Util.Vector dir2) {
     this.name = dir1.name + "_" + dir2.name;
-    offsets = new Vec3d[2];
+    offsets = new Vec3i[2];
     offsets[0] = dir1.value;
     offsets[1] = dir2.value;
   }
@@ -61,28 +57,12 @@ public enum LargeTrackSide implements IStringSerializable {
     return this.isCardinal() || this.isDiagonal();
   }
 
-  public boolean connectsTo (Vec3d offset) {
-    return offsets[0].equals(offset.normalize()) || offsets[1].equals(offset.normalize());
+  public boolean connectsTo (Vec3i offset) {
+    return offsets[0].equals(offset) || offsets[1].equals(offset);
   }
-  /*
-  public boolean hasConnectionTo (Direction direction) {
-    switch (direction) {
-      case NORTH:
-        return this == NORTH_SOUTH || this == NORTH_SOUTHEAST || this == NORTH_SOUTHWEST;
-      case SOUTH:
-        return this == NORTH_SOUTH || this == SOUTH_NORTHEAST || this == SOUTH_NORTHWEST;
-      case EAST:
-        return this == EAST_WEST   || this == EAST_NORTHWEST  || this == EAST_SOUTHWEST;
-      case WEST:
-        return this == EAST_WEST   || this == WEST_NORTHEAST  || this == WEST_SOUTHEAST;
-      default:
-        return false;
-    }
-  } // */
 
-  public static LargeTrackSide findValidStateFrom(Vec3d a) {
+  public static LargeTrackSide findValidStateFrom(Vec3i a) {
     // try to find a straight track
-    a = a.normalize();
     for (LargeTrackSide side : values()) {
       if (!side.isStraight()) continue;
       if (side.offsets[0].equals(a) || side.offsets[1].equals(a)) return side;
@@ -90,7 +70,7 @@ public enum LargeTrackSide implements IStringSerializable {
     return NORTH_SOUTH;
   }
 
-  public static LargeTrackSide findValidStateFrom(Vec3d a, Vec3d b) {
+  public static LargeTrackSide findValidStateFrom(Vec3i a, Vec3i b) {
     for (LargeTrackSide side : LargeTrackSide.values()) {
       if (!side.connectsTo(a)) continue;
       if (!side.connectsTo(b)) continue;
