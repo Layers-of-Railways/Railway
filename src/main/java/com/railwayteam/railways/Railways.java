@@ -1,6 +1,7 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.CapabilitySetup;
+import com.railwayteam.railways.items.StationEditorItem;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,6 +57,7 @@ public class Railways {
     setup.register(railwayRegistrar);
 
     MOD_EVENT_BUS.register(CapabilitySetup.class);
+    MOD_EVENT_BUS.register(StationEditorItem.class);
 
     MOD_EVENT_BUS.addGenericListener(ContainerType.class, Containers::register);
   }

@@ -17,11 +17,16 @@ import java.util.ArrayList;
 
 public class StationListContainer extends Container {
   public PlayerEntity player;
+  protected String target;
   protected PlayerInventory playerInventory;
   protected ArrayList<StationLocation> stationList;
 
   public StationListContainer(ContainerType<?> type, int id, PlayerInventory inv, PacketBuffer extraData) {
     this(type, id, inv);
+    target = extraData.readString();
+    if (target.equals("minecart")) {
+      Railways.LOGGER.debug("sent to minecart");
+    }
     int len = extraData.readInt();
     for (int index=0; index<len; index++) {
       stationList.add( new StationLocation(extraData.readString()) );

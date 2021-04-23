@@ -26,6 +26,15 @@ apply plugin: 'com.wynprice.cursemaven'
 
 apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/master/generic/markdown-git-changelog.gradle'
 
+repositories {
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
 version = '1.15.2-0.1.0'
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'railways'
@@ -33,12 +42,13 @@ archivesBaseName = 'railways'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.15.1'
+    mappings channel: 'snapshot', version: '20200301-mixed-1.15.2'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
+            jvmArgs "-Dmixin.env.disableRefMap=true"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -50,9 +60,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-
+            jvmArgs "-Dmixin.env.disableRefMap=true"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -64,8 +73,8 @@ minecraft {
 
         data {
             workingDirectory project.file('run')
+            jvmArgs "-Dmixin.env.disableRefMap=true"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
             property 'forge.logging.console.level', 'debug'
 
             args '--mod', 'railways', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
@@ -121,9 +130,11 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.0'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
 	
-  	// implementation fg.deobf("mezz.jei:jei-1.14.4:6.0.0.26")
+  	// implementation fg.deobf("mezz.jei:jei-1.15.2-6.0.3.15")
+
+    implementation fg.deobf("curse.maven:create-328085:3261454")
 	
 	def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
     implementation fg.deobf(registrate)

@@ -14,15 +14,11 @@ import java.nio.file.Path;
 public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
-    public static final String CATEGORY_POWER = "power";
-    public static final String CATEGORY_Belt_MACHINES = "belt_machines";
-    public static final String SUBCATEGORY_DYNAMO = "dynamo";
-    public static final String SUBCATEGORY_MOTOR = "motor";
 
     public static ForgeConfigSpec COMMON_CONFIG;
     public static ForgeConfigSpec CLIENT_CONFIG;
 
-    public static ForgeConfigSpec.IntValue ROLLER_SU;
+    public static ForgeConfigSpec.BooleanValue HIBYE;
 
 
     static {
@@ -41,6 +37,7 @@ public class Config {
 
     private static void setupOneConfigCategory(ForgeConfigSpec.Builder COMMON_BUILDER) {
         //ROLLER_SU = COMMON_BUILDER.comment("Base SU for the Rolling Machine").defineInRange("rollingMachineSU", 4, 0, Integer.MAX_VALUE);
+        HIBYE = COMMON_BUILDER.comment("sorceror").define("hibye", false);
     }
 
     public static void loadConfig(ForgeConfigSpec spec, Path path) {
