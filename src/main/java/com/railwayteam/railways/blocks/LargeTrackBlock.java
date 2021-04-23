@@ -14,6 +14,24 @@ import java.util.ArrayList;
 public class LargeTrackBlock extends AbstractLargeTrackBlock {
   public static final String name = "large_track";
 
+  // Priority sorting: Cardinal, Straight, North-South
+  // Currently unused in code, but this is the ideal
+  /*
+  public static final LargeTrackSide[] priorityOrder = {
+    LargeTrackSide.NORTH_SOUTH,
+    LargeTrackSide.EAST_WEST,
+    LargeTrackSide.NORTHEAST_SOUTHWEST,
+    LargeTrackSide.NORTHWEST_SOUTHEAST,
+    LargeTrackSide.NORTH_SOUTHEAST,
+    LargeTrackSide.NORTH_SOUTHWEST,
+    LargeTrackSide.SOUTH_NORTHEAST,
+    LargeTrackSide.SOUTH_NORTHWEST,
+    LargeTrackSide.EAST_NORTHWEST,
+    LargeTrackSide.EAST_SOUTHWEST,
+    LargeTrackSide.WEST_NORTHEAST,
+    LargeTrackSide.WEST_SOUTHEAST
+  };
+  */
   public static EnumProperty<LargeTrackSide> TRACK_SIDE = EnumProperty.create("bigtrack", LargeTrackSide.class);
 
   public LargeTrackBlock(Properties properties) {
@@ -25,50 +43,57 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) { builder.add(TRACK_SIDE); }
 
   @Override
-  protected BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos) {
-    BlockPos other = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-    ArrayList<Vec3i> directions = new ArrayList<>();
-  //  Railways.LOGGER.debug("Checking around " + other.toString());
+  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
+    return state.get(TRACK_SIDE).connectsTo(direction.value);
+  }
+
+  protected BlockState checkForConnections (BlockState state, IWorld world, BlockPos pos) {
+    ArrayList<Vec3i> priority = new ArrayList<>();
+    ArrayList<Vec3i> found = new ArrayList<>();
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
-        if (other.add(x,0,z).equals(pos)) continue;
-      //  Railways.LOGGER.debug("  checking at " + other.add(x,0,z));
-      //  if (worldIn.getBlockState(other.add(x,0,z)).has(LargeSwitchTrackBlock.SWITCH_SIDE)) continue;
-        if (worldIn.getBlockState(other.add(x,0,z)).getBlock() instanceof AbstractLargeTrackBlock) {
-        //  Railways.LOGGER.debug("  found at " + x + "," + z);
-          directions.add(new Vec3i(x,0,z));
+        if (pos.add(x,0,z).equals(pos)) continue; // skip the center point
+        BlockState candidate = world.getBlockState(pos.add(x,0,z));
+        if (candidate.getBlock() instanceof AbstractLargeTrackBlock) {
+          Vec3i offset = new Vec3i(x,0,z);
+          if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
+            candidate, world, pos.add(x,0,z),
+            Util.Vector.getClosest(new Vec3i(x,0,z)).getOpposite())
+          ) { // front of the line if it connects
+            priority.add(offset);
+          }
+          else {  // to the back of the line if it doesn't connect
+            found.add(offset);
+          }
         }
       }
     }
-    switch (directions.size()) {
-      case 2:
-        state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(directions.get(0), directions.get(1)));
+    found.addAll(0, priority); // stack them together
+    switch (found.size()) {
+      case 0: // no valid connections, we'll just accept the default state
         break;
-      case 1:
-        state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(directions.get(0)));
+      case 1: // one valid side, attach to it
+        state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(found.get(0)));
         break;
-      case 0:
-        // state = state; // use regular state
-        break;
-      default:
-        boolean found = false;
-      //  Railways.LOGGER.debug("Found " + directions.size() + " possible connections");
-        for (Vec3i dir : directions) {
-        //  Railways.LOGGER.debug("checking " + dir + " vs " + Util.opposite(dir));
-        //  if (worldIn.getBlockState(pos.add(dir.getX(), dir.getY(), dir.getZ())).getBlock() instanceof LargeSwitchTrackBlock) {
-        //    state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(dir));
-        //  }
-          if (directions.contains(Util.opposite(dir))) {
-            state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(dir));
-            found = true;
-            break;
-          //  Railways.LOGGER.debug("  found a straight connection");
+      case 2: // the perfect number of connections found
+        if (LargeTrackSide.isValid(found.get(0), found.get(1))) {
+          state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(found.get(0), found.get(1)));
+          break;
+        } // else fall through
+      default: // too many, arbitrate.
+        arbitration:
+        for (Vec3i b : found) {
+          for (Vec3i a : found) {
+            if (LargeTrackSide.isValid(a,b)) {
+              state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(a,b));
+              break arbitration;
+            }
           }
         }
-        // else
-        if (!found) state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(directions.get(0),directions.get(1)));
     }
-  //  Railways.LOGGER.debug("result: " + state.get(TRACK_SIDE).getName());
+    Railways.LOGGER.debug("offsets found:");
+    for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
+    Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
     return state;
   }
 }

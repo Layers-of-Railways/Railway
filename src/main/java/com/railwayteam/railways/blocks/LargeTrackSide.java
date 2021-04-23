@@ -37,16 +37,6 @@ public enum LargeTrackSide implements IStringSerializable {
     return this.name;
   }
 
-  // needed for Switch tracks
-  /*
-  public static Collection<LargeTrackSide> getNonStraight () {
-    ArrayList<LargeTrackSide> allowed = new ArrayList<LargeTrackSide>();
-    for (LargeTrackSide state : values()) {
-      if (!state.isStraight()) allowed.add(state);
-    }
-    return allowed;
-  } //*/
-
   public boolean isCardinal () {
     return this == NORTH_SOUTH || this == EAST_WEST;
   }
@@ -59,6 +49,17 @@ public enum LargeTrackSide implements IStringSerializable {
 
   public boolean connectsTo (Vec3i offset) {
     return offsets[0].equals(offset) || offsets[1].equals(offset);
+  }
+
+  public static boolean isValid    (Vec3i a, Vec3i b) {
+    for (LargeTrackSide side : values()) {
+      if (side.offsets[0].equals(a) && side.offsets[1].equals(b)
+      ||  side.offsets[1].equals(a) && side.offsets[0].equals(b)
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public static LargeTrackSide findValidStateFrom(Vec3i a) {

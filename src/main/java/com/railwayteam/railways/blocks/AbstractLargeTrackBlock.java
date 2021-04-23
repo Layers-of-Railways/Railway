@@ -1,6 +1,7 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.Util;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
@@ -20,6 +21,7 @@ public abstract class AbstractLargeTrackBlock extends Block {
 
   protected abstract BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos);
   protected abstract void fillStateContainer(StateContainer.Builder<Block, BlockState> builder);
+  protected abstract boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction);
 
   @Nullable
   @Override
@@ -50,10 +52,6 @@ public abstract class AbstractLargeTrackBlock extends Block {
       for (int x=-1; x<2; x++) {
         if (x==0 || z==0) continue;
         corner = worldIn.getBlockState(pos.add(x,0,z));
-        //  if (corner.has(LargeSwitchTrackBlock.SWITCH_SIDE)) {
-        //    Railways.LOGGER.debug("switch detected, skipping");
-        //  }
-        //  else
         if (corner.getBlock() instanceof AbstractLargeTrackBlock) {
           worldIn.setBlockState(pos.add(x,0,z), ((AbstractLargeTrackBlock)corner.getBlock()).checkForConnections(corner,worldIn,pos.add(x,0,z)));
         }

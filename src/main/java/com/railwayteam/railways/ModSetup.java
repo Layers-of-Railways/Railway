@@ -66,7 +66,7 @@ public class ModSetup {
       .register();      // pack it up for Registrate
 
     R_BLOCK_LARGE_STRAIGHT = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
       }))
@@ -75,7 +75,7 @@ public class ModSetup {
       .register();
 
     R_BLOCK_LARGE_DIAGONAL = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
       }))
@@ -85,7 +85,7 @@ public class ModSetup {
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
       .initialProperties(()->Blocks.DETECTOR_RAIL)
-      .properties(p->p.notSolid().doesNotBlockMovement())
+      .properties(p->p.nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
       .item().model((ctx,prov)-> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
       .tag(BlockTags.RAILS)

@@ -42,6 +42,11 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   }
 
   @Override
+  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
+    return state.get(SWITCH_SIDE).connectsTo(direction.value);
+  }
+
+  @Override
   protected BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos) {
     BlockPos other = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
     ArrayList<Vec3i> directions = new ArrayList<>();

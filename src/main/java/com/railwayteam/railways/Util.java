@@ -21,6 +21,15 @@ public class Util {
       this.name = name;
     }
 
+    public static Vector getClosest (Vec3i candidate) {
+      for (Vector v : values()) {
+        if (Integer.signum(candidate.getX()) != v.value.getX()) continue;
+        if (Integer.signum(candidate.getZ()) != v.value.getZ()) continue;
+        return v;
+      }
+      return SOUTH;
+    }
+
     public Vector getOpposite () {
       return getOpposite(this);
     }
