@@ -22,6 +22,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 
@@ -37,8 +38,8 @@ public class ModSetup {
   // we cache Registry entries in case other mod components need a convenient reference (including Registrate itself)
   public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
   public static BlockEntry<StationSensorRailBlock> R_BLOCK_STATION_SENSOR;
-  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_STRAIGHT;
-  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_DIAGONAL;
+  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL;
+  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -65,7 +66,7 @@ public class ModSetup {
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
 
-    R_BLOCK_LARGE_STRAIGHT = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
+    R_BLOCK_LARGE_RAIL = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
@@ -74,7 +75,7 @@ public class ModSetup {
       .lang("Wide Gauge Track")
       .register();
 
-    R_BLOCK_LARGE_DIAGONAL = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
+    R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();

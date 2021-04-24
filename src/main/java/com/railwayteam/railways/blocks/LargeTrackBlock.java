@@ -91,9 +91,9 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
           }
         }
     }
-    Railways.LOGGER.debug("offsets found:");
+  //  Railways.LOGGER.debug("offsets found:");
     for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
-    Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
+  //  Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
     return state;
   }
 }
