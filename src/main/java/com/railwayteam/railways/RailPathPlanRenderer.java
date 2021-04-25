@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
@@ -26,17 +28,11 @@ public class RailPathPlanRenderer {
 
   @SubscribeEvent
   public static void onDrawBlockHighlightEvent(DrawHighlightEvent.HighlightBlock event) {
-    BlockPos eventPos = event.getTarget().getPos();
-    World world;
-
-    try {
-      world = (World) ObfuscationReflectionHelper.findField(WorldRenderer.class, "world").get(event.getContext());
-    } catch (IllegalAccessException iae) {
-      return;
-    }
-    if ( !(world.getBlockState(eventPos).getBlock() instanceof WayPointBlock) ) return;
     if ( !(event.getInfo().getRenderViewEntity() instanceof PlayerEntity) ) return;
     PlayerEntity viewer = (PlayerEntity)event.getInfo().getRenderViewEntity();
+    World world = viewer.world;
+    BlockPos eventPos = event.getTarget().getPos();
+    if ( !(world.getBlockState(eventPos).getBlock() instanceof WayPointBlock) ) return;
     if ( !viewer.getHeldItem(Hand.MAIN_HAND).getItem().getName().equals(ModSetup.R_ITEM_WAYPOINT_TOOL.get().getName()) ) return;
     ItemStack flag = viewer.getHeldItem(Hand.MAIN_HAND);
 

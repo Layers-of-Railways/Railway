@@ -111,6 +111,10 @@ shadowJar {
     relocate 'com.tterrag.registrate', 'com.railwayteam.railways.repack.registrate'
 }
 
+reobf {
+    shadowJar {}
+}
+
 
 repositories {
     mavenLocal()
