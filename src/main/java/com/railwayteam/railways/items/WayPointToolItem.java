@@ -31,6 +31,11 @@ public class WayPointToolItem extends Item{
 		super(properties);
 	}
 
+	public static boolean isValid (Vec3i first, Vec3i second) {
+		Vec3i diff = new Vec3i(second.getX()-first.getX(), second.getY()-first.getY(), second.getZ()-first.getZ());
+		return (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ()));
+	}
+
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
@@ -60,11 +65,11 @@ public class WayPointToolItem extends Item{
 
 				if (first != null && !first.equals(pos)) {
 					// do connection check
-					Vec3i diff = pos.subtract(first);
 				//	player.sendMessage(new StringTextComponent(diff.toString()));
 					// straight line or 45* diagonal
-					if (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ())) {
-						float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
+					if (isValid(first, pos)) {
+					//	Vec3i diff = pos.subtract(first);
+					//	float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
 					//	player.sendMessage(new StringTextComponent(MSG_VALID + String.format("%.2f.",slope)));
 						context.getItem().setTag(null);
 						// this is where we'd fire the event to build a track connection...

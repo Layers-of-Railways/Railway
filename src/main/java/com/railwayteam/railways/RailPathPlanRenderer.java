@@ -23,8 +23,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.awt.*;
+
 @Mod.EventBusSubscriber
 public class RailPathPlanRenderer {
+
+  private static final float X0 = 0.5f;
+  private static final float Y0 = 0.5f;
+  private static final float Z0 = 0.5f;
+  private static final Color   VALID = Color.GREEN;
+  private static final Color INVALID = Color.RED;
 
   @SubscribeEvent
   public static void onDrawBlockHighlightEvent(DrawHighlightEvent.HighlightBlock event) {
@@ -51,13 +59,11 @@ public class RailPathPlanRenderer {
       Vec3i pos2 = new Vec3i (first.getX(), first.getY(), first.getZ());
 
       //vs.forEachBox((x0, y0, z0, x1, y1, z1) -> {
-      float x0 = 0.5f;
-      float y0 = 0.5f;
-      float z0 = 0.5f;
-        vb.vertex(m4f, (float) (x0 + pos1.getX() - eyeX), (float) (y0 + pos1.getY() - eyeY), (float) (z0 + pos1.getZ() - eyeZ))
-        .color(0f, 1f, 0f, 1f).endVertex();
-        vb.vertex(m4f, (float) (x0 + pos2.getX() - eyeX), (float) (y0 + pos2.getY() - eyeY), (float) (z0 + pos2.getZ() - eyeZ))
-        .color(0f, 1f, 0f, 1f).endVertex();
+        Color line = (WayPointToolItem.isValid(pos1, pos2)) ? VALID : INVALID;
+        vb.vertex(m4f, (float) (X0 + pos1.getX() - eyeX), (float) (Y0 + pos1.getY() - eyeY), (float) (Z0 + pos1.getZ() - eyeZ))
+        .color(line.getRed()/255f, line.getGreen()/255f, line.getBlue()/255f, 1f).endVertex();
+        vb.vertex(m4f, (float) (X0 + pos2.getX() - eyeX), (float) (Y0 + pos2.getY() - eyeY), (float) (Z0 + pos2.getZ() - eyeZ))
+        .color(line.getRed()/255f, line.getGreen()/255f, line.getBlue()/255f, 1f).endVertex();
       //});
     }
     else {
