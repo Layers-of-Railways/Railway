@@ -71,7 +71,7 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
           }
         });
       }
-      return ActionResult.success(player.getHeldItem(hand));
+      return ActionResult.resultSuccess(player.getHeldItem(hand));
     }
     return super.onItemRightClick(world, player, hand);
   } // */
@@ -107,13 +107,13 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
       for (StationLocation loc : stationList) {
         if (loc.isAt(context.getPos())) {
           found = true;
-          context.getPlayer().sendMessage(MSG_ADD_EXISTS);
+          context.getPlayer().sendStatusMessage(MSG_ADD_EXISTS, false);
           break;
         }
       }
       if (!found) {
         stationList.add(new StationLocation(context.getPos()));
-        context.getPlayer().sendMessage(MSG_ADD_SUCCESS);
+        context.getPlayer().sendStatusMessage(MSG_ADD_SUCCESS, false);
       }
       return ActionResultType.CONSUME;
     }

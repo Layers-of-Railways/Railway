@@ -35,15 +35,15 @@ public class RailwaysEventHandler {
     if (player.isSneaking()) {
       // just check it, don't assign
       if (eis.getSide().isClient()) {
-        player.sendMessage(new StringTextComponent("stations:"));
+        player.sendStatusMessage(new StringTextComponent("stations:"), false);
         Iterator<String> iter = list.iterate();
-        while (iter.hasNext()) player.sendMessage(new StringTextComponent("  " + iter.next()));
+        while (iter.hasNext()) player.sendStatusMessage(new StringTextComponent("  " + iter.next()), false);
       }
     } else {
       // assign to it
-      String candidate = player.getDisplayName().getFormattedText();
+      String candidate = player.getDisplayName().getString(); // TODO: dont know if getFormattedText and getString are the same
       if (list.contains(candidate)) {
-        if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("station already assigned"));
+        if (eis.getSide().isClient()) player.sendStatusMessage(new StringTextComponent("station already assigned"), false);
         return;
       }
       list.add(candidate);
@@ -51,7 +51,7 @@ public class RailwaysEventHandler {
         RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with (()->target), new CustomPacketStationList(target.getEntityId(), list.copy()));
         Railways.LOGGER.debug("sent update packet for list: " + list.copy().get(0));
       }
-      if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("assigned station: " + candidate));
+      if (eis.getSide().isClient()) player.sendStatusMessage(new StringTextComponent("assigned station: " + candidate), false);
     }
     eis.setCanceled(true);
     eis.setCancellationResult(ActionResultType.SUCCESS); // stop further events

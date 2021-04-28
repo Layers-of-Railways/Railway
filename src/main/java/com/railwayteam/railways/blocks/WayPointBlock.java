@@ -31,11 +31,12 @@ public class WayPointBlock extends Block {
 		return VoxelShapes.empty();
 	}
 	
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
-	}
-	
+//	@Override
+//	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+//		return false;
+//	}
+	// moved to block properties
+
 	@Nonnull
     @Override
     public BlockRenderType getRenderType(@Nonnull BlockState p_149645_1_) {

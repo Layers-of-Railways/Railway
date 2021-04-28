@@ -1,12 +1,15 @@
 package com.railwayteam.railways;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,24 +26,46 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
     this.ySize = height;
   }
 
+//  @Override
+//  public void render (int mouseX, int mouseY, float partialTicks) {
+//    renderBackground();
+//    renderWindow (mouseX, mouseY, partialTicks);
+//
+//    for (Widget w : widgets) {
+//      w.render(mouseX, mouseY, partialTicks);
+//    }
+//    super.render(mouseX, mouseY, partialTicks);
+//
+//    RenderSystem.enableAlphaTest();
+//    RenderSystem.enableBlend();
+//    RenderSystem.disableRescaleNormal();
+//    RenderSystem.disableLighting();
+//    RenderSystem.disableDepthTest();
+//    renderWindowForeground (mouseX, mouseY, partialTicks);
+//    for (Widget w : widgets) {
+//      w.renderToolTip(mouseX, mouseY);
+//    }
+//  }
+
+
   @Override
-  public void render (int mouseX, int mouseY, float partialTicks) {
-    renderBackground();
-    renderWindow (mouseX, mouseY, partialTicks);
+  public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    renderBackground(matrixStack);
+    renderWindow (matrixStack, mouseX, mouseY, partialTicks);
 
     for (Widget w : widgets) {
-      w.render(mouseX, mouseY, partialTicks);
+      w.render(matrixStack, mouseX, mouseY, partialTicks);
     }
-    super.render(mouseX, mouseY, partialTicks);
+    super.render(matrixStack, mouseX, mouseY, partialTicks);
 
     RenderSystem.enableAlphaTest();
     RenderSystem.enableBlend();
     RenderSystem.disableRescaleNormal();
     RenderSystem.disableLighting();
     RenderSystem.disableDepthTest();
-    renderWindowForeground (mouseX, mouseY, partialTicks);
+    renderWindowForeground (matrixStack, mouseX, mouseY, partialTicks);
     for (Widget w : widgets) {
-      w.renderToolTip(mouseX, mouseY);
+      w.renderToolTip(matrixStack, mouseX, mouseY);
     }
   }
 
@@ -106,14 +131,19 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
     return false;
   }
 
-  protected abstract void renderWindow (int mouseX, int mouseY, float PartialTicks);
+  protected abstract void renderWindow (MatrixStack ms, int mouseX, int mouseY, float PartialTicks);
 
-  @Override
-  protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
-  }
+//  @Override
+//  protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
+//  }
 
-  protected void renderWindowForeground (int mouseX, int mouseY, float partialTicks) {
-    renderHoveredToolTip(mouseX, mouseY);
+
+//  @Override
+//  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+//  }
+
+  protected void renderWindowForeground (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    renderHoveredTooltip(matrixStack, mouseX, mouseY);
     for (Widget w : widgets) {
       if (!w.isHovered()) {
         continue;

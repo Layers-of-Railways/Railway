@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.blocks.WayPointBlock;
 import com.railwayteam.railways.items.WayPointToolItem;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,7 +41,8 @@ public class RailPathPlanRenderer {
     ItemStack flag = viewer.getHeldItem(Hand.MAIN_HAND);
 
     MatrixStack ms       = event.getMatrix();
-    Matrix4f m4f         = ms.peek().getModel(); //ms.getLast().getMatrix();
+    Matrix4f m4f         = ms.getLast().getMatrix(); //ms.peek().getModel(); //ms.getLast().getMatrix();
+    // TODO: what the hell does peek do? i changed it for whatever is in that comment but i have no idea if it will work
     VoxelShape vs        = world.getBlockState(eventPos).getShape(world, eventPos);
     ActiveRenderInfo ari = event.getInfo();
     IVertexBuilder vb    = event.getBuffers().getBuffer(RenderType.getLines());
@@ -49,26 +50,27 @@ public class RailPathPlanRenderer {
     double eyeY = ari.getProjectedView().getY();
     double eyeZ = ari.getProjectedView().getZ();
 
-    Vec3i pos1 = new Vec3i(eventPos.getX(),eventPos.getY(),eventPos.getZ());
+    Vector3d pos1 = new Vector3d(eventPos.getX(),eventPos.getY(),eventPos.getZ());
     if (flag.hasTag() && flag.getTag().contains(WayPointToolItem.selectTag)) {
       BlockPos first = NBTUtil.readBlockPos(flag.getTag().getCompound(WayPointToolItem.selectTag));
-      Vec3i pos2 = new Vec3i (first.getX(), first.getY(), first.getZ());
+      Vector3d pos2 = new Vector3d (first.getX(), first.getY(), first.getZ());
 
       //vs.forEachBox((x0, y0, z0, x1, y1, z1) -> {
       float x0 = 0.5f;
       float y0 = 0.5f;
       float z0 = 0.5f;
-        vb.vertex(m4f, (float) (x0 + pos1.getX() - eyeX), (float) (y0 + pos1.getY() - eyeY), (float) (z0 + pos1.getZ() - eyeZ))
+      // TODO: no idea if vb.vertex and vb.pos are the same thing
+        vb.pos(m4f, (float) (x0 + pos1.getX() - eyeX), (float) (y0 + pos1.getY() - eyeY), (float) (z0 + pos1.getZ() - eyeZ))
         .color(0f, 1f, 0f, 1f).endVertex();
-        vb.vertex(m4f, (float) (x0 + pos2.getX() - eyeX), (float) (y0 + pos2.getY() - eyeY), (float) (z0 + pos2.getZ() - eyeZ))
+        vb.pos(m4f, (float) (x0 + pos2.getX() - eyeX), (float) (y0 + pos2.getY() - eyeY), (float) (z0 + pos2.getZ() - eyeZ))
         .color(0f, 1f, 0f, 1f).endVertex();
       //});
     }
     else {
       vs.forEachEdge((x0, y0, z0, x1, y1, z1) -> {
-        vb.vertex(m4f, (float) (x0 + eventPos.getX() - eyeX), (float) (y0 + eventPos.getY() - eyeY), (float) (z0 + eventPos.getZ() - eyeZ))
+        vb.pos(m4f, (float) (x0 + eventPos.getX() - eyeX), (float) (y0 + eventPos.getY() - eyeY), (float) (z0 + eventPos.getZ() - eyeZ))
         .color(0f, 1f, 0f, 0.5f).endVertex();
-        vb.vertex(m4f, (float) (x1 + eventPos.getX() - eyeX), (float) (y1 + eventPos.getY() - eyeY), (float) (z1 + eventPos.getZ() - eyeZ))
+        vb.pos(m4f, (float) (x1 + eventPos.getX() - eyeX), (float) (y1 + eventPos.getY() - eyeY), (float) (z1 + eventPos.getZ() - eyeZ))
         .color(0f, 1f, 0f, 0.5f).endVertex();
       });
     }

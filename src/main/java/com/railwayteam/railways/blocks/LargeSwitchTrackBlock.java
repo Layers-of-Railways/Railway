@@ -8,7 +8,7 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 
 import javax.annotation.Nullable;
@@ -49,14 +49,14 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   @Override
   protected BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos) {
     BlockPos other = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-    ArrayList<Vec3i> directions = new ArrayList<>();
+    ArrayList<Vector3d> directions = new ArrayList<>();
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
         if (other.add(x,0,z).equals(pos)) continue;
         //  Railways.LOGGER.debug("  checking at " + other.add(x,0,z));
         if (worldIn.getBlockState(other.add(x,0,z)).getBlock() instanceof AbstractLargeTrackBlock) {
           //  Railways.LOGGER.debug("  found at " + x + "," + z);
-          directions.add(new Vec3i(x,0,z));
+          directions.add(new Vector3d(x,0,z));
         }
       }
     }
@@ -76,7 +76,7 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
       default:
         boolean found = false;
         //  Railways.LOGGER.debug("Found " + directions.size() + " possible connections");
-        for (Vec3i dir : directions) {
+        for (Vector3d dir : directions) {
           //  Railways.LOGGER.debug("checking " + dir + " vs " + Util.opposite(dir));
           if (directions.contains(Util.opposite(dir))) {
             state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(dir));

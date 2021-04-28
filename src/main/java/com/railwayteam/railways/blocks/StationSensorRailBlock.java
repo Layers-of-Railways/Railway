@@ -34,7 +34,7 @@ public class StationSensorRailBlock extends DetectorRailBlock {
   @Override
   public void onBlockAdded(BlockState blockstate, World world, BlockPos pos, BlockState oldstate, boolean p_220082_5_) {
     super.onBlockAdded(blockstate, world, pos, oldstate, p_220082_5_);
-    ((StationSensorRailTileEntity)world.getTileEntity(pos)).setStation(pos.toShortString());
+    ((StationSensorRailTileEntity)world.getTileEntity(pos)).setStation(pos.toString());
   }
 
   @Override

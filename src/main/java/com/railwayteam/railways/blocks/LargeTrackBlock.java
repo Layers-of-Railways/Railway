@@ -7,7 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import java.util.ArrayList;
 
@@ -48,17 +48,17 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   }
 
   protected BlockState checkForConnections (BlockState state, IWorld world, BlockPos pos) {
-    ArrayList<Vec3i> priority = new ArrayList<>();
-    ArrayList<Vec3i> found = new ArrayList<>();
+    ArrayList<Vector3d> priority = new ArrayList<>();
+    ArrayList<Vector3d> found = new ArrayList<>();
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
         if (pos.add(x,0,z).equals(pos)) continue; // skip the center point
         BlockState candidate = world.getBlockState(pos.add(x,0,z));
         if (candidate.getBlock() instanceof AbstractLargeTrackBlock) {
-          Vec3i offset = new Vec3i(x,0,z);
+          Vector3d offset = new Vector3d(x,0,z);
           if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
             candidate, world, pos.add(x,0,z),
-            Util.Vector.getClosest(new Vec3i(x,0,z)).getOpposite())
+            Util.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
           ) { // front of the line if it connects
             priority.add(offset);
           }
@@ -82,8 +82,8 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         } // else fall through
       default: // too many, arbitrate.
         arbitration:
-        for (Vec3i b : found) {
-          for (Vec3i a : found) {
+        for (Vector3d b : found) {
+          for (Vector3d a : found) {
             if (LargeTrackSide.isValid(a,b)) {
               state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(a,b));
               break arbitration;
@@ -92,7 +92,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         }
     }
   //  Railways.LOGGER.debug("offsets found:");
-    for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
+    for (Vector3d v : found) Railways.LOGGER.debug("  " + v.toString());
   //  Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
     return state;
   }
