@@ -130,7 +130,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.4' // dont know why minecraft_version isnt used here, might add it later
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.37' // dont know why minecraft_version isnt used here, might add it later
 	
   	// implementation fg.deobf("mezz.jei:jei-1.15.2-6.0.3.15")
 
