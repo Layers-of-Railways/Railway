@@ -8,7 +8,7 @@ displayName="Railways"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/railways"
 credits="Thanks to someone i guess"
 authors="Grimmauld, Spirolateral, Pannoniae, CaveJohnson376, Shura, D'Arcy Olla, YeetusDiabetes"
-description='''This mod Is WIP and something to do with trains'''
+description='''This mod is WIP and something to do with trains'''
 
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
