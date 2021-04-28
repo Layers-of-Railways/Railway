@@ -35,14 +35,14 @@ repositories {
     }
 }
 
-version = '1.15.2-0.1.0'
+version = '1.16.4-0.1.0'
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'railways'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200301-mixed-1.15.2'
+    mappings channel: 'snapshot', version: '20210309-1.16.4'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -130,13 +130,15 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.4' // dont know why minecraft_version isnt used here, might add it later
 	
   	// implementation fg.deobf("mezz.jei:jei-1.15.2-6.0.3.15")
 
-    implementation fg.deobf("curse.maven:create-328085:3261454")
+    implementation fg.deobf("curse.maven:create-328085:3278516")
+    // https://www.curseforge.com/minecraft/mc-mods/create/files/3278516
+    // Create 0.3.1c
 	
-	def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+	def registrate = "com.tterrag.registrate:Registrate:MC1.16.2-${registrate_version}" // doesnt use minecraft_version because we are on 1.16.4 and registrate is for 1.16.2
     implementation fg.deobf(registrate)
     shade registrate
 }
