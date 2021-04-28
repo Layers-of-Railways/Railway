@@ -1,5 +1,6 @@
 package com.railwayteam.railways.blocks;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,21 +14,21 @@ public class StationSensorRailTileEntity extends TileEntity {
     super(typeIn);
   }
 
-  public void setStation (String value) {
+  public void setStation(String value) {
     station = value;
-    markDirty();
+    setChanged();
   }
-  public String getStation () { return station; }
+  public String getStation() { return station; }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
+  public CompoundNBT save(CompoundNBT compound) {
     compound.putString("station", station);
-    return super.write(compound);
+    return super.save(compound);
   }
 
   @Override
-  public void read(CompoundNBT compound) {
+  public void load(BlockState state, CompoundNBT compound) {
     station = compound.getString("station");
-    super.read(compound);
+    super.deserializeNBT(compound);
   }
 }

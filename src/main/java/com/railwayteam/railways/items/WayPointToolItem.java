@@ -13,11 +13,12 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-public class WayPointToolItem extends Item{
+public class WayPointToolItem extends Item {
 	public static final String name      = "waypoint_manager";
 	public static final String selectTag = "FirstPoint";
 
@@ -32,22 +33,22 @@ public class WayPointToolItem extends Item{
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
 		if (player != null) {
-			if (player.isSneaking()) {
-				context.getItem().setTag(null);
-				player.sendMessage(new StringTextComponent(MSG_RESET));
+			if (player.isShiftKeyDown()) {
+				context.getItemInHand().setTag(null);
+				player.displayClientMessage(new StringTextComponent(MSG_RESET), false);
 				return ActionResultType.SUCCESS;
 			}
-			World world   = context.getWorld();
-			BlockPos pos  = context.getPos();
+			World world   = context.getLevel();
+			BlockPos pos  = context.getClickedPos();
 			boolean valid = (world.getBlockState(pos).getBlock() instanceof WayPointBlock);
-			if (world.isRemote) {
+			if (world.isClientSide) {
 				return valid ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 			}
 			if (valid) {
-				CompoundNBT tag = context.getItem().getOrCreateTag();
+				CompoundNBT tag = context.getItemInHand().getOrCreateTag();
 				BlockPos first = null;
 				if (tag.contains(selectTag)) {
 					first = NBTUtil.readBlockPos(tag.getCompound(selectTag));
@@ -56,41 +57,41 @@ public class WayPointToolItem extends Item{
 				else {
 					tag.put(selectTag, NBTUtil.writeBlockPos(pos));
 				}
-				context.getItem().setTag(tag);
+				context.getItemInHand().setTag(tag);
 
 				if (first != null && !first.equals(pos)) {
 					// do connection check
-					Vec3i diff = pos.subtract(first);
+					Vector3i diff = pos.subtract(first);
 				//	player.sendMessage(new StringTextComponent(diff.toString()));
 					// straight line or 45* diagonal
 					if (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ())) {
 						float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
 					//	player.sendMessage(new StringTextComponent(MSG_VALID + String.format("%.2f.",slope)));
-						context.getItem().setTag(null);
+						context.getItemInHand().setTag(null);
 						// this is where we'd fire the event to build a track connection...
 						// TODO: fire track path connection event stuff
 						tryToPlaceTracks(player, first, pos);
 						return ActionResultType.SUCCESS;
 					}
 					else {
-						player.sendMessage(new StringTextComponent(MSG_INVALID));
+						player.displayClientMessage(new StringTextComponent(MSG_INVALID), false);
 						return ActionResultType.SUCCESS;
 					}
 				}
 			}
 		}
 		// else player is null
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 
 	private boolean tryToPlaceTracks (PlayerEntity player, BlockPos start, BlockPos end) {
-		if (player.world.isRemote || start.equals(end)) return false;
+		if (player.level.isClientSide || start.equals(end)) return false;
 
 		// let's figure out the direction to iterate
-		Vec3i delta = end.subtract(start);
+		Vector3i delta = end.subtract(start);
 
 		if (Math.abs(delta.getX()) + Math.abs(delta.getZ()) > MAX_TRACK_SEG_LEN) {
-			player.sendMessage(new StringTextComponent(MSG_TOOLONG));
+			player.displayClientMessage(new StringTextComponent(MSG_TOOLONG), false);
 			return false;
 		}
 		int stepX = delta.getX()==0 ? 0 : Math.abs(delta.getX())/delta.getX();
@@ -104,9 +105,9 @@ public class WayPointToolItem extends Item{
 		while (!step.equals(end)) {
 			// make sure we have tracks available
 			if ((stack == null || stack.isEmpty()) && !player.isCreative()) {
-				while (slot < player.inventory.getSizeInventory()) {
-					ItemStack check = player.inventory.getStackInSlot(slot);
-					if (ItemTags.getCollection().getOrCreate(ItemTags.RAILS.getId()).contains(check.getItem())) {
+				while (slot < player.inventory.getContainerSize()) {
+					ItemStack check = player.inventory.getItem(slot);
+					if (ItemTags.getAllTags().getTagOrEmpty(ItemTags.RAILS.getName()).contains(check.getItem())) {
 						stack = check;
 						break;
 					}
@@ -125,41 +126,41 @@ public class WayPointToolItem extends Item{
 			//     valid
 			boolean valid = false;
 
-			if (player.world.getBlockState(step).getBlock() instanceof WayPointBlock) {
+			if (player.level.getBlockState(step).getBlock() instanceof WayPointBlock) {
 				valid = true;
 				if (!player.isCreative()) {
-					player.world.addEntity(
-					  new ItemEntity(player.world, step.getX(), step.getY(), step.getZ(),
+					player.level.addFreshEntity(
+					  new ItemEntity(player.level, step.getX(), step.getY(), step.getZ(),
 					    new ItemStack(ModSetup.R_BLOCK_WAYPOINT.get(), 1))
 					);
 				}
 			}
-			else if (player.world.isAirBlock(step)) {
-				if (player.world.isAirBlock(step.add(0,-1,0))) {
-					if (!player.world.isAirBlock(step.add(0,-2,0))) {
+			else if (player.level.isEmptyBlock(step)) {
+				if (player.level.isEmptyBlock(step.offset(0,-1,0))) {
+					if (!player.level.isEmptyBlock(step.offset(0,-2,0))) {
 						valid = true;
-						step = step.add(0,-1,0);
+						step = step.offset(0,-1,0);
 					}
 				}
 				else valid = true;
 			}
-			else if (player.world.isAirBlock(step.add(0,1,0))) {
+			else if (player.level.isEmptyBlock(step.offset(0,1,0))) {
 				valid = true;
-				step = step.add(0,1,0);
+				step = step.offset(0,1,0);
 			}
 			// validation done, get a rail from the player's inventory
 			if (valid) {
 				// we got a rail, let's place it
 				if (player.isCreative() || stack.getCount() > 0) {
-					player.world.setBlockState(step, Blocks.RAIL.getDefaultState(), Constants.BlockFlags.BLOCK_UPDATE);
+					player.level.setBlock(step, Blocks.RAIL.defaultBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
 					if (!player.isCreative()) stack.setCount(stack.getCount() - 1);
 				}
 			}
 			// escape if we can't get any more
-			if (!valid || (slot == player.inventory.getSizeInventory() && stack.isEmpty())) break;
+			if (!valid || (slot == player.inventory.getContainerSize() && stack.isEmpty())) break;
 
 			// otherwise step to the next iteration
-			step = step.add(zig ? stepX : 0, 0, zig ? 0 : stepZ);
+			step = step.offset(zig ? stepX : 0, 0, zig ? 0 : stepZ);
 			if (Math.abs(stepX) == Math.abs(stepZ)) zig = !zig;
 		}
 		return step.equals(end); // false if we failed early for whatever reason

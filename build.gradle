@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net/' }
         maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
@@ -35,19 +35,22 @@ repositories {
     }
 }
 
-version = '1.15.2-0.1.0'
+version = "${minecraft_version}-0.1.0"
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'railways'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200301-mixed-1.15.2'
+    //mappings channel: 'snapshot', version: "${mappings_version}"
+    mappings channel: 'official', version: "1.16.5"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
             workingDirectory project.file('run')
             jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -61,6 +64,8 @@ minecraft {
         server {
             workingDirectory project.file('run')
             jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -74,6 +79,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
             jvmArgs "-Dmixin.env.disableRefMap=true"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
@@ -130,13 +137,13 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
+    minecraft "net.minecraftforge:forge:${forge_version}"
 	
   	// implementation fg.deobf("mezz.jei:jei-1.15.2-6.0.3.15")
 
-    implementation fg.deobf("curse.maven:create-328085:3261454")
+    implementation fg.deobf("curse.maven:create-328085:3278516")
 	
-	def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+	def registrate = "com.tterrag.registrate:Registrate:${registrate_version}"
     implementation fg.deobf(registrate)
     shade registrate
 }

@@ -1,6 +1,6 @@
 package com.railwayteam.railways;
 
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3i;
 
 public class Util {
   public enum Vector {
@@ -13,15 +13,15 @@ public class Util {
     SOUTHWEST(-1, 0,  1, "sw"),
     SOUTHEAST( 1, 0,  1, "se");
 
-    public Vec3i value;
+    public Vector3i value;
     public String name;
 
     private Vector(int x, int y, int z, String name) {
-      value = new Vec3i(x, y, z);
+      value = new Vector3i(x, y, z);
       this.name = name;
     }
 
-    public static Vector getClosest (Vec3i candidate) {
+    public static Vector getClosest (Vector3i candidate) {
       for (Vector v : values()) {
         if (Integer.signum(candidate.getX()) != v.value.getX()) continue;
         if (Integer.signum(candidate.getZ()) != v.value.getZ()) continue;
@@ -49,7 +49,7 @@ public class Util {
     }
   }
 
-  public static Vec3i opposite (Vec3i in) {
-    return new Vec3i (in.getX()*-1, in.getY()*-1, in.getZ()*-1);
+  public static Vector3i opposite (Vector3i in) {
+    return new Vector3i (in.getX()*-1, in.getY()*-1, in.getZ()*-1);
   }
 }

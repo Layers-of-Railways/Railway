@@ -1,9 +1,11 @@
 package com.railwayteam.railways;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -22,18 +24,18 @@ public class TextListWidget extends Widget {
   private boolean drawDel = true;
 
   public TextListWidget(int xIn, int yIn, int widthIn, int heightIn) {
-    super(xIn, yIn, widthIn, heightIn, "text_list");
+    super(xIn, yIn, widthIn, heightIn, new StringTextComponent("text_list"));
     active     = new LinkedHashMap<Button, TextFieldWidget>();
     graveyard  = new LinkedHashMap<Button, TextFieldWidget>();
-    add        = new Button(xIn, yIn, buttonWidth, fieldHeight, "Add", button->addItem(""));
+    add        = new Button(xIn, yIn, buttonWidth, fieldHeight, new StringTextComponent("Add"), button->addItem(""));
   }
 
   public void addItem (String startingText) {
-    Button removeButton = new Button (this.x, this.y + active.size()*spacing, buttonWidth, fieldHeight, "Remove", this::removeItem);
+    Button removeButton = new Button (this.x, this.y + active.size()*spacing, buttonWidth, fieldHeight, new StringTextComponent("Remove"), this::removeItem);
     TextFieldWidget textEntry = new TextFieldWidget(
-      Minecraft.getInstance().fontRenderer, this.x+buttonWidth, this.y + active.size()*spacing, textWidth, fieldHeight, "field"
+      Minecraft.getInstance().font, this.x+buttonWidth, this.y + active.size()*spacing, textWidth, fieldHeight, new StringTextComponent("field")
     );
-    textEntry.setText(startingText);
+    textEntry.setValue(startingText);
     active.put(removeButton, textEntry);
     add.y += spacing;
   }
@@ -75,23 +77,23 @@ public class TextListWidget extends Widget {
     deferredRemoval();
     ArrayList<String> ret = new ArrayList<String>();
     for (TextFieldWidget entry : active.values()) {
-      ret.add(entry.getText());
+      ret.add(entry.getValue());
     }
     return ret;
   }
 
   @Override
-  public void render (int mouseX, int mouseY, float partialTicks) {
+  public void render (MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
     int yFixed = this.y;
     for (Button b : active.keySet()) {
       b.y = yFixed;
       active.get(b).y = yFixed;
-      if (drawDel) b.render(mouseX, mouseY, partialTicks);
-      active.get(b).render(mouseX, mouseY, partialTicks);
+      if (drawDel) b.render(stack, mouseX, mouseY, partialTicks);
+      active.get(b).render(stack, mouseX, mouseY, partialTicks);
       yFixed += spacing;
     }
     add.y = yFixed;
-    if (drawAdd) add.render(mouseX, mouseY, partialTicks);
+    if (drawAdd) add.render(stack, mouseX, mouseY, partialTicks);
     deferredRemoval();
   }
 

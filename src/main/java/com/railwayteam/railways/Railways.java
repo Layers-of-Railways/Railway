@@ -72,10 +72,10 @@ public class Railways {
 	}
 
   public static void clientInit(FMLClientSetupEvent event) {
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_RAIL.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_SWITCH.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.cutoutMipped());
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_RAIL.get(), RenderType.cutoutMipped());
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_SWITCH.get(), RenderType.cutoutMipped());
+    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.translucent());
     setup.registerRenderers();
     Containers.registerScreenFactories();
   }

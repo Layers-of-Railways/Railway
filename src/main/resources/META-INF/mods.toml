@@ -1,14 +1,15 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[36,)"
+license="MIT"
 issueTrackerURL="https://github.com/Spirolateral/Railway/issues"
 [[mods]]
 modId="railways"
 version="0.1.0"
 displayName="Railways"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/railways"
-credits="Thanks to someone i guess"
+credits="Thanks to Evelyn for being nice and cute. <3"
 authors="Grimmauld, Spirolateral, Pannoniae, CaveJohnson376, Shura, D'Arcy Olla, YeetusDiabetes"
-description='''This mod is WIP and something to do with trains'''
+description='''This mod is WIP and something to do with trains and the conductor's gender'''
 
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
@@ -19,6 +20,6 @@ description='''This mod is WIP and something to do with trains'''
 [[dependencies.railways]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.5]"
     ordering="NONE"
     side="BOTH"

@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.railwayteam.railways.items.StationLocation;
 import com.railwayteam.railways.packets.CustomPacketUpdateOrders;
@@ -8,6 +9,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.Iterator;
 
@@ -28,15 +30,15 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   }
 
   @Override
-  protected void init () {
+  protected void init() {
     super.init();
     if (Config.HIBYE.get()) {
-      widgets.add(new Button(buttonX, buttonY, buttonWidth, buttonHeight, "Press me!", button -> {
+      widgets.add(new Button(buttonX, buttonY, buttonWidth, buttonHeight, new StringTextComponent("Press me!"), button -> {
         this.pressed = !pressed;
-        button.setMessage("Press again!");
+        button.setMessage(new StringTextComponent("Press again!"));
       }));
     }
-    Iterator<StationLocation> list = container.stationList.iterator();
+    Iterator<StationLocation> list = menu.stationList.iterator();
     listWidget = new TextListWidget(buttonX, buttonY + buttonHeight*2, 200, 200);
     listWidget.setAddable(false);
     while (list.hasNext()) listWidget.addItem(list.next().name);
@@ -44,19 +46,19 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   }
 
   @Override
-  protected void renderWindow (int mouseX, int mouseY, float partialTicks) {
-    drawString (Minecraft.getInstance().fontRenderer, "Test GUI: " + container.target, 10,10, 0xffffff);
+  protected void renderWindow(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+    drawString(stack, Minecraft.getInstance().font, "Test GUI: " + menu.target, 10,10, 0xffffff);
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
     if (Config.HIBYE.get()) {
       RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-      minecraft.getTextureManager().bindTexture(pressed ? FG : BG);
+      minecraft.getTextureManager().bind(pressed ? FG : BG);
       RenderSystem.scaled(0.7d, 0.7d, 1d);
       int relX = (width - getXSize()) / 2 + 200;
       int relY = (height - getYSize()) / 2;
-      blit(relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
+      blit(stack, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
     }
   }
 
@@ -78,7 +80,7 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   @Override
   public void onClose() {
     super.onClose();
-    RailwaysPacketHandler.channel.sendToServer(new CustomPacketUpdateOrders(container.target, listWidget.getActiveValues()));
+    RailwaysPacketHandler.channel.sendToServer(new CustomPacketUpdateOrders(menu.target, listWidget.getActiveValues()));
   //  playerInventory.player.sendMessage(new StringTextComponent("updated list with " + container.stationList.size() + " values"));
   }
 }

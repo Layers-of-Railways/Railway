@@ -8,11 +8,13 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IWorld;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+
+import net.minecraft.block.AbstractBlock.Properties;
 
 public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   public static final String name = "large_switch";
@@ -21,9 +23,9 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
 
   public LargeSwitchTrackBlock(Properties properties) {
     super(properties);
-    this.setDefaultState(this.stateContainer.getBaseState()
-      .with(SWITCH_SIDE, LargeSwitchSide.NORTH_SOUTHEAST)
-      .with(BlockStateProperties.ENABLED, false) // tracking whether it's turning or straight
+    this.registerDefaultState(this.stateDefinition.any()
+      .setValue(SWITCH_SIDE, LargeSwitchSide.NORTH_SOUTHEAST)
+      .setValue(BlockStateProperties.ENABLED, false) // tracking whether it's turning or straight
     );
   }
 
@@ -31,8 +33,8 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
     return super.getStateForPlacement(context)
-      .with(SWITCH_SIDE, LargeSwitchSide.NORTH_SOUTHEAST)
-      .with(BlockStateProperties.ENABLED, false);
+      .setValue(SWITCH_SIDE, LargeSwitchSide.NORTH_SOUTHEAST)
+      .setValue(BlockStateProperties.ENABLED, false);
   }
 
   @Override
@@ -43,32 +45,32 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
 
   @Override
   protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
-    return state.get(SWITCH_SIDE).connectsTo(direction.value);
+    return state.getValue(SWITCH_SIDE).connectsTo(direction.value);
   }
 
   @Override
   protected BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos) {
     BlockPos other = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-    ArrayList<Vec3i> directions = new ArrayList<>();
+    ArrayList<Vector3i> directions = new ArrayList<>();
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
-        if (other.add(x,0,z).equals(pos)) continue;
+        if (other.offset(x,0,z).equals(pos)) continue;
         //  Railways.LOGGER.debug("  checking at " + other.add(x,0,z));
-        if (worldIn.getBlockState(other.add(x,0,z)).getBlock() instanceof AbstractLargeTrackBlock) {
+        if (worldIn.getBlockState(other.offset(x,0,z)).getBlock() instanceof AbstractLargeTrackBlock) {
           //  Railways.LOGGER.debug("  found at " + x + "," + z);
-          directions.add(new Vec3i(x,0,z));
+          directions.add(new Vector3i(x,0,z));
         }
       }
     }
     switch (directions.size()) {
       case 3:
-        state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0), directions.get(1), directions.get(2)));
+        state = state.setValue(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0), directions.get(1), directions.get(2)));
         break;
       case 2:
-        state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0), directions.get(1)));
+        state = state.setValue(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0), directions.get(1)));
         break;
       case 1:
-        state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0)));
+        state = state.setValue(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0)));
         break;
       case 0:
         // state = state; // use regular state
@@ -76,21 +78,21 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
       default:
         boolean found = false;
         //  Railways.LOGGER.debug("Found " + directions.size() + " possible connections");
-        for (Vec3i dir : directions) {
+        for (Vector3i dir : directions) {
           //  Railways.LOGGER.debug("checking " + dir + " vs " + Util.opposite(dir));
           if (directions.contains(Util.opposite(dir))) {
-            state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(dir));
+            state = state.setValue(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(dir));
             found = true;
             //  Railways.LOGGER.debug("  found a straight connection");
           }
         }
         // else
-        if (!found) state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0),directions.get(1)));
+        if (!found) state = state.setValue(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(directions.get(0),directions.get(1)));
     }
     return state;
   }
 
   public boolean isTurning (BlockState state) {
-    return state.get(BlockStateProperties.ENABLED);
+    return state.getValue(BlockStateProperties.ENABLED);
   }
 }

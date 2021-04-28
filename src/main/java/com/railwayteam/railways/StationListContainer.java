@@ -23,13 +23,13 @@ public class StationListContainer extends Container {
 
   public StationListContainer(ContainerType<?> type, int id, PlayerInventory inv, PacketBuffer extraData) {
     this(type, id, inv);
-    target = extraData.readString();
+    target = extraData.readUtf();
     if (target.equals("minecart")) {
       Railways.LOGGER.debug("sent to minecart");
     }
     int len = extraData.readInt();
     for (int index=0; index<len; index++) {
-      stationList.add( new StationLocation(extraData.readString()) );
+      stationList.add( new StationLocation(extraData.readUtf()) );
     }
   }
 
@@ -55,27 +55,27 @@ public class StationListContainer extends Container {
   }
 
   @Override
-  public boolean canMergeSlot (ItemStack stack, Slot slotIn) {
+  public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
     return false;
   }
 
   @Override
-  public boolean canDragIntoSlot (Slot slotIn) {
+  public boolean canDragTo(Slot slotIn) {
     return false;
   }
 
   @Override
-  public boolean canInteractWith (PlayerEntity playerIn) {
+  public boolean stillValid(PlayerEntity playerIn) {
     return true;
   }
 
   @Override
-  public ItemStack slotClick (int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public ItemStack transferStackInSlot (PlayerEntity playerIn, int index) {
+  public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
     return ItemStack.EMPTY;
   }
 }

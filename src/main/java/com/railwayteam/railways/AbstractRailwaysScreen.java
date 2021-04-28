@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
@@ -19,28 +20,28 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
   }
 
   protected void setWindowSize (int width, int height) {
-    this.xSize = width;
-    this.ySize = height;
+    this.imageWidth = width;
+    this.imageHeight = height;
   }
 
   @Override
-  public void render (int mouseX, int mouseY, float partialTicks) {
-    renderBackground();
-    renderWindow (mouseX, mouseY, partialTicks);
+  public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+    renderBackground(stack);
+    renderWindow(stack, mouseX, mouseY, partialTicks);
 
     for (Widget w : widgets) {
-      w.render(mouseX, mouseY, partialTicks);
+      w.render(stack, mouseX, mouseY, partialTicks);
     }
-    super.render(mouseX, mouseY, partialTicks);
+    super.render(stack, mouseX, mouseY, partialTicks);
 
     RenderSystem.enableAlphaTest();
     RenderSystem.enableBlend();
     RenderSystem.disableRescaleNormal();
     RenderSystem.disableLighting();
     RenderSystem.disableDepthTest();
-    renderWindowForeground (mouseX, mouseY, partialTicks);
+    renderWindowForeground(stack, mouseX, mouseY, partialTicks);
     for (Widget w : widgets) {
-      w.renderToolTip(mouseX, mouseY);
+      w.renderToolTip(stack, mouseX, mouseY);
     }
   }
 
@@ -106,14 +107,13 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
     return false;
   }
 
-  protected abstract void renderWindow (int mouseX, int mouseY, float PartialTicks);
+  protected abstract void renderWindow(MatrixStack stack, int mouseX, int mouseY, float PartialTicks);
 
-  @Override
-  protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
   }
 
-  protected void renderWindowForeground (int mouseX, int mouseY, float partialTicks) {
-    renderHoveredToolTip(mouseX, mouseY);
+  protected void renderWindowForeground(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+    renderTooltip(stack, mouseX, mouseY);
     for (Widget w : widgets) {
       if (!w.isHovered()) {
         continue;

@@ -31,25 +31,25 @@ public class CustomPacketStationList extends RailwaysPacketHandler.CustomPacketB
     int len = buffer.readInt();
     if (stations == null) stations = new ArrayList<String>();
     for (int i=0; i<len; i++) {
-      this.stations.add(buffer.readString());
+      this.stations.add(buffer.readUtf());
     }
   }
 
   @Override
-  public void write (PacketBuffer buf) {
+  public void write(PacketBuffer buf) {
     buf.writeInt(id);
     buf.writeInt(stations.size());
     for (String station : stations) {
-      buf.writeString(station);
+      buf.writeUtf(station);
     }
   }
 
   @Override
-  public void handle (Supplier<NetworkEvent.Context> context) {
+  public void handle(Supplier<NetworkEvent.Context> context) {
     NetworkEvent.Context ctx = context.get();
     if (Minecraft.getInstance().player == null) LogManager.getLogger(Railways.MODID).debug("null sender");
     ctx.enqueueWork( ()-> {
-      Entity target = Minecraft.getInstance().player.world.getEntityByID(id);
+      Entity target = Minecraft.getInstance().player.level.getEntity(id);
       if (target instanceof MinecartEntity) {
         target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {
           for (String station : stations) {
