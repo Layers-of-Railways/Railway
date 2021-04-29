@@ -1,3 +1,6 @@
 {
-  "parent": "railways:block/wide_gauge/large_track_n_s"
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "railways:item/large_track"
+    }
 }
