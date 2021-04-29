@@ -1,6 +1,8 @@
 {
-  "block.railways.large_switch": "Wide Gauge Switch",
-  "block.railways.large_track": "Wide Gauge Track",
+  "block.railways.large_switch": "Andesite Switch",
+  "block.railways.large_switch_wooden": "Wooden Switch",
+  "block.railways.large_track": "Andesite track",
+  "block.railways.large_track_wooden": "Wooden Track",
   "block.railways.station_sensor": "Station Sensor",
   "block.railways.waypoint": "Waypoint",
   "entity.railways.steadycart": "Steady Minecart",

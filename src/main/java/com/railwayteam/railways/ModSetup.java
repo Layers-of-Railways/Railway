@@ -38,8 +38,12 @@ public class ModSetup {
   // we cache Registry entries in case other mod components need a convenient reference (including Registrate itself)
   public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
   public static BlockEntry<StationSensorRailBlock> R_BLOCK_STATION_SENSOR;
+
   public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL;
   public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH;
+
+  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL_WOODEN;
+  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH_WOODEN;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -72,7 +76,7 @@ public class ModSetup {
         return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
       }))
       .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_s"))).build()
-      .lang("Wide Gauge Track")
+      .lang("Andesite track")
       .register();
 
     R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
@@ -81,8 +85,30 @@ public class ModSetup {
         return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
       }))
       .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_se"))).build()
-      .lang("Wide Gauge Switch")
+      .lang("Andesite Switch")
       .register();
+
+    // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
+
+    R_BLOCK_LARGE_RAIL_WOODEN = reg.block(LargeTrackBlock.name + "_wooden", LargeTrackBlock::new)
+            .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
+            .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+                return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
+            }))
+            .item().model((ctx,prov) -> {
+           prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_s"));
+            }).build()
+            .lang("Wooden Track")
+            .register();
+
+    R_BLOCK_LARGE_SWITCH_WOODEN = reg.block(LargeSwitchTrackBlock.name + "_wooden", LargeSwitchTrackBlock::new)
+            .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
+            .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+              return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
+            }))
+            .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_se"))).build()
+            .lang("Wooden Switch")
+            .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
       .initialProperties(()->Blocks.DETECTOR_RAIL)

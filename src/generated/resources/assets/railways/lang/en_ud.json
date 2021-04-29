@@ -1,6 +1,8 @@
 {
-  "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DDbn\u0250\u2141 \u01DDp\u0131M",
-  "block.railways.large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DDbn\u0250\u2141 \u01DDp\u0131M",
+  "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DD\u0287\u0131s\u01DDpu\u2C6F",
+  "block.railways.large_switch_wooden": "\u0265\u0254\u0287\u0131\u028DS u\u01DDpooM",
+  "block.railways.large_track": "\u029E\u0254\u0250\u0279\u0287 \u01DD\u0287\u0131s\u01DDpu\u2C6F",
+  "block.railways.large_track_wooden": "\u029E\u0254\u0250\u0279\u27D8 u\u01DDpooM",
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",

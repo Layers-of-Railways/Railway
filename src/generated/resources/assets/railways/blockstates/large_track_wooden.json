@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "bigtrack=n_sw": {
+      "model": "railways:block/wide_gauge/large_track_wooden_n_sw"
+    },
+    "bigtrack=n_s": {
+      "model": "railways:block/wide_gauge/large_track_wooden_n_s"
+    },
+    "bigtrack=n_se": {
+      "model": "railways:block/wide_gauge/large_track_wooden_n_se"
+    },
+    "bigtrack=e_nw": {
+      "model": "railways:block/wide_gauge/large_track_wooden_e_nw"
+    },
+    "bigtrack=e_w": {
+      "model": "railways:block/wide_gauge/large_track_wooden_e_w"
+    },
+    "bigtrack=e_sw": {
+      "model": "railways:block/wide_gauge/large_track_wooden_e_sw"
+    },
+    "bigtrack=s_ne": {
+      "model": "railways:block/wide_gauge/large_track_wooden_s_ne"
+    },
+    "bigtrack=s_nw": {
+      "model": "railways:block/wide_gauge/large_track_wooden_s_nw"
+    },
+    "bigtrack=w_se": {
+      "model": "railways:block/wide_gauge/large_track_wooden_w_se"
+    },
+    "bigtrack=w_ne": {
+      "model": "railways:block/wide_gauge/large_track_wooden_w_ne"
+    },
+    "bigtrack=ne_sw": {
+      "model": "railways:block/wide_gauge/large_track_wooden_ne_sw"
+    },
+    "bigtrack=nw_se": {
+      "model": "railways:block/wide_gauge/large_track_wooden_nw_se"
+    }
+  }
+}
