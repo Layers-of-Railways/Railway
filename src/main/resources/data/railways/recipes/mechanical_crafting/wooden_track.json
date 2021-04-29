@@ -1,0 +1,22 @@
+{
+  "type": "create:mechanical_crafting",
+  "pattern": [
+    " I I ",
+    "WIWIW",
+    " I I ",
+    "WIWIW",
+    " I I "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:logs"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "railways:large_track_wooden",
+    "count": 16
+  }
+}
