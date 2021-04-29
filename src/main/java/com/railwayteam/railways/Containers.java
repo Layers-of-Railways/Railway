@@ -37,6 +37,6 @@ public enum Containers {
   @OnlyIn(Dist.CLIENT)
   @SuppressWarnings("unchecked")
   private static <C extends Container, S extends Screen & IHasContainer<C>> void bind (Containers c, ScreenManager.IScreenFactory<C,S> factory) {
-    ScreenManager.register((ContainerType<C>)c.type, factory);
+    ScreenManager.registerFactory((ContainerType<C>)c.type, factory);
   }
 }

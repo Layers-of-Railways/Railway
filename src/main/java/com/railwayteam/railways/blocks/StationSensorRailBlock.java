@@ -14,8 +14,6 @@ import net.minecraft.world.World;
 
 import java.util.Iterator;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class StationSensorRailBlock extends DetectorRailBlock {
   public static final String name = "station_sensor";
 
@@ -34,27 +32,27 @@ public class StationSensorRailBlock extends DetectorRailBlock {
   }
 
   @Override
-  public void onPlace(BlockState blockstate, World world, BlockPos pos, BlockState oldstate, boolean p_220082_5_) {
-    super.onPlace(blockstate, world, pos, oldstate, p_220082_5_);
-    ((StationSensorRailTileEntity)world.getBlockEntity(pos)).setStation(pos.toShortString());
+  public void onBlockAdded(BlockState blockstate, World world, BlockPos pos, BlockState oldstate, boolean p_220082_5_) {
+    super.onBlockAdded(blockstate, world, pos, oldstate, p_220082_5_);
+    ((StationSensorRailTileEntity)world.getTileEntity(pos)).setStation(pos.toShortString());
   }
 
   @Override
-  public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+  public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
     if (entityIn instanceof MinecartEntity) {
       Railways.LOGGER.debug("minecart detected...");
       entityIn.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {
         Railways.LOGGER.debug("  capability is present...");
         if (capability.isEmpty()) return;
         Railways.LOGGER.debug("    capability is not empty...");
-        TileEntity te = worldIn.getBlockEntity(pos);
+        TileEntity te = worldIn.getTileEntity(pos);
         if (!(te instanceof StationSensorRailTileEntity)) return;
         Railways.LOGGER.debug("sanity secure, checking contents vs '" + ((StationSensorRailTileEntity)te).getStation() + "'...");
         Iterator<String> iter = capability.iterate();
         while (iter.hasNext()) Railways.LOGGER.debug("    " + iter.next());
         if (capability.contains(( "(" + ((StationSensorRailTileEntity)te).getStation() + ")" ).replace(" ",""))) {
           Railways.LOGGER.debug("  found a hit");
-          super.entityInside(state, worldIn, pos, entityIn);
+          super.onEntityCollision(state, worldIn, pos, entityIn);
         }
       });
     }

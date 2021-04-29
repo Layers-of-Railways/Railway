@@ -30,7 +30,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class ModSetup {
   public static ItemGroup itemGroup = new ItemGroup(Railways.MODID) {
     @Override
-    public ItemStack makeIcon() {
+    public ItemStack createIcon() {
             return new ItemStack(Items.MINECART);
         }
   };
@@ -51,14 +51,14 @@ public class ModSetup {
   public void init() {
   }
 
-  public static void register(Registrate reg) {
+  public static void register (Registrate reg) {
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
 
     // right now we're registering a block and an item.
     // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
     R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)         // tell Registrate how to create it
-      .properties(p->p.strength(5.0f, 6.0f).isViewBlocking((state, blockReader, pos) -> false))    // set block properties
+      .properties(p->p.hardnessAndResistance(5.0f, 6.0f))    // set block properties
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
       ))
@@ -67,18 +67,18 @@ public class ModSetup {
       .register();      // pack it up for Registrate
 
     R_BLOCK_LARGE_RAIL = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
-      .properties(p->p.strength(10.0f, 10.0f).isViewBlocking((state, blockReader, pos) -> false).noCollission())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
-        return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.getValue(LargeTrackBlock.TRACK_SIDE).toString())).build();
+        return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
       }))
       .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_s"))).build()
       .lang("Wide Gauge Track")
       .register();
 
     R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
-      .properties(p->p.strength(10.0f, 10.0f).isViewBlocking((state, blockReader, pos) -> false).noCollission())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
-        return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.getValue(LargeSwitchTrackBlock.SWITCH_SIDE).toString())).build();
+        return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
       }))
       .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/wide_gauge/" + ctx.getName() + "_n_se"))).build()
       .lang("Wide Gauge Switch")
@@ -86,9 +86,9 @@ public class ModSetup {
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
       .initialProperties(()->Blocks.DETECTOR_RAIL)
-      .properties(p->p.isViewBlocking((state, blockReader, pos) -> false).noCollission())
+      .properties(p->p.nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
-      .item().model((ctx,prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
+      .item().model((ctx,prov)-> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
       .tag(BlockTags.RAILS)
       .lang("Station Sensor")
       .register();

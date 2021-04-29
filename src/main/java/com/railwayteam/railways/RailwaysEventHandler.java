@@ -27,31 +27,31 @@ public class RailwaysEventHandler {
     PlayerEntity player = eis.getPlayer();
     Entity target = eis.getTarget();
     if (!(target instanceof MinecartEntity)) return;
-    if (player.getMainHandItem().getItem() instanceof StationEditorItem) return;
+    if (player.getHeldItemMainhand().getItem() instanceof StationEditorItem) return;
     // else is minecart
     StationListCapability list = target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).orElse(null);
     if (list == null) return;
     // else process it
-    if (player.isShiftKeyDown()) {
+    if (player.isSneaking()) {
       // just check it, don't assign
       if (eis.getSide().isClient()) {
-        player.displayClientMessage(new StringTextComponent("stations:"), false);
+        player.sendMessage(new StringTextComponent("stations:"));
         Iterator<String> iter = list.iterate();
-        while (iter.hasNext()) player.displayClientMessage(new StringTextComponent("  " + iter.next()), false);
+        while (iter.hasNext()) player.sendMessage(new StringTextComponent("  " + iter.next()));
       }
     } else {
       // assign to it
-      String candidate = player.getDisplayName().getString();
+      String candidate = player.getDisplayName().getFormattedText();
       if (list.contains(candidate)) {
-        if (eis.getSide().isClient()) player.displayClientMessage(new StringTextComponent("station already assigned"), false);
+        if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("station already assigned"));
         return;
       }
       list.add(candidate);
       if (eis.getSide().isServer()) {
-        RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with (()->target), new CustomPacketStationList(target.getId(), list.copy()));
+        RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with (()->target), new CustomPacketStationList(target.getEntityId(), list.copy()));
         Railways.LOGGER.debug("sent update packet for list: " + list.copy().get(0));
       }
-      if (eis.getSide().isClient()) player.displayClientMessage(new StringTextComponent("assigned station: " + candidate), false);
+      if (eis.getSide().isClient()) player.sendMessage(new StringTextComponent("assigned station: " + candidate));
     }
     eis.setCanceled(true);
     eis.setCancellationResult(ActionResultType.SUCCESS); // stop further events
@@ -68,14 +68,14 @@ public class RailwaysEventHandler {
   public void onPlayerTrackEntity (final PlayerEvent.StartTracking pe) {
     pe.getTarget().getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability ->
       RailwaysPacketHandler.channel.send(PacketDistributor.TRACKING_ENTITY.with(
-        pe::getTarget), new CustomPacketStationList(pe.getTarget().getId(), capability.copy())
+        pe::getTarget), new CustomPacketStationList(pe.getTarget().getEntityId(), capability.copy())
       )
     );
   //  Railways.LOGGER.debug("sent tracking packet");
   }
 
   @SubscribeEvent
-  public void onPlayerStopTrackingEntity(final PlayerEvent.StopTracking pe) {
+  public void onPlayerStopTrackingEntity (final PlayerEvent.StopTracking pe) {
 
   }
 }

@@ -12,14 +12,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class WayPointBlock extends Block {
 	public static final String name = "waypoint";
 
 	// default constructor probably isn't necessary, but it's here for legacy reasons.
 	public WayPointBlock() {
-		this(Properties.copy(Blocks.OAK_FENCE));
+		this(Properties.from(Blocks.OAK_FENCE));
 	}
 
 	// Registrate will always use this constructor, and properties are set inline during registration
@@ -33,15 +31,20 @@ public class WayPointBlock extends Block {
 		return VoxelShapes.empty();
 	}
 	
+	@Override
+	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return false;
+	}
+	
 	@Nonnull
     @Override
-    public BlockRenderType getRenderShape(@Nonnull BlockState p_149645_1_) {
+    public BlockRenderType getRenderType(@Nonnull BlockState p_149645_1_) {
         return BlockRenderType.MODEL;
     }
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.or(VoxelShapes.box(7.0f/16, 0, 7.0f/16, 9.0f/16, 12.0f/16, 9.0f/16),
-		       VoxelShapes.box(7.5f/16, 6.5f/16, 0, 8.5f/16, 11.5f/16, 7f/16));
+		return VoxelShapes.or(VoxelShapes.create(7.0f/16, 0, 7.0f/16, 9.0f/16, 12.0f/16, 9.0f/16),
+		       VoxelShapes.create(7.5f/16, 6.5f/16, 0, 8.5f/16, 11.5f/16, 7f/16));
 	}
 }

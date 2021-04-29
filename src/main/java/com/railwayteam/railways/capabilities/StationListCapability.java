@@ -50,8 +50,8 @@ public class StationListCapability {
     public void readNBT (Capability<StationListCapability> cap, StationListCapability instance, Direction side, INBT nbt) {
       ArrayList<String> proc = new ArrayList<String>();
     //  LogManager.getLogger(Railways.MODID).debug("reading NBT type " + nbt.getType().toString());
-      if (nbt.getType() == CompoundNBT.TYPE) {
-        for (String key : ((CompoundNBT)nbt).getAllKeys()) {
+      if (nbt.getReader() == CompoundNBT.READER) {
+        for (String key : ((CompoundNBT)nbt).keySet()) {
         //  LogManager.getLogger(Railways.MODID).debug("reading string in packet: " + key);
           if (!key.startsWith(NBTKEY)) continue;
           proc.add( ((CompoundNBT)nbt).getString(key) );

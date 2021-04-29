@@ -25,20 +25,20 @@ public class CustomPacketUpdateOrders extends RailwaysPacketHandler.CustomPacket
   }
 
   public CustomPacketUpdateOrders (PacketBuffer buffer) {
-    target = buffer.readUtf();
+    target = buffer.readString();
     int size = buffer.readInt();
     stations = new ArrayList<String>();
     for (int entry=0; entry<size; entry++) {
-      stations.add(buffer.readUtf());
+      stations.add(buffer.readString());
     }
   }
 
   @Override
   public void write (PacketBuffer buf) {
-    buf.writeUtf(target);
+    buf.writeString(target);
     buf.writeInt(stations.size());
     for (String entry : stations) {
-      buf.writeUtf(entry);
+      buf.writeString(entry);
     }
   }
 
@@ -47,11 +47,11 @@ public class CustomPacketUpdateOrders extends RailwaysPacketHandler.CustomPacket
     context.get().enqueueWork( ()-> {
       ServerPlayerEntity player = context.get().getSender();
       if (player == null) return;
-      if (player.containerMenu instanceof StationListContainer) {
-        ((StationListContainer)player.containerMenu).updateStationList(stations);
+      if (player.openContainer instanceof StationListContainer) {
+        ((StationListContainer)player.openContainer).updateStationList(stations);
         if (target.startsWith("minecart")) {
         //  Railways.LOGGER.debug("handling minecart packet...");
-          Entity targetEntity = player.level.getEntity(Integer.parseInt(target.replace("minecart","")));
+          Entity targetEntity = player.world.getEntityByID(Integer.parseInt(target.replace("minecart","")));
           if (targetEntity instanceof AbstractMinecartEntity) {
           //  Railways.LOGGER.debug("  minecart is minecart");
             ((AbstractMinecartEntity)targetEntity).getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {

@@ -33,8 +33,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.minecraft.item.Item.Properties;
-
 public class StationEditorItem extends Item implements INamedContainerProvider {
   public static final String NAME = "station_editor_tool";
 
@@ -54,9 +52,9 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
   }
 
   public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-    if (!world.isClientSide) {
+    if (!world.isRemote) {
     //  player.sendMessage(new StringTextComponent("checking for cart"));
-      RayTraceResult result = Minecraft.getInstance().hitResult;
+      RayTraceResult result = Minecraft.getInstance().objectMouseOver;
       if (result.getType().equals(RayTraceResult.Type.ENTITY) && ((EntityRayTraceResult)result).getEntity() instanceof AbstractMinecartEntity) {
       //  player.sendMessage(new StringTextComponent("found"));
         handleInteractionWithMinecart(world, player, (AbstractMinecartEntity)((EntityRayTraceResult)result).getEntity());
@@ -64,36 +62,36 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
       else {
         //  player.sendMessage(new StringTextComponent("opened menu from nothing"));
         NetworkHooks.openGui((ServerPlayerEntity) player, this, buf -> {
-          buf.writeUtf("player");
+          buf.writeString("player");
           if (stationList.isEmpty()) {
             buf.writeInt(0);
           } else {
             buf.writeInt(stationList.size());
-            for (StationLocation loc : stationList) buf.writeUtf(loc.name);
+            for (StationLocation loc : stationList) buf.writeString(loc.name);
           }
         });
       }
-      return ActionResult.success(player.getItemInHand(hand));
+      return ActionResult.success(player.getHeldItem(hand));
     }
-    return super.use(world, player, hand);
+    return super.onItemRightClick(world, player, hand);
   } // */
 
   // /*
 	public void handleInteractionWithMinecart(World world, PlayerEntity player, AbstractMinecartEntity target) {
   //  player.sendMessage(new StringTextComponent("opened menu from minecart"));
-    if (world.isClientSide) return;
+    if (world.isRemote) return;
     NetworkHooks.openGui((ServerPlayerEntity)player, this, buf -> {
       target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {
       //  ((StationListCapability)capability).clear();
       //  for (StationLocation loc : stationList) {
       //    ((StationListCapability)capability).add(loc.name);
       //  }
-        buf.writeUtf("minecart" + target.getId());
+        buf.writeString("minecart" + target.getEntityId());
       //  buf.writeInt( ((StationListCapability)capability).length() );
       //  Iterator<String> list = ((StationListCapability)capability).iterate();
       //  while (list.hasNext()) buf.writeString(list.next());
         buf.writeInt(stationList.size());
-        for (StationLocation station : stationList) buf.writeUtf(station.printCoords());
+        for (StationLocation station : stationList) buf.writeString(station.printCoords());
       });
     //  target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).ifPresent(capability -> {
     //    player.sendMessage(new StringTextComponent("wrote list of size " + ((StationListCapability) capability).length() + " to cart"));
@@ -102,24 +100,24 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
   } // */
 
   @Override
-  public ActionResultType useOn(ItemUseContext context) {
-    if (context.getLevel().isClientSide()) return ActionResultType.PASS;
-    if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof StationSensorRailTileEntity) {
+  public ActionResultType onItemUse(ItemUseContext context) {
+    if (context.getWorld().isRemote()) return ActionResultType.PASS;
+    if (context.getWorld().getTileEntity(context.getPos()) instanceof StationSensorRailTileEntity) {
       boolean found = false;
       for (StationLocation loc : stationList) {
-        if (loc.isAt(context.getClickedPos())) {
+        if (loc.isAt(context.getPos())) {
           found = true;
-          context.getPlayer().displayClientMessage(MSG_ADD_EXISTS, false);
+          context.getPlayer().sendMessage(MSG_ADD_EXISTS);
           break;
         }
       }
       if (!found) {
-        stationList.add(new StationLocation(context.getClickedPos()));
-        context.getPlayer().displayClientMessage(MSG_ADD_SUCCESS, false);
+        stationList.add(new StationLocation(context.getPos()));
+        context.getPlayer().sendMessage(MSG_ADD_SUCCESS);
       }
       return ActionResultType.CONSUME;
     }
-    else return super.useOn(context);
+    else return super.onItemUse(context);
   } // */
 
   public void updateStationList (ArrayList<String> updatedList) {
@@ -134,7 +132,7 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
 
   @Override
   public ITextComponent getDisplayName () {
-    return new StringTextComponent(getDescriptionId());
+    return new StringTextComponent(getTranslationKey());
   }
 
   @Override
