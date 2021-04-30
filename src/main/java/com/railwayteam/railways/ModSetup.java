@@ -2,7 +2,6 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntityModel;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
@@ -10,27 +9,34 @@ import com.railwayteam.railways.items.EngineersCapItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
 
+import com.railwayteam.railways.util.UsefulTags;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import com.tterrag.registrate.Registrate;
 
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import java.lang.reflect.InvocationTargetException;
 
 
 public class ModSetup {
@@ -50,6 +56,7 @@ public class ModSetup {
 
   public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL_WOODEN;
   public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH_WOODEN;
+  public static BlockEntry<Block> R_BLOCK_WHEEL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -143,6 +150,42 @@ public class ModSetup {
       .tag(BlockTags.RAILS)
       .lang("Station Sensor")
       .register();
+
+    R_BLOCK_WHEEL = reg.block("wheel", Block::new)
+            .lang("Wheel")
+            .simpleItem()
+            .defaultBlockstate()
+            .recipe((ctx, prov) -> {
+              System.out.println(prov);
+              ShapedRecipeBuilder.shapedRecipe(ctx.get(), 4)
+                      .patternLine(" I ")
+                      .patternLine("ISI")
+                      .patternLine(" I ")
+                      .key('I', UsefulTags.IronSheet)
+                      .key('S', AllBlocks.SHAFT.get())
+                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulTags.IronSheet))
+                      .build(prov);
+            })
+//            .recipe((ctx,prov) -> {
+//              System.out.println(UsefulTags.IronSheet);
+//              System.out.println(AllBlocks.SHAFT.get());
+//              System.out.println(prov.hasItem(UsefulTags.IronSheet));
+//                System.out.println(ctx);
+//                System.out.println(prov);
+//
+//              ShapedRecipeBuilder a = ShapedRecipeBuilder.shapedRecipe(R_BLOCK_WHEEL.get(), 4)
+//                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulTags.IronSheet))
+//                      .patternLine(" I ")
+//                      .patternLine("ISI")
+//                      .patternLine(" I ")
+//                      .key('I', UsefulTags.IronSheet
+//                      ).key('S', AllBlocks.SHAFT.get())
+//                      .setGroup("");
+//
+//              a.build(prov::accept);
+//            })
+
+            .register();
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
