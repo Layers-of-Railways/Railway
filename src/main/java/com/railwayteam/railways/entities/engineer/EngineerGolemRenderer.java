@@ -14,6 +14,12 @@ public class EngineerGolemRenderer extends LivingRenderer<EngineerGolemEntity, E
     super(manager, new EngineerGolemEntityModel(), 0.2f);
   }
 
+  @Override
+  protected boolean canRenderName(EngineerGolemEntity golem) {
+    if(golem.getDisplayName().getUnformattedComponentText().equals(EngineerGolemEntity.defaultDisplayName)) return false;
+    return super.canRenderName(golem);
+  }
+
   @Nonnull
   @Override
   public ResourceLocation getEntityTexture(EngineerGolemEntity entity) {

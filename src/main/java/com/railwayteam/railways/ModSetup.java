@@ -165,7 +165,7 @@ public class ModSetup {
       .register();
 
     R_ENTITY_ENGINEER   = reg.entity(EngineerGolemEntity.name, EngineerGolemEntity::new, EntityClassification.MISC)
-      .lang("Engineer Golem")
+      .lang(EngineerGolemEntity.defaultDisplayName)
       .register();
   }
 
