@@ -121,13 +121,13 @@ repositories {
     mavenCentral()
     maven {
         // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name "Progwml6 maven"
+        url "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
         // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        name "ModMaven"
+        url "https://modmaven.k-4u.nl"
     }
     maven { // Registrate
         url "http://maven.tterrag.com/"
@@ -137,7 +137,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
 	
-//    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2-6.0.3.16")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2")
 
     implementation fg.deobf("curse.maven:create-328085:3261454")
 	
