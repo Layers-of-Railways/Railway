@@ -21,6 +21,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -63,6 +64,7 @@ public class ModSetup {
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
   public static ItemEntry<EngineersCapItem> R_ITEM_ENGINEERS_CAP;
+  public static ItemEntry<Item> R_ITEM_BOGIE;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
   public static RegistryEntry<EntityType<EngineerGolemEntity>>  R_ENTITY_ENGINEER;
@@ -189,6 +191,27 @@ public class ModSetup {
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
       .lang("Station Editor")
       .register();
+
+    R_ITEM_BOGIE = reg.item("bogie", Item::new)
+            .lang("Bogie")
+            .model((ctx, prov) -> { // TODO: placeholder model
+              prov.singleTexture(
+                      ctx.getName(),
+                      prov.mcLoc("item/generated"),
+                      "layer0",
+                      prov.modLoc("item/waypoint_manager"));
+            })
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                    .patternLine("WBW")
+                    .patternLine("SMS")
+                    .patternLine("WBW")
+                    .key('W', R_BLOCK_WHEEL.get())
+                    .key('B', AllBlocks.METAL_BRACKET.get())
+                    .key('M', AllBlocks.MECHANICAL_BEARING.get())
+                    .key('S', AllBlocks.SHAFT.get())
+                    .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
+                    .build(prov))
+            .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")

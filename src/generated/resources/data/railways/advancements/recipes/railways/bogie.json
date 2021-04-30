@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "railways:bogie"
+    ]
+  },
+  "criteria": {
+    "has_wheel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "railways:wheel"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "railways:bogie"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wheel",
+      "has_the_recipe"
+    ]
+  ]
+}

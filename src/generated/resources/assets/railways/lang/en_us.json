@@ -8,6 +8,7 @@
   "block.railways.wheel": "Wheel",
   "entity.railways.engineer_golem": "Engineer Golem",
   "entity.railways.steadycart": "Steady Minecart",
+  "item.railways.bogie": "Bogie",
   "item.railways.engineers_cap": "Engineer's cap",
   "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",
