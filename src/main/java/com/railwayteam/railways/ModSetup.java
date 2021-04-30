@@ -30,6 +30,7 @@ import com.tterrag.registrate.Registrate;
 
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -75,6 +76,7 @@ public class ModSetup {
   }
 
   public static void register (Registrate reg) {
+
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
 
@@ -164,6 +166,15 @@ public class ModSetup {
       .item().model((ctx,prov)-> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
       .tag(BlockTags.RAILS)
       .lang("Station Sensor")
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get(), 6)
+                    .patternLine("I I")
+                    .patternLine("ILI")
+                    .patternLine("IRI")
+                    .key('L', AllItems.LAPIS_SHEET.get())
+                    .key('R', Tags.Items.DUSTS_REDSTONE)
+                    .key('I', Tags.Items.INGOTS_IRON)
+                    .addCriterion("has_lapis", prov.hasItem(Tags.Items.GEMS_LAPIS))
+                    .build(prov))
       .register();
 
     R_BLOCK_WHEEL = reg.block("wheel", Block::new)

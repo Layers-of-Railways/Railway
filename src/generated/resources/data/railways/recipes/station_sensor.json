@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    "ILI",
+    "IRI"
+  ],
+  "key": {
+    "L": {
+      "item": "create:lapis_sheet"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "railways:station_sensor",
+    "count": 6
+  }
+}

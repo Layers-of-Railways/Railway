@@ -19,6 +19,7 @@ da60a131d8c7802e2f9cd2fa1aeee61e897cb6ee assets/railways/models/item/station_edi
 52d7614993b20f59d7cce7277738ce8d4b84a5c7 assets/railways/models/item/wheel.json
 a6ad25241858d9581f2603d725000c4cd1b61d1d data/minecraft/tags/blocks/rails.json
 f8ac8c9858aa681890c86d4f54376c41431a11d1 data/railways/advancements/recipes/railways/bogie.json
+bb8753a51e88f9fdee624568405abbf99b1f7bf9 data/railways/advancements/recipes/railways/station_sensor.json
 51fc970a1087d8c1f3c542386cc795f4d8cfa891 data/railways/advancements/recipes/railways/waypoint.json
 9e5ff73a38d17b88cc0998d8348db1ffc587ad0a data/railways/advancements/recipes/railways/wheel.json
 06ea9981ec044b4e9997ab80a12b8c3778c79a77 data/railways/loot_tables/blocks/large_switch.json
@@ -29,5 +30,6 @@ f8ac8c9858aa681890c86d4f54376c41431a11d1 data/railways/advancements/recipes/rail
 a67463ded4b3d9d47969501efb02c89418a6b66e data/railways/loot_tables/blocks/waypoint.json
 0de43eeca392b82a484e23e3bce085ea537b3503 data/railways/loot_tables/blocks/wheel.json
 d72571b3e8ef0d12477844cffbde096dcbf22d74 data/railways/recipes/bogie.json
+caeddece765a7a0432569850d07f580fd1788847 data/railways/recipes/station_sensor.json
 3162c1e174e1ed9f946be8b3b20f843a46a3b23b data/railways/recipes/waypoint.json
 ace3f81d142b1642027bb6c34a3f505b472a32dd data/railways/recipes/wheel.json
