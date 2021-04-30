@@ -5,8 +5,10 @@
   "block.railways.large_track_wooden": "Wooden Track",
   "block.railways.station_sensor": "Station Sensor",
   "block.railways.waypoint": "Waypoint",
+  "block.railways.wheel": "Wheel",
   "entity.railways.engineer_golem": "Engineer Golem",
   "entity.railways.steadycart": "Steady Minecart",
+  "item.railways.engineers_cap": "Engineer's cap",
   "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",
   "itemGroup.railways": "railways"

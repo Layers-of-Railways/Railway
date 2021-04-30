@@ -156,7 +156,6 @@ public class ModSetup {
             .simpleItem()
             .defaultBlockstate()
             .recipe((ctx, prov) -> {
-              System.out.println(prov);
               ShapedRecipeBuilder.shapedRecipe(ctx.get(), 4)
                       .patternLine(" I ")
                       .patternLine("ISI")
@@ -166,25 +165,6 @@ public class ModSetup {
                       .addCriterion("has_iron_sheet", prov.hasItem(UsefulTags.IronSheet))
                       .build(prov);
             })
-//            .recipe((ctx,prov) -> {
-//              System.out.println(UsefulTags.IronSheet);
-//              System.out.println(AllBlocks.SHAFT.get());
-//              System.out.println(prov.hasItem(UsefulTags.IronSheet));
-//                System.out.println(ctx);
-//                System.out.println(prov);
-//
-//              ShapedRecipeBuilder a = ShapedRecipeBuilder.shapedRecipe(R_BLOCK_WHEEL.get(), 4)
-//                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulTags.IronSheet))
-//                      .patternLine(" I ")
-//                      .patternLine("ISI")
-//                      .patternLine(" I ")
-//                      .key('I', UsefulTags.IronSheet
-//                      ).key('S', AllBlocks.SHAFT.get())
-//                      .setGroup("");
-//
-//              a.build(prov::accept);
-//            })
-
             .register();
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
@@ -197,6 +177,13 @@ public class ModSetup {
 
     R_ITEM_ENGINEERS_CAP = reg.item(EngineersCapItem.name, EngineersCapItem::new)
             .lang("Engineer's cap")
+            .model((ctx, prov) -> { // TODO: placeholder model
+              prov.singleTexture(
+                      ctx.getName(),
+                      prov.mcLoc("item/generated"),
+                      "layer0",
+                      prov.modLoc("item/waypoint_manager"));
+            })
             .register();
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)

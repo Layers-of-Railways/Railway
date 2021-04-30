@@ -5,8 +5,10 @@
   "block.railways.large_track_wooden": "\u029E\u0254\u0250\u0279\u27D8 u\u01DDpooM",
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
+  "block.railways.wheel": "\u05DF\u01DD\u01DD\u0265M",
   "entity.railways.engineer_golem": "\u026F\u01DD\u05DFo\u2141 \u0279\u01DD\u01DDu\u0131bu\u018E",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",
+  "item.railways.engineers_cap": "d\u0250\u0254 s,\u0279\u01DD\u01DDu\u0131bu\u018E",
   "item.railways.station_editor_tool": "\u0279o\u0287\u0131p\u018E uo\u0131\u0287\u0250\u0287S",
   "item.railways.waypoint_manager": "\u05DFoo\u27D8 \u0287u\u0131od\u028E\u0250M",
   "itemGroup.railways": "s\u028E\u0250\u028D\u05DF\u0131\u0250\u0279"
