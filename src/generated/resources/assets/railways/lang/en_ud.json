@@ -1,8 +1,11 @@
 {
-  "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DDbn\u0250\u2141 \u01DDp\u0131M",
-  "block.railways.large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DDbn\u0250\u2141 \u01DDp\u0131M",
+  "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DDbn\u0250\u2141 \u01DDp\u0131M \u01DD\u0287\u0131s\u01DDpu\u2C6F",
+  "block.railways.large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DDbn\u0250\u2141 \u01DDp\u0131M \u01DD\u0287\u0131s\u01DDpu\u2C6F",
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
+  "block.railways.wooden_large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DDbn\u0250\u2141 \u01DDp\u0131M u\u01DDpooM",
+  "block.railways.wooden_large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DDbn\u0250\u2141 \u01DDp\u0131M u\u01DDpooM",
+  "entity.railways.engineer_golem": "\u026F\u01DD\u05DFo\u2141 \u0279\u01DD\u01DDu\u0131bu\u018E",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",
   "item.railways.station_editor_tool": "\u0279o\u0287\u0131p\u018E uo\u0131\u0287\u0250\u0287S",
   "item.railways.waypoint_manager": "\u05DFoo\u27D8 \u0287u\u0131od\u028E\u0250M",

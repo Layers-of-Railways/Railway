@@ -1,8 +1,11 @@
 {
-  "block.railways.large_switch": "Wide Gauge Switch",
-  "block.railways.large_track": "Wide Gauge Track",
+  "block.railways.large_switch": "Andesite Wide Gauge Switch",
+  "block.railways.large_track": "Andesite Wide Gauge Track",
   "block.railways.station_sensor": "Station Sensor",
   "block.railways.waypoint": "Waypoint",
+  "block.railways.wooden_large_switch": "Wooden Wide Gauge Switch",
+  "block.railways.wooden_large_track": "Wooden Wide Gauge Track",
+  "entity.railways.engineer_golem": "Engineer Golem",
   "entity.railways.steadycart": "Steady Minecart",
   "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",

@@ -35,7 +35,7 @@ repositories {
     }
 }
 
-version = '1.15.2-0.1.0'
+version = '1.15.2-0.1.2'
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'railways'
 
