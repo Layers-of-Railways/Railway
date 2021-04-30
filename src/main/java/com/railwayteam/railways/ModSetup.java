@@ -19,6 +19,7 @@ import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -30,6 +31,7 @@ import com.tterrag.registrate.Registrate;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -76,6 +78,9 @@ public class ModSetup {
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
 
+//      AllBlocks.SAIL_FRAME.get().getTags().add(UsefulTags.SailsTagLoc);
+//      AllBlocks.SAIL.get().getTags().add(UsefulTags.SailsTagLoc);
+
     // right now we're registering a block and an item.
     // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
     R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)         // tell Registrate how to create it
@@ -83,6 +88,14 @@ public class ModSetup {
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
       ))
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                    .patternLine("   ")
+                    .patternLine(" A ")
+                    .patternLine(" T ")
+                    .key('A', AllBlocks.SAIL_FRAME.get())
+                    .key('T', Items.STICK)
+                    .addCriterion("has_sail", prov.hasItem(AllBlocks.SAIL_FRAME.get()))
+                    .build(prov))
       .simpleItem()     // nothing special about the item right now
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate

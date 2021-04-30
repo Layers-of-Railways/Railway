@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "railways:waypoint"
+    ]
+  },
+  "criteria": {
+    "has_sail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "create:sail_frame"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "railways:waypoint"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sail",
+      "has_the_recipe"
+    ]
+  ]
+}
