@@ -2,9 +2,11 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
+import com.railwayteam.railways.entities.engineer.EngineerGolemEntityModel;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.items.EngineersCapItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
 
@@ -14,8 +16,10 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -51,6 +55,7 @@ public class ModSetup {
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
+  public static ItemEntry<EngineersCapItem> R_ITEM_ENGINEERS_CAP;
 
   public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
   public static RegistryEntry<EntityType<EngineerGolemEntity>>  R_ENTITY_ENGINEER;
@@ -146,6 +151,10 @@ public class ModSetup {
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
       .register();
+
+    R_ITEM_ENGINEERS_CAP = reg.item(EngineersCapItem.name, EngineersCapItem::new)
+            .lang("Engineer's cap")
+            .register();
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
       .lang("Station Editor")
