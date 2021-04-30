@@ -5,6 +5,7 @@ import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.EntityType;
@@ -20,6 +21,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import java.util.Arrays;
+
 public class EngineersCapItem extends Item {
     public static final String name = "engineers_cap";
 
@@ -29,12 +32,39 @@ public class EngineersCapItem extends Item {
 
     static Block AndesiteCasing = AllBlocks.ANDESITE_CASING.get();
 
-//    public static BlockPos[] getBlocksToRemove(World world, BlockPos pos) {
-//
-//    }
+    static boolean isCasing(Block block) {
+        return block.equals(AndesiteCasing);
+    }
+
+    static boolean isCasing(BlockState block) {
+        return isCasing(block.getBlock());
+    }
+
+    static boolean isCasing(World world, BlockPos pos) {
+        return isCasing(world.getBlockState(pos));
+    }
+
+    public static BlockPos[] getBlocksToRemove(World world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
+        if(!isCasing(state)) return new BlockPos[2];
+        BlockPos otherBlock = pos.up();
+        if(!isCasing(world, otherBlock)) otherBlock = pos.down();
+        if(!isCasing(world, otherBlock)) return new BlockPos[2];
+        return new BlockPos[]{pos, otherBlock};
+    }
+
+    public static BlockPos getLowest(BlockPos[] pos) {
+        BlockPos lowest = pos[0];
+        for(BlockPos pos1 : pos) {
+            if(pos1.getY() < lowest.getY()) lowest = pos1;
+        }
+        return lowest;
+    }
 
     @Override
     public ActionResultType onItemUse(ItemUseContext ctx) {
+        // TODO: crashes if a deployer tries to spawn the conductor
+
         World world = ctx.getWorld();
         if(!world.isRemote) {
             PlayerEntity player = ctx.getPlayer();
@@ -44,13 +74,14 @@ public class EngineersCapItem extends Item {
             BlockPos pos = ctx.getPos();
             BlockState blockState = world.getBlockState(pos);
             Block block = blockState.getBlock();
-            if(block.equals(AndesiteCasing)) {
-                world.breakBlock(pos, false, null);
+            BlockPos[] blocksToRemove = getBlocksToRemove(world, pos);
+            if(blocksToRemove.length > 0) {
+                for(BlockPos pos1 : blocksToRemove) world.breakBlock(pos1, false, player);
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
                 ModSetup.R_ENTITY_ENGINEER.get().spawn(
-                        world, stack, player, pos, SpawnReason.STRUCTURE, false, false
+                        world, stack, player, getLowest(blocksToRemove), SpawnReason.STRUCTURE, false, false
                 );
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
