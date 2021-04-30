@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "railways:large_track_wooden"
+    },
+    {
+      "item": "railways:large_track_wooden"
+    }
+  ],
+  "result": {
+    "item": "railways:large_switch_wooden"
+  }
+}

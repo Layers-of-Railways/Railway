@@ -127,6 +127,10 @@ public class ModSetup {
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
       .lang("Andesite Switch")
+            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+                    .addIngredient(R_BLOCK_LARGE_RAIL.get(), 2)
+                    .addCriterion("has_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL.get()))
+                    .build(prov))
       .register();
 
     // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
@@ -157,6 +161,10 @@ public class ModSetup {
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
       .lang("Wooden Switch")
+            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+                    .addIngredient(R_BLOCK_LARGE_RAIL_WOODEN.get(), 2)
+                    .addCriterion("has_wooden_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL_WOODEN.get()))
+                    .build(prov))
       .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
