@@ -199,6 +199,11 @@ public class ModSetup {
 
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
+            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+                    .addIngredient(ItemTags.SIGNS)
+                    .addIngredient(AllItems.ANDESITE_ALLOY.get())
+                    .addCriterion("has_andesite_alloy", prov.hasItem(AllItems.ANDESITE_ALLOY.get()))
+                    .build(prov))
       .register();
 
     R_ITEM_ENGINEERS_CAP = reg.item(EngineersCapItem.name, EngineersCapItem::new)
