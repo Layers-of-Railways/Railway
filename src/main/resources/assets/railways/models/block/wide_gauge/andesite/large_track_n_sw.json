@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "railways:block/andesite-track-curved",
-		"particle": "railways:block/andesite-track-curved"
+		"0": "railways:block/andesite_track_curved",
+		"particle": "railways:block/andesite_track_curved"
 	},
 	"elements": [
 		{

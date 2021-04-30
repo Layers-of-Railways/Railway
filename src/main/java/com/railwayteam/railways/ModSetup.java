@@ -38,12 +38,14 @@ public class ModSetup {
   };
 
   // we cache Registry entries in case other mod components need a convenient reference (including Registrate itself)
-  public static BlockEntry<WayPointBlock>               R_BLOCK_WAYPOINT;
-  public static BlockEntry<StationSensorRailBlock>      R_BLOCK_STATION_SENSOR;
-  public static BlockEntry<LargeTrackBlock>             R_BLOCK_LARGE_RAIL;
-  public static BlockEntry<WoodenLargeTrackBlock>       R_BLOCK_LARGE_WOODEN_RAIL;
-  public static BlockEntry<LargeSwitchTrackBlock>       R_BLOCK_LARGE_SWITCH;
-  public static BlockEntry<WoodenLargeSwitchTrackBlock> R_BLOCK_LARGE_WOODEN_SWITCH;
+  public static BlockEntry<WayPointBlock> R_BLOCK_WAYPOINT;
+  public static BlockEntry<StationSensorRailBlock> R_BLOCK_STATION_SENSOR;
+
+  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL;
+  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH;
+
+  public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL_WOODEN;
+  public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH_WOODEN;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -81,20 +83,7 @@ public class ModSetup {
         prov.mcLoc("item/generated"),
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
-      .lang("Andesite Wide Gauge Track")
-      .register();
-
-    R_BLOCK_LARGE_WOODEN_RAIL = reg.block(WoodenLargeTrackBlock.name, WoodenLargeTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(5f,5f).nonOpaque()/*.doesNotBlockMovement()*/.sound(SoundType.WOOD))
-      .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
-        return ConfiguredModel.builder().modelFile(WoodenLargeTrackBlock.partialModel(ctx,prov,state.get(WoodenLargeTrackBlock.TRACK_SIDE).getName())).build();
-      }))
-      .item().model((ctx,prov) -> prov.singleTexture(
-        ctx.getName(),
-        prov.mcLoc("item/generated"),
-        "layer0",
-        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
-      .lang("Wooden Wide Gauge Track")
+      .lang("Andesite Track")
       .register();
 
     R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
@@ -108,20 +97,37 @@ public class ModSetup {
         prov.mcLoc("item/generated"),
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
-      .lang("Andesite Wide Gauge Switch")
+      .lang("Andesite Switch")
       .register();
 
-    R_BLOCK_LARGE_WOODEN_SWITCH = reg.block(WoodenLargeSwitchTrackBlock.name, WoodenLargeSwitchTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque()/*.doesNotBlockMovement()*/.sound(SoundType.WOOD))
+    // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
+
+    R_BLOCK_LARGE_RAIL_WOODEN = reg.block(LargeTrackBlock.name + "_wooden", LargeTrackBlock::new)
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
-        return ConfiguredModel.builder().modelFile(WoodenLargeSwitchTrackBlock.partialModel(ctx,prov,state.get(WoodenLargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
+         return ConfiguredModel.builder().modelFile(
+           LargeTrackBlock.partialModel(true, ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
       }))
       .item().model((ctx,prov) -> prov.singleTexture(
         ctx.getName(),
         prov.mcLoc("item/generated"),
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
-      .lang("Wooden Wide Gauge Switch")
+      .lang("Wooden Track")
+      .register();
+
+    R_BLOCK_LARGE_SWITCH_WOODEN = reg.block(LargeSwitchTrackBlock.name + "_wooden", LargeSwitchTrackBlock::new)
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
+      .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+        return ConfiguredModel.builder().modelFile(
+          LargeSwitchTrackBlock.partialModel(true, ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
+      }))
+      .item().model((ctx,prov) -> prov.singleTexture(
+        ctx.getName(),
+        prov.mcLoc("item/generated"),
+        "layer0",
+        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
+      .lang("Wooden Switch")
       .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)

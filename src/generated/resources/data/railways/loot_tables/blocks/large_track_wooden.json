@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:wooden_large_track"
+          "name": "railways:large_track_wooden"
         }
       ],
       "conditions": [

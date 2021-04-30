@@ -66,8 +66,12 @@ public abstract class AbstractLargeTrackBlock extends Block {
     }
   }
 
-  public static ModelFile partialModel (DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
-    StringBuilder loc = new StringBuilder("block/wide_gauge/andesite/" + ctx.getName());
+  public static ModelFile partialModel(DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
+    return partialModel(false, ctx, prov, suffix);
+  }
+
+  public static ModelFile partialModel (boolean wooden, DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
+    StringBuilder loc = new StringBuilder((wooden ? "block/wide_gauge/wooden/" : "block/wide_gauge/andesite/") + ctx.getName().replace("_wooden",""));
     for (String suf : suffix) loc.append("_" + suf);
     return prov.models().getExistingFile(prov.modLoc(loc.toString()));
   }

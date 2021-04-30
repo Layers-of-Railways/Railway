@@ -26,7 +26,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 @Mod(Railways.MODID)
 public class Railways {
 	public static final String MODID = "railways";
-	public static final String VERSION = "0.1.2";
+	public static final String VERSION = "0.2.0";
 	public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();

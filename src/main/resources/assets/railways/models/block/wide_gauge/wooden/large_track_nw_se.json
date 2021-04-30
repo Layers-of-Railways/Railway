@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "railways:block/wooden-track-diagonal",
-		"particle": "railways:block/wooden-track-diagonal"
+		"1": "railways:block/wooden_track_diagonal",
+		"particle": "railways:block/wooden_track_diagonal"
 	},
 	"elements": [
 		{
