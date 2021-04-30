@@ -46,10 +46,10 @@ public class EngineersCapItem extends Item {
 
     public static BlockPos[] getBlocksToRemove(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        if(!isCasing(state)) return new BlockPos[2];
+        if(!isCasing(state)) return new BlockPos[0];
         BlockPos otherBlock = pos.up();
         if(!isCasing(world, otherBlock)) otherBlock = pos.down();
-        if(!isCasing(world, otherBlock)) return new BlockPos[2];
+        if(!isCasing(world, otherBlock)) return new BlockPos[0];
         return new BlockPos[]{pos, otherBlock};
     }
 
@@ -63,8 +63,6 @@ public class EngineersCapItem extends Item {
 
     @Override
     public ActionResultType onItemUse(ItemUseContext ctx) {
-        // TODO: crashes if a deployer tries to spawn the conductor
-
         World world = ctx.getWorld();
         if(!world.isRemote) {
             PlayerEntity player = ctx.getPlayer();
