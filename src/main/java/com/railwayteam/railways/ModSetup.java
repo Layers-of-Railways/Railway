@@ -223,6 +223,12 @@ public class ModSetup {
                       "layer0",
                       prov.modLoc("item/waypoint_manager"));
             })
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                    .patternLine("WWW")
+                    .patternLine("W W")
+                    .key('W', ItemTags.WOOL)
+                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+                    .build(prov))
             .register();
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
