@@ -18,13 +18,6 @@ public class EngineerGolemEntityModel extends EntityModel<EngineerGolemEntity> {
 	public final ModelRenderer hat;
 	public final ModelRenderer hatBrim;
 
-	@Override
-	public void setLivingAnimations(EngineerGolemEntity p_212843_1_, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
-		super.setLivingAnimations(p_212843_1_, p_212843_2_, p_212843_3_, p_212843_4_);
-	}
-
-
-
 	public EngineerGolemEntityModel() {
 		textureWidth = 64;
 		textureHeight = 64;
