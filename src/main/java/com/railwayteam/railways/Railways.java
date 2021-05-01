@@ -1,10 +1,12 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.CapabilitySetup;
+import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +24,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import software.bernie.example.client.renderer.entity.ExampleGeoRenderer;
+import software.bernie.example.registry.EntityRegistry;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -76,6 +80,8 @@ public class Railways {
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_RAIL.get(), RenderType.getCutoutMipped());
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_SWITCH.get(), RenderType.getCutoutMipped());
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
+    RenderingRegistry.registerEntityRenderingHandler(ModSetup.R_ENTITY_ENGINEER.get(),
+            EngineerGolemRenderer::new);
     setup.registerRenderers();
     Containers.registerScreenFactories();
   }
