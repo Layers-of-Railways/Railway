@@ -1,5 +1,7 @@
 package com.railwayteam.railways;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
@@ -9,7 +11,7 @@ import com.railwayteam.railways.items.EngineersCapItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
 
-import com.railwayteam.railways.util.UsefulTags;
+import com.railwayteam.railways.util.UsefulAndRailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -22,25 +24,20 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import com.tterrag.registrate.Registrate;
 
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 
 public class ModSetup {
@@ -66,6 +63,7 @@ public class ModSetup {
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
+  public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
   public static ItemEntry<EngineersCapItem> R_ITEM_ENGINEERS_CAP;
   public static ItemEntry<Item> R_ITEM_BOGIE;
 
@@ -194,9 +192,9 @@ public class ModSetup {
                       .patternLine(" I ")
                       .patternLine("ISI")
                       .patternLine(" I ")
-                      .key('I', UsefulTags.IronSheet)
+                      .key('I', UsefulAndRailwaysTags.IronSheet)
                       .key('S', AllBlocks.SHAFT.get())
-                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulTags.IronSheet))
+                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulAndRailwaysTags.IronSheet))
                       .build(prov);
             })
             .register();
@@ -214,22 +212,48 @@ public class ModSetup {
                     .build(prov))
       .register();
 
-    R_ITEM_ENGINEERS_CAP = reg.item(EngineersCapItem.name, EngineersCapItem::new)
-            .lang("Engineer's cap")
-            .model((ctx, prov) -> { // TODO: placeholder model
-              prov.singleTexture(
-                      ctx.getName(),
-                      prov.mcLoc("item/generated"),
-                      "layer0",
-                      prov.modLoc("item/waypoint_manager"));
-            })
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-                    .patternLine("WWW")
-                    .patternLine("W W")
-                    .key('W', ItemTags.WOOL)
-                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
-                    .build(prov))
-            .register();
+//    ItemBuilder<EngineersCapItem, Registrate> engineersCapBuilder = reg.item(EngineersCapItem.name, EngineersCapItem::new)
+//            .lang("Engineer's cap")
+//            .model((ctx, prov) -> { // TODO: placeholder model
+//              prov.singleTexture(
+//                      ctx.getName(),
+//                      prov.mcLoc("item/generated"),
+//                      "layer0",
+//                      prov.modLoc("item/waypoint_manager"));
+//            });
+//            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+//                    .patternLine("WWW")
+//                    .patternLine("W W")
+//                    .key('W', ItemTags.WOOL)
+//                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+//                    .build(prov));
+    for(DyeColor color : DyeColor.values()) {
+          ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getName(),
+                  (p) -> new EngineersCapItem(p, color))
+                  .lang("Engineer's cap")
+                  .tag(UsefulAndRailwaysTags.EngineerCaps)
+                  .model((ctx, prov) -> { // TODO: placeholder model
+                        prov.singleTexture(
+                        "item/engineer_caps/" + color.getName(),
+                        prov.mcLoc("item/generated"),
+                        "layer0",
+                        prov.modLoc("item/waypoint_manager"));
+                    })
+                  .recipe((ctx, prov) -> {
+                    ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                            .patternLine("WWW")
+                            .patternLine("W W")
+                            .key('W', Ingredient.deserialize(new Gson().fromJson("{\"item\": \"minecraft:" + color.getName() + "_wool\"}", JsonObject.class))) // wow the fact that i have to do this is so stupid
+                            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName()));
+                    ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+                            .addIngredient(UsefulAndRailwaysTags.EngineerCaps)
+                            .addIngredient(color.getTag())
+                            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName() + "_dye"));
+                  })
+                  .register());
+      }
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
       .lang("Station Editor")

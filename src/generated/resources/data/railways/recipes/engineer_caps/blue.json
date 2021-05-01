@@ -6,10 +6,10 @@
   ],
   "key": {
     "W": {
-      "tag": "minecraft:wool"
+      "item": "minecraft:blue_wool"
     }
   },
   "result": {
-    "item": "railways:engineers_cap"
+    "item": "railways:engineers_cap_blue"
   }
 }

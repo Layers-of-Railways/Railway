@@ -7,27 +7,37 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.Vector3d;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.List;
 
 public class EngineersCapItem extends Item {
     public static final String name = "engineers_cap";
+    public final DyeColor color;
 
-    public EngineersCapItem(Properties p_i48487_1_) {
+    public EngineersCapItem(Properties p_i48487_1_, DyeColor color) {
         super(p_i48487_1_);
+        this.color = color;
+    }
+
+    @Override
+    public void addInformation(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> text, ITooltipFlag p_77624_4_) {
+        text.add(new StringTextComponent("Color: " + color.getTranslationKey())); // TODO: Turn this into a translatable text
+        super.addInformation(p_77624_1_, p_77624_2_, text, p_77624_4_);
     }
 
     static Block AndesiteCasing = AllBlocks.ANDESITE_CASING.get();
@@ -75,6 +85,7 @@ public class EngineersCapItem extends Item {
             BlockPos[] blocksToRemove = getBlocksToRemove(world, pos);
             if(blocksToRemove.length > 0) {
                 for(BlockPos pos1 : blocksToRemove) world.breakBlock(pos1, false, player);
+                System.out.println(Blocks.CYAN_WOOL.getTags());
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);

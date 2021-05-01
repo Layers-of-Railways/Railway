@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "railways:engineers_cap_white",
+    "railways:engineers_cap_orange",
+    "railways:engineers_cap_magenta",
+    "railways:engineers_cap_light_blue",
+    "railways:engineers_cap_yellow",
+    "railways:engineers_cap_lime",
+    "railways:engineers_cap_pink",
+    "railways:engineers_cap_gray",
+    "railways:engineers_cap_light_gray",
+    "railways:engineers_cap_cyan",
+    "railways:engineers_cap_purple",
+    "railways:engineers_cap_blue",
+    "railways:engineers_cap_brown",
+    "railways:engineers_cap_green",
+    "railways:engineers_cap_red",
+    "railways:engineers_cap_black"
+  ]
+}
