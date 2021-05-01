@@ -234,10 +234,10 @@ public class ModSetup {
                   .tag(UsefulAndRailwaysTags.EngineerCaps)
                   .model((ctx, prov) -> { // TODO: placeholder model
                         prov.singleTexture(
-                        "item/engineer_caps/" + color.getName(),
+                        ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/waypoint_manager"));
+                        prov.modLoc("item/engineer_caps/" + color.getName()));
                     })
                   .recipe((ctx, prov) -> {
                     ShapedRecipeBuilder.shapedRecipe(ctx.get())
