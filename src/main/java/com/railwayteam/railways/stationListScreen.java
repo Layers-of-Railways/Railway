@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.railwayteam.railways.items.StationLocation;
 import com.railwayteam.railways.packets.CustomPacketUpdateOrders;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +20,7 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   private ResourceLocation FG = new ResourceLocation(Railways.MODID, "textures/gui/schedule_fg.png");
   private boolean pressed = false;
   private TextListWidget listWidget;
+  Minecraft minecraft = Minecraft.getInstance();
 
   private static final int buttonWidth  = 80;
   private static final int buttonHeight = 20;
@@ -46,8 +48,20 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   }
 
   @Override
+  protected void drawBackground(MatrixStack matrix, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+    if (Config.HIBYE.get()) {
+      RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+      minecraft.getTextureManager().bindTexture(pressed ? FG : BG);
+      RenderSystem.scaled(0.7d, 0.7d, 1d);
+      int relX = (width - getXSize()) / 2 + 200;
+      int relY = (height - getYSize()) / 2;
+      this.drawTexture(matrix, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
+    }
+  }
+
+  @Override
   protected void renderWindow (MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
-    drawString(ms, Minecraft.getInstance().fontRenderer, "Test GUI: " + container.target, 10,10, 0xffffff);
+    drawCenteredString(ms, Minecraft.getInstance().fontRenderer, "Test GUI: " + container.target, 10,10, 0xffffff);
   }
 
 //  @Override
@@ -63,17 +77,17 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
 //  }
 
 
-  @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-    if (Config.HIBYE.get()) {
-      RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-      minecraft.getTextureManager().bindTexture(pressed ? FG : BG);
-      RenderSystem.scaled(0.7d, 0.7d, 1d);
-      int relX = (width - getXSize()) / 2 + 200;
-      int relY = (height - getYSize()) / 2;
-      blit(matrixStack, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
-    }
-  }
+//  @Override
+//  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+//    if (Config.HIBYE.get()) {
+//      RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+//      minecraft.getTextureManager().bindTexture(pressed ? FG : BG);
+//      RenderSystem.scaled(0.7d, 0.7d, 1d);
+//      int relX = (width - getXSize()) / 2 + 200;
+//      int relY = (height - getYSize()) / 2;
+//      blit(matrixStack, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
+//    }
+//  }
 
   @Override
   public void tick () {

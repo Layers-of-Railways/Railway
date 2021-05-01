@@ -143,7 +143,7 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
 //  }
 
   protected void renderWindowForeground (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-    renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    drawMouseoverTooltip(matrixStack, mouseX, mouseY);
     for (Widget w : widgets) {
       if (!w.isHovered()) {
         continue;

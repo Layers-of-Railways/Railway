@@ -32,10 +32,9 @@ public class StationSensorRailTileEntity extends TileEntity {
 //    super.read(compound);
 //  }
 
-
   @Override
-  public void read(BlockState state, CompoundNBT nbt) {
+  public void deserializeNBT(BlockState state, CompoundNBT nbt) {
     station = nbt.getString("station");
-    super.read(state, nbt);
+    super.deserializeNBT(state, nbt);
   }
 }

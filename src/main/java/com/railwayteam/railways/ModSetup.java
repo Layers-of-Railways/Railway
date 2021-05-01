@@ -58,7 +58,7 @@ public class ModSetup {
     // right now we're registering a block and an item.
     // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
     R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)         // tell Registrate how to create it
-      .properties(p->p.hardnessAndResistance(5.0f, 6.0f).setOpaque((state, blockReader, pos) -> false))
+      .properties(p->p.hardnessAndResistance(5.0f, 6.0f).nonOpaque())
             // set block properties
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
@@ -68,7 +68,7 @@ public class ModSetup {
       .register();      // pack it up for Registrate
 
     R_BLOCK_LARGE_RAIL = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).setOpaque((state, blockReader, pos) -> false).doesNotBlockMovement())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getString())).build();
       }))
@@ -77,7 +77,7 @@ public class ModSetup {
       .register();
 
     R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
-      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).setOpaque((state, blockReader, pos) -> false).doesNotBlockMovement())
+      .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getString())).build();
       }))
@@ -87,7 +87,7 @@ public class ModSetup {
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
       .initialProperties(()->Blocks.DETECTOR_RAIL)
-      .properties(p->p.setOpaque((state, blockReader, pos) -> false).doesNotBlockMovement())
+      .properties(p->p.nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
       .item().model((ctx,prov)-> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
       .tag(BlockTags.RAILS)

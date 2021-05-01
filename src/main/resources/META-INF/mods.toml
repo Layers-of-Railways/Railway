@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="[31,)"
 issueTrackerURL="https://github.com/Spirolateral/Railway/issues"
+license="TODO" # TODO
 [[mods]]
 modId="railways"
 version="0.1.0"

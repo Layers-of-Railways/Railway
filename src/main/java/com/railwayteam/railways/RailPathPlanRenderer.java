@@ -41,8 +41,7 @@ public class RailPathPlanRenderer {
     ItemStack flag = viewer.getHeldItem(Hand.MAIN_HAND);
 
     MatrixStack ms       = event.getMatrix();
-    Matrix4f m4f         = ms.getLast().getMatrix(); //ms.peek().getModel(); //ms.getLast().getMatrix();
-    // TODO: what the hell does peek do? i changed it for whatever is in that comment but i have no idea if it will work
+    Matrix4f m4f         = ms.peek().getModel(); //ms.peek().getModel(); //ms.getLast().getMatrix();
     VoxelShape vs        = world.getBlockState(eventPos).getShape(world, eventPos);
     ActiveRenderInfo ari = event.getInfo();
     IVertexBuilder vb    = event.getBuffers().getBuffer(RenderType.getLines());
@@ -59,18 +58,17 @@ public class RailPathPlanRenderer {
       float x0 = 0.5f;
       float y0 = 0.5f;
       float z0 = 0.5f;
-      // TODO: no idea if vb.vertex and vb.pos are the same thing
-        vb.pos(m4f, (float) (x0 + pos1.getX() - eyeX), (float) (y0 + pos1.getY() - eyeY), (float) (z0 + pos1.getZ() - eyeZ))
+        vb.vertex(m4f, (float) (x0 + pos1.getX() - eyeX), (float) (y0 + pos1.getY() - eyeY), (float) (z0 + pos1.getZ() - eyeZ))
         .color(0f, 1f, 0f, 1f).endVertex();
-        vb.pos(m4f, (float) (x0 + pos2.getX() - eyeX), (float) (y0 + pos2.getY() - eyeY), (float) (z0 + pos2.getZ() - eyeZ))
+        vb.vertex(m4f, (float) (x0 + pos2.getX() - eyeX), (float) (y0 + pos2.getY() - eyeY), (float) (z0 + pos2.getZ() - eyeZ))
         .color(0f, 1f, 0f, 1f).endVertex();
       //});
     }
     else {
       vs.forEachEdge((x0, y0, z0, x1, y1, z1) -> {
-        vb.pos(m4f, (float) (x0 + eventPos.getX() - eyeX), (float) (y0 + eventPos.getY() - eyeY), (float) (z0 + eventPos.getZ() - eyeZ))
+        vb.vertex(m4f, (float) (x0 + eventPos.getX() - eyeX), (float) (y0 + eventPos.getY() - eyeY), (float) (z0 + eventPos.getZ() - eyeZ))
         .color(0f, 1f, 0f, 0.5f).endVertex();
-        vb.pos(m4f, (float) (x1 + eventPos.getX() - eyeX), (float) (y1 + eventPos.getY() - eyeY), (float) (z1 + eventPos.getZ() - eyeZ))
+        vb.vertex(m4f, (float) (x1 + eventPos.getX() - eyeX), (float) (y1 + eventPos.getY() - eyeY), (float) (z1 + eventPos.getZ() - eyeZ))
         .color(0f, 1f, 0f, 0.5f).endVertex();
       });
     }
