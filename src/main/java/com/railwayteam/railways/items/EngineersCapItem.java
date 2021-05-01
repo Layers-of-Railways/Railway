@@ -12,10 +12,10 @@ import net.minecraft.command.impl.SummonCommand;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -25,13 +25,54 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class EngineersCapItem extends Item {
+public class EngineersCapItem extends ArmorItem {
+    static class EngineerCapArmorMaterial implements IArmorMaterial {
+        @Override
+        public int getDurability(EquipmentSlotType p_200896_1_) {
+            return 0;
+        }
+
+        @Override
+        public int getDamageReductionAmount(EquipmentSlotType p_200902_1_) {
+            return 0;
+        }
+
+        @Override
+        public int getEnchantability() {
+            return 0;
+        }
+
+        @Override
+        public SoundEvent getSoundEvent() {
+            return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
+        }
+
+        @Override
+        public Ingredient getRepairMaterial() {
+            return null;
+        }
+
+        @Override
+        public String getName() {
+            return "engineer_cap";
+        }
+
+        @Override
+        public float getToughness() {
+            return 0;
+        }
+    }
+
     public static final String name = "engineers_cap";
     public final DyeColor color;
 
-    public EngineersCapItem(Properties p_i48487_1_, DyeColor color) {
-        super(p_i48487_1_);
+    public EngineersCapItem(IArmorMaterial p_i48534_1_, EquipmentSlotType p_i48534_2_, Properties p_i48534_3_,  DyeColor color) {
+        super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
         this.color = color;
+    }
+
+    public EngineersCapItem(Properties p, DyeColor color) {
+        this(new EngineerCapArmorMaterial(), EquipmentSlotType.HEAD, p, color);
     }
 
     @Override
