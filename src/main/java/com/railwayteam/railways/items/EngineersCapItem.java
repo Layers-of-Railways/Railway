@@ -145,7 +145,6 @@ public class EngineersCapItem extends ArmorItem {
             BlockPos[] blocksToRemove = getBlocksToRemove(world, pos);
             if(blocksToRemove.length > 0) {
                 for(BlockPos pos1 : blocksToRemove) world.breakBlock(pos1, false, player);
-                System.out.println(Blocks.CYAN_WOOL.getTags());
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
