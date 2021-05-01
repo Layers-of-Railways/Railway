@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "W W"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "result": {
+    "item": "railways:engineers_cap_blue"
+  }
+}

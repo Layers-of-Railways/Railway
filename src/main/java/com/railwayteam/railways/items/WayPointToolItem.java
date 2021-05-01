@@ -13,7 +13,6 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -32,13 +31,18 @@ public class WayPointToolItem extends Item{
 		super(properties);
 	}
 
+	public static boolean isValid (Vec3i first, Vec3i second) {
+		Vec3i diff = new Vec3i(second.getX()-first.getX(), second.getY()-first.getY(), second.getZ()-first.getZ());
+		return (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ()));
+	}
+
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
 		if (player != null) {
 			if (player.isSneaking()) {
 				context.getItem().setTag(null);
-				player.sendStatusMessage(new StringTextComponent(MSG_RESET), false);
+				player.sendMessage(new StringTextComponent(MSG_RESET));
 				return ActionResultType.SUCCESS;
 			}
 			World world   = context.getWorld();
@@ -61,11 +65,11 @@ public class WayPointToolItem extends Item{
 
 				if (first != null && !first.equals(pos)) {
 					// do connection check
-					BlockPos diff = pos.subtract(first);
 				//	player.sendMessage(new StringTextComponent(diff.toString()));
 					// straight line or 45* diagonal
-					if (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ())) {
-						float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
+					if (isValid(first, pos)) {
+					//	Vec3i diff = pos.subtract(first);
+					//	float slope = diff.getY()/(float)Math.abs(diff.getX()==0?diff.getZ():diff.getX());
 					//	player.sendMessage(new StringTextComponent(MSG_VALID + String.format("%.2f.",slope)));
 						context.getItem().setTag(null);
 						// this is where we'd fire the event to build a track connection...
@@ -74,7 +78,7 @@ public class WayPointToolItem extends Item{
 						return ActionResultType.SUCCESS;
 					}
 					else {
-						player.sendStatusMessage(new StringTextComponent(MSG_INVALID), false);
+						player.sendMessage(new StringTextComponent(MSG_INVALID));
 						return ActionResultType.SUCCESS;
 					}
 				}
@@ -88,14 +92,14 @@ public class WayPointToolItem extends Item{
 		if (player.world.isRemote || start.equals(end)) return false;
 
 		// let's figure out the direction to iterate
-		BlockPos delta = end.subtract(start);
+		Vec3i delta = end.subtract(start);
 
 		if (Math.abs(delta.getX()) + Math.abs(delta.getZ()) > MAX_TRACK_SEG_LEN) {
-			player.sendStatusMessage(new StringTextComponent(MSG_TOOLONG), false);
+			player.sendMessage(new StringTextComponent(MSG_TOOLONG));
 			return false;
 		}
-		int stepX = delta.getX()==0 ? 0 : (Math.abs(delta.getX()) / delta.getX());
-		int stepZ = delta.getZ()==0 ? 0 : (Math.abs(delta.getZ()) / delta.getZ());
+		int stepX = delta.getX()==0 ? 0 : Math.abs(delta.getX())/delta.getX();
+		int stepZ = delta.getZ()==0 ? 0 : Math.abs(delta.getZ())/delta.getZ();
 		int slot  = 0;
 		ItemStack stack = null;
 		boolean zig = (stepZ==0); // zig = stepX, zag = stepZ
@@ -107,7 +111,7 @@ public class WayPointToolItem extends Item{
 			if ((stack == null || stack.isEmpty()) && !player.isCreative()) {
 				while (slot < player.inventory.getSizeInventory()) {
 					ItemStack check = player.inventory.getStackInSlot(slot);
-					if (ItemTags.getCollection().get(ItemTags.RAILS.getId()).contains(check.getItem())) {
+					if (ItemTags.getCollection().getOrCreate(ItemTags.RAILS.getId()).contains(check.getItem())) {
 						stack = check;
 						break;
 					}

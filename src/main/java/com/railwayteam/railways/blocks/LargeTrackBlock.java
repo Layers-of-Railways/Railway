@@ -4,11 +4,14 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IWorld;
+
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class LargeTrackBlock extends AbstractLargeTrackBlock {
@@ -39,6 +42,15 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
     this.setDefaultState(this.stateContainer.getBaseState().with(TRACK_SIDE, LargeTrackSide.NORTH_SOUTH));
   }
 
+  @Nullable
+  @Override
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
+    return checkForConnections(
+      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(Util.Vector.getClosest(context.getPlayer().getLookVec()).value)),
+      context.getWorld(), context.getPos()
+    );
+  }
+
   @Override
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) { builder.add(TRACK_SIDE); }
 
@@ -48,17 +60,17 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   }
 
   protected BlockState checkForConnections (BlockState state, IWorld world, BlockPos pos) {
-    ArrayList<Vector3d> priority = new ArrayList<>();
-    ArrayList<Vector3d> found = new ArrayList<>();
+    ArrayList<Vec3i> priority = new ArrayList<>();
+    ArrayList<Vec3i> found = new ArrayList<>();
     for (int x=-1; x<2; x++) {
       for (int z=-1; z<2; z++) {
         if (pos.add(x,0,z).equals(pos)) continue; // skip the center point
         BlockState candidate = world.getBlockState(pos.add(x,0,z));
         if (candidate.getBlock() instanceof AbstractLargeTrackBlock) {
-          Vector3d offset = new Vector3d(x,0,z);
+          Vec3i offset = new Vec3i(x,0,z);
           if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
             candidate, world, pos.add(x,0,z),
-            Util.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
+            Util.Vector.getClosest(new Vec3i(x,0,z)).getOpposite())
           ) { // front of the line if it connects
             priority.add(offset);
           }
@@ -82,8 +94,8 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         } // else fall through
       default: // too many, arbitrate.
         arbitration:
-        for (Vector3d b : found) {
-          for (Vector3d a : found) {
+        for (Vec3i b : found) {
+          for (Vec3i a : found) {
             if (LargeTrackSide.isValid(a,b)) {
               state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(a,b));
               break arbitration;
@@ -92,7 +104,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         }
     }
   //  Railways.LOGGER.debug("offsets found:");
-    for (Vector3d v : found) Railways.LOGGER.debug("  " + v.toString());
+  //  for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
   //  Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
     return state;
   }

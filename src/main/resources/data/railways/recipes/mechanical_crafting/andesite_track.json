@@ -1,0 +1,22 @@
+{
+  "type": "create:mechanical_crafting",
+  "pattern": [
+    " I I ",
+    "WIWIW",
+    " I I ",
+    "WIWIW",
+    " I I "
+  ],
+  "key": {
+    "W": {
+      "item": "create:andesite_alloy"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "railways:large_track",
+    "count": 16
+  }
+}

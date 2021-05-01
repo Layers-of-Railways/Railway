@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:signs"
+    },
+    {
+      "item": "create:andesite_alloy"
+    }
+  ],
+  "result": {
+    "item": "railways:waypoint_manager"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:engineer_caps"
+    },
+    {
+      "tag": "forge:dyes/red"
+    }
+  ],
+  "result": {
+    "item": "railways:engineers_cap_red"
+  }
+}

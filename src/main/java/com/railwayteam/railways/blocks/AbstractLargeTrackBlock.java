@@ -10,6 +10,9 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -17,6 +20,10 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import javax.annotation.Nullable;
 
 public abstract class AbstractLargeTrackBlock extends Block {
+  private static final VoxelShape SHAPE = Block.makeCuboidShape(
+    0d, 0d, 0d,
+    16, 2d, 16d
+  );
   public AbstractLargeTrackBlock(Properties properties) { super(properties); }
 
   protected abstract BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos);
@@ -59,9 +66,18 @@ public abstract class AbstractLargeTrackBlock extends Block {
     }
   }
 
-  public static ModelFile partialModel (DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
-    StringBuilder loc = new StringBuilder("block/wide_gauge/" + ctx.getName());
+  public static ModelFile partialModel(DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
+    return partialModel(false, ctx, prov, suffix);
+  }
+
+  public static ModelFile partialModel (boolean wooden, DataGenContext<?,?> ctx, RegistrateBlockstateProvider prov, String... suffix) {
+    StringBuilder loc = new StringBuilder((wooden ? "block/wide_gauge/wooden/" : "block/wide_gauge/andesite/") + ctx.getName().replace("_wooden",""));
     for (String suf : suffix) loc.append("_" + suf);
     return prov.models().getExistingFile(prov.modLoc(loc.toString()));
+  }
+
+  @Override
+  public VoxelShape getShape (BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
+    return SHAPE;
   }
 }
