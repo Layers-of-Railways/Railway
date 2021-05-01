@@ -7,6 +7,7 @@ import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.items.EngineerGolemItem;
 import com.railwayteam.railways.items.EngineersCapItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.WayPointToolItem;
@@ -67,10 +68,10 @@ public class ModSetup {
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
   public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
-  public static ItemEntry<EngineersCapItem> R_ITEM_ENGINEERS_CAP;
   public static ItemEntry<Item> R_ITEM_BOGIE;
+  public static ItemEntry<EngineerGolemItem> R_ITEM_ENGINEER_GOLEM;
 
-  public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
+    public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
   public static RegistryEntry<EntityType<EngineerGolemEntity>>  R_ENTITY_ENGINEER;
 
   public void init() {
@@ -283,6 +284,17 @@ public class ModSetup {
                     .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
                     .build(prov))
             .register();
+
+    R_ITEM_ENGINEER_GOLEM = reg.item("engineer_golem", EngineerGolemItem::new)
+              .lang("Engineer golem")
+            .model((ctx, prov) -> {
+                prov.singleTexture(
+                        ctx.getName(),
+                        prov.mcLoc("item/generated"),
+                        "layer0",
+                        prov.modLoc("item/waypoint_manager"));
+            })
+              .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")
