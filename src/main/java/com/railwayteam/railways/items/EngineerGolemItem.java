@@ -34,13 +34,16 @@ public class EngineerGolemItem extends Item {
         ItemStack stack = ctx.getItem();
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
-        if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
+        if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
             EngineerGolemEntity.spawn(world, stack, plr, pos.up());
             if(!plr.isCreative()) {
                 stack.setCount(stack.getCount()-1);
                 return ActionResultType.SUCCESS;
             }
         } else {
+            CompoundNBT tag = stack.getTag();
+            tag.putBoolean("spawn_entity", true);// for some reason setCount doesnt work in creative, so im doing this
+            stack.setTag(tag);
             if(!world.isRemote) {
                 stack.setCount(0);
             }
@@ -91,11 +94,6 @@ public class EngineerGolemItem extends Item {
     }
 
     public static CompoundNBT getOrCreateNbt(ItemStack stack) {
-        if(stack.getTag() == null) {
-            CompoundNBT nbt = new CompoundNBT();
-            stack.setTag(nbt);
-            return nbt;
-        }
-        return null;
+        return stack.getOrCreateTag();
     }
 }
