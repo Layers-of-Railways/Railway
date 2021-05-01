@@ -2,18 +2,20 @@ package com.railwayteam.railways.entities.engineer;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class EngineerGolemEntityModel extends EntityModel<EngineerGolemEntity> {
+
 	private final ModelRenderer head;
 	private final ModelRenderer body;
 	private final ModelRenderer armRight;
 	private final ModelRenderer armLeft;
 	private final ModelRenderer legRight;
 	private final ModelRenderer legLeft;
-	private final ModelRenderer hat;
-	private final ModelRenderer hatBrim;
+	public final ModelRenderer hat;
+	public final ModelRenderer hatBrim;
 
 	public EngineerGolemEntityModel() {
 		textureWidth = 64;

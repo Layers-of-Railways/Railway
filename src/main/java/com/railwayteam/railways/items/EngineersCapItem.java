@@ -1,19 +1,19 @@
 package com.railwayteam.railways.items;
 
-import com.railwayteam.railways.ModSetup;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.command.impl.SummonCommand;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.ZombieVillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -25,7 +25,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 public class EngineersCapItem extends ArmorItem {
@@ -64,6 +63,18 @@ public class EngineersCapItem extends ArmorItem {
         public float getToughness() {
             return 0;
         }
+    }
+
+    @Nullable
+    @Override
+    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
+        return (A) new EngineersCapModel();
+    }
+
+    @Nullable
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+        return "railways:textures/models/armor/" + color + "_golem_hat.png";
     }
 
     public static final String name = "engineers_cap";
@@ -176,4 +187,68 @@ public class EngineersCapItem extends ArmorItem {
 //        }
 //        return super.onItemRightClick(world, player, hand);
 //    }
+}
+
+//class EngineersCapModel extends BipedModel<LivingEntity> {
+//    private final ModelRenderer bb_main;
+//    private final ModelRenderer Hat_r1;
+//
+//    public EngineersCapModel() {
+//        super(0,0,0,0);
+//        textureWidth = 64;
+//        textureHeight = 64;
+//
+//        bb_main = new ModelRenderer(this);
+//        bb_main.setRotationPoint(0.0F, 24.0F, 0.0F);
+//        bb_main.setTextureOffset(39, 33).addCuboid(-12.0F, -23.0F, 12.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+//        bb_main.setTextureOffset(34, 48).addCuboid(-13.0F, -23.0F, 3.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+//        bb_main.setTextureOffset(34, 36).addCuboid(-4.0F, -23.0F, 3.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+//        bb_main.setTextureOffset(39, 30).addCuboid(-12.0F, -23.0F, 3.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+//        bb_main.setTextureOffset(32, 22).addCuboid(-12.0F, -23.0F, 4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+//
+//        Hat_r1 = new ModelRenderer(this);
+//        Hat_r1.setRotationPoint(0.0F, -20.4362F, 2.096F);
+////        bb_main.addChild(Hat_r1);
+//        bipedHead.addChild(Hat_r1);
+//        setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
+//        Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
+//    }
+//
+//    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+//        modelRenderer.rotateAngleX = x;
+//        modelRenderer.rotateAngleY = y;
+//        modelRenderer.rotateAngleZ = z;
+//    }
+//}
+
+class EngineersCapModel extends BipedModel<LivingEntity> {
+    private final ModelRenderer Hat;
+    private final ModelRenderer Hat_r1;
+
+    public EngineersCapModel() {
+        super(0,0,0,0);
+        textureWidth = 64;
+        textureHeight = 64;
+
+        Hat = new ModelRenderer(this);
+        Hat.setRotationPoint(0.0F, 6.0F, 0.0F);
+        Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -15.0F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+        Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+        Hat.setTextureOffset(34, 36).addCuboid(4.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+        Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -15.0F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+        Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -15.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+
+        Hat_r1 = new ModelRenderer(this);
+        Hat_r1.setRotationPoint(8.0F, -12.4362F, -5.904F);
+        Hat.addChild(Hat_r1);
+        setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
+        Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
+        bipedHead.addChild(Hat);
+    }
+
+    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+        modelRenderer.rotateAngleX = x;
+        modelRenderer.rotateAngleY = y;
+        modelRenderer.rotateAngleZ = z;
+    }
 }
