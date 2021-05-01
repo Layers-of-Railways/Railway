@@ -4,11 +4,14 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IWorld;
+
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class LargeTrackBlock extends AbstractLargeTrackBlock {
@@ -37,6 +40,15 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   public LargeTrackBlock(Properties properties) {
     super(properties);
     this.setDefaultState(this.stateContainer.getBaseState().with(TRACK_SIDE, LargeTrackSide.NORTH_SOUTH));
+  }
+
+  @Nullable
+  @Override
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
+    return checkForConnections(
+      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(Util.Vector.getClosest(context.getPlayer().getLookVec()).value)),
+      context.getWorld(), context.getPos()
+    );
   }
 
   @Override
@@ -92,7 +104,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         }
     }
   //  Railways.LOGGER.debug("offsets found:");
-    for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
+  //  for (Vec3i v : found) Railways.LOGGER.debug("  " + v.toShortString());
   //  Railways.LOGGER.debug("selected " + state.get(TRACK_SIDE).getName());
     return state;
   }

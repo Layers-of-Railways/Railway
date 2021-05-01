@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "railways:large_switch"
+    ]
+  },
+  "criteria": {
+    "has_tracks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "railways:large_track"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "railways:large_switch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tracks",
+      "has_the_recipe"
+    ]
+  ]
+}

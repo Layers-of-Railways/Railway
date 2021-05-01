@@ -1,52 +1,52 @@
 {
   "variants": {
     "bigswitch=n_se,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_n_se"
+      "model": "railways:block/wide_gauge/andesite/large_switch_n_se"
     },
     "bigswitch=n_sw,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_n_sw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_n_sw"
     },
     "bigswitch=s_ne,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_s_ne"
+      "model": "railways:block/wide_gauge/andesite/large_switch_s_ne"
     },
     "bigswitch=s_nw,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_s_nw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_s_nw"
     },
     "bigswitch=e_nw,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_e_nw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_e_nw"
     },
     "bigswitch=e_sw,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_e_sw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_e_sw"
     },
     "bigswitch=w_ne,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_w_ne"
+      "model": "railways:block/wide_gauge/andesite/large_switch_w_ne"
     },
     "bigswitch=w_se,enabled=false": {
-      "model": "railways:block/wide_gauge/large_switch_w_se"
+      "model": "railways:block/wide_gauge/andesite/large_switch_w_se"
     },
     "bigswitch=n_se,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_n_se"
+      "model": "railways:block/wide_gauge/andesite/large_switch_n_se"
     },
     "bigswitch=n_sw,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_n_sw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_n_sw"
     },
     "bigswitch=s_ne,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_s_ne"
+      "model": "railways:block/wide_gauge/andesite/large_switch_s_ne"
     },
     "bigswitch=s_nw,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_s_nw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_s_nw"
     },
     "bigswitch=e_nw,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_e_nw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_e_nw"
     },
     "bigswitch=e_sw,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_e_sw"
+      "model": "railways:block/wide_gauge/andesite/large_switch_e_sw"
     },
     "bigswitch=w_ne,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_w_ne"
+      "model": "railways:block/wide_gauge/andesite/large_switch_w_ne"
     },
     "bigswitch=w_se,enabled=true": {
-      "model": "railways:block/wide_gauge/large_switch_w_se"
+      "model": "railways:block/wide_gauge/andesite/large_switch_w_se"
     }
   }
 }

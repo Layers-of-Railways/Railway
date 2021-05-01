@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
 public class Util {
@@ -19,6 +20,14 @@ public class Util {
     private Vector(int x, int y, int z, String name) {
       value = new Vec3i(x, y, z);
       this.name = name;
+    }
+
+    public static Vector getClosest (Vec3d candidate) {
+      return getClosest(new Vec3i(
+        Math.signum(Math.round(candidate.getX())),
+        0,
+        Math.signum(Math.round(candidate.getZ()))
+      ));
     }
 
     public static Vector getClosest (Vec3i candidate) {
