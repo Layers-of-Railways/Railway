@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "railways:item/engineer_caps/pink"
+    "layer0": "railways:item/engineer_caps/pink_engineers_cap"
   }
 }

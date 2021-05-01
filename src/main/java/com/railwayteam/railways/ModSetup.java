@@ -242,7 +242,7 @@ public class ModSetup {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/engineer_caps/" + color.getName()));
+                        prov.modLoc("item/engineer_caps/" + color.getName() + "_engineers_cap"));
                     })
                   .recipe((ctx, prov) -> {
                     ShapedRecipeBuilder.shapedRecipe(ctx.get())
