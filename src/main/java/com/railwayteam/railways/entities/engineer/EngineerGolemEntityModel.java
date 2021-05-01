@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class EngineerGolemEntityModel extends EntityModel<EngineerGolemEntity> {
@@ -16,6 +17,13 @@ public class EngineerGolemEntityModel extends EntityModel<EngineerGolemEntity> {
 	private final ModelRenderer legLeft;
 	public final ModelRenderer hat;
 	public final ModelRenderer hatBrim;
+
+	@Override
+	public void setLivingAnimations(EngineerGolemEntity p_212843_1_, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
+		super.setLivingAnimations(p_212843_1_, p_212843_2_, p_212843_3_, p_212843_4_);
+	}
+
+
 
 	public EngineerGolemEntityModel() {
 		textureWidth = 64;
