@@ -112,6 +112,11 @@ public class EngineersCapItem extends ArmorItem {
         return lowest;
     }
 
+    @Override // overridden so that minecraft doesnt equip the item when right clicked, mainly so my engineer factory doesnt stop working lol
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity plr, Hand hand) {
+        return ActionResult.pass(plr.getHeldItem(hand));
+    }
+
     @Override
     public ActionResultType onItemUse(ItemUseContext ctx) {
         World world = ctx.getWorld();
