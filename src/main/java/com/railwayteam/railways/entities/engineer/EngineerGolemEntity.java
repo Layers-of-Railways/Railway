@@ -3,15 +3,20 @@ package com.railwayteam.railways.entities.engineer;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.items.EngineerGolemItem;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.contraptions.wrench.WrenchItem;
 import net.minecraft.client.renderer.entity.model.VillagerModel;
 import net.minecraft.client.renderer.entity.model.WolfModel;
 import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,9 +26,15 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -35,12 +46,23 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 
+@Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   public static final String name = "engineer_golem";
   public static final String defaultDisplayName = "Engineer Golem"; // huh why isnt he called conductor
 
+//  public static AttributeModifierMap attributes = AttributeModifierMap.builder().add(
+//          Attributes.GENERIC_MAX_HEALTH, 20.0)
+//          .build();
+
   public EngineerGolemEntity(EntityType<? extends CreatureEntity> type, World world) {
     super(type, world);
+  }
+
+  @SubscribeEvent
+  public static void createEntityAttributes(EntityAttributeCreationEvent event) {
+
+    event.put(ModSetup.R_ENTITY_ENGINEER.get(), EngineerGolemEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 
   @Override
@@ -122,16 +144,16 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
 //    return super.processInteract(plr, hand);
 //  }
 
-
   @Override
-  protected ActionResultType interactMob(PlayerEntity plr, Hand hand) {
+  public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
     ItemStack stack = plr.getHeldItem(hand);
-    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
-      remove();
+
+    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isSneaking()) {
       entityDropItem(EngineerGolemItem.create(this));
+      remove();
       return ActionResultType.SUCCESS;
     }
-    return super.interactMob(plr, hand);
+    return super.applyPlayerInteraction(plr, vector3d, hand);
   }
 
   private AnimationFactory factory = new AnimationFactory(this);

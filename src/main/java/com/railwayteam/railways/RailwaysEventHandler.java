@@ -2,6 +2,7 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.*;
 
+import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;
@@ -12,6 +13,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.StringTextComponent;
 
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

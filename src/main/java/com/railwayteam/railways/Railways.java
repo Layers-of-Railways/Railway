@@ -1,10 +1,14 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.CapabilitySetup;
+import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -24,15 +28,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.w3c.dom.Attr;
 import software.bernie.example.GeckoLibMod;
 import software.bernie.example.client.renderer.entity.ExampleGeoRenderer;
 import software.bernie.example.registry.EntityRegistry;
 
 @Mod(Railways.MODID)
 public class Railways {
-	public static final String MODID = "railways";
-	public static final String VERSION = "0.2.0";
-	public static Railways instance;
+  public static final String MODID = "railways";
+  public static final String VERSION = "0.2.0";
+  public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();
   public static Registrate railwayRegistrar;
@@ -41,10 +46,10 @@ public class Railways {
   private RailwaysEventHandler eventHandler;
 
   public Railways() {
-  	instance = this;
+    instance = this;
     GeckoLibMod.DISABLE_IN_DEV = true;
 
-  	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
     MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
@@ -74,8 +79,8 @@ public class Railways {
   }
 
   public static ResourceLocation createResourceLocation(String name) {
-		return new ResourceLocation(MODID, name);
-	}
+    return new ResourceLocation(MODID, name);
+  }
 
   public static void clientInit(FMLClientSetupEvent event) {
     RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
