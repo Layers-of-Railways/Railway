@@ -47,6 +47,8 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
     goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.2));
     goalSelector.addGoal(2, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 5, 5));
     goalSelector.addGoal(1, new LookRandomlyGoal(this));
+    goalSelector.addGoal(2, new SwimGoal(this));
+    goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0.2, 8));
   }
 
   @Override
