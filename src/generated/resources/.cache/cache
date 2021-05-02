@@ -74,7 +74,6 @@ c766b7cf9d1e34dea36e90359cbeeac27714cc82 data/railways/advancements/recipes/rail
 bb8753a51e88f9fdee624568405abbf99b1f7bf9 data/railways/advancements/recipes/railways/station_sensor.json
 51fc970a1087d8c1f3c542386cc795f4d8cfa891 data/railways/advancements/recipes/railways/waypoint.json
 b30f120dae29aca5f3422fc98696730169096441 data/railways/advancements/recipes/railways/waypoint_manager.json
-9e5ff73a38d17b88cc0998d8348db1ffc587ad0a data/railways/advancements/recipes/railways/wheel.json
 7274909fa9c6e1821d0a9ec1970dae1b48e4db4a data/railways/loot_tables/blocks/basic_signal.json
 06ea9981ec044b4e9997ab80a12b8c3778c79a77 data/railways/loot_tables/blocks/large_switch.json
 63118c07c4f2c826356fce7ea1070c0a949313a2 data/railways/loot_tables/blocks/large_switch_wooden.json
@@ -121,5 +120,4 @@ af2835d3a5c1665c874e19c12455be2bfd4c8b02 data/railways/recipes/large_switch.json
 caeddece765a7a0432569850d07f580fd1788847 data/railways/recipes/station_sensor.json
 3162c1e174e1ed9f946be8b3b20f843a46a3b23b data/railways/recipes/waypoint.json
 936a6193c2172fcdf65001372af88401db43abfc data/railways/recipes/waypoint_manager.json
-ace3f81d142b1642027bb6c34a3f505b472a32dd data/railways/recipes/wheel.json
 a6b85f93e5d8174a9bd68e6a309ec7127808b106 data/railways/tags/items/engineer_caps.json
