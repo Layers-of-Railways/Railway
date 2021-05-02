@@ -11,12 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
-import javax.annotation.Nullable;
 
 public class EngineerGolemItem extends Item {
     public static ItemStack create(Entity entity) {
@@ -35,22 +31,27 @@ public class EngineerGolemItem extends Item {
         ItemStack stack = ctx.getItem();
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
-        if(!world.isRemote) {
-            ServerWorld serverWorld = (ServerWorld) world;
-            if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
-                EngineerGolemEntity.spawn(serverWorld, stack, plr, pos.up());
-                if(!plr.isCreative()) {
-                    stack.setCount(stack.getCount()-1);
-                    return ActionResultType.SUCCESS;
-                }
-            } else {
-                stack.setCount(0);
-                LivingEntity entity = (LivingEntity) getEntityFromItem(stack, world);
-                entity.setHealth(entity.getMaxHealth());
-                world.addEntity(entity);
-                entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-                entity.setMotion(0, 0.1, 0);
+        if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
+            EngineerGolemEntity.spawn(world, stack, plr, pos.up());
+            if(!plr.isCreative()) {
+                stack.setCount(stack.getCount()-1);
+                return ActionResultType.SUCCESS;
             }
+        } else {
+            CompoundNBT tag = stack.getTag();
+            tag.putBoolean("spawn_entity", true);// for some reason setCount doesnt work in creative, so im doing this
+            stack.setTag(tag);
+            if(!world.isRemote) {
+                stack.setCount(0);
+            }
+            LivingEntity entity = (LivingEntity) getEntityFromItem(stack, world);
+            entity.setHealth(entity.getMaxHealth());
+            world.addEntity(entity);
+            entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+            entity.fallDistance = 0; // prevent instant death if died from fall damage
+            entity.setFireTimer(0); // prevent fire if died from fire
+            entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
+            entity.setMotion(0, 0.1, 0);
         }
         return ActionResultType.CONSUME;
     }
@@ -93,11 +94,6 @@ public class EngineerGolemItem extends Item {
     }
 
     public static CompoundNBT getOrCreateNbt(ItemStack stack) {
-        if(stack.getTag() == null) {
-            CompoundNBT nbt = new CompoundNBT();
-            stack.setTag(nbt);
-            return nbt;
-        }
-        return null;
+        return stack.getOrCreateTag();
     }
 }

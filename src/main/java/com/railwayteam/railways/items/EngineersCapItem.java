@@ -1,16 +1,11 @@
 package com.railwayteam.railways.items;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -152,7 +147,6 @@ public class EngineersCapItem extends ArmorItem {
             BlockPos[] blocksToRemove = getBlocksToRemove(world, pos);
             if(blocksToRemove.length > 0) {
                 for(BlockPos pos1 : blocksToRemove) world.breakBlock(pos1, false, player);
-                System.out.println(Blocks.CYAN_WOOL.getTags());
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
