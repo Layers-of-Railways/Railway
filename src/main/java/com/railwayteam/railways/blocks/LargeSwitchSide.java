@@ -59,6 +59,6 @@ public enum LargeSwitchSide implements IStringSerializable {
 
   @Override
   public String getString() {
-    return null;
+    return this.name;
   }
 }

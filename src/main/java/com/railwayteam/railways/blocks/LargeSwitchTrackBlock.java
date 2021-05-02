@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   public static final String name = "large_switch";
-
   public static EnumProperty<LargeSwitchSide> SWITCH_SIDE = EnumProperty.create("bigswitch", LargeSwitchSide.class);
 
   public LargeSwitchTrackBlock(Properties properties) {
