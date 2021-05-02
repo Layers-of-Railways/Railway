@@ -1,12 +1,6 @@
-package com.railwayteam.railways.entities.engineer;
+package com.railwayteam.railways.entities.conductor;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.example.item.JackInTheBoxItem;
-import software.bernie.geckolib3.GeckoLib;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -14,28 +8,28 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import javax.annotation.Nullable;
 
-public class EngineerGolemEntityModel extends AnimatedGeoModel<EngineerGolemEntity>
+public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
 {
 	@Override
-	public ResourceLocation getModelLocation(EngineerGolemEntity object)
+	public ResourceLocation getModelLocation(ConductorEntity object)
 	{
-		return new ResourceLocation("railways", "geo/engineer_golem.geo.json");
+		return new ResourceLocation("railways", "geo/conductor.geo.json");
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(EngineerGolemEntity object)
+	public ResourceLocation getTextureLocation(ConductorEntity object)
 	{
-		return new ResourceLocation("railways", "textures/entity/engineer_golem.png");
+		return new ResourceLocation("railways", "textures/entity/conductor.png");
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(EngineerGolemEntity object)
+	public ResourceLocation getAnimationFileLocation(ConductorEntity object)
 	{
-		return new ResourceLocation("railways", "animations/engineer_golem.animation.json");
+		return new ResourceLocation("railways", "animations/conductor.animation.json");
 	}
 
 	@Override
-	public void setLivingAnimations(EngineerGolemEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
+	public void setLivingAnimations(ConductorEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
 		super.setLivingAnimations(entity, uniqueID, customPredicate);
 
 		IBone head = this.getAnimationProcessor().getBone("Head");

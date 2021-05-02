@@ -1,7 +1,7 @@
 package com.railwayteam.railways.items;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -14,14 +14,14 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EngineerGolemItem extends Item {
+public class ConductorItem extends Item {
     public static ItemStack create(Entity entity) {
-        ItemStack stack = new ItemStack(ModSetup.R_ITEM_ENGINEER_GOLEM.get());
+        ItemStack stack = new ItemStack(ModSetup.R_ITEM_CONDUCTOR.get());
         putEntityDataInItem(stack, entity);
         return stack;
     }
 
-    public EngineerGolemItem(Properties p_i48487_1_) {
+    public ConductorItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 
@@ -32,7 +32,7 @@ public class EngineerGolemItem extends Item {
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
         if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
-            EngineerGolemEntity.spawn(world, stack, plr, pos.up());
+            ConductorEntity.spawn(world, stack, plr, pos.up());
             if(!plr.isCreative()) {
                 stack.setCount(stack.getCount()-1);
                 return ActionResultType.SUCCESS;

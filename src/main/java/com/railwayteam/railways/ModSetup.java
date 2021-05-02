@@ -3,8 +3,8 @@ package com.railwayteam.railways;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.railwayteam.railways.blocks.*;
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
-import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.items.*;
@@ -12,7 +12,6 @@ import com.railwayteam.railways.items.*;
 import com.railwayteam.railways.util.UsefulAndRailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -69,10 +68,10 @@ public class ModSetup {
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
   public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
   public static ItemEntry<Item> R_ITEM_BOGIE;
-  public static ItemEntry<EngineerGolemItem> R_ITEM_ENGINEER_GOLEM;
+  public static ItemEntry<ConductorItem> R_ITEM_CONDUCTOR;
 
-    public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
-  public static RegistryEntry<EntityType<EngineerGolemEntity>>  R_ENTITY_ENGINEER;
+  public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
+  public static RegistryEntry<EntityType<ConductorEntity>> R_ENTITY_CONDUCTOR;
 
   public void init() {
   }
@@ -297,8 +296,8 @@ public class ModSetup {
         .build(prov))
       .register();
 
-    R_ITEM_ENGINEER_GOLEM = reg.item("engineer_golem", EngineerGolemItem::new)
-      .lang("Engineer golem")
+    R_ITEM_CONDUCTOR = reg.item("conductor", ConductorItem::new)
+      .lang("Conductor")
       .model((ctx, prov) -> {
         prov.singleTexture(
         ctx.getName(),
@@ -312,14 +311,14 @@ public class ModSetup {
       .lang("Steady Minecart")
       .register();
 
-    R_ENTITY_ENGINEER   = reg.entity(EngineerGolemEntity.name, EngineerGolemEntity::new, EntityClassification.MISC)
-      .lang(EngineerGolemEntity.defaultDisplayName)
+    R_ENTITY_CONDUCTOR = reg.entity(ConductorEntity.name, ConductorEntity::new, EntityClassification.MISC)
+      .lang(ConductorEntity.defaultDisplayName)
       .register();
   }
 
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
-    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_ENGINEER.get(), EngineerGolemRenderer::new);
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
   }
 }

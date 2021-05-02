@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"golem_walk": {
+		"conductor_walk": {
 			"loop": true,
 			"animation_length": 0.92,
 			"bones": {
@@ -59,7 +59,7 @@
 				}
 			}
 		},
-		"golem_idle": {
+		"conductor_idle": {
 			"loop": true
 		}
 	},

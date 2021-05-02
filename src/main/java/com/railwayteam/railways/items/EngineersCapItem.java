@@ -1,6 +1,6 @@
 package com.railwayteam.railways.items;
 
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -69,7 +69,7 @@ public class EngineersCapItem extends ArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "railways:textures/models/armor/" + color + "_golem_hat.png";
+        return "railways:textures/models/armor/" + color + "_conductor_hat.png";
     }
 
     public static final String name = "engineers_cap";
@@ -143,7 +143,7 @@ public class EngineersCapItem extends ArmorItem {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                EngineerGolemEntity.spawn(world, stack, player, getLowest(blocksToRemove));
+                ConductorEntity.spawn(world, stack, player, getLowest(blocksToRemove));
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
                     return ActionResultType.CONSUME;
