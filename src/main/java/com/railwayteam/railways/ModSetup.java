@@ -177,7 +177,7 @@ public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
       .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
       .blockstate((ctx,prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
         (blockstate) -> (prov.models().getExistingFile(
-          prov.modLoc("block/"+ctx.getName())// + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
+          prov.modLoc("block/"+ctx.getName() + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
       ))))
       .simpleItem()
       .lang("Track Signal")

@@ -28,7 +28,6 @@ public class SignalBlock extends Block {
   public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState oldState, IWorld world, BlockPos pos, BlockPos oldPos) {
     return state
       .with(BlockStateProperties.POWERED, world.getWorld().isBlockPowered(pos))
-      .with(BlockStateProperties.HORIZONTAL_FACING, direction)
     ;
   }
 
