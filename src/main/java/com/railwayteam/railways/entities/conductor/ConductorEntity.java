@@ -1,25 +1,14 @@
-package com.railwayteam.railways.entities.engineer;
+package com.railwayteam.railways.entities.conductor;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.items.EngineerGolemItem;
+import com.railwayteam.railways.items.ConductorItem;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.wrench.WrenchItem;
-import net.minecraft.client.renderer.entity.model.VillagerModel;
-import net.minecraft.client.renderer.entity.model.WolfModel;
-import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifierManager;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
@@ -27,11 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,22 +32,17 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
-public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
-  public static final String name = "engineer_golem";
-  public static final String defaultDisplayName = "Engineer Golem"; // huh why isnt he called conductor
+public class ConductorEntity extends CreatureEntity implements IAnimatable {
+  public static final String name = "conductor";
+  public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
-//  public static AttributeModifierMap attributes = AttributeModifierMap.builder().add(
-//          Attributes.GENERIC_MAX_HEALTH, 20.0)
-//          .build();
-
-  public EngineerGolemEntity(EntityType<? extends CreatureEntity> type, World world) {
+  public ConductorEntity(EntityType<? extends CreatureEntity> type, World world) {
     super(type, world);
   }
 
   @SubscribeEvent
   public static void createEntityAttributes(EntityAttributeCreationEvent event) {
-
-    event.put(ModSetup.R_ENTITY_ENGINEER.get(), EngineerGolemEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
+    event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 
   @Override
@@ -77,8 +57,13 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   }
 
   @Override
+  public void setHeadRotation(float p_208000_1_, int p_208000_2_) {
+    super.setHeadRotation(p_208000_1_, p_208000_2_);
+  }
+
+  @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
-    entityDropItem(EngineerGolemItem.create(this));
+    entityDropItem(ConductorItem.create(this));
     super.spawnDrops(p_213345_1_);
   }
 
@@ -95,7 +80,7 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
 
   @Override
   public Iterable<ItemStack> getArmorInventoryList() {
-    return new ArrayList<>();
+    return new ArrayList<ItemStack>();
   }
 
   @Override
@@ -115,42 +100,25 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   @Override
   public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
-  public static EngineerGolemEntity spawn(ServerWorld world, ItemStack stack, PlayerEntity player, BlockPos pos, SpawnReason spawnReason) {
-    return (EngineerGolemEntity) ModSetup.R_ENTITY_ENGINEER.get().spawn(
-            world, stack, player, pos, spawnReason, false, false
-    );
-  }
-
-  public static EngineerGolemEntity spawn(World world, int x, int y, int z) {
-    EngineerGolemEntity entity = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
+  public static ConductorEntity spawn(World world, int x, int y, int z) {
+    ConductorEntity entity = new ConductorEntity(ModSetup.R_ENTITY_CONDUCTOR.get(), world);
     entity.setPosition(x, y, z);
 
     world.addEntity(entity);
     return entity;
   }
 
-  public static EngineerGolemEntity spawn(World world, BlockPos pos) {
+  public static ConductorEntity spawn(World world, BlockPos pos) {
     return spawn(world, pos.getX(), pos.getY(), pos.getZ());
   }
 
-//  @Override
-//  protected boolean processInteract(PlayerEntity plr, Hand hand) {
-//    ItemStack stack = plr.getHeldItem(hand);
-//    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
-//      remove();
-//      entityDropItem(EngineerGolemItem.create(this));
-//      return true;
-//    }
-//    return super.processInteract(plr, hand);
-//  }
 
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
     ItemStack stack = plr.getHeldItem(hand);
-
-    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isSneaking()) {
-      entityDropItem(EngineerGolemItem.create(this));
+    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
       remove();
+      entityDropItem(ConductorItem.create(this));
       return ActionResultType.SUCCESS;
     }
     return super.applyPlayerInteraction(plr, vector3d, hand);
@@ -160,9 +128,9 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
 
   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
     if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      event.getController().setAnimation(new AnimationBuilder().addAnimation("golem_walk", true));
+      event.getController().setAnimation(new AnimationBuilder().addAnimation("conductor_walk", true));
     } else {
-      event.getController().setAnimation(new AnimationBuilder().addAnimation("golem_idle", true));
+      event.getController().setAnimation(new AnimationBuilder().addAnimation("conductor_idle", true));
     }
     return PlayState.CONTINUE;
   }

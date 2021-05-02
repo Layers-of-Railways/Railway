@@ -2,7 +2,6 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.*;
 
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;

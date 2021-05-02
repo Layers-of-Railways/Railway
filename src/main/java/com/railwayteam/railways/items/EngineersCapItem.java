@@ -1,6 +1,6 @@
 package com.railwayteam.railways.items;
 
-import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +18,6 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -75,7 +74,7 @@ public class EngineersCapItem extends ArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "railways:textures/models/armor/" + color + "_golem_hat.png";
+        return "railways:textures/models/armor/" + color + "_conductor_hat.png";
     }
 
     public static final String name = "engineers_cap";
@@ -136,7 +135,6 @@ public class EngineersCapItem extends ArmorItem {
     public ActionResultType onItemUse(ItemUseContext ctx) {
         World world = ctx.getWorld();
         if(!world.isRemote) {
-            ServerWorld serverWorld = (ServerWorld) world;
             PlayerEntity player = ctx.getPlayer();
             Hand hand = ctx.getHand();
             ItemStack stack = ctx.getItem();
@@ -150,7 +148,7 @@ public class EngineersCapItem extends ArmorItem {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                EngineerGolemEntity.spawn(serverWorld, getLowest(blocksToRemove));
+                ConductorEntity.spawn(world, getLowest(blocksToRemove));
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
                     return ActionResultType.CONSUME;
