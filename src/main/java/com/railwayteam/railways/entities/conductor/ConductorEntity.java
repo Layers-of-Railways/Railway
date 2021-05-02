@@ -3,6 +3,8 @@ package com.railwayteam.railways.entities.conductor;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.items.ConductorItem;
 import com.simibubi.create.AllItems;
+import net.minecraft.block.AirBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -116,7 +118,7 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
     ItemStack stack = plr.getHeldItem(hand);
-    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
+    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isSneaking()) {
       remove();
       entityDropItem(ConductorItem.create(this));
       return ActionResultType.SUCCESS;
