@@ -7,14 +7,12 @@ import com.railwayteam.railways.entities.engineer.EngineerGolemEntity;
 import com.railwayteam.railways.entities.engineer.EngineerGolemRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
-import com.railwayteam.railways.items.EngineerGolemItem;
-import com.railwayteam.railways.items.EngineersCapItem;
-import com.railwayteam.railways.items.StationEditorItem;
-import com.railwayteam.railways.items.WayPointToolItem;
+import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.util.UsefulAndRailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -65,9 +63,10 @@ public class ModSetup {
 
   public static BlockEntry<Block> R_BLOCK_WHEEL;
 
-public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
+  public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
+  public static TileEntityEntry<SignalTileEntity> R_TE_SIGNAL;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
@@ -179,7 +178,7 @@ public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
         (blockstate) -> (prov.models().getExistingFile(
           prov.modLoc("block/"+ctx.getName() + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
       ))))
-      .simpleItem()
+      .item(SignalItem::new).build()
       .lang("Track Signal")
       .register();
 
@@ -217,6 +216,10 @@ public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
+      .register();
+
+    R_TE_SIGNAL = reg.tileEntity(SignalTileEntity.NAME, SignalTileEntity::new)
+      .validBlock(()->R_BLOCK_SIGNAL.get())
       .register();
 
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
