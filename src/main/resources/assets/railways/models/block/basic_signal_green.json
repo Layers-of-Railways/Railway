@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "railways:block/basic_signal",
-		"particle": "railways:block/basic_signal"
+		"0": "railways:block/basic_signal_green",
+		"particle": "railways:block/basic_signal_green"
 	},
 	"elements": [
 		{
