@@ -132,16 +132,20 @@ repositories {
     maven { // Registrate
         url "http://maven.tterrag.com/"
     }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-	
+
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     implementation fg.deobf("curse.maven:create-328085:${create_version}")
-	
-	def registrate = "com.tterrag.registrate:Registrate:MC${registrate_version}"
+    compile fg.deobf("software.bernie.geckolib:geckolib-forge-${geckolib_version}")
+
+    def registrate = "com.tterrag.registrate:Registrate:MC${registrate_version}"
     implementation fg.deobf(registrate)
     shade registrate
 }

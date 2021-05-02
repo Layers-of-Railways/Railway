@@ -22,10 +22,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 
-public class EngineerGolemEntity extends CreatureEntity {
+public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   public static final String name = "engineer_golem";
   public static final String defaultDisplayName = "Engineer Golem"; // huh why isnt he called conductor
 
@@ -101,5 +108,26 @@ public class EngineerGolemEntity extends CreatureEntity {
       return true;
     }
     return super.processInteract(plr, hand);
+  }
+
+  private AnimationFactory factory = new AnimationFactory(this);
+
+  private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
+      event.getController().setAnimation(new AnimationBuilder().addAnimation("golem_walk", true));
+    } else {
+      event.getController().setAnimation(new AnimationBuilder().addAnimation("golem_idle", true));
+    }
+    return PlayState.CONTINUE;
+  }
+
+  @Override
+  public void registerControllers(AnimationData data) {
+    data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+  }
+
+  @Override
+  public AnimationFactory getFactory() {
+    return this.factory;
   }
 }
