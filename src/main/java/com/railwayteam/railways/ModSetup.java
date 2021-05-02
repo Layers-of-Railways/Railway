@@ -15,6 +15,8 @@ import com.railwayteam.railways.items.WayPointToolItem;
 import com.railwayteam.railways.util.UsefulAndRailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -31,6 +33,7 @@ import com.tterrag.registrate.Registrate;
 
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -107,7 +110,7 @@ public class ModSetup {
     R_BLOCK_LARGE_RAIL = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque()) //.doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
-        return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
+        return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getString())).build();
       }))
       .item().model((ctx,prov) -> prov.singleTexture(
         ctx.getName(),
@@ -121,7 +124,7 @@ public class ModSetup {
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque())//.doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(
-          LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
+          LargeSwitchTrackBlock.partialModel(ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getString())).build();
       }))
       .item().model((ctx,prov) -> prov.singleTexture(
         ctx.getName(),
@@ -141,7 +144,7 @@ public class ModSetup {
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
          return ConfiguredModel.builder().modelFile(
-           LargeTrackBlock.partialModel(true, ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getName())).build();
+           LargeTrackBlock.partialModel(true, ctx,prov,state.get(LargeTrackBlock.TRACK_SIDE).getString())).build();
       }))
       .item().model((ctx,prov) -> prov.singleTexture(
         ctx.getName(),
@@ -155,7 +158,7 @@ public class ModSetup {
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
       .blockstate((ctx,prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
         return ConfiguredModel.builder().modelFile(
-          LargeSwitchTrackBlock.partialModel(true, ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getName())).build();
+          LargeSwitchTrackBlock.partialModel(true, ctx,prov,state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getString())).build();
       }))
       .item().model((ctx,prov) -> prov.singleTexture(
         ctx.getName(),
@@ -232,7 +235,7 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-          ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getName(),
+          ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getString(),
                   (p) -> new EngineersCapItem(p, color))
                   .properties(p -> p.maxStackSize(1))
                   .lang("Engineer's cap")
@@ -242,20 +245,20 @@ public class ModSetup {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/engineer_caps/" + color.getName() + "_engineers_cap"));
+                        prov.modLoc("item/engineer_caps/" + color.getString() + "_engineers_cap"));
                     })
                   .recipe((ctx, prov) -> {
                     ShapedRecipeBuilder.shapedRecipe(ctx.get())
                             .patternLine("WWW")
                             .patternLine("W W")
-                            .key('W', Ingredient.deserialize(new Gson().fromJson("{\"item\": \"minecraft:" + color.getName() + "_wool\"}", JsonObject.class))) // wow the fact that i have to do this is so stupid
+                            .key('W', Ingredient.deserialize(new Gson().fromJson("{\"item\": \"minecraft:" + color.getString() + "_wool\"}", JsonObject.class))) // wow the fact that i have to do this is so stupid
                             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
-                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName()));
+                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString()));
                     ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                             .addIngredient(UsefulAndRailwaysTags.EngineerCaps)
                             .addIngredient(color.getTag())
                             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
-                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName() + "_dye"));
+                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));
                   })
                   .register());
       }

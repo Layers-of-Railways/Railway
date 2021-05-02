@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
@@ -34,21 +35,22 @@ public class EngineerGolemItem extends Item {
         ItemStack stack = ctx.getItem();
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
-        if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
-            EngineerGolemEntity.spawn(world, stack, plr, pos.up());
-            if(!plr.isCreative()) {
-                stack.setCount(stack.getCount()-1);
-                return ActionResultType.SUCCESS;
-            }
-        } else {
-            if(!world.isRemote) {
+        if(!world.isRemote) {
+            ServerWorld serverWorld = (ServerWorld) world;
+            if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
+                EngineerGolemEntity.spawn(serverWorld, stack, plr, pos.up());
+                if(!plr.isCreative()) {
+                    stack.setCount(stack.getCount()-1);
+                    return ActionResultType.SUCCESS;
+                }
+            } else {
                 stack.setCount(0);
+                LivingEntity entity = (LivingEntity) getEntityFromItem(stack, world);
+                entity.setHealth(entity.getMaxHealth());
+                world.addEntity(entity);
+                entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+                entity.setMotion(0, 0.1, 0);
             }
-            LivingEntity entity = (LivingEntity) getEntityFromItem(stack, world);
-            entity.setHealth(entity.getMaxHealth());
-            world.addEntity(entity);
-            entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-            entity.setMotion(0, 0.1, 0);
         }
         return ActionResultType.CONSUME;
     }

@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.blocks.WayPointBlock;
 import com.railwayteam.railways.items.WayPointToolItem;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,8 +14,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -53,10 +52,10 @@ public class RailPathPlanRenderer {
     double eyeY = ari.getProjectedView().getY();
     double eyeZ = ari.getProjectedView().getZ();
 
-    Vec3i pos1 = new Vec3i(eventPos.getX(),eventPos.getY(),eventPos.getZ());
+    BlockPos pos1 = new BlockPos(eventPos.getX(),eventPos.getY(),eventPos.getZ());
     if (flag.hasTag() && flag.getTag().contains(WayPointToolItem.selectTag)) {
       BlockPos first = NBTUtil.readBlockPos(flag.getTag().getCompound(WayPointToolItem.selectTag));
-      Vec3i pos2 = new Vec3i (first.getX(), first.getY(), first.getZ());
+      BlockPos pos2 = new BlockPos (first.getX(), first.getY(), first.getZ());
 
       //vs.forEachBox((x0, y0, z0, x1, y1, z1) -> {
         Color line = (WayPointToolItem.isValid(pos1, pos2)) ? VALID : INVALID;

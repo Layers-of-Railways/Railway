@@ -7,9 +7,11 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,23 +20,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UsefulAndRailwaysTags {
-    public static final Tag<Item> IronSheet = AllTags.forgeItemTag("plates/iron");
+    public static final ITag.INamedTag<Item> IronSheet = AllTags.forgeItemTag("plates/iron");
     public static final ResourceLocation EngineerCapsLoc = new ResourceLocation("railways", "engineer_caps");
-    public static final Tag<Item> EngineerCaps = ItemTags.getCollection().getOrCreate(EngineerCapsLoc);
+    public static final Tags.IOptionalNamedTag<Item> EngineerCaps = ItemTags.createOptional(EngineerCapsLoc);
 
-    public static Tag<Item> getForgeItemTag(String name) {
+    public static ITag.INamedTag<Item> getForgeItemTag(String name) {
         return AllTags.forgeItemTag(name);
     }
 
-    public static Tag<Block> getForgeBlockTag(String name) {
+    public static ITag.INamedTag<Block> getForgeBlockTag(String name) {
         return AllTags.forgeBlockTag(name);
     }
 
-    public static Tag<Item> getMinecraftItemTag(String name) {
+    public static ITag<Item> getMinecraftItemTag(String name) {
         return ItemTags.getCollection().get(new ResourceLocation(name));
     }
 
-    public static Tag<Block> getMinecraftBlockTag(String name) {
+    public static ITag<Block> getMinecraftBlockTag(String name) {
         return BlockTags.getCollection().get(new ResourceLocation(name));
     }
 

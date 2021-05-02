@@ -23,6 +23,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -61,6 +62,11 @@ public class EngineersCapItem extends ArmorItem {
 
         @Override
         public float getToughness() {
+            return 0;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
             return 0;
         }
     }
@@ -135,6 +141,7 @@ public class EngineersCapItem extends ArmorItem {
     public ActionResultType onItemUse(ItemUseContext ctx) {
         World world = ctx.getWorld();
         if(!world.isRemote) {
+            ServerWorld serverWorld = (ServerWorld) world;
             PlayerEntity player = ctx.getPlayer();
             Hand hand = ctx.getHand();
             ItemStack stack = ctx.getItem();
@@ -149,7 +156,7 @@ public class EngineersCapItem extends ArmorItem {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                EngineerGolemEntity.spawn(world, stack, player, getLowest(blocksToRemove));
+                EngineerGolemEntity.spawn(serverWorld, stack, player, getLowest(blocksToRemove));
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
                     return ActionResultType.CONSUME;

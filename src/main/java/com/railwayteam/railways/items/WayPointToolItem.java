@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -31,8 +32,8 @@ public class WayPointToolItem extends Item{
 		super(properties);
 	}
 
-	public static boolean isValid (Vec3i first, Vec3i second) {
-		Vec3i diff = new Vec3i(second.getX()-first.getX(), second.getY()-first.getY(), second.getZ()-first.getZ());
+	public static boolean isValid (BlockPos first, BlockPos second) {
+		BlockPos diff = new BlockPos(second.getX()-first.getX(), second.getY()-first.getY(), second.getZ()-first.getZ());
 		return (diff.getX()==0 || diff.getZ()==0 || Math.abs(diff.getX())==Math.abs(diff.getZ()));
 	}
 
@@ -42,7 +43,7 @@ public class WayPointToolItem extends Item{
 		if (player != null) {
 			if (player.isSneaking()) {
 				context.getItem().setTag(null);
-				player.sendMessage(new StringTextComponent(MSG_RESET));
+				player.sendStatusMessage(new StringTextComponent(MSG_RESET), false);
 				return ActionResultType.SUCCESS;
 			}
 			World world   = context.getWorld();
@@ -78,7 +79,7 @@ public class WayPointToolItem extends Item{
 						return ActionResultType.SUCCESS;
 					}
 					else {
-						player.sendMessage(new StringTextComponent(MSG_INVALID));
+						player.sendStatusMessage(new StringTextComponent(MSG_INVALID), false);
 						return ActionResultType.SUCCESS;
 					}
 				}
@@ -92,10 +93,10 @@ public class WayPointToolItem extends Item{
 		if (player.world.isRemote || start.equals(end)) return false;
 
 		// let's figure out the direction to iterate
-		Vec3i delta = end.subtract(start);
+		BlockPos delta = end.subtract(start);
 
 		if (Math.abs(delta.getX()) + Math.abs(delta.getZ()) > MAX_TRACK_SEG_LEN) {
-			player.sendMessage(new StringTextComponent(MSG_TOOLONG));
+			player.sendStatusMessage(new StringTextComponent(MSG_TOOLONG), false);
 			return false;
 		}
 		int stepX = delta.getX()==0 ? 0 : Math.abs(delta.getX())/delta.getX();
@@ -111,7 +112,7 @@ public class WayPointToolItem extends Item{
 			if ((stack == null || stack.isEmpty()) && !player.isCreative()) {
 				while (slot < player.inventory.getSizeInventory()) {
 					ItemStack check = player.inventory.getStackInSlot(slot);
-					if (ItemTags.getCollection().getOrCreate(ItemTags.RAILS.getId()).contains(check.getItem())) {
+					if (ItemTags.getCollection().get(ItemTags.RAILS.getId()).contains(check.getItem())) {
 						stack = check;
 						break;
 					}

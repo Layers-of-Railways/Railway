@@ -13,12 +13,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.ArrayList;
@@ -70,19 +72,19 @@ public class EngineerGolemEntity extends LivingEntity {
   @Override
   public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
-  public static Entity spawn(World world, ItemStack stack, PlayerEntity player, BlockPos pos) {
+  public static Entity spawn(ServerWorld world, ItemStack stack, PlayerEntity player, BlockPos pos) {
     return ModSetup.R_ENTITY_ENGINEER.get().spawn(
             world, stack, player, pos, SpawnReason.STRUCTURE, false, false
     );
   }
 
   @Override
-  public boolean processInitialInteract(PlayerEntity plr, Hand hand) {
+  public ActionResultType processInitialInteract(PlayerEntity plr, Hand hand) {
     ItemStack stack = plr.getHeldItem(hand);
     if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
       remove();
       entityDropItem(EngineerGolemItem.create(this));
-      return true;
+      return ActionResultType.SUCCESS;
     }
     return super.processInitialInteract(plr, hand);
   }
