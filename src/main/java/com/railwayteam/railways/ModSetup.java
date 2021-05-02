@@ -30,6 +30,7 @@ import net.minecraft.item.*;
 import com.tterrag.registrate.Registrate;
 
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -61,7 +62,10 @@ public class ModSetup {
 
   public static BlockEntry<LargeTrackBlock> R_BLOCK_LARGE_RAIL_WOODEN;
   public static BlockEntry<LargeSwitchTrackBlock> R_BLOCK_LARGE_SWITCH_WOODEN;
+
   public static BlockEntry<Block> R_BLOCK_WHEEL;
+
+public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
 
@@ -92,14 +96,14 @@ public class ModSetup {
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
       ))
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-                    .patternLine("   ")
-                    .patternLine(" A ")
-                    .patternLine(" T ")
-                    .key('A', AllBlocks.SAIL_FRAME.get())
-                    .key('T', Items.STICK)
-                    .addCriterion("has_sail", prov.hasItem(AllBlocks.SAIL_FRAME.get()))
-                    .build(prov))
+      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+        .patternLine("   ")
+        .patternLine(" A ")
+        .patternLine(" T ")
+        .key('A', AllBlocks.SAIL_FRAME.get())
+        .key('T', Items.STICK)
+        .addCriterion("has_sail", prov.hasItem(AllBlocks.SAIL_FRAME.get()))
+        .build(prov))
       .simpleItem()     // nothing special about the item right now
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
@@ -129,10 +133,10 @@ public class ModSetup {
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
       .lang("Andesite Switch")
-            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-                    .addIngredient(R_BLOCK_LARGE_RAIL.get(), 2)
-                    .addCriterion("has_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL.get()))
-                    .build(prov))
+      .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+        .addIngredient(R_BLOCK_LARGE_RAIL.get(), 2)
+        .addCriterion("has_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL.get()))
+        .build(prov))
       .register();
 
     // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
@@ -163,10 +167,20 @@ public class ModSetup {
         "layer0",
         prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
       .lang("Wooden Switch")
-            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-                    .addIngredient(R_BLOCK_LARGE_RAIL_WOODEN.get(), 2)
-                    .addCriterion("has_wooden_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL_WOODEN.get()))
-                    .build(prov))
+      .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+        .addIngredient(R_BLOCK_LARGE_RAIL_WOODEN.get(), 2)
+        .addCriterion("has_wooden_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL_WOODEN.get()))
+        .build(prov))
+      .register();
+
+    R_BLOCK_SIGNAL = reg.block(SignalBlock.name, SignalBlock::new)
+      .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
+      .blockstate((ctx,prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
+        (blockstate) -> (prov.models().getExistingFile(
+          prov.modLoc("block/"+ctx.getName())// + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
+      ))))
+      .simpleItem()
+      .lang("Track Signal")
       .register();
 
     R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
@@ -176,32 +190,30 @@ public class ModSetup {
       .item().model((ctx,prov)-> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
       .tag(BlockTags.RAILS)
       .lang("Station Sensor")
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get(), 6)
-                    .patternLine("I I")
-                    .patternLine("ILI")
-                    .patternLine("IRI")
-                    .key('L', AllItems.LAPIS_SHEET.get())
-                    .key('R', Tags.Items.DUSTS_REDSTONE)
-                    .key('I', Tags.Items.INGOTS_IRON)
-                    .addCriterion("has_lapis", prov.hasItem(Tags.Items.GEMS_LAPIS))
-                    .build(prov))
+      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get(), 6)
+        .patternLine("I I")
+        .patternLine("ILI")
+        .patternLine("IRI")
+        .key('L', AllItems.LAPIS_SHEET.get())
+        .key('R', Tags.Items.DUSTS_REDSTONE)
+        .key('I', Tags.Items.INGOTS_IRON)
+        .addCriterion("has_lapis", prov.hasItem(Tags.Items.GEMS_LAPIS))
+        .build(prov))
       .register();
 
     R_BLOCK_WHEEL = reg.block("wheel", Block::new)
-            .lang("Wheel")
-            .simpleItem()
-            .defaultBlockstate()
-            .recipe((ctx, prov) -> {
-              ShapedRecipeBuilder.shapedRecipe(ctx.get(), 4)
-                      .patternLine(" I ")
-                      .patternLine("ISI")
-                      .patternLine(" I ")
-                      .key('I', UsefulAndRailwaysTags.IronSheet)
-                      .key('S', AllBlocks.SHAFT.get())
-                      .addCriterion("has_iron_sheet", prov.hasItem(UsefulAndRailwaysTags.IronSheet))
-                      .build(prov);
-            })
-            .register();
+      .lang("Wheel")
+      .simpleItem()
+      .defaultBlockstate()
+      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get(), 4)
+        .patternLine(" I ")
+        .patternLine("ISI")
+        .patternLine(" I ")
+        .key('I', UsefulAndRailwaysTags.IronSheet)
+        .key('S', AllBlocks.SHAFT.get())
+        .addCriterion("has_iron_sheet", prov.hasItem(UsefulAndRailwaysTags.IronSheet))
+        .build(prov))
+      .register();
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
@@ -209,11 +221,11 @@ public class ModSetup {
 
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
-            .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-                    .addIngredient(ItemTags.SIGNS)
-                    .addIngredient(AllItems.ANDESITE_ALLOY.get())
-                    .addCriterion("has_andesite_alloy", prov.hasItem(AllItems.ANDESITE_ALLOY.get()))
-                    .build(prov))
+      .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+        .addIngredient(ItemTags.SIGNS)
+        .addIngredient(AllItems.ANDESITE_ALLOY.get())
+        .addCriterion("has_andesite_alloy", prov.hasItem(AllItems.ANDESITE_ALLOY.get()))
+        .build(prov))
       .register();
 
 //    ItemBuilder<EngineersCapItem, Registrate> engineersCapBuilder = reg.item(EngineersCapItem.name, EngineersCapItem::new)
@@ -232,32 +244,32 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-          ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getName(),
-                  (p) -> new EngineersCapItem(p, color))
-                  .properties(p -> p.maxStackSize(1))
-                  .lang("Engineer's cap")
-                  .tag(UsefulAndRailwaysTags.EngineerCaps)
-                  .model((ctx, prov) -> {
-                        prov.singleTexture(
-                        ctx.getName(),
-                        prov.mcLoc("item/generated"),
-                        "layer0",
-                        prov.modLoc("item/engineer_caps/" + color.getName() + "_engineers_cap"));
-                    })
-                  .recipe((ctx, prov) -> {
-                    ShapedRecipeBuilder.shapedRecipe(ctx.get())
-                            .patternLine("WWW")
-                            .patternLine("W W")
-                            .key('W', Ingredient.deserialize(new Gson().fromJson("{\"item\": \"minecraft:" + color.getName() + "_wool\"}", JsonObject.class))) // wow the fact that i have to do this is so stupid
-                            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
-                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName()));
-                    ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-                            .addIngredient(UsefulAndRailwaysTags.EngineerCaps)
-                            .addIngredient(color.getTag())
-                            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
-                            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName() + "_dye"));
-                  })
-                  .register());
+      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getName(),
+      (p) -> new EngineersCapItem(p, color))
+        .properties(p -> p.maxStackSize(1))
+        .lang("Engineer's cap")
+        .tag(UsefulAndRailwaysTags.EngineerCaps)
+        .model((ctx, prov) -> {
+          prov.singleTexture(
+          ctx.getName(),
+          prov.mcLoc("item/generated"),
+          "layer0",
+          prov.modLoc("item/engineer_caps/" + color.getName() + "_engineers_cap"));
+        })
+        .recipe((ctx, prov) -> {
+          ShapedRecipeBuilder.shapedRecipe(ctx.get())
+            .patternLine("WWW")
+            .patternLine("W W")
+            .key('W', Ingredient.deserialize(new Gson().fromJson("{\"item\": \"minecraft:" + color.getName() + "_wool\"}", JsonObject.class))) // wow the fact that i have to do this is so stupid
+            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName()));
+          ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+            .addIngredient(UsefulAndRailwaysTags.EngineerCaps)
+            .addIngredient(color.getTag())
+            .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
+            .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getName() + "_dye"));
+          })
+        .register());
       }
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
@@ -265,36 +277,36 @@ public class ModSetup {
       .register();
 
     R_ITEM_BOGIE = reg.item("bogie", Item::new)
-            .lang("Bogie")
-            .model((ctx, prov) -> { // TODO: placeholder model
-              prov.singleTexture(
-                      ctx.getName(),
-                      prov.mcLoc("item/generated"),
-                      "layer0",
-                      prov.modLoc("item/waypoint_manager"));
-            })
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-                    .patternLine("WBW")
-                    .patternLine("SMS")
-                    .patternLine("WBW")
-                    .key('W', R_BLOCK_WHEEL.get())
-                    .key('B', AllBlocks.METAL_BRACKET.get())
-                    .key('M', AllBlocks.MECHANICAL_BEARING.get())
-                    .key('S', AllBlocks.SHAFT.get())
-                    .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
-                    .build(prov))
-            .register();
+      .lang("Bogie")
+      .model((ctx, prov) -> { // TODO: placeholder model
+        prov.singleTexture(
+        ctx.getName(),
+        prov.mcLoc("item/generated"),
+        "layer0",
+        prov.modLoc("item/waypoint_manager"));
+      })
+      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+        .patternLine("WBW")
+        .patternLine("SMS")
+        .patternLine("WBW")
+        .key('W', R_BLOCK_WHEEL.get())
+        .key('B', AllBlocks.METAL_BRACKET.get())
+        .key('M', AllBlocks.MECHANICAL_BEARING.get())
+        .key('S', AllBlocks.SHAFT.get())
+        .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
+        .build(prov))
+      .register();
 
     R_ITEM_ENGINEER_GOLEM = reg.item("engineer_golem", EngineerGolemItem::new)
-              .lang("Engineer golem")
-            .model((ctx, prov) -> {
-                prov.singleTexture(
-                        ctx.getName(),
-                        prov.mcLoc("item/generated"),
-                        "layer0",
-                        prov.modLoc("item/waypoint_manager"));
-            })
-              .register();
+      .lang("Engineer golem")
+      .model((ctx, prov) -> {
+        prov.singleTexture(
+        ctx.getName(),
+        prov.mcLoc("item/generated"),
+        "layer0",
+        prov.modLoc("item/waypoint_manager"));
+      })
+      .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")
