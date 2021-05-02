@@ -30,9 +30,9 @@ public class SignalTileEntity extends TileEntity {
   }
 
   @Override
-  public void read(CompoundNBT compound) {
-    int[] data = compound.getIntArray("target");
+  public void deserializeNBT(CompoundNBT nbt) {
+    int[] data = nbt.getIntArray("target");
     target = new BlockPos(data[0],data[1],data[2]);
-    super.read(compound);
+    super.deserializeNBT(nbt);
   }
 }

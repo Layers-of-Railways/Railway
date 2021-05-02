@@ -19,6 +19,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 
@@ -61,7 +62,7 @@ public class SignalBlock extends Block {
 
   @Override
   public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState oldState, IWorld world, BlockPos pos, BlockPos oldPos) {
-    boolean power = world.getWorld().isBlockPowered(pos);
+    boolean power = ((ServerWorld) world).isBlockPowered(pos);
     if (state.get(BlockStateProperties.POWERED) != power) {
       TileEntity te = world.getTileEntity(pos);
       if (te instanceof SignalTileEntity) {

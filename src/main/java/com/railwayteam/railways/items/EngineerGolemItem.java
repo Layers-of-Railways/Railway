@@ -32,7 +32,7 @@ public class EngineerGolemItem extends Item {
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
         if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
-            EngineerGolemEntity.spawn(world, stack, plr, pos.up());
+            EngineerGolemEntity.spawn(world, pos.up());
             if(!plr.isCreative()) {
                 stack.setCount(stack.getCount()-1);
                 return ActionResultType.SUCCESS;
@@ -49,7 +49,7 @@ public class EngineerGolemItem extends Item {
             world.addEntity(entity);
             entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
             entity.fallDistance = 0; // prevent instant death if died from fall damage
-            entity.setFireTimer(0); // prevent fire if died from fire
+            entity.setFireTicks(0); // prevent fire if died from fire
             entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
             entity.setMotion(0, 0.1, 0);
         }

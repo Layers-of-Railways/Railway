@@ -16,6 +16,11 @@ public class EngineerGolemRenderer extends GeoEntityRenderer<EngineerGolemEntity
     super(renderManager, new EngineerGolemEntityModel());
     this.shadowSize = 0.4F;
   }
+
+  @Override
+  public ResourceLocation getEntityTexture(EngineerGolemEntity entity) {
+    return new EngineerGolemEntityModel().getTextureLocation(entity);
+  }
 }
 
 //public class EngineerGolemRenderer extends MobRenderer<EngineerGolemEntity, EngineerGolemEntityModel> {

@@ -150,7 +150,7 @@ public class EngineersCapItem extends ArmorItem {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                EngineerGolemEntity.spawn(serverWorld, stack, player, getLowest(blocksToRemove));
+                EngineerGolemEntity.spawn(serverWorld, getLowest(blocksToRemove));
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
                     return ActionResultType.CONSUME;

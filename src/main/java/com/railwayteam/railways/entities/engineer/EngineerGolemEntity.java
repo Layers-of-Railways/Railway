@@ -10,17 +10,20 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -52,11 +55,6 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   }
 
   @Override
-  public void setHeadRotation(float p_208000_1_, int p_208000_2_) {
-    super.setHeadRotation(p_208000_1_, p_208000_2_);
-  }
-
-  @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
     entityDropItem(EngineerGolemItem.create(this));
     super.spawnDrops(p_213345_1_);
@@ -75,7 +73,7 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
 
   @Override
   public Iterable<ItemStack> getArmorInventoryList() {
-    return new ArrayList<ItemStack>();
+    return new ArrayList<>();
   }
 
   @Override
@@ -95,21 +93,45 @@ public class EngineerGolemEntity extends CreatureEntity implements IAnimatable {
   @Override
   public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
-  public static Entity spawn(World world, ItemStack stack, PlayerEntity player, BlockPos pos) {
-    return ModSetup.R_ENTITY_ENGINEER.get().spawn(
-            world, stack, player, pos, SpawnReason.STRUCTURE, false, false
+  public static EngineerGolemEntity spawn(ServerWorld world, ItemStack stack, PlayerEntity player, BlockPos pos, SpawnReason spawnReason) {
+    return (EngineerGolemEntity) ModSetup.R_ENTITY_ENGINEER.get().spawn(
+            world, stack, player, pos, spawnReason, false, false
     );
   }
 
+  public static EngineerGolemEntity spawn(World world, int x, int y, int z) {
+    EngineerGolemEntity entity = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
+    entity.setPosition(x, y, z);
+
+    world.addEntity(entity);
+    return entity;
+  }
+
+  public static EngineerGolemEntity spawn(World world, BlockPos pos) {
+    return spawn(world, pos.getX(), pos.getY(), pos.getZ());
+  }
+
+//  @Override
+//  protected boolean processInteract(PlayerEntity plr, Hand hand) {
+//    ItemStack stack = plr.getHeldItem(hand);
+//    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
+//      remove();
+//      entityDropItem(EngineerGolemItem.create(this));
+//      return true;
+//    }
+//    return super.processInteract(plr, hand);
+//  }
+
+
   @Override
-  protected boolean processInteract(PlayerEntity plr, Hand hand) {
+  protected ActionResultType interactMob(PlayerEntity plr, Hand hand) {
     ItemStack stack = plr.getHeldItem(hand);
     if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isCrouching()) {
       remove();
       entityDropItem(EngineerGolemItem.create(this));
-      return true;
+      return ActionResultType.SUCCESS;
     }
-    return super.processInteract(plr, hand);
+    return super.interactMob(plr, hand);
   }
 
   private AnimationFactory factory = new AnimationFactory(this);
