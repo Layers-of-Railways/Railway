@@ -48,6 +48,9 @@ public class EngineerGolemItem extends Item {
             entity.setHealth(entity.getMaxHealth());
             world.addEntity(entity);
             entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+            entity.fallDistance = 0; // prevent instant death if died from fall damage
+            entity.setFireTimer(0); // prevent fire if died from fire
+            entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
             entity.setMotion(0, 0.1, 0);
         }
         return ActionResultType.CONSUME;
