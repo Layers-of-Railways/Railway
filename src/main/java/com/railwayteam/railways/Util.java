@@ -1,10 +1,18 @@
 package com.railwayteam.railways;
 
+import com.simibubi.create.AllTags;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
@@ -101,5 +109,25 @@ public class Util {
       e.printStackTrace(); // this should be impossible
     }
     return false;
+  }
+
+  public static final ITag.INamedTag<Item> IronSheet = AllTags.forgeItemTag("plates/iron");
+  public static final ResourceLocation EngineerCapsLoc = new ResourceLocation("railways", "engineer_caps");
+  public static final Tags.IOptionalNamedTag<Item> EngineerCaps = ItemTags.createOptional(EngineerCapsLoc);
+
+  public static ITag.INamedTag<Item> getForgeItemTag(String name) {
+    return AllTags.forgeItemTag(name);
+  }
+
+  public static ITag.INamedTag<Block> getForgeBlockTag(String name) {
+    return AllTags.forgeBlockTag(name);
+  }
+
+  public static ITag<Item> getMinecraftItemTag(String name) {
+    return ItemTags.getCollection().get(new ResourceLocation(name));
+  }
+
+  public static ITag<Block> getMinecraftBlockTag(String name) {
+    return BlockTags.getCollection().get(new ResourceLocation(name));
   }
 }
