@@ -28,8 +28,34 @@ public class ConductorItem extends Item {
         super(p_i48487_1_);
     }
 
-    public static void onMinecartRightClicked(PlayerEntity plr, Hand hand) {
-        System.out.println("minecart mixin plz work :(");
+    public static ConductorEntity spawn(ItemStack stack, BlockPos pos, PlayerEntity plr) {
+        if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
+            if(!plr.isCreative()) {
+                stack.setCount(stack.getCount()-1);
+            }
+            return ConductorEntity.spawn(plr.world, pos);
+        } else {
+            CompoundNBT tag = stack.getTag();
+            tag.putBoolean("spawn_entity", true);// for some reason setCount doesnt work in creative, so im doing this
+            stack.setTag(tag);
+            stack.setCount(0);
+            LivingEntity entity = (LivingEntity) getEntityFromItem(stack, plr.world);
+            entity.setHealth(entity.getMaxHealth());
+            plr.world.addEntity(entity);
+            entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+            entity.fallDistance = 0; // prevent instant death if died from fall damage
+            entity.setFireTicks(0); // prevent fire if died from fire
+            entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
+            entity.setMotion(0, 0.1, 0);
+            return (ConductorEntity) entity;
+        }
+    }
+
+    public static ActionResultType onMinecartRightClicked(PlayerEntity plr, ItemStack stack, Hand hand, MinecartEntity entity) {
+        ConductorEntity conductor = spawn(stack, entity.getBlockPos(), plr);
+        conductor.startRiding(entity);
+
+        return ActionResultType.SUCCESS;
     }
 
     @Override
@@ -38,29 +64,7 @@ public class ConductorItem extends Item {
         ItemStack stack = ctx.getItem();
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
-        if(!hasEntity(stack) || stack.getOrCreateTag().getBoolean("spawn_entity")) { // if the item is created using /give or through creative, it doesnt have an entity
-            ConductorEntity.spawn(world, pos.up());
-            if(!plr.isCreative()) {
-                stack.setCount(stack.getCount()-1);
-                return ActionResultType.SUCCESS;
-            }
-        } else {
-            CompoundNBT tag = stack.getTag();
-            tag.putBoolean("spawn_entity", true);// for some reason setCount doesnt work in creative, so im doing this
-            stack.setTag(tag);
-            if(!world.isRemote) {
-                stack.setCount(0);
-            }
-            LivingEntity entity = (LivingEntity) getEntityFromItem(stack, world);
-            entity.setHealth(entity.getMaxHealth());
-            world.addEntity(entity);
-            entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-            entity.fallDistance = 0; // prevent instant death if died from fall damage
-            entity.setFireTicks(0); // prevent fire if died from fire
-            entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
-            entity.setMotion(0, 0.1, 0);
-        }
-        return ActionResultType.CONSUME;
+        return ActionResultType.SUCCESS;
     }
 
     @Override

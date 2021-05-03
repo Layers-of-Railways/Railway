@@ -2,6 +2,7 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.capabilities.*;
 
+import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;
@@ -9,6 +10,7 @@ import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
 
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -30,9 +32,15 @@ public class RailwaysEventHandler {
     if (!(target instanceof MinecartEntity)) return;
     if (player.getHeldItemMainhand().getItem() instanceof StationEditorItem) return;
     // else is minecart
+    if(player.getHeldItemMainhand().getItem().equals(ModSetup.R_ITEM_CONDUCTOR.get())) {
+      eis.setCanceled(true);
+      eis.setCancellationResult(ConductorItem.onMinecartRightClicked(player, player.getHeldItemMainhand(), Hand.MAIN_HAND, (MinecartEntity) target));
+      return;
+    }
     StationListCapability list = target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).orElse(null);
     if (list == null) return;
     // else process it
+
     if (player.isSneaking()) {
       // just check it, don't assign
       if (eis.getSide().isClient()) {
