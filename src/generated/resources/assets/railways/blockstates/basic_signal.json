@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north,powered=false": {
-      "model": "railways:block/basic_signal_green"
+      "model": "railways:block/basic_signal_red"
     },
     "facing=south,powered=false": {
-      "model": "railways:block/basic_signal_green",
+      "model": "railways:block/basic_signal_red",
       "y": 180
     },
     "facing=west,powered=false": {
-      "model": "railways:block/basic_signal_green",
+      "model": "railways:block/basic_signal_red",
       "y": 270
     },
     "facing=east,powered=false": {
-      "model": "railways:block/basic_signal_green",
+      "model": "railways:block/basic_signal_red",
       "y": 90
     },
     "facing=north,powered=true": {

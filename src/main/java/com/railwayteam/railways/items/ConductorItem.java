@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,10 @@ public class ConductorItem extends Item {
 
     public ConductorItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
+    }
+
+    public static void onMinecartRightClicked() {
+
     }
 
     @Override

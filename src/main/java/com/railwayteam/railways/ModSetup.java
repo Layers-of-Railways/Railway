@@ -169,9 +169,9 @@ public class ModSetup {
 
     R_BLOCK_SIGNAL = reg.block(SignalBlock.name, SignalBlock::new)
       .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
-      .blockstate((ctx,prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
+      .blockstate((ctx,prov) -> prov.horizontalBlock(ctx.getEntry(),
         (blockstate) -> (prov.models().getExistingFile(
-          prov.modLoc("block/"+ctx.getName() + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
+          prov.modLoc("block/"+ctx.getName() + (/* blockstate.get(BlockStateProperties.POWERED) */ true ? "_red" : "_green"))
       ))))
       .item(SignalItem::new).build()
       .lang("Track Signal")
