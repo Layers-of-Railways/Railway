@@ -5,12 +5,14 @@ import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -23,6 +25,12 @@ public class ConductorItem extends Item {
 
     public ConductorItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
+    }
+
+    @Override
+    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity plr, LivingEntity entity, Hand hand) {
+        System.out.println(entity.getClass().getSimpleName());
+        return super.itemInteractionForEntity(stack, plr, entity, hand);
     }
 
     @Override
