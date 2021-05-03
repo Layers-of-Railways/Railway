@@ -74,7 +74,7 @@ public class EngineersCapItem extends ArmorItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "railways:textures/models/armor/" + color + "_conductor_hat.png";
+        return "railways:textures/models/armor/" + color + "_golem_hat.png";
     }
 
     public static final String name = "engineers_cap";

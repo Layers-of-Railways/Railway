@@ -28,12 +28,6 @@ public class ConductorItem extends Item {
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity plr, LivingEntity entity, Hand hand) {
-        System.out.println(entity.getClass().getSimpleName());
-        return super.itemInteractionForEntity(stack, plr, entity, hand);
-    }
-
-    @Override
     public ActionResultType onItemUse(ItemUseContext ctx) {
         World world = ctx.getWorld();
         ItemStack stack = ctx.getItem();
