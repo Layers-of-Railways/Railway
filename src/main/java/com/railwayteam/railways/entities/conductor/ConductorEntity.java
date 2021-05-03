@@ -1,10 +1,9 @@
 package com.railwayteam.railways.entities.conductor;
 
 import com.railwayteam.railways.ModSetup;
+import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
 import com.railwayteam.railways.items.ConductorItem;
 import com.simibubi.create.AllItems;
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -56,6 +55,7 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
     goalSelector.addGoal(1, new LookRandomlyGoal(this));
     goalSelector.addGoal(2, new SwimGoal(this));
     goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0.2, 8));
+    goalSelector.addGoal(10, new WalkToAndSitInNearestMinecart(this, 0.4 /* Move to the minecart slightly faster than normal */, 5, 2));
   }
 
   @Override
@@ -146,4 +146,5 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
   public AnimationFactory getFactory() {
     return this.factory;
   }
+
 }

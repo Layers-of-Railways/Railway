@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO: Move to the Util class
 public class UsefulAndRailwaysTags {
     public static final ITag.INamedTag<Item> IronSheet = AllTags.forgeItemTag("plates/iron");
     public static final ResourceLocation EngineerCapsLoc = new ResourceLocation("railways", "engineer_caps");
