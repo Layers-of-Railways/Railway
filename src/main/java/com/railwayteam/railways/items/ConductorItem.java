@@ -28,8 +28,8 @@ public class ConductorItem extends Item {
         super(p_i48487_1_);
     }
 
-    public static void onMinecartRightClicked() {
-
+    public static void onMinecartRightClicked(PlayerEntity plr, Hand hand) {
+        System.out.println("minecart mixin plz work :(");
     }
 
     @Override
