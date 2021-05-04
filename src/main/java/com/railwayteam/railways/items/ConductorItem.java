@@ -53,9 +53,7 @@ public class ConductorItem extends Item {
 
     public static ActionResultType onMinecartRightClicked(PlayerEntity plr, ItemStack stack, Hand hand, MinecartEntity entity) {
         ConductorEntity conductor = spawn(stack, entity.getBlockPos(), plr);
-        conductor.startRiding(entity);
-
-        return ActionResultType.SUCCESS;
+        return conductor.startRiding(entity) ? ActionResultType.SUCCESS : ActionResultType.PASS;
     }
 
     @Override
@@ -64,6 +62,7 @@ public class ConductorItem extends Item {
         ItemStack stack = ctx.getItem();
         PlayerEntity plr = ctx.getPlayer();
         BlockPos pos = ctx.getPos();
+        spawn(stack, pos.up(), plr);
         return ActionResultType.SUCCESS;
     }
 
