@@ -2,16 +2,22 @@ package com.railwayteam.railways;
 
 import com.simibubi.create.AllTags;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RailBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.item.Item;
+import net.minecraft.state.properties.RailShape;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 

@@ -1,22 +1,27 @@
 package com.railwayteam.railways.entities.conductor;
 
 import com.railwayteam.railways.ModSetup;
+import com.railwayteam.railways.Util;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
 import com.railwayteam.railways.items.ConductorItem;
 import com.simibubi.create.AllItems;
+import net.minecraft.block.AbstractRailBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RailBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.HandSide;
+import net.minecraft.state.properties.RailShape;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,6 +51,10 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
     event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 
+  public boolean isInMinecart() {
+    return this.getRidingEntity() instanceof MinecartEntity;
+  }
+
   @Override
   protected void registerGoals() {
     super.registerGoals();
@@ -59,15 +68,29 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
   }
 
   @Override
-  public void setHeadRotation(float p_208000_1_, int p_208000_2_) {
-    super.setHeadRotation(p_208000_1_, p_208000_2_);
-  }
-
-  @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
     entityDropItem(ConductorItem.create(this));
     super.spawnDrops(p_213345_1_);
   }
+
+//  @Override
+//  public void livingTick() {
+//    if(isInMinecart()) {
+//      MinecartEntity minecart = (MinecartEntity) getRidingEntity();
+//      BlockState state = world.getBlockState(minecart.getBlockPos());
+//      if(AbstractRailBlock.isRail(state)) {
+//        RailShape shape = Util.getRailDirection(world, minecart.getBlockPos(), minecart);
+//        // a bunch of me testing and my attempts to do this
+////        Vector3i v = Util.railShapeToFirstDirection(shape).getDirectionVec();
+////        BlockPos p = minecart.getBlockPos().add(mine);
+////        BlockPos p = minecart.getBlockPos().add(minecart.getAdjustedHorizontalFacing().getDirectionVec());
+////        getLookController().setLookPosition(p.getX(), p.getY(), p.getZ());
+////      setRotation((float) Util.getMinecartYaw(minecart), (float) Util.getMinecartPitch(minecart));
+//        setRotation(0, 0);
+//      }
+//    }
+//    super.livingTick();
+//  }
 
   @Override
   public boolean getAlwaysRenderNameTagForRender() {
@@ -128,13 +151,30 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
 
   private AnimationFactory factory = new AnimationFactory(this);
 
+  protected AnimationBuilder animation(String name, boolean shouldLoop) {
+    return new AnimationBuilder().addAnimation("conductor_"+name, shouldLoop);
+  }
+
+  protected void setAnim(AnimationEvent<?> event, AnimationBuilder builder) {
+    event.getController().setAnimation(builder);
+  }
+
+  protected void setAnim(AnimationEvent<?> event, String name, boolean shouldLoop) {
+    setAnim(event, animation(name, shouldLoop));
+  }
+
   private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-    if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      event.getController().setAnimation(new AnimationBuilder().addAnimation("conductor_walk", true));
-    } else {
-      event.getController().setAnimation(new AnimationBuilder().addAnimation("conductor_idle", true));
+    PlayState toRet = PlayState.CONTINUE;
+    if(isInMinecart()) {
+      setAnim(event, "minecart", true);
+      return toRet;
     }
-    return PlayState.CONTINUE;
+    if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
+      setAnim(event,"walk", true);
+    } else {
+      setAnim(event,"idle", true);
+    }
+    return toRet;
   }
 
   @Override
