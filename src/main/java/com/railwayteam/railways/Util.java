@@ -20,6 +20,13 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -135,5 +142,48 @@ public class Util {
 
   public static ITag<Block> getMinecraftBlockTag(String name) {
     return BlockTags.getCollection().get(new ResourceLocation(name));
+  }
+
+  public interface Animatable extends IAnimatable, AnimationUtil {
+    <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event);
+
+    default <E extends IAnimatable> PlayState getPlayState(AnimationEvent<E> event) {
+      return PlayState.CONTINUE;
+    }
+
+    default <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+      setAnim(event, getAnimation(event));
+      return getPlayState(event);
+    }
+
+    default int getTransitionLength() {
+      return 0;
+    }
+
+    @Override
+    default void registerControllers(AnimationData data) {
+      data.addAnimationController(new AnimationController(this, "controller", getTransitionLength(), this::predicate));
+    }
+  }
+
+  public interface AnimationUtil {
+    default String getAnimationPrefix() {return "";}
+    default String getAnimationSuffix() {return "";}
+
+    default AnimationBuilder animation(String name, boolean shouldLoop) {
+      return new AnimationBuilder().addAnimation(getAnimationPrefix() + name + getAnimationSuffix(), shouldLoop);
+    }
+
+    default void setAnim(AnimationEvent<?> event, AnimationBuilder builder) {
+      event.getController().setAnimation(builder);
+    }
+
+    default void setAnim(AnimationEvent<?> event, String name, boolean shouldLoop) {
+      setAnim(event, animation(name, shouldLoop));
+    }
+
+    default AnimationBuilder anim(String name, boolean shouldLoop) {
+      return animation(name, shouldLoop);
+    }
   }
 }

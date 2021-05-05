@@ -38,7 +38,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ConductorEntity extends CreatureEntity implements IAnimatable {
+public class ConductorEntity extends CreatureEntity implements Util.Animatable {
   public static final String name = "conductor";
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
@@ -151,35 +151,16 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
 
   private AnimationFactory factory = new AnimationFactory(this);
 
-  protected AnimationBuilder animation(String name, boolean shouldLoop) {
-    return new AnimationBuilder().addAnimation("conductor_"+name, shouldLoop);
-  }
-
-  protected void setAnim(AnimationEvent<?> event, AnimationBuilder builder) {
-    event.getController().setAnimation(builder);
-  }
-
-  protected void setAnim(AnimationEvent<?> event, String name, boolean shouldLoop) {
-    setAnim(event, animation(name, shouldLoop));
-  }
-
-  private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-    PlayState toRet = PlayState.CONTINUE;
+  @Override
+  public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
     if(isInMinecart()) {
-      setAnim(event, "minecart", true);
-      return toRet;
+      return anim("minecart", true);
     }
     if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      setAnim(event,"walk", true);
+      return anim("walk", true);
     } else {
-      setAnim(event,"idle", true);
+      return anim("idle", true);
     }
-    return toRet;
-  }
-
-  @Override
-  public void registerControllers(AnimationData data) {
-    data.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
   }
 
   @Override
@@ -187,4 +168,8 @@ public class ConductorEntity extends CreatureEntity implements IAnimatable {
     return this.factory;
   }
 
+  @Override
+  public String getAnimationPrefix() {
+    return "conductor_";
+  }
 }
