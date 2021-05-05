@@ -38,7 +38,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ConductorEntity extends CreatureEntity implements Util.Animatable {
+public class ConductorEntity extends CreatureEntity implements Util.Animatable, Util.WrenchableEntity {
   public static final String name = "conductor";
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
@@ -140,13 +140,12 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable {
 
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
-    ItemStack stack = plr.getHeldItem(hand);
-    if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isSneaking()) {
-      remove();
-      entityDropItem(ConductorItem.create(this));
-      return ActionResultType.SUCCESS;
-    }
-    return super.applyPlayerInteraction(plr, vector3d, hand);
+    return onWrenched(plr, hand, this);
+  }
+
+  @Override
+  public void afterWrenched(PlayerEntity plr, Hand hand) {
+    entityDropItem(ConductorItem.create(this));
   }
 
   private AnimationFactory factory = new AnimationFactory(this);

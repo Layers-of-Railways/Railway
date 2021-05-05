@@ -1,5 +1,7 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.items.ConductorItem;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -8,12 +10,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.RailShape;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -185,5 +191,19 @@ public class Util {
     default AnimationBuilder anim(String name, boolean shouldLoop) {
       return animation(name, shouldLoop);
     }
+  }
+
+  public interface WrenchableEntity {
+    default ActionResultType onWrenched(PlayerEntity plr, Hand hand, Entity entity) {
+      ItemStack stack = plr.getHeldItem(hand);
+      if(stack.getItem().equals(AllItems.WRENCH.get()) && plr.isSneaking()) {
+        entity.remove();
+        afterWrenched(plr, hand);
+        return ActionResultType.SUCCESS;
+      }
+      return ActionResultType.PASS;
+    }
+
+    default void afterWrenched(PlayerEntity plr, Hand hand) { }
   }
 }
