@@ -2,6 +2,7 @@ package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.Util;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
 import javax.annotation.Nonnull;
@@ -21,10 +22,10 @@ public enum LargeTrackSide implements IStringSerializable {
   NORTHWEST_SOUTHEAST(Util.Vector.NORTHWEST, Util.Vector.SOUTHEAST);
 
   private final String name;
-  private final Vector3d[] offsets;
+  private final BlockPos[] offsets;
   private LargeTrackSide (Util.Vector dir1, Util.Vector dir2) {
     this.name = dir1.name + "_" + dir2.name;
-    offsets = new Vector3d[2];
+    offsets = new BlockPos[2];
     offsets[0] = dir1.value;
     offsets[1] = dir2.value;
   }
@@ -47,11 +48,11 @@ public enum LargeTrackSide implements IStringSerializable {
     return this.isCardinal() || this.isDiagonal();
   }
 
-  public boolean connectsTo (Vector3d offset) {
+  public boolean connectsTo (BlockPos offset) {
     return offsets[0].equals(offset) || offsets[1].equals(offset);
   }
 
-  public static boolean isValid    (Vector3d a, Vector3d b) {
+  public static boolean isValid    (BlockPos a, BlockPos b) {
     for (LargeTrackSide side : values()) {
       if (side.offsets[0].equals(a) && side.offsets[1].equals(b)
       ||  side.offsets[1].equals(a) && side.offsets[0].equals(b)
@@ -62,7 +63,7 @@ public enum LargeTrackSide implements IStringSerializable {
     return false;
   }
 
-  public static LargeTrackSide findValidStateFrom(Vector3d a) {
+  public static LargeTrackSide findValidStateFrom(BlockPos a) {
     // try to find a straight track
     for (LargeTrackSide side : values()) {
       if (!side.isStraight()) continue;
@@ -71,7 +72,7 @@ public enum LargeTrackSide implements IStringSerializable {
     return NORTH_SOUTH;
   }
 
-  public static LargeTrackSide findValidStateFrom(Vector3d a, Vector3d b) {
+  public static LargeTrackSide findValidStateFrom(BlockPos a, BlockPos b) {
     for (LargeTrackSide side : LargeTrackSide.values()) {
       if (!side.connectsTo(a)) continue;
       if (!side.connectsTo(b)) continue;

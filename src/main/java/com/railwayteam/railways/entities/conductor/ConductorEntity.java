@@ -37,18 +37,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 
-@Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConductorEntity extends CreatureEntity implements IAnimatable {
   public static final String name = "conductor";
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
   public ConductorEntity(EntityType<? extends CreatureEntity> type, World world) {
     super(type, world);
-  }
-
-  @SubscribeEvent
-  public static void createEntityAttributes(EntityAttributeCreationEvent event) {
-    event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 
   public boolean isInMinecart() {

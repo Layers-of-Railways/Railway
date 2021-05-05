@@ -38,11 +38,11 @@ public class Util {
     SOUTHWEST(-1, 0,  1, "sw"),
     SOUTHEAST( 1, 0,  1, "se");
 
-    public Vector3d value;
+    public BlockPos value;
     public String name;
 
     private Vector(int x, int y, int z, String name) {
-      value = new Vector3d(x, y, z);
+      value = new BlockPos(x, y, z);
       this.name = name;
     }
 

@@ -1,6 +1,5 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.Util;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -12,12 +11,15 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public abstract class AbstractLargeTrackBlock extends Block {
   private static final VoxelShape SHAPE = Block.makeCuboidShape(
@@ -79,5 +81,42 @@ public abstract class AbstractLargeTrackBlock extends Block {
   @Override
   public VoxelShape getShape (BlockState state, IBlockReader world, BlockPos pos, ISelectionContext ctx) {
     return SHAPE;
+  }
+
+  public ArrayList<BlockPos>[] getConnectionsAndPriority(IWorld world, BlockPos pos) {
+    ArrayList<BlockPos> priority = new ArrayList<>();
+    ArrayList<BlockPos> found = new ArrayList<>();
+    for (int x=-1; x<2; x++) {
+      for (int z=-1; z<2; z++) {
+        if (pos.add(x,0,z).equals(pos)) continue; // skip the center point
+        BlockState candidate = world.getBlockState(pos.add(x,0,z));
+        if (candidate.getBlock() instanceof AbstractLargeTrackBlock) {
+          BlockPos offset = new BlockPos(x,0,z);
+          if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
+                  candidate, world, pos.add(x,0,z),
+                  Util.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
+          ) { // front of the line if it connects
+            priority.add(offset);
+          }
+          else {  // to the back of the line if it doesn't connect
+            found.add(offset);
+          }
+        }
+      }
+    }
+    found.addAll(0, priority); // stack them together
+    return new ArrayList[]{found, priority};
+  }
+
+  public ArrayList<BlockPos> getConnections(IWorld world, BlockPos pos) {
+    return getConnectionsAndPriority(world, pos)[0];
+  }
+
+  public static boolean isTrack(Block block) {
+    return block instanceof AbstractLargeTrackBlock;
+  }
+
+  public static boolean isTrack(BlockState state) {
+    return isTrack(state.getBlock());
   }
 }
