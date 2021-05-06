@@ -152,14 +152,16 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
 
   @Override
   public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
-    if(isInMinecart()) {
-      return anim("minecart", true);
+    if(this.getRidingEntity() != null) {
+      if(isInMinecart()) {
+        return anim("minecart");
+      }
+      return anim("sit");
     }
     if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      return anim("walk", true);
-    } else {
-      return anim("idle", true);
+      return anim("walk");
     }
+    return anim("idle");
   }
 
   @Override
