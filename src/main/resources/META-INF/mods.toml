@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/Spirolateral/Railway/issues"
 license="All rights reserved"
 [[mods]]
 modId="railways"
-version="0.1.0"
+version="${file.jarVersion}"
 displayName="Railways"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/railways"
 credits="Thanks to someone i guess"
