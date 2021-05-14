@@ -300,13 +300,6 @@ public class ModSetup {
 
     R_ITEM_CONDUCTOR = reg.item("conductor", ConductorItem::new)
       .lang("Conductor")
-      .model((ctx, prov) -> {
-        prov.singleTexture(
-        ctx.getName(),
-        prov.mcLoc("item/generated"),
-        "layer0",
-        prov.modLoc("item/waypoint_manager"));
-      })
       .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)

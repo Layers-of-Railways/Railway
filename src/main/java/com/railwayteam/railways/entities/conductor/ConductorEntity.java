@@ -207,6 +207,20 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
 
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
+    ItemStack stack = plr.getHeldItem(hand);
+    Item item = stack.getItem();
+
+    if(item instanceof DyeItem) {
+      DyeColor color = ((DyeItem) item).getDyeColor();
+      if(!color.equals(getColor())) {
+        setColor(color);
+        if(!plr.isCreative()) {
+          stack.shrink(1);
+        }
+      }
+      return ActionResultType.SUCCESS;
+    }
+
     return onWrenched(plr, hand, this);
   }
 
