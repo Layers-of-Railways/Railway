@@ -40,14 +40,15 @@ public abstract class ColorUtils {
     }
 
     public static TextFormatting colorToFormat(DyeColor color) {
-        return colorToColorFormat.keySet().stream().filter((k) -> colorToColorFormat.get(k).getId() == color.getId()).findFirst().orElse(TextFormatting.BLACK);
+        return colorToColorFormat.keySet().stream().filter((k) -> colorToColorFormat.get(k).getId() == color.getId()).findFirst().orElse(TextFormatting.WHITE);
     }
 
-    public static String colorToColoredText(DyeColor color, String text) {
-        return colorToFormat(color) + text;
+    public static String colorToColoredText(DyeColor color, String text, boolean changeBlackToGray) {
+        TextFormatting t = colorToFormat(color);
+        return (t.equals(TextFormatting.BLACK) && changeBlackToGray ? TextFormatting.GRAY : t) + text;
     }
 
     public static String colorToColoredText(DyeColor color) {
-        return colorToColoredText(color, color.getTranslationKey());
+        return colorToColoredText(color, color.getTranslationKey(), true);
     }
 }

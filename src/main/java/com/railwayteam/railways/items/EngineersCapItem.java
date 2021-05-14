@@ -2,6 +2,7 @@ package com.railwayteam.railways.items;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.Animatable;
+import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -93,7 +94,7 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
 
     @Override
     public void addInformation(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> text, ITooltipFlag p_77624_4_) {
-        text.add(new StringTextComponent("Color: " + color.getTranslationKey())); // TODO: Turn this into a translatable text
+        text.add(new StringTextComponent("Color: " + ColorUtils.colorToColoredText(color))); // TODO: Turn this into a translatable text
         super.addInformation(p_77624_1_, p_77624_2_, text, p_77624_4_);
     }
 
