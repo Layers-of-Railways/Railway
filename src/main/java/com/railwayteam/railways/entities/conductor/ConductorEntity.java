@@ -254,4 +254,18 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
   public String getAnimationPrefix() {
     return "conductor_";
   }
+
+  @Override
+  public void read(CompoundNBT nbt) {
+    super.read(nbt);
+
+    setColor(nbt.getInt("CapColor"));
+  }
+
+  @Override
+  public void writeAdditional(CompoundNBT nbt) {
+    nbt.putInt("CapColor", getColorId());
+
+    super.writeAdditional(nbt);
+  }
 }
