@@ -7,6 +7,10 @@ import software.bernie.example.item.PotatoArmorItem;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class EngineersCapModel extends AnimatedGeoModel<EngineersCapItem> {
+    public ResourceLocation getConductorEntityModel() {
+        return new ResourceLocation("railways", "geo/engineers_cap_conductor.geo.json");
+    }
+
     @Override
     public ResourceLocation getModelLocation(EngineersCapItem object)
     {

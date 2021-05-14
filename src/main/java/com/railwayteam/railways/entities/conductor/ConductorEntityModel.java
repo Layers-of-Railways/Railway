@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
 {
 	public ConductorEntityModel() {
+
 	}
 
 	@Override

@@ -20,6 +20,7 @@ public class ConductorRenderer extends GeoEntityRenderer<ConductorEntity> {
   {
     super(renderManager, new ConductorEntityModel());
     this.shadowSize = 0.4F;
+    addLayer(new EngineersCapLayer(this));
   }
 
   @Override

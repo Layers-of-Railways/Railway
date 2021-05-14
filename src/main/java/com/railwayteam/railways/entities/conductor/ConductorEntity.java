@@ -4,16 +4,19 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Util;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
 import com.railwayteam.railways.items.ConductorItem;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
+import com.railwayteam.railways.items.EngineersCapItem;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -33,11 +36,20 @@ import javax.annotation.Nullable;
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConductorEntity extends CreatureEntity implements Util.Animatable, Util.WrenchableEntity {
   public static final String name = "conductor";
-  public int color = getDefaultColor().getId();
+//  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
   public ConductorEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
     super(p_i48575_1_, p_i48575_2_);
+  }
+
+  public static final DataParameter<Integer> COLOR = EntityDataManager.createKey(ConductorEntity.class, DataSerializers.VARINT);
+
+  @Override
+  protected void registerData() {
+    super.registerData();
+    EntityDataManager dataManager = getDataManager();
+    dataManager.register(COLOR, getDefaultColor().getId());
   }
 
   @SubscribeEvent
@@ -90,30 +102,49 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
     return super.isCustomNameVisible();
   }
 
-  public static int getColorId(ConductorEntity entity) {
-    CompoundNBT nbt = entity.serializeNBT();
-    return nbt.getInt("CapColor");
-  }
-
-  public static DyeColor getColor(ConductorEntity entity) {
-    return DyeColor.byId(getColorId(entity));
-  }
-
   public int getColorId() {
-   return getColorId(this);
+    return getDataManager().get(COLOR);
+//    CompoundNBT nbt = entity.serializeNBT();
+//    return nbt.getInt("CapColor");
   }
 
   public DyeColor getColor() {
-    return getColor(this);
+    return DyeColor.byId(getColorId());
   }
 
-  public ItemStack getHatByColor(int id) {
+//  public ItemStack getHelmet() {
+//    Iterable<ItemStack> l = getArmorInventoryList();
+//
+//    ItemStack ret = null;
+//    for(ItemStack stack : l) { // bruh moment why doesnt it just return a list or an array or something
+//      if(stack.getItem() instanceof EngineersCapItem) {
+//        ret = stack;
+//        break;
+//      }
+//    }
+//
+//    return ret == null ? createHatByColor(getDefaultColor()) : ret;
+//  }
+//
+//  public EngineersCapItem getCap() {
+//    return (EngineersCapItem) getHelmet().getItem();
+//  }
+
+  public ItemStack createHatByColor(int id) {
+    return new ItemStack(getHatByColor(id));
+  }
+
+  public ItemStack createHatByColor(DyeColor color) {
+//    return new ItemStack(Items.IRON_HELMET);
+    return new ItemStack(getHatByColor(color));
+  }
+
+  public Item getHatByColor(int id) {
     return getHatByColor(DyeColor.byId(id));
   }
 
-  public ItemStack getHatByColor(DyeColor color) {
-//    return new ItemStack(Items.IRON_HELMET);
-    return ModSetup.ENGINEERS_CAPS.get(color).asStack();
+  public Item getHatByColor(DyeColor color) {
+    return ModSetup.ENGINEERS_CAPS.get(color).get();
   }
 
 //  @Override
@@ -143,34 +174,23 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
   }
 
   public ItemStack setCap(DyeColor color) {
-    return setCap(getHatByColor(color));
+    return setCap(createHatByColor(color));
   }
 
   public ItemStack updateCap() {
-    if(color == 0) {
-      setColor(getDefaultColor());
-    }
-
     return setCap(getColor());
   }
 
-  public static void setColor(ConductorEntity entity, int color) {
-    CompoundNBT nbt = entity.serializeNBT();
-    nbt.putInt("CapColor", color);
-//    System.out.println(entity.getBlockPos().toShortString() + ": " + color);
-    entity.deserializeNBT(nbt);
-  }
-
-  public static void setColor(ConductorEntity entity, DyeColor color) {
-    setColor(entity, color.getId());
-  }
-
   public void setColor(int color) {
-    setColor(this, color);
+//    CompoundNBT nbt = entity.serializeNBT();
+//    nbt.putInt("CapColor", color);
+//    System.out.println(entity.getBlockPos().toShortString() + ": " + color);
+//    entity.deserializeNBT(nbt);
+    getDataManager().set(COLOR, color);
   }
 
   public void setColor(DyeColor color) {
-    setColor(this, color);
+    setColor(color.getId());
   }
 
 //  @Override
@@ -180,16 +200,10 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
 //    return nbt;
 //  }
 
-  @Override
-  public void read(CompoundNBT nbt) {
-    color = nbt.getInt("CapColor");
-    super.read(nbt);
-  }
-
-  @Override
-  public void writeAdditional(CompoundNBT nbt) {
-    nbt.putInt("CapColor", color);
-  }
+//  @Override
+//  public void writeAdditional(CompoundNBT nbt) {
+//    nbt.putInt("CapColor", color);
+//  }
 
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {
