@@ -1,12 +1,6 @@
-package com.railwayteam.railways.entities.conductor.engineers_cap;
+package com.railwayteam.railways.items.engineers_cap;
 
 import com.railwayteam.railways.items.EngineersCapItem;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.Model;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 

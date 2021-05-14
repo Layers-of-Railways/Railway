@@ -7,7 +7,7 @@ import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
-import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapRenderer;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.util.TagUtils;

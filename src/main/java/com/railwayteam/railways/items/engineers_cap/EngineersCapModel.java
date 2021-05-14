@@ -1,9 +1,7 @@
-package com.railwayteam.railways.entities.conductor.engineers_cap;
+package com.railwayteam.railways.items.engineers_cap;
 
-import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.items.EngineersCapItem;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.example.item.PotatoArmorItem;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class EngineersCapModel extends AnimatedGeoModel<EngineersCapItem> {

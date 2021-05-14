@@ -2,15 +2,12 @@ package com.railwayteam.railways.entities.conductor;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.entities.conductor.ConductorEntity;
-import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapModel;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapModel;
 import com.railwayteam.railways.items.EngineersCapItem;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.network.datasync.DataParameter;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;

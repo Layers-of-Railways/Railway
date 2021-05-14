@@ -10,6 +10,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -20,6 +22,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -268,5 +271,10 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
     nbt.putInt("CapColor", getColorId());
 
     super.writeAdditional(nbt);
+  }
+
+  @Override
+  public ItemStack getPickedResult(RayTraceResult target) {
+    return ConductorItem.g().create(this);
   }
 }
