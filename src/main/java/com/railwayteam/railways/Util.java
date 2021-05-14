@@ -1,11 +1,13 @@
 package com.railwayteam.railways;
 
+import com.google.common.collect.ImmutableMap;
 import com.railwayteam.railways.items.ConductorItem;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RailBlock;
+import net.minecraft.block.StandingSignBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
@@ -26,6 +28,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -41,10 +44,50 @@ import software.bernie.geckolib3.core.processor.IBone;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class Util {
+    public static final ImmutableMap<TextFormatting, DyeColor> colorToColorFormat;
+
+    static {
+        HashMap<TextFormatting, DyeColor> m = new HashMap<>();
+
+        // pain
+        m.put(TextFormatting.BLACK, DyeColor.BLACK);
+        m.put(TextFormatting.DARK_BLUE, DyeColor.BLUE);
+        m.put(TextFormatting.DARK_GREEN, DyeColor.GREEN);
+        m.put(TextFormatting.DARK_AQUA, DyeColor.CYAN);
+        m.put(TextFormatting.DARK_RED, DyeColor.RED);
+        m.put(TextFormatting.DARK_PURPLE, DyeColor.PURPLE);
+        m.put(TextFormatting.GOLD, DyeColor.ORANGE);
+        m.put(TextFormatting.GRAY, DyeColor.LIGHT_GRAY);
+        m.put(TextFormatting.DARK_GRAY, DyeColor.GRAY);
+        m.put(TextFormatting.BLUE, DyeColor.LIGHT_BLUE);
+        m.put(TextFormatting.GREEN, DyeColor.LIME);
+        m.put(TextFormatting.AQUA, DyeColor.CYAN);
+        m.put(TextFormatting.RED, DyeColor.PINK);
+        m.put(TextFormatting.LIGHT_PURPLE, DyeColor.MAGENTA);
+        m.put(TextFormatting.YELLOW, DyeColor.YELLOW);
+        m.put(TextFormatting.WHITE, DyeColor.WHITE);
+
+        colorToColorFormat = ImmutableMap.copyOf(m);
+    }
+
+    public static TextFormatting colorToFormat(DyeColor color) {
+        return colorToColorFormat.keySet().stream().filter((k) -> colorToColorFormat.get(k).getId() == color.getId()).findFirst().orElse(TextFormatting.BLACK);
+    }
+
+    public static String colorToColoredText(DyeColor color, String text) {
+        return colorToFormat(color) + text;
+    }
+
+    public static String colorToColoredText(DyeColor color) {
+        return colorToColoredText(color, color.getTranslationKey());
+    }
+
     public enum Vector {
         NORTH(0, 0, -1, "n"),
         SOUTH(0, 0, 1, "s"),

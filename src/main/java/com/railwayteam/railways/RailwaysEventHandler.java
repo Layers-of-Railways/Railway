@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
+import net.minecraft.network.play.client.CPickItemPacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
