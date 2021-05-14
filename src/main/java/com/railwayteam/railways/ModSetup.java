@@ -245,7 +245,7 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getString(),
+      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.toString(),
       (p) -> new EngineersCapItem(p, color))
         .properties(p -> p.maxStackSize(1))
         .lang("Engineer's cap")
