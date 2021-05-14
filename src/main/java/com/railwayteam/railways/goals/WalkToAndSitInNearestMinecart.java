@@ -1,6 +1,6 @@
 package com.railwayteam.railways.goals;
 
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.EntityUtils;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 
@@ -18,7 +18,7 @@ public class WalkToAndSitInNearestMinecart extends MoveTowardsClosestEntityGoal<
 
     @Override
     public boolean checkTarget(MinecartEntity entity) {
-        return Util.canEntitySitInMinecart(goalOwner, entity);
+        return EntityUtils.canEntitySitInMinecart(goalOwner, entity);
     }
 
     @Override

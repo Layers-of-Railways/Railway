@@ -1,7 +1,7 @@
 package com.railwayteam.railways.items;
 
-import com.railwayteam.railways.Util;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import com.railwayteam.railways.util.Animatable;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,7 +24,7 @@ import software.bernie.geckolib3.item.GeoArmorItem;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EngineersCapItem extends GeoArmorItem implements Util.Animatable {
+public class EngineersCapItem extends GeoArmorItem implements Animatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     @Override

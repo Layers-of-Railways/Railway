@@ -1,6 +1,6 @@
 package com.railwayteam.railways.goals;
 
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.EntityUtils;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.goal.TargetGoal;
@@ -58,7 +58,7 @@ public class MoveTowardsClosestEntityGoal<T extends Entity> extends TargetGoal {
 //      } else {
 //        this.nearestTarget = null;
 //      }
-      this.nearestTarget = Util.getClosestEntity(goalOwner, entities, this::checkTarget);
+      this.nearestTarget = EntityUtils.getClosestEntity(goalOwner, entities, this::checkTarget);
     } else {
       this.nearestTarget = (T) this.goalOwner.world.getClosestPlayer(this.targetEntitySelector, this.goalOwner, this.goalOwner.getX(), this.goalOwner.getEyeY(), this.goalOwner.getZ());
     }

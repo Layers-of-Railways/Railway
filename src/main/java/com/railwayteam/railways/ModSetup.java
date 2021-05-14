@@ -7,10 +7,10 @@ import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
-import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapModel;
 import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.*;
 
+import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -249,7 +249,7 @@ public class ModSetup {
       (p) -> new EngineersCapItem(p, color))
         .properties(p -> p.maxStackSize(1))
         .lang("Engineer's cap")
-        .tag(Util.EngineerCaps)
+        .tag(TagUtils.EngineerCaps)
         .model((ctx, prov) -> {
           prov.singleTexture(
           ctx.getName(),
@@ -265,7 +265,7 @@ public class ModSetup {
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString()));
           ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-            .addIngredient(Util.EngineerCaps)
+            .addIngredient(TagUtils.EngineerCaps)
             .addIngredient(color.getTag())
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));

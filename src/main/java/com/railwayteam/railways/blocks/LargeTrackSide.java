@@ -1,28 +1,26 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.vector.Vector3d;
 
-import javax.annotation.Nonnull;
-
 public enum LargeTrackSide implements IStringSerializable {
-  NORTH_SOUTHWEST(    Util.Vector.NORTH,     Util.Vector.SOUTHWEST),
-  NORTH_SOUTH(        Util.Vector.NORTH,     Util.Vector.SOUTH),
-  NORTH_SOUTHEAST(    Util.Vector.NORTH,     Util.Vector.SOUTHEAST),
-  EAST_NORTHWEST(     Util.Vector.EAST,      Util.Vector.NORTHWEST),
-  EAST_WEST(          Util.Vector.EAST,      Util.Vector.WEST),
-  EAST_SOUTHWEST(     Util.Vector.EAST,      Util.Vector.SOUTHWEST),
-  SOUTH_NORTHEAST(    Util.Vector.SOUTH,     Util.Vector.NORTHEAST),
-  SOUTH_NORTHWEST(    Util.Vector.SOUTH,     Util.Vector.NORTHWEST),
-  WEST_SOUTHEAST(     Util.Vector.WEST,      Util.Vector.SOUTHEAST),
-  WEST_NORTHEAST(     Util.Vector.WEST,      Util.Vector.NORTHEAST),
-  NORTHEAST_SOUTHWEST(Util.Vector.NORTHEAST, Util.Vector.SOUTHWEST),
-  NORTHWEST_SOUTHEAST(Util.Vector.NORTHWEST, Util.Vector.SOUTHEAST);
+  NORTH_SOUTHWEST(    VectorUtils.Vector.NORTH,     VectorUtils.Vector.SOUTHWEST),
+  NORTH_SOUTH(        VectorUtils.Vector.NORTH,     VectorUtils.Vector.SOUTH),
+  NORTH_SOUTHEAST(    VectorUtils.Vector.NORTH,     VectorUtils.Vector.SOUTHEAST),
+  EAST_NORTHWEST(     VectorUtils.Vector.EAST,      VectorUtils.Vector.NORTHWEST),
+  EAST_WEST(          VectorUtils.Vector.EAST,      VectorUtils.Vector.WEST),
+  EAST_SOUTHWEST(     VectorUtils.Vector.EAST,      VectorUtils.Vector.SOUTHWEST),
+  SOUTH_NORTHEAST(    VectorUtils.Vector.SOUTH,     VectorUtils.Vector.NORTHEAST),
+  SOUTH_NORTHWEST(    VectorUtils.Vector.SOUTH,     VectorUtils.Vector.NORTHWEST),
+  WEST_SOUTHEAST(     VectorUtils.Vector.WEST,      VectorUtils.Vector.SOUTHEAST),
+  WEST_NORTHEAST(     VectorUtils.Vector.WEST,      VectorUtils.Vector.NORTHEAST),
+  NORTHEAST_SOUTHWEST(VectorUtils.Vector.NORTHEAST, VectorUtils.Vector.SOUTHWEST),
+  NORTHWEST_SOUTHEAST(VectorUtils.Vector.NORTHWEST, VectorUtils.Vector.SOUTHEAST);
 
   private final String name;
   private final Vector3d[] offsets;
-  private LargeTrackSide (Util.Vector dir1, Util.Vector dir2) {
+  private LargeTrackSide (VectorUtils.Vector dir1, VectorUtils.Vector dir2) {
     this.name = dir1.name + "_" + dir2.name;
     offsets = new Vector3d[2];
     offsets[0] = dir1.value;

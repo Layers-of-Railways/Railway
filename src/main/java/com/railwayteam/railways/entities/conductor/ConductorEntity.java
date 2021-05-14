@@ -1,10 +1,11 @@
 package com.railwayteam.railways.entities.conductor;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.Util;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
 import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.items.EngineersCapItem;
+import com.railwayteam.railways.util.Animatable;
+import com.railwayteam.railways.util.WrenchableEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -34,7 +35,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ConductorEntity extends CreatureEntity implements Util.Animatable, Util.WrenchableEntity {
+public class ConductorEntity extends CreatureEntity implements Animatable, WrenchableEntity {
   public static final String name = "conductor";
 //  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
@@ -79,7 +80,7 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
 
   @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
-    entityDropItem(ConductorItem.create(this));
+    entityDropItem(ConductorItem.g().create(this));
     super.spawnDrops(p_213345_1_);
   }
 
@@ -226,7 +227,7 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
 
   @Override
   public void afterWrenched(PlayerEntity plr, Hand hand) {
-    entityDropItem(ConductorItem.create(this));
+    entityDropItem(ConductorItem.g().create(this));
   }
 
   private AnimationFactory factory = new AnimationFactory(this);

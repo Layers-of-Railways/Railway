@@ -35,7 +35,7 @@ public class RailwaysEventHandler {
     // else is minecart
     if(player.getHeldItemMainhand().getItem().equals(ModSetup.R_ITEM_CONDUCTOR.get())) {
       eis.setCanceled(true);
-      eis.setCancellationResult(ConductorItem.onMinecartRightClicked(player, player.getHeldItemMainhand(), Hand.MAIN_HAND, (MinecartEntity) target));
+      eis.setCancellationResult(ModSetup.R_ITEM_CONDUCTOR.get().onMinecartRightClicked(player, player.getHeldItemMainhand(), Hand.MAIN_HAND, (MinecartEntity) target));
       return;
     }
     StationListCapability list = target.getCapability(CapabilitySetup.CAPABILITY_STATION_LIST).orElse(null);

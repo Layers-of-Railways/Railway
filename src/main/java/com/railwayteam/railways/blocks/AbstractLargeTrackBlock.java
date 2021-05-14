@@ -1,7 +1,6 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
@@ -28,7 +27,7 @@ public abstract class AbstractLargeTrackBlock extends Block {
 
   protected abstract BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos);
   protected abstract void fillStateContainer(StateContainer.Builder<Block, BlockState> builder);
-  protected abstract boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction);
+  protected abstract boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, VectorUtils.Vector direction);
 
   @Nullable
   @Override

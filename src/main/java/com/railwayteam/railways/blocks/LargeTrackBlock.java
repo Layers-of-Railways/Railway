@@ -1,7 +1,6 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -46,7 +45,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
     return checkForConnections(
-      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(Util.Vector.getClosest(context.getPlayer().getLookVec()).value)),
+      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(VectorUtils.Vector.getClosest(context.getPlayer().getLookVec()).value)),
       context.getWorld(), context.getPos()
     );
   }
@@ -55,7 +54,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) { builder.add(TRACK_SIDE); }
 
   @Override
-  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
+  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, VectorUtils.Vector direction) {
     return state.get(TRACK_SIDE).connectsTo(direction.value);
   }
 
@@ -70,7 +69,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
           Vector3d offset = new Vector3d(x,0,z);
           if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
             candidate, world, pos.add(x,0,z),
-            Util.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
+            VectorUtils.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
           ) { // front of the line if it connects
             priority.add(offset);
           }

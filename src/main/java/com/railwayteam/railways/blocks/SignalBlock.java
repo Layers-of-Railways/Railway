@@ -1,7 +1,6 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.Util;
 import com.railwayteam.railways.items.SignalItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
