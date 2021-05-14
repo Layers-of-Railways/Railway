@@ -1,14 +1,11 @@
 package com.railwayteam.railways.items;
 
+import com.railwayteam.railways.Util;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -18,11 +15,28 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EngineersCapItem extends ArmorItem {
+public class EngineersCapItem extends GeoArmorItem implements Util.Animatable {
+    private AnimationFactory factory = new AnimationFactory(this);
+
+    @Override
+    public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
+        return anim("idle");
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
     static class EngineerCapArmorMaterial implements IArmorMaterial {
         @Override
         public int getDurability(EquipmentSlotType p_200896_1_) {
@@ -63,18 +77,6 @@ public class EngineersCapItem extends ArmorItem {
         public float getKnockbackResistance() {
             return 0;
         }
-    }
-
-    @Nullable
-    @Override
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        return (A) new EngineersCapModel();
-    }
-
-    @Nullable
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        return "railways:textures/models/armor/" + color + "_golem_hat.png";
     }
 
     public static final String name = "engineers_cap";
@@ -148,7 +150,7 @@ public class EngineersCapItem extends ArmorItem {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                ConductorEntity.spawn(world, getLowest(blocksToRemove));
+                ConductorEntity.spawn(world, getLowest(blocksToRemove), color);
                 if(!player.isCreative()) {
                     stack.setCount(stack.getCount() - 1);
                     return ActionResultType.CONSUME;
@@ -220,34 +222,3 @@ public class EngineersCapItem extends ArmorItem {
 //    }
 //}
 
-class EngineersCapModel extends BipedModel<LivingEntity> {
-    private final ModelRenderer Hat;
-    private final ModelRenderer Hat_r1;
-
-    public EngineersCapModel() {
-        super(0,0,0,0);
-        textureWidth = 64;
-        textureHeight = 64;
-
-        Hat = new ModelRenderer(this);
-        Hat.setRotationPoint(0.0F, 6.0F, 0.0F);
-        Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -15.0F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-        Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-        Hat.setTextureOffset(34, 36).addCuboid(4.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-        Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -15.0F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-        Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -15.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
-
-        Hat_r1 = new ModelRenderer(this);
-        Hat_r1.setRotationPoint(8.0F, -12.4362F, -5.904F);
-        Hat.addChild(Hat_r1);
-        setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
-        Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
-        bipedHead.addChild(Hat);
-    }
-
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.rotateAngleX = x;
-        modelRenderer.rotateAngleY = y;
-        modelRenderer.rotateAngleZ = z;
-    }
-}

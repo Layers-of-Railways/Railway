@@ -2,11 +2,16 @@ package com.railwayteam.railways.items;
 
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import net.minecraft.client.renderer.entity.ArmorStandRenderer;
+import net.minecraft.client.renderer.entity.SheepRenderer;
+import net.minecraft.client.renderer.entity.model.SheepModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -33,7 +38,7 @@ public class ConductorItem extends Item {
             if(!plr.isCreative()) {
                 stack.setCount(stack.getCount()-1);
             }
-            return ConductorEntity.spawn(plr.world, pos);
+            return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
         } else {
             CompoundNBT tag = stack.getTag();
             tag.putBoolean("spawn_entity", true);// for some reason setCount doesnt work in creative, so im doing this

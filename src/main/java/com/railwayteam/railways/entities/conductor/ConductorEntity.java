@@ -4,51 +4,49 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Util;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
 import com.railwayteam.railways.items.ConductorItem;
-import com.simibubi.create.AllItems;
-import net.minecraft.block.AbstractRailBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RailBlock;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.state.properties.RailShape;
+import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConductorEntity extends CreatureEntity implements Util.Animatable, Util.WrenchableEntity {
   public static final String name = "conductor";
+  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
-  public ConductorEntity(EntityType<? extends CreatureEntity> type, World world) {
-    super(type, world);
+  public ConductorEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
+    super(p_i48575_1_, p_i48575_2_);
   }
 
   @SubscribeEvent
   public static void createEntityAttributes(EntityAttributeCreationEvent event) {
     event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
+  }
+
+  public static DyeColor getDefaultColor() {
+    return DyeColor.BLUE;
   }
 
   public boolean isInMinecart() {
@@ -73,24 +71,13 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
     super.spawnDrops(p_213345_1_);
   }
 
-//  @Override
-//  public void livingTick() {
-//    if(isInMinecart()) {
-//      MinecartEntity minecart = (MinecartEntity) getRidingEntity();
-//      BlockState state = world.getBlockState(minecart.getBlockPos());
-//      if(AbstractRailBlock.isRail(state)) {
-//        RailShape shape = Util.getRailDirection(world, minecart.getBlockPos(), minecart);
-//        // a bunch of me testing and my attempts to do this
-////        Vector3i v = Util.railShapeToFirstDirection(shape).getDirectionVec();
-////        BlockPos p = minecart.getBlockPos().add(mine);
-////        BlockPos p = minecart.getBlockPos().add(minecart.getAdjustedHorizontalFacing().getDirectionVec());
-////        getLookController().setLookPosition(p.getX(), p.getY(), p.getZ());
-////      setRotation((float) Util.getMinecartYaw(minecart), (float) Util.getMinecartPitch(minecart));
-//        setRotation(0, 0);
-//      }
-//    }
-//    super.livingTick();
-//  }
+  @Nullable
+  @Override
+  public ILivingEntityData onInitialSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
+    updateCap();
+
+    return super.onInitialSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
+  }
 
   @Override
   public boolean getAlwaysRenderNameTagForRender() {
@@ -103,40 +90,106 @@ public class ConductorEntity extends CreatureEntity implements Util.Animatable, 
     return super.isCustomNameVisible();
   }
 
-  @Override
-  public Iterable<ItemStack> getArmorInventoryList() {
-    return new ArrayList<ItemStack>();
+  public static int getColorId(ConductorEntity entity) {
+    CompoundNBT nbt = entity.serializeNBT();
+    return nbt.getInt("CapColor");
   }
 
-  @Override
-  public ItemStack getItemStackFromSlot(EquipmentSlotType slotType) {
-    return ItemStack.EMPTY;
+  public static DyeColor getColor(ConductorEntity entity) {
+    return DyeColor.byId(getColorId(entity));
   }
 
-  @Override
-  public void setItemStackToSlot(EquipmentSlotType slotType, ItemStack stack) {
+  public int getColorId() {
+   return getColorId(this);
   }
 
-  @Override
-  public HandSide getPrimaryHand() {
-    return null;
+  public DyeColor getColor() {
+    return getColor(this);
   }
 
-  @Override
-  public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
+  public ItemStack getHatByColor(int id) {
+    return getHatByColor(DyeColor.byId(id));
+  }
 
-  public static ConductorEntity spawn(World world, int x, int y, int z) {
+  public ItemStack getHatByColor(DyeColor color) {
+//    return new ItemStack(Items.IRON_HELMET);
+    return ModSetup.ENGINEERS_CAPS.get(color).asStack();
+  }
+
+//  @Override
+//  public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
+
+  public static ConductorEntity spawn(World world, int x, int y, int z, DyeColor color) {
     ConductorEntity entity = new ConductorEntity(ModSetup.R_ENTITY_CONDUCTOR.get(), world);
     entity.setPosition(x, y, z);
 
     world.addEntity(entity);
+    entity.setColor(color);
+    entity.updateCap();
     return entity;
   }
 
-  public static ConductorEntity spawn(World world, BlockPos pos) {
-    return spawn(world, pos.getX(), pos.getY(), pos.getZ());
+  public static ConductorEntity spawn(World world, BlockPos pos, DyeColor color) {
+    return spawn(world, pos.getX(), pos.getY(), pos.getZ(), color);
   }
 
+  public ItemStack setCap(ItemStack stack) {
+    setItemStackToSlot(EquipmentSlotType.HEAD, stack);
+    return stack;
+  }
+
+  public ItemStack setCap(Item item) {
+    return setCap(new ItemStack(item));
+  }
+
+  public ItemStack setCap(DyeColor color) {
+    return setCap(getHatByColor(color));
+  }
+
+  public ItemStack updateCap() {
+    if(color == 0) {
+      setColor(getDefaultColor());
+    }
+
+    return setCap(getColor());
+  }
+
+  public static void setColor(ConductorEntity entity, int color) {
+    CompoundNBT nbt = entity.serializeNBT();
+    nbt.putInt("CapColor", color);
+//    System.out.println(entity.getBlockPos().toShortString() + ": " + color);
+    entity.deserializeNBT(nbt);
+  }
+
+  public static void setColor(ConductorEntity entity, DyeColor color) {
+    setColor(entity, color.getId());
+  }
+
+  public void setColor(int color) {
+    setColor(this, color);
+  }
+
+  public void setColor(DyeColor color) {
+    setColor(this, color);
+  }
+
+//  @Override
+//  public CompoundNBT serializeNBT() {
+//    CompoundNBT nbt =  super.serializeNBT();
+//    nbt.putInt("color", color);
+//    return nbt;
+//  }
+
+  @Override
+  public void read(CompoundNBT nbt) {
+    color = nbt.getInt("CapColor");
+    super.read(nbt);
+  }
+
+  @Override
+  public void writeAdditional(CompoundNBT nbt) {
+    nbt.putInt("CapColor", color);
+  }
 
   @Override
   public ActionResultType applyPlayerInteraction(PlayerEntity plr, Vector3d vector3d, Hand hand) {

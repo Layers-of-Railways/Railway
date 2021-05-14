@@ -7,6 +7,8 @@ import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapModel;
+import com.railwayteam.railways.entities.conductor.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.*;
 
 import com.simibubi.create.AllBlocks;
@@ -34,6 +36,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.HashMap;
 
@@ -319,5 +322,6 @@ public class ModSetup {
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
+    GeoArmorRenderer.registerArmorRenderer(EngineersCapItem.class, new EngineersCapRenderer());
   }
 }
