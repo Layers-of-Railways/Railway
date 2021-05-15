@@ -13,6 +13,29 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 
 public abstract class ColorUtils {
+    public static TextFormatting colorToFormat(DyeColor color) {
+        switch (color) {
+            case BLACK: return TextFormatting.BLACK;
+            case BLUE: return TextFormatting.DARK_BLUE;
+            case GREEN: return TextFormatting.DARK_GREEN;
+            case CYAN: return TextFormatting.DARK_AQUA;
+            case RED: return TextFormatting.DARK_RED;
+            case PURPLE: return TextFormatting.DARK_PURPLE;
+            case ORANGE:
+            case BROWN:
+                return TextFormatting.GOLD;
+            case GRAY: return TextFormatting.DARK_GRAY;
+            case LIGHT_BLUE: return TextFormatting.BLUE;
+            case LIME: return TextFormatting.GREEN;
+            case PINK: return TextFormatting.RED;
+            case MAGENTA: return TextFormatting.LIGHT_PURPLE;
+            case YELLOW: return TextFormatting.YELLOW;
+            case WHITE: return TextFormatting.WHITE;
+            default: return TextFormatting.GRAY;
+        }
+    }
+
+    @Deprecated // use colorToFormat(color) instead
     private static ImmutableMap<TextFormatting, DyeColor> colorToColorFormat;
 
     static {
@@ -41,12 +64,9 @@ public abstract class ColorUtils {
         // VARIABLE ISNT ASSIGNED A VALUE AFTER MOVING THIS TO A NEW CLASS, SO THANKS INTELLIJ, NOW I HAVE TO MAKE A GETTER
     }
 
+    @Deprecated // use colorToFormat(color) instead
     public static ImmutableMap<TextFormatting, DyeColor> getColorToColorFormat() {
         return colorToColorFormat;
-    }
-
-    public static TextFormatting colorToFormat(DyeColor color) {
-        return colorToColorFormat.keySet().stream().filter((k) -> colorToColorFormat.get(k).getId() == color.getId()).findFirst().orElse(TextFormatting.WHITE);
     }
 
     public static String colorToColoredText(DyeColor color, TextComponent text, boolean changeBlackToGray) {
