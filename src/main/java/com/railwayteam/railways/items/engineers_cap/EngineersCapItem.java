@@ -1,5 +1,7 @@
 package com.railwayteam.railways.items.engineers_cap;
 
+import com.railwayteam.railways.ModSetup;
+import com.railwayteam.railways.Translation;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.ColorUtils;
@@ -94,7 +96,7 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
 
     @Override
     public void addInformation(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> text, ITooltipFlag p_77624_4_) {
-        text.add(new StringTextComponent("Color: " + ColorUtils.colorToColoredText(color))); // TODO: Turn this into a translatable text
+        text.add(ColorUtils.colored(color));
         super.addInformation(p_77624_1_, p_77624_2_, text, p_77624_4_);
     }
 

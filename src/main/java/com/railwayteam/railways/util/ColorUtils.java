@@ -1,8 +1,14 @@
 package com.railwayteam.railways.util;
 
 import com.google.common.collect.ImmutableMap;
+import com.railwayteam.railways.Translation;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.item.DyeColor;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 
@@ -43,12 +49,24 @@ public abstract class ColorUtils {
         return colorToColorFormat.keySet().stream().filter((k) -> colorToColorFormat.get(k).getId() == color.getId()).findFirst().orElse(TextFormatting.WHITE);
     }
 
-    public static String colorToColoredText(DyeColor color, String text, boolean changeBlackToGray) {
+    public static String colorToColoredText(DyeColor color, TextComponent text, boolean changeBlackToGray) {
         TextFormatting t = colorToFormat(color);
-        return (t.equals(TextFormatting.BLACK) && changeBlackToGray ? TextFormatting.GRAY : t) + text;
+        return (t.equals(TextFormatting.BLACK) && changeBlackToGray ? TextFormatting.GRAY : t) + text.getString();
     }
 
     public static String colorToColoredText(DyeColor color) {
-        return colorToColoredText(color, color.getTranslationKey(), true);
+        return colorToColoredText(color, Translation.colorToText.get(color), true);
+    }
+
+    public static String colorToEnglish(String original) {
+        return StringUtils.capitalize(original).replaceAll("_", " ");
+    }
+
+    public static String colorToEnglish(DyeColor color) {
+        return colorToEnglish(color.getTranslationKey());
+    }
+
+    public static TranslationTextComponent colored(DyeColor color) {
+        return Translation.Colored.getComponent(ColorUtils.colorToColoredText(color));
     }
 }

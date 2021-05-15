@@ -11,6 +11,7 @@ import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.*;
 
+import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -80,6 +81,9 @@ public class ModSetup {
   }
 
   public static void register (Registrate reg) {
+    for(Translation translation : Translation.values()) {
+      reg.addLang(translation.type, translation.id, translation.english);
+    }
 
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
@@ -246,10 +250,18 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.toString(),
+      // Color lang
+      Translation.colorToText.put(color,
+              reg.addLang(
+                      "color",
+                      new ResourceLocation("railways", color.getTranslationKey()),
+                      ColorUtils.colorToEnglish(color)
+              )
+      );
+
+      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
       (p) -> new EngineersCapItem(p, color))
         .properties(p -> p.maxStackSize(1))
-        .lang("Engineer's cap")
         .tag(TagUtils.EngineerCaps)
         .model((ctx, prov) -> {
           prov.singleTexture(

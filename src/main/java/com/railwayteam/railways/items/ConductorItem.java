@@ -1,6 +1,7 @@
 package com.railwayteam.railways.items;
 
 import com.railwayteam.railways.ModSetup;
+import com.railwayteam.railways.Translation;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.EntityItem;
@@ -55,15 +56,15 @@ public class ConductorItem extends EntityItem<ConductorEntity> {
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> lines, ITooltipFlag p_77624_4_) {
         super.addInformation(stack, world, lines, p_77624_4_);
-        ConductorEntity entity = (ConductorEntity) getEntityFromItem(stack, world);
+        ConductorEntity entity = getEntityFromItem(stack, world);
         if(entity != null) {
             DyeColor color = entity.getColor();
-            lines.add(new StringTextComponent("Cap color: " + ColorUtils.colorToColoredText(color)));
+            lines.add(ColorUtils.colored(color));
             if(entity.getCustomName() != null) {
-                lines.add(new StringTextComponent("Name: " + entity.getCustomName().getString()));
+                lines.add(Translation.Named.getComponent(entity.getCustomName().getString()));
             }
         } else {
-            lines.add(new StringTextComponent("Cap color: " + ColorUtils.colorToColoredText(DyeColor.BLUE)));
+            lines.add(ColorUtils.colored(ConductorEntity.getDefaultColor()));
         }
     }
 }
