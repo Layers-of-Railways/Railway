@@ -10,6 +10,8 @@ import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.items.*;
 
+import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
@@ -43,6 +45,8 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.HashMap;
 

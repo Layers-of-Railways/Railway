@@ -1,8 +1,8 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.Util;
-import comюtterrag.registrate.providers.DataGenContext;
+import com.railwayteam.railways.util.VectorUtils;
+import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,12 +12,14 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public abstract class AbstractLargeTrackBlock extends Block {
   private static final VoxelShape SHAPE = Block.makeCuboidShape(
@@ -92,7 +94,7 @@ public abstract class AbstractLargeTrackBlock extends Block {
           BlockPos offset = new BlockPos(x,0,z);
           if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
                   candidate, world, pos.add(x,0,z),
-                  Util.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
+                  VectorUtils.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
           ) { // front of the line if it connects
             priority.add(offset);
           }
