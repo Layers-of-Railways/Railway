@@ -12,22 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "The_Boxcar",
-					"pivot": [0, 0, -39]
-				},
-				{
-					"name": "bogies",
-					"parent": "The_Boxcar",
-					"pivot": [0, 0, -39]
-				},
-				{
-					"name": "FrontBogies",
-					"parent": "bogies",
-					"pivot": [0, 8.45, 0]
-				},
-				{
 					"name": "whole_axis_2",
-					"parent": "FrontBogies",
 					"pivot": [0, 7, 18],
 					"rotation": [0, -90, 0]
 				},
@@ -42,7 +27,6 @@
 				},
 				{
 					"name": "whole_axis_3",
-					"parent": "FrontBogies",
 					"pivot": [0, 6, -8],
 					"rotation": [0, -90, 0]
 				},
@@ -116,6 +100,30 @@
 					]
 				},
 				{
+					"name": "bone3",
+					"pivot": [0, 24, 0],
+					"cubes": [
+						{"origin": [-6.5, 23.5, -7.5], "size": [13, 1, 1], "pivot": [-2.5, 23.5, 0], "rotation": [0, 0, 0], "uv": [0, 54]},
+						{"origin": [-6.5, 23.5, 6.5], "size": [13, 1, 1], "pivot": [0, 24, 7], "rotation": [0, 180, 0], "uv": [0, 54]},
+						{"origin": [-0.5, 23.5, 0.5], "size": [1, 1, 5], "pivot": [0, 24, 3], "rotation": [0, 180, 0], "uv": [0, 46]},
+						{"origin": [-1.5, 23.5, 5.5], "size": [3, 1, 1], "pivot": [-2.5, 23.5, 0], "rotation": [0, 0, 0], "uv": [0, 52]},
+						{"origin": [-4, 23.5, -0.5], "size": [8, 1, 1], "pivot": [-2.5, 23.5, 0], "rotation": [0, 0, 0], "uv": [0, 44]},
+						{"origin": [-3, 23, -1], "size": [1, 2, 2], "pivot": [-2.5, 23.5, 0], "rotation": [0, 0, 0], "uv": [0, 37]},
+						{"origin": [14, 23, -1], "size": [1, 2, 2], "pivot": [8.5, 12, 0], "rotation": [0, 180, 0], "uv": [0, 37]},
+						{"origin": [-0.5, 23.5, -5.5], "size": [1, 1, 5], "pivot": [-2.5, 23.5, 0], "rotation": [0, 0, 0], "uv": [0, 46]},
+						{"origin": [-1.5, 23.5, -6.5], "size": [3, 1, 1], "pivot": [0, 24, -6], "rotation": [0, 180, 0], "uv": [0, 52]}
+					]
+				},
+				{
+					"name": "bogies",
+					"pivot": [0, 0, -39]
+				},
+				{
+					"name": "FrontBogies",
+					"parent": "bogies",
+					"pivot": [0, 8.45, 0]
+				},
+				{
 					"name": "wheel_beam",
 					"parent": "FrontBogies",
 					"pivot": [-12, 10, 5]
@@ -154,15 +162,6 @@
 						{"origin": [15, 10, 5], "size": [7, 1, 10], "pivot": [18.5, 10.5, 10], "rotation": [0, 180, 0], "uv": [67, 32]},
 						{"origin": [32, 10, 5], "size": [7, 1, 10], "pivot": [32.5, 9, 10], "rotation": [0, 180, 0], "uv": [67, 43]},
 						{"origin": [38, 22, 7], "size": [1, 1, 6], "pivot": [32.5, 12, 10], "rotation": [0, 180, 0], "uv": [114, 56]},
-						{"origin": [38, 23, 9], "size": [1, 2, 2], "pivot": [32.5, 12, 10], "rotation": [0, 180, 0], "uv": [0, 37]},
-						{"origin": [21, 23, 9], "size": [1, 2, 2], "pivot": [21.5, 23.5, 10], "rotation": [0, 0, 0], "uv": [0, 37]},
-						{"origin": [23.5, 23.5, 4.5], "size": [1, 1, 5], "pivot": [21.5, 23.5, 10], "rotation": [0, 0, 0], "uv": [0, 46]},
-						{"origin": [22.5, 23.5, 3.5], "size": [3, 1, 1], "pivot": [24, 24, 4], "rotation": [0, 180, 0], "uv": [0, 52]},
-						{"origin": [22.5, 23.5, 15.5], "size": [3, 1, 1], "pivot": [21.5, 23.5, 10], "rotation": [0, 0, 0], "uv": [0, 52]},
-						{"origin": [17.5, 23.5, 2.5], "size": [13, 1, 1], "pivot": [21.5, 23.5, 10], "rotation": [0, 0, 0], "uv": [0, 54]},
-						{"origin": [17.5, 23.5, 16.5], "size": [13, 1, 1], "pivot": [24, 24, 17], "rotation": [0, 180, 0], "uv": [0, 54]},
-						{"origin": [23.5, 23.5, 10.5], "size": [1, 1, 5], "pivot": [24, 24, 13], "rotation": [0, 180, 0], "uv": [0, 46]},
-						{"origin": [20, 23.5, 9.5], "size": [8, 1, 1], "pivot": [21.5, 23.5, 10], "rotation": [0, 0, 0], "uv": [0, 44]},
 						{"origin": [37, 11, 2], "size": [1, 2, 16], "pivot": [32.5, 12, 10], "rotation": [0, 180, 0], "uv": [94, 56]},
 						{"origin": [44, 11, 2], "size": [1, 2, 16], "pivot": [32.5, 12, 10], "rotation": [0, 180, 0], "uv": [94, 56]},
 						{"origin": [43, 22, 7], "size": [1, 1, 6], "pivot": [32.5, 12, 10], "rotation": [0, 180, 0], "uv": [114, 56]},
@@ -177,29 +176,6 @@
 						{"origin": [32, 10, 15], "size": [18, 1, 15], "pivot": [32.5, 9, 10], "rotation": [0, 180, 0], "uv": [62, 0]},
 						{"origin": [32, 10, -10], "size": [18, 1, 15], "pivot": [32.5, 9, 10], "rotation": [0, 180, 0], "uv": [62, 16]}
 					]
-				},
-				{
-					"name": "bone3",
-					"parent": "wheel_beam2",
-					"pivot": [27, 9, 5]
-				},
-				{
-					"name": "springrecoil3",
-					"parent": "bone3",
-					"pivot": [10, 8, 17],
-					"rotation": [-54, 0, 0]
-				},
-				{
-					"name": "bone4",
-					"parent": "wheel_beam2",
-					"pivot": [11, 9, 5],
-					"rotation": [0, 180, 0]
-				},
-				{
-					"name": "springrecoil4",
-					"parent": "bone4",
-					"pivot": [10, 8, 17],
-					"rotation": [-54, 0, 0]
 				},
 				{
 					"name": "center_plate",

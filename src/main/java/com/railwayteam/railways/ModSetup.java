@@ -3,11 +3,11 @@ package com.railwayteam.railways;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.railwayteam.railways.blocks.*;
-import com.railwayteam.railways.entities.*;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
-import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.entities.handcar.HandcarEntity;
+import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
@@ -27,9 +27,7 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.*;
 

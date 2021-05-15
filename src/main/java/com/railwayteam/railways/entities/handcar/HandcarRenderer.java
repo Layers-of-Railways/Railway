@@ -1,6 +1,5 @@
-package com.railwayteam.railways.entities;
+package com.railwayteam.railways.entities.handcar;
 
-import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

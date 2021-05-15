@@ -1,8 +1,26 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"handcar_idle": {
-			"loop": true
+		"push": {
+			"loop": true,
+			"animation_length": 4.96,
+			"bones": {
+				"bone3": {
+					"rotation": {
+						"0.0": {
+							"vector": [-37.5, 0, 0]
+						},
+						"2.28": {
+							"vector": [37.5, 0, 0],
+							"easing": "easeInQuad"
+						},
+						"4.96": {
+							"vector": [-37.5, 0, 0],
+							"easing": "easeInQuad"
+						}
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2
