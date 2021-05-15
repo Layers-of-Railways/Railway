@@ -106,6 +106,10 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
+reobf {
+    shadowJar {}
+}
+
 shadowJar {
     configurations = [project.configurations.shade]
     relocate 'com.tterrag.registrate', 'com.railwayteam.railways.repack.registrate'
