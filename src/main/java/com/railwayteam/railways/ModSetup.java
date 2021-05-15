@@ -6,8 +6,12 @@ import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.*;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
+import com.railwayteam.railways.entities.SteadyMinecartEntity;
+import com.railwayteam.railways.entities.SteadyMinecartRenderer;
 import com.railwayteam.railways.items.*;
 
+import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.Registrate;
@@ -39,7 +43,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 
@@ -83,6 +86,9 @@ public class ModSetup {
   }
 
   public static void register (Registrate reg) {
+    for(Translation translation : Translation.values()) {
+      reg.addLang(translation.type, translation.id, translation.english);
+    }
 
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
@@ -249,11 +255,19 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color.getString(),
+      // Color lang
+      Translation.colorToText.put(color,
+              reg.addLang(
+                      "color",
+                      new ResourceLocation("railways", color.getTranslationKey()),
+                      ColorUtils.colorToEnglish(color)
+              )
+      );
+
+      ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
       (p) -> new EngineersCapItem(p, color))
         .properties(p -> p.maxStackSize(1))
-        .lang("Engineer's cap")
-        .tag(Util.EngineerCaps)
+        .tag(TagUtils.EngineerCaps)
         .model((ctx, prov) -> {
           prov.singleTexture(
           ctx.getName(),
@@ -269,7 +283,7 @@ public class ModSetup {
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString()));
           ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-            .addIngredient(Util.EngineerCaps)
+            .addIngredient(TagUtils.EngineerCaps)
             .addIngredient(color.getTag())
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));
@@ -304,13 +318,7 @@ public class ModSetup {
 
     R_ITEM_CONDUCTOR = reg.item("conductor", ConductorItem::new)
       .lang("Conductor")
-      .model((ctx, prov) -> {
-        prov.singleTexture(
-        ctx.getName(),
-        prov.mcLoc("item/generated"),
-        "layer0",
-        prov.modLoc("item/waypoint_manager"));
-      })
+            .properties(p -> p.maxStackSize(1))
       .register();
 
     R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
@@ -330,6 +338,7 @@ public class ModSetup {
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
+    GeoArmorRenderer.registerArmorRenderer(EngineersCapItem.class, new EngineersCapRenderer());
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_HANDCAR.get(), HandcarRenderer::new);
   }
 

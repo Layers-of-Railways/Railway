@@ -1,7 +1,8 @@
 package com.railwayteam.railways.blocks;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.Util;
-import com.tterrag.registrate.providers.DataGenContext;
+import comюtterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,15 +12,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public abstract class AbstractLargeTrackBlock extends Block {
   private static final VoxelShape SHAPE = Block.makeCuboidShape(
@@ -30,7 +28,7 @@ public abstract class AbstractLargeTrackBlock extends Block {
 
   protected abstract BlockState checkForConnections (BlockState state, IWorld worldIn, BlockPos pos);
   protected abstract void fillStateContainer(StateContainer.Builder<Block, BlockState> builder);
-  protected abstract boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction);
+  protected abstract boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, VectorUtils.Vector direction);
 
   @Nullable
   @Override

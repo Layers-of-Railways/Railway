@@ -1,25 +1,22 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
-import javax.annotation.Nonnull;
-
 public enum LargeSwitchSide implements IStringSerializable {
-  NORTH_SOUTHEAST (Util.Vector.NORTH, Util.Vector.SOUTHEAST, "n_se"),
-  NORTH_SOUTHWEST (Util.Vector.NORTH, Util.Vector.SOUTHWEST, "n_sw"),
-  SOUTH_NORTHEAST (Util.Vector.SOUTH, Util.Vector.NORTHEAST, "s_ne"),
-  SOUTH_NORTHWEST (Util.Vector.SOUTH, Util.Vector.NORTHWEST, "s_nw"),
-  EAST_NORTHWEST  (Util.Vector.EAST,  Util.Vector.NORTHWEST, "e_nw"),
-  EAST_SOUTHWEST  (Util.Vector.EAST,  Util.Vector.SOUTHWEST, "e_sw"),
-  WEST_NORTHEAST  (Util.Vector.WEST,  Util.Vector.NORTHEAST, "w_ne"),
-  WEST_SOUTHEAST  (Util.Vector.WEST,  Util.Vector.SOUTHEAST, "w_se");
+  NORTH_SOUTHEAST (VectorUtils.Vector.NORTH, VectorUtils.Vector.SOUTHEAST, "n_se"),
+  NORTH_SOUTHWEST (VectorUtils.Vector.NORTH, VectorUtils.Vector.SOUTHWEST, "n_sw"),
+  SOUTH_NORTHEAST (VectorUtils.Vector.SOUTH, VectorUtils.Vector.NORTHEAST, "s_ne"),
+  SOUTH_NORTHWEST (VectorUtils.Vector.SOUTH, VectorUtils.Vector.NORTHWEST, "s_nw"),
+  EAST_NORTHWEST  (VectorUtils.Vector.EAST,  VectorUtils.Vector.NORTHWEST, "e_nw"),
+  EAST_SOUTHWEST  (VectorUtils.Vector.EAST,  VectorUtils.Vector.SOUTHWEST, "e_sw"),
+  WEST_NORTHEAST  (VectorUtils.Vector.WEST,  VectorUtils.Vector.NORTHEAST, "w_ne"),
+  WEST_SOUTHEAST  (VectorUtils.Vector.WEST,  VectorUtils.Vector.SOUTHEAST, "w_se");
 
   private final String name;
   private final BlockPos[] offsets;
-  LargeSwitchSide(Util.Vector axis, Util.Vector turn, String name) {
+  LargeSwitchSide(VectorUtils.Vector axis, VectorUtils.Vector turn, String name) {
     this.name = name;
     offsets = new BlockPos[3];
     offsets[0] = axis.value;

@@ -1,7 +1,6 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -11,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IWorld;
+import software.bernie.geckolib3.util.VectorUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
     return checkForConnections(
-      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(Util.Vector.getClosest(context.getPlayer().getLookVec()).value)),
+      getDefaultState().with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(VectorUtils.Vector.getClosest(context.getPlayer().getLookVec()).value)),
       context.getWorld(), context.getPos()
     );
   }
@@ -56,7 +56,7 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) { builder.add(TRACK_SIDE); }
 
   @Override
-  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
+  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, VectorUtils.Vector direction) {
     return state.get(TRACK_SIDE).connectsTo(direction.value);
   }
 

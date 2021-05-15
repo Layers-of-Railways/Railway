@@ -3,6 +3,7 @@ package com.railwayteam.railways.entities.conductor;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
@@ -10,6 +11,10 @@ import javax.annotation.Nullable;
 
 public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
 {
+	public ConductorEntityModel() {
+
+	}
+
 	@Override
 	public ResourceLocation getModelLocation(ConductorEntity object)
 	{

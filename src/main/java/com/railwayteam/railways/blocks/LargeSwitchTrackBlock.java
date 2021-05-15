@@ -1,6 +1,6 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Util;
+import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -41,7 +41,7 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
   }
 
   @Override
-  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, Util.Vector direction) {
+  protected boolean canConnectFrom (BlockState state, IWorld worldIn, BlockPos pos, VectorUtils.Vector direction) {
     return state.get(SWITCH_SIDE).connectsTo(direction.value);
   }
 
@@ -77,7 +77,7 @@ public class LargeSwitchTrackBlock extends AbstractLargeTrackBlock {
         //  Railways.LOGGER.debug("Found " + directions.size() + " possible connections");
         for (BlockPos dir : directions) {
           //  Railways.LOGGER.debug("checking " + dir + " vs " + Util.opposite(dir));
-          if (directions.contains(Util.opposite(dir))) {
+          if (directions.contains(VectorUtils.opposite(dir))) {
             state = state.with(SWITCH_SIDE, LargeSwitchSide.findValidStateFrom(dir));
             found = true;
             //  Railways.LOGGER.debug("  found a straight connection");

@@ -1,7 +1,6 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.Util;
 import com.railwayteam.railways.items.SignalItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -62,7 +61,10 @@ public class SignalBlock extends Block {
 
   @Override
   public BlockState updatePostPlacement(BlockState state, Direction direction, BlockState oldState, IWorld world, BlockPos pos, BlockPos oldPos) {
-    boolean power = ((ServerWorld) world).isBlockPowered(pos);
+    boolean power = false;
+    if(!world.isRemote()) {
+      power = ((ServerWorld) world).isBlockPowered(pos);
+    }
     if (state.get(BlockStateProperties.POWERED) != power) {
       TileEntity te = world.getTileEntity(pos);
       if (te instanceof SignalTileEntity) {
