@@ -3,7 +3,7 @@ package com.railwayteam.railways.entities.conductor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapModel;
-import com.railwayteam.railways.items.EngineersCapItem;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;

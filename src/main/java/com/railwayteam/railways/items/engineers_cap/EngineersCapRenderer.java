@@ -1,6 +1,5 @@
 package com.railwayteam.railways.items.engineers_cap;
 
-import com.railwayteam.railways.items.EngineersCapItem;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 

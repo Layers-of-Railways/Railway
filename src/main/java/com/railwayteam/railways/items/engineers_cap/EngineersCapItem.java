@@ -1,4 +1,4 @@
-package com.railwayteam.railways.items;
+package com.railwayteam.railways.items.engineers_cap;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.Animatable;
@@ -153,7 +153,7 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
 //            world.addEntity(golem);
                 ConductorEntity.spawn(world, getLowest(blocksToRemove), color);
                 if(!player.isCreative()) {
-                    stack.setCount(stack.getCount() - 1);
+                    stack.shrink(1);
                     return ActionResultType.CONSUME;
                 }
                 return ActionResultType.SUCCESS;

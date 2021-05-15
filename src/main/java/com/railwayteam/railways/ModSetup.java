@@ -7,6 +7,7 @@ import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.SteadyMinecartRenderer;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.*;
 
@@ -300,6 +301,7 @@ public class ModSetup {
 
     R_ITEM_CONDUCTOR = reg.item("conductor", ConductorItem::new)
       .lang("Conductor")
+            .properties(p -> p.maxStackSize(1))
       .register();
 
     R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
