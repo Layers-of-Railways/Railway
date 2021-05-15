@@ -4,16 +4,18 @@ import com.railwayteam.railways.util.EntityUtils;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 
-public class WalkToAndSitInNearestMinecart extends MoveTowardsClosestEntityGoal<MinecartEntity> {
+public class WalkToAndSitInNearestMinecartGoal extends MoveTowardsClosestEntityGoal<MinecartEntity> {
     public final int sitDistance;
 
-    public WalkToAndSitInNearestMinecart(CreatureEntity entity, double speed, int targetChance, int aabbSize, int sitDistance) {
-        super(entity, MinecartEntity.class, speed, targetChance, aabbSize);
+    public WalkToAndSitInNearestMinecartGoal(CreatureEntity entity, double speed, int targetChance, int aabbSize, int sitDistance, float minDistance) {
+        super(entity, MinecartEntity.class, speed, targetChance, aabbSize, minDistance);
         this.sitDistance = sitDistance;
     }
 
-    public WalkToAndSitInNearestMinecart(CreatureEntity entity, double speed, int aabbSize, int sitDistance) {
-        this(entity, speed, 0, aabbSize, sitDistance);
+    public WalkToAndSitInNearestMinecartGoal(CreatureEntity entity, double speed, int aabbSize, int sitDistance) {
+        this(entity, speed, 0, aabbSize, sitDistance, 0);
+        // the conductor will sit in the minecart if its close enough, and just wont follow it if
+        // its not empty, so theres no need for min distance
     }
 
     @Override

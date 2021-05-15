@@ -1,7 +1,8 @@
 package com.railwayteam.railways.entities.conductor;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecart;
+import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecartGoal;
+import com.railwayteam.railways.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.WrenchableEntity;
@@ -9,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -68,13 +70,14 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
   @Override
   protected void registerGoals() {
     super.registerGoals();
-    goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8));
-    goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.2));
+    goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8));
+    goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.2));
     goalSelector.addGoal(2, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 5, 5));
-    goalSelector.addGoal(1, new LookRandomlyGoal(this));
-    goalSelector.addGoal(2, new SwimGoal(this));
-    goalSelector.addGoal(3, new RandomSwimmingGoal(this, 0.2, 8));
-    goalSelector.addGoal(10, new WalkToAndSitInNearestMinecart(this, 0.4 /* Move to the minecart slightly faster than normal */, 5, 2));
+    goalSelector.addGoal(2, new LookRandomlyGoal(this));
+    goalSelector.addGoal(5, new SwimGoal(this));
+    goalSelector.addGoal(5, new RandomSwimmingGoal(this, 0.2, 8));
+    goalSelector.addGoal(1, new WalkToAndSitInNearestMinecartGoal(this, 0.4 /* Move to the minecart slightly faster than normal */, 5, 2));
+    goalSelector.addGoal(0, new WalkToNearestPlayerWithCapGoal(this, 0.4, 5, 2, 1));
   }
 
   @Override
