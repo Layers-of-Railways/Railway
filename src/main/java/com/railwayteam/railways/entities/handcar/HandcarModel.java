@@ -12,22 +12,37 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 import javax.annotation.Nullable;
 
 public class HandcarModel extends AnimatedGeoModel<HandcarEntity> {
+    public ResourceLocation getModelLocation()
+    {
+        return new ResourceLocation("railways", "geo/handcar.geo.json");
+    }
+
+    public ResourceLocation getTextureLocation()
+    {
+        return new ResourceLocation("railways", "textures/entity/handcar.png");
+    }
+
+    public ResourceLocation getAnimationFileLocation()
+    {
+        return new ResourceLocation("railways", "animations/handcar.animation.json");
+    }
+
     @Override
     public ResourceLocation getModelLocation(HandcarEntity object)
     {
-        return new ResourceLocation("railways", "geo/handcar.geo.json");
+        return getModelLocation();
     }
 
     @Override
     public ResourceLocation getTextureLocation(HandcarEntity object)
     {
-        return new ResourceLocation("railways", "textures/entity/handcar.png");
+        return getTextureLocation();
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(HandcarEntity object)
     {
-        return new ResourceLocation("railways", "animations/handcar.animation.json");
+        return getAnimationFileLocation();
     }
 
     final double toRotateWheels = 0.07;

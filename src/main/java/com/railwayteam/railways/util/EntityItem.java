@@ -14,18 +14,19 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.UUID;
 
 public abstract class EntityItem<E extends LivingEntity> extends Item {
-    public abstract E spawnEntity(PlayerEntity plr, ItemStack stack, BlockPos pos);
+    public abstract E spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos);
 
     public EntityItem(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
 
-    public E spawnNew(PlayerEntity plr, ItemStack stack, BlockPos pos) {
+    public E spawnNew(PlayerEntity plr, ItemStack stack, Vector3d pos) {
         if(!plr.isCreative()) {
             stack.shrink(1);
         }
@@ -34,12 +35,12 @@ public abstract class EntityItem<E extends LivingEntity> extends Item {
     }
 
     public E spawn(ItemStack stack, BlockPos pos, PlayerEntity plr, Direction face) {
-        BlockPos spawn = pos.offset(face);
+        Vector3d spawn = VectorUtils.blockPosToVector3d(pos.offset(face)).add(0.5, 0, 0.5);
         if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
             return spawnNew(plr, stack, spawn);
         } else {
             E entity = getEntityFromItem(stack, plr.world);
-            entity.setPositionAndRotation(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, 0, 0);
+            entity.setPositionAndRotation(spawn.getX(), spawn.getY(), spawn.getZ(), 0, 0);
             stack.shrink(1);
             entity.setHealth(entity.getMaxHealth());
             entity.setUniqueId(UUID.randomUUID()); // to prevent UUID conflicts, the UUID is changed but the data is kept, so its pretty much a clone of the original

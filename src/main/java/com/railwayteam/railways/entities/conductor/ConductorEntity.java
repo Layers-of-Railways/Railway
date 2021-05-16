@@ -147,7 +147,7 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
 //  @Override
 //  public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
-  public static ConductorEntity spawn(World world, int x, int y, int z, DyeColor color) {
+  public static ConductorEntity spawn(World world, double x, double y, double z, DyeColor color) {
     ConductorEntity entity = new ConductorEntity(ModSetup.R_ENTITY_CONDUCTOR.get(), world);
     entity.setPosition(x, y, z);
 
@@ -157,7 +157,7 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
     return entity;
   }
 
-  public static ConductorEntity spawn(World world, BlockPos pos, DyeColor color) {
+  public static ConductorEntity spawn(World world, Vector3d pos, DyeColor color) {
     return spawn(world, pos.getX(), pos.getY(), pos.getZ(), color);
   }
 

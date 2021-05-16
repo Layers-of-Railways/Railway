@@ -69,4 +69,8 @@ public abstract class VectorUtils {
             return SOUTH; // should never get here
         }
     }
+
+    public static Vector3d blockPosToVector3d(BlockPos pos) {
+        return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
+    }
 }

@@ -12,6 +12,8 @@ import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
+import com.railwayteam.railways.items.handcar.HandcarItem;
+import com.railwayteam.railways.items.handcar.HandcarItemRenderer;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
@@ -79,6 +81,7 @@ public class ModSetup {
   public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
   public static ItemEntry<Item> R_ITEM_BOGIE;
   public static ItemEntry<ConductorItem> R_ITEM_CONDUCTOR;
+  public static ItemEntry<HandcarItem> R_ITEM_HANDCAR;
 
   public static EntityEntry<Entity> R_ENTITY_STEADYCART;
   public static EntityEntry<ConductorEntity> R_ENTITY_CONDUCTOR;
@@ -243,13 +246,7 @@ public class ModSetup {
 
 //    ItemBuilder<EngineersCapItem, Registrate> engineersCapBuilder = reg.item(EngineersCapItem.name, EngineersCapItem::new)
 //            .lang("Engineer's cap")
-//            .model((ctx, prov) -> { // TODO: placeholder model
-//              prov.singleTexture(
-//                      ctx.getName(),
-//                      prov.mcLoc("item/generated"),
-//                      "layer0",
-//                      prov.modLoc("item/waypoint_manager"));
-//            });
+//
 //            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
 //                    .patternLine("WWW")
 //                    .patternLine("W W")
@@ -322,6 +319,11 @@ public class ModSetup {
       .lang("Conductor")
             .properties(p -> p.maxStackSize(1))
       .register();
+
+    R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
+            .lang("Handcar")
+            .properties(p -> p.maxStackSize(1).setISTER(() -> HandcarItemRenderer::new))
+            .register();
 
     R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")

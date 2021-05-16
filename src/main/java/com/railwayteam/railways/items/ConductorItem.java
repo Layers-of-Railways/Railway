@@ -20,6 +20,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -34,13 +35,13 @@ public class ConductorItem extends EntityItem<ConductorEntity> {
     }
 
     public ItemStack create(ConductorEntity entity) {
-        ItemStack stack = new ItemStack(ModSetup.R_ITEM_CONDUCTOR.get());
+        ItemStack stack = new ItemStack(g());
         putEntityDataInItem(stack, entity);
         return stack;
     }
 
     @Override
-    public ConductorEntity spawnEntity(PlayerEntity plr, ItemStack stack, BlockPos pos) {
+    public ConductorEntity spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos) {
         return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
     }
 

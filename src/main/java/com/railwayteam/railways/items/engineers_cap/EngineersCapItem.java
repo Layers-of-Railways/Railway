@@ -5,6 +5,7 @@ import com.railwayteam.railways.Translation;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.VectorUtils;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -153,7 +154,7 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);
-                ConductorEntity.spawn(world, getLowest(blocksToRemove), color);
+                ConductorEntity.spawn(world, VectorUtils.blockPosToVector3d(getLowest(blocksToRemove)), color);
                 if(!player.isCreative()) {
                     stack.shrink(1);
                     return ActionResultType.CONSUME;

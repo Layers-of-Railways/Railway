@@ -1,6 +1,7 @@
 package com.railwayteam.railways.entities.handcar;
 
 import com.railwayteam.railways.entities.TrackRidingEntity;
+import com.railwayteam.railways.items.handcar.HandcarItem;
 import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.WrenchableEntity;
 import net.minecraft.entity.EntityType;
@@ -16,9 +17,7 @@ import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
@@ -76,5 +75,10 @@ public class HandcarEntity extends TrackRidingEntity implements Animatable, Wren
     @Override
     public <E extends IAnimatable> PlayState getPlayState(AnimationEvent<E> event, AnimationBuilder returnedAnimation) {
         return isMoving ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+    @Override
+    public void afterWrenched(PlayerEntity plr, Hand hand) {
+        entityDropItem(HandcarItem.g().create(this));
     }
 }
