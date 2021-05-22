@@ -1,5 +1,6 @@
 package com.railwayteam.railways.entities.handcar;
 
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;

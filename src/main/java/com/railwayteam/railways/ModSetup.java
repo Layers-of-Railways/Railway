@@ -341,7 +341,6 @@ public class ModSetup {
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
-    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
     GeoArmorRenderer.registerArmorRenderer(EngineersCapItem.class, new EngineersCapRenderer());
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_HANDCAR.get(), HandcarRenderer::new);
   }

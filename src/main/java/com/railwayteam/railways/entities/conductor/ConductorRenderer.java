@@ -1,20 +1,30 @@
 package com.railwayteam.railways.entities.conductor;
 
+import com.railwayteam.railways.Railways;
+import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
+import net.minecraft.client.renderer.entity.model.ArmorStandArmorModel;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class ConductorRenderer extends GeoEntityRenderer<ConductorEntity> {
-  public ConductorRenderer(EntityRendererManager renderManager)
-  {
-    super(renderManager, new ConductorEntityModel());
+import javax.annotation.Nonnull;
+
+public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEntityModel> {
+  public static final ResourceLocation TEXTURE = new ResourceLocation(Railways.MODID, "textures/entity/conductor.png");
+
+  public ConductorRenderer(EntityRendererManager manager) {
+    super(manager, new ConductorEntityModel(), 0.2f);
+
     this.shadowSize = 0.4F;
-    addLayer(new EngineersCapLayer(this));
+//    this.addLayer(new BipedArmorLayer<>(this, new ConductorEntityModel(), new ConductorEntityModel()));
+//    addLayer(new EngineersCapLayer(this));
   }
 
   @Override
-  public ResourceLocation getEntityTexture(ConductorEntity entity) {
-    return new ConductorEntityModel().getTextureLocation(entity);
+  public ResourceLocation getEntityTexture(ConductorEntity p_110775_1_) {
+    return TEXTURE;
   }
 }
 
