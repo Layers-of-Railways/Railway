@@ -2,12 +2,16 @@ package com.railwayteam.railways.entities.conductor;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.EndermanModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.ZombieModel;
+import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
+import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
@@ -15,6 +19,10 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 //public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
 //{
@@ -53,14 +61,14 @@ import javax.annotation.Nullable;
 //}
 
 
-public class ConductorEntityModel extends EntityModel<ConductorEntity> {
+public class ConductorEntityModel extends EntityModel<ConductorEntity> implements IHasArm, IHasHead {
 
-	private final ModelRenderer head;
-	private final ModelRenderer body;
-	private final ModelRenderer armRight;
-	private final ModelRenderer armLeft;
-	private final ModelRenderer legRight;
-	private final ModelRenderer legLeft;
+	public final ModelRenderer Head;
+	public final ModelRenderer Body;
+	public final ModelRenderer RightArm;
+	public final ModelRenderer LeftArm;
+	public final ModelRenderer RightLeg;
+	public final ModelRenderer LeftLeg;
 //	private final ModelRenderer hat;
 //	private final ModelRenderer hatBrim;
 
@@ -70,59 +78,133 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> {
 		textureWidth = 64;
 		textureHeight = 64;
 
-		head = new ModelRenderer(this); //(this);
-		head.setRotationPoint(0.0F, 17.5F, 0.0F);
-		head.setTextureOffset(0, 1).addCuboid(-12.0F, 13F, 4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
+		Head = new ModelRenderer(this);
+		Head.setRotationPoint(0.0F, 6.5F, 0.0F);
+		Head.setTextureOffset(0, 1).addCuboid(-4.0F, -3.5F, -4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
 
-		body = new ModelRenderer(this);
-		body.setRotationPoint(0.0F, 0.0F, 0.0F);
-		body.setTextureOffset(2, 16).addCuboid(-12.0F, 10.0F, 5.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
-		body.setTextureOffset(5, 27).addCuboid(-11.0F, 15.0F, 6.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
+		Body = new ModelRenderer(this);
+		Body.setRotationPoint(0.0F, 17.0F, 0.0F);
+		Body.setTextureOffset(2, 16).addCuboid(-4.0F, -7.0F, -3.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
+		Body.setTextureOffset(5, 27).addCuboid(-3.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
 
-		armRight = new ModelRenderer(this);
-		armRight.setRotationPoint(-5.0F, 2.0F, 0.0F);
-		armRight.setTextureOffset(50, 0).addCuboid(-10.0F, 8.0F, 6.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
+		RightArm = new ModelRenderer(this);
+		RightArm.setRotationPoint(-4.0F, 11.0F, 0.0F);
+		RightArm.setTextureOffset(50, 0).addCuboid(-3.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
-		armLeft = new ModelRenderer(this);
-		armLeft.setRotationPoint(4.0F, 1.0F, 0.0F);
-		armLeft.setTextureOffset(36, 0).addCuboid(-8.0F, 9.0F, 6.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
+		LeftArm = new ModelRenderer(this);
+		LeftArm.setRotationPoint(4.0F, 11.0F, 0.0F);
+		LeftArm.setTextureOffset(36, 0).addCuboid(0.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
-		legRight = new ModelRenderer(this);
-		legRight.setRotationPoint(-1.9F, 12.0F, 0.0F);
-		legRight.setTextureOffset(50, 13).addCuboid(-9.1F, 7.0F, 6.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
+		RightLeg = new ModelRenderer(this);
+		RightLeg.setRotationPoint(-1.9F, 20.0F, 0.0F);
+		RightLeg.setTextureOffset(50, 13).addCuboid(-1.1F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
-		legLeft = new ModelRenderer(this);
-		legLeft.setRotationPoint(1.9F, 12.0F, 0.0F);
-		legLeft.setTextureOffset(36, 13).addCuboid(-9.9F, 7.0F, 6.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
+		LeftLeg = new ModelRenderer(this);
+		LeftLeg.setRotationPoint(1.9F, 20.0F, 0.0F);
+		LeftLeg.setTextureOffset(36, 13).addCuboid(-1.9F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
-		body.addChild(legLeft);
-		body.addChild(legRight);
-		body.addChild(armLeft);
-		body.addChild(armRight);
-		body.addChild(head);
-		body.setRotationPoint(8.0F, 0.0F, -8.0F);
+//		body.addChild(legLeft);
+//		body.addChild(legRight);
+//		body.addChild(armLeft);
+//		body.addChild(armRight);
+//		body.addChild(head);
+//		body.setRotationPoint(8.0F, 0.0F, -8.0F);
 	}
 
 	@Override
 	public void setAngles(ConductorEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
-//		head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-//		head.rotateAngleX = (-(float)Math.PI / 4F);
-		// for talrey: i tried doing what minecraft does in BipedModel, line 84.
-		// theres also a head pitch thing there but it doesnt use the head pitch argument for some reason
-		head.rotateAngleY = headYaw * ((float)Math.PI / 180F);
+		Head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+		Head.rotateAngleY = headYaw * ((float)Math.PI / 180F);
+
+		RightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		LeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+
+		RightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+		LeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+
+		// default angles
+		RightArm.rotateAngleZ = 0.0F;
+		LeftArm.rotateAngleZ = 0.0F;
+		RightLeg.rotateAngleY = 0.0F;
+		LeftLeg.rotateAngleY = 0.0F;
+		RightLeg.rotateAngleZ = 0.0F;
+		LeftLeg.rotateAngleZ = 0.0F;
+
+		// default rotation points
+		RightArm.rotationPointY = 11;
+		LeftArm.rotationPointY = 11;
+//		Body.rotationPointY = 17;
+		Head.rotationPointY = 6.5F;
+		Head.rotationPointZ = 0;
+
+		// sitting poses
+		if (this.isSitting) {
+			Entity riding = entity.getRidingEntity();
+			if(riding != null) {
+				if(riding instanceof MinecartEntity) {
+					setMinecartPose();
+				} else if(riding instanceof SeatEntity) {
+					setSeatPose();
+				} else {
+					setSittingPose();
+				}
+			} else {
+				setSittingPose();
+			}
+		}
+	}
+
+	public void setMinecartPose() {
+		LeftArm.rotateAngleX = -45.5F;
+		RightArm.rotateAngleX = -45.5F;
+		LeftLeg.rotateAngleX = 80;
+		RightLeg.rotateAngleX = 80;
+	}
+
+	public void setSeatPose() {
+		RightArm.rotationPointY = 9;
+		RightArm.rotateAngleX = 7.5F;
+		RightArm.rotateAngleY = -25;
+
+		LeftArm.rotationPointY = 9;
+		LeftArm.rotateAngleX = 7.5F;
+		LeftArm.rotateAngleY = 25;
+
+//		Body.rotationPointY = 4.5F;
+		Body.rotateAngleX = -12.5F;
+
+		Head.rotationPointY = -5.5F;
+		Head.rotationPointZ = 3;
+	}
+
+	public void setSittingPose() {
+		RightArm.rotateAngleX += (-(float)Math.PI / 5F);
+		LeftArm.rotateAngleX += (-(float)Math.PI / 5F);
+		RightLeg.rotateAngleX = -1.4137167F;
+		RightLeg.rotateAngleY = ((float)Math.PI / 10F);
+		RightLeg.rotateAngleZ = 0.07853982F;
+		LeftLeg.rotateAngleX = -1.4137167F;
+		LeftLeg.rotateAngleY = (-(float)Math.PI / 10F);
+		LeftLeg.rotateAngleZ = -0.07853982F;
 	}
 
 	@Override
-	public void setLivingAnimations(ConductorEntity entity, float limbSwing, float limbSwingAmount, float partialTick) {
-		super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTick);
-
-//		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-//		head.setRotationPoint(entity.rotationPitch * ((float) Math.PI / 360F), entity.getRotationYawHead() * ((float) Math.PI / 340F), head.rotationPointZ);
-//		head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 340F));
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		Head.render(matrixStack, buffer, packedLight, packedOverlay);
+		Body.render(matrixStack, buffer, packedLight, packedOverlay);
+		RightArm.render(matrixStack, buffer, packedLight, packedOverlay);
+		LeftArm.render(matrixStack, buffer, packedLight, packedOverlay);
+		RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
+		LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedOverlay, int red, float green, float blue, float alpha, float whatisthislol) {
-		body.render(matrixStack, buffer, packedOverlay, packedOverlay);
+	public void setArmAngle(HandSide hand, MatrixStack stack) {
+		(hand == HandSide.LEFT ? LeftArm : RightArm).rotate(stack);
+	}
+
+	@Override
+	public ModelRenderer func_205072_a() { // getModelHead
+		return Head;
 	}
 }
