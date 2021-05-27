@@ -1,8 +1,10 @@
 package com.railwayteam.railways.entities.conductor;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -22,6 +24,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
@@ -125,17 +128,26 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 		// default angles
 		RightArm.rotateAngleZ = 0.0F;
 		LeftArm.rotateAngleZ = 0.0F;
+		RightArm.rotateAngleX = 0;
+		LeftArm.rotateAngleX = 0;
+		RightArm.rotateAngleY = 0;
+		LeftArm.rotateAngleY = 0;
 		RightLeg.rotateAngleY = 0.0F;
 		LeftLeg.rotateAngleY = 0.0F;
 		RightLeg.rotateAngleZ = 0.0F;
 		LeftLeg.rotateAngleZ = 0.0F;
+		Body.rotateAngleX = 0;
 
 		// default rotation points
 		RightArm.rotationPointY = 11;
 		LeftArm.rotationPointY = 11;
-//		Body.rotationPointY = 17;
+		Body.rotationPointY = 17;
 		Head.rotationPointY = 6.5F;
 		Head.rotationPointZ = 0;
+		RightLeg.rotationPointY = 20;
+		LeftLeg.rotationPointY = 20;
+		RightLeg.rotationPointZ = 0;
+		LeftLeg.rotationPointZ = 0;
 
 		// sitting poses
 		if (this.isSitting) {
@@ -143,7 +155,7 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 			if(riding != null) {
 				if(riding instanceof MinecartEntity) {
 					setMinecartPose();
-				} else if(riding instanceof SeatEntity) {
+				} else if(riding instanceof SeatEntity || riding instanceof AbstractContraptionEntity) {
 					setSeatPose();
 				} else {
 					setSittingPose();
@@ -156,28 +168,44 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 
 	public void setMinecartPose() {
 		LeftArm.rotateAngleX = -45.5F;
+		LeftArm.rotateAngleY -= 0.2;
 		RightArm.rotateAngleX = -45.5F;
-		LeftLeg.rotateAngleX = 80;
-		RightLeg.rotateAngleX = 80;
+		RightArm.rotateAngleY += 0.2;
+		// leg angles copied from biped model
+		RightLeg.rotateAngleX = -1.4137167F;
+		RightLeg.rotateAngleY = ((float)Math.PI / 10F);
+		RightLeg.rotateAngleZ = 0.07853982F;
+		LeftLeg.rotateAngleX = -1.4137167F;
+		LeftLeg.rotateAngleY = (-(float)Math.PI / 10F);
+		LeftLeg.rotateAngleZ = -0.07853982F;
 	}
 
 	public void setSeatPose() {
-		RightArm.rotationPointY = 9;
-		RightArm.rotateAngleX = 7.5F;
-		RightArm.rotateAngleY = -25;
+		RightArm.rotationPointY += 2;
+		RightArm.rotateAngleX += 0.5F;
 
-		LeftArm.rotationPointY = 9;
-		LeftArm.rotateAngleX = 7.5F;
-		LeftArm.rotateAngleY = 25;
+		LeftArm.rotationPointY += 2;
+		LeftArm.rotateAngleX += 0.5F;
 
-//		Body.rotationPointY = 4.5F;
-		Body.rotateAngleX = -12.5F;
+		RightLeg.rotateAngleX = 80;
+		RightLeg.rotateAngleY += 0.5F;
+		RightLeg.rotationPointY -= 1;
+		RightLeg.rotationPointZ -= 3;
 
-		Head.rotationPointY = -5.5F;
-		Head.rotationPointZ = 3;
+		LeftLeg.rotateAngleX = 80;
+		LeftLeg.rotateAngleY -= 0.5F;
+		LeftLeg.rotationPointY -= 1;
+		LeftLeg.rotationPointZ -= 3;
+
+		Body.rotationPointY += 1; // WHY DOES ADDING TO THE ROTATION POINT Y LOWER IT THIS DOESNT MAKE ANY SENSE
+		Body.rotateAngleX -= 0.2;
+
+		Head.rotationPointY += 1;
+		Head.rotationPointZ += 1;
 	}
 
 	public void setSittingPose() {
+		// copied from biped model
 		RightArm.rotateAngleX += (-(float)Math.PI / 5F);
 		LeftArm.rotateAngleX += (-(float)Math.PI / 5F);
 		RightLeg.rotateAngleX = -1.4137167F;
@@ -190,12 +218,8 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 
 	@Override
 	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		Head.render(matrixStack, buffer, packedLight, packedOverlay);
-		Body.render(matrixStack, buffer, packedLight, packedOverlay);
-		RightArm.render(matrixStack, buffer, packedLight, packedOverlay);
-		LeftArm.render(matrixStack, buffer, packedLight, packedOverlay);
-		RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-		LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
+		Arrays.asList(Head, Body, RightArm, LeftArm, RightLeg, LeftLeg)
+				.forEach(part -> part.render(matrixStack, buffer, packedLight, packedOverlay));
 	}
 
 	@Override
