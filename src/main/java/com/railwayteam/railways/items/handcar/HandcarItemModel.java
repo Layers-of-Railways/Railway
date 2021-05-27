@@ -4,6 +4,7 @@ import com.railwayteam.railways.entities.handcar.HandcarModel;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
+// TODO: make this into a vanilla iter
 public class HandcarItemModel extends AnimatedGeoModel<HandcarItem> {
     HandcarModel model = new HandcarModel();
 
@@ -14,11 +15,11 @@ public class HandcarItemModel extends AnimatedGeoModel<HandcarItem> {
 
     @Override
     public ResourceLocation getTextureLocation(HandcarItem handcarItem) {
-        return model.getTextureLocation();
+        return new ResourceLocation("railways", "textures/entity/handcar.png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(HandcarItem handcarItem) {
-        return model.getAnimationFileLocation();
+        return new ResourceLocation("railways", "animations/handcar.animation.json");
     }
 }

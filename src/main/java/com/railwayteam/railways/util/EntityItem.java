@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.UUID;
 
-public abstract class EntityItem<E extends LivingEntity> extends Item {
+public abstract class EntityItem<E extends Entity> extends Item {
     public abstract E spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos);
 
     public EntityItem(Properties p_i48487_1_) {
@@ -34,6 +34,10 @@ public abstract class EntityItem<E extends LivingEntity> extends Item {
         return spawnEntity(plr, stack, pos);
     }
 
+    public void setHealthNonLiving(E entity) {
+
+    }
+
     public E spawn(ItemStack stack, BlockPos pos, PlayerEntity plr, Direction face) {
         Vector3d spawn = VectorUtils.blockPosToVector3d(pos.offset(face)).add(0.5, 0, 0.5);
         if(!hasEntity(stack)) { // if the item is created using /give or through creative, it doesnt have an entity
@@ -42,7 +46,9 @@ public abstract class EntityItem<E extends LivingEntity> extends Item {
             E entity = getEntityFromItem(stack, plr.world);
             entity.setPositionAndRotation(spawn.getX(), spawn.getY(), spawn.getZ(), 0, 0);
             stack.shrink(1);
-            entity.setHealth(entity.getMaxHealth());
+            if (entity instanceof LivingEntity)
+                ((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
+            else setHealthNonLiving(entity);
             entity.setUniqueId(UUID.randomUUID()); // to prevent UUID conflicts, the UUID is changed but the data is kept, so its pretty much a clone of the original
             plr.world.addEntity(entity);
             entity.fallDistance = 0; // prevent instant death if died from fall damage

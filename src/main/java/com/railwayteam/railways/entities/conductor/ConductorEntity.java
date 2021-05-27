@@ -35,7 +35,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public class ConductorEntity extends CreatureEntity implements Animatable, WrenchableEntity {
+public class ConductorEntity extends CreatureEntity implements WrenchableEntity {
   public static final String name = "conductor";
 //  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
@@ -224,32 +224,6 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
   @Override
   public void afterWrenched(PlayerEntity plr, Hand hand) {
     entityDropItem(ConductorItem.g().create(this));
-  }
-
-  private AnimationFactory factory = new AnimationFactory(this);
-
-  @Override
-  public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
-    if(this.getRidingEntity() != null) {
-      if(isInMinecart()) {
-        return anim("minecart");
-      }
-      return anim("sit");
-    }
-    if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      return anim("walk");
-    }
-    return anim("idle");
-  }
-
-  @Override
-  public AnimationFactory getFactory() {
-    return this.factory;
-  }
-
-  @Override
-  public String getAnimationPrefix() {
-    return "conductor_";
   }
 
   @Override

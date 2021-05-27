@@ -39,6 +39,11 @@ public class HandcarItem extends EntityItem<HandcarEntity> implements Animatable
     }
 
     @Override
+    public void setHealthNonLiving(HandcarEntity entity) {
+        entity.setHealth(entity.getMaxHealth());
+    }
+
+    @Override
     public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
         return anim("push");
     }

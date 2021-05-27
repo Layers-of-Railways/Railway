@@ -27,43 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
-//{
-//	public ConductorEntityModel() {
-//
-//	}
-//
-//	@Override
-//	public ResourceLocation getModelLocation(ConductorEntity object)
-//	{
-//		return new ResourceLocation("railways", "geo/conductor.geo.json");
-//	}
-//
-//	@Override
-//	public ResourceLocation getTextureLocation(ConductorEntity object)
-//	{
-//		return new ResourceLocation("railways", "textures/entity/conductor.png");
-//	}
-//
-//	@Override
-//	public ResourceLocation getAnimationFileLocation(ConductorEntity object)
-//	{
-//		return new ResourceLocation("railways", "animations/conductor.animation.json");
-//	}
-//
-//	@Override
-//	public void setLivingAnimations(ConductorEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-//		super.setLivingAnimations(entity, uniqueID, customPredicate);
-//
-//		IBone head = this.getAnimationProcessor().getBone("Head");
-//
-//		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-//		head.setRotationX(extraData.headPitch * ((float) Math.PI / 360F));
-//		head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 340F));
-//	}
-//}
-
-
 public class ConductorEntityModel extends EntityModel<ConductorEntity> implements IHasArm, IHasHead {
 
 	public final ModelRenderer Head;

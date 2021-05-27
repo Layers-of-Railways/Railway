@@ -348,6 +348,6 @@ public class ModSetup {
   @SubscribeEvent
   public static void createEntityAttributes(EntityAttributeCreationEvent event) {
     event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), LivingEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
-    event.put(ModSetup.R_ENTITY_HANDCAR.get(), LivingEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
+//    event.put(ModSetup.R_ENTITY_HANDCAR.get(), LivingEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 }
