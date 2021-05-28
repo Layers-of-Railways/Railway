@@ -90,8 +90,6 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 		// default angles
 		RightArm.rotateAngleZ = 0.0F;
 		LeftArm.rotateAngleZ = 0.0F;
-		RightArm.rotateAngleX = 0;
-		LeftArm.rotateAngleX = 0;
 		RightArm.rotateAngleY = 0;
 		LeftArm.rotateAngleY = 0;
 		RightLeg.rotateAngleY = 0.0F;
