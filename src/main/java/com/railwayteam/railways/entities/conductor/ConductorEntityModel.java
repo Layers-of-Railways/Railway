@@ -5,7 +5,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;

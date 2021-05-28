@@ -2,7 +2,6 @@ package com.railwayteam.railways.entities;
 
 import com.mojang.datafixers.util.Pair;
 import com.railwayteam.railways.blocks.AbstractLargeTrackBlock;
-import com.railwayteam.railways.entities.handcar.HandcarEntity;
 import com.railwayteam.railways.items.handcar.HandcarItem;
 import net.minecraft.block.AbstractRailBlock;
 import net.minecraft.block.BlockState;
@@ -59,7 +58,7 @@ public abstract class TrackRidingEntity extends Entity {
 
     public abstract void spawnDrops(DamageSource p_213345_1_);
 
-    private static final DataParameter<Integer> HEALTH = EntityDataManager.createKey(HandcarEntity.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> HEALTH = EntityDataManager.createKey(TrackRidingEntity.class, DataSerializers.VARINT);
 
     @Override
     protected void registerData() {
