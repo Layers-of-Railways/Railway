@@ -6,6 +6,7 @@ import com.railwayteam.railways.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.WrenchableEntity;
+import net.minecraft.client.renderer.entity.layers.SheepWoolLayer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;

@@ -1,10 +1,13 @@
 package com.railwayteam.railways.entities.conductor;
 
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import com.railwayteam.railways.Railways;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
+import net.minecraft.client.renderer.entity.layers.LeatherHorseArmorLayer;
 import net.minecraft.client.renderer.entity.model.ArmorStandArmorModel;
 import net.minecraft.util.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -18,8 +21,9 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
     super(manager, new ConductorEntityModel(), 0.2f);
 
     this.shadowSize = 0.4F;
+
 //    this.addLayer(new BipedArmorLayer<>(this, new ConductorEntityModel(), new ConductorEntityModel()));
-//    addLayer(new EngineersCapLayer(this));
+    addLayer(new EngineersCapLayer(this));
   }
 
   @Override
