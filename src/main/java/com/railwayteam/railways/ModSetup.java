@@ -335,6 +335,7 @@ public class ModSetup {
 
     R_ENTITY_HANDCAR = reg.entity(HandcarEntity.name, HandcarEntity::new, EntityClassification.MISC)
             .lang("Handcar")
+            .properties(entity -> entity.size(2, 3))
             .register();
   }
 
