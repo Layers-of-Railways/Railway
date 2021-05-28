@@ -44,23 +44,34 @@ public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity
 
     boolean pushDirection = true; // used in hand car animation so it switches directions at some point
 
-    // TODO: when the actual track riding is done, please add these values
-    public boolean shouldMoveWheels() {
-        return true;
-    }
+    float wheelRotationZ = 0;
+    float walkingBeamRotationX = 0;
 
-    public boolean shouldPushWalkingBeam() {
-        return true;
-    }
-
-    // TODO: change these 2 negative when moving in the other direction
+    // TODO: change these 2 negative when moving in the other direction, and to zero when shouldnt move
     // TODO: make this change depending on the movement speed
     public double getRotateWheelsBy() {
-        return 0.001;
+        return 0.01;
     }
 
     public double getPushWalkingBeamBy() {
         return 0.01;
+    }
+
+    @Override
+    public void tick() {
+        if(world.isRemote) {
+            if(walkingBeamRotationX >= 0.4) {
+                pushDirection = false;
+            } else if(walkingBeamRotationX <= -0.4) {
+                pushDirection = true;
+            }
+            walkingBeamRotationX += getPushWalkingBeamBy() * (pushDirection ? 1D : -1D);
+
+            wheelRotationZ += getRotateWheelsBy();
+            wheelRotationZ %= Math.PI * 2;
+        }
+
+        super.tick();
     }
 
     public HandcarEntity(EntityType<? extends Entity> p_i48577_1_, World p_i48577_2_) {

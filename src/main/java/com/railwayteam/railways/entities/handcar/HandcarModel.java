@@ -13,22 +13,10 @@ public class HandcarModel extends EntityModel<HandcarEntity> {
     @Override
     public void setAngles(HandcarEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
         if(Minecraft.getInstance().isGamePaused()) return;
-        if(entity.shouldMoveWheels()) {
-            double rotateBy = entity.getRotateWheelsBy();
-            Arrays.asList(RightWheel1, RightWheel2, LeftWheel1, LeftWheel2, Axle1, Axle2).forEach(part -> {
-                part.rotateAngleZ %= Math.PI;
-                part.rotateAngleZ += rotateBy;
-            });
-        }
-        if(entity.shouldPushWalkingBeam()) {
-            if(WalkingBeam.rotateAngleX >= 0.4) {
-                entity.pushDirection = false;
-            } else if(WalkingBeam.rotateAngleX <= -0.4) {
-                entity.pushDirection = true;
-            }
-            WalkingBeam.rotateAngleX += entity.getPushWalkingBeamBy() * (entity.pushDirection ? 1D : -1D);
-//            bone3.rotateAngleX+=entity.getPushWalkingBeamBy();
-        }
+        Arrays.asList(RightWheel1, RightWheel2, LeftWheel1, LeftWheel2, Axle1, Axle2).forEach(part -> {
+            part.rotateAngleZ = entity.wheelRotationZ;
+        });
+        WalkingBeam.rotateAngleX = entity.walkingBeamRotationX;
     }
 
     @Override
