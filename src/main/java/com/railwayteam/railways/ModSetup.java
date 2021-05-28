@@ -330,12 +330,12 @@ public class ModSetup {
       .register();
 
     R_ENTITY_CONDUCTOR = reg.entity(ConductorEntity.name, ConductorEntity::new, EntityClassification.MISC)
-      .lang(ConductorEntity.defaultDisplayName)
+      .lang(ConductorEntity.defaultDisplayName).properties(p -> p.size(0.5F, 1.3F))
       .register();
 
     R_ENTITY_HANDCAR = reg.entity(HandcarEntity.name, HandcarEntity::new, EntityClassification.MISC)
             .lang("Handcar")
-            .properties(entity -> entity.size(2, 3))
+            .properties(p -> p.size(2, 1.7F))
             .register();
   }
 

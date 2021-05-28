@@ -10,6 +10,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -243,5 +244,10 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   @Override
   public ItemStack getPickedResult(RayTraceResult target) {
     return ConductorItem.g().create(this);
+  }
+
+  @Override
+  public float getStandingEyeHeight(Pose pose, EntitySize size) {
+    return size.height * 0.90F;
   }
 }

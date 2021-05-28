@@ -27,6 +27,7 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -116,7 +117,7 @@ public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity
 
     @Override
     public double getPushBoxX() {
-        return 1;
+        return 0.3;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity
 
     @Override
     public double getPushBoxZ() {
-        return 0.5;
+        return 0.3;
     }
 
     public ActionResultType processInitialInteract(PlayerEntity plr, Hand hand) {
@@ -143,5 +144,10 @@ public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity
     @Override
     public void afterWrenched(PlayerEntity plr, Hand hand) {
         entityDropItem(HandcarItem.g().create(this));
+    }
+
+    @Override
+    public ItemStack getPickedResult(RayTraceResult target) {
+        return HandcarItem.g().create(this);
     }
 }
