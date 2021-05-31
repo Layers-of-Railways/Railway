@@ -70,7 +70,6 @@ class EngineersCapModel1 extends BipedModel<LivingEntity> { // TODO: remove 1 fr
     public void setAngles(LivingEntity p_225597_1_, float p_225597_2_, float p_225597_3_, float p_225597_4_, float headYaw, float headPitch) {
         if(isOnConductor) {
 //            Hat.rotationPointY = bipedHead.rotationPointY;
-            Hat.rotationPointY = 16;
 //            System.out.println(Hat.rotationPointY);
 
             Hat.rotateAngleX = headPitch * ((float)Math.PI / 180F);
@@ -97,15 +96,15 @@ class EngineersCapModel1 extends BipedModel<LivingEntity> { // TODO: remove 1 fr
 
         if(isOnConductor) {
             Hat = new ModelRenderer(this);
-            Hat.setRotationPoint(0.0F, 3.0F, 0.0F);
-            Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -6.0F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -6.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 36).addCuboid(4.0F, -6.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -6.0F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -6.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+            Hat.setRotationPoint(0.0F, 6.5F, 0.0F);
+            Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -4.5F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 36).addCuboid(4.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -4.5F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -4.5F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
 
             Hat_r1 = new ModelRenderer(this);
-            Hat_r1.setRotationPoint(8.0F, -3.4362F, -5.904F);
+            Hat_r1.setRotationPoint(8.0F, -1.9362F, -5.904F);
             Hat.addChild(Hat_r1);
             setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
             Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
