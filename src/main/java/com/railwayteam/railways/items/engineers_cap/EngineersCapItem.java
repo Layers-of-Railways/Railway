@@ -1,15 +1,15 @@
 package com.railwayteam.railways.items.engineers_cap;
 
-import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.Translation;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
-import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.VectorUtils;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -17,30 +17,12 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.*;
 import net.minecraft.util.math.*;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.item.GeoArmorItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EngineersCapItem extends GeoArmorItem implements Animatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-
-    @Override
-    public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
-        return anim("idle");
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
+public class EngineersCapItem extends ArmorItem {
     static class EngineerCapArmorMaterial implements IArmorMaterial {
         @Override
         public int getDurability(EquipmentSlotType p_200896_1_) {
@@ -115,6 +97,12 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
         return isCasing(world.getBlockState(pos));
     }
 
+    @Nullable
+    @Override
+    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
+        return (A) new EngineersCapModel();
+    }
+
     public static BlockPos[] getBlocksToRemove(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if(!isCasing(state)) return new BlockPos[0];
@@ -135,6 +123,12 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
     @Override // overridden so that minecraft doesnt equip the item when right clicked, mainly so my engineer factory doesnt stop working lol
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity plr, Hand hand) {
         return ActionResult.pass(plr.getHeldItem(hand));
+    }
+
+    @Nullable
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+        return "railways:textures/models/armor/" + color + "_golem_hat.png";
     }
 
     @Override

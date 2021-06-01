@@ -11,9 +11,7 @@ import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
 import com.railwayteam.railways.items.handcar.HandcarItem;
-import com.railwayteam.railways.items.handcar.HandcarItemRenderer;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
@@ -46,7 +44,6 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.HashMap;
 
@@ -322,7 +319,7 @@ public class ModSetup {
 
     R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
             .lang("Handcar")
-            .properties(p -> p.maxStackSize(1).setISTER(() -> HandcarItemRenderer::new))
+            .properties(p -> p.maxStackSize(1))
             .model((ctx, prov) -> {
               prov.singleTexture(
                       ctx.getName(),
@@ -349,7 +346,6 @@ public class ModSetup {
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
-    GeoArmorRenderer.registerArmorRenderer(EngineersCapItem.class, new EngineersCapRenderer());
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_HANDCAR.get(), HandcarRenderer::new);
   }
 

@@ -2,19 +2,14 @@ package com.railwayteam.railways.items.handcar;
 
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.entities.handcar.HandcarEntity;
-import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.EntityItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class HandcarItem extends EntityItem<HandcarEntity> implements Animatable {
+public class HandcarItem extends EntityItem<HandcarEntity> {
     public static HandcarItem g() {
         return ModSetup.R_ITEM_HANDCAR.get();
     }
@@ -41,17 +36,5 @@ public class HandcarItem extends EntityItem<HandcarEntity> implements Animatable
     @Override
     public void setHealthNonLiving(HandcarEntity entity) {
         entity.setHealth(entity.getMaxHealth());
-    }
-
-    @Override
-    public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
-        return anim("push");
-    }
-
-    protected AnimationFactory factory = new AnimationFactory(this);
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

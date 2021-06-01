@@ -18,8 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class HandcarRenderer extends EntityRenderer<HandcarEntity> {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Railways.MODID, "textures/entity/handcar.png");

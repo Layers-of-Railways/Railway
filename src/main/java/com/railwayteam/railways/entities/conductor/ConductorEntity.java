@@ -4,7 +4,6 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecartGoal;
 import com.railwayteam.railways.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.items.ConductorItem;
-import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.WrenchableEntity;
 import net.minecraft.client.renderer.entity.layers.SheepWoolLayer;
 import net.minecraft.entity.*;
@@ -30,10 +29,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
@@ -143,7 +138,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   }
 
   public Item getHatByColor(DyeColor color) {
-    return ModSetup.ENGINEERS_CAPS.get(color).get();
+    return (Item) ModSetup.ENGINEERS_CAPS.get(color).get();
   }
 
 //  @Override
