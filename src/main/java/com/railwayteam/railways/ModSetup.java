@@ -323,6 +323,13 @@ public class ModSetup {
     R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
             .lang("Handcar")
             .properties(p -> p.maxStackSize(1).setISTER(() -> HandcarItemRenderer::new))
+            .model((ctx, prov) -> {
+              prov.singleTexture(
+                      ctx.getName(),
+                      prov.mcLoc("item/generated"),
+                      "layer0",
+                      prov.modLoc("item/waypoint_manager"));
+            })
             .register();
 
     R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
