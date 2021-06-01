@@ -4,7 +4,11 @@ import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.BlockPosArgument;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +38,8 @@ public class Railways {
   public static ModSetup setup = new ModSetup();
   public static Registrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;
+
+  public static RailLineSegmentManager SEGMENT_MANAGER = RailLineSegmentManager.getInstance();
 
   private RailwaysEventHandler eventHandler;
 
@@ -82,6 +88,30 @@ public class Railways {
             ConductorRenderer::new);
     setup.registerRenderers();
     Containers.registerScreenFactories();
+  }
+
+  @SubscribeEvent
+  public void registerCommands (RegisterCommandsEvent rce) {
+    rce.getDispatcher().register(Commands.literal("graph")
+      .then(Commands.literal("set")
+        .then(Commands.argument("position", BlockPosArgument.blockPos())
+          .executes(context -> {
+            return SEGMENT_MANAGER.addTrack(BlockPosArgument.getBlockPos(context, "position"));
+        })))
+      .then(Commands.literal("get")
+        .then(Commands.argument("position", BlockPosArgument.blockPos())
+          .executes(context -> {
+            boolean found = SEGMENT_MANAGER.containsTrack(BlockPosArgument.getBlockPos(context, "position"));
+            if (context.getSource().getEntity() != null) {
+              context.getSource().sendErrorMessage(new StringTextComponent("track was " + (found ? "" : "not ") + "found in Graph"));
+            }
+            return 1;
+        })))
+      .executes(context -> {
+        context.getSource().sendErrorMessage(new StringTextComponent("usage: graph set|get <BlockPos>"));
+        return 1;
+      })
+    );
   }
 
   @SubscribeEvent

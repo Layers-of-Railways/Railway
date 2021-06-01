@@ -1,8 +1,8 @@
 package com.railwayteam.railways.items.engineers_cap;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
-import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.VectorUtils;
+import com.railwayteam.railways.ModSetup;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -75,12 +75,6 @@ public class EngineersCapItem extends ArmorItem {
 
     public EngineersCapItem(Properties p, DyeColor color) {
         this(new EngineerCapArmorMaterial(), EquipmentSlotType.HEAD, p, color);
-    }
-
-    @Override
-    public void addInformation(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> text, ITooltipFlag p_77624_4_) {
-        text.add(ColorUtils.colored(color));
-        super.addInformation(p_77624_1_, p_77624_2_, text, p_77624_4_);
     }
 
     static Block AndesiteCasing = AllBlocks.ANDESITE_CASING.get();

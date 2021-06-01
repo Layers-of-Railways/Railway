@@ -12,7 +12,6 @@ import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.items.handcar.HandcarItem;
-import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -46,6 +45,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModSetup {
@@ -88,10 +88,6 @@ public class ModSetup {
   }
 
   public static void register (Registrate reg) {
-    for(Translation translation : Translation.values()) {
-      reg.addLang(translation.type, translation.id, translation.english);
-    }
-
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
 
@@ -251,17 +247,11 @@ public class ModSetup {
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
-      // Color lang
-      Translation.colorToText.put(color,
-              reg.addLang(
-                      "color",
-                      new ResourceLocation("railways", color.getTranslationKey()),
-                      ColorUtils.colorToEnglish(color)
-              )
-      );
+      reg.addLang("item", new ResourceLocation("railways", "conductor_" + color.getTranslationKey()), toEnglishName(color.getTranslationKey() + "_conductor"));
 
       ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
       (p) -> new EngineersCapItem(p, color))
+              .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))
         .properties(p -> p.maxStackSize(1))
         .tag(TagUtils.EngineerCaps)
         .model((ctx, prov) -> {
