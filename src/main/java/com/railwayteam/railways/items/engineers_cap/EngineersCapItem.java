@@ -1,10 +1,8 @@
 package com.railwayteam.railways.items.engineers_cap;
 
 import com.railwayteam.railways.ModSetup;
-import com.railwayteam.railways.Translation;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.Animatable;
-import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
