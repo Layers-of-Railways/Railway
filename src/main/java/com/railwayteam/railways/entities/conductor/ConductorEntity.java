@@ -251,4 +251,8 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   public float getStandingEyeHeight(Pose pose, EntitySize size) {
     return size.height * 0.90F;
   }
+
+  public boolean shouldBeRainbow() {
+    return hasCustomName() && "jeb_".equals(getName().getUnformattedComponentText());
+  }
 }
