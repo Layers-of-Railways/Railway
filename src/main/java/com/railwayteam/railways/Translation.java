@@ -10,8 +10,7 @@ import java.util.HashMap;
 
 public enum Translation {
     Colored("tooltip", "colored", "Color: %s"),
-    Named("tooltip", "named", "Name: %s"),
-    EngineersCap("item", "engineers_cap", "Engineer's cap");
+    Named("tooltip", "named", "Name: %s");
 
     public static HashMap<DyeColor, TranslationTextComponent> colorToText = new HashMap<>();
 

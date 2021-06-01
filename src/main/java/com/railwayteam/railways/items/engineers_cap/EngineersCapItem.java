@@ -94,12 +94,6 @@ public class EngineersCapItem extends GeoArmorItem implements Animatable {
         this(new EngineerCapArmorMaterial(), EquipmentSlotType.HEAD, p, color);
     }
 
-    @Override
-    public void addInformation(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> text, ITooltipFlag p_77624_4_) {
-        text.add(ColorUtils.colored(color));
-        super.addInformation(p_77624_1_, p_77624_2_, text, p_77624_4_);
-    }
-
     static Block AndesiteCasing = AllBlocks.ANDESITE_CASING.get();
 
     static boolean isCasing(Block block) {

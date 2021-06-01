@@ -38,9 +38,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.HashMap;
+
+import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 
 
 public class ModSetup {
@@ -251,7 +254,7 @@ public class ModSetup {
 //                    .build(prov));
     for(DyeColor color : DyeColor.values()) {
       // Color lang
-      Translation.colorToText.put(color,
+      Translation.colorToText.put(color, // will be removed in next commit!
               reg.addLang(
                       "color",
                       new ResourceLocation("railways", color.getTranslationKey()),
@@ -259,8 +262,10 @@ public class ModSetup {
               )
       );
 
+
       ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
       (p) -> new EngineersCapItem(p, color))
+              .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))
         .properties(p -> p.maxStackSize(1))
         .tag(TagUtils.EngineerCaps)
         .model((ctx, prov) -> {
