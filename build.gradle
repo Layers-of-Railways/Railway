@@ -131,9 +131,6 @@ repositories {
     maven { // Registrate
         url "http://maven.tterrag.com/"
     }
-    maven {
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-    }
 }
 
 dependencies {
@@ -144,8 +141,6 @@ dependencies {
     implementation fg.deobf("curse.maven:create-328085:3278516")
     // https://www.curseforge.com/minecraft/mc-mods/create/files/3278516
     // Create 0.3.1c
-
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.16.5:3.0.33")
 
 	def registrate = "com.tterrag.registrate:Registrate:MC1.16.2-${registrate_version}" // doesnt use minecraft_version because we are on 1.16.4 and registrate is for 1.16.2
     implementation fg.deobf(registrate)

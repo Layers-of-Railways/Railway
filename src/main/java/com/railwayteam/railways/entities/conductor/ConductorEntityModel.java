@@ -1,132 +1,189 @@
 package com.railwayteam.railways.entities.conductor;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
+import net.minecraft.client.renderer.entity.model.*;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.model.provider.data.EntityModelData;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class ConductorEntityModel extends AnimatedGeoModel<ConductorEntity>
-{
+public class ConductorEntityModel extends EntityModel<ConductorEntity> implements IHasArm, IHasHead {
+
+	public final ModelRenderer Head;
+	public final ModelRenderer Body;
+	public final ModelRenderer RightArm;
+	public final ModelRenderer LeftArm;
+	public final ModelRenderer RightLeg;
+	public final ModelRenderer LeftLeg;
+//	private final ModelRenderer hat;
+//	private final ModelRenderer hatBrim;
+
 	public ConductorEntityModel() {
+		super();
 
-	}
+		textureWidth = 64;
+		textureHeight = 64;
 
-	@Override
-	public ResourceLocation getModelLocation(ConductorEntity object)
-	{
-		return new ResourceLocation("railways", "geo/conductor.geo.json");
-	}
+		Head = new ModelRenderer(this);
+		Head.setRotationPoint(0.0F, 6.5F, 0.0F);
+		Head.setTextureOffset(0, 1).addCuboid(-4.0F, -3.5F, -4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
 
-	@Override
-	public ResourceLocation getTextureLocation(ConductorEntity object)
-	{
-		return new ResourceLocation("railways", "textures/entity/conductor.png");
-	}
+		Body = new ModelRenderer(this);
+		Body.setRotationPoint(0.0F, 17.0F, 0.0F);
+		Body.setTextureOffset(2, 16).addCuboid(-4.0F, -7.0F, -3.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
+		Body.setTextureOffset(5, 27).addCuboid(-3.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
 
-	@Override
-	public ResourceLocation getAnimationFileLocation(ConductorEntity object)
-	{
-		return new ResourceLocation("railways", "animations/conductor.animation.json");
-	}
+		RightArm = new ModelRenderer(this);
+		RightArm.setRotationPoint(-4.0F, 11.0F, 0.0F);
+		RightArm.setTextureOffset(50, 0).addCuboid(-3.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
-	@Override
-	public void setLivingAnimations(ConductorEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-		super.setLivingAnimations(entity, uniqueID, customPredicate);
+		LeftArm = new ModelRenderer(this);
+		LeftArm.setRotationPoint(4.0F, 11.0F, 0.0F);
+		LeftArm.setTextureOffset(36, 0).addCuboid(0.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
-		IBone head = this.getAnimationProcessor().getBone("Head");
+		RightLeg = new ModelRenderer(this);
+		RightLeg.setRotationPoint(-1.9F, 20.0F, 0.0F);
+		RightLeg.setTextureOffset(50, 13).addCuboid(-1.1F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
-		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-		head.setRotationX(extraData.headPitch * ((float) Math.PI / 360F));
-		head.setRotationY(extraData.netHeadYaw * ((float) Math.PI / 340F));
-	}
-}
+		LeftLeg = new ModelRenderer(this);
+		LeftLeg.setRotationPoint(1.9F, 20.0F, 0.0F);
+		LeftLeg.setTextureOffset(36, 13).addCuboid(-1.9F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
-//public class EngineerGolemEntityModel extends EntityModel<EngineerGolemEntity> {
-//
-//	private final ModelRenderer head;
-//	private final ModelRenderer body;
-//	private final ModelRenderer armRight;
-//	private final ModelRenderer armLeft;
-//	private final ModelRenderer legRight;
-//	private final ModelRenderer legLeft;
-//	public final ModelRenderer hat;
-//	public final ModelRenderer hatBrim;
-//
-//	public EngineerGolemEntityModel() {
-//		textureWidth = 64;
-//		textureHeight = 64;
-//
-//		head = new ModelRenderer(this); //(this);
-//		head.setRotationPoint(0.0F, 0.0F, 0.0F);
-//		head.setTextureOffset(0, 1).addCuboid(-12.0F, 3.0F, 4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
-//
-//		body = new ModelRenderer(this);
-//		body.setRotationPoint(0.0F, 0.0F, 0.0F);
-//		body.setTextureOffset(2, 16).addCuboid(-12.0F, 10.0F, 5.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
-//		body.setTextureOffset(5, 27).addCuboid(-11.0F, 15.0F, 6.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
-//
-//		armRight = new ModelRenderer(this);
-//		armRight.setRotationPoint(-5.0F, 2.0F, 0.0F);
-//		armRight.setTextureOffset(50, 0).addCuboid(-10.0F, 8.0F, 6.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
-//
-//		armLeft = new ModelRenderer(this);
-//		armLeft.setRotationPoint(4.0F, 1.0F, 0.0F);
-//		armLeft.setTextureOffset(36, 0).addCuboid(-8.0F, 9.0F, 6.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
-//
-//		legRight = new ModelRenderer(this);
-//		legRight.setRotationPoint(-1.9F, 12.0F, 0.0F);
-//		legRight.setTextureOffset(50, 13).addCuboid(-9.1F, 7.0F, 6.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
-//
-//		legLeft = new ModelRenderer(this);
-//		legLeft.setRotationPoint(1.9F, 12.0F, 0.0F);
-//		legLeft.setTextureOffset(36, 13).addCuboid(-9.9F, 7.0F, 6.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
-//
-//		hat = new ModelRenderer(this);
-//		hat.setRotationPoint(-8.0F, 3.5777F, 7.0058F);
-//		setRotationAngle(hat, -0.1309F, 0.0F, 0.0F);
-//		hat.setTextureOffset(39, 33).addCuboid(-4.0F, -1.5777F, 4.9942F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-//		hat.setTextureOffset(34, 48).addCuboid(-5.0F, -1.5777F, -4.0058F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-//		hat.setTextureOffset(34, 36).addCuboid(4.0F, -1.5777F, -4.0058F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-//		hat.setTextureOffset(39, 30).addCuboid(-4.0F, -1.5777F, -4.0058F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-//		hat.setTextureOffset(32, 22).addCuboid(-4.0F, -1.5777F, -3.0058F, 8.0F, 1.0F, 8.0F, 0.0F, false);
-//
-//		hatBrim = new ModelRenderer(this);
-//		hatBrim.setRotationPoint(8.0F, 0.9861F, -4.9098F);
-//		setRotationAngle(hatBrim, 0.3927F, 0.0F, 0.0F);
-//		hatBrim.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
-//
-//		hat.addChild(hatBrim);
-//		head.addChild(hat);
 //		body.addChild(legLeft);
 //		body.addChild(legRight);
 //		body.addChild(armLeft);
 //		body.addChild(armRight);
-//		head.addChild(body);
-//		head.setRotationPoint(8.0F, 0.0F, -8.0F);
-//	}
-//
-//	@Override
-//	public void setAngles(EngineerGolemEntity entity, float p_225597_2_, float p_225597_3_, float p_225597_4_, float p_225597_5_, float p_225597_6_) {
-//	}
-//
-//	@Override
-//	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
-//		head.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	body.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	armRight.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	armLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	legRight.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	legLeft.render(matrixStack, buffer, packedLight, packedOverlay);
-//	//	hat.render(matrixStack, buffer, packedLight, packedOverlay);
-//	}
-//
-//	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-//		modelRenderer.rotateAngleX = x;
-//		modelRenderer.rotateAngleY = y;
-//		modelRenderer.rotateAngleZ = z;
-//	}
-//}
+//		body.addChild(head);
+//		body.setRotationPoint(8.0F, 0.0F, -8.0F);
+	}
+
+	@Override
+	public void setAngles(ConductorEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
+		Head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
+		Head.rotateAngleY = headYaw * ((float)Math.PI / 180F);
+
+		RightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+		LeftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+
+		RightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+		LeftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+
+		// default angles
+		RightArm.rotateAngleZ = 0.0F;
+		LeftArm.rotateAngleZ = 0.0F;
+		RightArm.rotateAngleY = 0;
+		LeftArm.rotateAngleY = 0;
+		RightLeg.rotateAngleY = 0.0F;
+		LeftLeg.rotateAngleY = 0.0F;
+		RightLeg.rotateAngleZ = 0.0F;
+		LeftLeg.rotateAngleZ = 0.0F;
+		Body.rotateAngleX = 0;
+
+		// default rotation points
+		RightArm.rotationPointY = 11;
+		LeftArm.rotationPointY = 11;
+		Body.rotationPointY = 17;
+		Head.rotationPointY = 6.5F;
+		Head.rotationPointZ = 0;
+		RightLeg.rotationPointY = 20;
+		LeftLeg.rotationPointY = 20;
+		RightLeg.rotationPointZ = 0;
+		LeftLeg.rotationPointZ = 0;
+
+		// sitting poses
+		if (this.isSitting) {
+			Entity riding = entity.getRidingEntity();
+			if(riding != null) {
+				if(riding instanceof MinecartEntity) {
+					setMinecartPose();
+				} else if(riding instanceof SeatEntity || riding instanceof AbstractContraptionEntity) {
+					setSeatPose();
+				} else {
+					setSittingPose();
+				}
+			} else {
+				setSittingPose();
+			}
+		}
+	}
+
+	public void setMinecartPose() {
+		LeftArm.rotateAngleX = -45.5F;
+		LeftArm.rotateAngleY -= 0.2;
+		RightArm.rotateAngleX = -45.5F;
+		RightArm.rotateAngleY += 0.2;
+		// leg angles copied from biped model
+		RightLeg.rotateAngleX = -1.4137167F;
+		RightLeg.rotateAngleY = ((float)Math.PI / 10F);
+		RightLeg.rotateAngleZ = 0.07853982F;
+		LeftLeg.rotateAngleX = -1.4137167F;
+		LeftLeg.rotateAngleY = (-(float)Math.PI / 10F);
+		LeftLeg.rotateAngleZ = -0.07853982F;
+	}
+
+	public void setSeatPose() {
+		RightArm.rotationPointY += 2;
+		RightArm.rotateAngleX += 0.5F;
+
+		LeftArm.rotationPointY += 2;
+		LeftArm.rotateAngleX += 0.5F;
+
+		RightLeg.rotateAngleX = 80;
+		RightLeg.rotateAngleY += 0.5F;
+		RightLeg.rotationPointY -= 1;
+		RightLeg.rotationPointZ -= 3;
+
+		LeftLeg.rotateAngleX = 80;
+		LeftLeg.rotateAngleY -= 0.5F;
+		LeftLeg.rotationPointY -= 1;
+		LeftLeg.rotationPointZ -= 3;
+
+		Body.rotationPointY += 1; // WHY DOES ADDING TO THE ROTATION POINT Y LOWER IT THIS DOESNT MAKE ANY SENSE
+		Body.rotateAngleX -= 0.2;
+
+		Head.rotationPointY += 1;
+		Head.rotationPointZ += 1;
+	}
+
+	public void setSittingPose() {
+		// copied from biped model
+		RightArm.rotateAngleX += (-(float)Math.PI / 5F);
+		LeftArm.rotateAngleX += (-(float)Math.PI / 5F);
+		RightLeg.rotateAngleX = -1.4137167F;
+		RightLeg.rotateAngleY = ((float)Math.PI / 10F);
+		RightLeg.rotateAngleZ = 0.07853982F;
+		LeftLeg.rotateAngleX = -1.4137167F;
+		LeftLeg.rotateAngleY = (-(float)Math.PI / 10F);
+		LeftLeg.rotateAngleZ = -0.07853982F;
+	}
+
+	@Override
+	public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		Arrays.asList(Head, Body, RightArm, LeftArm, RightLeg, LeftLeg)
+				.forEach(part -> part.render(matrixStack, buffer, packedLight, packedOverlay));
+	}
+
+	@Override
+	public void setArmAngle(HandSide hand, MatrixStack stack) {
+		(hand == HandSide.LEFT ? LeftArm : RightArm).rotate(stack);
+	}
+
+	@Override
+	public ModelRenderer func_205072_a() { // getModelHead
+		return Head;
+	}
+}

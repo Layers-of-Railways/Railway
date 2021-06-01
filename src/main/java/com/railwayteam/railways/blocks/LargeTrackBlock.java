@@ -8,6 +8,7 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IWorld;
 
 import javax.annotation.Nullable;
@@ -59,27 +60,9 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
   }
 
   protected BlockState checkForConnections (BlockState state, IWorld world, BlockPos pos) {
-    ArrayList<Vector3d> priority = new ArrayList<>();
-    ArrayList<Vector3d> found = new ArrayList<>();
-    for (int x=-1; x<2; x++) {
-      for (int z=-1; z<2; z++) {
-        if (pos.add(x,0,z).equals(pos)) continue; // skip the center point
-        BlockState candidate = world.getBlockState(pos.add(x,0,z));
-        if (candidate.getBlock() instanceof AbstractLargeTrackBlock) {
-          Vector3d offset = new Vector3d(x,0,z);
-          if ( ((AbstractLargeTrackBlock)candidate.getBlock()).canConnectFrom(
-            candidate, world, pos.add(x,0,z),
-            VectorUtils.Vector.getClosest(new Vector3d(x,0,z)).getOpposite())
-          ) { // front of the line if it connects
-            priority.add(offset);
-          }
-          else {  // to the back of the line if it doesn't connect
-            found.add(offset);
-          }
-        }
-      }
-    }
-    found.addAll(0, priority); // stack them together
+   ArrayList<BlockPos>[] connections = getConnectionsAndPriority(world, pos);
+    ArrayList<BlockPos> found = connections[0];
+    ArrayList<BlockPos> priority = connections[1];
     switch (found.size()) {
       case 0: // no valid connections, we'll just accept the default state
         break;
@@ -93,8 +76,8 @@ public class LargeTrackBlock extends AbstractLargeTrackBlock {
         } // else fall through
       default: // too many, arbitrate.
         arbitration:
-        for (Vector3d b : found) {
-          for (Vector3d a : found) {
+        for (BlockPos b : found) {
+          for (BlockPos a : found) {
             if (LargeTrackSide.isValid(a,b)) {
               state = state.with(TRACK_SIDE, LargeTrackSide.findValidStateFrom(a,b));
               break arbitration;

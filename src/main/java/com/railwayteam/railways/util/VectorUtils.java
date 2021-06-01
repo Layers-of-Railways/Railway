@@ -4,7 +4,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class VectorUtils {
-    public static Vector3d opposite(Vector3d in) {
+    public static Vector3d opposite(BlockPos in) {
         return new Vector3d(in.getX() * -1, in.getY() * -1, in.getZ() * -1);
     }
 
@@ -18,11 +18,11 @@ public abstract class VectorUtils {
         SOUTHWEST(-1, 0, 1, "sw"),
         SOUTHEAST(1, 0, 1, "se");
 
-        public Vector3d value;
+        public BlockPos value;
         public String name;
 
         private Vector(int x, int y, int z, String name) {
-            value = new Vector3d(x, y, z);
+            value = new BlockPos(x, y, z);
             this.name = name;
         }
 
@@ -68,5 +68,9 @@ public abstract class VectorUtils {
             }
             return SOUTH; // should never get here
         }
+    }
+
+    public static Vector3d blockPosToVector3d(BlockPos pos) {
+        return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
     }
 }

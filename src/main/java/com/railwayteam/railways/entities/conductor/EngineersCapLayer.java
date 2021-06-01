@@ -3,44 +3,63 @@ package com.railwayteam.railways.entities.conductor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapModel;
-import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.IEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.renderers.geo.GeoLayerRenderer;
-import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
+import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.item.DyeColor;
+import net.minecraft.util.ResourceLocation;
 
-import java.util.Iterator;
+public class EngineersCapLayer extends LayerRenderer<ConductorEntity, ConductorEntityModel> {
+    private final EngineersCapModel capModel = new EngineersCapModel(true);
 
-public class EngineersCapLayer extends GeoLayerRenderer<ConductorEntity> {
-    private final EngineersCapModel geoModel = new EngineersCapModel();
-    private final IGeoRenderer<ConductorEntity> entityRenderer;
-
-    public EngineersCapLayer(IGeoRenderer<ConductorEntity> entityRendererIn) {
-        super(entityRendererIn);
-        this.entityRenderer = entityRendererIn;
+    public EngineersCapLayer(IEntityRenderer<ConductorEntity, ConductorEntityModel> p_i50926_1_) {
+        super(p_i50926_1_);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, IRenderTypeBuffer bufferIn, int i, ConductorEntity entity, float v, float v1, float v2, float v3, float v4, float v5) {
-        EngineersCapItem item = (EngineersCapItem) entity.getHatByColor(entity.getColor());
-        GeoModel conductorModel = this.entityRenderer.getGeoModelProvider().getModel(this.entityRenderer.getGeoModelProvider().getModelLocation(entity));
+    public void render(MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLight, ConductorEntity entity, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
+//        renderModel(matrixStack, renderTypeBuffer, packedLight, getEntityModel(), entity);
+        capModel.setLivingAnimations(entity, p_225628_5_, p_225628_6_, p_225628_7_);
+        capModel.setAngles(entity, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_);
 
-//        System.out.println(item.color.getTranslationKey());
-        IVertexBuilder ivertexbuilder = ItemRenderer.getItemGlintConsumer(bufferIn, RenderType.getArmorCutoutNoCull(geoModel.getTextureLocation(item)), false, false);
-
-        Iterator group = geoModel.getModel(geoModel.getConductorEntityModel()).topLevelBones.iterator();
-
-        while (group.hasNext()) {
-            GeoBone itemBone = (GeoBone) group.next();
-            IBone headBone = conductorModel.getBone("Head").get();
-            itemBone.setRotationX(headBone.getRotationX());
-            itemBone.setRotationY(headBone.getRotationY());
-            this.entityRenderer.renderRecursively(itemBone, matrixStack, ivertexbuilder, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+        IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(RenderType.getEntityCutoutNoCull
+                (getCapTextureRainbowSupport(entity)));
+        float r = 1;
+        float g = 1;
+        float b = 1;
+        if (entity.shouldBeRainbow()) {
+            int i = entity.ticksExisted / 25 + entity.getEntityId();
+            int j = DyeColor.values().length;
+            int k = i % j;
+            int l = (i + 1) % j;
+            float f3 = ((float)(entity.ticksExisted % 25) + p_225628_7_) / 25.0F;
+            float[] afloat1 = SheepEntity.getDyeRgb(DyeColor.byId(k));
+            float[] afloat2 = SheepEntity.getDyeRgb(DyeColor.byId(l));
+            r = afloat1[0] * (1.0F - f3) + afloat2[0] * f3;
+            g = afloat1[1] * (1.0F - f3) + afloat2[1] * f3;
+            b = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
         }
+        capModel.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
+//        render(this.getEntityModel(), getEntityModel(), getCapTexture(entity), matrixStack, renderTypeBuffer, packedLight, entity, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_, p_225628_7_, p_225628_8_, p_225628_9_, p_225628_10_);
+    }
+
+    public static ResourceLocation getCapTexture(String color) {
+        return new ResourceLocation("railways", "textures/models/armor/" + color + "_golem_hat.png");
+    }
+
+    public static ResourceLocation getCapTexture(DyeColor color) {
+        return getCapTexture(color.getTranslationKey());
+    }
+
+    public static ResourceLocation getCapTexture(ConductorEntity entity) {
+        return getCapTexture(entity.getColor());
+    }
+
+    public static ResourceLocation getCapTextureRainbowSupport(ConductorEntity entity) {
+        return entity.shouldBeRainbow() ? getCapTexture(DyeColor.WHITE) : getCapTexture(entity);
     }
 }
+

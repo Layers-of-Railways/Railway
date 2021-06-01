@@ -5,8 +5,6 @@
 edabdedf85b73af629b14cd55f1efbf794d610af assets/railways/blockstates/large_track_wooden.json
 232b7b9a747e186457fe0798cda63c2decba74a1 assets/railways/blockstates/waypoint.json
 8793ab88de81d30f208f6440be1c101e46d4f534 assets/railways/blockstates/wheel.json
-a931102b1b2b94af73eb11cb7d998cebc8ef5205 assets/railways/lang/en_ud.json
-83d745eccd4511e0ea09b7de0605acd68bcc90fb assets/railways/lang/en_us.json
 302f43d0d24d9bd27135afeddd5e2f8feb072352 assets/railways/models/block/wheel.json
 b166ef879f37075a93ec084d7f9247c546c9804c assets/railways/models/item/basic_signal.json
 9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/bogie.json
@@ -27,6 +25,7 @@ d1b4907d18dd0e6f3f53158ffcf7c1cb7ac91cd1 assets/railways/models/item/engineers_c
 b128b27c48b6fa97d03c72ddca68e7cad8c1204b assets/railways/models/item/engineers_cap_red.json
 8f6720d0d5308c966b8fed1ab749e9a156a57e6c assets/railways/models/item/engineers_cap_white.json
 f925f74752ab44f425e6886c9089368348dac7a0 assets/railways/models/item/engineers_cap_yellow.json
+9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/handcar.json
 00113bd03320e775f786136825ba90d63ebadde3 assets/railways/models/item/large_switch.json
 9b4a2817bc823e21b7c20a2e29b7022f1fd04d83 assets/railways/models/item/large_switch_wooden.json
 adb54c18597575731e8c76b60a3bfab65085a78b assets/railways/models/item/large_track.json

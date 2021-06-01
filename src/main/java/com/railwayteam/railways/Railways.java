@@ -28,7 +28,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import software.bernie.example.GeckoLibMod;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -46,7 +45,6 @@ public class Railways {
 
   public Railways() {
   	instance = this;
-    GeckoLibMod.DISABLE_IN_DEV = true;
 
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);

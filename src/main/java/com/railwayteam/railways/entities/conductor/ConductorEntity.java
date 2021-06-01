@@ -4,12 +4,13 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecartGoal;
 import com.railwayteam.railways.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.items.ConductorItem;
-import com.railwayteam.railways.util.Animatable;
 import com.railwayteam.railways.util.WrenchableEntity;
+import net.minecraft.client.renderer.entity.layers.SheepWoolLayer;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.minecart.MinecartEntity;
+import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -28,15 +29,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ConductorEntity extends CreatureEntity implements Animatable, WrenchableEntity {
+public class ConductorEntity extends CreatureEntity implements WrenchableEntity {
   public static final String name = "conductor";
 //  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
@@ -52,11 +48,6 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
     super.registerData();
     EntityDataManager dataManager = getDataManager();
     dataManager.register(COLOR, getDefaultColor().getId());
-  }
-
-  @SubscribeEvent
-  public static void createEntityAttributes(EntityAttributeCreationEvent event) {
-    event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 
   public static DyeColor getDefaultColor() {
@@ -147,13 +138,13 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
   }
 
   public Item getHatByColor(DyeColor color) {
-    return ModSetup.ENGINEERS_CAPS.get(color).get();
+    return (Item) ModSetup.ENGINEERS_CAPS.get(color).get();
   }
 
 //  @Override
 //  public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
-  public static ConductorEntity spawn(World world, int x, int y, int z, DyeColor color) {
+  public static ConductorEntity spawn(World world, double x, double y, double z, DyeColor color) {
     ConductorEntity entity = new ConductorEntity(ModSetup.R_ENTITY_CONDUCTOR.get(), world);
     entity.setPosition(x, y, z);
 
@@ -163,7 +154,7 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
     return entity;
   }
 
-  public static ConductorEntity spawn(World world, BlockPos pos, DyeColor color) {
+  public static ConductorEntity spawn(World world, Vector3d pos, DyeColor color) {
     return spawn(world, pos.getX(), pos.getY(), pos.getZ(), color);
   }
 
@@ -232,32 +223,6 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
     entityDropItem(ConductorItem.g().create(this));
   }
 
-  private AnimationFactory factory = new AnimationFactory(this);
-
-  @Override
-  public <E extends IAnimatable> AnimationBuilder getAnimation(AnimationEvent<E> event) {
-    if(this.getRidingEntity() != null) {
-      if(isInMinecart()) {
-        return anim("minecart");
-      }
-      return anim("sit");
-    }
-    if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-      return anim("walk");
-    }
-    return anim("idle");
-  }
-
-  @Override
-  public AnimationFactory getFactory() {
-    return this.factory;
-  }
-
-  @Override
-  public String getAnimationPrefix() {
-    return "conductor_";
-  }
-
   @Override
   public void read(CompoundNBT nbt) {
     super.read(nbt);
@@ -275,5 +240,14 @@ public class ConductorEntity extends CreatureEntity implements Animatable, Wrenc
   @Override
   public ItemStack getPickedResult(RayTraceResult target) {
     return ConductorItem.g().create(this);
+  }
+
+  @Override
+  public float getStandingEyeHeight(Pose pose, EntitySize size) {
+    return size.height * 0.90F;
+  }
+
+  public boolean shouldBeRainbow() {
+    return hasCustomName() && "jeb_".equals(getName().getUnformattedComponentText());
   }
 }

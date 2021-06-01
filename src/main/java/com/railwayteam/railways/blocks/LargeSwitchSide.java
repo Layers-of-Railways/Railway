@@ -2,6 +2,7 @@ package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
 public enum LargeSwitchSide implements IStringSerializable {
@@ -15,10 +16,10 @@ public enum LargeSwitchSide implements IStringSerializable {
   WEST_SOUTHEAST  (VectorUtils.Vector.WEST,  VectorUtils.Vector.SOUTHEAST, "w_se");
 
   private final String name;
-  private final Vector3d[] offsets;
+  private final BlockPos[] offsets;
   LargeSwitchSide(VectorUtils.Vector axis, VectorUtils.Vector turn, String name) {
     this.name = name;
-    offsets = new Vector3d[3];
+    offsets = new BlockPos[3];
     offsets[0] = axis.value;
     offsets[1] = axis.getOpposite().value;
     offsets[2] = turn.value;
@@ -26,11 +27,11 @@ public enum LargeSwitchSide implements IStringSerializable {
 
   public String toString() { return this.name; }
 
-  public boolean connectsTo (Vector3d offset) {
+  public boolean connectsTo (BlockPos offset) {
     return offsets[0].equals(offset) || offsets[1].equals(offset) || offsets[2].equals(offset);
   }
 
-  public static LargeSwitchSide findValidStateFrom(Vector3d a) {
+  public static LargeSwitchSide findValidStateFrom(BlockPos a) {
     for (LargeSwitchSide side : values()) {
       if (side.offsets[0].equals(a) || side.offsets[1].equals(a)) return side;
       if (side.offsets[2].equals(a)) return side; // else, just pick one using the "turn" side
@@ -38,7 +39,7 @@ public enum LargeSwitchSide implements IStringSerializable {
     return null; //NORTH_SOUTHEAST
   }
 
-  public static LargeSwitchSide findValidStateFrom(Vector3d a, Vector3d b) {
+  public static LargeSwitchSide findValidStateFrom(BlockPos a, BlockPos b) {
     for (LargeSwitchSide side : LargeSwitchSide.values()) {
       if (!side.connectsTo(a)) continue;
       if (!side.connectsTo(b)) continue;
@@ -47,7 +48,7 @@ public enum LargeSwitchSide implements IStringSerializable {
     return null; // NORTH_SOUTHEAST
   }
 
-  public static LargeSwitchSide findValidStateFrom (Vector3d a, Vector3d b, Vector3d c) {
+  public static LargeSwitchSide findValidStateFrom (BlockPos a, BlockPos b, BlockPos c) {
     for (LargeSwitchSide side : LargeSwitchSide.values()) {
       if (side.connectsTo(a) && side.connectsTo(b) && side.connectsTo(c)) return side;
     }

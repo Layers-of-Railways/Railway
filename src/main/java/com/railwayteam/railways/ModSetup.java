@@ -6,26 +6,29 @@ import com.railwayteam.railways.blocks.*;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.entities.SteadyMinecartEntity;
-import com.railwayteam.railways.entities.SteadyMinecartRenderer;
-import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.items.engineers_cap.EngineersCapRenderer;
+import com.railwayteam.railways.entities.handcar.HandcarEntity;
+import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
 
+import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
+import com.railwayteam.railways.items.handcar.HandcarItem;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.*;
-import com.tterrag.registrate.Registrate;
 
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -36,15 +39,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
-
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 
-
+@Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModSetup {
   public static ItemGroup itemGroup = new ItemGroup(Railways.MODID) {
     @Override
@@ -75,9 +78,11 @@ public class ModSetup {
   public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
   public static ItemEntry<Item> R_ITEM_BOGIE;
   public static ItemEntry<ConductorItem> R_ITEM_CONDUCTOR;
+  public static ItemEntry<HandcarItem> R_ITEM_HANDCAR;
 
-  public static RegistryEntry<EntityType<SteadyMinecartEntity>> R_ENTITY_STEADYCART;
-  public static RegistryEntry<EntityType<ConductorEntity>> R_ENTITY_CONDUCTOR;
+  public static EntityEntry<Entity> R_ENTITY_STEADYCART;
+  public static EntityEntry<ConductorEntity> R_ENTITY_CONDUCTOR;
+  public static EntityEntry<HandcarEntity> R_ENTITY_HANDCAR;
 
   public void init() {
   }
@@ -234,13 +239,7 @@ public class ModSetup {
 
 //    ItemBuilder<EngineersCapItem, Registrate> engineersCapBuilder = reg.item(EngineersCapItem.name, EngineersCapItem::new)
 //            .lang("Engineer's cap")
-//            .model((ctx, prov) -> { // TODO: placeholder model
-//              prov.singleTexture(
-//                      ctx.getName(),
-//                      prov.mcLoc("item/generated"),
-//                      "layer0",
-//                      prov.modLoc("item/waypoint_manager"));
-//            });
+//
 //            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
 //                    .patternLine("WWW")
 //                    .patternLine("W W")
@@ -308,19 +307,41 @@ public class ModSetup {
             .properties(p -> p.maxStackSize(1))
       .register();
 
-    R_ENTITY_STEADYCART = reg.<SteadyMinecartEntity>entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
+    R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
+            .lang("Handcar")
+            .properties(p -> p.maxStackSize(1))
+            .model((ctx, prov) -> {
+              prov.singleTexture(
+                      ctx.getName(),
+                      prov.mcLoc("item/generated"),
+                      "layer0",
+                      prov.modLoc("item/waypoint_manager"));
+            })
+            .register();
+
+    R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
       .lang("Steady Minecart")
       .register();
 
     R_ENTITY_CONDUCTOR = reg.entity(ConductorEntity.name, ConductorEntity::new, EntityClassification.MISC)
-      .lang(ConductorEntity.defaultDisplayName)
+      .lang(ConductorEntity.defaultDisplayName).properties(p -> p.size(0.5F, 1.3F))
       .register();
+
+    R_ENTITY_HANDCAR = reg.entity(HandcarEntity.name, HandcarEntity::new, EntityClassification.MISC)
+            .lang("Handcar")
+            .properties(p -> p.size(2, 1.7F))
+            .register();
   }
 
   @OnlyIn(value=Dist.CLIENT)
   public static void registerRenderers () {
-    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_STEADYCART.get(), SteadyMinecartRenderer::new);
     RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), ConductorRenderer::new);
-    GeoArmorRenderer.registerArmorRenderer(EngineersCapItem.class, new EngineersCapRenderer());
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_HANDCAR.get(), HandcarRenderer::new);
+  }
+
+  @SubscribeEvent
+  public static void createEntityAttributes(EntityAttributeCreationEvent event) {
+    event.put(ModSetup.R_ENTITY_CONDUCTOR.get(), LivingEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
+//    event.put(ModSetup.R_ENTITY_HANDCAR.get(), LivingEntity.createLivingAttributes().add(Attributes.GENERIC_FOLLOW_RANGE, 16).build());
   }
 }
