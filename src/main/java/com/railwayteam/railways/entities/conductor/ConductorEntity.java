@@ -106,24 +106,6 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
     return DyeColor.byId(getColorId());
   }
 
-//  public ItemStack getHelmet() {
-//    Iterable<ItemStack> l = getArmorInventoryList();
-//
-//    ItemStack ret = null;
-//    for(ItemStack stack : l) { // bruh moment why doesnt it just return a list or an array or something
-//      if(stack.getItem() instanceof EngineersCapItem) {
-//        ret = stack;
-//        break;
-//      }
-//    }
-//
-//    return ret == null ? createHatByColor(getDefaultColor()) : ret;
-//  }
-//
-//  public EngineersCapItem getCap() {
-//    return (EngineersCapItem) getHelmet().getItem();
-//  }
-
   public ItemStack createHatByColor(int id) {
     return new ItemStack(getHatByColor(id));
   }
