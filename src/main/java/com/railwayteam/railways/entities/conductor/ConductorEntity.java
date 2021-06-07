@@ -73,7 +73,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
-    entityDropItem(ConductorItem.g().create(this));
+    entityDropItem(ConductorItem.g(getColor()).create(this));
     super.spawnDrops(p_213345_1_);
   }
 
@@ -220,7 +220,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   public void afterWrenched(PlayerEntity plr, Hand hand) {
-    entityDropItem(ConductorItem.g().create(this));
+    entityDropItem(ConductorItem.g(getColor()).create(this));
   }
 
   @Override
@@ -239,7 +239,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   public ItemStack getPickedResult(RayTraceResult target) {
-    return ConductorItem.g().create(this);
+    return ConductorItem.g(getColor()).create(this);
   }
 
   @Override

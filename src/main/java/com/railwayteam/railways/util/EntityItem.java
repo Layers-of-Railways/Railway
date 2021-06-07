@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +16,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -32,6 +35,14 @@ public abstract class EntityItem<E extends Entity> extends Item {
         }
 //        return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
         return spawnEntity(plr, stack, pos);
+    }
+
+    public ITextComponent getDisplayName(ItemStack stack) {
+        if(hasEntity(stack)) {
+            E entity = getEntityFromItem(stack, Minecraft.getInstance().world);
+            return entity.hasCustomName() ? new StringTextComponent(entity.getCustomName().getString()).styled(style -> style.withItalic(true)) : super.getDisplayName(stack);
+        }
+        return super.getDisplayName(stack);
     }
 
     public void setHealthNonLiving(E entity) {
