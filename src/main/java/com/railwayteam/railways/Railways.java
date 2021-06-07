@@ -6,6 +6,9 @@ import com.railwayteam.railways.items.StationEditorItem;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.BlockPosArgument;
+import net.minecraft.command.impl.GameRuleCommand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -28,6 +31,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -90,8 +96,25 @@ public class Railways {
     Containers.registerScreenFactories();
   }
 
+  public ArrayList<ServerPlayerEntity> enableRCS = new ArrayList<>();
+
   @SubscribeEvent
   public void registerCommands (RegisterCommandsEvent rce) {
+    rce.getDispatcher().register(Commands.literal("railwayrcs")
+      .requires(r -> r.hasPermissionLevel(2))
+            .executes(ctx -> {
+              if(ctx.getSource().getEntity() != null) {
+                ServerPlayerEntity plr = ctx.getSource().asPlayer();
+                if(enableRCS.contains(plr)) {
+                  enableRCS.remove(plr);
+                } else {
+                  enableRCS.add(plr);
+                }
+                ctx.getSource().sendFeedback(new StringTextComponent("RCS " + (enableRCS.contains(plr) ? "enabled" : "disabled")), false);
+              }
+              return 1;
+            })
+      );
     rce.getDispatcher().register(Commands.literal("graph")
       .then(Commands.literal("set")
         .then(Commands.argument("position", BlockPosArgument.blockPos())

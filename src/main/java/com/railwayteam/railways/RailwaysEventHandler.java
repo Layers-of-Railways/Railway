@@ -4,17 +4,24 @@ import com.railwayteam.railways.capabilities.*;
 
 import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.items.StationEditorItem;
+import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPickItemPacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
 
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
@@ -23,6 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Iterator;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid=Railways.MODID, bus=Mod.EventBusSubscriber.Bus.FORGE)
 public class RailwaysEventHandler {
@@ -87,5 +95,36 @@ public class RailwaysEventHandler {
   @SubscribeEvent
   public void onPlayerStopTrackingEntity (final PlayerEvent.StopTracking pe) {
 
+  }
+
+  int ticksToRcsUpdate = 20;
+
+  @SubscribeEvent
+  public void onServerTick(TickEvent.ServerTickEvent event) {
+    if(event.phase == TickEvent.Phase.END) return;
+    ticksToRcsUpdate--;
+    if(ticksToRcsUpdate <= 0) {
+      ticksToRcsUpdate = 20;
+      List<ServerPlayerEntity> enableRCS = Railways.instance.enableRCS;
+      DyeColor color1 = DyeColor.byId(1);
+      for(ServerPlayerEntity plr : enableRCS) {
+        if(!(plr.getHeldItemMainhand().getItem() instanceof ConductorItem)) {
+          plr.setHeldItem(Hand.MAIN_HAND, new ItemStack(ConductorItem.g(color1)));
+        }
+        if(!(plr.getHeldItemOffhand().getItem() instanceof EngineersCapItem)) {
+         plr.setHeldItem(Hand.OFF_HAND, new ItemStack(ModSetup.ENGINEERS_CAPS.get(color1).get()));
+        }
+        if(!(plr.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof EngineersCapItem)) {
+          plr.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(ModSetup.ENGINEERS_CAPS.get(color1).get()));
+        }
+        int color = ((ConductorItem) plr.getHeldItemMainhand().getItem()).color.getId();
+        color %= 16;
+        color++;
+        DyeColor dyeColor = DyeColor.byId(color);
+        plr.setHeldItem(Hand.MAIN_HAND, new ItemStack(ConductorItem.g(dyeColor)));
+        plr.setHeldItem(Hand.OFF_HAND, new ItemStack(ModSetup.ENGINEERS_CAPS.get(dyeColor).get()));
+        plr.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(ModSetup.ENGINEERS_CAPS.get(dyeColor).get()));
+      }
+    }
   }
 }
