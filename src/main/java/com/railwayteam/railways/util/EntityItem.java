@@ -57,8 +57,12 @@ public abstract class EntityItem<E extends Entity> extends Item {
             E entity = getEntityFromItem(stack, plr.world);
             entity.setPositionAndRotation(spawn.getX(), spawn.getY(), spawn.getZ(), 0, 0);
             stack.shrink(1);
-            if (entity instanceof LivingEntity)
+            if (entity instanceof LivingEntity) {
                 ((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
+                if(stack.hasDisplayName()) {
+                    entity.setCustomName(stack.getDisplayName());
+                }
+            }
             else setHealthNonLiving(entity);
             entity.setUniqueId(UUID.randomUUID()); // to prevent UUID conflicts, the UUID is changed but the data is kept, so its pretty much a clone of the original
             plr.world.addEntity(entity);
