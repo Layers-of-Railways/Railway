@@ -59,11 +59,11 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   protected void registerGoals() {
     super.registerGoals();
     goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8));
-    goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.2));
+    goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.2));
     goalSelector.addGoal(2, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 5, 5));
     goalSelector.addGoal(2, new LookRandomlyGoal(this));
-    goalSelector.addGoal(5, new SwimGoal(this));
-    goalSelector.addGoal(5, new RandomSwimmingGoal(this, 0.2, 8));
+    goalSelector.addGoal(2, new SwimGoal(this));
+    goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.2, 8));
     goalSelector.addGoal(1, new WalkToAndSitInNearestMinecartGoal(this, 0.4 /* Move to the minecart slightly faster than normal */, 5, 2));
     goalSelector.addGoal(0, new WalkToNearestPlayerWithCapGoal(this, 0.4, 5, 2, 1));
   }
