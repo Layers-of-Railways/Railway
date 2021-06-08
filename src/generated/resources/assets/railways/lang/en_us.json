@@ -11,8 +11,6 @@
   "entity.railways.handcar": "Handcar",
   "entity.railways.steadycart": "Steady Minecart",
   "item.railways.bogie": "Bogie",
-  "item.railways.conductor": "Conductor",
-  "item.railways.handcar": "Handcar",
   "item.railways.conductor_black": "Black Conductor",
   "item.railways.conductor_blue": "Blue Conductor",
   "item.railways.conductor_brown": "Brown Conductor",
@@ -45,6 +43,7 @@
   "item.railways.engineers_cap_red": "Red Engineer's Cap",
   "item.railways.engineers_cap_white": "White Engineer's Cap",
   "item.railways.engineers_cap_yellow": "Yellow Engineer's Cap",
+  "item.railways.handcar": "Handcar",
   "item.railways.station_editor_tool": "Station Editor",
   "item.railways.waypoint_manager": "Waypoint Tool",
   "itemGroup.railways": "railways"

@@ -33,34 +33,26 @@ import java.util.UUID;
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 
 public class ConductorItem extends EntityItem<ConductorEntity> {
-    public static ConductorItem g() {
-        return ModSetup.R_ITEM_CONDUCTOR.get();
+    public final DyeColor color;
+
+    public static ConductorItem g(DyeColor color) {
+        return ModSetup.CONDUCTOR_ITEMS.get(color).get();
     }
 
     public ItemStack create(ConductorEntity entity) {
-        ItemStack stack = new ItemStack(g());
+        ItemStack stack = new ItemStack(g(color));
         putEntityDataInItem(stack, entity);
         return stack;
     }
 
     @Override
     public ConductorEntity spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos) {
-       return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
-    }
-    public ITextComponent getDisplayName(ItemStack stack) {
-        if(hasEntity(stack)) {
-            ConductorEntity entity = getEntityFromItem(stack, Minecraft.getInstance().world);
-            return entity.hasCustomName() ? new StringTextComponent(entity.getCustomName().getString()).styled(style -> style.withItalic(true)) : nameWithColor(entity.getColor().getTranslationKey());
-        }
-        return nameWithColor(ConductorEntity.getDefaultColor().getTranslationKey());
+        return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
     }
 
-    public static ITextComponent nameWithColor(String color) {
-        return new TranslationTextComponent("item.railways.conductor_" + color);
-    }
-
-    public ConductorItem(Properties p_i48487_1_) {
+    public ConductorItem(Properties p_i48487_1_, DyeColor color) {
         super(p_i48487_1_);
+        this.color = color;
     }
 
     public ActionResultType onMinecartRightClicked(PlayerEntity plr, ItemStack stack, Hand hand, MinecartEntity entity) {

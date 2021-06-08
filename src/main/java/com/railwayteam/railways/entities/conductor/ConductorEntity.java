@@ -73,7 +73,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   protected void spawnDrops(DamageSource p_213345_1_) {
-    entityDropItem(ConductorItem.g().create(this));
+    entityDropItem(ConductorItem.g(getColor()).create(this));
     super.spawnDrops(p_213345_1_);
   }
 
@@ -105,24 +105,6 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   public DyeColor getColor() {
     return DyeColor.byId(getColorId());
   }
-
-//  public ItemStack getHelmet() {
-//    Iterable<ItemStack> l = getArmorInventoryList();
-//
-//    ItemStack ret = null;
-//    for(ItemStack stack : l) { // bruh moment why doesnt it just return a list or an array or something
-//      if(stack.getItem() instanceof EngineersCapItem) {
-//        ret = stack;
-//        break;
-//      }
-//    }
-//
-//    return ret == null ? createHatByColor(getDefaultColor()) : ret;
-//  }
-//
-//  public EngineersCapItem getCap() {
-//    return (EngineersCapItem) getHelmet().getItem();
-//  }
 
   public ItemStack createHatByColor(int id) {
     return new ItemStack(getHatByColor(id));
@@ -220,7 +202,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   public void afterWrenched(PlayerEntity plr, Hand hand) {
-    entityDropItem(ConductorItem.g().create(this));
+    entityDropItem(ConductorItem.g(getColor()).create(this));
   }
 
   @Override
@@ -239,7 +221,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   @Override
   public ItemStack getPickedResult(RayTraceResult target) {
-    return ConductorItem.g().create(this);
+    return ConductorItem.g(getColor()).create(this);
   }
 
   @Override

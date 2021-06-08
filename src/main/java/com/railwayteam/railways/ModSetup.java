@@ -76,8 +76,8 @@ public class ModSetup {
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
   public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
+  public static HashMap<DyeColor, ItemEntry<ConductorItem>> CONDUCTOR_ITEMS = new HashMap<>();
   public static ItemEntry<Item> R_ITEM_BOGIE;
-  public static ItemEntry<ConductorItem> R_ITEM_CONDUCTOR;
   public static ItemEntry<HandcarItem> R_ITEM_HANDCAR;
 
   public static EntityEntry<Entity> R_ENTITY_STEADYCART;
@@ -246,9 +246,9 @@ public class ModSetup {
 //                    .key('W', ItemTags.WOOL)
 //                    .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
 //                    .build(prov));
+    ENGINEERS_CAPS = new HashMap<>();
+    CONDUCTOR_ITEMS = new HashMap<>();
     for(DyeColor color : DyeColor.values()) {
-      reg.addLang("item", new ResourceLocation("railways", "conductor_" + color.getTranslationKey()), toEnglishName(color.getTranslationKey() + "_conductor"));
-
       ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
       (p) -> new EngineersCapItem(p, color))
               .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))
@@ -275,6 +275,19 @@ public class ModSetup {
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));
           })
         .register());
+
+      CONDUCTOR_ITEMS.put(color, reg.item("conductor" + "_" + color, p -> new ConductorItem(p, color))
+              .lang(toEnglishName(color.getTranslationKey() + "_conductor"))
+              .model((ctx, prov) -> {
+                prov.singleTexture(
+                        ctx.getName(),
+                        prov.mcLoc("item/generated"),
+                        "layer0",
+                        prov.modLoc("item/conductors/" + color.getTranslationKey() + "_conductor"));
+              })
+              .properties(p -> p.maxStackSize(1))
+              .register()
+      );
       }
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
@@ -300,11 +313,6 @@ public class ModSetup {
         .key('S', AllBlocks.SHAFT.get())
         .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
         .build(prov))
-      .register();
-
-    R_ITEM_CONDUCTOR = reg.item("conductor", ConductorItem::new)
-      .lang("Conductor")
-            .properties(p -> p.maxStackSize(1))
       .register();
 
     R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)

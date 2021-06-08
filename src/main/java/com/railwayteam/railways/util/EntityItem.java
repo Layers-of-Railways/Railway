@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +16,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -34,6 +37,14 @@ public abstract class EntityItem<E extends Entity> extends Item {
         return spawnEntity(plr, stack, pos);
     }
 
+    public ITextComponent getDisplayName(ItemStack stack) {
+        if(hasEntity(stack)) {
+            E entity = getEntityFromItem(stack, Minecraft.getInstance().world);
+            return entity.hasCustomName() ? new StringTextComponent(entity.getCustomName().getString()).styled(style -> style.withItalic(true)) : super.getDisplayName(stack);
+        }
+        return super.getDisplayName(stack);
+    }
+
     public void setHealthNonLiving(E entity) {
 
     }
@@ -46,8 +57,12 @@ public abstract class EntityItem<E extends Entity> extends Item {
             E entity = getEntityFromItem(stack, plr.world);
             entity.setPositionAndRotation(spawn.getX(), spawn.getY(), spawn.getZ(), 0, 0);
             stack.shrink(1);
-            if (entity instanceof LivingEntity)
+            if (entity instanceof LivingEntity) {
                 ((LivingEntity) entity).setHealth(((LivingEntity) entity).getMaxHealth());
+                if(stack.hasDisplayName()) {
+                    entity.setCustomName(stack.getDisplayName());
+                }
+            }
             else setHealthNonLiving(entity);
             entity.setUniqueId(UUID.randomUUID()); // to prevent UUID conflicts, the UUID is changed but the data is kept, so its pretty much a clone of the original
             plr.world.addEntity(entity);
