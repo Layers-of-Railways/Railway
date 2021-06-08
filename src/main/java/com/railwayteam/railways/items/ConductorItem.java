@@ -47,7 +47,9 @@ public class ConductorItem extends EntityItem<ConductorEntity> {
 
     @Override
     public ConductorEntity spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos) {
-        return ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
+        ConductorEntity entity = ConductorEntity.spawn(plr.world, pos, ConductorEntity.getDefaultColor());
+        entity.setColor(color);
+        return entity;
     }
 
     public ConductorItem(Properties p_i48487_1_, DyeColor color) {
