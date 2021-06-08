@@ -1,4 +1,4 @@
-package com.railwayteam.railways.items.handcar;
+package com.railwayteam.railways.items;
 
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.entities.handcar.HandcarEntity;

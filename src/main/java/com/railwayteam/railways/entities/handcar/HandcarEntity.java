@@ -1,37 +1,20 @@
 package com.railwayteam.railways.entities.handcar;
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.entities.TrackRidingEntity;
-import com.railwayteam.railways.items.ConductorItem;
-import com.railwayteam.railways.items.handcar.HandcarItem;
+import com.railwayteam.railways.items.HandcarItem;
 import com.railwayteam.railways.util.WrenchableEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.entity.model.BoatModel;
 import net.minecraft.entity.*;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.entity.item.minecart.MinecartEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.HandSide;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity {
     public static final String name = "handcar";

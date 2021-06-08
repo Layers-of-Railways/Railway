@@ -11,7 +11,7 @@ import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
 
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.items.handcar.HandcarItem;
+import com.railwayteam.railways.items.HandcarItem;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
