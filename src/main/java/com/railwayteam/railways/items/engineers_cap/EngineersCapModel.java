@@ -2,8 +2,13 @@ package com.railwayteam.railways.items.engineers_cap;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
+import com.railwayteam.railways.entities.conductor.ConductorEntityModel;
+import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
+import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 
 public class EngineersCapModel extends BipedModel<LivingEntity> {
@@ -12,16 +17,26 @@ public class EngineersCapModel extends BipedModel<LivingEntity> {
     public boolean isOnConductor;
 
     @Override
-    public void setAngles(LivingEntity p_225597_1_, float p_225597_2_, float p_225597_3_, float p_225597_4_, float headYaw, float headPitch) {
+    public void setAngles(LivingEntity entity, float p_225597_2_, float p_225597_3_, float p_225597_4_, float headYaw, float headPitch) {
         if (isOnConductor) {
 //            Hat.rotationPointY = bipedHead.rotationPointY;
 //            System.out.println(Hat.rotationPointY);
 
             Hat.rotateAngleX = headPitch * ((float) Math.PI / 180F);
             Hat.rotateAngleY = headYaw * ((float) Math.PI / 180F);
+
+            Entity riding = entity.getRidingEntity();
+
+            Hat.rotationPointY = 6.5F;
+            Hat.rotationPointZ = 0;
+
+            if(riding instanceof SeatEntity || riding instanceof AbstractContraptionEntity) {
+                Hat.rotationPointY += 1;
+                Hat.rotationPointZ += 1;
+            }
         }
 
-        super.setAngles(p_225597_1_, p_225597_2_, p_225597_3_, p_225597_4_, headYaw, headPitch);
+        super.setAngles(entity, p_225597_2_, p_225597_3_, p_225597_4_, headYaw, headPitch);
     }
 
     @Override
