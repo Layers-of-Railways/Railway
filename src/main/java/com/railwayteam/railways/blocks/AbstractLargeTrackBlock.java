@@ -1,6 +1,5 @@
 package com.railwayteam.railways.blocks;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.VectorUtils;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;

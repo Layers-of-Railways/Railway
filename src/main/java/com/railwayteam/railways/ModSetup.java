@@ -3,15 +3,13 @@ package com.railwayteam.railways;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.railwayteam.railways.blocks.*;
+import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
-import com.railwayteam.railways.entities.SteadyMinecartEntity;
 import com.railwayteam.railways.entities.handcar.HandcarEntity;
 import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
-
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.items.HandcarItem;
 import com.railwayteam.railways.util.TagUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -29,7 +27,6 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.*;
-
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
@@ -45,6 +42,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)

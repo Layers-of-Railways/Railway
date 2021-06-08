@@ -2,10 +2,7 @@ package com.railwayteam.railways.goals;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

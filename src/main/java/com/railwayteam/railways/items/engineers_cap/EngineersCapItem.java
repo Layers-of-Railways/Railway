@@ -2,12 +2,10 @@ package com.railwayteam.railways.items.engineers_cap;
 
 import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import com.railwayteam.railways.util.VectorUtils;
-import com.railwayteam.railways.ModSetup;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,12 +13,10 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.*;
-import net.minecraft.util.math.*;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class EngineersCapItem extends ArmorItem {
     static class EngineerCapArmorMaterial implements IArmorMaterial {

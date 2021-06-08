@@ -1,11 +1,8 @@
 package com.railwayteam.railways.packets;
 
-import com.railwayteam.railways.Containers;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysPacketHandler;
 import com.railwayteam.railways.StationListContainer;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
-import com.railwayteam.railways.items.StationLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

@@ -1,12 +1,9 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.packets.CustomPacketStationList;
-
 import com.railwayteam.railways.packets.CustomPacketUpdateOrders;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
-
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkEvent.Context;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;

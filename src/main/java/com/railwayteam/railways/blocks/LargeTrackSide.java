@@ -3,7 +3,6 @@ package com.railwayteam.railways.blocks;
 import com.railwayteam.railways.util.VectorUtils;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 
 public enum LargeTrackSide implements IStringSerializable {
   NORTH_SOUTHWEST(    VectorUtils.Vector.NORTH,     VectorUtils.Vector.SOUTHWEST),

@@ -1,16 +1,15 @@
 package com.railwayteam.railways.items;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.StationListContainer;
 import com.railwayteam.railways.blocks.StationSensorRailTileEntity;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
-import com.railwayteam.railways.capabilities.StationListCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -19,19 +18,14 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class StationEditorItem extends Item implements INamedContainerProvider {
   public static final String NAME = "station_editor_tool";

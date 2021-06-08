@@ -2,8 +2,6 @@ package com.railwayteam.railways.items.engineers_cap;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.railwayteam.railways.entities.conductor.ConductorEntity;
-import com.railwayteam.railways.entities.conductor.ConductorEntityModel;
 import com.simibubi.create.content.contraptions.components.actors.SeatEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import net.minecraft.client.renderer.entity.model.BipedModel;

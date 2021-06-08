@@ -1,9 +1,9 @@
 package com.railwayteam.railways.blocks;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.nbt.CompoundNBT;
 
 public class StationSensorRailTileEntity extends TileEntity {
   public static final String NAME = "station_sensor";

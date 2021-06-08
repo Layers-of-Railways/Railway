@@ -1,7 +1,8 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.capabilities.*;
-
+import com.railwayteam.railways.capabilities.CapabilitySetup;
+import com.railwayteam.railways.capabilities.StationListCapability;
+import com.railwayteam.railways.capabilities.StationListProvider;
 import com.railwayteam.railways.items.ConductorItem;
 import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
@@ -9,20 +10,15 @@ import com.railwayteam.railways.packets.CustomPacketStationList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPickItemPacket;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
-
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

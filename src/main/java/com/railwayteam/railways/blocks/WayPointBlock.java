@@ -1,7 +1,5 @@
 package com.railwayteam.railways.blocks;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -11,6 +9,8 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+
+import javax.annotation.Nonnull;
 
 public class WayPointBlock extends Block {
 	public static final String name = "waypoint";
