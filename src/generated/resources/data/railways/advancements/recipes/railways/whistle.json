@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "railways:whistle"
+    ]
+  },
+  "criteria": {
+    "has_brass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "create:brass_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "railways:whistle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_brass",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -73,10 +73,12 @@ public class ModSetup {
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
-  public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
-  public static HashMap<DyeColor, ItemEntry<ConductorItem>> CONDUCTOR_ITEMS = new HashMap<>();
   public static ItemEntry<Item> R_ITEM_BOGIE;
   public static ItemEntry<HandcarItem> R_ITEM_HANDCAR;
+  public static ItemEntry<Item> R_ITEM_WHISTLE;
+
+  public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
+  public static HashMap<DyeColor, ItemEntry<ConductorItem>> CONDUCTOR_ITEMS = new HashMap<>();
 
   public static EntityEntry<Entity> R_ENTITY_STEADYCART;
   public static EntityEntry<ConductorEntity> R_ENTITY_CONDUCTOR;
@@ -332,6 +334,26 @@ public class ModSetup {
               .key('B', AllBlocks.WOODEN_BRACKET.get())
               .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
             .build(prov))
+            .register();
+
+    R_ITEM_WHISTLE = reg.item("whistle", Item::new)
+            .lang("Whistle")
+            .properties(p -> p.maxStackSize(1))
+            .model((ctx, prov) -> {
+              prov.singleTexture(
+                      ctx.getName(),
+                      prov.mcLoc("item/generated"),
+                      "layer0",
+                      prov.modLoc("item/waypoint_manager"));
+            })
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry())
+              .patternLine("B")
+              .patternLine("B")
+              .patternLine("A")
+              .key('B', AllItems.BRASS_INGOT.get())
+              .key('A', AllItems.ANDESITE_ALLOY.get())
+              .addCriterion("has_brass", prov.hasItem(AllItems.BRASS_INGOT.get()))
+              .build(prov))
             .register();
 
     R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)

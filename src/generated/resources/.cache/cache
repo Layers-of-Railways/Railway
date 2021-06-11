@@ -5,8 +5,8 @@
 edabdedf85b73af629b14cd55f1efbf794d610af assets/railways/blockstates/large_track_wooden.json
 232b7b9a747e186457fe0798cda63c2decba74a1 assets/railways/blockstates/waypoint.json
 8793ab88de81d30f208f6440be1c101e46d4f534 assets/railways/blockstates/wheel.json
-f061d56885f016a4b054ee669d47558ffcf3a11e assets/railways/lang/en_ud.json
-8bbc976f1c54f30d354c386e0dabe3fb785d64e3 assets/railways/lang/en_us.json
+f731b18f80fe7108761a31e8787a1ea6c2bddb7a assets/railways/lang/en_ud.json
+5a570866427b18a9dffb78f76698e9fa7b2d5ea7 assets/railways/lang/en_us.json
 302f43d0d24d9bd27135afeddd5e2f8feb072352 assets/railways/models/block/wheel.json
 b166ef879f37075a93ec084d7f9247c546c9804c assets/railways/models/item/basic_signal.json
 9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/bogie.json
@@ -51,6 +51,7 @@ adb54c18597575731e8c76b60a3bfab65085a78b assets/railways/models/item/large_track
 70592629bba15d88757038e0e0065a30e2d54713 assets/railways/models/item/waypoint.json
 9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/waypoint_manager.json
 52d7614993b20f59d7cce7277738ce8d4b84a5c7 assets/railways/models/item/wheel.json
+9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/whistle.json
 a6ad25241858d9581f2603d725000c4cd1b61d1d data/minecraft/tags/blocks/rails.json
 f8ac8c9858aa681890c86d4f54376c41431a11d1 data/railways/advancements/recipes/railways/bogie.json
 dcf37f321956d704757de611533d03314b9fdbb0 data/railways/advancements/recipes/railways/engineer_caps/black.json
@@ -91,6 +92,7 @@ c766b7cf9d1e34dea36e90359cbeeac27714cc82 data/railways/advancements/recipes/rail
 bb8753a51e88f9fdee624568405abbf99b1f7bf9 data/railways/advancements/recipes/railways/station_sensor.json
 51fc970a1087d8c1f3c542386cc795f4d8cfa891 data/railways/advancements/recipes/railways/waypoint.json
 b30f120dae29aca5f3422fc98696730169096441 data/railways/advancements/recipes/railways/waypoint_manager.json
+f38e8d5c734cd4112691c5ed310c05557e5e0422 data/railways/advancements/recipes/railways/whistle.json
 7274909fa9c6e1821d0a9ec1970dae1b48e4db4a data/railways/loot_tables/blocks/basic_signal.json
 06ea9981ec044b4e9997ab80a12b8c3778c79a77 data/railways/loot_tables/blocks/large_switch.json
 63118c07c4f2c826356fce7ea1070c0a949313a2 data/railways/loot_tables/blocks/large_switch_wooden.json
@@ -138,4 +140,5 @@ af2835d3a5c1665c874e19c12455be2bfd4c8b02 data/railways/recipes/large_switch.json
 caeddece765a7a0432569850d07f580fd1788847 data/railways/recipes/station_sensor.json
 3162c1e174e1ed9f946be8b3b20f843a46a3b23b data/railways/recipes/waypoint.json
 936a6193c2172fcdf65001372af88401db43abfc data/railways/recipes/waypoint_manager.json
+867ee471694b748a5a0b5c275cbe50e5a85486f4 data/railways/recipes/whistle.json
 a6b85f93e5d8174a9bd68e6a309ec7127808b106 data/railways/tags/items/engineer_caps.json
