@@ -323,6 +323,15 @@ public class ModSetup {
                       "layer0",
                       prov.modLoc("item/waypoint_manager"));
             })
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry())
+              .patternLine("W W")
+              .patternLine("CBC")
+              .patternLine("W W")
+              .key('W', R_BLOCK_WHEEL.get())
+              .key('C', AllBlocks.ANDESITE_CASING.get())
+              .key('B', AllBlocks.WOODEN_BRACKET.get())
+              .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
+            .build(prov))
             .register();
 
     R_ENTITY_STEADYCART = reg.entity(SteadyMinecartEntity.name, SteadyMinecartEntity::new, EntityClassification.MISC)
