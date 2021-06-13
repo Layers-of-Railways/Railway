@@ -226,11 +226,14 @@ public class ModSetup {
 
     R_BLOCK_HORN = reg.block("horn", HornBlock::new)
             .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
-            .simpleItem()
+            .item().model((ctx, prov) -> prov.getExistingFile(prov.modLoc("item/horn"))).build()
             .blockstate((ctx,prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
                     (blockstate) -> (prov.models().getExistingFile(
                             prov.modLoc("block/horn/horn_" + (blockstate.get(HorizontalFaceBlock.FACE) == AttachFace.WALL ? "side" : "bottom") + "_" + blockstate.get(HornBlock.HORNS))
                     ))))
+//            .loot((t, block) -> {
+//              t.registerLootTable(block, new LootTable.Builder().addLootPool(new LootPool.Builder().acceptCondition(new BlockStateProperty.Builder(block).properties(StatePropertiesPredicate.Builder.create().exactMatch(HornBlock.HORNS, 0)))));
+//            })
             .lang("Horn")
             .register();
 
