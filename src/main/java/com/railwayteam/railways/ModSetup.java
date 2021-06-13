@@ -20,6 +20,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.HorizontalFaceBlock;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.entity.Entity;
@@ -28,6 +29,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -67,6 +69,8 @@ public class ModSetup {
   public static BlockEntry<Block> R_BLOCK_WHEEL;
 
   public static BlockEntry<SignalBlock> R_BLOCK_SIGNAL;
+
+  public static BlockEntry<HornBlock> R_BLOCK_HORN;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
   public static TileEntityEntry<SignalTileEntity> R_TE_SIGNAL;
@@ -219,6 +223,16 @@ public class ModSetup {
 //        .addCriterion("has_iron_sheet", prov.hasItem(UsefulAndRailwaysTags.IronSheet))
 //        .build(prov))
       .register();
+
+    R_BLOCK_HORN = reg.block("horn", HornBlock::new)
+            .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
+            .simpleItem()
+            .blockstate((ctx,prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
+                    (blockstate) -> (prov.models().getExistingFile(
+                            prov.modLoc("block/horn/horn_" + (blockstate.get(HorizontalFaceBlock.FACE) == AttachFace.WALL ? "side" : "bottom") + "_" + blockstate.get(HornBlock.HORNS))
+                    ))))
+            .lang("Horn")
+            .register();
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
