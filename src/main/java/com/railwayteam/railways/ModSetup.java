@@ -234,6 +234,13 @@ public class ModSetup {
 //            .loot((t, block) -> {
 //              t.registerLootTable(block, new LootTable.Builder().addLootPool(new LootPool.Builder().acceptCondition(new BlockStateProperty.Builder(block).properties(StatePropertiesPredicate.Builder.create().exactMatch(HornBlock.HORNS, 0)))));
 //            })
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry())
+                    .patternLine("B")
+                    .patternLine("B")
+                    .patternLine("B")
+                    .key('B', AllItems.BRASS_INGOT.get())
+                    .addCriterion("has_brass", prov.hasItem(AllItems.BRASS_INGOT.get()))
+                    .build(prov))
             .lang("Horn")
             .register();
 
