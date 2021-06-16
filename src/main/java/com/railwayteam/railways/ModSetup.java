@@ -217,8 +217,8 @@ public class ModSetup {
 
     R_BLOCK_WHEEL = reg.block("wheel", Block::new)
       .lang("Wheel")
-      .simpleItem()
-      .defaultBlockstate()
+      .item().model((ctx, prov) -> {}).build()
+      .blockstate((ctx, prov) -> {})
 //      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get(), 4)
 //        .patternLine(" I ")
 //        .patternLine("ISI")
@@ -341,13 +341,7 @@ public class ModSetup {
 
     R_ITEM_BOGIE = reg.item("bogie", Item::new)
       .lang("Bogie")
-      .model((ctx, prov) -> { // TODO: placeholder model
-        prov.singleTexture(
-        ctx.getName(),
-        prov.mcLoc("item/generated"),
-        "layer0",
-        prov.modLoc("item/waypoint_manager"));
-      })
+      .model((ctx, prov) -> { })
       .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
         .patternLine("WBW")
         .patternLine("SMS")
@@ -362,7 +356,7 @@ public class ModSetup {
 
     R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
             .lang("Handcar")
-            .properties(p -> p.maxStackSize(1))
+//            .model((ctx, prov) -> {}) // TODO: handcar is invisible as an item even though it uses the same methods as others???
             .model((ctx, prov) -> {
               prov.singleTexture(
                       ctx.getName(),
@@ -370,6 +364,7 @@ public class ModSetup {
                       "layer0",
                       prov.modLoc("item/waypoint_manager"));
             })
+            .properties(p -> p.maxStackSize(1))
             .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry())
               .patternLine("W W")
               .patternLine("CBC")
@@ -384,13 +379,7 @@ public class ModSetup {
     R_ITEM_WHISTLE = reg.item("whistle", Item::new)
             .lang("Whistle")
             .properties(p -> p.maxStackSize(1))
-            .model((ctx, prov) -> {
-              prov.singleTexture(
-                      ctx.getName(),
-                      prov.mcLoc("item/generated"),
-                      "layer0",
-                      prov.modLoc("item/waypoint_manager"));
-            })
+            .model((ctx, prov) -> {})
             .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry())
               .patternLine("B")
               .patternLine("B")

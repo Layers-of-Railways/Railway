@@ -5,12 +5,9 @@
 90b8d27bafbcf0ffe3b66655796bcc0cbb2345ea assets/railways/blockstates/large_track.json
 edabdedf85b73af629b14cd55f1efbf794d610af assets/railways/blockstates/large_track_wooden.json
 232b7b9a747e186457fe0798cda63c2decba74a1 assets/railways/blockstates/waypoint.json
-8793ab88de81d30f208f6440be1c101e46d4f534 assets/railways/blockstates/wheel.json
 3779f9e10f201a207bfc10bf61ca4a769d235a97 assets/railways/lang/en_ud.json
 b42a565e640666dff4f20e63c99d0337055d87c4 assets/railways/lang/en_us.json
-302f43d0d24d9bd27135afeddd5e2f8feb072352 assets/railways/models/block/wheel.json
 b166ef879f37075a93ec084d7f9247c546c9804c assets/railways/models/item/basic_signal.json
-9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/bogie.json
 df95fa7f2346bb1f9709f8819559258f20c93b9b assets/railways/models/item/conductor_black.json
 326952cd1067a48b445986ebd00583d236ec7adf assets/railways/models/item/conductor_blue.json
 236337aeac1810894bdb6f4ee1e6ec71eece720c assets/railways/models/item/conductor_brown.json
@@ -51,8 +48,6 @@ adb54c18597575731e8c76b60a3bfab65085a78b assets/railways/models/item/large_track
 25a19f7e35db3c832e10f687e406befc85b6a775 assets/railways/models/item/station_editor_tool.json
 70592629bba15d88757038e0e0065a30e2d54713 assets/railways/models/item/waypoint.json
 9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/waypoint_manager.json
-52d7614993b20f59d7cce7277738ce8d4b84a5c7 assets/railways/models/item/wheel.json
-9377b989529d558e2ba8768e26105109cf53eb18 assets/railways/models/item/whistle.json
 a6ad25241858d9581f2603d725000c4cd1b61d1d data/minecraft/tags/blocks/rails.json
 21bf53d7a1112081678bf6c818af88551586f260 data/railways/advancements/recipes/railways/basic_signal.json
 f8ac8c9858aa681890c86d4f54376c41431a11d1 data/railways/advancements/recipes/railways/bogie.json
