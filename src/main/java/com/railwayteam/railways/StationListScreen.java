@@ -13,7 +13,7 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.util.Iterator;
 
-public class stationListScreen extends AbstractRailwaysScreen<StationListContainer> {
+public class StationListScreen extends AbstractRailwaysScreen<StationListContainer> {
 
   private ResourceLocation BG = new ResourceLocation(Railways.MODID, "textures/gui/schedule_bg.png");
   private ResourceLocation FG = new ResourceLocation(Railways.MODID, "textures/gui/schedule_fg.png");
@@ -26,7 +26,7 @@ public class stationListScreen extends AbstractRailwaysScreen<StationListContain
   private static final int buttonX = 20;
   private static final int buttonY = 20;
 
-  protected stationListScreen(StationListContainer container, PlayerInventory inv, ITextComponent title) {
+  protected StationListScreen(StationListContainer container, PlayerInventory inv, ITextComponent title) {
     super (container, inv, title);
   }
 
