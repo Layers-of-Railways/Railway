@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.blocks.NumericalSignalTileEntityRenderer;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
@@ -17,6 +18,7 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -89,6 +91,7 @@ public class Railways {
             ConductorRenderer::new);
     setup.registerRenderers();
     Containers.registerScreenFactories();
+    ClientRegistry.bindTileEntityRenderer(ModSetup.R_TE_NUMERICAL_SIGNAL.get(), NumericalSignalTileEntityRenderer::new);
   }
 
   public ArrayList<ServerPlayerEntity> enableRCS = new ArrayList<>();

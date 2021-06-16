@@ -72,8 +72,11 @@ public class ModSetup {
 
   public static BlockEntry<HornBlock> R_BLOCK_HORN;
 
+  public static BlockEntry<NumericalSignalBlock> R_BLOCK_NUMERICAL_SIGNAL;
+
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
   public static TileEntityEntry<SignalTileEntity> R_TE_SIGNAL;
+  public static TileEntityEntry<NumericalSignalTileEntity> R_TE_NUMERICAL_SIGNAL;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
@@ -246,6 +249,13 @@ public class ModSetup {
             .lang("Horn")
             .register();
 
+    R_BLOCK_NUMERICAL_SIGNAL = reg.block("numerical_signal", NumericalSignalBlock::new)
+            .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
+            .simpleItem()
+            .defaultBlockstate()
+            .lang("Numerical signal")
+            .register();
+
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
       .register();
@@ -253,6 +263,10 @@ public class ModSetup {
     R_TE_SIGNAL = reg.tileEntity(SignalTileEntity.NAME, SignalTileEntity::new)
       .validBlock(()->R_BLOCK_SIGNAL.get())
       .register();
+
+    R_TE_NUMERICAL_SIGNAL = reg.tileEntity("numerical_signal", NumericalSignalTileEntity::new)
+            .validBlock(()->R_BLOCK_NUMERICAL_SIGNAL.get())
+            .register();
 
     R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
       .lang("Waypoint Tool")
