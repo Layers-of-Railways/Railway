@@ -31,7 +31,7 @@ public enum Containers {
 
   @OnlyIn(Dist.CLIENT)
   public static void registerScreenFactories () {
-    bind(SCHEDULE, stationListScreen::new);
+    bind(SCHEDULE, StationListScreen::new);
   }
 
   @OnlyIn(Dist.CLIENT)

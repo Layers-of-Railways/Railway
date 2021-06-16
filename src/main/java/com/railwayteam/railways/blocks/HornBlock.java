@@ -70,8 +70,8 @@ public class HornBlock extends HorizontalFaceBlock {
     public VoxelShape getShape(BlockState blockState, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         Direction direction = blockState.get(HORIZONTAL_FACING);
         switch(blockState.get(FACE)) {
-            case FLOOR:
-                return direction.getAxis() == Direction.Axis.X ? ShapeBottomNorthSouth : ShapeBottomWestEast;
+            case FLOOR: case CEILING:
+                return direction.getAxis() == Direction.Axis.X ? ShapeBottomWestEast : ShapeBottomNorthSouth;
             case WALL:
                 switch (direction) {
                     case WEST:
