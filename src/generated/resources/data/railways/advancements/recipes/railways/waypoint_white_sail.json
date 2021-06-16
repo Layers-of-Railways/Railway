@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "railways:waypoint"
+      "railways:waypoint_white_sail"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "create:sail_frame"
+            "item": "create:white_sail"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "railways:waypoint"
+        "recipe": "railways:waypoint_white_sail"
       }
     }
   },

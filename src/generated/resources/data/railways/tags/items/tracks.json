@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "railways:large_track",
+    "railways:large_switch",
+    "railways:large_track_wooden",
+    "railways:large_switch_wooden"
+  ]
+}

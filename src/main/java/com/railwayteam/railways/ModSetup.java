@@ -10,7 +10,7 @@ import com.railwayteam.railways.entities.handcar.HandcarEntity;
 import com.railwayteam.railways.entities.handcar.HandcarRenderer;
 import com.railwayteam.railways.items.*;
 import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.util.TagUtils;
+import com.railwayteam.railways.util.RailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.tterrag.registrate.Registrate;
@@ -105,14 +105,10 @@ public class ModSetup {
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
       ))
-      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-        .patternLine("   ")
-        .patternLine(" A ")
-        .patternLine(" T ")
-        .key('A', AllBlocks.SAIL_FRAME.get())
-        .key('T', Items.STICK)
-        .addCriterion("has_sail", prov.hasItem(AllBlocks.SAIL_FRAME.get()))
-        .build(prov))
+      .recipe((ctx, prov) -> {
+        ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL.get());
+        ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL_FRAME.get());
+      })
       .simpleItem()     // nothing special about the item right now
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
@@ -126,9 +122,9 @@ public class ModSetup {
         ctx.getName(),
         prov.mcLoc("item/generated"),
         "layer0",
-        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
+        prov.modLoc("item/wide_gauge/"+ctx.getName()))).tag(RailwaysTags.Tracks).build()
       .lang("Andesite Track")
-      .register();
+            .register();
 
     R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
       .properties(p->p.hardnessAndResistance(10.0f, 10.0f).nonOpaque())//.doesNotBlockMovement())
@@ -140,13 +136,13 @@ public class ModSetup {
         ctx.getName(),
         prov.mcLoc("item/generated"),
         "layer0",
-        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
+        prov.modLoc("item/wide_gauge/"+ctx.getName()))).tag(RailwaysTags.Tracks).build()
       .lang("Andesite Switch")
       .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
         .addIngredient(R_BLOCK_LARGE_RAIL.get(), 2)
         .addCriterion("has_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL.get()))
-        .build(prov))
-      .register();
+              .build(prov))
+            .register();
 
     // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
 
@@ -160,7 +156,7 @@ public class ModSetup {
         ctx.getName(),
         prov.mcLoc("item/generated"),
         "layer0",
-        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
+        prov.modLoc("item/wide_gauge/"+ctx.getName()))).tag(RailwaysTags.Tracks).build()
       .lang("Wooden Track")
       .register();
 
@@ -174,13 +170,13 @@ public class ModSetup {
         ctx.getName(),
         prov.mcLoc("item/generated"),
         "layer0",
-        prov.modLoc("item/wide_gauge/"+ctx.getName()))).build()
+        prov.modLoc("item/wide_gauge/"+ctx.getName()))).tag(RailwaysTags.Tracks).build()
       .lang("Wooden Switch")
       .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
         .addIngredient(R_BLOCK_LARGE_RAIL_WOODEN.get(), 2)
         .addCriterion("has_wooden_tracks", prov.hasItem(R_BLOCK_LARGE_RAIL_WOODEN.get()))
         .build(prov))
-      .register();
+            .register();
 
     R_BLOCK_SIGNAL = reg.block(SignalBlock.name, SignalBlock::new)
       .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
@@ -188,6 +184,12 @@ public class ModSetup {
         (blockstate) -> (prov.models().getExistingFile(
           prov.modLoc("block/"+ctx.getName() + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
       ))))
+      .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
+                  .addIngredient(AllBlocks.ANDESITE_CASING.get())
+                  .addIngredient(Items.REDSTONE_TORCH, 2)
+                  .addCriterion("has_tracks", prov.hasItem(RailwaysTags.Tracks))
+                  .addCriterion("has_andesite_casing", prov.hasItem(AllBlocks.ANDESITE_CASING.get()))
+                  .build(prov))
       .item(SignalItem::new).build()
       .lang("Track Signal")
       .register();
@@ -277,7 +279,7 @@ public class ModSetup {
       (p) -> new EngineersCapItem(p, color))
               .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))
         .properties(p -> p.maxStackSize(1))
-        .tag(TagUtils.EngineerCaps)
+        .tag(RailwaysTags.EngineerCaps)
         .model((ctx, prov) -> {
           prov.singleTexture(
           ctx.getName(),
@@ -293,7 +295,7 @@ public class ModSetup {
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString()));
           ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-            .addIngredient(TagUtils.EngineerCaps)
+            .addIngredient(RailwaysTags.EngineerCaps)
             .addIngredient(color.getTag())
             .addCriterion("has_wool", prov.hasItem(ItemTags.WOOL))
             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));

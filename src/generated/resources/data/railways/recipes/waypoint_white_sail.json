@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " T "
+  ],
+  "key": {
+    "A": {
+      "item": "create:white_sail"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "railways:waypoint"
+  }
+}
