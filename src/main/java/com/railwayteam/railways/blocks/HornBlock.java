@@ -1,5 +1,6 @@
 package com.railwayteam.railways.blocks;
 
+import com.railwayteam.railways.util.VoxelUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFaceBlock;
@@ -58,32 +59,65 @@ public class HornBlock extends HorizontalFaceBlock {
     }
 
     // shape stuff
-    public static VoxelShape ShapeBottomNorthSouth = Block.makeCuboidShape(0, 0, 1, 16, 15, 15);
-    public static VoxelShape ShapeBottomWestEast = Block.makeCuboidShape(1, 0, 0, 15, 15, 16);
 
-    public static VoxelShape ShapeSideNorth = Block.makeCuboidShape(0, 1, 1, 16, 15, 16);
-    public static VoxelShape ShapeSideSouth = Block.makeCuboidShape(0, 1, 0, 16, 15, 15);
-    public static VoxelShape ShapeSideWest = Block.makeCuboidShape(1, 1, 0, 16, 15, 16);
-    public static VoxelShape ShapeSideEast = Block.makeCuboidShape(0, 1, 0, 15, 15, 16);
+    protected static class HornShape extends VoxelUtils.Shape {
+        public final VoxelShape north2;
+        public final VoxelShape north3;
+
+        public HornShape(VoxelShape north, VoxelShape north2, VoxelShape north3) {
+            super(north);
+            this.north2 = north2;
+            this.north3 = north3;
+        }
+
+        public HornShape(double x, double y, double z, double sizeX, double sizeY, double sizeZ, double x2, double y2, double z2, double sizeX2, double sizeY2, double sizeZ2, double x3, double y3, double z3, double sizeX3, double sizeY3, double sizeZ3) {
+            this(Block.makeCuboidShape(x, y, z, sizeX, sizeY, sizeZ), Block.makeCuboidShape(x2, y2, z2, sizeX2, sizeY2, sizeZ2), Block.makeCuboidShape(x3, y3, z3, sizeX3, sizeY3, sizeZ3));
+        }
+
+        @Override
+        public VoxelShape get(BlockState blockState, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
+            Direction d = blockState.get(HORIZONTAL_FACING);
+            switch (blockState.get(HORNS)) {
+                case 2:
+                    return forDir(north2, d);
+                case 3:
+                    return forDir(north3, d);
+                default:
+                    return forDir(north, d);
+            }
+        }
+    }
+
+    public static HornShape BottomShapes = new HornShape(
+            4, 0, 1, 12, 13, 15, // 1 horn
+            0, 0, 1, 16, 12, 15, // 2 horns
+            0, 0, 1, 16, 15, 15 // 3 horns
+    );
+
+    public static HornShape SideShapes = new HornShape(
+            4, 4, 1, 12, 12, 16, // 1 horn
+            0, 4, 1, 16, 12, 16, // 2 horns
+            0, 1, 1, 16, 15, 16 // 3 horns
+    );
+
+    public static HornShape TopShapes = new HornShape(
+            4, 3, 1, 12, 16, 15, // 1 horn
+            0, 4, 1, 16, 16, 15, // 2 horns
+            0, 1, 1, 16, 16, 15 // 3 horns
+    );
 
     @Override
     public VoxelShape getShape(BlockState blockState, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
         Direction direction = blockState.get(HORIZONTAL_FACING);
+        int horns = blockState.get(HORNS);
         switch(blockState.get(FACE)) {
-            case FLOOR: case CEILING:
-                return direction.getAxis() == Direction.Axis.X ? ShapeBottomWestEast : ShapeBottomNorthSouth;
+            case FLOOR:
+                return BottomShapes.get(blockState, p_220053_2_, p_220053_3_, p_220053_4_);
+            case CEILING:
+                return TopShapes.get(blockState, p_220053_2_, p_220053_3_, p_220053_4_);
             case WALL:
-                switch (direction) {
-                    case WEST:
-                        return ShapeSideWest;
-                    case EAST:
-                        return ShapeSideEast;
-                    case NORTH:
-                        return ShapeSideNorth;
-                    case SOUTH:
-                        return ShapeSideSouth;
-                }
-            default: return ShapeSideNorth;
+               return SideShapes.get(blockState, p_220053_2_, p_220053_3_, p_220053_4_);
+            default: return SideShapes.north;
         }
     }
 
