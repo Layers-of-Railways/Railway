@@ -1,12 +1,16 @@
 package com.railwayteam.railways.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IReorderingProcessor;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.Style;
 
 public class NumericalSignalTileEntityRenderer extends TileEntityRenderer<NumericalSignalTileEntity> {
@@ -14,24 +18,64 @@ public class NumericalSignalTileEntityRenderer extends TileEntityRenderer<Numeri
         super(p_i226006_1_);
     }
 
-    @Override
-    public void render(NumericalSignalTileEntity tile, float p_225616_2_, MatrixStack p_225616_3_, IRenderTypeBuffer p_225616_4_, int p_225616_5_, int p_225616_6_) {
-        p_225616_3_.push();
-        float f = 0.6666667F;
-        p_225616_3_.translate(0.5D, 0, 1.00001D /* .00001 to prevent z-fighting */);
-//        p_225616_3_.translate(0.0D, -0.3125D, -0.4375D);
+    public static int getDegreesFromDirection(Direction direction) {
+        int d;
+        switch (direction) {
+            case EAST:
+                d = 3;
+                break;
+            case SOUTH:
+                d = 0;
+                break;
+            case WEST:
+                d = 1;
+                break;
+            default:
+                d = 2;
+                break;
+        }
+        return d * 90;
+    }
 
-        p_225616_3_.push();
-        p_225616_3_.scale(0.6666667F, -0.6666667F, -0.6666667F);
+    @Override
+    public void render(NumericalSignalTileEntity tile, float p_225616_2_, MatrixStack matrixStack, IRenderTypeBuffer p_225616_4_, int p_225616_5_, int p_225616_6_) {
+        BlockState blockstate = tile.getBlockState();
+
+        matrixStack.push();
+        float f = 0.6666667F;
+//        p_225616_3_.translate(0.0D, -0.3125D, -0.4375D);
+        Direction dir = blockstate.get(HorizontalBlock.HORIZONTAL_FACING);
+        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-((float)(getDegreesFromDirection(dir)))));
+
+//        switch (dir) {
+//            case EAST:
+//                matrixStack.translate();
+//        }
+        // i have no idea what im going lmao
+        switch (dir) {
+            case NORTH:
+                matrixStack.translate(-.5D, 0, -.1D);
+                break;
+            case EAST:
+                matrixStack.translate(-.5D, 0, .9D);
+                break;
+            case SOUTH:
+                matrixStack.translate(.5D, 0, .9D);
+                break;
+            case WEST:
+                matrixStack.translate(.5D, 0, -.1D);
+        }
+        matrixStack.push();
+        matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
 //        RenderMaterial rendermaterial = getModelTexture(blockstate.getBlock());
 //        IVertexBuilder ivertexbuilder = rendermaterial.getVertexConsumer(p_225616_4_, this.model::getLayer);
 //        this.model.field_78166_a.render(p_225616_3_, ivertexbuilder, p_225616_5_, p_225616_6_);
 //        this.model.field_78165_b.render(p_225616_3_, ivertexbuilder, p_225616_5_, p_225616_6_);
-        p_225616_3_.pop();
+        matrixStack.pop();
         FontRenderer fontrenderer = this.dispatcher.getFontRenderer();
         float f2 = 0.010416667F;
 //        p_225616_3_.translate(0.0D, (double)0.33333334F, (double)0.046666667F);
-        p_225616_3_.scale(0.03F, -0.03F, 0.03F);
+        matrixStack.scale(0.03F, -0.03F, 0.03F);
 
         int color = NativeImage.getAbgrColor(0, 255, 255, 255);
 
@@ -40,8 +84,8 @@ public class NumericalSignalTileEntityRenderer extends TileEntityRenderer<Numeri
 
         IReorderingProcessor text = IReorderingProcessor.styledString(str, Style.EMPTY);
         float f3 = (float)(-fontrenderer.getWidth(text) / 2);
-        fontrenderer.draw(text, f3, (float)(-20), color, false, p_225616_3_.peek().getModel(), p_225616_4_, false, 0, p_225616_5_);
+        fontrenderer.draw(text, f3, (float)(-20), color, false, matrixStack.peek().getModel(), p_225616_4_, false, 0, p_225616_5_);
 
-        p_225616_3_.pop();
+        matrixStack.pop();
     }
 }

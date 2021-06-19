@@ -251,8 +251,11 @@ public class ModSetup {
 
     R_BLOCK_NUMERICAL_SIGNAL = reg.block("numerical_signal", NumericalSignalBlock::new)
             .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
-            .item().model((ctx, prov) -> {}).build()
-            .blockstate((ctx, prov) -> {})
+            .simpleItem()
+            .blockstate((ctx,prov) -> prov.horizontalBlock(ctx.getEntry(),
+                    (blockstate) -> (prov.models().getExistingFile(
+                            prov.modLoc("block/numerical_signal")
+                    ))))
             .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                       .addIngredient(AllBlocks.ANDESITE_CASING.get())
                       .addIngredient(AllBlocks.NIXIE_TUBE.get())
