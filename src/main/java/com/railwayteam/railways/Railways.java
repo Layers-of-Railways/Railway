@@ -1,6 +1,6 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.blocks.NumericalSignalTileEntityRenderer;
+import com.railwayteam.railways.blocks.SpeedSignalTileRenderer;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
@@ -91,7 +91,7 @@ public class Railways {
             ConductorRenderer::new);
     setup.registerRenderers();
     Containers.registerScreenFactories();
-    ClientRegistry.bindTileEntityRenderer(ModSetup.R_TE_NUMERICAL_SIGNAL.get(), NumericalSignalTileEntityRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(ModSetup.R_TE_NUMERICAL_SIGNAL.get(), SpeedSignalTileRenderer::new);
   }
 
   public ArrayList<ServerPlayerEntity> enableRCS = new ArrayList<>();

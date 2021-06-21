@@ -13,8 +13,8 @@ import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.Style;
 
-public class NumericalSignalTileEntityRenderer extends TileEntityRenderer<NumericalSignalTileEntity> {
-    public NumericalSignalTileEntityRenderer(TileEntityRendererDispatcher p_i226006_1_) {
+public class SpeedSignalTileRenderer extends TileEntityRenderer<SpeedSignalTileEntity> {
+    public SpeedSignalTileRenderer(TileEntityRendererDispatcher p_i226006_1_) {
         super(p_i226006_1_);
     }
 
@@ -38,7 +38,7 @@ public class NumericalSignalTileEntityRenderer extends TileEntityRenderer<Numeri
     }
 
     @Override
-    public void render(NumericalSignalTileEntity tile, float p_225616_2_, MatrixStack matrixStack, IRenderTypeBuffer p_225616_4_, int p_225616_5_, int p_225616_6_) {
+    public void render(SpeedSignalTileEntity tile, float p_225616_2_, MatrixStack matrixStack, IRenderTypeBuffer p_225616_4_, int p_225616_5_, int p_225616_6_) {
         BlockState blockstate = tile.getBlockState();
 
         matrixStack.push();

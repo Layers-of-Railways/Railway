@@ -4,8 +4,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
-public class NumericalSignalTileEntity extends TileEntity {
-    public NumericalSignalTileEntity(TileEntityType<?> p_i48289_1_) {
+public class SpeedSignalTileEntity extends TileEntity {
+    public SpeedSignalTileEntity(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
 

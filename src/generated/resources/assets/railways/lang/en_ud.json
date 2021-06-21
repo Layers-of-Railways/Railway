@@ -5,7 +5,7 @@
   "block.railways.large_switch_wooden": "\u0265\u0254\u0287\u0131\u028DS u\u01DDpooM",
   "block.railways.large_track": "\u029E\u0254\u0250\u0279\u27D8 \u01DD\u0287\u0131s\u01DDpu\u2C6F",
   "block.railways.large_track_wooden": "\u029E\u0254\u0250\u0279\u27D8 u\u01DDpooM",
-  "block.railways.numerical_signal": "\u05DF\u0250ub\u0131s \u05DF\u0250\u0254\u0131\u0279\u01DD\u026FnN",
+  "block.railways.speed_signal": "\u05DF\u0250ub\u0131S p\u01DD\u01DDdS",
   "block.railways.station_sensor": "\u0279osu\u01DDS uo\u0131\u0287\u0250\u0287S",
   "block.railways.waypoint": "\u0287u\u0131od\u028E\u0250M",
   "block.railways.wheel": "\u05DF\u01DD\u01DD\u0265M",

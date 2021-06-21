@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:numerical_signal"
+          "name": "railways:speed_signal"
         }
       ],
       "conditions": [

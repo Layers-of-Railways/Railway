@@ -72,11 +72,11 @@ public class ModSetup {
 
   public static BlockEntry<HornBlock> R_BLOCK_HORN;
 
-  public static BlockEntry<NumericalSignalBlock> R_BLOCK_NUMERICAL_SIGNAL;
+  public static BlockEntry<SpeedSignalBlock> R_BLOCK_NUMERICAL_SIGNAL;
 
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
   public static TileEntityEntry<SignalTileEntity> R_TE_SIGNAL;
-  public static TileEntityEntry<NumericalSignalTileEntity> R_TE_NUMERICAL_SIGNAL;
+  public static TileEntityEntry<SpeedSignalTileEntity> R_TE_NUMERICAL_SIGNAL;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
@@ -249,19 +249,19 @@ public class ModSetup {
             .lang("Horn")
             .register();
 
-    R_BLOCK_NUMERICAL_SIGNAL = reg.block("numerical_signal", NumericalSignalBlock::new)
+    R_BLOCK_NUMERICAL_SIGNAL = reg.block("speed_signal", SpeedSignalBlock::new)
             .properties(p->p.hardnessAndResistance(10f, 10f).nonOpaque())
             .simpleItem()
             .blockstate((ctx,prov) -> prov.horizontalBlock(ctx.getEntry(),
                     (blockstate) -> (prov.models().getExistingFile(
-                            prov.modLoc("block/numerical_signal")
+                            prov.modLoc("block/speed_signal")
                     ))))
             .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                       .addIngredient(AllBlocks.ANDESITE_CASING.get())
                       .addIngredient(AllBlocks.NIXIE_TUBE.get())
                       .addCriterion("has_nixie_tube", prov.hasItem(AllBlocks.NIXIE_TUBE.get()))
                       .build(prov))
-            .lang("Numerical signal")
+            .lang("Speed Signal")
             .register();
 
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
@@ -272,7 +272,7 @@ public class ModSetup {
       .validBlock(()->R_BLOCK_SIGNAL.get())
       .register();
 
-    R_TE_NUMERICAL_SIGNAL = reg.tileEntity("numerical_signal", NumericalSignalTileEntity::new)
+    R_TE_NUMERICAL_SIGNAL = reg.tileEntity("numerical_signal", SpeedSignalTileEntity::new)
             .validBlock(()->R_BLOCK_NUMERICAL_SIGNAL.get())
             .register();
 

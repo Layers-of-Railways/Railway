@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
-public class NumericalSignalBlock extends HorizontalBlock {
-    public NumericalSignalBlock(Properties p_i48440_1_) {
+public class SpeedSignalBlock extends HorizontalBlock {
+    public SpeedSignalBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
         this.setDefaultState(this.stateContainer.getBaseState().with(BlockStateProperties.POWER_0_15, 0).with(HORIZONTAL_FACING, Direction.NORTH));
     }
