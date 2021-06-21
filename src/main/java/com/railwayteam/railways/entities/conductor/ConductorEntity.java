@@ -292,9 +292,6 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   }
 
   public ItemStack setStoredOrder(ItemStack stack) {
-    if (!(stack.getItem() instanceof StationEditorItem)) {
-      throw new IllegalArgumentException("Tried to store non order item in the conductor order slot");
-    }
     return setSlotStack(inventoryOrderIndex, stack);
   }
 
