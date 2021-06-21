@@ -3,6 +3,7 @@ package com.railwayteam.railways.items;
 import com.railwayteam.railways.StationListContainer;
 import com.railwayteam.railways.blocks.StationSensorRailTileEntity;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
+import com.railwayteam.railways.entities.conductor.ConductorEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,9 +50,15 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
     if (!world.isRemote) {
     //  player.sendMessage(new StringTextComponent("checking for cart"));
       RayTraceResult result = Minecraft.getInstance().objectMouseOver;
-      if (result.getType().equals(RayTraceResult.Type.ENTITY) && ((EntityRayTraceResult)result).getEntity() instanceof AbstractMinecartEntity) {
+      if (result.getType().equals(RayTraceResult.Type.ENTITY) && ((EntityRayTraceResult)result).getEntity() instanceof ConductorEntity) {
       //  player.sendMessage(new StringTextComponent("found"));
-        handleInteractionWithMinecart(world, player, (AbstractMinecartEntity)((EntityRayTraceResult)result).getEntity());
+//        handleInteractionWithMinecart(world, player, (AbstractMinecartEntity)((EntityRayTraceResult)result).getEntity());
+        /*
+          intellij is complaining about if having an empty body
+          though ill keep this here just for the commented out code
+          wait didnt i say before i wanted to stop keeping commented out code
+          idk lol
+        */
       }
       else {
         //  player.sendMessage(new StringTextComponent("opened menu from nothing"));

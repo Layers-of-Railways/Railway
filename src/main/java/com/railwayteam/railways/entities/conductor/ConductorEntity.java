@@ -4,16 +4,15 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.goals.WalkToAndSitInNearestMinecartGoal;
 import com.railwayteam.railways.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.items.ConductorItem;
+import com.railwayteam.railways.items.StationEditorItem;
 import com.railwayteam.railways.util.WrenchableEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.minecart.MinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -33,6 +32,8 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
   public static final String name = "conductor";
 //  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
+
+  public final Inventory inventory = new Inventory(2);
 
   public ConductorEntity(EntityType<? extends CreatureEntity> p_i48575_1_, World p_i48575_2_) {
     super(p_i48575_1_, p_i48575_2_);
@@ -192,6 +193,16 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
         }
       }
       return ActionResultType.SUCCESS;
+    } else if(item instanceof StationEditorItem) {
+      ItemStack copy = stack.copy(); // since the copy is deleted below, make a copy before
+      if(!plr.isCreative()) {
+        stack.setCount(0);
+        if(hasStoredOrder()) {
+          ItemStack oldOrder = getStoredOrder();
+          if(!plr.addItemStackToInventory(oldOrder)) entityDropItem(oldOrder);
+        }
+      };
+      setStoredOrder(copy);
     }
 
     return onWrenched(plr, hand, this);
@@ -207,11 +218,13 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
     super.read(nbt);
 
     setColor(nbt.getInt("CapColor"));
+    inventory.read(nbt.getList("Inventory", 10));
   }
 
   @Override
   public void writeAdditional(CompoundNBT nbt) {
     nbt.putInt("CapColor", getColorId());
+    nbt.put("Inventory", this.inventory.write());
 
     super.writeAdditional(nbt);
   }
@@ -228,5 +241,64 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 
   public boolean shouldBeRainbow() {
     return hasCustomName() && "jeb_".equals(getName().getUnformattedComponentText());
+  }
+
+  // just to make changing the inventory indexes this easier...
+  public int inventoryOrderIndex = 1;
+  public int inventorySlotIndex = 0;
+
+  /**
+   * Get the stack in the slot in the conductor inventory, which includes both the main slot, and the order slot
+   * <p>
+   * This method is protected to avoid confusion and because recreating it is easy
+   */
+  protected ItemStack getSlotStack(int s) {
+    return inventory.getStackInSlot(s);
+  }
+
+  // hey talrey, i made a getOrderData method for you
+  public ItemStack getStoredOrder() {
+    return getSlotStack(inventoryOrderIndex);
+  }
+
+  public CompoundNBT getOrderData() {
+    return getStoredOrder().getOrCreateTag();
+  }
+
+  public ItemStack getItemInSlot() {
+    return getSlotStack(inventorySlotIndex);
+  }
+
+  protected boolean slotHasStack(int s) {
+    return !(getSlotStack(s).getItem() instanceof AirItem);
+  }
+
+  public boolean hasStoredOrder() {
+    return slotHasStack(inventoryOrderIndex);
+  }
+
+  public boolean hasItemInSlot() {
+    return slotHasStack(inventorySlotIndex);
+  }
+
+  /**
+   * Set the stack in the slot in the conductor inventory, which includes both the main slot, and the order slot
+   * <p>
+   * This method is protected to avoid confusion and because recreating it is easy
+   */
+  protected ItemStack setSlotStack(int s, ItemStack stack) {
+    inventory.setInventorySlotContents(s, stack);
+    return stack;
+  }
+
+  public ItemStack setStoredOrder(ItemStack stack) {
+    if (!(stack.getItem() instanceof StationEditorItem)) {
+      throw new IllegalArgumentException("Tried to store non order item in the conductor order slot");
+    }
+    return setSlotStack(inventoryOrderIndex, stack);
+  }
+
+  public ItemStack setItemInSlot(ItemStack stack) {
+    return setSlotStack(inventorySlotIndex, stack);
   }
 }
