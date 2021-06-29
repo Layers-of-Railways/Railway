@@ -1,5 +1,6 @@
 {
   "block.railways.basic_signal": "\u05DF\u0250ub\u0131S \u029E\u0254\u0250\u0279\u27D8",
+  "block.railways.bogie": "\u01DD\u0131bo\u15FA",
   "block.railways.horn": "u\u0279oH",
   "block.railways.large_switch": "\u0265\u0254\u0287\u0131\u028DS \u01DD\u0287\u0131s\u01DDpu\u2C6F",
   "block.railways.large_switch_wooden": "\u0265\u0254\u0287\u0131\u028DS u\u01DDpooM",
@@ -12,7 +13,6 @@
   "entity.railways.conductor": "\u0279o\u0287\u0254npuo\u0186",
   "entity.railways.handcar": "\u0279\u0250\u0254pu\u0250H",
   "entity.railways.steadycart": "\u0287\u0279\u0250\u0254\u01DDu\u0131W \u028Ep\u0250\u01DD\u0287S",
-  "item.railways.bogie": "\u01DD\u0131bo\u15FA",
   "item.railways.conductor_black": "\u0279o\u0287\u0254npuo\u0186 \u029E\u0254\u0250\u05DF\u15FA",
   "item.railways.conductor_blue": "\u0279o\u0287\u0254npuo\u0186 \u01DDn\u05DF\u15FA",
   "item.railways.conductor_brown": "\u0279o\u0287\u0254npuo\u0186 u\u028Do\u0279\u15FA",

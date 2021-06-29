@@ -1,5 +1,6 @@
 {
   "block.railways.basic_signal": "Track Signal",
+  "block.railways.bogie": "Bogie",
   "block.railways.horn": "Horn",
   "block.railways.large_switch": "Andesite Switch",
   "block.railways.large_switch_wooden": "Wooden Switch",
@@ -12,7 +13,6 @@
   "entity.railways.conductor": "Conductor",
   "entity.railways.handcar": "Handcar",
   "entity.railways.steadycart": "Steady Minecart",
-  "item.railways.bogie": "Bogie",
   "item.railways.conductor_black": "Black Conductor",
   "item.railways.conductor_blue": "Blue Conductor",
   "item.railways.conductor_brown": "Brown Conductor",

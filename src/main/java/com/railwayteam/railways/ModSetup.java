@@ -74,13 +74,14 @@ public class ModSetup {
 
   public static BlockEntry<SpeedSignalBlock> R_BLOCK_NUMERICAL_SIGNAL;
 
+  public static BlockEntry<BogieBlock> R_BLOCK_BOGIE;
+
   public static TileEntityEntry<StationSensorRailTileEntity> R_TE_STATION_SENSOR;
   public static TileEntityEntry<SignalTileEntity> R_TE_SIGNAL;
   public static TileEntityEntry<SpeedSignalTileEntity> R_TE_NUMERICAL_SIGNAL;
 
   public static ItemEntry<WayPointToolItem> R_ITEM_WAYPOINT_TOOL;
   public static ItemEntry<StationEditorItem> R_ITEM_STATION_EDITOR_TOOL;
-  public static ItemEntry<Item> R_ITEM_BOGIE;
   public static ItemEntry<HandcarItem> R_ITEM_HANDCAR;
   public static ItemEntry<Item> R_ITEM_WHISTLE;
 
@@ -264,6 +265,22 @@ public class ModSetup {
             .lang("Speed Signal")
             .register();
 
+    R_BLOCK_BOGIE = reg.block("bogie", BogieBlock::new)
+            .lang("Bogie")
+            .blockstate((smth1, smth2) -> {})
+            .item(BogieItem::new).model((smth1, smth2) -> {}).build()
+            .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
+                    .patternLine("WBW")
+                    .patternLine("SMS")
+                    .patternLine("WBW")
+                    .key('W', R_BLOCK_WHEEL.get())
+                    .key('B', AllBlocks.METAL_BRACKET.get())
+                    .key('M', AllBlocks.MECHANICAL_BEARING.get())
+                    .key('S', AllBlocks.SHAFT.get())
+                    .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
+                    .build(prov))
+            .register();
+
     R_TE_STATION_SENSOR = reg.tileEntity(StationSensorRailTileEntity.NAME, StationSensorRailTileEntity::new)
       .validBlock(()->R_BLOCK_STATION_SENSOR.get())
       .register();
@@ -340,21 +357,6 @@ public class ModSetup {
 
     R_ITEM_STATION_EDITOR_TOOL = reg.item(StationEditorItem.NAME, StationEditorItem::new)
       .lang("Station Editor")
-      .register();
-
-    R_ITEM_BOGIE = reg.item("bogie", Item::new)
-      .lang("Bogie")
-      .model((ctx, prov) -> { })
-      .recipe((ctx, prov) -> ShapedRecipeBuilder.shapedRecipe(ctx.get())
-        .patternLine("WBW")
-        .patternLine("SMS")
-        .patternLine("WBW")
-        .key('W', R_BLOCK_WHEEL.get())
-        .key('B', AllBlocks.METAL_BRACKET.get())
-        .key('M', AllBlocks.MECHANICAL_BEARING.get())
-        .key('S', AllBlocks.SHAFT.get())
-        .addCriterion("has_wheel", prov.hasItem(R_BLOCK_WHEEL.get()))
-        .build(prov))
       .register();
 
     R_ITEM_HANDCAR = reg.item("handcar", HandcarItem::new)
