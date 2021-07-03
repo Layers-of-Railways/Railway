@@ -139,7 +139,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 	
-    implementation fg.deobf("mezz.jei:jei-${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     implementation fg.deobf("curse.maven:create-328085:${create_file_id}")
 

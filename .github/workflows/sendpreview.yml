@@ -17,6 +17,10 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message-title: "Building mod ${{ github.ref }} ${{ steps.commits.outputs.commits }}"
       - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
+        name: Gradle build
+        with:
+          args: build
+      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
         name: Build jar
         with:
           args: shadowJar
