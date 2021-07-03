@@ -26,7 +26,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Build jar
-        run: ./gradlew shadowJar
+        run: ./gradlew jar
         env:
           RAILWAYS_VERSION: preview-${{ github.event.after }}
       - name: Send built file to discord
@@ -34,4 +34,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: ./build/libs/*-all.*
+          args: ./build/libs/*.*

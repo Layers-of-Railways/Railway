@@ -4,7 +4,8 @@ import com.railwayteam.railways.blocks.SpeedSignalTileRenderer;
 import com.railwayteam.railways.capabilities.CapabilitySetup;
 import com.railwayteam.railways.entities.conductor.ConductorRenderer;
 import com.railwayteam.railways.items.StationEditorItem;
-import com.tterrag.registrate.Registrate;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.repack.registrate.Registrate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.command.Commands;
@@ -39,7 +40,7 @@ public class Railways {
 	public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();
-  public static Registrate railwayRegistrar;
+  public static CreateRegistrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;
 
   public static RailLineSegmentManager SEGMENT_MANAGER = RailLineSegmentManager.getInstance();
@@ -48,6 +49,8 @@ public class Railways {
 
   public Railways() {
   	instance = this;
+
+  	railwayRegistrar = CreateRegistrate.lazy(MODID).get();
 
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
@@ -64,7 +67,6 @@ public class Railways {
 
     MOD_EVENT_BUS.addListener(Railways::clientInit);
 
-    railwayRegistrar = Registrate.create(Railways.MODID);
     setup.register(railwayRegistrar);
 
     MOD_EVENT_BUS.register(CapabilitySetup.class);

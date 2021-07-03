@@ -1,8 +1,8 @@
 package com.railwayteam.railways.blocks;
 
 import com.railwayteam.railways.util.VectorUtils;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.simibubi.create.repack.registrate.providers.DataGenContext;
+import com.simibubi.create.repack.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;

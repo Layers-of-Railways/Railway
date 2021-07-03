@@ -1,7 +1,7 @@
 package com.railwayteam.railways.blocks;
 
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.simibubi.create.repack.registrate.providers.DataGenContext;
+import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;

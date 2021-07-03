@@ -13,11 +13,11 @@ import com.railwayteam.railways.items.engineers_cap.EngineersCapItem;
 import com.railwayteam.railways.util.RailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.EntityEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.TileEntityEntry;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import com.simibubi.create.repack.registrate.util.entry.EntityEntry;
+import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
+import com.simibubi.create.repack.registrate.util.entry.TileEntityEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFaceBlock;
@@ -45,7 +45,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 
-import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
+import static com.simibubi.create.repack.registrate.providers.RegistrateLangProvider.toEnglishName;
 
 @Mod.EventBusSubscriber(modid = "railways", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModSetup {
@@ -95,7 +95,7 @@ public class ModSetup {
   public void init() {
   }
 
-  public static void register (Registrate reg) {
+  public static void register (CreateRegistrate reg) {
     // set item group for the following registry entries
     reg.itemGroup(()->itemGroup, Railways.MODID);
 
@@ -104,15 +104,15 @@ public class ModSetup {
 
     // right now we're registering a block and an item.
     // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
-    R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)         // tell Registrate how to create it
+    R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)// tell Registrate how to create it
+            .recipe((ctx, prov) -> {
+              ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL.get());
+              ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL_FRAME.get());
+            })
       .properties(p->p.hardnessAndResistance(5.0f, 6.0f))    // set block properties
       .blockstate((ctx,prov) -> prov.simpleBlock(ctx.getEntry(),                 // block state determines the model
         prov.models().getExistingFile(prov.modLoc("block/"+ctx.getName())) // hence why that's tucked in here
       ))
-      .recipe((ctx, prov) -> {
-        ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL.get());
-        ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL_FRAME.get());
-      })
       .simpleItem()     // nothing special about the item right now
       .lang("Waypoint") // give it a friendly name
       .register();      // pack it up for Registrate
