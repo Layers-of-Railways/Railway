@@ -16,14 +16,17 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message-title: "Building mod ${{ github.ref }} ${{ steps.commits.outputs.commits }}"
-      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
-        name: Gradle build
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
         with:
-          args: build
-      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
-        name: Build jar
-        with:
-          args: shadowJar
+          java-version: '8'
+          distribution: 'adopt'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Build jar
+        run: ./gradlew shadowJar
         env:
           RAILWAYS_VERSION: preview-${{ github.event.after }}
       - name: Send built file to discord
