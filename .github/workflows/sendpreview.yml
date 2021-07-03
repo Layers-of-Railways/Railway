@@ -1,0 +1,30 @@
+on: push
+name: Upload jar to testing channel
+jobs:
+  build-and-send:
+    name: Build Jar and send to Discord
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - name: Get commits
+        id: commits
+        run: echo "::set-output name=commits::" >> git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+      - name: Send building message to discord
+        uses: fateyan/action-discord-notifier@v1.2.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message-title: "Building mod ${{ github.ref }} ${{ steps.commits.outputs.commits }}"
+      - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-8
+        name: Build jar
+        with:
+          args: shadowJar
+        env:
+          RAILWAYS_VERSION: preview-${{ github.event.after }}
+      - name: Send built file to discord
+        uses: sinshutu/upload-to-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: ./build/libs/*-all.*

@@ -35,7 +35,10 @@ repositories {
     }
 }
 
-version = "${mc_version}-${version}"
+version = "${mc_version}-${mod_version}"
+if(System.getenv("RAILWAYS_VERSION") != null) {
+    version = "${mc_version}-${System.getenv("RAILWAYS_VERSION")}"
+}
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'railways'
 
