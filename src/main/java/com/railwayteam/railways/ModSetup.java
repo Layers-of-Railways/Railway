@@ -97,7 +97,7 @@ public class ModSetup {
 
   public static void register (CreateRegistrate reg) {
     // set item group for the following registry entries
-    reg.itemGroup(()->itemGroup, Railways.MODID);
+    reg.itemGroup(()->itemGroup, "Create Railways");
 
 //      AllBlocks.SAIL_FRAME.get().getTags().add(UsefulTags.SailsTagLoc);
 //      AllBlocks.SAIL.get().getTags().add(UsefulTags.SailsTagLoc);

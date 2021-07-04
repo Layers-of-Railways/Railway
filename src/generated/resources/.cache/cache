@@ -6,8 +6,8 @@
 edabdedf85b73af629b14cd55f1efbf794d610af assets/railways/blockstates/large_track_wooden.json
 9584abd2b0c36ec34972d4fb217d283adbe5ebc4 assets/railways/blockstates/speed_signal.json
 232b7b9a747e186457fe0798cda63c2decba74a1 assets/railways/blockstates/waypoint.json
-c1eb6154e8e26f8f2b11b37fb815104898e344b6 assets/railways/lang/en_ud.json
-960784791829b3717c11de6007280d71bfe99d42 assets/railways/lang/en_us.json
+74cea6127e76a1181ed1f83362505ad5074ea8dd assets/railways/lang/en_ud.json
+c10db654b078d5e478d6024b54f556d921b19593 assets/railways/lang/en_us.json
 b166ef879f37075a93ec084d7f9247c546c9804c assets/railways/models/item/basic_signal.json
 df95fa7f2346bb1f9709f8819559258f20c93b9b assets/railways/models/item/conductor_black.json
 326952cd1067a48b445986ebd00583d236ec7adf assets/railways/models/item/conductor_blue.json
