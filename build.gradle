@@ -111,6 +111,7 @@ configurations.all {
 
 reobf {
     shadowJar {}
+    jar {}
 }
 
 shadowJar {
@@ -175,3 +176,5 @@ def reobfArtifact = artifacts.add('default', reobfFile) {
 artifacts {
     archives deobfJar
 }
+
+jar.finalizedBy('reobfJar')
