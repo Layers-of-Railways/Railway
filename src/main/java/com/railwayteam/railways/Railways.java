@@ -1,25 +1,20 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.blocks.SpeedSignalTileRenderer;
-import com.railwayteam.railways.capabilities.CapabilitySetup;
-import com.railwayteam.railways.entities.conductor.ConductorRenderer;
-import com.railwayteam.railways.items.StationEditorItem;
+import com.railwayteam.railways.content.entities.conductor.ConductorRenderer;
+import com.railwayteam.railways.content.items.StationEditorItem;
+import com.railwayteam.railways.content.uiandrendering.Containers;
+import com.railwayteam.railways.interaction.RailwaysPacketHandler;
+import com.railwayteam.railways.interaction.capabilities.CapabilitySetup;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.Registrate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.command.Commands;
-import net.minecraft.command.arguments.BlockPosArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -31,7 +26,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import static com.railwayteam.railways.registry.CREntities.R_ENTITY_CONDUCTOR;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -43,9 +38,7 @@ public class Railways {
   public static CreateRegistrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;
 
-  public static RailLineSegmentManager SEGMENT_MANAGER = RailLineSegmentManager.getInstance();
-
-  private RailwaysEventHandler eventHandler;
+  private final RailwaysEventHandler eventHandler;
 
   public Railways() {
   	instance = this;
@@ -67,7 +60,7 @@ public class Railways {
 
     MOD_EVENT_BUS.addListener(Railways::clientInit);
 
-    setup.register(railwayRegistrar);
+    ModSetup.register(railwayRegistrar);
 
     MOD_EVENT_BUS.register(CapabilitySetup.class);
     MOD_EVENT_BUS.register(StationEditorItem.class);
@@ -85,56 +78,13 @@ public class Railways {
 	}
 
   public static void clientInit(FMLClientSetupEvent event) {
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_RAIL.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_LARGE_SWITCH.get(), RenderType.getCutoutMipped());
-    RenderTypeLookup.setRenderLayer(ModSetup.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
-    RenderingRegistry.registerEntityRenderingHandler(ModSetup.R_ENTITY_CONDUCTOR.get(),
+    RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_WAYPOINT.get(), RenderType.getCutoutMipped());
+    RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_LARGE_RAIL.get(), RenderType.getCutoutMipped());
+    RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_LARGE_SWITCH.get(), RenderType.getCutoutMipped());
+    RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(),
             ConductorRenderer::new);
-    setup.registerRenderers();
     Containers.registerScreenFactories();
-    ClientRegistry.bindTileEntityRenderer(ModSetup.R_TE_NUMERICAL_SIGNAL.get(), SpeedSignalTileRenderer::new);
-  }
-
-  public ArrayList<ServerPlayerEntity> enableRCS = new ArrayList<>();
-
-  @SubscribeEvent
-  public void registerCommands (RegisterCommandsEvent rce) {
-    rce.getDispatcher().register(Commands.literal("railwayrcs")
-      .requires(r -> r.hasPermissionLevel(2))
-            .executes(ctx -> {
-              if(ctx.getSource().getEntity() != null) {
-                ServerPlayerEntity plr = ctx.getSource().asPlayer();
-                if(enableRCS.contains(plr)) {
-                  enableRCS.remove(plr);
-                } else {
-                  enableRCS.add(plr);
-                }
-                ctx.getSource().sendFeedback(new StringTextComponent("RCS " + (enableRCS.contains(plr) ? "enabled" : "disabled")), false);
-              }
-              return 1;
-            })
-      );
-    rce.getDispatcher().register(Commands.literal("graph")
-      .then(Commands.literal("set")
-        .then(Commands.argument("position", BlockPosArgument.blockPos())
-          .executes(context -> {
-            return SEGMENT_MANAGER.addTrack(BlockPosArgument.getBlockPos(context, "position"));
-        })))
-      .then(Commands.literal("get")
-        .then(Commands.argument("position", BlockPosArgument.blockPos())
-          .executes(context -> {
-            boolean found = SEGMENT_MANAGER.containsTrack(BlockPosArgument.getBlockPos(context, "position"));
-            if (context.getSource().getEntity() != null) {
-              context.getSource().sendErrorMessage(new StringTextComponent("track was " + (found ? "" : "not ") + "found in Graph"));
-            }
-            return 1;
-        })))
-      .executes(context -> {
-        context.getSource().sendErrorMessage(new StringTextComponent("usage: graph set|get <BlockPos>"));
-        return 1;
-      })
-    );
   }
 
   @SubscribeEvent
