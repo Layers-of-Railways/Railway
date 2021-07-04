@@ -7,8 +7,8 @@ import com.railwayteam.railways.registry.CRTiles;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 
 public class ModSetup {
-  public void init() {
-  }
+    public void init() {
+    }
 
   public static void register (CreateRegistrate reg) {
       CRItems.register(reg);

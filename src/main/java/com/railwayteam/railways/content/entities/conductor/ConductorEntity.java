@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.entities.conductor;
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.content.entities.goals.WalkToAndSitInNearestMinecartGoal;
 import com.railwayteam.railways.content.entities.goals.WalkToNearestPlayerWithCapGoal;
 import com.railwayteam.railways.content.items.ConductorItem;
@@ -29,9 +28,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import static com.railwayteam.railways.registry.CREntities.R_ENTITY_CONDUCTOR;
+
 public class ConductorEntity extends CreatureEntity implements WrenchableEntity {
   public static final String name = "conductor";
-//  public int color = getDefaultColor().getId();
+  //  public int color = getDefaultColor().getId();
   public static final String defaultDisplayName = "Conductor"; // huh why isnt he called conductor
 
   public final Inventory inventory = new Inventory(2);
@@ -126,7 +127,7 @@ public class ConductorEntity extends CreatureEntity implements WrenchableEntity 
 //  public IPacket<?> createSpawnPacket() { return NetworkHooks.getEntitySpawningPacket(this); }
 
   public static ConductorEntity spawn(World world, double x, double y, double z, DyeColor color) {
-    ConductorEntity entity = new ConductorEntity(ModSetup.R_ENTITY_CONDUCTOR.get(), world);
+    ConductorEntity entity = new ConductorEntity(R_ENTITY_CONDUCTOR.get(), world);
     entity.setPosition(x, y, z);
 
     world.addEntity(entity);

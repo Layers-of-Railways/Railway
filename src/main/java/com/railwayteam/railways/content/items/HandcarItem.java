@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.items;
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.content.entities.handcar.HandcarEntity;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.EntityItem;
@@ -9,6 +8,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+
+import static com.railwayteam.railways.registry.CREntities.R_ENTITY_HANDCAR;
 
 public class HandcarItem extends EntityItem<HandcarEntity> {
     public static HandcarItem g() {
@@ -28,7 +29,7 @@ public class HandcarItem extends EntityItem<HandcarEntity> {
     @Override
     public HandcarEntity spawnEntity(PlayerEntity plr, ItemStack stack, Vector3d pos) {
         World world = plr.world;
-        HandcarEntity entity = new HandcarEntity(ModSetup.R_ENTITY_HANDCAR.get(), world);
+        HandcarEntity entity = new HandcarEntity(R_ENTITY_HANDCAR.get(), world);
         entity.setPosition(pos.x, pos.y, pos.z);
         world.addEntity(entity);
         return entity;

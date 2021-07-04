@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Railways.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Railways.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GraphCommand {
     public static RailLineSegmentManager SEGMENT_MANAGER = RailLineSegmentManager.getInstance();
 

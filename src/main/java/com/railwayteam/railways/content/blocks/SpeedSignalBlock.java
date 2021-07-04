@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.blocks;
 
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.util.VoxelUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,6 +20,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
+import static com.railwayteam.railways.registry.CRTiles.R_TE_NUMERICAL_SIGNAL;
+
 public class SpeedSignalBlock extends HorizontalBlock {
     public SpeedSignalBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
@@ -33,7 +34,7 @@ public class SpeedSignalBlock extends HorizontalBlock {
     }
 
     public TileEntity createTileEntity (final BlockState state, final IBlockReader world) {
-        return ModSetup.R_TE_NUMERICAL_SIGNAL.create();
+        return R_TE_NUMERICAL_SIGNAL.create();
     }
 
     @Override

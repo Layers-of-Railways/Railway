@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.blocks;
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.content.items.SignalItem;
 import com.railwayteam.railways.content.tiles.tiles.SignalTileEntity;
 import net.minecraft.block.Block;
@@ -21,6 +20,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
+
+import static com.railwayteam.railways.registry.CRTiles.R_TE_SIGNAL;
 
 public class SignalBlock extends Block {
   public static final String name = "basic_signal";
@@ -44,7 +45,7 @@ public class SignalBlock extends Block {
 
   @Override
   public TileEntity createTileEntity (final BlockState state, final IBlockReader world) {
-    return ModSetup.R_TE_SIGNAL.create();
+    return R_TE_SIGNAL.create();
   }
 
   @Override

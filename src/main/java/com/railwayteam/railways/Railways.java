@@ -38,8 +38,6 @@ public class Railways {
   public static CreateRegistrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;
 
-  private final RailwaysEventHandler eventHandler;
-
   public Railways() {
   	instance = this;
 
@@ -52,8 +50,6 @@ public class Railways {
 
     MOD_EVENT_BUS.addListener(this::setup);
     MinecraftForge.EVENT_BUS.register(this);
-    eventHandler = new RailwaysEventHandler();
-    MinecraftForge.EVENT_BUS.register(eventHandler);
 
     Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
     Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));

@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.blocks;
 
-import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.tiles.tiles.StationSensorRailTileEntity;
 import com.railwayteam.railways.interaction.capabilities.CapabilitySetup;
@@ -14,6 +13,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import java.util.Iterator;
+
+import static com.railwayteam.railways.registry.CRTiles.R_TE_STATION_SENSOR;
 
 public class StationSensorRailBlock extends DetectorRailBlock {
   public static final String name = "station_sensor";
@@ -29,7 +30,7 @@ public class StationSensorRailBlock extends DetectorRailBlock {
 
   @Override
   public TileEntity createTileEntity (final BlockState state, final IBlockReader world) {
-    return ModSetup.R_TE_STATION_SENSOR.create();
+    return R_TE_STATION_SENSOR.create();
   }
 
   @Override

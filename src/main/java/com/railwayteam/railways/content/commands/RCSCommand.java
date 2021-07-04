@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 
-@Mod.EventBusSubscriber(modid = Railways.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Railways.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class RCSCommand {
     public static ArrayList<ServerPlayerEntity> enableRCS = new ArrayList<>();
 
