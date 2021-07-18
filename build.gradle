@@ -143,6 +143,7 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     implementation fg.deobf("curse.maven:create-328085:${create_file_id}")
+    implementation fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
 }
 
 jar {

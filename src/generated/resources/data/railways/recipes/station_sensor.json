@@ -7,7 +7,7 @@
   ],
   "key": {
     "L": {
-      "item": "create:lapis_sheet"
+      "item": "minecraft:lapis_block"
     },
     "R": {
       "tag": "forge:dusts/redstone"
