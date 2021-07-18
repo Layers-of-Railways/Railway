@@ -8,7 +8,6 @@ import com.railwayteam.railways.content.items.HandcarItem;
 import com.railwayteam.railways.content.items.StationEditorItem;
 import com.railwayteam.railways.content.items.WayPointToolItem;
 import com.railwayteam.railways.content.items.engineers_cap.EngineersCapItem;
-import com.railwayteam.railways.util.RailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -108,7 +107,7 @@ public class CRItems {
                 (p) -> new EngineersCapItem(p, color))
                 .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))
                 .properties(p -> p.maxStackSize(1))
-                .tag(RailwaysTags.EngineerCaps)
+                .tag(CRTags.Items.EngineerCaps)
                 .model((ctx, prov) -> {
                     prov.singleTexture(
                             ctx.getName(),
@@ -124,7 +123,7 @@ public class CRItems {
                             .addCriterion("has_wool", RegistrateRecipeProvider.hasItem(ItemTags.WOOL))
                             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString()));
                     ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
-                            .addIngredient(RailwaysTags.EngineerCaps)
+                            .addIngredient(CRTags.Items.EngineerCaps)
                             .addIngredient(color.getTag())
                             .addCriterion("has_wool", RegistrateRecipeProvider.hasItem(ItemTags.WOOL))
                             .build(prov, new ResourceLocation("railways", "engineer_caps/" + color.getString() + "_dye"));

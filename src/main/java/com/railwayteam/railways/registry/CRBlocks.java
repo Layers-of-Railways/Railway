@@ -3,7 +3,6 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.content.blocks.*;
 import com.railwayteam.railways.content.items.BogieItem;
 import com.railwayteam.railways.content.items.SignalItem;
-import com.railwayteam.railways.util.RailwaysTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -65,7 +64,7 @@ public class CRBlocks {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(RailwaysTags.Tracks).build()
+                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(CRTags.Items.Tracks).build()
                 .lang("Andesite Track")
                 .register();
 
@@ -79,7 +78,7 @@ public class CRBlocks {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(RailwaysTags.Tracks).build()
+                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(CRTags.Items.Tracks).build()
                 .lang("Andesite Switch")
                 .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                         .addIngredient(R_BLOCK_LARGE_RAIL.get(), 2)
@@ -99,7 +98,7 @@ public class CRBlocks {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(RailwaysTags.Tracks).build()
+                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(CRTags.Items.Tracks).build()
                 .lang("Wooden Track")
                 .register();
 
@@ -113,7 +112,7 @@ public class CRBlocks {
                         ctx.getName(),
                         prov.mcLoc("item/generated"),
                         "layer0",
-                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(RailwaysTags.Tracks).build()
+                        prov.modLoc("item/wide_gauge/" + ctx.getName()))).tag(CRTags.Items.Tracks).build()
                 .lang("Wooden Switch")
                 .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                         .addIngredient(R_BLOCK_LARGE_RAIL_WOODEN.get(), 2)
@@ -130,7 +129,7 @@ public class CRBlocks {
                 .recipe((ctx, prov) -> ShapelessRecipeBuilder.shapelessRecipe(ctx.get())
                         .addIngredient(AllBlocks.ANDESITE_CASING.get())
                         .addIngredient(Items.REDSTONE_TORCH, 2)
-                        .addCriterion("has_tracks", RegistrateRecipeProvider.hasItem(RailwaysTags.Tracks))
+                        .addCriterion("has_tracks", RegistrateRecipeProvider.hasItem(CRTags.Items.Tracks))
                         .addCriterion("has_andesite_casing", RegistrateRecipeProvider.hasItem(AllBlocks.ANDESITE_CASING.get()))
                         .build(prov))
                 .item(SignalItem::new).build()
