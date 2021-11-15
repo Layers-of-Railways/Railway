@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.items.engineers_cap.EngineersCapItem;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -41,7 +42,7 @@ public class CRItems {
     public static HashMap<DyeColor, ItemEntry<EngineersCapItem>> ENGINEERS_CAPS = new HashMap<>();
     public static HashMap<DyeColor, ItemEntry<ConductorItem>> CONDUCTOR_ITEMS = new HashMap<>();
 
-    public static void register(CreateRegistrate reg) {
+    public static void register(Registrate reg) {
         reg.itemGroup(() -> itemGroup, "Create Railways");
 
         R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)
@@ -102,7 +103,7 @@ public class CRItems {
                 .register();
     }
 
-    protected static void registerColored(CreateRegistrate reg, DyeColor color) {
+    protected static void registerColored(Registrate reg, DyeColor color) {
         ENGINEERS_CAPS.put(color, reg.item(EngineersCapItem.name + "_" + color,
                 (p) -> new EngineersCapItem(p, color))
                 .lang(toEnglishName(color.getTranslationKey() + "_engineer's_cap"))

@@ -42,7 +42,8 @@ public class EngineersCapLayer extends LayerRenderer<ConductorEntity, ConductorE
             g = afloat1[1] * (1.0F - f3) + afloat2[1] * f3;
             b = afloat1[2] * (1.0F - f3) + afloat2[2] * f3;
         }
-        capModel.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
+        //I'm trying, ok?
+        //capModel.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
 //        render(this.getEntityModel(), getEntityModel(), getCapTexture(entity), matrixStack, renderTypeBuffer, packedLight, entity, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_, p_225628_7_, p_225628_8_, p_225628_9_, p_225628_10_);
     }
 

@@ -61,7 +61,7 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
     RenderSystem.disableRescaleNormal();
     RenderSystem.disableLighting();
     RenderSystem.disableDepthTest();
-    renderWindowForeground (matrixStack, mouseX, mouseY, partialTicks);
+    //renderWindowForeground (matrixStack, mouseX, mouseY, partialTicks);
     for (Widget w : widgets) {
       w.renderToolTip(matrixStack, mouseX, mouseY);
     }
@@ -140,15 +140,18 @@ public abstract class AbstractRailwaysScreen <S extends Container> extends Conta
 //  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
 //  }
 
+  //drawMouseoverTooltip seems to be causing an error, it broke when I updated forge and I don't know what it's used for/what it should be now so I'm just gonna
+  //comment it out and hope things still work ok
+  /*
   protected void renderWindowForeground (MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
     drawMouseoverTooltip(matrixStack, mouseX, mouseY);
     for (Widget w : widgets) {
       if (!w.isHovered()) {
         continue;
-      }
+      }*/
       // check for special widgetation here
     }
-  }
+  //}
 
 
-}
+//}

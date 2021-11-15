@@ -37,7 +37,7 @@ public abstract class EntityItem<E extends Entity> extends Item {
     public ITextComponent getDisplayName(ItemStack stack) {
         if(hasEntity(stack)) {
             E entity = getEntityFromItem(stack, Minecraft.getInstance().world);
-            return entity.hasCustomName() ? new StringTextComponent(entity.getCustomName().getString()).styled(style -> style.withItalic(true)) : super.getDisplayName(stack);
+            //return entity.hasCustomName() ? new StringTextComponent(entity.getCustomName().getString()).setStyle(style -> style.withItalic(true)) : super.getDisplayName(stack);
         }
         return super.getDisplayName(stack);
     }
@@ -64,7 +64,7 @@ public abstract class EntityItem<E extends Entity> extends Item {
             entity.setUniqueId(UUID.randomUUID()); // to prevent UUID conflicts, the UUID is changed but the data is kept, so its pretty much a clone of the original
             plr.world.addEntity(entity);
             entity.fallDistance = 0; // prevent instant death if died from fall damage
-            entity.setFireTicks(0); // prevent fire if died from fire
+            entity.setFire(0); // prevent fire if died from fire
             entity.setAir(entity.getMaxAir()); // prevent starting to drown immediately if died from drowning
             entity.setMotion(0, 0.1, 0);
             return entity;

@@ -14,7 +14,6 @@ public class EngineersCapModel extends BipedModel<LivingEntity> {
     private final ModelRenderer Hat_r1;
     public boolean isOnConductor;
 
-    @Override
     public void setAngles(LivingEntity entity, float p_225597_2_, float p_225597_3_, float p_225597_4_, float headYaw, float headPitch) {
         if (isOnConductor) {
 //            Hat.rotationPointY = bipedHead.rotationPointY;
@@ -34,7 +33,7 @@ public class EngineersCapModel extends BipedModel<LivingEntity> {
             }
         }
 
-        super.setAngles(entity, p_225597_2_, p_225597_3_, p_225597_4_, headYaw, headPitch);
+        super.setRotationAngles(entity, p_225597_2_, p_225597_3_, p_225597_4_, headYaw, headPitch);
     }
 
     @Override
@@ -55,31 +54,31 @@ public class EngineersCapModel extends BipedModel<LivingEntity> {
         if (isOnConductor) {
             Hat = new ModelRenderer(this);
             Hat.setRotationPoint(0.0F, 6.5F, 0.0F);
-            Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -4.5F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 36).addCuboid(4.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -4.5F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -4.5F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+            Hat.setTextureOffset(39, 33).addBox(-4.0F, -4.5F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 48).addBox(-5.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 36).addBox(4.0F, -4.5F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(39, 30).addBox(-4.0F, -4.5F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(32, 22).addBox(-4.0F, -4.5F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
 
             Hat_r1 = new ModelRenderer(this);
             Hat_r1.setRotationPoint(8.0F, -1.9362F, -5.904F);
             Hat.addChild(Hat_r1);
             setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
-            Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
+            Hat_r1.setTextureOffset(12, 46).addBox(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
         } else {
             Hat = new ModelRenderer(this);
             Hat.setRotationPoint(0.0F, 6.0F, 0.0F);
-            Hat.setTextureOffset(39, 33).addCuboid(-4.0F, -15.0F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 48).addCuboid(-5.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(34, 36).addCuboid(4.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
-            Hat.setTextureOffset(39, 30).addCuboid(-4.0F, -15.0F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
-            Hat.setTextureOffset(32, 22).addCuboid(-4.0F, -15.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
+            Hat.setTextureOffset(39, 33).addBox(-4.0F, -15.0F, 4.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 48).addBox(-5.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(34, 36).addBox(4.0F, -15.0F, -5.0F, 1.0F, 3.0F, 10.0F, 0.0F, false);
+            Hat.setTextureOffset(39, 30).addBox(-4.0F, -15.0F, -5.0F, 8.0F, 3.0F, 1.0F, 0.0F, false);
+            Hat.setTextureOffset(32, 22).addBox(-4.0F, -15.0F, -4.0F, 8.0F, 1.0F, 8.0F, 0.0F, false);
 
             Hat_r1 = new ModelRenderer(this);
             Hat_r1.setRotationPoint(8.0F, -12.4362F, -5.904F);
             Hat.addChild(Hat_r1);
             setRotationAngle(Hat_r1, 0.3927F, 0.0F, 0.0F);
-            Hat_r1.setTextureOffset(12, 46).addCuboid(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
+            Hat_r1.setTextureOffset(12, 46).addBox(-13.0F, -0.0978F, -1.5612F, 10.0F, 1.0F, 3.0F, 0.0F, false);
             bipedHead.addChild(Hat);
         }
     }

@@ -45,7 +45,7 @@ archivesBaseName = 'railways'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: "${mappings_channel}", version: "${mappings_version}"
+    mappings channel: 'snapshot', version: '20210309-1.16.5'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client {
@@ -138,12 +138,12 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.8'
 	
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
-    implementation fg.deobf("curse.maven:create-328085:${create_file_id}")
-    implementation fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
+    implementation fg.deobf("curse.maven:create-328085:3499718")
+    implementation fg.deobf("curse.maven:486392:3459739")
 }
 
 jar {

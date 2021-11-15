@@ -34,10 +34,10 @@ public class StationListProvider implements ICapabilitySerializable<INBT> {
 
   @Override
   public void deserializeNBT (INBT nbt) {
-    if (nbt.getReader()!= CompoundNBT.READER) {
+    //if (nbt.getReader()!= CompoundNBT.READER) {
       LogManager.getLogger(Railways.MODID).debug("wrong NBT Type on deserialize!");
       return;
     }
-    CapabilitySetup.CAPABILITY_STATION_LIST.readNBT(stationList, SIDE_AGNOSTIC, nbt);
+    //CapabilitySetup.CAPABILITY_STATION_LIST.readNBT(stationList, SIDE_AGNOSTIC, nbt);
   }
-}
+//}

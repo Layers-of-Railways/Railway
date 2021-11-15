@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.items.SignalItem;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.providers.RegistrateRecipeProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.block.Block;
@@ -40,7 +41,7 @@ public class CRBlocks {
 
     public static BlockEntry<BogieBlock> R_BLOCK_BOGIE;
 
-    public static void register(CreateRegistrate reg) {
+    public static void register(Registrate reg) {
         // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
         R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)// tell Registrate how to create it
                 .recipe((ctx, prov) -> {
@@ -56,7 +57,7 @@ public class CRBlocks {
                 .register();      // pack it up for Registrate
 
         R_BLOCK_LARGE_RAIL = reg.block(LargeTrackBlock.name, LargeTrackBlock::new)
-                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).nonOpaque()) //.doesNotBlockMovement())
+                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).notSolid()) //.doesNotBlockMovement())
                 .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(LargeTrackBlock.partialModel(ctx, prov, state.get(LargeTrackBlock.TRACK_SIDE).getString())).build();
                 }))
@@ -69,7 +70,7 @@ public class CRBlocks {
                 .register();
 
         R_BLOCK_LARGE_SWITCH = reg.block(LargeSwitchTrackBlock.name, LargeSwitchTrackBlock::new)
-                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).nonOpaque())//.doesNotBlockMovement())
+                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).notSolid())//.doesNotBlockMovement())
                 .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(
                             LargeSwitchTrackBlock.partialModel(ctx, prov, state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getString())).build();
@@ -89,7 +90,7 @@ public class CRBlocks {
         // TODO: there has to be a cleaner way of creating almost identical blocks than copy pasting
 
         R_BLOCK_LARGE_RAIL_WOODEN = reg.block(LargeTrackBlock.name + "_wooden", LargeTrackBlock::new)
-                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
+                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
                 .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(
                             LargeTrackBlock.partialModel(true, ctx, prov, state.get(LargeTrackBlock.TRACK_SIDE).getString())).build();
@@ -103,7 +104,7 @@ public class CRBlocks {
                 .register();
 
         R_BLOCK_LARGE_SWITCH_WOODEN = reg.block(LargeSwitchTrackBlock.name + "_wooden", LargeSwitchTrackBlock::new)
-                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).nonOpaque().doesNotBlockMovement())
+                .properties(p -> p.hardnessAndResistance(10.0f, 10.0f).notSolid().doesNotBlockMovement())
                 .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
                     return ConfiguredModel.builder().modelFile(
                             LargeSwitchTrackBlock.partialModel(true, ctx, prov, state.get(LargeSwitchTrackBlock.SWITCH_SIDE).getString())).build();
@@ -121,7 +122,7 @@ public class CRBlocks {
                 .register();
 
         R_BLOCK_SIGNAL = reg.block(SignalBlock.name, SignalBlock::new)
-                .properties(p -> p.hardnessAndResistance(10f, 10f).nonOpaque())
+                .properties(p -> p.hardnessAndResistance(10f, 10f).notSolid())
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(),
                         (blockstate) -> (prov.models().getExistingFile(
                                 prov.modLoc("block/" + ctx.getName() + (blockstate.get(BlockStateProperties.POWERED) ? "_red" : "_green"))
@@ -138,7 +139,7 @@ public class CRBlocks {
 
         R_BLOCK_STATION_SENSOR = reg.block(StationSensorRailBlock.name, StationSensorRailBlock::new)
                 .initialProperties(() -> Blocks.DETECTOR_RAIL)
-                .properties(p -> p.nonOpaque().doesNotBlockMovement())
+                .properties(p -> p.notSolid().doesNotBlockMovement())
                 .blockstate((ctx, prov) -> prov.getExistingVariantBuilder(ctx.getEntry()))
                 .item().model((ctx, prov) -> prov.getExistingFile(prov.modLoc("block/" + ctx.getName()))).build()
                 .tag(BlockTags.RAILS)
@@ -171,7 +172,7 @@ public class CRBlocks {
                 .register();
 
         R_BLOCK_HORN = reg.block("horn", HornBlock::new)
-                .properties(p -> p.hardnessAndResistance(10f, 10f).nonOpaque())
+                .properties(p -> p.hardnessAndResistance(10f, 10f).notSolid())
                 .item().model((ctx, prov) -> prov.getExistingFile(prov.modLoc("item/horn"))).build()
                 .blockstate((ctx, prov) -> prov.horizontalFaceBlock(ctx.getEntry(),
                         (blockstate) -> (prov.models().getExistingFile(
@@ -191,7 +192,7 @@ public class CRBlocks {
                 .register();
 
         R_BLOCK_NUMERICAL_SIGNAL = reg.block("speed_signal", SpeedSignalBlock::new)
-                .properties(p -> p.hardnessAndResistance(10f, 10f).nonOpaque())
+                .properties(p -> p.hardnessAndResistance(10f, 10f).notSolid())
                 .simpleItem()
                 .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(),
                         (blockstate) -> (prov.models().getExistingFile(

@@ -72,7 +72,7 @@ public class StationEditorItem extends Item implements INamedContainerProvider {
           }
         });
       }
-      return ActionResult.success(player.getHeldItem(hand));
+      return ActionResult.resultSuccess(player.getHeldItem(hand));
     }
     return super.onItemRightClick(world, player, hand);
   } // */

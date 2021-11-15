@@ -19,7 +19,7 @@ public class SignalTileEntity extends TileEntity {
   public BlockPos getTarget () { return target; }
   public void     setTarget (BlockPos in) {
     target = in;
-    Railways.LOGGER.debug("target set to: " + in.toShortString());
+    Railways.LOGGER.debug("target set to: " + in.toString());
     markDirty();
   }
 

@@ -34,28 +34,28 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 
 		Head = new ModelRenderer(this);
 		Head.setRotationPoint(0.0F, 6.5F, 0.0F);
-		Head.setTextureOffset(0, 1).addCuboid(-4.0F, -3.5F, -4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
+		Head.setTextureOffset(0, 1).addBox(-4.0F, -3.5F, -4.0F, 8.0F, 7.0F, 8.0F, 0.0F, true);
 
 		Body = new ModelRenderer(this);
 		Body.setRotationPoint(0.0F, 17.0F, 0.0F);
-		Body.setTextureOffset(2, 16).addCuboid(-4.0F, -7.0F, -3.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
-		Body.setTextureOffset(5, 27).addCuboid(-3.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
+		Body.setTextureOffset(2, 16).addBox(-4.0F, -7.0F, -3.0F, 8.0F, 5.0F, 6.0F, 0.0F, false);
+		Body.setTextureOffset(5, 27).addBox(-3.0F, -2.0F, -2.0F, 6.0F, 4.0F, 4.0F, 0.0F, false);
 
 		RightArm = new ModelRenderer(this);
 		RightArm.setRotationPoint(-4.0F, 11.0F, 0.0F);
-		RightArm.setTextureOffset(50, 0).addCuboid(-3.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
+		RightArm.setTextureOffset(50, 0).addBox(-3.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
 		LeftArm = new ModelRenderer(this);
 		LeftArm.setRotationPoint(4.0F, 11.0F, 0.0F);
-		LeftArm.setTextureOffset(36, 0).addCuboid(0.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
+		LeftArm.setTextureOffset(36, 0).addBox(0.0F, -1.0F, -2.0F, 3.0F, 9.0F, 4.0F, 0.0F, false);
 
 		RightLeg = new ModelRenderer(this);
 		RightLeg.setRotationPoint(-1.9F, 20.0F, 0.0F);
-		RightLeg.setTextureOffset(50, 13).addCuboid(-1.1F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
+		RightLeg.setTextureOffset(50, 13).addBox(-1.1F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
 		LeftLeg = new ModelRenderer(this);
 		LeftLeg.setRotationPoint(1.9F, 20.0F, 0.0F);
-		LeftLeg.setTextureOffset(36, 13).addCuboid(-1.9F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
+		LeftLeg.setTextureOffset(36, 13).addBox(-1.9F, -1.0F, -2.0F, 3.0F, 5.0F, 4.0F, 0.0F, false);
 
 //		body.addChild(legLeft);
 //		body.addChild(legRight);
@@ -66,6 +66,11 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 	}
 
 	@Override
+	public void setRotationAngles(ConductorEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		
+	}
+
+	//@Override
 	public void setAngles(ConductorEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
 		Head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
 		Head.rotateAngleY = headYaw * ((float)Math.PI / 180F);
@@ -171,13 +176,24 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 				.forEach(part -> part.render(matrixStack, buffer, packedLight, packedOverlay));
 	}
 
-	@Override
+	//@Override
 	public void setArmAngle(HandSide hand, MatrixStack stack) {
-		(hand == HandSide.LEFT ? LeftArm : RightArm).rotate(stack);
+		//another one I don't know how to fix :c
+		//(hand == HandSide.LEFT ? LeftArm : RightArm).rotate(stack);
+	}
+
+	//@Override
+	public ModelRenderer func_205072_a() { // getModelHead
+		return Head;
 	}
 
 	@Override
-	public ModelRenderer func_205072_a() { // getModelHead
-		return Head;
+	public void translateHand(HandSide sideIn, MatrixStack matrixStackIn) {
+
+	}
+
+	@Override
+	public ModelRenderer getModelHead() {
+		return null;
 	}
 }

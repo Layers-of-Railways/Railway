@@ -38,7 +38,7 @@ public class ConductorItem extends EntityItem<ConductorEntity> {
     }
 
     public ActionResultType onMinecartRightClicked(PlayerEntity plr, ItemStack stack, Hand hand, MinecartEntity entity) {
-        ConductorEntity conductor = spawn(stack, entity.getBlockPos(), plr, Direction.UP);
+        ConductorEntity conductor = spawn(stack, entity.getPosition(), plr, Direction.UP);
         return conductor.startRiding(entity) ? ActionResultType.SUCCESS : ActionResultType.PASS;
     }
 }

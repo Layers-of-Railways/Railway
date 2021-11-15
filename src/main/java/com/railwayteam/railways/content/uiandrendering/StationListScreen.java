@@ -51,6 +51,11 @@ public class StationListScreen extends AbstractRailwaysScreen<StationListContain
   }
 
   @Override
+  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+
+  }
+
+
   protected void drawBackground(MatrixStack matrix, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
     if (Config.HIBYE.get()) {
       RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -58,7 +63,7 @@ public class StationListScreen extends AbstractRailwaysScreen<StationListContain
       RenderSystem.scaled(0.7d, 0.7d, 1d);
       int relX = (width - getXSize()) / 2 + 200;
       int relY = (height - getYSize()) / 2;
-      this.drawTexture(matrix, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
+      //this.drawTexture(matrix, relX, relY, 0, 0, (int) Math.floor(getXSize() * 1.5), (int) Math.floor(getYSize() * 1.54));
     }
   }
 

@@ -112,7 +112,7 @@ public class EngineersCapItem extends ArmorItem {
 
     @Override // overridden so that minecraft doesnt equip the item when right clicked, mainly so my engineer factory doesnt stop working lol
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity plr, Hand hand) {
-        return ActionResult.pass(plr.getHeldItem(hand));
+        return ActionResult.resultPass(plr.getHeldItem(hand));
     }
 
     @Nullable
@@ -134,7 +134,7 @@ public class EngineersCapItem extends ArmorItem {
             Block block = blockState.getBlock();
             BlockPos[] blocksToRemove = getBlocksToRemove(world, pos);
             if(blocksToRemove.length > 0) {
-                for(BlockPos pos1 : blocksToRemove) world.breakBlock(pos1, false, player);
+                for(BlockPos pos1 : blocksToRemove) world.destroyBlock(pos1, false, player);
 //            EngineerGolemEntity golem = new EngineerGolemEntity(ModSetup.R_ENTITY_ENGINEER.get(), world);
 //            golem.setPos(pos.getX(), pos.getY(), pos.getZ());
 //            world.addEntity(golem);

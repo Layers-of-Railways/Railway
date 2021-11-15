@@ -84,7 +84,7 @@ public class HandcarEntity extends TrackRidingEntity implements WrenchableEntity
 //        return super.applyPlayerInteraction(p_184199_1_, p_184199_2_, p_184199_3_);
     }
 
-    @Override
+    //@Override
     public boolean isCollidable() {
         return true;
     }

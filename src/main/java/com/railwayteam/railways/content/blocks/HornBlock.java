@@ -41,7 +41,7 @@ public class HornBlock extends HorizontalFaceBlock {
 //        world.notifyNeighborsOfStateChange(pos, this);
     }
 
-    @Override
+    //@Override
     public ActionResultType onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity plr, Hand hand, BlockRayTraceResult raytrace) {
         if(plr.isSneaking() || !plr.isAllowEdit()) return ActionResultType.PASS;
         ItemStack stack = plr.getHeldItem(hand);

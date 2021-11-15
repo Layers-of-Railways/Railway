@@ -46,7 +46,8 @@ public class SpeedSignalTileRenderer extends TileEntityRenderer<SpeedSignalTileE
         float f = 0.6666667F;
 //        p_225616_3_.translate(0.0D, -0.3125D, -0.4375D);
         Direction dir = blockstate.get(HorizontalBlock.HORIZONTAL_FACING);
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-((float)(getDegreesFromDirection(dir)))));
+        //why
+        //matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-((float)(getDegreesFromDirection(dir)))));
 
 //        switch (dir) {
 //            case EAST:
@@ -73,19 +74,19 @@ public class SpeedSignalTileRenderer extends TileEntityRenderer<SpeedSignalTileE
 //        this.model.field_78166_a.render(p_225616_3_, ivertexbuilder, p_225616_5_, p_225616_6_);
 //        this.model.field_78165_b.render(p_225616_3_, ivertexbuilder, p_225616_5_, p_225616_6_);
         matrixStack.pop();
-        FontRenderer fontrenderer = this.dispatcher.getFontRenderer();
+        FontRenderer fontrenderer = this.renderDispatcher.getFontRenderer();
         float f2 = 0.010416667F;
 //        p_225616_3_.translate(0.0D, (double)0.33333334F, (double)0.046666667F);
         matrixStack.scale(0.03F, -0.03F, 0.03F);
 
-        int color = NativeImage.getAbgrColor(0, 255, 255, 255);
+        int color = NativeImage.getCombined(0, 255, 255, 255);
 
         String str = String.valueOf(tile.getPower());
 //        String str = "power: " + tile.getPower() + " also svelte > r**ct";
 
-        IReorderingProcessor text = IReorderingProcessor.styledString(str, Style.EMPTY);
-        float f3 = (float)(-fontrenderer.getWidth(text) / 2);
-        fontrenderer.draw(text, f3, (float)(-20), color, false, matrixStack.peek().getModel(), p_225616_4_, false, 0, p_225616_5_);
+        IReorderingProcessor text = IReorderingProcessor.fromString(str, Style.EMPTY);
+        float f3 = (float)(-fontrenderer.getStringWidth(String.valueOf(text)) / 2);
+        //fontrenderer.drawString(text, f3, (float)(-20), color, false, matrixStack.peek().getModel(), p_225616_4_, false, 0, p_225616_5_);
 
         matrixStack.pop();
     }

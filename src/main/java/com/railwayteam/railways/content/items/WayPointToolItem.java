@@ -112,7 +112,7 @@ public class WayPointToolItem extends Item {
 			if ((stack == null || stack.isEmpty()) && !player.isCreative()) {
 				while (slot < player.inventory.getSizeInventory()) {
 					ItemStack check = player.inventory.getStackInSlot(slot);
-					if (ItemTags.getCollection().get(ItemTags.RAILS.getId()).contains(check.getItem())) {
+					if (ItemTags.getCollection().get(ItemTags.RAILS.getName()).contains(check.getItem())) {
 						stack = check;
 						break;
 					}

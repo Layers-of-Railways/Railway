@@ -62,7 +62,7 @@ public class MoveTowardsClosestEntityGoal<T extends Entity> extends TargetGoal {
 
       this.nearestTarget = EntityUtils.getClosestEntity(goalOwner, entities, this::checkTarget);
     } else {
-      this.nearestTarget = (T) this.goalOwner.world.getClosestPlayer(getEntityPredicate(), this.goalOwner, this.goalOwner.getX(), this.goalOwner.getEyeY(), this.goalOwner.getZ());
+      this.nearestTarget = (T) this.goalOwner.world.getClosestPlayer(getEntityPredicate(), this.goalOwner, this.goalOwner.getPosX(), this.goalOwner.getPosYEye(), this.goalOwner.getPosZ());
 //      this.nearestTarget = (T) ;
     }
   }
@@ -75,7 +75,7 @@ public class MoveTowardsClosestEntityGoal<T extends Entity> extends TargetGoal {
   public void startExecuting() {
 
 //    Vector3d vector3d = RandomPositionGenerator.findRandomTargetBlockTowards((CreatureEntity) this.goalOwner, 16, 7, this.nearestTarget.getPositionVec());
-    this.goalOwner.getNavigator().tryMoveToXYZ(nearestTarget.getX(), nearestTarget.getY(), nearestTarget.getZ(), this.speed);
+    this.goalOwner.getNavigator().tryMoveToXYZ(nearestTarget.getPosX(), nearestTarget.getPosY(), nearestTarget.getPosZ(), this.speed);
     super.startExecuting();
     afterExecuted();
   }

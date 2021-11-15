@@ -7,6 +7,7 @@ import com.railwayteam.railways.interaction.RailwaysPacketHandler;
 import com.railwayteam.railways.interaction.capabilities.CapabilitySetup;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.repack.registrate.Registrate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.container.ContainerType;
@@ -35,13 +36,13 @@ public class Railways {
 	public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();
-  public static CreateRegistrate railwayRegistrar;
+  public static Registrate railwayRegistrar;
   public static IEventBus MOD_EVENT_BUS;
 
   public Railways() {
   	instance = this;
 
-  	railwayRegistrar = CreateRegistrate.lazy(MODID).get();
+  	railwayRegistrar = Registrate.create(MODID);
 
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);

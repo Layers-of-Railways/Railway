@@ -174,7 +174,7 @@ public abstract class TrackRidingEntity extends Entity {
     }
 
     public void waterMove(double gravity, boolean isNotFalling) {
-        double posY = this.getY();
+        double posY = this.getPosY();
         float moveBy = this.isSprinting() ? 0.9F : this.getWaterSlowDown();
 
 //            this.moveRelative(f6, new Vector3d((double)this.moveStrafing, (double)this.moveVertical, (double)this.moveForward));
@@ -183,7 +183,7 @@ public abstract class TrackRidingEntity extends Entity {
         this.setMotion(vector3d6.mul(moveBy, 0.8F, moveBy));
         Vector3d vector3d2 = this.unknownMovementMethod1(gravity, isNotFalling, this.getMotion());
         this.setMotion(vector3d2);
-        if (this.collidedHorizontally && this.isOffsetPositionInLiquid(vector3d2.x, vector3d2.y + (double)0.6F - this.getY() + posY, vector3d2.z)) {
+        if (this.collidedHorizontally && this.isOffsetPositionInLiquid(vector3d2.x, vector3d2.y + (double)0.6F - this.getPosY() + posY, vector3d2.z)) {
             this.setMotion(vector3d2.x, 0.3F, vector3d2.z);
         }
     }
