@@ -65,13 +65,10 @@ public class ConductorEntityModel extends EntityModel<ConductorEntity> implement
 //		body.setRotationPoint(8.0F, 0.0F, -8.0F);
 	}
 
-	@Override
-	public void setRotationAngles(ConductorEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		
-	}
 
-	//@Override
-	public void setAngles(ConductorEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
+
+	@Override
+	public void setRotationAngles(ConductorEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
 		Head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
 		Head.rotateAngleY = headYaw * ((float)Math.PI / 180F);
 

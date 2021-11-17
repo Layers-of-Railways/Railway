@@ -27,8 +27,7 @@ public class HandcarRenderer extends EntityRenderer<HandcarEntity> {
     public void render(HandcarEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int packedLight) {
         matrixStack.push();
         matrixStack.translate(0.0D, 0.375D, 0.0D);
-        //what's the replacement for .multiply???
-        //matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180.0F - entityYaw));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
 //        float f = (float)entity.getTimeSinceHit() - partialTicks;
 //        float f1 = entity.getDamageTaken() - partialTicks;
 //        if (f1 < 0.0F) {
@@ -45,11 +44,10 @@ public class HandcarRenderer extends EntityRenderer<HandcarEntity> {
 //        }
 
         matrixStack.scale(-1.0F, -1.0F, 1.0F);
-        //matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(90.0F));
         this.model.setAngles(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         IVertexBuilder ivertexbuilder = renderTypeBuffer.getBuffer(this.model.getRenderType(this.getEntityTexture(entity)));
-        //another issue with "DEFAULT_UV"
-        //this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+        this.model.render(matrixStack, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
         matrixStack.pop();
         super.render(entity, entityYaw, partialTicks, matrixStack, renderTypeBuffer, packedLight);
