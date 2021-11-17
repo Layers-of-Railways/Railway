@@ -50,9 +50,11 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            jvmArgs "-Dmixin.env.disableRefMap=true"
+        //    jvmArgs  "-Dmixin.env.disableRefMap=true"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 railways {
@@ -63,9 +65,11 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            jvmArgs "-Dmixin.env.disableRefMap=true"
+        //    jvmArgs "-Dmixin.env.disableRefMap=true"
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 railways {

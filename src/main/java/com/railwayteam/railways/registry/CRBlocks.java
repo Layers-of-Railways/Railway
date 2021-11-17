@@ -42,7 +42,6 @@ public class CRBlocks {
     public static BlockEntry<BogieBlock> R_BLOCK_BOGIE;
 
     public static void register(Registrate reg) {
-        // TODO: consider splitting into ::registerBlocks and ::registerItems, or even to dedicated files?
         R_BLOCK_WAYPOINT = reg.block(WayPointBlock.name, WayPointBlock::new)// tell Registrate how to create it
                 .recipe((ctx, prov) -> {
                     ctx.getEntry().recipe(ctx, prov, AllBlocks.SAIL.get());

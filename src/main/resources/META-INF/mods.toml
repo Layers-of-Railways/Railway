@@ -14,7 +14,7 @@ description='''This mod is WIP and something to do with trains'''
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31,)" #mandatory
+    versionRange="[36.2,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.railways]]

@@ -38,11 +38,10 @@ public class CREntities {
                 .register();
 
         OneTimeEventReceiver.addListener(Railways.MOD_EVENT_BUS, EntityAttributeCreationEvent.class, (e) -> {
-            e.put(R_ENTITY_CONDUCTOR.get(), LivingEntity.registerAttributes().create());
-            //this is the closest I could get it to working, any help would be appreciated
-            /*OneTimeEventReceiver.addListener(Railways.MOD_EVENT_BUS, EntityAttributeCreationEvent.class, (e) -> {
-                e.put(R_ENTITY_CONDUCTOR.get(), LivingEntity.registerAttributes().hasAttribute(Attributes.FOLLOW_RANGE, 16)).build(); //this is the closest I could get it to working, any help would be appreciated
-            });*/
+            e.put(R_ENTITY_CONDUCTOR.get(), LivingEntity.registerAttributes().createMutableAttribute(Attributes.FOLLOW_RANGE, 16).create());
+        //    OneTimeEventReceiver.addListener(Railways.MOD_EVENT_BUS, EntityAttributeCreationEvent.class, (e) -> {
+        //        e.put(R_ENTITY_CONDUCTOR.get(), LivingEntity.registerAttributes().hasAttribute(Attributes.FOLLOW_RANGE, 16)).build();
+        //    });
         });
     }
 }
