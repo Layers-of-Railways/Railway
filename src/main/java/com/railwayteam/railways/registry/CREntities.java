@@ -10,11 +10,14 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.util.OneTimeEventReceiver;
 import com.simibubi.create.repack.registrate.util.entry.EntityEntry;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class CREntities {
     public static EntityEntry<Entity> R_ENTITY_STEADYCART;
@@ -28,7 +31,7 @@ public class CREntities {
 
         R_ENTITY_CONDUCTOR = reg.entity(ConductorEntity.name, ConductorEntity::new, EntityClassification.MISC)
                 .lang(ConductorEntity.defaultDisplayName).properties(p -> p.size(0.5F, 1.3F))
-                .renderer(() -> ConductorRenderer::new)
+                .renderer(()-> (manager)-> new ConductorRenderer(manager))
                 .register();
 
         R_ENTITY_HANDCAR = reg.entity(HandcarEntity.name, HandcarEntity::new, EntityClassification.MISC)

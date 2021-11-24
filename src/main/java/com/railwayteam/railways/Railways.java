@@ -16,6 +16,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -79,8 +80,7 @@ public class Railways {
     RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_LARGE_RAIL.get(), RenderType.getCutoutMipped());
     RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_LARGE_SWITCH.get(), RenderType.getCutoutMipped());
     RenderTypeLookup.setRenderLayer(CRBlocks.R_BLOCK_STATION_SENSOR.get(), RenderType.getTranslucent());
-    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(),
-            ConductorRenderer::new);
+    RenderingRegistry.registerEntityRenderingHandler(R_ENTITY_CONDUCTOR.get(), (manager)-> new ConductorRenderer(manager));
     Containers.registerScreenFactories();
   }
 
