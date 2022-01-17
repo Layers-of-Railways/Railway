@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "railways:item/engineer_caps/black_engineers_cap"
-  }
-}

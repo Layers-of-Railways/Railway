@@ -1,32 +1,92 @@
 buildscript {
     repositories {
-        jcenter()
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
+        maven {url='https://repo.spongepowered.org/maven'}
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.1.0'
         classpath 'com.wynprice.cursemaven:CurseMaven:2.1.3'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 
 plugins {
-    id "com.wynprice.cursemaven" version "2.1.3"
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'com.github.gmazzo.buildconfig' version '3.0.1'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
 apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'com.wynprice.cursemaven'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
-apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/master/generic/markdown-git-changelog.gradle'
+version = "${minecraft_version}-${mod_version}"
+group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = modid
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+minecraft {
+    mappings channel: "official", version: "${minecraft_version}"
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            //args "--debug", "--stacktrace", "--scan", "-mixin.config=${modid}.mixins.json".toString()
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('server')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            //args "--debug", "--stacktrace", "--scan", "-mixin.config=${modid}.mixins.json".toString()
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            args "--mod", modid, "--all", "--output", file('src/generated/resources/'), "--existing", file('src/main/resources/')
+
+            mods {
+                "${modid}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven {
+        url "https://maven.tterrag.com/"
+    }
     maven {
         url "https://www.cursemaven.com"
         content {
@@ -35,142 +95,40 @@ repositories {
     }
 }
 
-version = "${mc_version}-${mod_version}"
-if(System.getenv("RAILWAYS_VERSION") != null) {
-    version = "${mc_version}-${System.getenv("RAILWAYS_VERSION")}"
-}
-group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'railways'
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-
-minecraft {
-    mappings channel: 'snapshot', version: '20210309-1.16.5'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-    runs {
-        client {
-            workingDirectory project.file('run')
-        //    jvmArgs  "-Dmixin.env.disableRefMap=true"
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                railways {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-        //    jvmArgs "-Dmixin.env.disableRefMap=true"
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                railways {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-            jvmArgs "-Dmixin.env.disableRefMap=true"
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'railways', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources')
-
-            environment 'target', 'fmluserdevdata'
-
-            mods {
-                railways {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDir 'src/generated/resources'
-        }
-    }
-}
-
-configurations {
-    shade
-}
-
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-reobf {
-    shadowJar {}
-    jar {}
-}
-
-shadowJar {
-    configurations = [project.configurations.shade]
-    relocate 'com.tterrag.registrate', 'com.railwayteam.railways.repack.registrate'
-}
-
-
-repositories {
-    mavenLocal()
-    maven {
-        // location of the maven that hosts JEI files
-        name "Progwml6 maven"
-        url "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name "ModMaven"
-        url "https://modmaven.k-4u.nl"
-    }
-    maven { // Registrate
-        url "http://maven.tterrag.com/"
-    }
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.8'
-	
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("curse.maven:create-328085:3499718")
-    implementation fg.deobf("curse.maven:486392:3459739")
+    implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
+    implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
+
+compileJava.options.encoding = 'UTF-8'
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "railways",
+                "Specification-Title": modid,
                 "Specification-Vendor": "grimmauld",
                 "Specification-Version": "1",
                 "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
+                "Implementation-Version": project.version,
                 "Implementation-Vendor" :"grimmauld",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                // "MixinConfigs"            : "${modid}.mixins.json"
         ])
     }
+}
+
+mixin {
+    //add sourceSets.main, "${modid}.refmap.json"
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier 'deobf'
 }
-
-build.dependsOn deobfJar
-build.dependsOn shadowJar
 
 def reobfFile = file("$buildDir/reobfJar/output.jar")
 def reobfArtifact = artifacts.add('default', reobfFile) {
@@ -182,4 +140,39 @@ artifacts {
     archives deobfJar
 }
 
+build.dependsOn deobfJar
+
 jar.finalizedBy('reobfJar')
+
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def hasUnstaged = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'status', '--porcelain'
+        standardOutput = stdout
+    }
+    def result = stdout.toString().replaceAll("M gradlew", "").trim()
+    if (!result.isEmpty())
+        println("Found stageable results:\n${result}\n")
+    return !result.isEmpty()
+}
+
+buildConfig {
+    buildConfigField 'String', 'MODID', "\"${modid}\""
+    buildConfigField 'String', 'VERSION', "\"${project.version}\""
+    buildConfigField 'String', 'DISPLAY_NAME', "\"${display_name}\""
+    def gitstage = "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+    println("Using git stage ${gitstage}")
+    buildConfigField "String", "GITHASH", gitstage
+
+    version = project.version
+    packageName = project.group
+}

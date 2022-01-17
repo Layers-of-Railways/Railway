@@ -14,12 +14,12 @@ description='''This mod is WIP and something to do with trains'''
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[36.2,)" #mandatory
+    versionRange="[38.0,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.railways]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,1.17)"
+    versionRange="[1.18, 1.19)"
     ordering="NONE"
     side="BOTH"
