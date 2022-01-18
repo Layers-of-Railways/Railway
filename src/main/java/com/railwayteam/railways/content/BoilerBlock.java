@@ -7,8 +7,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
-public class BoilerBlock extends Block {
-  public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+public class BoilerBlock extends HorizontalDirectionalBlock {
 
   public BoilerBlock(Properties props) {
     super(props);
