@@ -1,6 +1,8 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.*;
+import com.railwayteam.railways.content.Boiler.BoilerBlock;
+import com.railwayteam.railways.content.Firebox.FireboxBlock;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 
