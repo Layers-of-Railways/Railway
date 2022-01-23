@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.Boiler.BoilerBlock;
 import com.railwayteam.railways.content.Firebox.FireboxBlock;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import net.minecraft.resources.ResourceLocation;
 
 public class CRBlocks {
   public static BlockEntry<FireboxBlock>         BLOCK_FIREBOX;
@@ -13,14 +14,20 @@ public class CRBlocks {
 
   public static void register(Registrate reg) {
     BLOCK_FIREBOX = reg.block("firebox", FireboxBlock::new)
+    .blockstate((ctx,prov)-> prov.simpleBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc("block/"+ ctx.getName()))))
+    .simpleItem()
     .lang("Firebox")
     .register();
 
     BLOCK_BOILER = reg.block("boiler", BoilerBlock::new)
+    .blockstate((ctx,prov)-> prov.simpleBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc("block/"+ ctx.getName()))))
+    .simpleItem()
     .lang("Boiler")
     .register();
 
     BLOCK_HYDRAULIC_PISTON = reg.block("hydraulic_piston", HydraulicPistonBlock::new)
+    .blockstate((ctx,prov)-> prov.simpleBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc("block/"+ ctx.getName()))))
+    .simpleItem()
     .lang("Hydraulic Piston")
     .register();
   }
