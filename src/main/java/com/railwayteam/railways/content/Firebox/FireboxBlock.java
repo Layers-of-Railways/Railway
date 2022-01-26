@@ -3,7 +3,9 @@ package com.railwayteam.railways.content.Firebox;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.HorizontalConnectedBlock;
 import com.railwayteam.railways.registry.CRBlockEntities;
+import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,15 +20,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class FireboxBlock extends HorizontalConnectedBlock implements EntityBlock {
   public static final BooleanProperty LIT = BlockStateProperties.LIT;
+  public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 
   public FireboxBlock(Properties props) {
     super(props);
-    this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
+    this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(SHAPE, Shape.DOOR_SHUT));
   }
 
   @Nullable
@@ -52,8 +56,23 @@ public class FireboxBlock extends HorizontalConnectedBlock implements EntityBloc
 //      world.setBlock(pos, state, Block.UPDATE_ALL);
 //      player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
 //    }
-
-    Railways.LOGGER.debug("TEST SUCCESSFUL");
+    // TODO remove this testing state-cycle feature
+    world.setBlock(pos, state.setValue(SHAPE, switch(state.getValue(SHAPE)) {
+      case DOOR_OPEN     -> Shape.DOOR_SHUT;
+      case DOOR_SHUT     -> Shape.BOTTOM_CENTER;
+      case BOTTOM_CENTER -> Shape.BOTTOM_SIDE;
+      case BOTTOM_SIDE   -> Shape.BOTTOM_CORNER;
+      case BOTTOM_CORNER -> Shape.TOP_CENTER;
+      case TOP_CENTER    -> Shape.TOP_SIDE;
+      case TOP_SIDE      -> Shape.TOP_CORNER;
+      case TOP_CORNER    -> Shape.BOTTOM_CORNER_L_SHUT;
+      case BOTTOM_CORNER_L_SHUT -> Shape.BOTTOM_CORNER_L_OPEN;
+      case BOTTOM_CORNER_L_OPEN -> Shape.BOTTOM_CORNER_R_SHUT;
+      case BOTTOM_CORNER_R_SHUT -> Shape.BOTTOM_CORNER_R_OPEN;
+      case BOTTOM_CORNER_R_OPEN-> Shape.SOLO_OPEN;
+      case SOLO_OPEN -> Shape.SOLO_SHUT;
+      case SOLO_SHUT -> Shape.DOOR_OPEN;
+    }), Block.UPDATE_ALL);
     return InteractionResult.SUCCESS;
   }
 
@@ -74,6 +93,21 @@ public class FireboxBlock extends HorizontalConnectedBlock implements EntityBloc
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LIT);
+    builder.add(SHAPE);
     super.createBlockStateDefinition(builder);
+  }
+
+  public enum Shape implements StringRepresentable {
+    SOLO_OPEN, SOLO_SHUT,
+    DOOR_OPEN, DOOR_SHUT,
+    BOTTOM_CORNER_L_OPEN, BOTTOM_CORNER_L_SHUT,
+    BOTTOM_CORNER_R_OPEN, BOTTOM_CORNER_R_SHUT,
+    BOTTOM_CENTER, BOTTOM_SIDE, BOTTOM_CORNER,
+    TOP_CENTER, TOP_SIDE, TOP_CORNER;
+
+    @Override
+    public String getSerializedName() {
+      return Lang.asId(name());
+    }
   }
 }

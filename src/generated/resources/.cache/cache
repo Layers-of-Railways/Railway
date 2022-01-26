@@ -1,10 +1,9 @@
 f80cfc4737ef5328ec234b0016f6557f365343e6 assets/railways/blockstates/boiler.json
-c11cc9383fc28c475c5041289cbb44ba6e9fd266 assets/railways/blockstates/firebox.json
+d1521a7c78be0f4c7ab5ddcb777bf9f1f7061f7f assets/railways/blockstates/firebox.json
 0ca740e470f06b693d55de371d079462af432841 assets/railways/blockstates/hydraulic_piston.json
 2570028e01d46157b3d3a8bc1b1f9836d0bb29da assets/railways/lang/en_ud.json
 322bf7d9969ccc225633e589333a50c0de1c3724 assets/railways/lang/en_us.json
 5cca0cf329566979e6c63e58df9a75814ca9abdf assets/railways/models/item/boiler.json
-a514c96b5cd95ecf7ce30ed736569a6e38c277e7 assets/railways/models/item/firebox.json
 8c007f8d57b5a584193f4e77d727115eb998efb0 assets/railways/models/item/hydraulic_piston.json
 c713e6c48b415b689763a6479a5158e5925eeb06 data/railways/loot_tables/blocks/boiler.json
 ff9f2f47c4c82a0563db41925e799c9855338c1e data/railways/loot_tables/blocks/firebox.json

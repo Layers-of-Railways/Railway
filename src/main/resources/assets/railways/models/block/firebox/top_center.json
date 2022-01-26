@@ -1,0 +1,10 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "railways:block/firebox",
+		"particle": "railways:block/firebox"
+	},
+	"elements": [
+		
+	]
+}
