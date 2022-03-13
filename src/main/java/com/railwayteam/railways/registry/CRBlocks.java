@@ -1,12 +1,19 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.base.CTSpriteShifts;
+import com.railwayteam.railways.base.ConnectedBlockCTBehavior;
 import com.railwayteam.railways.content.*;
 import com.railwayteam.railways.content.Boiler.BoilerBlock;
 import com.railwayteam.railways.content.Firebox.FireboxBlock;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.Registrate;
+import com.simibubi.create.repack.registrate.providers.DataGenContext;
+import com.simibubi.create.repack.registrate.providers.RegistrateBlockstateProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class CRBlocks {
@@ -38,7 +45,14 @@ public class CRBlocks {
     .register();
 
     BLOCK_BOILER = reg.block("boiler", BoilerBlock::new)
-    .blockstate((ctx,prov)-> prov.simpleBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc("block/"+ ctx.getName()))))
+    .blockstate((ctx,prov)-> {
+      String loc = "block/" + ctx.getName() + "/" + ctx.getName();
+      prov.horizontalBlock(ctx.get(),
+        prov.modLoc(loc + "_side"),  // side
+        prov.modLoc(loc + "_unlit"), // front
+        prov.modLoc(loc + "_side")); // top
+    })
+    .onRegister(CreateRegistrate.connectedTextures(()-> new ConnectedBlockCTBehavior(CTSpriteShifts.BOILER)))
     .simpleItem()
     .lang("Boiler")
     .register();

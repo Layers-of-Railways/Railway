@@ -1,10 +1,17 @@
 package com.railwayteam.railways.content.Boiler;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.HorizontalConnectedBlock;
+import com.railwayteam.railways.registry.CRBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class BoilerBlock extends HorizontalConnectedBlock implements EntityBlock {
@@ -15,20 +22,14 @@ public class BoilerBlock extends HorizontalConnectedBlock implements EntityBlock
 
   @Nullable
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-    return null;
-  }
-/*
-  @Nullable
-  @Override
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-    return EntityBlock.super.getTicker(p_153212_, p_153213_, p_153214_);
-  }
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return CRBlockEntities.BOILER_BE.create(pos, state); }
 
-  @Nullable
   @Override
-  public <T extends BlockEntity> GameEventListener getListener(Level p_153210_, T p_153211_) {
-    return EntityBlock.super.getListener(p_153210_, p_153211_);
+  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    BlockEntity be = world.getBlockEntity(pos);
+    if (be instanceof BoilerBlockEntity) {
+
+    }
+    return InteractionResult.PASS;
   }
- */
 }

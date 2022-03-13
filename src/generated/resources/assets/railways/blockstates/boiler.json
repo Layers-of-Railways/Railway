@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "railways:block/boiler"
+    },
+    "facing=south": {
+      "model": "railways:block/boiler",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "railways:block/boiler",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "railways:block/boiler",
+      "y": 90
     }
   }
 }
