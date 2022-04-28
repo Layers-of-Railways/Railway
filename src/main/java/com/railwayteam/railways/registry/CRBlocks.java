@@ -1,25 +1,24 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.CTSpriteShifts;
 import com.railwayteam.railways.base.ConnectedBlockCTBehavior;
 import com.railwayteam.railways.content.*;
 import com.railwayteam.railways.content.Boiler.BoilerBlock;
 import com.railwayteam.railways.content.Firebox.FireboxBlock;
+import com.railwayteam.railways.content.Steamcart.SteamCartBlock;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.repack.registrate.Registrate;
-import com.simibubi.create.repack.registrate.providers.DataGenContext;
-import com.simibubi.create.repack.registrate.providers.RegistrateBlockstateProvider;
 import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
-import com.simibubi.create.repack.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class CRBlocks {
   public static BlockEntry<FireboxBlock>         BLOCK_FIREBOX;
   public static BlockEntry<BoilerBlock>          BLOCK_BOILER;
   public static BlockEntry<HydraulicPistonBlock> BLOCK_HYDRAULIC_PISTON;
+  public static BlockEntry<SteamCartBlock>       BLOCK_STEAMCART;
 
   public static void register(Registrate reg) {
     BLOCK_FIREBOX = reg.block("firebox", FireboxBlock::new)
@@ -61,6 +60,15 @@ public class CRBlocks {
     .blockstate((ctx,prov)-> prov.simpleBlock(ctx.get(), prov.models().getExistingFile(prov.modLoc("block/"+ ctx.getName()))))
     .simpleItem()
     .lang("Hydraulic Piston")
+    .register();
+
+    BLOCK_STEAMCART = reg.block("steamcart", SteamCartBlock::new)
+    .blockstate((ctx,prov)-> prov.models().getExistingFile(prov.modLoc("entity/steamcart")))
+    .blockstate((ctx,prov)-> prov.getVariantBuilder(ctx.get()).forAllStates((state)-> ConfiguredModel.builder()
+      .modelFile(prov.models().getExistingFile(prov.modLoc("entity/steamcart_" + (state.getValue(SteamCartBlock.POWERED) ? "on" : "off"))))
+      .rotationY((int)state.getValue(SteamCartBlock.FACING).toYRot())
+      .build()
+    ))
     .register();
   }
 }
