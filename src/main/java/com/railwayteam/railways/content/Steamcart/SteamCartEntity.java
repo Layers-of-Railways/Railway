@@ -2,9 +2,11 @@ package com.railwayteam.railways.content.Steamcart;
 
 import com.railwayteam.railways.content.minecarts.MinecartBlock;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -58,6 +60,11 @@ public class SteamCartEntity extends MinecartBlock {
     if ((toggleCooldown <= 0) && active) {
       toggleCartRunning();
     }
+  }
+
+  @Override
+  public ItemStack getPickResult() {
+    return CRItems.ITEM_STEAMCART.asStack();
   }
 
   public void handleEntityEvent(byte data) {

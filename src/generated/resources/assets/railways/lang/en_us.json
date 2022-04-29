@@ -6,5 +6,8 @@
   "entity.railways.benchcart": "Bench Minecart",
   "entity.railways.jukeboxcart": "Jukebox Minecart",
   "entity.railways.steamcart": "Steam Engine Cart",
+  "item.railways.benchcart": "Benchcart",
+  "item.railways.jukeboxcart": "Jukeboxcart",
+  "item.railways.steamcart": "Steamcart",
   "itemGroup.railways": "Create Railways"
 }

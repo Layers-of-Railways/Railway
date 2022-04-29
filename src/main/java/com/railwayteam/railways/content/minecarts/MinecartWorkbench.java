@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.minecarts;
 
+import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -52,5 +54,10 @@ public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
         ).stream().anyMatch((e) -> player.distanceToSqr(e) < VALID_RANGE);
       }
     };
+  }
+
+  @Override
+  public ItemStack getPickResult() {
+    return CRItems.ITEM_BENCHCART.asStack();
   }
 }
