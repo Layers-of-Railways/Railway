@@ -1,9 +1,9 @@
 82423fec0a96c3f69ac4eaa84c487c1f2c9d436a assets/railways/blockstates/boiler.json
-d1521a7c78be0f4c7ab5ddcb777bf9f1f7061f7f assets/railways/blockstates/firebox.json
 0ca740e470f06b693d55de371d079462af432841 assets/railways/blockstates/hydraulic_piston.json
 ffab31f3fbba80d000a137449799362815960e6d assets/railways/blockstates/steamcart.json
-fd9ca319c35daa59cbf4e2b15968a9d3088feb9a assets/railways/lang/en_ud.json
-13fb26e9f1d5454d8b7c3247550631be6739835a assets/railways/lang/en_us.json
+3e4734c2d6212d8bd02ab784feefb2de3f7976f8 assets/railways/blockstates/tender.json
+6ddd28b9ced8897d38def077b606e522cc9e40c3 assets/railways/lang/en_ud.json
+30d1d69332e2c2f417df1360b52846d774db61ec assets/railways/lang/en_us.json
 c320fdf20980234b0e5e187b97816d01e9dcb7c2 assets/railways/models/block/boiler.json
 387e631411f8f94e8c6ba8b44d8d1cf1a566a210 assets/railways/models/item/benchcart.json
 5cca0cf329566979e6c63e58df9a75814ca9abdf assets/railways/models/item/boiler.json
@@ -13,8 +13,8 @@ c320fdf20980234b0e5e187b97816d01e9dcb7c2 assets/railways/models/block/boiler.jso
 432bc12c07672f29698159fe6cb7aab4b9e61007 data/railways/advancements/recipes/railways/benchcart.json
 a396e413114573bca913b8753d4dd9cfde478d55 data/railways/advancements/recipes/railways/jukeboxcart.json
 c713e6c48b415b689763a6479a5158e5925eeb06 data/railways/loot_tables/blocks/boiler.json
-ff9f2f47c4c82a0563db41925e799c9855338c1e data/railways/loot_tables/blocks/firebox.json
 c8016784a54bd3651520acbf8c0c60e0cdb2fd60 data/railways/loot_tables/blocks/hydraulic_piston.json
 5c1df8443043b3fe3b665dba348e2ff188bcbe31 data/railways/loot_tables/blocks/steamcart.json
+d417796551dbc73c10920d78251e9f8c0abf5b34 data/railways/loot_tables/blocks/tender.json
 5e30854811a9d01c1976eb0190acc6faed40157e data/railways/recipes/benchcart.json
 59bc5da89ed9a3109beb4c952e718b3c39770535 data/railways/recipes/jukeboxcart.json

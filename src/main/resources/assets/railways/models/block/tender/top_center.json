@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "railways:block/firebox",
-		"particle": "railways:block/firebox"
+		"0": "railways:block/tender",
+		"particle": "railways:block/tender"
 	},
 	"elements": [
 		

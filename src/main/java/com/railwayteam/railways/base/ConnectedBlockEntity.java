@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ConnectedBlockEntity extends SmartTileEntity implements IHaveGoggleInformation, IMultiTileContainer {
+public class ConnectedBlockEntity extends SmartTileEntity implements /*IHaveGoggleInformation,*/ IMultiTileContainer {
   public static final int CAPACITY = 1; // buckets
   protected LazyOptional<IFluidHandler> fluidCapability;
   protected FluidTank fluidContainer;
@@ -180,11 +180,11 @@ public class ConnectedBlockEntity extends SmartTileEntity implements IHaveGoggle
   // */
 
   ///* IHaveGoggleInformation
-  @Override
-  public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-    ConnectedBlockEntity cbe = getControllerTE();
-    if (cbe == null) return false;
-    return containedFluidTooltip(tooltip, isPlayerSneaking, cbe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
-  }
+//  @Override
+//  public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+//    ConnectedBlockEntity cbe = getControllerTE();
+//    if (cbe == null) return false;
+//    return containedFluidTooltip(tooltip, isPlayerSneaking, cbe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
+//  }
   // */
 }

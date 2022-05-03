@@ -1,6 +1,5 @@
-package com.railwayteam.railways.content.Firebox;
+package com.railwayteam.railways.content.Tender;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.HorizontalConnectedBlock;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.simibubi.create.foundation.utility.Lang;
@@ -24,22 +23,22 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class FireboxBlock extends HorizontalConnectedBlock implements EntityBlock {
+public class TenderBlock extends HorizontalConnectedBlock implements EntityBlock {
   public static final BooleanProperty LIT = BlockStateProperties.LIT;
   public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
 
-  public FireboxBlock(Properties props) {
+  public TenderBlock(Properties props) {
     super(props);
     this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(SHAPE, Shape.DOOR_SHUT));
   }
 
   @Nullable
   @Override
-  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return CRBlockEntities.FIREBOX_BE.create(pos, state); }
+  public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return CRBlockEntities.TENDER_BE.create(pos, state); }
 
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-    if (!(world.getBlockEntity(pos) instanceof FireboxBlockEntity)) return super.use(state, world, pos, player, hand, hitResult);
+    if (!(world.getBlockEntity(pos) instanceof TenderBlockEntity)) return super.use(state, world, pos, player, hand, hitResult);
 
     ItemStack held = player.getItemInHand(hand);
     Item heldItem  = held.getItem();

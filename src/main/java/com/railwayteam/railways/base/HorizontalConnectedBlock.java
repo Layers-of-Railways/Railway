@@ -45,6 +45,8 @@ public abstract class HorizontalConnectedBlock extends HorizontalDirectionalBloc
   @Nullable
   @Override
   public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+    ConnectionHelper helper = new ConnectionHelper();
+    helper.search(ctx.getLevel(), this, ctx.getClickedPos());
     return super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite());
   }
 

@@ -1,8 +1,8 @@
 {
   "block.railways.boiler": "Boiler",
-  "block.railways.firebox": "Firebox",
   "block.railways.hydraulic_piston": "Hydraulic Piston",
   "block.railways.steamcart": "Steamcart",
+  "block.railways.tender": "Tender",
   "entity.railways.benchcart": "Bench Minecart",
   "entity.railways.jukeboxcart": "Jukebox Minecart",
   "entity.railways.steamcart": "Steam Engine Cart",
