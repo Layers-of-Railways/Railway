@@ -4,6 +4,7 @@
   "block.railways.hydraulic_piston": "Hydraulic Piston",
   "block.railways.steamcart": "Steamcart",
   "entity.railways.benchcart": "Bench Minecart",
+  "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Jukebox Minecart",
   "entity.railways.steamcart": "Steam Engine Cart",
   "item.railways.benchcart": "Benchcart",
