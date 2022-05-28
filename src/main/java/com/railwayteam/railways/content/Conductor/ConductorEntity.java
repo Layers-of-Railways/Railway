@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,10 +26,17 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -42,6 +50,8 @@ public class ConductorEntity extends AbstractGolem {
 
   // keep this small for performance (plus conductors are smol)
   private static final Vector3i REACH = new Vector3i(3, 2, 3);
+
+  private ConductorFakePlayer fakePlayer = null;
 
   public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
@@ -79,6 +89,12 @@ public class ConductorEntity extends AbstractGolem {
       return InteractionResult.SUCCESS;
     }
     return super.mobInteract(player, hand);
+  }
+
+  @Override
+  public void tick() {
+    super.tick();
+    if (fakePlayer == null && !level.isClientSide) fakePlayer = new ConductorFakePlayer((ServerLevel)level);
   }
 
   public static ConductorEntity spawn (Level level, double x, double y, double z, DyeColor color) {
@@ -152,12 +168,28 @@ public class ConductorEntity extends AbstractGolem {
     }
 
     public void start () {
-      //Railways.LOGGER.info("Player looked at me!");
-      BlockPos pos = this.conductor.getEntityData().get(BLOCK);
-      Block block  = this.conductor.level.getBlockState(pos).getBlock();
+    //  Railways.LOGGER.info("Player looked at me!");
+      Level level      = this.conductor.level;
+      BlockPos pos     = this.conductor.getEntityData().get(BLOCK);
+      BlockState state = level.getBlockState(pos);
+      Block block      = state.getBlock();
+      ConductorFakePlayer fake = this.conductor.fakePlayer;
+
+      // -- activate a button or lever --
       if (validActivatedBlocks.contains(block)) {
-        Railways.LOGGER.info("I'm activating a block for you!");
-        // TODO ConductorFakePlayer use
+      //  Railways.LOGGER.info("I'm activating a block for you!");
+
+        ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
+          ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fake);
+        BlockHitResult hitResult = level.clip(context);
+        Event.Result useBlock    = Event.Result.DEFAULT;
+        if (!state.getShape(level, pos).isEmpty()) {
+          PlayerInteractEvent.RightClickBlock event = ForgeHooks.onRightClickBlock(fake, InteractionHand.MAIN_HAND, pos, hitResult);
+          useBlock = event.getUseBlock();
+        }
+        if (useBlock != Event.Result.DENY) {
+          state.use(level, fake, InteractionHand.MAIN_HAND, hitResult);
+        }
       }
     }
 
