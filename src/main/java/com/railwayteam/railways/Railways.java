@@ -1,10 +1,9 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.content.Conductor.ConductorCapModel;
 import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
 import com.simibubi.create.repack.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,5 +64,6 @@ public class Railways {
   @SubscribeEvent
   public void registerModelLayers (EntityRenderersEvent.RegisterLayerDefinitions event) {
     event.registerLayerDefinition(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
+    event.registerLayerDefinition(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
   }
 }

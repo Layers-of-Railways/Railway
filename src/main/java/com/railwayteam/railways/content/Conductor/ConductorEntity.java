@@ -1,8 +1,6 @@
 package com.railwayteam.railways.content.Conductor;
 
 import com.jozufozu.flywheel.repack.joml.Vector3i;
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.Hat.EngineerCapItem;
 import com.railwayteam.railways.registry.CREntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,7 +24,6 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -115,7 +112,7 @@ public class ConductorEntity extends AbstractGolem {
 
   public boolean isCorrectEngineerCap (ItemStack hat) {
     if (hat.isEmpty()) return true;
-    return (hat.getItem() instanceof EngineerCapItem cap) && (cap.color == colorFrom(this.entityData.get(COLOR)));
+    return (hat.getItem() instanceof ConductorCapItem cap) && (cap.color == colorFrom(this.entityData.get(COLOR)));
   }
 
   public static List<Block> getValidActivatedBlocks () {
