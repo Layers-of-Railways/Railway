@@ -22,6 +22,7 @@ import net.minecraftforge.fml.DistExecutor;
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 public class CRItems {
@@ -82,8 +83,10 @@ public class CRItems {
 
     ITEM_CONDUCTOR_CAP = new HashMap<>();
     for (DyeColor color : DyeColor.values()) {
-      ITEM_CONDUCTOR_CAP.put(color, reg.item("conductor_cap", p-> new ConductorCapItem(p, color))
-        .lang("Conductor's Cap")
+      String colorName = color.getName().substring(0,1).toUpperCase() + color.getName().substring(1).toLowerCase();
+      String colorReg  = color.getName().toLowerCase(Locale.ROOT);
+      ITEM_CONDUCTOR_CAP.put(color, reg.item(/*colorReg + "_*/"conductor_cap", p-> new ConductorCapItem(p, color))
+        .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> {
@@ -97,7 +100,7 @@ public class CRItems {
               .requires(CONDUCTOR_CAPS)
               .requires(color.getTag())
               .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
-              .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap"));
+              .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg));
         })
         .register());
     }

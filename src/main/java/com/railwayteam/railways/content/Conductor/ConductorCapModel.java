@@ -18,10 +18,17 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Railways.MODID, "conductor_cap"), "main");
 	private final ModelPart cap;
+	private boolean isOnConductor;
 
-	public ConductorCapModel(ModelPart root) {
+	public ConductorCapModel (ModelPart root) {
 		super(RenderType::armorCutoutNoCull);
 		this.cap = root.getChild("cap");
+		isOnConductor = false;
+	}
+
+	public ConductorCapModel (ModelPart root, boolean onConductor) {
+		this(root);
+		this.isOnConductor = onConductor;
 	}
 
 	public static LayerDefinition createBodyLayer () {
@@ -43,6 +50,9 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		if (isOnConductor) {
+			poseStack.translate(0d, 0.5d, 0d);
+		}
 		cap.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 

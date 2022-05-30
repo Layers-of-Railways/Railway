@@ -49,7 +49,7 @@ public class ConductorCapItem extends ArmorItem {
     BlockPos pos = ctx.getClickedPos();
     if (!level.isClientSide && isCasing(level, pos)) {
       level.removeBlock(pos, false);
-      ConductorEntity.spawn(level, pos.getX(), pos.getY()+1, pos.getZ(), color);
+      ConductorEntity.spawn(level, pos, ctx.getItemInHand().copy());
       if (ctx.getPlayer() != null && !ctx.getPlayer().isCreative()) {
         ctx.getItemInHand().shrink(1);
         return InteractionResult.CONSUME;
@@ -66,7 +66,7 @@ public class ConductorCapItem extends ArmorItem {
       @Override
       public Model getBaseArmorModel (LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
-        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION));
+        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION), (entityLiving instanceof ConductorEntity));
         model.setProperties(_default);
         return model;
       }

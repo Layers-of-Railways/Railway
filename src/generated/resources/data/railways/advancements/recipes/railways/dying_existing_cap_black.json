@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "railways:dying_existing_cap"
+      "railways:dying_existing_cap_black"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "railways:dying_existing_cap"
+        "recipe": "railways:dying_existing_cap_black"
       }
     }
   },

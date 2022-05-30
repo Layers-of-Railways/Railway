@@ -1,7 +1,9 @@
 package com.railwayteam.railways.content.Conductor;
 
 import com.jozufozu.flywheel.repack.joml.Vector3i;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CREntities;
+import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -94,10 +96,12 @@ public class ConductorEntity extends AbstractGolem {
     if (fakePlayer == null && !level.isClientSide) fakePlayer = new ConductorFakePlayer((ServerLevel)level);
   }
 
-  public static ConductorEntity spawn (Level level, double x, double y, double z, DyeColor color) {
+  public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
+    if (!(stack.getItem() instanceof ConductorCapItem cap)) return null;
     ConductorEntity result = new ConductorEntity(CREntities.CONDUCTOR.get(), level);
-    result.setPos(x,y,z);
-    result.setColor(color);
+    result.setPos(pos.getX(), pos.getY(), pos.getZ());
+    result.setColor(cap.color);
+    result.equipItemIfPossible(stack);
     level.addFreshEntity(result);
     return result;
   }
