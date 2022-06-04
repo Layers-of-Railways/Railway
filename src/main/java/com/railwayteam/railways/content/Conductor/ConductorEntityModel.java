@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,26 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
 
   @Override
   public void setupAnim (@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    // mostly based on HumanoidModel::setupAnim
+    // TODO can't call super directly due to rotation anchor offsets, find a way to fix them?
+    this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+    this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+    this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+    this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+    this.rightLeg.yRot = 0.0F;
+    this.leftLeg.yRot = 0.0F;
+    this.rightLeg.zRot = 0.0F;
+    this.leftLeg.zRot = 0.0F;
+    if (this.riding) {
+      this.rightArm.xRot += (-(float)Math.PI / 2f);
+      this.leftArm.xRot += (-(float)Math.PI / 2f);
+      this.rightLeg.xRot = -1.4137167F;
+      this.rightLeg.yRot = ((float)Math.PI / 20f);
+      this.rightLeg.zRot = 0.07853982F;
+      this.leftLeg.xRot = -1.4137167F;
+      this.leftLeg.yRot = (-(float)Math.PI / 20f);
+      this.leftLeg.zRot = -0.07853982F;
+    }
   }
 
   @Override
