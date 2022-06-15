@@ -5,6 +5,7 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -13,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class SteamCartEntity extends MinecartBlock {
   private boolean powered;
-  private int toggleCooldown;
+  private int toggleCooldown, fuel, water;
   private static final int COOLDOWN = 100; // ticks
 
   protected Vec3 directionCache;
@@ -23,6 +24,8 @@ public class SteamCartEntity extends MinecartBlock {
     powered = false;
     toggleCooldown = COOLDOWN;
     directionCache = Vec3.ZERO;
+    fuel = 0;
+    water = 0;
   }
 
   public boolean isPowered () {
@@ -35,9 +38,25 @@ public class SteamCartEntity extends MinecartBlock {
   }
 
   @Override
+  public boolean isVehicle() {
+    return false; // prevents entities from riding us
+  }
+
+  @Override
+  public boolean canBeRidden() {
+    return true; // Contraptions check this
+  }
+
+  @Override
   public void tick () {
     super.tick();
     if (toggleCooldown > 0) toggleCooldown--;
+
+    if (this.powered) {
+      if (this.random.nextInt(4) == 0) {
+        this.level.addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getX(), this.getY() + 0.8D, this.getZ(), 0.0D, 0.0D, 0.0D);
+      }
+    }
   }
 
   @Override
@@ -48,11 +67,7 @@ public class SteamCartEntity extends MinecartBlock {
 
   @Override
   protected void applyNaturalSlowdown() {
-    if (!powered) {
-      super.applyNaturalSlowdown();
-    } else {
-      
-    }
+    if (!powered) super.applyNaturalSlowdown();
   }
 
   @Override
