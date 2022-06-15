@@ -34,16 +34,19 @@ public class CREntities {
   public static void register(Registrate reg) {
     CART_STEAM = reg.entity("steamcart", SteamCartEntity::new, MobCategory.MISC)
     .renderer(()-> SteamCartRenderer::new)
+    .properties(p -> p.sized(0.98F, 0.7F))
     .lang("Steam Engine Cart")
     .register();
 
     CART_BLOCK = reg.entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
     .renderer(()-> MinecartBlockRenderer::new)
+    .properties(p -> p.sized(0.98F, 0.7F))
     .lang("Bench Minecart")
     .register();
 
     CART_JUKEBOX = reg.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
     .renderer(()-> MinecartBlockRenderer::new)
+    .properties(p -> p.sized(0.98F, 0.7F))
     .lang("Jukebox Minecart")
     .register();
   }
