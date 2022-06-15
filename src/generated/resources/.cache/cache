@@ -2,8 +2,8 @@
 0ca740e470f06b693d55de371d079462af432841 assets/railways/blockstates/hydraulic_piston.json
 ffab31f3fbba80d000a137449799362815960e6d assets/railways/blockstates/steamcart.json
 3e4734c2d6212d8bd02ab784feefb2de3f7976f8 assets/railways/blockstates/tender.json
-6ddd28b9ced8897d38def077b606e522cc9e40c3 assets/railways/lang/en_ud.json
-30d1d69332e2c2f417df1360b52846d774db61ec assets/railways/lang/en_us.json
+9c0378be2772097fc233244584260fea335a735f assets/railways/lang/en_ud.json
+ff539099bb4d63f5ed5c61c8343247c94819e10c assets/railways/lang/en_us.json
 c320fdf20980234b0e5e187b97816d01e9dcb7c2 assets/railways/models/block/boiler.json
 387e631411f8f94e8c6ba8b44d8d1cf1a566a210 assets/railways/models/item/benchcart.json
 5cca0cf329566979e6c63e58df9a75814ca9abdf assets/railways/models/item/boiler.json
