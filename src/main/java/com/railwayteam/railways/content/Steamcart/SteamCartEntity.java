@@ -11,12 +11,16 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
@@ -81,7 +85,7 @@ public class SteamCartEntity extends MinecartBlock {
     if (fuel > 0 && water > 0) {
       this.xPush = this.getX() - player.getX();
       this.zPush = this.getZ() - player.getZ();
-      setCartRunning(true);
+      if (!level.isClientSide()) setCartRunning(true);
     }
     return InteractionResult.sidedSuccess(this.level.isClientSide);
   }
@@ -91,11 +95,7 @@ public class SteamCartEntity extends MinecartBlock {
     super.tick();
     if (toggleCooldown > 0) toggleCooldown--;
 
-    if (!powered) {
-      this.xPush = 0.0D;
-      this.zPush = 0.0D;
-    }
-    else {
+    if (powered) {
       if (water > fuel) {
         --water;
       }
@@ -104,10 +104,12 @@ public class SteamCartEntity extends MinecartBlock {
       }
       else { // fuel and water are <= 0
         setCartRunning(false);
+        this.xPush = 0.0D;
+        this.zPush = 0.0D;
       }
 
-      if (this.random.nextInt(4) == 0) {
-        this.level.addParticle(ParticleTypes.CLOUD, this.getX(), this.getY() + 0.8D, this.getZ(), 0.0D, 0.0D, 0.0D);
+      if (this.random.nextInt(16) <= 3) {
+        this.level.addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getX(), this.getY() + 0.8D, this.getZ(), 0.0D, 0.05D, 0.0D);
       }
     }
   }
@@ -120,6 +122,7 @@ public class SteamCartEntity extends MinecartBlock {
     double d0 = 1.0E-4D;
     double d1 = 0.001D;
     super.moveAlongTrack(pos, state);
+    if (!isPowered()) return;
     Vec3 vec3 = this.getDeltaMovement();
     double d2 = vec3.horizontalDistanceSqr();
     double d3 = this.xPush * this.xPush + this.zPush * this.zPush;
@@ -133,22 +136,23 @@ public class SteamCartEntity extends MinecartBlock {
 
   @Override
   protected void applyNaturalSlowdown() {
-    // taken from the Furnace Minecart
-    double d0 = this.xPush * this.xPush + this.zPush * this.zPush;
-    if (d0 > 1.0E-7D) {
-      d0 = Math.sqrt(d0);
-      this.xPush /= d0;
-      this.zPush /= d0;
-      Vec3 vec3 = this.getDeltaMovement().multiply(0.8D, 0.0D, 0.8D).add(this.xPush, 0.0D, this.zPush);
-      if (this.isInWater()) {
-        vec3 = vec3.scale(0.1D);
+    if (isPowered()) {
+      // taken from the Furnace Minecart
+      double d0 = this.xPush * this.xPush + this.zPush * this.zPush;
+      if (d0 > 1.0E-7D) {
+        d0 = Math.sqrt(d0);
+        this.xPush /= d0;
+        this.zPush /= d0;
+        Vec3 vec3 = this.getDeltaMovement().multiply(0.8D, 0.0D, 0.8D).add(this.xPush, 0.0D, this.zPush);
+        if (this.isInWater()) {
+          vec3 = vec3.scale(0.1D);
+        }
+
+        this.setDeltaMovement(vec3);
+      } else {
+        this.setDeltaMovement(this.getDeltaMovement().multiply(0.98D, 0.0D, 0.98D));
       }
-
-      this.setDeltaMovement(vec3);
-    } else {
-      this.setDeltaMovement(this.getDeltaMovement().multiply(0.98D, 0.0D, 0.98D));
     }
-
     super.applyNaturalSlowdown();
   }
 
@@ -175,8 +179,20 @@ public class SteamCartEntity extends MinecartBlock {
     return CRItems.ITEM_STEAMCART.asStack();
   }
 
+  @Override
+  public void destroy(DamageSource source) {
+    this.remove(Entity.RemovalReason.KILLED);
+    if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+      ItemStack itemstack = new ItemStack(CRItems.ITEM_STEAMCART.get());
+      if (this.hasCustomName()) {
+        itemstack.setHoverName(this.getCustomName());
+      }
+      spawnAtLocation(itemstack);
+    }
+  }
+
   public void handleEntityEvent(byte data) {
-    if (data == 10) {
+    if (data == (byte)10) {
       toggleCartRunning();
     }
   }
@@ -196,7 +212,7 @@ public class SteamCartEntity extends MinecartBlock {
 
   public BlockState getDisplayBlockState () {
     boolean negative = getMotionDirection().getAxisDirection() == Direction.AxisDirection.NEGATIVE;
-    return content.setValue(SteamCartBlock.POWERED, isPowered()).setValue(SteamCartBlock.FACING, negative ? Direction.WEST : Direction.EAST);
+    return content.setValue(SteamCartBlock.POWERED, powered).setValue(SteamCartBlock.FACING, negative ? Direction.WEST : Direction.EAST);
   }
 
   protected void addAdditionalSaveData(CompoundTag tag) {
@@ -215,5 +231,11 @@ public class SteamCartEntity extends MinecartBlock {
     this.fuel    = tag.getInt("Fuel");
     this.water   = tag.getInt("Water");
     this.powered = tag.getBoolean("Powered");
+
+    // a "kick" to start it when the world reloads
+    double vsq = xPush * xPush + zPush * zPush;
+    if (powered && vsq > 0.1E-4d) {
+      setDeltaMovement(xPush, 0d, zPush);
+    }
   }
 }

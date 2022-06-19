@@ -2,12 +2,15 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.builders.ItemBuilder;
 import com.simibubi.create.repack.registrate.util.LazySpawnEggItem;
 import com.simibubi.create.repack.registrate.util.entry.EntityEntry;
 import com.simibubi.create.repack.registrate.util.entry.ItemEntry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -42,14 +45,26 @@ public class CRItems {
         ITEM_BENCHCART = makeMinecart(reg, "benchcart", ()->CREntities.CART_BLOCK, Color.YELLOW)
         .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+        .lang("Minecart with Workbench")
         .register();
 
         ITEM_JUKEBOXCART = makeMinecart(reg, "jukeboxcart", ()->CREntities.CART_JUKEBOX, Color.RED)
         .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+        .lang("Minecart with Jukebox")
         .register();
 
-        ITEM_STEAMCART = makeMinecart(reg, "steamcart", ()->CREntities.CART_STEAM, Color.ORANGE).register();
+        ITEM_STEAMCART = makeMinecart(reg, "steamcart", ()->CREntities.CART_STEAM, Color.ORANGE)
+          .recipe((ctx,prov)-> ShapedRecipeBuilder.shaped(ctx.get())
+            .pattern("ctp")
+            .pattern(" u ")
+            .define('c', AllBlocks.COGWHEEL.get())
+            .define('t', AllBlocks.FLUID_TANK.get())
+            .define('p', AllItems.COPPER_SHEET.get())
+            .define('u', Items.MINECART)
+            .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov)
+          )
+          .lang("Steam-Powered Minecart").register();
 
 /*
         R_ITEM_WAYPOINT_TOOL = reg.item(WayPointToolItem.name, WayPointToolItem::new)

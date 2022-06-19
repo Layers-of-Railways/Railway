@@ -6,8 +6,8 @@
   "entity.railways.benchcart": "Minecart with Workbench",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",
   "entity.railways.steamcart": "Minecart With Steam Engine",
-  "item.railways.benchcart": "Benchcart",
-  "item.railways.jukeboxcart": "Jukeboxcart",
-  "item.railways.steamcart": "Steamcart",
+  "item.railways.benchcart": "Minecart with Workbench",
+  "item.railways.jukeboxcart": "Minecart with Jukebox",
+  "item.railways.steamcart": "Steam-Powered Minecart",
   "itemGroup.railways": "Create Railways"
 }
