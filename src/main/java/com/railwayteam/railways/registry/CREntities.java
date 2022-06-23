@@ -1,5 +1,7 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.Conductor.ConductorRenderer;
 import com.railwayteam.railways.content.Steamcart.SteamCartEntity;
 import com.railwayteam.railways.content.Steamcart.SteamCartRenderer;
 import com.railwayteam.railways.content.minecarts.MinecartBlock;
@@ -12,16 +14,15 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.jetbrains.annotations.NotNull;
 
 public class CREntities {
   public static EntityEntry<SteamCartEntity>   CART_STEAM;
   public static EntityEntry<MinecartWorkbench> CART_BLOCK;
   public static EntityEntry<MinecartJukebox>   CART_JUKEBOX;
+
+  public static EntityEntry<ConductorEntity> CONDUCTOR;
 
   private static class CRFactory implements EntityType.EntityFactory<MinecartBlock> {
     private final Block b;
@@ -53,5 +54,13 @@ public class CREntities {
     .properties(p -> p.sized(0.98F, 0.7F))
     .lang("Minecart with Jukebox")
     .register();
+
+    CONDUCTOR = reg.entity("conductor", ConductorEntity::new, MobCategory.CREATURE)
+      .renderer(()-> ConductorRenderer::new)
+      .lang("Conductor")
+      .properties(p -> p.sized(2, 1.7f).fireImmune())
+      .loot((table, type)-> table.add(type, new LootTable.Builder()))
+      .attributes(ConductorEntity::createAttributes)
+      .register();
   }
 }

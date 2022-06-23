@@ -1,7 +1,10 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.content.Conductor.ConductorCapModel;
+import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
 import com.simibubi.create.repack.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,6 +39,7 @@ public class Railways {
     MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
 
     MOD_EVENT_BUS.addListener(this::setup);
+    MOD_EVENT_BUS.addListener(this::registerModelLayers);
     MinecraftForge.EVENT_BUS.register(this);
 
     Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
@@ -55,5 +59,11 @@ public class Railways {
 	}
 
   public static void clientInit(FMLClientSetupEvent event) {
+  }
+
+  @SubscribeEvent
+  public void registerModelLayers (EntityRenderersEvent.RegisterLayerDefinitions event) {
+    event.registerLayerDefinition(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
+    event.registerLayerDefinition(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
   }
 }

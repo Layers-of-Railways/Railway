@@ -4,9 +4,11 @@
   "block.railways.steamcart": "Steamcart",
   "block.railways.tender": "Tender",
   "entity.railways.benchcart": "Minecart with Workbench",
+  "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",
   "entity.railways.steamcart": "Minecart With Steam Engine",
   "item.railways.benchcart": "Minecart with Workbench",
+  "item.railways.conductor_cap": "Black Conductor's Cap",
   "item.railways.jukeboxcart": "Minecart with Jukebox",
   "item.railways.steamcart": "Steam-Powered Minecart",
   "itemGroup.railways": "Create Railways"
