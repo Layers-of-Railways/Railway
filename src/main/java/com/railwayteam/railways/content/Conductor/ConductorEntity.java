@@ -45,7 +45,6 @@ import java.util.List;
 public class ConductorEntity extends AbstractGolem {
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
-  public static List<Block> validActivatedBlocks;
 
   // keep this small for performance (plus conductors are smol)
   private static final Vector3i REACH = new Vector3i(3, 2, 3);
@@ -55,7 +54,6 @@ public class ConductorEntity extends AbstractGolem {
   public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
     this.maxUpStep = 0.5f;
-    if (validActivatedBlocks == null) validActivatedBlocks = getValidActivatedBlocks();
   }
 
   @Override
@@ -119,12 +117,6 @@ public class ConductorEntity extends AbstractGolem {
     return (hat.getItem() instanceof ConductorCapItem cap) && (cap.color == colorFrom(this.entityData.get(COLOR)));
   }
 
-  public static List<Block> getValidActivatedBlocks () {
-    ArrayList<Block> ponders = new ArrayList<>(BlockTags.BUTTONS.getValues());
-    ponders.add(Blocks.LEVER);
-    return ponders;
-  }
-
   boolean isLookingAtMe (Player player) {
     boolean looking = false;
     ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
@@ -146,6 +138,10 @@ public class ConductorEntity extends AbstractGolem {
     int c = color.getId();
     if (c >= 16) return 16;
     return (byte)c;
+  }
+
+  public boolean canUseBlock (BlockState state) {
+    return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER);
   }
 
   static class ConductorLookedAtGoal extends Goal {
@@ -177,7 +173,7 @@ public class ConductorEntity extends AbstractGolem {
       ConductorFakePlayer fake = this.conductor.fakePlayer;
 
       // -- activate a button or lever --
-      if (validActivatedBlocks.contains(block)) {
+      if (this.conductor.canUseBlock(state)) {
       //  Railways.LOGGER.info("I'm activating a block for you!");
 
         ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
@@ -210,14 +206,14 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canUse () {
-      if (validActivatedBlocks.contains(this.conductor.level.getBlockState(this.target).getBlock())) return true;
+      if (this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
       // else search
       for (int y= -REACH.y; y< REACH.y; y++) {
         for (int x= -REACH.x; x< REACH.x; x++) {
           for (int z= -REACH.z; z< REACH.z; z++) {
             BlockPos at = this.conductor.blockPosition().offset(x, y, z);
-            Block block = this.conductor.level.getBlockState(at).getBlock();
-            if (validActivatedBlocks.contains(block)) {
+            BlockState state = this.conductor.level.getBlockState(at);
+            if (this.conductor.canUseBlock(state)) {
               this.target = at;
               conductor.entityData.set(BLOCK, this.target);
               return true;

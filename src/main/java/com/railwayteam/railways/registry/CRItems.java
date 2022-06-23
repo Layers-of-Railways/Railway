@@ -15,11 +15,13 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -31,7 +33,15 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  public static Tag.Named<Item> CONDUCTOR_CAPS = ItemTags.createOptional(new ResourceLocation(Railways.MODID, "conductor_caps"));
+  public static TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
+
+  public static TagKey<Item> makeForgeItemTag (String path) {
+    return makeItemTag("forge", path);
+  }
+
+  public static TagKey<Item> makeItemTag (String mod, String path) {
+    return ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation(mod, path), Collections.emptySet());
+  }
 
   private static ItemBuilder<? extends Item, ?> makeMinecart (Registrate reg, String name, Supplier<EntityEntry<?>> entity, Color primary) {
     return reg.item(name, (props)-> new LazySpawnEggItem<>(entity.get(), primary.getRGB(), Color.BLACK.getRGB(), props))

@@ -72,7 +72,7 @@ public class SteamCartEntity extends MinecartBlock {
     if (ret.consumesAction()) return ret;
 
     ItemStack stack = player.getItemInHand(hand);
-    if (ItemTags.COALS.contains(stack.getItem()) && fuel <= 32000) {
+    if (stack.is(ItemTags.COALS)  && fuel <= 32000) {
       fuel += Math.round(ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) * BURN_RATIO);
       if (!player.getAbilities().instabuild) stack.shrink(1);
     }

@@ -174,17 +174,52 @@ public class ConnectedBlockEntity extends SmartTileEntity implements /*IHaveGogg
   }
 
   @Override
+  public void removeController(boolean keepContents) {
+
+  }
+
+  @Override
   public BlockPos getLastKnownPos() {
     return this.getBlockPos();
   }
-  // */
 
-  ///* IHaveGoggleInformation
-//  @Override
-//  public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-//    ConnectedBlockEntity cbe = getControllerTE();
-//    if (cbe == null) return false;
-//    return containedFluidTooltip(tooltip, isPlayerSneaking, cbe.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY));
-//  }
-  // */
+  @Override
+  public void preventConnectivityUpdate() {
+
+  }
+
+  @Override
+  public void notifyMultiUpdated() {
+
+  }
+
+  @Override
+  public Direction.Axis getMainConnectionAxis() { return getMainAxisOf(this); }
+
+  @Override
+  public int getMaxLength(Direction.Axis longAxis, int width) {
+    if (longAxis == Direction.Axis.Y) return getMaxWidth();
+    return getMaxLength(width);
+  }
+
+  public static int getMaxLength(int radius) {
+    return radius * 3;
+  }
+
+  @Override
+  public int getMaxWidth() {
+    return 3;
+  }
+
+  @Override
+  public int getHeight() { return length; }
+
+  @Override
+  public int getWidth() { return width; }
+
+  @Override
+  public void setHeight(int height) { this.length = height; }
+
+  @Override
+  public void setWidth(int width) { this.width = width; }
 }
