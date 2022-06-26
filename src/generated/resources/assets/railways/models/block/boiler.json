@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "side": "railways:block/boiler/boiler_side",
-    "front": "railways:block/boiler/boiler_unlit",
-    "top": "railways:block/boiler/boiler_side"
-  }
-}

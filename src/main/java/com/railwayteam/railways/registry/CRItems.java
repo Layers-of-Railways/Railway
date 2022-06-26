@@ -14,7 +14,6 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -104,9 +103,10 @@ public class CRItems {
 
     ITEM_CONDUCTOR_CAP = new HashMap<>();
     for (DyeColor color : DyeColor.values()) {
+      if (color != DyeColor.BLUE) continue; // TODO make other cap colors
       String colorName = color.getName().substring(0,1).toUpperCase() + color.getName().substring(1).toLowerCase();
       String colorReg  = color.getName().toLowerCase(Locale.ROOT);
-      ITEM_CONDUCTOR_CAP.put(color, reg.item(/*colorReg + "_*/"conductor_cap", p-> new ConductorCapItem(p, color))
+      ITEM_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))

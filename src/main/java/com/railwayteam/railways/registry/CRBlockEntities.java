@@ -10,6 +10,7 @@ public class CRBlockEntities {
   public static BlockEntityEntry<BoilerBlockEntity> BOILER_BE;
 
   public static void register (Registrate reg) {
+    /*
     TENDER_BE = reg.blockEntity("tender", TenderBlockEntity::new)
     .validBlock(CRBlocks.BLOCK_TENDER)
     .register();
@@ -17,5 +18,6 @@ public class CRBlockEntities {
     BOILER_BE = reg.blockEntity ("boiler", BoilerBlockEntity::new)
     .validBlock(CRBlocks.BLOCK_BOILER)
     .register();
+     */
   }
 }

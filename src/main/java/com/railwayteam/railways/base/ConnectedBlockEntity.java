@@ -172,7 +172,7 @@ public class ConnectedBlockEntity extends SmartTileEntity implements /*IHaveGogg
 		setChanged();
 		sendData();
   }
-///*
+/*
   @Override
   public void removeController(boolean keepContents) {
 
@@ -182,7 +182,7 @@ public class ConnectedBlockEntity extends SmartTileEntity implements /*IHaveGogg
   public BlockPos getLastKnownPos() {
     return this.getBlockPos();
   }
-///*
+/*
   @Override
   public void preventConnectivityUpdate() {
 

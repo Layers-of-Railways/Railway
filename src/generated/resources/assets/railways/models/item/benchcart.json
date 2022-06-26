@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/minecart",
-  "textures": {
-    "layer0": "railways:item/benchcart"
-  }
-}

@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.Conductor;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -26,19 +27,19 @@ import net.minecraftforge.client.IItemRenderProperties;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ConductorCapItem extends ArmorItem {
   public final DyeColor color;
-  static Block casing = null; // it'll initialize later
 
   public ConductorCapItem (Properties props, DyeColor color) {
     super(new ConductorArmorMaterial(), EquipmentSlot.HEAD, props);
     this.color  = color;
-    if (casing == null) casing = AllBlocks.ANDESITE_CASING.get();
   }
 
-  static boolean isCasing (Block block) { return block.equals(casing); }
+  static boolean isCasing (Block block) { return block.equals( AllBlocks.ANDESITE_CASING.get()); }
   static boolean isCasing (BlockState state) { return isCasing(state.getBlock()); }
   static boolean isCasing (Level level, BlockPos pos) { return isCasing(level.getBlockState(pos)); }
 
@@ -77,7 +78,7 @@ public class ConductorCapItem extends ArmorItem {
   @Nullable
   @Override
   public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-    return Railways.MODID + ":textures/entity/conductor_cap.png";
+    return Railways.MODID + ":textures/entity/" + color.getName().toLowerCase(Locale.ROOT) + "_conductor_cap.png";
   }
 
   static class ConductorArmorMaterial implements ArmorMaterial {

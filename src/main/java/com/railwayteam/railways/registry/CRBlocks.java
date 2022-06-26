@@ -20,6 +20,7 @@ public class CRBlocks {
   public static BlockEntry<SteamCartBlock>       BLOCK_STEAMCART;
 
   public static void register(Registrate reg) {
+/*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
     .blockstate((ctx,prov)->
       prov.getVariantBuilder(ctx.get()).forAllStates(state -> {
@@ -58,7 +59,7 @@ public class CRBlocks {
     .simpleItem()
     .lang("Hydraulic Piston")
     .register();
-
+//*/
     // this is used to render the steam cart entity, it isn't meant to be a placeable block
     BLOCK_STEAMCART = reg.block("steamcart", SteamCartBlock::new)
     .blockstate((ctx,prov)-> prov.models().getExistingFile(prov.modLoc("entity/steamcart")))
