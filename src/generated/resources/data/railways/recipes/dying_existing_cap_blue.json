@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:conductor_caps"
+    },
+    {
+      "tag": "forge:dyes/blue"
+    }
+  ],
+  "result": {
+    "item": "railways:blue_conductor_cap"
+  }
+}
