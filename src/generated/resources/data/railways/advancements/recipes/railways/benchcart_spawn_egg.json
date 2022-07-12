@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "railways:benchcart"
+      "railways:benchcart_spawn_egg"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "railways:benchcart"
+        "recipe": "railways:benchcart_spawn_egg"
       }
     }
   },

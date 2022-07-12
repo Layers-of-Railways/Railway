@@ -4,9 +4,9 @@
   "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",
   "entity.railways.steamcart": "Minecart With Steam Engine",
-  "item.railways.benchcart": "Minecart with Workbench",
+  "item.railways.benchcart_spawn_egg": "Minecart with Workbench",
   "item.railways.blue_conductor_cap": "Blue Conductor's Cap",
-  "item.railways.jukeboxcart": "Minecart with Jukebox",
-  "item.railways.steamcart": "Steam-Powered Minecart",
+  "item.railways.jukeboxcart_spawn_egg": "Minecart with Jukebox",
+  "item.railways.steamcart_spawn_egg": "Minecart With Steam Engine",
   "itemGroup.railways": "Create Railways"
 }

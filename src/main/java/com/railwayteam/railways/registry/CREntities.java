@@ -8,14 +8,22 @@ import com.railwayteam.railways.content.minecarts.MinecartBlock;
 import com.railwayteam.railways.content.minecarts.MinecartBlockRenderer;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.util.entry.EntityEntry;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 
 public class CREntities {
   public static EntityEntry<SteamCartEntity>   CART_STEAM;
@@ -40,18 +48,46 @@ public class CREntities {
     CART_STEAM = reg.entity("steamcart", SteamCartEntity::new, MobCategory.MISC)
     .renderer(()-> SteamCartRenderer::new)
     .properties(p -> p.sized(0.98F, 0.7F))
+    .spawnEgg(Color.WHITE.getRGB(), Color.BLACK.getRGB())
+      .lang("Minecart With Steam Engine")
+      .tab(()-> CRItems.itemGroup)
+      .model((ctx,prov)-> prov.withExistingParent("steamcart_spawn_egg", prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/steamcart")))
+      .recipe((ctx,prov)-> ShapedRecipeBuilder.shaped(ctx.get())
+        .pattern("ctp")
+        .pattern(" u ")
+        .define('c', AllBlocks.COGWHEEL.get())
+        .define('t', AllBlocks.FLUID_TANK.get())
+        .define('p', AllItems.COPPER_SHEET.get())
+        .define('u', Items.MINECART)
+        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov)
+      )
+      .build()
     .lang("Minecart With Steam Engine")
     .register();
 
     CART_BLOCK = reg.entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
     .renderer(()-> MinecartBlockRenderer::new)
     .properties(p -> p.sized(0.98F, 0.7F))
+    .spawnEgg(Color.WHITE.getRGB(), Color.BLACK.getRGB())
+      .lang("Minecart with Workbench")
+      .tab(()-> CRItems.itemGroup)
+      .model((ctx,prov)-> prov.withExistingParent("benchcart_spawn_egg", prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/benchcart")))
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+      .build()
     .lang("Minecart with Workbench")
     .register();
 
     CART_JUKEBOX = reg.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
     .renderer(()-> MinecartBlockRenderer::new)
     .properties(p -> p.sized(0.98F, 0.7F))
+    .spawnEgg(Color.WHITE.getRGB(), Color.BLACK.getRGB())
+      .lang("Minecart with Jukebox")
+      .tab(()-> CRItems.itemGroup)
+      .model((ctx,prov)-> prov.withExistingParent("jukeboxcart_spawn_egg", prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/jukeboxcart")))
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
+        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+      .build()
     .lang("Minecart with Jukebox")
     .register();
 

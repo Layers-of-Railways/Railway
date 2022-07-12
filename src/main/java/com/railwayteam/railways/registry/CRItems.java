@@ -77,29 +77,29 @@ public class CRItems {
   public static void register(Registrate reg) {
     reg.creativeModeTab(() -> itemGroup, "Create Railways");
 
-    ITEM_BENCHCART = makeMinecart(reg, "benchcart", ()->CREntities.CART_BLOCK, Color.YELLOW)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
-        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
-      .lang("Minecart with Workbench")
-      .register();
+//    ITEM_BENCHCART = makeMinecart(reg, "benchcart", ()->CREntities.CART_BLOCK, Color.YELLOW)
+//      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+//        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+//      .lang("Minecart with Workbench")
+//      .register();
 
-    ITEM_JUKEBOXCART = makeMinecart(reg, "jukeboxcart", ()->CREntities.CART_JUKEBOX, Color.RED)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
-        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
-      .lang("Minecart with Jukebox")
-      .register();
+//    ITEM_JUKEBOXCART = makeMinecart(reg, "jukeboxcart", ()->CREntities.CART_JUKEBOX, Color.RED)
+//      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
+//        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+//      .lang("Minecart with Jukebox")
+//      .register();
 
-    ITEM_STEAMCART = makeMinecart(reg, "steamcart", ()->CREntities.CART_STEAM, Color.ORANGE)
-      .recipe((ctx,prov)-> ShapedRecipeBuilder.shaped(ctx.get())
-        .pattern("ctp")
-        .pattern(" u ")
-        .define('c', AllBlocks.COGWHEEL.get())
-        .define('t', AllBlocks.FLUID_TANK.get())
-        .define('p', AllItems.COPPER_SHEET.get())
-        .define('u', Items.MINECART)
-        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov)
-      )
-      .lang("Steam-Powered Minecart").register();
+//    ITEM_STEAMCART = makeMinecart(reg, "steamcart", ()->CREntities.CART_STEAM, Color.ORANGE)
+//      .recipe((ctx,prov)-> ShapedRecipeBuilder.shaped(ctx.get())
+//        .pattern("ctp")
+//        .pattern(" u ")
+//        .define('c', AllBlocks.COGWHEEL.get())
+//        .define('t', AllBlocks.FLUID_TANK.get())
+//        .define('p', AllItems.COPPER_SHEET.get())
+//        .define('u', Items.MINECART)
+//        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov)
+//      )
+//      .lang("Steam-Powered Minecart").register();
 
     ITEM_CONDUCTOR_CAP = new HashMap<>();
     for (DyeColor color : DyeColor.values()) {
