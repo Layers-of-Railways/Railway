@@ -87,7 +87,9 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   protected boolean validForHolding(ItemStack stack) {
-    return stack.is(AllTags.AllItemTags.TOOLBOXES.tag);
+    //Must be in main hand, otherwise it can't be retrieved
+    //Add items as conductor gets functionality relating to them
+    return getEquipmentSlotForItem(stack) == EquipmentSlot.MAINHAND && stack.is(AllTags.AllItemTags.TOOLBOXES.tag);
   }
 
   @Override
@@ -95,6 +97,17 @@ public class ConductorEntity extends AbstractGolem {
     if (player.getItemInHand(hand).getItem() instanceof DyeItem di) {
       setColor (di.getDyeColor());
       if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
+      return InteractionResult.SUCCESS;
+    } else if (this.getMainHandItem().isEmpty() && validForHolding(player.getItemInHand(hand))) {
+      if (this.equipItemIfPossible(player.getItemInHand(hand))) {
+        player.setItemInHand(hand, ItemStack.EMPTY);
+        return InteractionResult.SUCCESS;
+      }
+    } else if (this.getMainHandItem().is(AllTags.AllItemTags.TOOLBOXES.tag)) {
+      if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
+        player.setItemInHand(hand, this.getMainHandItem());
+        this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+      }
       return InteractionResult.SUCCESS;
     }
     return super.mobInteract(player, hand);
@@ -109,7 +122,7 @@ public class ConductorEntity extends AbstractGolem {
   public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
     if (!(stack.getItem() instanceof ConductorCapItem cap)) return null;
     ConductorEntity result = new ConductorEntity(CREntities.CONDUCTOR.get(), level);
-    result.setPos(pos.getX(), pos.getY(), pos.getZ());
+    result.setPos(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
     result.setColor(cap.color);
     result.equipItemIfPossible(stack);
     level.addFreshEntity(result);
