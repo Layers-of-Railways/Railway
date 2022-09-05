@@ -94,7 +94,7 @@ public class CREntities {
     CONDUCTOR = reg.entity("conductor", ConductorEntity::new, MobCategory.CREATURE)
       .renderer(()-> ConductorRenderer::new)
       .lang("Conductor")
-      .properties(p -> p.sized(2, 1.7f).fireImmune())
+      .properties(p -> p.sized(0.6f, 1.5f).fireImmune())
       .loot((table, type)-> table.add(type, new LootTable.Builder()))
       .attributes(ConductorEntity::createAttributes)
       .register();

@@ -3,8 +3,11 @@ package com.railwayteam.railways.content.Conductor;
 import com.jozufozu.flywheel.repack.joml.Vector3i;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CREntities;
-import com.railwayteam.railways.registry.CRItems;
+import com.simibubi.create.AllTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,10 +15,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -39,8 +44,6 @@ import net.minecraftforge.eventbus.api.Event;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConductorEntity extends AbstractGolem {
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
@@ -76,6 +79,15 @@ public class ConductorEntity extends AbstractGolem {
       .add(Attributes.MAX_HEALTH, 100.0D)
       .add(Attributes.MOVEMENT_SPEED, 0.25D)
       .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+  }
+
+  @Override
+  protected float getStandingEyeHeight(@NotNull Pose pPose, @NotNull EntityDimensions pDimensions) {
+    return pDimensions.height * 0.76f;
+  }
+
+  protected boolean validForHolding(ItemStack stack) {
+    return stack.is(AllTags.AllItemTags.TOOLBOXES.tag);
   }
 
   @Override
@@ -118,6 +130,8 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   boolean isLookingAtMe (Player player) {
+    if (player.isSpectator())
+      return false;
     boolean looking = false;
     ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
     if (isCorrectEngineerCap(helmet) || !helmet.isEnderMask(player, null)) {
@@ -206,6 +220,7 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canUse () {
+      this.target = conductor.entityData.get(BLOCK);
       if (this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
       // else search
       for (int y= -REACH.y; y< REACH.y; y++) {
@@ -230,6 +245,20 @@ public class ConductorEntity extends AbstractGolem {
 
     public void tick () {
       this.conductor.lookControl.setLookAt(target.getX(), target.getY(), target.getZ());
+    }
+  }
+
+  @Override
+  public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
+    super.addAdditionalSaveData(pCompound);
+    pCompound.put("target", NbtUtils.writeBlockPos(getEntityData().get(BLOCK)));
+  }
+
+  @Override
+  public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
+    super.readAdditionalSaveData(pCompound);
+    if (pCompound.contains("target", Tag.TAG_COMPOUND)) {
+      getEntityData().set(BLOCK, NbtUtils.readBlockPos(pCompound.getCompound("target")));
     }
   }
 }

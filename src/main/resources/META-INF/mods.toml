@@ -8,7 +8,7 @@ version="${file.jarVersion}"
 displayName="Railways"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/railways"
 credits="Thanks to someone i guess"
-authors="Grimmauld, Spirolateral, Pannoniae, CaveJohnson376, Shura, D'Arcy Olla, YeetusDiabetes"
+authors="Grimmauld, Spirolateral, Pannoniae, CaveJohnson376, Shura, D'Arcy Olla, YeetusDiabetes, Slimeist"
 description='''This mod is WIP and something to do with trains'''
 
 [[dependencies.railways]] #optional
