@@ -1,10 +1,11 @@
 package com.railwayteam.railways.content.Conductor;
 
 import com.jozufozu.flywheel.repack.joml.Vector3i;
-import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CREntities;
-import com.simibubi.create.AllTags;
+import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -12,9 +13,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +43,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -53,6 +60,7 @@ public class ConductorEntity extends AbstractGolem {
   private static final Vector3i REACH = new Vector3i(3, 2, 3);
 
   private ConductorFakePlayer fakePlayer = null;
+  MountedToolboxHolder toolboxHolder = null;
 
   public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
@@ -86,10 +94,62 @@ public class ConductorEntity extends AbstractGolem {
     return pDimensions.height * 0.76f;
   }
 
-  protected boolean validForHolding(ItemStack stack) {
-    //Must be in main hand, otherwise it can't be retrieved
-    //Add items as conductor gets functionality relating to them
-    return getEquipmentSlotForItem(stack) == EquipmentSlot.MAINHAND && stack.is(AllTags.AllItemTags.TOOLBOXES.tag);
+  protected boolean isToolbox(ItemStack stack) {
+    return stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ToolboxBlock;
+  }
+
+  public boolean isCarryingToolbox() {
+    return toolboxHolder != null;
+  }
+
+  public ItemStack getToolboxDisplayStack() {
+    if (isCarryingToolbox()) {
+      return toolboxHolder.getDisplayStack();
+    }
+    return ItemStack.EMPTY;
+  }
+
+  @Nullable
+  public MountedToolboxHolder getToolboxHolder() {
+    return toolboxHolder;
+  }
+
+  @NotNull
+  public MountedToolboxHolder getOrCreateToolboxHolder() {
+    if (toolboxHolder == null) {
+      toolboxHolder = new MountedToolboxHolder(this, DyeColor.BROWN);
+    }
+    return toolboxHolder;
+  }
+
+  public void equipToolbox(ItemStack stack) {
+    if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ToolboxBlock) {
+      toolboxHolder = new MountedToolboxHolder(this, ((ToolboxBlock) blockItem.getBlock()).getColor());
+      toolboxHolder.readFromItem(stack);
+      toolboxHolder.sendData();
+    }
+  }
+
+  @Override
+  public void startSeenByPlayer(@NotNull ServerPlayer pServerPlayer) {
+    super.startSeenByPlayer(pServerPlayer);
+    if (toolboxHolder != null)
+      toolboxHolder.sendData();
+  }
+
+  public ItemStack unequipToolbox() {
+    if (level.isClientSide || toolboxHolder == null) {
+      toolboxHolder = null;
+      return ItemStack.EMPTY;
+    }
+    ItemStack itemStack = toolboxHolder.getCloneItemStack();
+
+    toolboxHolder = null;
+    return itemStack;
+  }
+
+  protected void openToolbox(Player player) {
+    NetworkHooks.openGui((ServerPlayer) player, this.toolboxHolder, this.toolboxHolder::sendToContainer);
   }
 
   @Override
@@ -98,15 +158,15 @@ public class ConductorEntity extends AbstractGolem {
       setColor (di.getDyeColor());
       if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
       return InteractionResult.SUCCESS;
-    } else if (this.getMainHandItem().isEmpty() && validForHolding(player.getItemInHand(hand))) {
-      if (this.equipItemIfPossible(player.getItemInHand(hand))) {
-        player.setItemInHand(hand, ItemStack.EMPTY);
-        return InteractionResult.SUCCESS;
-      }
-    } else if (this.getMainHandItem().is(AllTags.AllItemTags.TOOLBOXES.tag)) {
+    } else if (!this.isCarryingToolbox() && isToolbox(player.getItemInHand(hand))) {
+      this.equipToolbox(player.getItemInHand(hand));
+      player.getItemInHand(hand).shrink(1);
+      return InteractionResult.SUCCESS;
+    } else if (this.isCarryingToolbox()) {
       if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
-        player.setItemInHand(hand, this.getMainHandItem());
-        this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        player.setItemInHand(hand, this.unequipToolbox());
+      } else if (!level.isClientSide) {
+        openToolbox(player);
       }
       return InteractionResult.SUCCESS;
     }
@@ -117,6 +177,7 @@ public class ConductorEntity extends AbstractGolem {
   public void tick() {
     super.tick();
     if (fakePlayer == null && !level.isClientSide) fakePlayer = new ConductorFakePlayer((ServerLevel)level);
+    if (toolboxHolder != null) toolboxHolder.tick();
   }
 
   public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
@@ -169,6 +230,15 @@ public class ConductorEntity extends AbstractGolem {
 
   public boolean canUseBlock (BlockState state) {
     return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER);
+  }
+
+  @Override
+  protected void dropCustomDeathLoot(@NotNull DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+    super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+    ItemStack holdingStack = this.unequipToolbox();
+    if (!holdingStack.isEmpty()) {
+      this.spawnAtLocation(holdingStack);
+    }
   }
 
   static class ConductorLookedAtGoal extends Goal {
@@ -262,16 +332,32 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   @Override
-  public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
-    super.addAdditionalSaveData(pCompound);
-    pCompound.put("target", NbtUtils.writeBlockPos(getEntityData().get(BLOCK)));
+  public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
+    super.addAdditionalSaveData(nbt);
+    nbt.put("target", NbtUtils.writeBlockPos(getEntityData().get(BLOCK)));
+    if (toolboxHolder != null) {
+      CompoundTag toolboxTag = new CompoundTag();
+      toolboxHolder.write(toolboxTag, false);
+      nbt.put("toolboxHolder", toolboxTag);
+    }
   }
 
   @Override
-  public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
-    super.readAdditionalSaveData(pCompound);
-    if (pCompound.contains("target", Tag.TAG_COMPOUND)) {
-      getEntityData().set(BLOCK, NbtUtils.readBlockPos(pCompound.getCompound("target")));
+  public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
+    super.readAdditionalSaveData(nbt);
+    if (nbt.contains("target", Tag.TAG_COMPOUND)) {
+      getEntityData().set(BLOCK, NbtUtils.readBlockPos(nbt.getCompound("target")));
     }
+    if (nbt.contains("toolboxHolder", Tag.TAG_COMPOUND)) {
+      toolboxHolder = MountedToolboxHolder.read(this, nbt.getCompound("toolboxHolder"));
+    } else {
+      toolboxHolder = null;
+    }
+  }
+
+  @Override
+  public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
+    //TODO
+    return super.getCapability(capability, facing);
   }
 }

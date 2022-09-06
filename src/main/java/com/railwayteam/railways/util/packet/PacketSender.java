@@ -9,7 +9,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class PacketSender {
-  private static final String PROTOCOL_VER = "1";
+  private static final String PROTOCOL_VER = "2";
   private static final ResourceLocation CHANNEL_ID = new ResourceLocation(Railways.MODID, "main");
 
   public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
@@ -21,6 +21,7 @@ public class PacketSender {
   public static void register () {
     int uid = 0;
     CHANNEL.registerMessage(uid++, JukeboxCartPacket.class, JukeboxCartPacket::encode, JukeboxCartPacket::new, JukeboxCartPacket::handle);
+    CHANNEL.registerMessage(uid++, MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::encode, MountedToolboxSyncPacket::new, MountedToolboxSyncPacket::handle);
   }
 
   public static void updateJukeboxClientside (MinecartJukebox sender, ItemStack newDisc) {
