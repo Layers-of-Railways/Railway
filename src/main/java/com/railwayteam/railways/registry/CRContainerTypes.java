@@ -2,7 +2,6 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxContainer;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxScreen;
-import com.simibubi.create.Create;
 import com.simibubi.create.repack.registrate.Registrate;
 import com.simibubi.create.repack.registrate.builders.MenuBuilder;
 import com.simibubi.create.repack.registrate.util.entry.MenuEntry;
@@ -11,7 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
-public class CrContainerTypes {
+public class CRContainerTypes {
   public static MenuEntry<MountedToolboxContainer> MOUNTED_TOOLBOX;
 
   public static void register(Registrate reg) {

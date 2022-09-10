@@ -107,7 +107,7 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
       return;
     CompoundTag nbt = new CompoundTag();
     this.write(nbt, true);
-    PacketSender.CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> this.parent), new MountedToolboxSyncPacket(this.parent, nbt));
+    PacketSender.syncMountedToolboxNBT(this.parent, nbt);
   }
 
   public Level getLevel() {

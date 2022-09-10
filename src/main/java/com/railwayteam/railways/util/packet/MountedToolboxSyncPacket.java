@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,7 +13,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MountedToolboxSyncPacket {
+public class MountedToolboxSyncPacket extends SimplePacketBase {
   int id;
   CompoundTag nbt;
 
@@ -26,24 +27,26 @@ public class MountedToolboxSyncPacket {
     nbt = buf.readNbt();
   }
 
-  public static void encode(MountedToolboxSyncPacket packet, FriendlyByteBuf buf) {
-    buf.writeInt(packet.id);
-    buf.writeNbt(packet.nbt);
+  @Override
+  public void write(FriendlyByteBuf buffer) {
+    buffer.writeInt(this.id);
+    buffer.writeNbt(this.nbt);
   }
 
-  public static void handle(MountedToolboxSyncPacket packet, Supplier<NetworkEvent.Context> supplier) {
-    supplier.get().enqueueWork(()-> {
-      DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> ()-> __handle(packet, supplier));
+  @Override
+  public void handle(Supplier<NetworkEvent.Context> context) {
+    context.get().enqueueWork(()-> {
+      DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> ()-> this.__handle(context));
     });
-    supplier.get().setPacketHandled(true);
+    context.get().setPacketHandled(true);
   }
 
-  private static void __handle(MountedToolboxSyncPacket packet, Supplier<NetworkEvent.Context> supplier) {
+  private void __handle(Supplier<NetworkEvent.Context> supplier) {
     Level level = Minecraft.getInstance().level;
     if (level != null) {
-      Entity target = level.getEntity(packet.id);
+      Entity target = level.getEntity(this.id);
       if (target instanceof ConductorEntity conductor) {
-        conductor.getOrCreateToolboxHolder().read(packet.nbt, true);
+        conductor.getOrCreateToolboxHolder().read(this.nbt, true);
       }
     }
   }

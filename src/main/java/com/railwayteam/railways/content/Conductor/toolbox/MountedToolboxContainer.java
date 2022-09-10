@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.Conductor.toolbox;
 
 import com.railwayteam.railways.content.Conductor.ConductorEntity;
-import com.railwayteam.railways.registry.CrContainerTypes;
+import com.railwayteam.railways.registry.CRContainerTypes;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import com.simibubi.create.foundation.gui.container.ContainerBase;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class MountedToolboxContainer extends ContainerBase<ConductorEntity> {
   }
 
   public static MountedToolboxContainer create(int id, Inventory inv, ConductorEntity entity) {
-    return new MountedToolboxContainer(CrContainerTypes.MOUNTED_TOOLBOX.get(), id, inv, entity);
+    return new MountedToolboxContainer(CRContainerTypes.MOUNTED_TOOLBOX.get(), id, inv, entity);
   }
 
   @Override

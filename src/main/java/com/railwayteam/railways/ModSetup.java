@@ -13,8 +13,8 @@ public class ModSetup {
     CRBlocks.register(reg);
     CRBlockEntities.register(reg);
     CREntities.register(reg);
-    CrContainerTypes.register(reg);
-    PacketSender.register();
+    CRContainerTypes.register(reg);
+    CRPackets.registerPackets();
   }
 }
 
