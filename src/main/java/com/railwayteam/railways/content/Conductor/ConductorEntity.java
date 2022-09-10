@@ -47,6 +47,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -357,7 +359,25 @@ public class ConductorEntity extends AbstractGolem {
 
   @Override
   public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-    //TODO
+    if (isCarryingToolbox() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return toolboxHolder.getInventoryProvider().cast();
+    }
     return super.getCapability(capability, facing);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    super.invalidateCaps();
+    if (isCarryingToolbox()) {
+      toolboxHolder.invalidateCaps();
+    }
+  }
+
+  @Override
+  public void reviveCaps() {
+    super.reviveCaps();
+    if (isCarryingToolbox()) {
+      toolboxHolder.reviveCaps();
+    }
   }
 }

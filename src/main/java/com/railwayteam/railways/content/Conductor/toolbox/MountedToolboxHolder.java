@@ -221,4 +221,16 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
 
     return stack;
   }
+
+  public LazyOptional<IItemHandler> getInventoryProvider() {
+    return inventoryProvider;
+  }
+
+  public void invalidateCaps() {
+    inventoryProvider.invalidate();
+  }
+
+  public void reviveCaps() {
+    inventoryProvider = LazyOptional.of(() -> inventory);
+  }
 }
