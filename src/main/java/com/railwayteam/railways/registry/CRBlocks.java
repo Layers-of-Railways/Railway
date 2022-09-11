@@ -1,20 +1,15 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.base.CTSpriteShifts;
-import com.railwayteam.railways.base.FacingBlockCTBehaviour;
-import com.railwayteam.railways.content.*;
 import com.railwayteam.railways.content.Boiler.BoilerBlock;
-import com.railwayteam.railways.content.Tender.TenderBlock;
+import com.railwayteam.railways.content.HydraulicPistonBlock;
 import com.railwayteam.railways.content.Steamcart.SteamCartBlock;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.repack.registrate.Registrate;
-import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import com.railwayteam.railways.content.Tender.TenderBlock;;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class CRBlocks {
-  public static BlockEntry<TenderBlock>         BLOCK_TENDER;
+  public static BlockEntry<TenderBlock> BLOCK_TENDER;
   public static BlockEntry<BoilerBlock>          BLOCK_BOILER;
   public static BlockEntry<HydraulicPistonBlock> BLOCK_HYDRAULIC_PISTON;
   public static BlockEntry<SteamCartBlock>       BLOCK_STEAMCART;

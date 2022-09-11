@@ -10,8 +10,8 @@ import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.repack.registrate.Registrate;
-import com.simibubi.create.repack.registrate.util.entry.EntityEntry;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 public class CREntities {
-  public static EntityEntry<SteamCartEntity>   CART_STEAM;
+  public static EntityEntry<SteamCartEntity> CART_STEAM;
   public static EntityEntry<MinecartWorkbench> CART_BLOCK;
   public static EntityEntry<MinecartJukebox>   CART_JUKEBOX;
 

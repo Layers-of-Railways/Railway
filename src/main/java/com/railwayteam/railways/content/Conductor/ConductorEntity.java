@@ -1,11 +1,11 @@
 package com.railwayteam.railways.content.Conductor;
 
-import com.jozufozu.flywheel.repack.joml.Vector3i;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -59,7 +59,7 @@ public class ConductorEntity extends AbstractGolem {
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
 
   // keep this small for performance (plus conductors are smol)
-  private static final Vector3i REACH = new Vector3i(3, 2, 3);
+  private static final Vec3i REACH = new Vec3i(3, 2, 3);
 
   private ConductorFakePlayer fakePlayer = null;
   MountedToolboxHolder toolboxHolder = null;
@@ -308,9 +308,9 @@ public class ConductorEntity extends AbstractGolem {
       this.target = conductor.entityData.get(BLOCK);
       if (this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
       // else search
-      for (int y= -REACH.y; y< REACH.y; y++) {
-        for (int x= -REACH.x; x< REACH.x; x++) {
-          for (int z= -REACH.z; z< REACH.z; z++) {
+      for (int y= -REACH.getY(); y< REACH.getY(); y++) {
+        for (int x= -REACH.getX(); x< REACH.getX(); x++) {
+          for (int z= -REACH.getZ(); z< REACH.getZ(); z++) {
             BlockPos at = this.conductor.blockPosition().offset(x, y, z);
             BlockState state = this.conductor.level.getBlockState(at);
             if (this.conductor.canUseBlock(state)) {

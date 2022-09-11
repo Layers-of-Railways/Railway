@@ -2,7 +2,7 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.content.Conductor.ConductorCapModel;
 import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
-import com.simibubi.create.repack.registrate.Registrate;
+import com.tterrag.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;

@@ -2,10 +2,10 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxContainer;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxScreen;
-import com.simibubi.create.repack.registrate.Registrate;
-import com.simibubi.create.repack.registrate.builders.MenuBuilder;
-import com.simibubi.create.repack.registrate.util.entry.MenuEntry;
-import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.builders.MenuBuilder;
+import com.tterrag.registrate.util.entry.MenuEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.world.inventory.AbstractContainerMenu;

@@ -1,8 +1,7 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.registry.*;
-import com.railwayteam.railways.util.packet.PacketSender;
-import com.simibubi.create.repack.registrate.Registrate;
+import com.tterrag.registrate.Registrate;
 
 public class ModSetup {
   public void init() {

@@ -2,7 +2,6 @@ package com.railwayteam.railways.content.Conductor;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.repack.registrate.util.entry.BlockEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;

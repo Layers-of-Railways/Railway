@@ -23,3 +23,9 @@ description='''This mod is WIP and something to do with trains'''
     versionRange="[1.18, 1.19)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.railways]]
+modId="create"
+mandatory=true
+versionRange="[0.5.0.d,)"
+ordering="NONE"
+side="BOTH"
