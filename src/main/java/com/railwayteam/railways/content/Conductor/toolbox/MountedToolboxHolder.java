@@ -4,9 +4,12 @@ import com.railwayteam.railways.content.Conductor.ConductorEntity;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
+import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,10 +23,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.util.*;
 
 //Sort of simulates a ToolboxTileEntity, but carried by a conductor
 public class MountedToolboxHolder implements MenuProvider, Nameable {
@@ -94,11 +94,58 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
     }
   }
 
-  private void tickAudio() {
+  private void tickPlayers() {
     //TODO
   }
 
-  private void tickPlayers() {
+  public void unequipTracked() {
+    if (parent.level.isClientSide)
+      return;
+
+    Set<ServerPlayer> affected = new HashSet<>();
+
+    for (Iterator<Map.Entry<Integer, WeakHashMap<Player, Integer>>> toolboxSlots = connectedPlayers.entrySet()
+        .iterator(); toolboxSlots.hasNext();) {
+
+      Map.Entry<Integer, WeakHashMap<Player, Integer>> toolboxSlotEntry = toolboxSlots.next();
+      WeakHashMap<Player, Integer> set = toolboxSlotEntry.getValue();
+
+      for (Iterator<Map.Entry<Player, Integer>> playerEntries = set.entrySet()
+          .iterator(); playerEntries.hasNext();) {
+        Map.Entry<Player, Integer> playerEntry = playerEntries.next();
+
+        Player player = playerEntry.getKey();
+        int hotbarSlot = playerEntry.getValue();
+
+        ToolboxHandler.unequip(player, hotbarSlot, false);
+        if (player instanceof ServerPlayer)
+          affected.add((ServerPlayer) player);
+      }
+    }
+
+    for (ServerPlayer player : affected)
+      ToolboxHandler.syncData(player);
+    connectedPlayers.clear();
+  }
+
+  public void unequip(int slot, Player player, int hotbarSlot, boolean keepItems) {
+    if (!connectedPlayers.containsKey(slot))
+      return;
+    connectedPlayers.get(slot)
+        .remove(player);
+    if (keepItems)
+      return;
+
+    Inventory playerInv = player.getInventory();
+    ItemStack playerStack = playerInv.getItem(hotbarSlot);
+    ItemStack toInsert = ToolboxInventory.cleanItemNBT(playerStack.copy());
+    ItemStack remainder = inventory.distributeToCompartment(toInsert, slot, false);
+
+    if (remainder.getCount() != toInsert.getCount())
+      playerInv.setItem(hotbarSlot, remainder);
+  }
+
+  private void tickAudio() {
     //TODO
   }
 
@@ -154,6 +201,19 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
 
   public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
     return MountedToolboxContainer.create(id, inv, this.parent);
+  }
+
+  public void connectPlayer(int slot, Player player, int hotbarSlot) {
+    if (parent.level.isClientSide)
+      return;
+    WeakHashMap<Player, Integer> map = connectedPlayers.computeIfAbsent(slot, WeakHashMap::new);
+    Integer previous = map.get(player);
+    if (previous != null) {
+      if (previous == hotbarSlot)
+        return;
+      ToolboxHandler.unequip(player, previous, false);
+    }
+    map.put(player, hotbarSlot);
   }
 
   public void readInventory(CompoundTag compoundTag) {
