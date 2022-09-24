@@ -26,6 +26,8 @@ public class MountedToolboxContainer extends ContainerBase<ConductorEntity> {
 
   public MountedToolboxContainer(MenuType<?> type, int id, Inventory inv, ConductorEntity entity) {
     super(type, id, inv, entity);
+    if (entity.isCarryingToolbox())
+      entity.getToolboxHolder().startOpen(player);
   }
 
   public static MountedToolboxContainer create(int id, Inventory inv, ConductorEntity entity) {
@@ -147,7 +149,8 @@ public class MountedToolboxContainer extends ContainerBase<ConductorEntity> {
   public void removed(Player playerIn) {
     super.removed(playerIn);
     if (!playerIn.level.isClientSide) {
-      //TODO contentHolder.stopOpen(playerIn);
+      if (contentHolder.isCarryingToolbox())
+        contentHolder.getToolboxHolder().stopOpen(playerIn);
     }
   }
 }

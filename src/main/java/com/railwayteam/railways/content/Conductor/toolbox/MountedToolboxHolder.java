@@ -1,15 +1,18 @@
 package com.railwayteam.railways.content.Conductor.toolbox;
 
 import com.railwayteam.railways.content.Conductor.ConductorEntity;
-import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
+import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
+import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,21 +21,31 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 //Sort of simulates a ToolboxTileEntity, but carried by a conductor
 public class MountedToolboxHolder implements MenuProvider, Nameable {
+
+  public LerpedFloat lid = LerpedFloat.linear()
+      .startWithValue(0);
+
+  public LerpedFloat drawers = LerpedFloat.linear()
+      .startWithValue(0);
+
   protected ConductorEntity parent;
   UUID uniqueId;
   MountedToolboxInventory inventory;
   LazyOptional<IItemHandler> inventoryProvider;
   DyeColor color;
   Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers;
+  protected int openCount;
 
   private boolean initialized = false;
   protected int lazyTickCounter;
@@ -62,13 +75,17 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
     return color;
   }
 
+  public ConductorEntity getParent() {
+    return parent;
+  }
+
   public void initialize() {
-    //TODO toolbox handler
+    IMountedToolboxHandler.onLoad(parent);
     this.lazyTick();
   }
 
   public void setRemoved() {
-    //TODO toolbox handler
+    IMountedToolboxHandler.onUnload(parent);
   }
 
   public void setLazyTickRate(int slowTickRate) {
@@ -92,10 +109,111 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
     } else {
       tickPlayers();
     }
+
+    lid.chase(openCount > 0 ? 1 : 0, 0.2f, LerpedFloat.Chaser.LINEAR);
+    drawers.chase(openCount > 0 ? 1 : 0, 0.2f, LerpedFloat.Chaser.EXP);
+    lid.tickChaser();
+    drawers.tickChaser();
   }
 
   private void tickPlayers() {
-    //TODO
+    boolean update = false;
+
+    for (Iterator<Map.Entry<Integer, WeakHashMap<Player, Integer>>> toolboxSlots = connectedPlayers.entrySet()
+        .iterator(); toolboxSlots.hasNext();) {
+
+      Map.Entry<Integer, WeakHashMap<Player, Integer>> toolboxSlotEntry = toolboxSlots.next();
+      WeakHashMap<Player, Integer> set = toolboxSlotEntry.getValue();
+      int slot = toolboxSlotEntry.getKey();
+
+      ItemStack referenceItem = inventory.filters.get(slot);
+      boolean clear = referenceItem.isEmpty();
+
+      for (Iterator<Map.Entry<Player, Integer>> playerEntries = set.entrySet()
+          .iterator(); playerEntries.hasNext();) {
+        Map.Entry<Player, Integer> playerEntry = playerEntries.next();
+
+        Player player = playerEntry.getKey();
+        int hotbarSlot = playerEntry.getValue();
+
+        if (!clear && !IMountedToolboxHandler.withinRange(player, parent))
+          continue;
+
+        Inventory playerInv = player.getInventory();
+        ItemStack playerStack = playerInv.getItem(hotbarSlot);
+
+        if (clear || !playerStack.isEmpty()
+            && !MountedToolboxInventory.canItemsShareCompartment(playerStack, referenceItem)) {
+          player.getPersistentData()
+              .getCompound("CreateToolboxData")
+              .remove(String.valueOf(hotbarSlot));
+          playerEntries.remove();
+          if (player instanceof ServerPlayer)
+            ToolboxHandler.syncData(player);
+          continue;
+        }
+
+        int count = playerStack.getCount();
+        int targetAmount = (referenceItem.getMaxStackSize() + 1) / 2;
+
+        if (count < targetAmount) {
+          int amountToReplenish = targetAmount - count;
+
+          if (isOpenInContainer(player)) {
+            ItemStack extracted = inventory.takeFromCompartment(amountToReplenish, slot, true);
+            if (!extracted.isEmpty()) {
+              ToolboxHandler.unequip(player, hotbarSlot, false);
+              ToolboxHandler.syncData(player);
+              continue;
+            }
+          }
+
+          ItemStack extracted = inventory.takeFromCompartment(amountToReplenish, slot, false);
+          if (!extracted.isEmpty()) {
+            update = true;
+            ItemStack template = playerStack.isEmpty() ? extracted : playerStack;
+            playerInv.setItem(hotbarSlot,
+                ItemHandlerHelper.copyStackWithSize(template, count + extracted.getCount()));
+          }
+        }
+
+        if (count > targetAmount) {
+          int amountToDeposit = count - targetAmount;
+          ItemStack toDistribute = ItemHandlerHelper.copyStackWithSize(playerStack, amountToDeposit);
+
+          if (isOpenInContainer(player)) {
+            int deposited = amountToDeposit - inventory.distributeToCompartment(toDistribute, slot, true)
+                .getCount();
+            if (deposited > 0) {
+              ToolboxHandler.unequip(player, hotbarSlot, true);
+              ToolboxHandler.syncData(player);
+              continue;
+            }
+          }
+
+          int deposited = amountToDeposit - inventory.distributeToCompartment(toDistribute, slot, false)
+              .getCount();
+          if (deposited > 0) {
+            update = true;
+            playerInv.setItem(hotbarSlot,
+                ItemHandlerHelper.copyStackWithSize(playerStack, count - deposited));
+          }
+        }
+      }
+
+      if (clear)
+        toolboxSlots.remove();
+    }
+
+    if (update)
+
+      sendData();
+
+  }
+
+  private boolean isOpenInContainer(Player player) {
+    return player.containerMenu instanceof MountedToolboxContainer
+        && ((MountedToolboxContainer) player.containerMenu).contentHolder == parent;
   }
 
   public void unequipTracked() {
@@ -104,16 +222,11 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
 
     Set<ServerPlayer> affected = new HashSet<>();
 
-    for (Iterator<Map.Entry<Integer, WeakHashMap<Player, Integer>>> toolboxSlots = connectedPlayers.entrySet()
-        .iterator(); toolboxSlots.hasNext();) {
+    for (Map.Entry<Integer, WeakHashMap<Player, Integer>> toolboxSlotEntry : connectedPlayers.entrySet()) {
 
-      Map.Entry<Integer, WeakHashMap<Player, Integer>> toolboxSlotEntry = toolboxSlots.next();
       WeakHashMap<Player, Integer> set = toolboxSlotEntry.getValue();
 
-      for (Iterator<Map.Entry<Player, Integer>> playerEntries = set.entrySet()
-          .iterator(); playerEntries.hasNext();) {
-        Map.Entry<Player, Integer> playerEntry = playerEntries.next();
-
+      for (Map.Entry<Player, Integer> playerEntry : set.entrySet()) {
         Player player = playerEntry.getKey();
         int hotbarSlot = playerEntry.getValue();
 
@@ -146,7 +259,22 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
   }
 
   private void tickAudio() {
-    //TODO
+    Vec3 vec = parent.position();
+    if (lid.settled()) {
+      if (openCount > 0 && lid.getChaseTarget() == 0) {
+        getLevel().playLocalSound(vec.x, vec.y, vec.z, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 0.25F,
+            getLevel().random.nextFloat() * 0.1F + 1.2F, true);
+        getLevel().playLocalSound(vec.x, vec.y, vec.z, SoundEvents.CHEST_OPEN, SoundSource.BLOCKS, 0.1F,
+            getLevel().random.nextFloat() * 0.1F + 1.1F, true);
+      }
+      if (openCount == 0 && lid.getChaseTarget() == 1)
+        getLevel().playLocalSound(vec.x, vec.y, vec.z, SoundEvents.CHEST_CLOSE, SoundSource.BLOCKS, 0.1F,
+            getLevel().random.nextFloat() * 0.1F + 1.1F, true);
+
+    } else if (openCount == 0 && lid.getChaseTarget() == 0 && lid.getValue(0) > 1 / 16f
+        && lid.getValue(1) < 1 / 16f)
+      getLevel().playLocalSound(vec.x, vec.y, vec.z, SoundEvents.IRON_DOOR_CLOSE, SoundSource.BLOCKS, 0.25F,
+          getLevel().random.nextFloat() * 0.1F + 1.2F, true);
   }
 
   public void sendData() {
@@ -164,7 +292,42 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
   public void setChanged() {}
 
   public void lazyTick() {
-    //TODO
+    updateOpenCount();
+    // keep re-advertising active TEs
+    IMountedToolboxHandler.onLoad(parent);
+  }
+
+  void updateOpenCount() {
+    if (getLevel().isClientSide)
+      return;
+    if (openCount == 0)
+      return;
+
+    int prevOpenCount = openCount;
+    openCount = 0;
+
+    for (Player playerentity : getLevel().getEntitiesOfClass(Player.class, new AABB(parent.position(), parent.position()).inflate(8)))
+      if (playerentity.containerMenu instanceof MountedToolboxContainer
+          && ((MountedToolboxContainer) playerentity.containerMenu).contentHolder == parent)
+        openCount++;
+
+    sendData();
+  }
+
+  public void startOpen(Player player) {
+    if (player.isSpectator())
+      return;
+    if (openCount < 0)
+      openCount = 0;
+    openCount++;
+    sendData();
+  }
+
+  public void stopOpen(Player player) {
+    if (player.isSpectator())
+      return;
+    openCount--;
+    sendData();
   }
 
   public static MountedToolboxHolder read(ConductorEntity parent, CompoundTag compound) {
@@ -181,8 +344,8 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
       this.uniqueId = compound.getUUID("UniqueId");
     if (compound.contains("CustomName", 8))
       this.customName = Component.Serializer.fromJson(compound.getString("CustomName"));
-    /*if (clientPacket)
-      openCount = compound.getInt("OpenCount");*/
+    if (clientPacket)
+      openCount = compound.getInt("OpenCount");
   }
 
   public void write(CompoundTag compound, boolean clientPacket) {
@@ -195,8 +358,8 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
 
     if (customName != null)
       compound.putString("CustomName", Component.Serializer.toJson(customName));
-    /*if (clientPacket)
-      compound.putInt("OpenCount", openCount);*/
+    if (clientPacket)
+      compound.putInt("OpenCount", openCount);
   }
 
   public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {

@@ -140,10 +140,14 @@ public class ConductorEntity extends AbstractGolem {
 
   public ItemStack unequipToolbox() {
     if (level.isClientSide || toolboxHolder == null) {
+      if (toolboxHolder != null)
+        toolboxHolder.setRemoved();
       toolboxHolder = null;
       return ItemStack.EMPTY;
     }
+    toolboxHolder.unequipTracked();
     ItemStack itemStack = toolboxHolder.getCloneItemStack();
+    toolboxHolder.setRemoved();
 
     toolboxHolder = null;
     return itemStack;
@@ -271,7 +275,7 @@ public class ConductorEntity extends AbstractGolem {
       ConductorFakePlayer fake = this.conductor.fakePlayer;
 
       // -- activate a button or lever --
-      if (this.conductor.canUseBlock(state)) {
+      if (this.conductor.canUseBlock(state) && fake != null) {
       //  Railways.LOGGER.info("I'm activating a block for you!");
 
         ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),

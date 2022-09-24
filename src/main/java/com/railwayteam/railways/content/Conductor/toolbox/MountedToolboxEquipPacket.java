@@ -4,7 +4,6 @@ import com.railwayteam.railways.content.Conductor.ConductorEntity;
 import com.simibubi.create.content.curiosities.toolbox.ItemReturnInvWrapper;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkEvent.Context;
 
@@ -102,7 +100,7 @@ public class MountedToolboxEquipPacket extends SimplePacketBase {
 			CompoundTag data = new CompoundTag();
 			data.putInt("Slot", slot);
 			data.putUUID("EntityUUID", conductorEntity.getUUID());
-//			data.put("Pos", NbtUtils.writeBlockPos(toolboxPos));
+			data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
 			compound.put(key, data);
 
 			player.getPersistentData()

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "com.railwayteam.railways.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.railways.refmap.json",
+  "mixins": [
+    "AccessorToolboxInventory",
+    "AccessorToolboxTileEntity",
+    "MixinToolboxHandler"
+  ],
+  "client": [
+    "client.MixinToolboxHandlerClient",
+    "client.AccessorToolboxHandlerClient"
+  ],
+  "minVersion": "0.8"
+}

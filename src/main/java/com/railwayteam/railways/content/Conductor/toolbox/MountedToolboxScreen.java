@@ -4,17 +4,15 @@ import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxContainer;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxDisposeAllPacket;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.container.AbstractSimiContainerScreen;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
 import com.simibubi.create.foundation.gui.widget.IconButton;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.client.renderer.Rect2i;
@@ -55,15 +53,11 @@ public class MountedToolboxScreen extends AbstractSimiContainerScreen<MountedToo
     color = menu.contentHolder.getToolboxHolder().getColor();
 
     confirmButton = new IconButton(leftPos + 30 + BG.width - 33, topPos + BG.height - 24, AllIcons.I_CONFIRM);
-    confirmButton.withCallback(() -> {
-      minecraft.player.closeContainer();
-    });
+    confirmButton.withCallback(() -> minecraft.player.closeContainer());
     addRenderableWidget(confirmButton);
 
     disposeButton = new IconButton(leftPos + 30 + 81, topPos + 69, AllIcons.I_TOOLBOX);
-    disposeButton.withCallback(() -> {
-      //TODO AllPackets.channel.sendToServer(new ToolboxDisposeAllPacket(menu.contentHolder.getBlockPos()));
-    });
+    disposeButton.withCallback(() -> CRPackets.channel.sendToServer(new MountedToolboxDisposeAllPacket(menu.contentHolder)));
     disposeButton.setToolTip(Lang.translateDirect("toolbox.depositBox"));
     addRenderableWidget(disposeButton);
 
@@ -143,7 +137,7 @@ public class MountedToolboxScreen extends AbstractSimiContainerScreen<MountedToo
     TransformStack.cast(ms)
         .pushPose()
         .translate(0, -6 / 16f, 12 / 16f)
-        //.rotateX(-105 * menu.contentHolder.lid.getValue(partialTicks))
+        .rotateX(-105 * menu.contentHolder.getToolboxHolder().lid.getValue(partialTicks))
         .translate(0, 6 / 16f, -12 / 16f);
     GuiGameElement.of(AllBlockPartials.TOOLBOX_LIDS.get(color))
         .render(ms);
@@ -152,7 +146,7 @@ public class MountedToolboxScreen extends AbstractSimiContainerScreen<MountedToo
     for (int offset : Iterate.zeroAndOne) {
       ms.pushPose();
       ms.translate(0, -offset * 1 / 8f,
-          0 * -.175f * (2 - offset));//menu.contentHolder.drawers.getValue(partialTicks) * -.175f * (2 - offset));
+          menu.contentHolder.getToolboxHolder().drawers.getValue(partialTicks) * -.175f * (2 - offset));
       GuiGameElement.of(AllBlockPartials.TOOLBOX_DRAWER)
           .render(ms);
       ms.popPose();

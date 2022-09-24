@@ -134,14 +134,20 @@ jar {
                 "Implementation-Title": project.name,
                 "Implementation-Version": project.version,
                 "Implementation-Vendor" :"grimmauld",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-                // "MixinConfigs"            : "${modid}.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "mixins.${modid}.json"
         ])
     }
 }
 
 mixin {
-    //add sourceSets.main, "${modid}.refmap.json"
+    add sourceSets.main, "mixins.${modid}.refmap.json"
+    config "mixins.${modid}.json"
+
+    debug.verbose = true
+    debug.export = true
+    dumpTargetOnFailure = true
+
 }
 
 task deobfJar(type: Jar) {
