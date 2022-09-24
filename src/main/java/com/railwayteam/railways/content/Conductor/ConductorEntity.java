@@ -9,7 +9,9 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -52,10 +54,32 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ConductorEntity extends AbstractGolem {
+
+
+  private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<Job>() {
+    public void write(FriendlyByteBuf buf, @NotNull Job job) {
+      buf.writeEnum(job);
+    }
+
+    public @NotNull Job read(FriendlyByteBuf buf) {
+      return buf.readEnum(Job.class);
+    }
+
+    public @NotNull Job copy(@NotNull Job job) {
+      return job;
+    }
+  };
+
+  static {
+    EntityDataSerializers.registerSerializer(JOB_SERIALIZER);
+  }
+
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
+  public static final EntityDataAccessor<Job> JOB = SynchedEntityData.defineId(ConductorEntity.class, JOB_SERIALIZER);
 
   // keep this small for performance (plus conductors are smol)
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
@@ -73,13 +97,16 @@ public class ConductorEntity extends AbstractGolem {
     super.defineSynchedData();
     this.entityData.define(COLOR, idFrom(defaultColor()));
     this.entityData.define(BLOCK, this.blockPosition());
+    this.entityData.define(JOB, Job.DEFAULT);
   }
 
   @Override
   protected void registerGoals () {
     super.registerGoals();
+    //NOTE: priority 0 is the highest priority, priority infinity lowest
     goalSelector.addGoal(2, new ConductorLookedAtGoal(this));
     goalSelector.addGoal(1, new ConductorPonderBlockGoal(this));
+    goalSelector.addGoal(1, new FollowToolboxPlayerGoal(this, 1.25d));
     goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 8f));
   }
 
@@ -128,6 +155,7 @@ public class ConductorEntity extends AbstractGolem {
       toolboxHolder = new MountedToolboxHolder(this, ((ToolboxBlock) blockItem.getBlock()).getColor());
       toolboxHolder.readFromItem(stack);
       toolboxHolder.sendData();
+      getEntityData().set(JOB, Job.TOOLBOX_CARRIER);
     }
   }
 
@@ -139,6 +167,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public ItemStack unequipToolbox() {
+    getEntityData().set(JOB, Job.DEFAULT);
     if (level.isClientSide || toolboxHolder == null) {
       if (toolboxHolder != null)
         toolboxHolder.setRemoved();
@@ -246,18 +275,88 @@ public class ConductorEntity extends AbstractGolem {
     }
   }
 
-  static class ConductorLookedAtGoal extends Goal {
-    private final ConductorEntity conductor;
+  static class JobBasedGoal extends Goal {
+
+    private final Job job;
+    protected final ConductorEntity conductor;
+
+    public JobBasedGoal(ConductorEntity conductor, Job job) {
+      this.conductor = conductor;
+      this.job = job;
+    }
+
+    @Override
+    public boolean canUse() {
+      return conductor.getEntityData().get(JOB) == job;
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+      return conductor.getEntityData().get(JOB) == job;
+    }
+  }
+
+  static class FollowToolboxPlayerGoal extends JobBasedGoal {
+
+    protected double speedModifier;
+    @Nullable
+    protected Player target;
+    protected int timeToRecalcPath;
+    public FollowToolboxPlayerGoal(ConductorEntity conductor, double speedModifier) {
+      super(conductor, Job.TOOLBOX_CARRIER);
+      this.speedModifier = speedModifier;
+    }
+
+    @Override
+    public void tick() {
+      super.tick();
+      if (--this.timeToRecalcPath <= 0) {
+        this.timeToRecalcPath = this.adjustedTickDelay(10);
+        if (this.conductor.distanceToSqr(target) > 4*4) {
+          this.conductor.getNavigation().moveTo(target, this.speedModifier);
+        } else {
+          this.conductor.getNavigation().stop();
+        }
+      }
+    }
+
+    @Override
+    public boolean canUse() {
+      return super.canUse() && conductor.isCarryingToolbox() && !conductor.getToolboxHolder().getConnectedPlayers().isEmpty();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+      return super.canContinueToUse() && conductor.isCarryingToolbox() && conductor.getToolboxHolder().getConnectedPlayers().contains(target) && target.isAlive() && !target.isSpectator();
+    }
+
+    @Override
+    public void start() {
+      super.start();
+      List<Player> players = conductor.getToolboxHolder().getConnectedPlayers();
+      target = players.get(conductor.random.nextInt(players.size()));
+    }
+
+    @Override
+    public void stop() {
+      super.stop();
+      target = null;
+    }
+  }
+
+  static class ConductorLookedAtGoal extends JobBasedGoal {
 
     @Nullable
     private LivingEntity target;
 
-    public ConductorLookedAtGoal (ConductorEntity conductor) {
-      this.conductor = conductor;
+    public ConductorLookedAtGoal(ConductorEntity conductor) {
+      super(conductor, Job.REDSTONE_OPERATOR);
     }
 
     @Override
     public boolean canUse () {
+      if (!super.canUse())
+        return false;
       for (Player player : this.conductor.level.players()) {
         if (player.hasLineOfSight(this.conductor)) {
           return ((conductor.distanceToSqr(player)) < 256) && conductor.isLookingAtMe(player);
@@ -297,17 +396,18 @@ public class ConductorEntity extends AbstractGolem {
     }
   }
 
-  static class ConductorPonderBlockGoal extends Goal {
-    private final ConductorEntity conductor;
+  static class ConductorPonderBlockGoal extends JobBasedGoal {
     private BlockPos target;
 
-    public ConductorPonderBlockGoal (ConductorEntity conductor) {
-      this.conductor  = conductor;
+    public ConductorPonderBlockGoal(ConductorEntity conductor) {
+      super(conductor, Job.REDSTONE_OPERATOR);
       this.target     = conductor.entityData.get(BLOCK);
     }
 
     @Override
     public boolean canUse () {
+      if (!super.canUse())
+        return false;
       this.target = conductor.entityData.get(BLOCK);
       if (this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
       // else search
@@ -340,16 +440,21 @@ public class ConductorEntity extends AbstractGolem {
   public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
     super.addAdditionalSaveData(nbt);
     nbt.put("target", NbtUtils.writeBlockPos(getEntityData().get(BLOCK)));
+    nbt.putByte("color", getEntityData().get(COLOR));
     if (toolboxHolder != null) {
       CompoundTag toolboxTag = new CompoundTag();
       toolboxHolder.write(toolboxTag, false);
       nbt.put("toolboxHolder", toolboxTag);
     }
+    nbt.putString("job", getEntityData().get(JOB).name());
   }
 
   @Override
   public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
     super.readAdditionalSaveData(nbt);
+    if (nbt.contains("color", Tag.TAG_BYTE)) {
+      getEntityData().set(COLOR, nbt.getByte("color"));
+    }
     if (nbt.contains("target", Tag.TAG_COMPOUND)) {
       getEntityData().set(BLOCK, NbtUtils.readBlockPos(nbt.getCompound("target")));
     }
@@ -357,6 +462,11 @@ public class ConductorEntity extends AbstractGolem {
       toolboxHolder = MountedToolboxHolder.read(this, nbt.getCompound("toolboxHolder"));
     } else {
       toolboxHolder = null;
+    }
+    if (nbt.contains("job", Tag.TAG_STRING)) {
+      getEntityData().set(JOB, Job.valueOf(nbt.getString("job")));
+    } else {
+      getEntityData().set(JOB, Job.DEFAULT);
     }
   }
 
@@ -382,5 +492,12 @@ public class ConductorEntity extends AbstractGolem {
     if (isCarryingToolbox()) {
       toolboxHolder.reviveCaps();
     }
+  }
+
+  public enum Job {
+    REDSTONE_OPERATOR,
+    TOOLBOX_CARRIER
+    ;
+    public static final Job DEFAULT = REDSTONE_OPERATOR;
   }
 }

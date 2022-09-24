@@ -116,6 +116,14 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
     drawers.tickChaser();
   }
 
+  public List<Player> getConnectedPlayers() {
+    Set<Player> players = new HashSet<>();
+    for (Map.Entry<Integer, WeakHashMap<Player, Integer>> entry : connectedPlayers.entrySet()) {
+       players.addAll(entry.getValue().keySet());
+    }
+    return players.stream().toList();
+  }
+
   private void tickPlayers() {
     boolean update = false;
 
