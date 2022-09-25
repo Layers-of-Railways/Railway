@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.Conductor;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
@@ -120,6 +121,10 @@ public class ConductorEntity extends AbstractGolem {
   @Override
   protected float getStandingEyeHeight(@NotNull Pose pPose, @NotNull EntityDimensions pDimensions) {
     return pDimensions.height * 0.76f;
+  }
+
+  public boolean canReach(Vec3i pos) {
+    return pos.distToCenterSqr(position()) <= REACH.distSqr(Vec3i.ZERO);
   }
 
   protected boolean isToolbox(ItemStack stack) {
@@ -292,7 +297,7 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canContinueToUse() {
-      return conductor.getEntityData().get(JOB) == job;
+      return this.canUse();
     }
   }
 
@@ -374,13 +379,16 @@ public class ConductorEntity extends AbstractGolem {
       ConductorFakePlayer fake = this.conductor.fakePlayer;
 
       // -- activate a button or lever --
-      if (this.conductor.canUseBlock(state) && fake != null) {
+      if (this.conductor.canReach(pos) && this.conductor.canUseBlock(state) && fake != null) {
       //  Railways.LOGGER.info("I'm activating a block for you!");
 
         ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
           ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fake);
         BlockHitResult hitResult = level.clip(context);
+        Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());
         Event.Result useBlock    = Event.Result.DEFAULT;
+        if (!pos.equals(hitResult.getBlockPos()))
+          return;
         if (!state.getShape(level, pos).isEmpty()) {
           PlayerInteractEvent.RightClickBlock event = ForgeHooks.onRightClickBlock(fake, InteractionHand.MAIN_HAND, pos, hitResult);
           useBlock = event.getUseBlock();
@@ -409,7 +417,7 @@ public class ConductorEntity extends AbstractGolem {
       if (!super.canUse())
         return false;
       this.target = conductor.entityData.get(BLOCK);
-      if (this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
+      if (this.conductor.canReach(target) && this.conductor.canUseBlock(this.conductor.level.getBlockState(this.target))) return true;
       // else search
       for (int y= -REACH.getY(); y< REACH.getY(); y++) {
         for (int x= -REACH.getX(); x< REACH.getX(); x++) {
