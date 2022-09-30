@@ -2,7 +2,6 @@ package com.railwayteam.railways.content.Conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import net.minecraft.client.model.HeadedModel;
@@ -20,19 +19,11 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Railways.MODID, "conductor_cap"), "main");
 
-	private static final Vector3f CAP_TILT = new Vector3f(-10f, 0f, 0f);
 	private final ModelPart cap;
-	private boolean isOnConductor;
 
 	public ConductorCapModel (ModelPart root) {
 		super(RenderType::armorCutoutNoCull);
 		this.cap = root.getChild("cap");
-		isOnConductor = false;
-	}
-
-	public ConductorCapModel (ModelPart root, boolean onConductor) {
-		this(root);
-		this.isOnConductor = onConductor;
 	}
 
 	public static LayerDefinition createBodyLayer () {
@@ -54,10 +45,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		if (isOnConductor) {
-			poseStack.translate(0d, 0.6d, -0.1d);
-			poseStack.mulPose(Quaternion.fromXYZDegrees(CAP_TILT));
-		}
 		cap.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
@@ -67,6 +54,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	}
 
 	public void setProperties (HumanoidModel<?> base) {
-		this.cap.copyFrom(base.head);
+		this.cap.copyFrom(base.hat);
 	}
 }

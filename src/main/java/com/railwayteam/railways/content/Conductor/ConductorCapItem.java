@@ -28,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.Locale;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class ConductorCapItem extends ArmorItem {
   public final DyeColor color;
@@ -66,7 +65,7 @@ public class ConductorCapItem extends ArmorItem {
       @Override
       public Model getBaseArmorModel (LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
-        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION), (entityLiving instanceof ConductorEntity));
+        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION));
         model.setProperties(_default);
         return model;
       }
