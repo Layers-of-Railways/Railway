@@ -46,8 +46,8 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
 
       poseStack.pushPose();
 
-      poseStack.mulPose(Vector3f.XP.rotationDegrees(190.0f));
-      poseStack.translate(-0.5d, -0.65d, -0.97d);
+      poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+      poseStack.translate(-0.5d, -1.2d, -0.94d);
 
       double rotate = 0;
 

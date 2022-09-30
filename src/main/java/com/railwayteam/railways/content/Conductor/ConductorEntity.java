@@ -385,7 +385,7 @@ public class ConductorEntity extends AbstractGolem {
         ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
           ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fake);
         BlockHitResult hitResult = level.clip(context);
-        Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());
+        //Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());
         Event.Result useBlock    = Event.Result.DEFAULT;
         if (!pos.equals(hitResult.getBlockPos()))
           return;
