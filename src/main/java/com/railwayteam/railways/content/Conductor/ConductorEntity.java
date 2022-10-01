@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.Conductor;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CREntities;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -113,9 +114,23 @@ public class ConductorEntity extends AbstractGolem {
 
   public static AttributeSupplier.Builder createAttributes () {
     return Mob.createMobAttributes()
-      .add(Attributes.MAX_HEALTH, 100.0D)
+      .add(Attributes.MAX_HEALTH, 20.0D)
       .add(Attributes.MOVEMENT_SPEED, 0.25D)
-      .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+      .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
+      .add(Attributes.ARMOR, 8.0D)
+      .add(Attributes.ARMOR_TOUGHNESS, 8.0D);
+  }
+
+  @Override
+  public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+    if (pSource.getEntity() instanceof LivingEntity living && living.getMainHandItem().is(AllItems.WRENCH.get()))
+      pAmount = 10;
+    return super.hurt(pSource, pAmount);
+  }
+
+  @Override
+  protected int decreaseAirSupply(int pAir) {
+    return pAir;
   }
 
   @Override
@@ -222,7 +237,7 @@ public class ConductorEntity extends AbstractGolem {
   public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
     if (!(stack.getItem() instanceof ConductorCapItem cap)) return null;
     ConductorEntity result = new ConductorEntity(CREntities.CONDUCTOR.get(), level);
-    result.setPos(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+    result.setPos(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
     result.setColor(cap.color);
     result.equipItemIfPossible(stack);
     level.addFreshEntity(result);

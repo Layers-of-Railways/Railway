@@ -20,7 +20,12 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -95,7 +100,13 @@ public class CREntities {
       .renderer(()-> ConductorRenderer::new)
       .lang("Conductor")
       .properties(p -> p.sized(0.6f, 1.5f).fireImmune())
-      .loot((table, type)-> table.add(type, new LootTable.Builder()))
+      .loot((table, type)-> table.add(type, new LootTable.Builder().withPool(
+          LootPool.lootPool()
+              .setRolls(ConstantValue.exactly(1.0f))
+              .add(LootItem.lootTableItem(AllItems.ANDESITE_ALLOY.get())
+                  .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 1.0f)))
+              )
+      )))
       .attributes(ConductorEntity::createAttributes)
       .register();
   }
