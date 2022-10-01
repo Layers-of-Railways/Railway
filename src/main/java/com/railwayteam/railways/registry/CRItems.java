@@ -1,9 +1,8 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
 import com.railwayteam.railways.content.Conductor.ConductorCapItem;
+import com.railwayteam.railways.util.TextUtils;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -103,10 +102,13 @@ public class CRItems {
 
     ITEM_CONDUCTOR_CAP = new HashMap<>();
     for (DyeColor color : DyeColor.values()) {
-      if (color != DyeColor.BLUE) continue; // TODO make other cap colors
-      String colorName = color.getName().substring(0,1).toUpperCase() + color.getName().substring(1).toLowerCase();
+      String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
       String colorReg  = color.getName().toLowerCase(Locale.ROOT);
       ITEM_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
+        .model(((dataGenContext, itemModelProvider) -> {
+          itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
+              .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"));
+        }))
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))

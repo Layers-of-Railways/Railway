@@ -13,6 +13,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.DyeColor;
@@ -76,7 +78,12 @@ public class ConductorCapItem extends ArmorItem {
   @Nullable
   @Override
   public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-    return Railways.MODID + ":textures/entity/" + color.getName().toLowerCase(Locale.ROOT) + "_conductor_cap.png";
+    return Railways.MODID + ":textures/entity/caps/" + color.getName().toLowerCase(Locale.ROOT) + "_conductor_cap.png";
+  }
+
+  @Override
+  public boolean isEnderMask(ItemStack stack, Player player, EnderMan endermanEntity) {
+    return true;
   }
 
   static class ConductorArmorMaterial implements ArmorMaterial {

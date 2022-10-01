@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "www",
+    "w w"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:yellow_wool"
+    }
+  },
+  "result": {
+    "item": "railways:yellow_conductor_cap"
+  }
+}

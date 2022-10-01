@@ -425,9 +425,14 @@ public class ConductorEntity extends AbstractGolem {
             BlockPos at = this.conductor.blockPosition().offset(x, y, z);
             BlockState state = this.conductor.level.getBlockState(at);
             if (this.conductor.canUseBlock(state)) {
-              this.target = at;
-              conductor.entityData.set(BLOCK, this.target);
-              return true;
+              ClipContext context = new ClipContext(this.conductor.getEyePosition(), new Vec3(at.getX(), at.getY(), at.getZ()),
+                  ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, null);
+              BlockHitResult hitResult = this.conductor.level.clip(context);
+              if (hitResult.getBlockPos().equals(at)) {
+                this.target = at;
+                conductor.entityData.set(BLOCK, this.target);
+                return true;
+              }
             }
           }
         }
