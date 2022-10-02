@@ -6,11 +6,12 @@
   "mixins": [
     "AccessorToolboxInventory",
     "AccessorToolboxTileEntity",
-    "MixinToolboxHandler"
+    "MixinToolboxHandler",
+    "MixinTrainHatOffsets"
   ],
   "client": [
-    "client.MixinToolboxHandlerClient",
-    "client.AccessorToolboxHandlerClient"
+    "client.AccessorToolboxHandlerClient",
+    "client.MixinToolboxHandlerClient"
   ],
   "minVersion": "0.8"
 }
