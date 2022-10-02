@@ -1,13 +1,17 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.content.Conductor.ConductorCapModel;
 import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.simibubi.create.Create;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +47,7 @@ public class Railways {
     MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
 
     MOD_EVENT_BUS.addListener(this::setup);
+    MOD_EVENT_BUS.addListener(EventPriority.LOWEST, Railways::gatherData);
     MOD_EVENT_BUS.addListener(this::registerModelLayers);
     MinecraftForge.EVENT_BUS.register(this);
 
@@ -58,11 +64,18 @@ public class Railways {
     setup.init();
   }
 
-  public static ResourceLocation createResourceLocation(String name) {
+  public static ResourceLocation asResource(String name) {
 		return new ResourceLocation(MODID, name);
 	}
 
   public static void clientInit(FMLClientSetupEvent event) {
+  }
+
+  public static void gatherData(GatherDataEvent event) {
+    DataGenerator gen = event.getGenerator();
+    if (event.includeServer()) {
+      gen.addProvider(new RailwaysSequencedAssemblyRecipeGen(gen));
+    }
   }
 
   @SubscribeEvent

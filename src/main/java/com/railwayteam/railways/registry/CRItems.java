@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.Conductor.ConductorCapItem;
 import com.railwayteam.railways.util.TextUtils;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -72,6 +73,7 @@ public class CRItems {
   public static ItemEntry<? extends Item> ITEM_STEAMCART;
 
   public static HashMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP;
+  public static HashMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP;
 
   public static void register(Registrate reg) {
     reg.creativeModeTab(() -> itemGroup, "Create Railways");
@@ -101,9 +103,17 @@ public class CRItems {
 //      .lang("Steam-Powered Minecart").register();
 
     ITEM_CONDUCTOR_CAP = new HashMap<>();
+    ITEM_INCOMPLETE_CONDUCTOR_CAP = new HashMap<>();
     for (DyeColor color : DyeColor.values()) {
       String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
       String colorReg  = color.getName().toLowerCase(Locale.ROOT);
+      ITEM_INCOMPLETE_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_incomplete_conductor_cap", SequencedAssemblyItem::new)
+          .model(((dataGenContext, itemModelProvider) -> {
+            itemModelProvider.withExistingParent(colorReg + "_incomplete_conductor_cap", itemModelProvider.modLoc("item/incomplete_conductor_cap"))
+                .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"));
+          }))
+              .lang("Incomplete " + colorName + " Conductor's Cap")
+          .register());
       ITEM_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
         .model(((dataGenContext, itemModelProvider) -> {
           itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
@@ -113,12 +123,12 @@ public class CRItems {
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> {
-            ShapedRecipeBuilder.shaped(ctx.get())
+            /*ShapedRecipeBuilder.shaped(ctx.get())
               .pattern("www")
               .pattern("w w")
               .define('w', woolByColor(color))
               .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(woolByColor(color)))
-              .save(prov);
+              .save(prov);*/
             ShapelessRecipeBuilder.shapeless(ctx.get())
               .requires(CONDUCTOR_CAPS)
               .requires(color.getTag())
@@ -127,5 +137,10 @@ public class CRItems {
         })
         .register());
     }
+  }
+
+  private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(Registrate reg, String name) {
+    return reg.item(name, SequencedAssemblyItem::new)
+        .register();
   }
 }
