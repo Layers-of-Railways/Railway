@@ -1,13 +1,11 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Boiler.BoilerBlockEntity;
 import com.railwayteam.railways.content.Tender.TenderBlockEntity;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 public class CRBlockEntities {
   public static BlockEntityEntry<TenderBlockEntity> TENDER_BE;
-  public static BlockEntityEntry<BoilerBlockEntity> BOILER_BE;
 
   public static void register (Registrate reg) {
     /*
