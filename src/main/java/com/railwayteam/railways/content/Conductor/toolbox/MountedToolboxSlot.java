@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.Conductor.toolbox;
 
-import com.simibubi.create.content.curiosities.toolbox.ToolboxContainer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 

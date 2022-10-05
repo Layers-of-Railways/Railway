@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.Conductor.toolbox;
 
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;

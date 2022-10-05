@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.WeakHashMap;
@@ -37,7 +38,7 @@ public interface IMountedToolboxHandler {
         .stream()
         .map(conductors.get(world)::get)
         .filter(p -> distance(location, p.position()) < maxRange * maxRange)
-        .sorted((p1, p2) -> Double.compare(distance(location, p1.position()), distance(location, p2.position())))
+        .sorted(Comparator.comparingDouble(p -> distance(location, p.position())))
         .limit(maxAmount)
         .filter((ce) -> {
           if (!ce.isCarryingToolbox())

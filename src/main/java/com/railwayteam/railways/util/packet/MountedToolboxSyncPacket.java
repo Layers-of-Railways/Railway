@@ -14,8 +14,8 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class MountedToolboxSyncPacket extends SimplePacketBase {
-  int id;
-  CompoundTag nbt;
+  final int id;
+  final CompoundTag nbt;
 
   public MountedToolboxSyncPacket(Entity target, CompoundTag nbt) {
     this.id = target.getId();
@@ -35,9 +35,7 @@ public class MountedToolboxSyncPacket extends SimplePacketBase {
 
   @Override
   public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(()-> {
-      DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> ()-> this.__handle(context));
-    });
+    context.get().enqueueWork(()-> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> ()-> this.__handle(context)));
     context.get().setPacketHandled(true);
   }
 

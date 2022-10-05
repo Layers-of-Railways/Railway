@@ -14,8 +14,8 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class JukeboxCartPacket extends SimplePacketBase {
-  int id;
-  ItemStack record;
+  final int id;
+  final ItemStack record;
 
   public JukeboxCartPacket (Entity target, ItemStack disc) {
     id = target.getId();
@@ -35,9 +35,7 @@ public class JukeboxCartPacket extends SimplePacketBase {
 
   @Override
   public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(() -> {
-      DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.__handle(context));
-    });
+    context.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.__handle(context)));
     context.get().setPacketHandled(true);
   }
 

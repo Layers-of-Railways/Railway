@@ -5,7 +5,6 @@ import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxDisposeA
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxEquipPacket;
 import com.railwayteam.railways.util.packet.JukeboxCartPacket;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

@@ -8,11 +8,9 @@ import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyIt
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.LazySpawnEggItem;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -20,7 +18,6 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,7 +30,7 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  public static TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
+  public static final TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
 
   public static TagKey<Item> makeForgeItemTag (String path) {
     return makeItemTag("forge", path);
@@ -108,28 +105,18 @@ public class CRItems {
       String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
       String colorReg  = color.getName().toLowerCase(Locale.ROOT);
       ITEM_INCOMPLETE_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_incomplete_conductor_cap", SequencedAssemblyItem::new)
-          .model(((dataGenContext, itemModelProvider) -> {
-            itemModelProvider.withExistingParent(colorReg + "_incomplete_conductor_cap", itemModelProvider.modLoc("item/incomplete_conductor_cap"))
-                .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"));
-          }))
+          .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_incomplete_conductor_cap", itemModelProvider.modLoc("item/incomplete_conductor_cap"))
+              .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
               .lang("Incomplete " + colorName + " Conductor's Cap")
           .register());
       ITEM_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
-        .model(((dataGenContext, itemModelProvider) -> {
-          itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
-              .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"));
-        }))
+        .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
+            .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> {
-            /*ShapedRecipeBuilder.shaped(ctx.get())
-              .pattern("www")
-              .pattern("w w")
-              .define('w', woolByColor(color))
-              .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(woolByColor(color)))
-              .save(prov);*/
-            ShapelessRecipeBuilder.shapeless(ctx.get())
+          ShapelessRecipeBuilder.shapeless(ctx.get())
               .requires(CONDUCTOR_CAPS)
               .requires(color.getTag())
               .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
