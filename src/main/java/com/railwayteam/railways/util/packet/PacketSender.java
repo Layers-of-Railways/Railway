@@ -17,6 +17,6 @@ public class PacketSender {
   }
 
   public static void syncMountedToolboxNBT(Entity entity, CompoundTag nbt) {
-    CRPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), new MountedToolboxSyncPacket(entity, nbt));;
+    CRPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), new MountedToolboxSyncPacket(entity, nbt));
   }
 }

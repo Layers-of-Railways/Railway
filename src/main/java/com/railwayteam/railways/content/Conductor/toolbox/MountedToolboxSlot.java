@@ -6,7 +6,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class MountedToolboxSlot extends SlotItemHandler {
 
-	private MountedToolboxContainer toolboxMenu;
+	private final MountedToolboxContainer toolboxMenu;
 
 	public MountedToolboxSlot(MountedToolboxContainer container, IItemHandler itemHandler, int index, int xPosition, int yPosition) {
 		super(itemHandler, index, xPosition, yPosition);

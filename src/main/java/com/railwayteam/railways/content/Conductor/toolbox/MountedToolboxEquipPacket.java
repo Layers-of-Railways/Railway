@@ -21,8 +21,8 @@ import java.util.function.Supplier;
 public class MountedToolboxEquipPacket extends SimplePacketBase {
 
 	private Integer toolboxCarrierId = null;
-	private int slot;
-	private int hotbarSlot;
+	private final int slot;
+	private final int hotbarSlot;
 
 	public MountedToolboxEquipPacket(ConductorEntity toolboxCarrier, int slot, int hotbarSlot) {
 		this.toolboxCarrierId = toolboxCarrier.getId();

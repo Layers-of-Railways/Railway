@@ -73,7 +73,7 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
         drawer.centre()
             .rotateY(rotate)
             .unCentre()
-            .translate(0, offset * 1 / 8f, -drawerOffset * .175f * (2 - offset))
+            .translate(0, offset / 8f, -drawerOffset * .175f * (2 - offset))
             .light(packedLight)
             .renderInto(poseStack, builder);
       }

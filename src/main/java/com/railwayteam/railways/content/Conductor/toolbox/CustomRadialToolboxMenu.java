@@ -46,7 +46,7 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 	private int hoveredSlot;
 	private boolean scrollMode;
 	private int scrollSlot = 0;
-	private List<Object> toolboxObjects; //ToolboxTileEntity | MountedToolboxHolder=
+	private final List<Object> toolboxObjects; //ToolboxTileEntity | MountedToolboxHolder=
 	private Object selectedObject; //ToolboxTileEntity | MountedToolboxHolder
 
 	private static final int DEPOSIT = -7;

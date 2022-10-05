@@ -19,7 +19,7 @@ public class MountedToolboxInventory extends ItemStackHandler {
 	public static final int STACKS_PER_COMPARTMENT = 4;
 	List<ItemStack> filters;
 	boolean settling;
-	private MountedToolboxHolder holder;
+	private final MountedToolboxHolder holder;
 
 	private boolean limitedMode;
 

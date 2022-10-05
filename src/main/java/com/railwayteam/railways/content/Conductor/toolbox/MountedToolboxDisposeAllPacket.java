@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 public class MountedToolboxDisposeAllPacket extends SimplePacketBase {
 
-	private int toolboxCarrierId;
+	private final int toolboxCarrierId;
 
 	public MountedToolboxDisposeAllPacket(ConductorEntity toolboxCarrier) {
 		this.toolboxCarrierId = toolboxCarrier.getId();

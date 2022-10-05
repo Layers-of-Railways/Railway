@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public interface IMountedToolboxHandler {
-  public static final WorldAttached<WeakHashMap<UUID, ConductorEntity>> conductors =
+  WorldAttached<WeakHashMap<UUID, ConductorEntity>> conductors =
       new WorldAttached<>(w -> new WeakHashMap<>());
 
-  public static void onLoad(ConductorEntity ce) {
+  static void onLoad(ConductorEntity ce) {
     conductors.get(ce.getLevel())
         .put(ce.getUUID(), ce);
   }
 
-  public static void onUnload(ConductorEntity ce) {
+  static void onUnload(ConductorEntity ce) {
     conductors.get(ce.getLevel())
         .remove(ce.getUUID());
   }
 
   // List<ConductorEntity | ToolboxTileEntity>
-  public static List<Object> getNearest(LevelAccessor world, Player player, int maxAmount) {
+  static List<Object> getNearest(LevelAccessor world, Player player, int maxAmount) {
     Vec3 location = player.position();
     double maxRange = getMaxRange(player);
     return Stream.concat(conductors.get(world)
@@ -48,18 +48,18 @@ public interface IMountedToolboxHandler {
         .collect(Collectors.toList());
   }
 
-  public static boolean withinRange(Player player, ConductorEntity ce) {
+  static boolean withinRange(Player player, ConductorEntity ce) {
     if (player.level != ce.getLevel())
       return false;
     double maxRange = getMaxRange(player);
     return distance(player.position(), ce.position()) < maxRange * maxRange;
   }
 
-  public static double distance(Vec3 location, Vec3 p) {
+  static double distance(Vec3 location, Vec3 p) {
     return location.distanceToSqr(p);
   }
 
-  public static double getMaxRange(Player player) {
+  static double getMaxRange(Player player) {
     return AllConfigs.SERVER.curiosities.toolboxRange.get()
         .doubleValue();
   }
