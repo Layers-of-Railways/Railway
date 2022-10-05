@@ -4,8 +4,6 @@ import com.railwayteam.railways.content.Tender.TenderBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
-;
-
 public class CRBlocks {
   public static BlockEntry<TenderBlock> BLOCK_TENDER;
 
