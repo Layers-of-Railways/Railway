@@ -26,7 +26,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
     return generatedRecipe;
   }
 
-  HashMap<DyeColor, GeneratedRecipe> CONDUCTOR_CAPS = new HashMap<>();
+  final HashMap<DyeColor, GeneratedRecipe> CONDUCTOR_CAPS = new HashMap<>();
   {
     for (DyeColor color : DyeColor.values()) {
       String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));

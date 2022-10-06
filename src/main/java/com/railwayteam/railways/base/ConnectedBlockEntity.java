@@ -1,7 +1,6 @@
 package com.railwayteam.railways.base;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.tileEntity.IMultiTileContainer;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
@@ -10,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -165,9 +163,9 @@ public class ConnectedBlockEntity extends SmartTileEntity implements /*IHaveGogg
   public void setController(BlockPos pos) {
     if (level.isClientSide && !isVirtual())
 			return;
-		if (controller.equals(this.controller))
+		if (pos.equals(this.controller))
 			return;
-		this.controller = controller;
+		this.controller = pos;
 		refreshCapability();
 		setChanged();
 		sendData();

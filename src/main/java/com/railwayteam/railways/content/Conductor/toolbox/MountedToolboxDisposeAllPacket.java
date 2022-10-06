@@ -2,17 +2,12 @@ package com.railwayteam.railways.content.Conductor.toolbox;
 
 import com.railwayteam.railways.content.Conductor.ConductorEntity;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkEvent.Context;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -21,7 +16,7 @@ import java.util.function.Supplier;
 
 public class MountedToolboxDisposeAllPacket extends SimplePacketBase {
 
-	private int toolboxCarrierId;
+	private final int toolboxCarrierId;
 
 	public MountedToolboxDisposeAllPacket(ConductorEntity toolboxCarrier) {
 		this.toolboxCarrierId = toolboxCarrier.getId();

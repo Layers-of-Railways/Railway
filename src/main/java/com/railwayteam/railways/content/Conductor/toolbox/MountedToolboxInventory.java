@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.Conductor.toolbox;
 
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -19,7 +18,7 @@ public class MountedToolboxInventory extends ItemStackHandler {
 	public static final int STACKS_PER_COMPARTMENT = 4;
 	List<ItemStack> filters;
 	boolean settling;
-	private MountedToolboxHolder holder;
+	private final MountedToolboxHolder holder;
 
 	private boolean limitedMode;
 

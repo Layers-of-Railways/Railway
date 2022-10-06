@@ -46,7 +46,7 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 	private int hoveredSlot;
 	private boolean scrollMode;
 	private int scrollSlot = 0;
-	private List<Object> toolboxObjects; //ToolboxTileEntity | MountedToolboxHolder=
+	private final List<Object> toolboxObjects; //ToolboxTileEntity | MountedToolboxHolder=
 	private Object selectedObject; //ToolboxTileEntity | MountedToolboxHolder
 
 	private static final int DEPOSIT = -7;
@@ -63,13 +63,6 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 				.map(ConductorEntity::getToolboxHolder)
 				.forEach(toolboxObjects::add);
 		toolboxObjects.addAll(toolboxes);
-		/*toolboxObjects.forEach((obj) -> {
-			if (obj instanceof ToolboxTileEntity te) {
-				Railways.LOGGER.info("TE: "+te.getDisplayName()+"@"+te.getBlockPos());
-			} else if (obj instanceof MountedToolboxHolder mt) {
-				Railways.LOGGER.info("MT: "+mt.getDisplayName()+"@"+mt.parent.position());
-			}
-		});*/
 		this.state = state;
 		hoveredSlot = -1;
 
@@ -84,13 +77,6 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 				.map(ConductorEntity::getToolboxHolder)
 				.forEach(toolboxObjects::add);
 		toolboxObjects.addAll(toolboxes);
-		/*toolboxObjects.forEach((obj) -> {
-			if (obj instanceof ToolboxTileEntity te) {
-				Railways.LOGGER.info("TE: "+te.getDisplayName()+"@"+te.getBlockPos());
-			} else if (obj instanceof MountedToolboxHolder mt) {
-				Railways.LOGGER.info("MT: "+mt.getDisplayName()+"@"+mt.parent.position());
-			}
-		});*/
 		this.state = state;
 		hoveredSlot = -1;
 
@@ -108,8 +94,8 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 
 		hoveredSlot = -1;
 		Window window = getMinecraft().getWindow();
-		float hoveredX = mouseX - window.getGuiScaledWidth() / 2;
-		float hoveredY = mouseY - window.getGuiScaledHeight() / 2;
+		float hoveredX = mouseX - window.getGuiScaledWidth() / 2f;
+		float hoveredY = mouseY - window.getGuiScaledHeight() / 2f;
 
 		float distance = hoveredX * hoveredX + hoveredY * hoveredY;
 		if (distance > 25 && distance < 10000)
@@ -123,7 +109,7 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 			hoveredSlot = UNEQUIP;
 
 		ms.pushPose();
-		ms.translate(width / 2, height / 2, 0);
+		ms.translate(width / 2f, height / 2f, 0);
 		Component tip = null;
 
 		if (state == State.DETACH) {
@@ -369,8 +355,8 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
 		Window window = getMinecraft().getWindow();
-		double hoveredX = mouseX - window.getGuiScaledWidth() / 2;
-		double hoveredY = mouseY - window.getGuiScaledHeight() / 2;
+		double hoveredX = mouseX - window.getGuiScaledWidth() / 2f;
+		double hoveredY = mouseY - window.getGuiScaledHeight() / 2f;
 		double distance = hoveredX * hoveredX + hoveredY * hoveredY;
 		if (distance <= 150) {
 			scrollMode = true;

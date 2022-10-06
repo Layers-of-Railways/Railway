@@ -4,7 +4,6 @@ import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipe
 import com.railwayteam.railways.content.Conductor.ConductorCapModel;
 import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.Create;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;

@@ -6,13 +6,9 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Optional;
 
 public abstract class HorizontalConnectedBlock extends HorizontalDirectionalBlock {
 
@@ -21,6 +17,7 @@ public abstract class HorizontalConnectedBlock extends HorizontalDirectionalBloc
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void onPlace(BlockState newState, Level world, BlockPos pos, BlockState oldState, boolean moved) {
     if (world.isClientSide() || newState.is(oldState.getBlock()) || moved) return;

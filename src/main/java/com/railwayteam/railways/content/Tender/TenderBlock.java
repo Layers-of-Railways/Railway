@@ -36,6 +36,7 @@ public class TenderBlock extends HorizontalConnectedBlock implements EntityBlock
   @Override
   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return CRBlockEntities.TENDER_BE.create(pos, state); }
 
+  @SuppressWarnings("deprecation")
   @Override
   public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
     if (!(world.getBlockEntity(pos) instanceof TenderBlockEntity)) return super.use(state, world, pos, player, hand, hitResult);

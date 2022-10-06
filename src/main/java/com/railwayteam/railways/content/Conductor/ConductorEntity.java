@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.Conductor;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.AllItems;
@@ -61,7 +60,7 @@ import java.util.List;
 public class ConductorEntity extends AbstractGolem {
 
 
-  private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<Job>() {
+  private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
     public void write(FriendlyByteBuf buf, @NotNull Job job) {
       buf.writeEnum(job);
     }
@@ -91,7 +90,11 @@ public class ConductorEntity extends AbstractGolem {
 
   public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
-    this.maxUpStep = 0.5f;
+  }
+
+  @Override
+  public float getStepHeight() {
+    return 0.5f;
   }
 
   @Override

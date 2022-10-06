@@ -5,7 +5,6 @@ import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxDisposeA
 import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxEquipPacket;
 import com.railwayteam.railways.util.packet.JukeboxCartPacket;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,7 +35,7 @@ public enum CRPackets {
   public static final String PROTOCOL_VER_STR = String.valueOf(PROTOCOL_VER);
   public static SimpleChannel channel;
 
-  private LoadedPacket<?> packet;
+  private final LoadedPacket<?> packet;
 
   <T extends SimplePacketBase> CRPackets(Class<T> type, Function<FriendlyByteBuf, T> factory,
                                           NetworkDirection direction) {
@@ -62,11 +61,11 @@ public enum CRPackets {
   private static class LoadedPacket<T extends SimplePacketBase> {
     private static int index = 0;
 
-    private BiConsumer<T, FriendlyByteBuf> encoder;
-    private Function<FriendlyByteBuf, T> decoder;
-    private BiConsumer<T, Supplier<NetworkEvent.Context>> handler;
-    private Class<T> type;
-    private NetworkDirection direction;
+    private final BiConsumer<T, FriendlyByteBuf> encoder;
+    private final Function<FriendlyByteBuf, T> decoder;
+    private final BiConsumer<T, Supplier<NetworkEvent.Context>> handler;
+    private final Class<T> type;
+    private final NetworkDirection direction;
 
     private LoadedPacket(Class<T> type, Function<FriendlyByteBuf, T> factory, NetworkDirection direction) {
       encoder = T::write;

@@ -33,18 +33,18 @@ import java.util.*;
 //Sort of simulates a ToolboxTileEntity, but carried by a conductor
 public class MountedToolboxHolder implements MenuProvider, Nameable {
 
-  public LerpedFloat lid = LerpedFloat.linear()
+  public final LerpedFloat lid = LerpedFloat.linear()
       .startWithValue(0);
 
-  public LerpedFloat drawers = LerpedFloat.linear()
+  public final LerpedFloat drawers = LerpedFloat.linear()
       .startWithValue(0);
 
-  protected ConductorEntity parent;
+  protected final ConductorEntity parent;
   UUID uniqueId;
-  MountedToolboxInventory inventory;
+  final MountedToolboxInventory inventory;
   LazyOptional<IItemHandler> inventoryProvider;
   DyeColor color;
-  Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers;
+  final Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers;
   protected int openCount;
 
   private boolean initialized = false;

@@ -145,7 +145,7 @@ public class MountedToolboxScreen extends AbstractSimiContainerScreen<MountedToo
 
     for (int offset : Iterate.zeroAndOne) {
       ms.pushPose();
-      ms.translate(0, -offset * 1 / 8f,
+      ms.translate(0, -offset / 8f,
           menu.contentHolder.getToolboxHolder().drawers.getValue(partialTicks) * -.175f * (2 - offset));
       GuiGameElement.of(AllBlockPartials.TOOLBOX_DRAWER)
           .render(ms);

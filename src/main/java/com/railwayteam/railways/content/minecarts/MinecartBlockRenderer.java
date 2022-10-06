@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class MinecartBlockRenderer extends MinecartRenderer<MinecartBlock> {
   public MinecartBlockRenderer(EntityRendererProvider.Context context) {
@@ -16,6 +17,6 @@ public class MinecartBlockRenderer extends MinecartRenderer<MinecartBlock> {
 
   @Override
   protected void renderMinecartContents (MinecartBlock entity, float partialMaybe, BlockState state, PoseStack stack, MultiBufferSource source, int lightMaybe) {
-    Minecraft.getInstance().getBlockRenderer().renderSingleBlock(state, stack, source, lightMaybe, OverlayTexture.NO_OVERLAY);
+    Minecraft.getInstance().getBlockRenderer().renderSingleBlock(state, stack, source, lightMaybe, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
   }
 }
