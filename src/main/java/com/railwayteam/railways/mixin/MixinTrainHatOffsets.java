@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
+import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.simibubi.create.content.logistics.trains.management.schedule.TrainHatOffsets;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.world.phys.Vec3;

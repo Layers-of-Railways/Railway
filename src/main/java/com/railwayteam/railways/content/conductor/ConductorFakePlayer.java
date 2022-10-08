@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor;
+package com.railwayteam.railways.content.conductor;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.Railways;

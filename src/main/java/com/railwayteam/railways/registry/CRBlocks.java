@@ -1,6 +1,6 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Tender.TenderBlock;
+import com.railwayteam.railways.content.tender.TenderBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 

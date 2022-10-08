@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor.toolbox;
+package com.railwayteam.railways.content.conductor.toolbox;
 
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;

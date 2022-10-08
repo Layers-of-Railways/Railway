@@ -1,9 +1,9 @@
-package com.railwayteam.railways.content.Conductor;
+package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllTags;

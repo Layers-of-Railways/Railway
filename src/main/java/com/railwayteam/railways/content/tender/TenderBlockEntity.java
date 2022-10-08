@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Tender;
+package com.railwayteam.railways.content.tender;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;

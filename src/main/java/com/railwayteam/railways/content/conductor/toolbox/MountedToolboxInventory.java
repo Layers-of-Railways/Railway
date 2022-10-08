@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor.toolbox;
+package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.NBTHelper;

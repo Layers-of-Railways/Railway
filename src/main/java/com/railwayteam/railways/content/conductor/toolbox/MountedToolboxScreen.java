@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor.toolbox;
+package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;

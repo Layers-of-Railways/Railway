@@ -1,7 +1,7 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
-import com.railwayteam.railways.content.Conductor.ConductorRenderer;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorRenderer;
 import com.railwayteam.railways.content.minecarts.MinecartBlock;
 import com.railwayteam.railways.content.minecarts.MinecartBlockRenderer;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;

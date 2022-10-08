@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.utility.WorldAttached;

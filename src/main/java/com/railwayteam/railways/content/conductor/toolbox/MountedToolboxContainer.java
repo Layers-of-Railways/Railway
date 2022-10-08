@@ -1,6 +1,6 @@
-package com.railwayteam.railways.content.Conductor.toolbox;
+package com.railwayteam.railways.content.conductor.toolbox;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRContainerTypes;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import com.simibubi.create.foundation.gui.container.ContainerBase;

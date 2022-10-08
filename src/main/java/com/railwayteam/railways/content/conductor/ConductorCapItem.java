@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor;
+package com.railwayteam.railways.content.conductor;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.AllBlocks;

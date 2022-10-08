@@ -1,7 +1,7 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxContainer;
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxScreen;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxContainer;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxScreen;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.util.entry.MenuEntry;

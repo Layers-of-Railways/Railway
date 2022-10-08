@@ -1,7 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.Conductor.ConductorCapItem;
+import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;

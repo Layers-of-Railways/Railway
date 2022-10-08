@@ -1,8 +1,8 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
-import com.railwayteam.railways.content.Conductor.ConductorCapModel;
-import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
+import com.railwayteam.railways.content.conductor.ConductorCapModel;
+import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.data.DataGenerator;

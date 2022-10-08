@@ -1,11 +1,11 @@
-package com.railwayteam.railways.content.Conductor.toolbox;
+package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorToolboxInventory;
 import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;

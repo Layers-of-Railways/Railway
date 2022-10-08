@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Tender;
+package com.railwayteam.railways.content.tender;
 
 import com.railwayteam.railways.base.HorizontalConnectedBlock;
 import com.railwayteam.railways.registry.CRBlockEntities;

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.Conductor;
+package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;

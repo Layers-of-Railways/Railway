@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import net.minecraft.core.BlockPos;
