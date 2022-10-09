@@ -6,12 +6,21 @@
   "mixins": [
     "AccessorToolboxInventory",
     "AccessorToolboxTileEntity",
+    "AccessorTrackPlacement_PlacementInfo",
+    "MixinAllTileEntities",
+    "MixinBezierConnection",
+    "MixinReplaceTrackCheck",
     "MixinToolboxHandler",
+    "MixinTrackBlock",
+    "MixinTrackPlacement",
     "MixinTrainHatOffsets"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",
-    "client.MixinToolboxHandlerClient"
+    "client.MixinToolboxHandlerClient",
+    "client.MixinTrackInstance",
+    "client.MixinTrackInstance_BezierTrackInstance",
+    "client.MixinTrackRenderer"
   ],
   "minVersion": "0.8"
 }

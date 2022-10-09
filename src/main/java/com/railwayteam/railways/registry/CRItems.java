@@ -5,7 +5,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
-import com.tterrag.registrate.Registrate;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.EntityEntry;
@@ -24,24 +24,29 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 public class CRItems {
+  private static final CreateRegistrate REGISTRATE = Railways.registrate();
   public static final CreativeModeTab itemGroup = new CreativeModeTab(Railways.MODID) {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
+  static {
+    REGISTRATE.creativeModeTab(() -> itemGroup, "Create Railways");
+  }
+
   public static final TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
 
-  public static TagKey<Item> makeForgeItemTag (String path) {
+  public static TagKey<Item> makeForgeItemTag(String path) {
     return makeItemTag("forge", path);
   }
 
-  public static TagKey<Item> makeItemTag (String mod, String path) {
+  public static TagKey<Item> makeItemTag(String mod, String path) {
     return ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation(mod, path), Collections.emptySet());
   }
 
-  private static ItemBuilder<? extends Item, ?> makeMinecart (Registrate reg, String name, Supplier<EntityEntry<?>> entity) {
-    return reg.item(name, (props)-> new MinecartItem(props, entity.get()))
+  private static ItemBuilder<? extends Item, ?> makeMinecart(String name, Supplier<EntityEntry<?>> entity) {
+    return REGISTRATE.item(name, (props)-> new MinecartItem(props, entity.get()))
     .model((ctx,prov)-> prov.withExistingParent(name, prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/" + name)));
   }
 
@@ -66,50 +71,30 @@ public class CRItems {
     };
   }
 
-  public static ItemEntry<? extends Item> ITEM_BENCHCART;
-  public static ItemEntry<? extends Item> ITEM_JUKEBOXCART;
-
-  public static HashMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP;
-  public static HashMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP;
-
-  public static void register(Registrate reg) {
-    reg.creativeModeTab(() -> itemGroup, "Create Railways");
-
-    ITEM_BENCHCART = makeMinecart(reg, "benchcart", ()->CREntities.CART_BLOCK)
+  public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", ()->CREntities.CART_BLOCK)
       .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();
-
-    ITEM_JUKEBOXCART = makeMinecart(reg, "jukeboxcart", ()->CREntities.CART_JUKEBOX)
+  public static final ItemEntry<? extends Item> ITEM_JUKEBOXCART = makeMinecart("jukeboxcart", ()->CREntities.CART_JUKEBOX)
       .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
-        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
+          .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Jukebox")
       .register();
 
-//    ITEM_STEAMCART = makeMinecart(reg, "steamcart", ()->CREntities.CART_STEAM, Color.ORANGE)
-//      .recipe((ctx,prov)-> ShapedRecipeBuilder.shaped(ctx.get())
-//        .pattern("ctp")
-//        .pattern(" u ")
-//        .define('c', AllBlocks.COGWHEEL.get())
-//        .define('t', AllBlocks.FLUID_TANK.get())
-//        .define('p', AllItems.COPPER_SHEET.get())
-//        .define('u', Items.MINECART)
-//        .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov)
-//      )
-//      .lang("Steam-Powered Minecart").register();
+  public static final HashMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new HashMap<>();
+  public static final HashMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP = new HashMap<>();
 
-    ITEM_CONDUCTOR_CAP = new HashMap<>();
-    ITEM_INCOMPLETE_CONDUCTOR_CAP = new HashMap<>();
+  static {
     for (DyeColor color : DyeColor.values()) {
       String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
       String colorReg  = color.getName().toLowerCase(Locale.ROOT);
-      ITEM_INCOMPLETE_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_incomplete_conductor_cap", SequencedAssemblyItem::new)
+      ITEM_INCOMPLETE_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_incomplete_conductor_cap", SequencedAssemblyItem::new)
           .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_incomplete_conductor_cap", itemModelProvider.modLoc("item/incomplete_conductor_cap"))
               .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
               .lang("Incomplete " + colorName + " Conductor's Cap")
           .register());
-      ITEM_CONDUCTOR_CAP.put(color, reg.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
+      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
         .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
             .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
         .lang(colorName + " Conductor's Cap")
@@ -126,8 +111,10 @@ public class CRItems {
     }
   }
 
-  private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(Registrate reg, String name) {
-    return reg.item(name, SequencedAssemblyItem::new)
+  private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
+    return REGISTRATE.item(name, SequencedAssemblyItem::new)
         .register();
   }
+
+  public static void register() {}
 }

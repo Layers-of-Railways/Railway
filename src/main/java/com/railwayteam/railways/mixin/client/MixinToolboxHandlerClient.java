@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import static com.simibubi.create.content.curiosities.toolbox.RadialToolboxMenu.State;
 import static com.simibubi.create.foundation.gui.AllGuiTextures.*;
 
-@Mixin(ToolboxHandlerClient.class)
+@Mixin(value = ToolboxHandlerClient.class, remap = false)
 public class MixinToolboxHandlerClient {
 
   @Shadow(remap = false)

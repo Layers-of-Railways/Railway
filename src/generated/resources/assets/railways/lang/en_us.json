@@ -1,4 +1,6 @@
 {
+  "block.railways.track_acacia": "Acacia Train Track",
+  "block.railways.track_birch": "Birch Train Track",
   "entity.railways.benchcart": "Minecart with Workbench",
   "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",

@@ -8,6 +8,7 @@ import com.simibubi.create.content.contraptions.components.saw.CuttingRecipe;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.DyeColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -36,14 +37,14 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
           .addOutput(CRItems.ITEM_CONDUCTOR_CAP.get(color).get(), 1)
           .loops(1)
           .addStep(CuttingRecipe::new, rb -> rb)
-          .addStep(DeployerApplicationRecipe::new, rb -> rb.require(I.precisionMechanism()))
-          .addStep(DeployerApplicationRecipe::new, rb -> rb.require(I.string()))
+          .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.precisionMechanism()))
+          .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.string()))
       ));
     }
   }
 
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return "Railways' Sequenced Assembly Recipes";
   }
 }

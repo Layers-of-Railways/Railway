@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -39,13 +40,21 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     void register(Consumer<FinishedRecipe> consumer);
   }
 
-  protected static class I {
-    static TagKey<Item> string() {
+  public static class Ingredients {
+    public static TagKey<Item> string() {
       return Tags.Items.STRING;
     }
 
-    static ItemLike precisionMechanism() {
+    public static ItemLike precisionMechanism() {
       return AllItems.PRECISION_MECHANISM.get();
+    }
+
+    public static TagKey<Item> ironNugget() {
+      return AllTags.forgeItemTag("nuggets/iron");
+    }
+
+    public static TagKey<Item> zincNugget() {
+      return AllTags.forgeItemTag("nuggets/zinc");
     }
   }
 }

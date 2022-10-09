@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(ToolboxHandler.class)
+@Mixin(value = ToolboxHandler.class, remap = false)
 public abstract class MixinToolboxHandler implements IMountedToolboxHandler {
 
   @Shadow(remap = false)
