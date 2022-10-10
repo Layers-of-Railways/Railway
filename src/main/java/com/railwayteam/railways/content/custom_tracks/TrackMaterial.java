@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.custom_tracks;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
@@ -8,6 +7,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -25,12 +25,12 @@ public enum TrackMaterial {
 
   ACACIA("Acacia", Lazy.of(() -> CRBlocks.ACACIA_TRACK), new ResourceLocation("block/acacia_planks"), Blocks.ACACIA_SLAB),
   BIRCH("Birch", Lazy.of(() -> CRBlocks.BIRCH_TRACK), new ResourceLocation("block/birch_planks"), Blocks.BIRCH_SLAB),
-  /*CRIMSON("Crimson", AllBlocks.TRACK, new ResourceLocation("block/crimson_planks"), Blocks.CRIMSON_SLAB),
-  DARK_OAK("Dark Oak", AllBlocks.TRACK, new ResourceLocation("block/dark_oak_planks"), Blocks.DARK_OAK_SLAB),
-  JUNGLE("Jungle", AllBlocks.TRACK, new ResourceLocation("block/jungle_planks"), Blocks.JUNGLE_SLAB),
-  OAK("Oak", AllBlocks.TRACK, new ResourceLocation("block/oak_planks"), Blocks.OAK_SLAB),
-  SPRUCE("Spruce", AllBlocks.TRACK, new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
-  WARPED("Warped", AllBlocks.TRACK, new ResourceLocation("block/warped_planks"), Blocks.WARPED_SLAB)*/
+  CRIMSON("Crimson", Lazy.of(() -> CRBlocks.CRIMSON_TRACK), new ResourceLocation("block/crimson_planks"), Ingredient.of(Blocks.CRIMSON_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
+  DARK_OAK("Dark Oak", Lazy.of(() -> CRBlocks.DARK_OAK_TRACK), new ResourceLocation("block/dark_oak_planks"), Blocks.DARK_OAK_SLAB),
+  JUNGLE("Jungle", Lazy.of(() -> CRBlocks.JUNGLE_TRACK), new ResourceLocation("block/jungle_planks"), Blocks.JUNGLE_SLAB),
+  OAK("Oak", Lazy.of(() -> CRBlocks.OAK_TRACK), new ResourceLocation("block/oak_planks"), Blocks.OAK_SLAB),
+  SPRUCE("Spruce", Lazy.of(() -> CRBlocks.SPRUCE_TRACK), new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
+  WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET))
   ;
 
   public final String langName;
@@ -56,7 +56,7 @@ public enum TrackMaterial {
   TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, boolean createBuiltin) {
     this.langName = langName;
     this.trackBlock = trackBlock;
-    Railways.LOGGER.info("Building track_material: "+this.langName+", trackBlock:"+this.trackBlock);
+//    Railways.LOGGER.info("Building track_material: "+this.langName+", trackBlock:"+this.trackBlock);
     this.createBuiltin = createBuiltin;
     this.sleeperIngredient = sleeperIngredient;
     this.railsIngredient = railsIngredient;
@@ -82,6 +82,14 @@ public enum TrackMaterial {
   public static List<BlockEntry<?>> allCustomBlocks() {
     List<BlockEntry<?>> list = new ArrayList<>();
     for (TrackMaterial material : allCustom()) {
+      list.add(material.getTrackBlock());
+    }
+    return list;
+  }
+
+  public static List<BlockEntry<?>> allBlocks() {
+    List<BlockEntry<?>> list = new ArrayList<>();
+    for (TrackMaterial material : values()) {
       list.add(material.getTrackBlock());
     }
     return list;

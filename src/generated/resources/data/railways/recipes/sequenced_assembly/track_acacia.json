@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:acacia_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_acacia"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        },
+        [
+          {
+            "tag": "forge:nuggets/iron"
+          },
+          {
+            "tag": "forge:nuggets/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        },
+        [
+          {
+            "tag": "forge:nuggets/iron"
+          },
+          {
+            "tag": "forge:nuggets/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_acacia"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_acacia"
+    }
+  ],
+  "loops": 1
+}

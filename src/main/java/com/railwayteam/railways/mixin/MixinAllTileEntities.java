@@ -23,7 +23,7 @@ public class MixinAllTileEntities {
       )
   )
   private static BlockEntityBuilder<?, ?> addLegalTracks(BlockEntityBuilder<?, ?> instance, NonNullSupplier<? extends Block>[] blocks) {
-    Railways.LOGGER.info("TEST POS 1");
+    //Railways.LOGGER.info("TEST POS 1");
     for (BlockEntry<? extends Block> blockEntry : TrackMaterial.allCustomBlocks()) {
       if (blockEntry == null) {
         Railways.LOGGER.error("blockEntry is null for some reason");

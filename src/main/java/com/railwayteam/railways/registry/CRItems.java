@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
@@ -19,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Locale;
 import java.util.function.Supplier;
 
@@ -82,8 +83,10 @@ public class CRItems {
       .lang("Minecart with Jukebox")
       .register();
 
-  public static final HashMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new HashMap<>();
-  public static final HashMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP = new HashMap<>();
+  public static final EnumMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);
+  public static final EnumMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);
+
+  public static final EnumMap<TrackMaterial, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_TRACK = new EnumMap<>(TrackMaterial.class);
 
   static {
     for (DyeColor color : DyeColor.values()) {
@@ -108,6 +111,13 @@ public class CRItems {
               .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg));
         })
         .register());
+    }
+
+    for (TrackMaterial material : TrackMaterial.allCustom()) {
+      ITEM_INCOMPLETE_TRACK.put(material, REGISTRATE.item("track_incomplete_" + material.resName(), SequencedAssemblyItem::new)
+          .model((c, p) -> p.generated(c, Railways.asResource("item/track_incomplete/" + c.getName())))
+          .lang("Incomplete " + material.langName + " Track")
+          .register());
     }
   }
 

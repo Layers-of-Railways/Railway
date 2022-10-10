@@ -43,10 +43,16 @@ public class CRBlocks {
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);
   public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(TrackMaterial.BIRCH);
+  public static final BlockEntry<CustomTrackBlock> CRIMSON_TRACK = makeTrack(TrackMaterial.CRIMSON);
+  public static final BlockEntry<CustomTrackBlock> DARK_OAK_TRACK = makeTrack(TrackMaterial.DARK_OAK);
+  public static final BlockEntry<CustomTrackBlock> JUNGLE_TRACK = makeTrack(TrackMaterial.JUNGLE);
+  public static final BlockEntry<CustomTrackBlock> OAK_TRACK = makeTrack(TrackMaterial.OAK);
+  public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(TrackMaterial.SPRUCE);
+  public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
 
-  static {
+  /*static {
     Railways.LOGGER.info("Acacia track: "+ACACIA_TRACK);
-  }
+  }*/
 
 /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)

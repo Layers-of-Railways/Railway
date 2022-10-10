@@ -8,4 +8,7 @@ public interface AllBlocksWrapper {
   static BlockEntry<?> metalGirder() {
     return AllBlocks.METAL_GIRDER;
   }
+  static BlockEntry<?> track() {
+    return AllBlocks.TRACK;
+  }
 }

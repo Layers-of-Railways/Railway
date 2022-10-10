@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:dark_oak_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_dark_oak"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        },
+        [
+          {
+            "tag": "forge:nuggets/iron"
+          },
+          {
+            "tag": "forge:nuggets/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        },
+        [
+          {
+            "tag": "forge:nuggets/iron"
+          },
+          {
+            "tag": "forge:nuggets/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_dark_oak"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_dark_oak"
+    }
+  ],
+  "loops": 1
+}
