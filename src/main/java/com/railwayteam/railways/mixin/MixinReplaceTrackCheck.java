@@ -53,7 +53,7 @@ public class MixinReplaceTrackCheck {
   @SuppressWarnings("InvalidInjectorMethodSignature")
   @Redirect(method = {
       "sendExtenderPacket",
-      "tryConnect",
+//      "tryConnect", //this needs to be a specific check actually
       "clientTick()V",
       "onClickInput",
       "drawCurveSelection(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V",

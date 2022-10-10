@@ -9,3 +9,6 @@
 2. Write your feature
 3. Make a pull request
 4. Have somebody review it, and merge
+
+### Datagen (if runData fails):
+Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railways/mixin/README.md) for more info.

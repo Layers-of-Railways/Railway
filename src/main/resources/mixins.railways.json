@@ -13,7 +13,9 @@
     "MixinToolboxHandler",
     "MixinTrackBlock",
     "MixinTrackPlacement",
-    "MixinTrainHatOffsets"
+    "MixinTrackPlacement_PlacementInfo",
+    "MixinTrainHatOffsets",
+    "client.MixinBlueprintOverlayRenderer"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",

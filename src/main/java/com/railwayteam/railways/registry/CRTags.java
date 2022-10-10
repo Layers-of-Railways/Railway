@@ -88,7 +88,7 @@ public class CRTags {
     }
 
     public boolean matches(ItemStack stack) {
-      return stack.getItem() instanceof BlockItem blockItem && matches(blockItem.getBlock());
+      return stack != null && stack.getItem() instanceof BlockItem blockItem && matches(blockItem.getBlock());
     }
 
     public boolean matches(BlockState state) {

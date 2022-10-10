@@ -77,7 +77,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial {
   }
 
   @SuppressWarnings("unchecked")
-  @Redirect(method = {"spawnItems", "spawnDestroyParticles"},
+  @Redirect(method = {"spawnItems", "spawnDestroyParticles", "addItemsToPlayer"},
       at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, target = "Lcom/simibubi/create/AllBlocks;TRACK:Lcom/tterrag/registrate/util/entry/BlockEntry;"), remap = false)
   private BlockEntry<TrackBlock> redirectTrackSpawn() {
     return (BlockEntry<TrackBlock>) getMaterial().getTrackBlock();
