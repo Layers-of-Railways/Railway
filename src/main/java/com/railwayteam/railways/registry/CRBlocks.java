@@ -1,13 +1,59 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Tender.TenderBlock;
-import com.tterrag.registrate.Registrate;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.content.tender.TenderBlock;
+import com.simibubi.create.AllTags;
+import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+
+import static com.simibubi.create.AllTags.pickaxeOnly;
 
 public class CRBlocks {
-  public static BlockEntry<TenderBlock> BLOCK_TENDER;
 
-  public static void register(Registrate reg) {
+  private static final CreateRegistrate REGISTRATE = Railways.registrate();
+
+  private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material) {
+    return REGISTRATE.block("track_" + material.resName(), material::create)
+        .initialProperties(Material.STONE)
+        .properties(p -> p.color(MaterialColor.METAL)
+            .strength(0.8F)
+            .sound(SoundType.METAL)
+            .noOcclusion())
+        .addLayer(() -> RenderType::cutoutMipped)
+        .transform(pickaxeOnly())
+        .blockstate(new CustomTrackBlockStateGenerator()::generate)
+        .tag(AllTags.AllBlockTags.RELOCATION_NOT_SUPPORTED.tag)
+        .tag(CRTags.AllBlockTags.TRACKS.tag)
+        .lang(material.langName + " Train Track")
+        .item(TrackBlockItem::new)
+        .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
+        .build()
+        .register();
+  }
+
+  public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
+
+  public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);
+  public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(TrackMaterial.BIRCH);
+  public static final BlockEntry<CustomTrackBlock> CRIMSON_TRACK = makeTrack(TrackMaterial.CRIMSON);
+  public static final BlockEntry<CustomTrackBlock> DARK_OAK_TRACK = makeTrack(TrackMaterial.DARK_OAK);
+  public static final BlockEntry<CustomTrackBlock> JUNGLE_TRACK = makeTrack(TrackMaterial.JUNGLE);
+  public static final BlockEntry<CustomTrackBlock> OAK_TRACK = makeTrack(TrackMaterial.OAK);
+  public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(TrackMaterial.SPRUCE);
+  public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
+
+  /*static {
+    Railways.LOGGER.info("Acacia track: "+ACACIA_TRACK);
+  }*/
+
 /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
     .blockstate((ctx,prov)->
@@ -28,5 +74,6 @@ public class CRBlocks {
     .lang("Tender")
     .addLayer(()-> RenderType::cutoutMipped)
     .register();*/
-  }
+
+  public static void register() {}
 }

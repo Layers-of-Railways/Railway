@@ -1,6 +1,6 @@
 package com.railwayteam.railways.util.packet;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

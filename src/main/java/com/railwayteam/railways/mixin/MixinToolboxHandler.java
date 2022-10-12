@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-@Mixin(ToolboxHandler.class)
+@Mixin(value = ToolboxHandler.class, remap = false)
 public abstract class MixinToolboxHandler implements IMountedToolboxHandler {
 
   @Shadow(remap = false)

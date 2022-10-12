@@ -1,21 +1,14 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.Tender.TenderBlockEntity;
-import com.tterrag.registrate.Registrate;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.tender.TenderBlockEntity;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 public class CRBlockEntities {
-  public static BlockEntityEntry<TenderBlockEntity> TENDER_BE;
+  private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-  public static void register (Registrate reg) {
-    /*
-    TENDER_BE = reg.blockEntity("tender", TenderBlockEntity::new)
-    .validBlock(CRBlocks.BLOCK_TENDER)
-    .register();
+  public static final BlockEntityEntry<TenderBlockEntity> TENDER_BE = null;
 
-    BOILER_BE = reg.blockEntity ("boiler", BoilerBlockEntity::new)
-    .validBlock(CRBlocks.BLOCK_BOILER)
-    .register();
-     */
-  }
+  public static void register() {}
 }

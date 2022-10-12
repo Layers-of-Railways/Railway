@@ -2,9 +2,9 @@ package com.railwayteam.railways.mixin.client;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.Conductor.ConductorEntity;
-import com.railwayteam.railways.content.Conductor.toolbox.CustomRadialToolboxMenu;
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxHolder;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.toolbox.CustomRadialToolboxMenu;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import static com.simibubi.create.content.curiosities.toolbox.RadialToolboxMenu.State;
 import static com.simibubi.create.foundation.gui.AllGuiTextures.*;
 
-@Mixin(ToolboxHandlerClient.class)
+@Mixin(value = ToolboxHandlerClient.class, remap = false)
 public class MixinToolboxHandlerClient {
 
   @Shadow(remap = false)

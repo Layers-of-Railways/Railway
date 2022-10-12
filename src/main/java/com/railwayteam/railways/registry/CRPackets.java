@@ -1,8 +1,8 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxDisposeAllPacket;
-import com.railwayteam.railways.content.Conductor.toolbox.MountedToolboxEquipPacket;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
 import com.railwayteam.railways.util.packet.JukeboxCartPacket;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;

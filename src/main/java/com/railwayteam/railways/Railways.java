@@ -1,10 +1,11 @@
 package com.railwayteam.railways;
 
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
-import com.railwayteam.railways.content.Conductor.ConductorCapModel;
-import com.railwayteam.railways.content.Conductor.ConductorEntityModel;
+import com.railwayteam.railways.content.conductor.ConductorCapModel;
+import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.tterrag.registrate.Registrate;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,18 +33,20 @@ public class Railways {
 	public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static ModSetup setup = new ModSetup();
-  public static Registrate railwayRegistrar;
+
+  private static final NonNullSupplier<CreateRegistrate> REGISTRATE = CreateRegistrate.lazy(MODID);
+
   public static IEventBus MOD_EVENT_BUS;
 
   public Railways() {
   	instance = this;
 
-  	railwayRegistrar = Registrate.create(MODID);
-
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
     MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+
+    ModSetup.register();
 
     MOD_EVENT_BUS.addListener(this::setup);
     MOD_EVENT_BUS.addListener(EventPriority.LOWEST, Railways::gatherData);
@@ -55,7 +58,6 @@ public class Railways {
 
     MOD_EVENT_BUS.addListener(Railways::clientInit);
 
-    ModSetup.register(railwayRegistrar);
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CRBlockPartials::init);
   }
 
@@ -81,5 +83,9 @@ public class Railways {
   public void registerModelLayers (EntityRenderersEvent.RegisterLayerDefinitions event) {
     event.registerLayerDefinition(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     event.registerLayerDefinition(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
+  }
+
+  public static CreateRegistrate registrate() {
+    return REGISTRATE.get();
   }
 }
