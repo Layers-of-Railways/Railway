@@ -432,7 +432,10 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
   }
 
   public ItemStack getDisplayStack() {
-    return new ItemStack(AllBlocks.TOOLBOXES.get(getColor()).get()).setHoverName(getDisplayName());
+    ItemStack stack = new ItemStack(AllBlocks.TOOLBOXES.get(getColor()).get());
+    if (hasCustomName())
+      stack.setHoverName(getCustomName());
+    return stack;
   }
 
   public void sendToContainer(FriendlyByteBuf friendlyByteBuf) {

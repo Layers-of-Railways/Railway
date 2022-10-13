@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.BlockStateUtils;
@@ -47,10 +48,12 @@ public abstract class MixinTrackPlacement {
     }
   }
 
-  @Inject(method = "tryConnect", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
+  @Inject(method = "tryConnect", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
   private static void setupMaterial_2(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
       ((IHasTrackMaterial) info).setMaterial(hasTrackMaterial.getMaterial());
+    } else {
+      Railways.LOGGER.info("Weird stack for tryConnect: "+stack);
     }
   }
 
