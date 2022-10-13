@@ -27,7 +27,7 @@ apply plugin: 'eclipse'
 
 version = "${minecraft_version}-${mod_version}"
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = modid
+archivesBaseName = "Steam+Rails"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -128,12 +128,12 @@ compileJava.options.encoding = 'UTF-8'
 jar {
     manifest {
         attributes([
-                "Specification-Title": modid,
-                "Specification-Vendor": "grimmauld",
+                "Specification-Title": archivesBaseName,
+                "Specification-Vendor": "The Railways Team",
                 "Specification-Version": "1",
                 "Implementation-Title": project.name,
                 "Implementation-Version": project.version,
-                "Implementation-Vendor" :"grimmauld",
+                "Implementation-Vendor" :"The Railways Team",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs"            : "mixins.${modid}.json"
         ])

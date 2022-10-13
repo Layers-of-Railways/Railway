@@ -99,26 +99,27 @@ public abstract class MixinTrackPlacement {
   private static BlockState stateAtPosVar = null;
   private static TrackPlacement.PlacementInfo infoArgument2 = null;
 
-  @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1))
+  @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1, remap = true))
   private static void setRelevantState1(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     relevantState = state1;
     infoArgument2 = info;
   }
 
-  @Inject(method = "placeTracks", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 2))
+  @Inject(method = "placeTracks", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 2, remap = true))
   private static void setRelevantState2(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     relevantState = state2;
     infoArgument2 = info;
   }
 
-  @Redirect(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"),
-      slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1)))
+  @Redirect(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", remap = true),
+      slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1, remap = true)))
   private static BlockState storeStateAtPos(Level level, BlockPos pos) {
     stateAtPosVar = level.getBlockState(pos);
     return stateAtPosVar;
   }
 
-  @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", ordinal = 2, shift = At.Shift.AFTER))
+  @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z",
+      ordinal = 2, shift = At.Shift.AFTER, remap = true))
   private static void resetStates(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     relevantState = null;
     stateAtPosVar = null;
