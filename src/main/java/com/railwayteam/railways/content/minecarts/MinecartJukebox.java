@@ -18,6 +18,8 @@ import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class MinecartJukebox extends MinecartBlock {
@@ -25,6 +27,7 @@ public class MinecartJukebox extends MinecartBlock {
   private int cooldownCount = 0;
 
   private ItemStack disc = ItemStack.EMPTY;
+  @OnlyIn(Dist.CLIENT)
   private JukeboxCartSoundInstance sound;
 
   public MinecartJukebox (EntityType<?> type, Level level) {
@@ -79,12 +82,13 @@ public class MinecartJukebox extends MinecartBlock {
   // clientside
   public void insertRecord (ItemStack record) {
     __insertRecord(record);
-    if (!this.disc.isEmpty()) {
-      if (sound == null || sound.isStopped()) {
-        startPlaying();
-      } else sound.requestStop();
+    if (level.isClientSide) {
+      if (!this.disc.isEmpty()) {
+        if (sound == null || sound.isStopped()) {
+          startPlaying();
+        } else sound.requestStop();
+      } else if (sound != null) sound.requestStop();
     }
-    else if (sound != null) sound.requestStop();
   }
 
   // serverside. Checks for side due to public method above being used clientside
@@ -109,6 +113,7 @@ public class MinecartJukebox extends MinecartBlock {
     __insertRecord(ItemStack.EMPTY);
   }
 
+  @OnlyIn(Dist.CLIENT)
   // clientside
   private void startPlaying () {
     if (!this.disc.isEmpty()) {
@@ -117,6 +122,7 @@ public class MinecartJukebox extends MinecartBlock {
     }
   }
 
+  @OnlyIn(Dist.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
       super(event, SoundSource.RECORDS);

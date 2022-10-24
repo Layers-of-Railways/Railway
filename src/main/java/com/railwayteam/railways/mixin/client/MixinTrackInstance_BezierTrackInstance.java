@@ -22,17 +22,17 @@ import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_LEFT;
 import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_RIGHT;
 
 @OnlyIn(Dist.CLIENT)
-@Mixin(targets = "com.simibubi.create.content.logistics.trains.track.TrackInstance$BezierTrackInstance")
+@Mixin(targets = "com.simibubi.create.content.logistics.trains.track.TrackInstance$BezierTrackInstance", remap = false)
 public class MixinTrackInstance_BezierTrackInstance {
 
   @Final
-  @Shadow(remap = false)
-  TrackInstance this$0;
+  @Shadow(aliases = {"this$0"})
+  TrackInstance myOuter;
 
   @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
       target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
   private PartialModel replaceTie() {
-    BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
+    BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
     if (bc != null) {
       TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
       if (material.isCustom()) {
@@ -45,7 +45,7 @@ public class MixinTrackInstance_BezierTrackInstance {
   @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
       target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
   private PartialModel replaceSegLeft() {
-    BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
+    BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
     if (bc != null) {
       TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
       if (material.isCustom()) {
@@ -58,7 +58,7 @@ public class MixinTrackInstance_BezierTrackInstance {
   @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
       target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
   private PartialModel replaceSegRight() {
-    BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
+    BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
     if (bc != null) {
       TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
       if (material.isCustom()) {

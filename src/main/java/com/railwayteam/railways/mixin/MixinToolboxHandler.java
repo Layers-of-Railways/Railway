@@ -41,7 +41,7 @@ public abstract class MixinToolboxHandler implements IMountedToolboxHandler {
     }
   }
 
-  @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"),
+  @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true),
       method = "unequip", remap = false, cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
   private static void inj$unequip(Player player, int hotbarSlot, boolean keepItems, CallbackInfo ci, CompoundTag compound, Level world, String key, CompoundTag prevData, BlockPos prevPos, int prevSlot) {
     if (prevData.hasUUID("EntityUUID") && world instanceof ServerLevel serverWorld) {
