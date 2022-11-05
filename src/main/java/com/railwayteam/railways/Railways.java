@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.ponder.PonderLocalization;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +49,8 @@ public class Railways {
 
     ModSetup.register();
 
+
+
     MOD_EVENT_BUS.addListener(this::setup);
     MOD_EVENT_BUS.addListener(EventPriority.LOWEST, Railways::gatherData);
     MOD_EVENT_BUS.addListener(this::registerModelLayers);
@@ -77,6 +80,10 @@ public class Railways {
     if (event.includeServer()) {
       gen.addProvider(new RailwaysSequencedAssemblyRecipeGen(gen));
     }
+    if (event.includeClient()) {
+      PonderLocalization.provideRegistrateLang(REGISTRATE.get());
+    }
+
   }
 
   @SubscribeEvent

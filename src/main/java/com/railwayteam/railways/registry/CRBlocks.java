@@ -4,17 +4,25 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
+import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
+import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import static com.simibubi.create.AllTags.pickaxeOnly;
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRBlocks {
 
@@ -40,6 +48,26 @@ public class CRBlocks {
   }
 
   public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
+  public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
+          .initialProperties(SharedProperties::softMetal)
+          //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()
+          //.getExistingFile(prov.modLoc("block/" + ctx.getName() + "/block"))))
+          .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry())
+                  .forAllStates(state -> ConfiguredModel.builder()
+                          .modelFile(prov.models().getExistingFile(prov.modLoc(
+                                  "block/semaphore/block" +
+                                          (state.getValue(SemaphoreBlock.FULL) ?"_full":"") +
+                                          (state.getValue(SemaphoreBlock.FLIPPED) ?"_flipped":""))))
+                          .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                          .build()
+                  )
+          )
+          .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+          .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+          .item(SemaphoreItem::new).transform(customItemModel())
+
+          .addLayer(() -> RenderType::translucent)
+          .register();
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);
   public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(TrackMaterial.BIRCH);
