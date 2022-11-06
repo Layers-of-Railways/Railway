@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value = ToolboxHandler.class, remap = false)
 public abstract class MixinToolboxHandler implements IMountedToolboxHandler {
 
+  @SuppressWarnings("EmptyMethod")
   @Shadow(remap = false)
   public static void syncData(Player player) {}
 

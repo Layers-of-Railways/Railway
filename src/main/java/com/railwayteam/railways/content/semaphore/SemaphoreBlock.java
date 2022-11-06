@@ -5,22 +5,15 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.base.GeneratingKineticTileEntity;
 import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.relays.advanced.GantryShaftBlock;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.content.logistics.block.redstone.DoubleFaceAttachedBlock;
-import com.simibubi.create.content.logistics.block.redstone.NixieTubeTileEntity;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import com.simibubi.create.foundation.utility.placement.PlacementOffset;
-import com.simibubi.create.foundation.utility.placement.util.PoleHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -37,18 +30,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.function.Predicate;
 
-import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
-
-public class SemaphoreBlock  extends HorizontalDirectionalBlock implements ITE<SemaphoreBlockEntity>,IWrenchable {
+public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<SemaphoreBlockEntity>, IWrenchable {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     public static final int girderPlacementHelperId = PlacementHelpers.register(new GirderPlacementHelper());
@@ -63,6 +52,7 @@ public class SemaphoreBlock  extends HorizontalDirectionalBlock implements ITE<S
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder.add(FACING).add(FLIPPED).add(FULL));
     }
+    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
                                  BlockHitResult ray) {
@@ -222,6 +212,7 @@ public class SemaphoreBlock  extends HorizontalDirectionalBlock implements ITE<S
         return CRBlockEntities.SEMAPHORE.get();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return CRShapes.SEMAPHORE.get(pState.getValue(FACING));

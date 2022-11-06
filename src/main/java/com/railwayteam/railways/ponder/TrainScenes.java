@@ -196,17 +196,10 @@ public class TrainScenes {
         scene.idle(10);
 
         AABB bb2 = bb.move(-.45, 0, 0);
-        //scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb2, bb2, 1);
-        //scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb2, bb2.expandTowards(-4, 0, 0), 130);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, c1, m1.add(-.45, 0, 0), 20);
         scene.idle(10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0),c1 , 10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m4.add(.45, 0, -.45), c1, 10);
-
-        //AABB bb3 = bb.move(-8, 0, 0);
-        //scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb3, bb3, 1);
-        //scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb3, bb3.inflate(.45f, 0, .45f), 120);
-        //scene.idle(10);
 
         scene.idle(20);
         scene.special.movePointOfInterest(semaphore1a);

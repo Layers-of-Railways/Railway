@@ -93,11 +93,6 @@ public abstract class MixinTrackPlacement {
     return BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument).getMaterial().getTrackBlock().get(), value);
   }
 
-  /*@ModifyArg(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", ordinal = 1), index = 1)
-  private static BlockState modifySetBlock(BlockState value) {
-    return BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument).getMaterial().getTrackBlock().get(), value);
-  }*/
-
   private static BlockState relevantState = null;
   private static BlockState stateAtPosVar = null;
   private static TrackPlacement.PlacementInfo infoArgument2 = null;

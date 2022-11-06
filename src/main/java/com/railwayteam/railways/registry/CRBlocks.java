@@ -5,7 +5,6 @@ import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
-import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.simibubi.create.AllTags;
@@ -14,7 +13,6 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
@@ -78,11 +76,7 @@ public class CRBlocks {
   public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(TrackMaterial.SPRUCE);
   public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
 
-  /*static {
-    Railways.LOGGER.info("Acacia track: "+ACACIA_TRACK);
-  }*/
-
-/*
+  /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
     .blockstate((ctx,prov)->
       prov.getVariantBuilder(ctx.get()).forAllStates(state -> {
@@ -103,5 +97,6 @@ public class CRBlocks {
     .addLayer(()-> RenderType::cutoutMipped)
     .register();*/
 
+  @SuppressWarnings("EmptyMethod")
   public static void register() {}
 }

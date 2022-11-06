@@ -1,30 +1,15 @@
 package com.railwayteam.railways.content.semaphore;
 
-import com.mojang.math.Vector3d;
-import com.mojang.math.Vector3f;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.curiosities.girder.GirderBlock;
-import com.simibubi.create.content.logistics.block.redstone.NixieTubeBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalTileEntity;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-import net.minecraft.client.particle.DustColorTransitionParticle;
-import net.minecraft.client.particle.DustParticle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -32,7 +17,7 @@ import java.util.List;
 public class SemaphoreBlockEntity extends SmartTileEntity {
     private WeakReference<SignalTileEntity> cachedSignalTE;
     public SignalTileEntity.SignalState signalState;
-    public LerpedFloat armPosition;
+    public final LerpedFloat armPosition;
     public boolean isValid = false;
     public boolean isDistantSignal=false;
     public SemaphoreBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

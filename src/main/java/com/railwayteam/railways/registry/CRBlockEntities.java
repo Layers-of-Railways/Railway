@@ -17,5 +17,6 @@ public class CRBlockEntities {
           .register();
 
 
+  @SuppressWarnings("EmptyMethod")
   public static void register() {}
 }

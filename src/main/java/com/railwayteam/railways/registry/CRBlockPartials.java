@@ -55,6 +55,7 @@ public class CRBlockPartials {
     }
   }
 
+  @SuppressWarnings("EmptyMethod")
   public static void init() {
   }
 }

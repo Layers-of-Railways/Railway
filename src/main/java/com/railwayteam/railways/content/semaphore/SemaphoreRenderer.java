@@ -1,22 +1,18 @@
 package com.railwayteam.railways.content.semaphore;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.logistics.block.redstone.DoubleFaceAttachedBlock;
 import com.simibubi.create.content.logistics.block.redstone.NixieTubeBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.RenderTypes;
 import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -80,8 +76,6 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
 
         if((top||bottom))
         {
-            //if(!bottom)
-                //continue;
             ms.pushPose();
             if(bottom)
                 ms.translate(8/16.0,7/16.0,15/16.0);
@@ -106,10 +100,6 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
                     .disableDiffuse()
                     .scale(1.5f,2, 2)
                     .renderInto(ms, buffer.getBuffer(RenderTypes.getAdditive()));
-
-            //CachedBufferer.partial(bottom?CRBlockPartials.SEMAPHORE_LAMP_WHITE:CRBlockPartials.SEMAPHORE_LAMP_RED, blockState)
-            //        .light(light)
-            //        .renderInto(ms, buffer.getBuffer(RenderType.translucent()));
 
             CachedBufferer
                     .partial(bottom?CRBlockPartials.SEMAPHORE_LAMP_WHITE:yellow?CRBlockPartials.SEMAPHORE_LAMP_YELLOW:CRBlockPartials.SEMAPHORE_LAMP_RED

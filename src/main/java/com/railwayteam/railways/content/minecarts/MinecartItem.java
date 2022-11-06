@@ -48,7 +48,7 @@ public class MinecartItem extends Item {
         }
 
         BlockState blockstate1 = level.getBlockState(blockpos.below());
-        RailShape railshape1 = blockstate1.getBlock() instanceof BaseRailBlock ? blockstate1.getValue(((BaseRailBlock)blockstate1.getBlock()).getShapeProperty()) : RailShape.NORTH_SOUTH;
+        RailShape railshape1 = blockstate1.getBlock() instanceof BaseRailBlock ? ((BaseRailBlock) blockstate1.getBlock()).getRailDirection(blockstate1, level, blockpos.below(), null) : RailShape.NORTH_SOUTH;
         if (direction != Direction.DOWN && railshape1.isAscending()) {
           dy_2 = -0.4D;
         } else {

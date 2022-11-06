@@ -24,5 +24,6 @@ public class CRContainerTypes {
         .register();
   }
 
+  @SuppressWarnings("EmptyMethod")
   public static void register() {}
 }

@@ -76,20 +76,6 @@ public class TenderBlock extends HorizontalConnectedBlock implements EntityBlock
     return InteractionResult.SUCCESS;
   }
 
-  /*
-  @Nullable
-  @Override
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-    return EntityBlock.super.getTicker(p_153212_, p_153213_, p_153214_);
-  }
-
-  @Nullable
-  @Override
-  public <T extends BlockEntity> GameEventListener getListener(Level p_153210_, T p_153211_) {
-    return EntityBlock.super.getListener(p_153210_, p_153211_);
-  }
- */
-
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
     builder.add(LIT);
