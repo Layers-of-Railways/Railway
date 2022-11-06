@@ -1,13 +1,6 @@
 {
   "replace": false,
   "values": [
-    "railways:track_acacia",
-    "railways:track_birch",
-    "railways:track_crimson",
-    "railways:track_dark_oak",
-    "railways:track_jungle",
-    "railways:track_oak",
-    "railways:track_spruce",
-    "railways:track_warped"
+    "create:track"
   ]
 }
