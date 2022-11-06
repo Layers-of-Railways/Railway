@@ -151,7 +151,7 @@ public class MixinToolboxHandlerClient {
       ScreenOpener.open(new CustomRadialToolboxMenu(toolboxes, conductors, State.SELECT_BOX, (ToolboxTileEntity) null));
   }
 
-  @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"),
+  @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", remap = true), //remap=true is ESSENTIAL
       method = "renderOverlay", locals = LocalCapture.CAPTURE_FAILHARD, remap = false, cancellable = true, require = 1)
   private static void inj$renderOverlay(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height, CallbackInfo ci, Minecraft mc, int x, int y, Player player, CompoundTag persistentData, CompoundTag compound) {
     poseStack.pushPose();
