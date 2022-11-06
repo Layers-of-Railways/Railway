@@ -1,15 +1,19 @@
 modLoader="javafml"
 loaderVersion="[31,)"
-issueTrackerURL="https://github.com/Spirolateral/Railway/issues"
-license="All rights reserved"
+issueTrackerURL="https://github.com/Layers-of-Railways/Railway/issues"
+license="MIT"
 [[mods]]
-modId="railways"
-version="${file.jarVersion}"
-displayName="Railways"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/railways"
-credits="Thanks to someone i guess"
-authors="Grimmauld, Spirolateral, Pannoniae, CaveJohnson376, Shura, D'Arcy Olla, YeetusDiabetes, Slimeist"
-description='''This mod is WIP and something to do with trains'''
+    modId="railways"
+    version="${file.jarVersion}"
+    displayName="Create: Steam 'n Rails"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/create-steam-n-rails"
+    logoFile="logo.png"
+    authors="The Railways Team"
+    description='''Customization and extension of Create rail systems and steam system
+    Features include:
+        Custom track types for all vanilla woods
+        Conductors that can operate redstone and carry toolboxes
+        and more to come...'''
 
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
@@ -24,8 +28,8 @@ description='''This mod is WIP and something to do with trains'''
     ordering="NONE"
     side="BOTH"
 [[dependencies.railways]]
-modId="create"
-mandatory=true
-versionRange="[0.5.0.d,)"
-ordering="NONE"
-side="BOTH"
+    modId="create"
+    mandatory=true
+    versionRange="[0.5.0.e,)"
+    ordering="AFTER"
+    side="BOTH"

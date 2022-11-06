@@ -12,6 +12,7 @@
     "MixinReplaceTrackCheck",
     "MixinToolboxHandler",
     "MixinTrackBlock",
+    "MixinTrackBlockItem",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
     "MixinTrainHatOffsets"
