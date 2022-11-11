@@ -46,12 +46,16 @@ public class CRTags {
 
   }
 
+
+
   public enum AllBlockTags {
-    TRACKS
+    TRACKS,
+    SEMAPHORE_POLES(MOD,MOD.optionalDefault,false)
 
     ;
 
     public final TagKey<Block> tag;
+
 
     AllBlockTags() {
       this(MOD);
@@ -134,6 +138,7 @@ public class CRTags {
           .addTag(child));
     }
   }
+
 
   public static void register() {
     AllBlockTags.TRACKS.addOptional(AllBlocks.TRACK.getId());

@@ -25,9 +25,24 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 version = "${minecraft_version}-${mod_version}"
+if (System.getenv("DEV") == "true") {
+    version = "${minecraft_version}-${mod_version}-dev-${getGitHash()}"
+}
+if (System.getenv("RAILWAYS_VERSION") != null) {
+    version = "${minecraft_version}-"+System.getenv("RAILWAYS_VERSION");
+}
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Steam+Rails"
+archivesBaseName = "Steam_Rails"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -168,15 +183,6 @@ artifacts {
 build.dependsOn deobfJar
 
 jar.finalizedBy('reobfJar')
-
-def getGitHash = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--short', 'HEAD'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
 
 def hasUnstaged = { ->
     def stdout = new ByteArrayOutputStream()

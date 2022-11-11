@@ -40,6 +40,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     void register(Consumer<FinishedRecipe> consumer);
   }
 
+  @SuppressWarnings("SameReturnValue")
   public static class Ingredients {
     public static TagKey<Item> string() {
       return Tags.Items.STRING;

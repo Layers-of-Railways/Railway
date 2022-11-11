@@ -17,6 +17,8 @@ public class CRBlockPartials {
     public final PartialModel segment_left;
     public final PartialModel segment_right;
 
+
+
     protected TrackModelHolder(PartialModel tie, PartialModel segment_left, PartialModel segment_right) {
       this.tie = tie;
       this.segment_left = segment_left;
@@ -26,6 +28,14 @@ public class CRBlockPartials {
 
   public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
   public static final Map<TrackMaterial, TrackModelHolder> TRACK_PARTS = new EnumMap<>(TrackMaterial.class);
+
+  public static final PartialModel SEMAPHORE_ARM_RED=block("semaphore/red_arm");
+  public static final PartialModel SEMAPHORE_ARM_YELLOW=block("semaphore/yellow_arm");
+  public static final PartialModel SEMAPHORE_ARM_RED_FLIPPED=block("semaphore/red_arm_flipped");
+  public static final PartialModel SEMAPHORE_ARM_YELLOW_FLIPPED=block("semaphore/yellow_arm_flipped");
+  public static final PartialModel SEMAPHORE_LAMP_RED=block("semaphore/red_lamp");
+  public static final PartialModel SEMAPHORE_LAMP_YELLOW=block("semaphore/yellow_lamp");
+  public static final PartialModel SEMAPHORE_LAMP_WHITE=block("semaphore/white_lamp");
 
   private static PartialModel createBlock(String path) {
     return new PartialModel(Create.asResource("block/" + path));
@@ -45,6 +55,7 @@ public class CRBlockPartials {
     }
   }
 
+  @SuppressWarnings("EmptyMethod")
   public static void init() {
   }
 }

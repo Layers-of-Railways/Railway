@@ -103,13 +103,11 @@ public class CRItems {
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
-        .recipe((ctx, prov)-> {
-          ShapelessRecipeBuilder.shapeless(ctx.get())
-              .requires(CONDUCTOR_CAPS)
-              .requires(color.getTag())
-              .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
-              .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg));
-        })
+        .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
+            .requires(CONDUCTOR_CAPS)
+            .requires(color.getTag())
+            .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
+            .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());
     }
 
@@ -126,5 +124,6 @@ public class CRItems {
         .register();
   }
 
+  @SuppressWarnings("EmptyMethod")
   public static void register() {}
 }

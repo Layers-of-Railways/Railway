@@ -15,8 +15,8 @@ public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
 
-    public static ForgeConfigSpec COMMON_CONFIG;
-    public static ForgeConfigSpec CLIENT_CONFIG;
+    public static final ForgeConfigSpec COMMON_CONFIG;
+    public static final ForgeConfigSpec CLIENT_CONFIG;
 
     public static ForgeConfigSpec.BooleanValue HIBYE;
 
@@ -47,7 +47,7 @@ public class Config {
     }
 
     @SubscribeEvent
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "EmptyMethod"})
     public static void onLoad(final ModConfigEvent.Loading configEvent) {
 
     }

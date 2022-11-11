@@ -297,6 +297,7 @@ public class MountedToolboxHolder implements MenuProvider, Nameable {
     return parent.getLevel();
   }
 
+  @SuppressWarnings("EmptyMethod")
   public void setChanged() {}
 
   public void lazyTick() {

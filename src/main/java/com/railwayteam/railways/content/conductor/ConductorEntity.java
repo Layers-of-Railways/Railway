@@ -251,6 +251,7 @@ public class ConductorEntity extends AbstractGolem {
     return this.getVehicle() instanceof AbstractMinecart;
   }
 
+  @SuppressWarnings("SameReturnValue")
   public static DyeColor defaultColor () { return DyeColor.BLUE; }
 
   public void setColor (DyeColor color) { getEntityData().set(COLOR, idFrom(color)); }
@@ -321,7 +322,7 @@ public class ConductorEntity extends AbstractGolem {
 
   static class FollowToolboxPlayerGoal extends JobBasedGoal {
 
-    protected double speedModifier;
+    protected final double speedModifier;
     @Nullable
     protected Player target;
     protected int timeToRecalcPath;

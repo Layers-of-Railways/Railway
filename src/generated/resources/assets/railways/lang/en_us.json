@@ -1,4 +1,5 @@
 {
+  "block.railways.semaphore": "Semaphore",
   "block.railways.track_acacia": "Acacia Train Track",
   "block.railways.track_birch": "Birch Train Track",
   "block.railways.track_crimson": "Crimson Train Track",
@@ -52,5 +53,14 @@
   "item.railways.white_incomplete_conductor_cap": "Incomplete White Conductor's Cap",
   "item.railways.yellow_conductor_cap": "Yellow Conductor's Cap",
   "item.railways.yellow_incomplete_conductor_cap": "Incomplete Yellow Conductor's Cap",
-  "itemGroup.railways": "Create Railways"
+  "itemGroup.railways": "Create Railways",
+  "railways.ponder.train_semaphore.header": "Visualizing Signal states using Semaphores",
+  "railways.ponder.train_semaphore.text_1": "Semaphores are placed on poles above Train Signals",
+  "railways.ponder.train_semaphore.text_2": "Semaphore poles can be made of different materials",
+  "railways.ponder.train_semaphore.text_3": "Semaphores show the current state of the signal below the pole",
+  "railways.ponder.train_semaphore.text_4": "If a brass signal has multiple valid exit paths...",
+  "railways.ponder.train_semaphore.text_5": "... a second semaphore can be placed above the first",
+  "railways.ponder.train_semaphore.text_6": "The bottom semaphore will now close if any of the available paths are blocked",
+  "railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
+  "railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously"
 }
