@@ -40,7 +40,7 @@ public class TrainScenes {
         BlockPos semaphore1b = new BlockPos(12,6,10);
         BlockPos semaphore2a = new BlockPos(9,4,2);
         BlockPos semaphore2b = new BlockPos(9,6,2);
-        BlockPos semaphore3 = new BlockPos(7,3,12);
+        BlockPos semaphore3 = new BlockPos(7,2,12);
         BlockPos semaphore4 = new BlockPos(4,4,4);
 
         Selection train1 = util.select.fromTo(11, 2, 6, 15, 3, 8);
