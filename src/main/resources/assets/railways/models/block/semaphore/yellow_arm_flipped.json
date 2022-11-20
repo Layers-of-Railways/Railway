@@ -12,7 +12,7 @@
 			"to": [5, 10, 16],
 			"rotation": {"angle": 0, "axis": "x", "origin": [13, 8, 8]},
 			"faces": {
-				"north": {"uv": [14, 2, 15, 4], "texture": "#5"},
+				"north": {"uv": [3, 2, 4, 4], "texture": "#5"},
 				"east": {"uv": [3, 2, 16, 4], "rotation": 180, "texture": "#5"},
 				"south": {"uv": [14, 2, 15, 4], "texture": "#5"},
 				"west": {"uv": [3, 2, 16, 4], "texture": "#5"},
