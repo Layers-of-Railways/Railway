@@ -11,4 +11,9 @@
 4. Have somebody review it, and merge
 
 ### Datagen (if runData fails):
-Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railways/mixin/README.md) for more info.
+Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railways/mixin/README.md) for more info. (There should be an upstream Create fix for this, but that is not yet in any 1.18 release, and so we can't take advantage of it.)
+
+### Commit Tricks:
+- Include `ci skip` in your commit message to skip the automatic preview build
+you can use this for example if the change you made is very minor, and not worth
+a preview, or if you are just fixing a typo in the README, etc.
