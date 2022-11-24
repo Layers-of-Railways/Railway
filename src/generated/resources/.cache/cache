@@ -1,4 +1,4 @@
-c8e040a171de5eaa8ec4bdba490ad035665300e8 assets/railways/blockstates/semaphore.json
+a1dccd03a96e7e8125197ccf3cbc0467e14fab15 assets/railways/blockstates/semaphore.json
 afcfe9005b5a2d8a04ae3237a1bf2d3f54265b90 assets/railways/blockstates/track_acacia.json
 f88bb285e538dddc3b449004ac466cad5da0e2b8 assets/railways/blockstates/track_birch.json
 8fc9f841d7974c25585f4caf56caacad31ff6528 assets/railways/blockstates/track_crimson.json
@@ -7,8 +7,8 @@ f88bb285e538dddc3b449004ac466cad5da0e2b8 assets/railways/blockstates/track_birch
 aca157234dfed1e0bae9f45c680f49392cc33eee assets/railways/blockstates/track_oak.json
 48cc2845a2bce81ff060bf841a9b2a333fd7e59d assets/railways/blockstates/track_spruce.json
 7516074fb2faabd7371773dccc4119982a94186a assets/railways/blockstates/track_warped.json
-b70a7726681a42d743921006a81610d6515bd7d9 assets/railways/lang/en_ud.json
-2e9963ffdf529040a97e160cdd46fdfb8ee92b88 assets/railways/lang/en_us.json
+9e0453e77127a89ef25e53d78e2979dc03909e60 assets/railways/lang/en_ud.json
+7282304f986beb9a9de20460b9ed522d07176b5a assets/railways/lang/en_us.json
 2632ca9aa52762369d1770898c86bb2014539470 assets/railways/models/block/track/acacia/ascending.json
 57963d791691babe95d2a7fac775826c77727ed3 assets/railways/models/block/track/acacia/cross_d1_xo.json
 4c9a65fdb3996631f1277bf7fd6239b5497c5a89 assets/railways/models/block/track/acacia/cross_d1_zo.json

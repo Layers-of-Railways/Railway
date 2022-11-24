@@ -43,14 +43,15 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
     public static final int girderPlacementHelperId = PlacementHelpers.register(new GirderPlacementHelper());
     public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
     public static final BooleanProperty FULL = BooleanProperty.create("full");
+    public static final BooleanProperty UPSIDE_DOWN = BooleanProperty.create("upside_down");
 
     public SemaphoreBlock(Properties pProperties) {
         super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(FLIPPED,false).setValue(FULL,false));
+        registerDefaultState(defaultBlockState().setValue(FLIPPED,false).setValue(FULL,false).setValue(UPSIDE_DOWN, false));
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        super.createBlockStateDefinition(pBuilder.add(FACING).add(FLIPPED).add(FULL));
+        super.createBlockStateDefinition(pBuilder.add(FACING).add(FLIPPED).add(FULL).add(UPSIDE_DOWN));
     }
     @SuppressWarnings("deprecation")
     @Override
@@ -80,20 +81,26 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         Vec3 look = context.getPlayer().getLookAngle();
         Vec3 cross = look.cross(new Vec3(facing.step()));
         boolean flipped = cross.y<0;
+        boolean upside_down = context.getClickedFace() == Direction.DOWN;
 
-        return state.setValue(FACING,facing).setValue(FLIPPED,flipped);
+        return state.setValue(FACING,facing).setValue(FLIPPED,flipped).setValue(UPSIDE_DOWN,upside_down);
     }
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         Level world = context.getLevel();
         BlockState rotated;
+        boolean upsideDownChanged = false;
 
         if(context.getClickedFace().getAxis() != Direction.Axis.Y)
         {
             if (context.getClickedFace() == state.getValue(FACING))
             {
                 rotated = state.cycle(FLIPPED);
-            }else
+            } else if (context.getClickedFace() == state.getValue(FACING).getOpposite()) {
+                rotated = state.cycle(UPSIDE_DOWN);
+                upsideDownChanged = true;
+            }
+            else
                 rotated = state.setValue(FACING,context.getClickedFace());
         }else
         {
@@ -109,11 +116,66 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         BlockEntity te = context.getLevel()
                 .getBlockEntity(context.getClickedPos());
 
+        if (upsideDownChanged) {
+            BlockPos currentPos = context.getClickedPos().below();
+            for (int i = 0; i < 16; i++) {
+                BlockState blockState = world.getBlockState(currentPos);
+                if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                    BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
+                    KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
+                    break;
+                }
+                currentPos = currentPos.below();
+            }
+
+            currentPos = context.getClickedPos().above();
+            for (int i = 0; i < 16; i++) {
+                BlockState blockState = world.getBlockState(currentPos);
+                if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                    BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
+                    KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
+                    break;
+                }
+                currentPos = currentPos.above();
+            }
+        }
+
 
         if (world.getBlockState(context.getClickedPos()) != state)
             playRotateSound(world, context.getClickedPos());
 
         return InteractionResult.SUCCESS;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, world, pos, oldState, isMoving);
+        BlockPos currentPos = pos.below();
+        for (int i = 0; i < 16; i++) {
+            BlockState blockState = world.getBlockState(currentPos);
+            if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
+                KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+            } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
+                break;
+            }
+            currentPos = currentPos.below();
+        }
+
+        currentPos = pos.above();
+        for (int i = 0; i < 16; i++) {
+            BlockState blockState = world.getBlockState(currentPos);
+            if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
+                KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+            } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
+                break;
+            }
+            currentPos = currentPos.above();
+        }
     }
 
     public static class PlacementHelper implements IPlacementHelper {
@@ -136,8 +198,15 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos,
                                          BlockHitResult ray) {
 
-            BlockPos newPos = pos.relative(Direction.UP);
+            Direction offsetDirection = ray.getLocation().subtract(Vec3.atCenterOf(pos)).y < 0 ? Direction.DOWN : Direction.UP;
+
+            BlockPos newPos = pos.relative(offsetDirection);
             BlockState newState = world.getBlockState(newPos);
+
+            if (!newState.getMaterial().isReplaceable()) {
+                newPos = pos.relative(offsetDirection.getOpposite());
+                newState = world.getBlockState(newPos);
+            }
 
             if (newState.getMaterial().isReplaceable()) {
 
@@ -148,8 +217,9 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
                 Vec3 look = player.getLookAngle();
                 Vec3 cross = look.cross(new Vec3(facing.step()));
                 boolean flipped = cross.y<0;
+                boolean upsideDown = offsetDirection == Direction.DOWN;
 
-                return PlacementOffset.success(newPos, x -> x.setValue(FLIPPED,flipped).setValue(FACING,facing));
+                return PlacementOffset.success(newPos, x -> x.setValue(FLIPPED,flipped).setValue(FACING,facing).setValue(UPSIDE_DOWN,upsideDown));
             }
 
             return PlacementOffset.fail();
@@ -174,7 +244,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
 
         @Override
         public Predicate<ItemStack> getItemPredicate() {
-            return AllBlocks.METAL_GIRDER::isIn;
+            return CRTags.AllBlockTags.SEMAPHORE_POLES::matches;
         }
 
         @Override
@@ -186,8 +256,15 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos,
                                          BlockHitResult ray) {
 
-            BlockPos newPos = pos.relative(Direction.UP);
+            Direction offsetDirection = ray.getLocation().subtract(Vec3.atCenterOf(pos)).y < 0 ? Direction.DOWN : Direction.UP;
+
+            BlockPos newPos = pos.relative(offsetDirection);
             BlockState newState = world.getBlockState(newPos);
+
+            if (!newState.getMaterial().isReplaceable()) {
+                newPos = pos.relative(offsetDirection.getOpposite());
+                newState = world.getBlockState(newPos);
+            }
 
             if (newState.getMaterial().isReplaceable()) {
 

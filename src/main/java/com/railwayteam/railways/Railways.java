@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.base.data.lang.LangMerger;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
@@ -85,6 +86,7 @@ public class Railways {
     }
     if (event.includeClient()) {
       PonderLocalization.provideRegistrateLang(REGISTRATE.get());
+      gen.addProvider(new LangMerger(gen));
     }
 
   }
@@ -98,7 +100,12 @@ public class Railways {
         return;
       }
       IModFile modFile = modFileInfo.getFile();
-      event.addRepositorySource((consumer, constructor) -> consumer.accept(Pack.create(Railways.asResource("legacy_semaphore").toString(), false, () -> new ModFilePackResources("Railways Legacy Semaphores", modFile, "resourcepacks/legacy_semaphore"), constructor, Pack.Position.TOP, PackSource.DEFAULT)));
+      event.addRepositorySource((consumer, constructor) -> consumer.accept(Pack.create(Railways.asResource("legacy_semaphore").toString(),
+          false, () -> new ModFilePackResources("Steam 'n Rails Legacy Semaphores", modFile, "resourcepacks/legacy_semaphore"),
+          constructor, Pack.Position.TOP, PackSource.DEFAULT)));
+      event.addRepositorySource((consumer, constructor) -> consumer.accept(Pack.create(Railways.asResource("green_signals").toString(),
+          false, () -> new ModFilePackResources("Steam 'n Rails Green Signals", modFile, "resourcepacks/green_signals"),
+          constructor, Pack.Position.TOP, PackSource.DEFAULT)));
     }
   }
 

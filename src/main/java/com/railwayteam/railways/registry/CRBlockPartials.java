@@ -33,6 +33,10 @@ public class CRBlockPartials {
   public static final PartialModel SEMAPHORE_ARM_YELLOW=block("semaphore/yellow_arm");
   public static final PartialModel SEMAPHORE_ARM_RED_FLIPPED=block("semaphore/red_arm_flipped");
   public static final PartialModel SEMAPHORE_ARM_YELLOW_FLIPPED=block("semaphore/yellow_arm_flipped");
+  public static final PartialModel SEMAPHORE_ARM_RED_UPSIDE_DOWN=block("semaphore/red_arm_down");
+  public static final PartialModel SEMAPHORE_ARM_YELLOW_UPSIDE_DOWN=block("semaphore/yellow_arm_down");
+  public static final PartialModel SEMAPHORE_ARM_RED_FLIPPED_UPSIDE_DOWN=block("semaphore/red_arm_flipped_down");
+  public static final PartialModel SEMAPHORE_ARM_YELLOW_FLIPPED_UPSIDE_DOWN=block("semaphore/yellow_arm_flipped_down");
   public static final PartialModel SEMAPHORE_LAMP_RED=block("semaphore/red_lamp");
   public static final PartialModel SEMAPHORE_LAMP_YELLOW=block("semaphore/yellow_lamp");
   public static final PartialModel SEMAPHORE_LAMP_WHITE=block("semaphore/white_lamp");

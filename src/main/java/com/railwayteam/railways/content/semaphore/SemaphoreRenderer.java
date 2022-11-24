@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.semaphore;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockPartials;
@@ -62,11 +63,20 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
         boolean top = pos<0.2;
         boolean bottom = pos>0.8;
         boolean flipped = blockState.getValue(SemaphoreBlock.FLIPPED);
-        CachedBufferer.partial(flipped?
+        boolean upside_down = blockState.getValue(SemaphoreBlock.UPSIDE_DOWN);
+        PartialModel arm;
+        if (upside_down) {
+            arm = flipped?
+                yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_FLIPPED_UPSIDE_DOWN:CRBlockPartials.SEMAPHORE_ARM_RED_FLIPPED_UPSIDE_DOWN:
+                yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_UPSIDE_DOWN:CRBlockPartials.SEMAPHORE_ARM_RED_UPSIDE_DOWN;
+        } else {
+            arm = flipped?
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_FLIPPED:CRBlockPartials.SEMAPHORE_ARM_RED_FLIPPED:
-                yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW:CRBlockPartials.SEMAPHORE_ARM_RED, blockState)
+                yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW:CRBlockPartials.SEMAPHORE_ARM_RED;
+        }
+        CachedBufferer.partial(arm, blockState)
                 .light(light)
-                .rotateCentered(Direction.EAST,angle)
+                .rotateCentered(Direction.EAST,angle * (upside_down?-1:1))
                 .renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
         float renderTime = AnimationTickHolder.getRenderTime(te.getLevel());
@@ -77,10 +87,17 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
         if((top||bottom))
         {
             ms.pushPose();
-            if(bottom)
-                ms.translate(8/16.0,7/16.0,15/16.0);
-            else
-                ms.translate(8/16.0,12/16.0,14/16.0);
+            if (upside_down) {
+                if (bottom)
+                    ms.translate(8 / 16.0, 9 / 16.0, 15 / 16.0);
+                else
+                    ms.translate(8 / 16.0, 4 / 16.0, 14 / 16.0);
+            } else {
+                if (bottom)
+                    ms.translate(8 / 16.0, 7 / 16.0, 15 / 16.0);
+                else
+                    ms.translate(8 / 16.0, 12 / 16.0, 14 / 16.0);
+            }
 
 
 

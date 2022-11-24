@@ -55,7 +55,8 @@ public class CRBlocks {
                           .modelFile(prov.models().getExistingFile(prov.modLoc(
                                   "block/semaphore/block" +
                                           (state.getValue(SemaphoreBlock.FULL) ?"_full":"") +
-                                          (state.getValue(SemaphoreBlock.FLIPPED) ?"_flipped":""))))
+                                          (state.getValue(SemaphoreBlock.FLIPPED) ?"_flipped":"") +
+                                          (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ?"_down":""))))
                           .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                           .build()
                   )
