@@ -1,0 +1,91 @@
+{
+
+ 
+
+ 	"block.railways.semaphore": "腕木式信号機",
+ 	"block.railways.track_acacia": "アカシアの鉄道用線路",
+ 	"block.railways.track_birch": "シラカバの鉄道用線路",
+ 	"block.railways.track_crimson": "真紅の鉄道用線路",
+ 	"block.railways.track_dark_oak": "ダークオークの鉄道用線路",
+ 	"block.railways.track_jungle": "ジャングルの鉄道用線路",
+ 	"block.railways.track_oak": "オークの鉄道用線路",
+ 	"block.railways.track_spruce": "トウヒの鉄道用線路",
+ 	"block.railways.track_warped": "歪んだ鉄道用線路",
+
+ 	"entity.railways.benchcart": "作業台付きトロッコ",
+ 	"entity.railways.conductor": "車掌",
+ 	"entity.railways.jukeboxcart": "ジュークボックス付きトロッコ",
+
+ 	"item.railways.benchcart": "作業台付きトロッコ",
+ 	"item.railways.black_conductor_cap": "黒色の車掌帽",
+ 	"item.railways.black_incomplete_conductor_cap": "組み立て中の黒色の車掌帽",
+ 	"item.railways.blue_conductor_cap": "青色の車掌帽",
+ 	"item.railways.blue_incomplete_conductor_cap": "組み立て中の青色の車掌帽",
+ 	"item.railways.brown_conductor_cap": "茶色の車掌帽",
+ 	"item.railways.brown_incomplete_conductor_cap": "組み立て中の青緑色の車掌帽",
+ 	"item.railways.cyan_conductor_cap": "青緑色の車掌帽",
+ 	"item.railways.cyan_incomplete_conductor_cap": "組み立て中の青緑色の車掌帽",
+ 	"item.railways.gray_conductor_cap": "灰色の車掌帽",
+ 	"item.railways.gray_incomplete_conductor_cap": "組み立て中の灰色の車掌帽",
+ 	"item.railways.green_conductor_cap": "緑色の車掌帽",
+ 	"item.railways.green_incomplete_conductor_cap": "組み立て中の緑色の車掌帽",
+ 	"item.railways.jukeboxcart": "ジュークボックス付きトロッコ",
+ 	"item.railways.light_blue_conductor_cap": "空色の車掌帽",
+ 	"item.railways.light_blue_incomplete_conductor_cap": "組み立て中の空色の車掌帽",
+ 	"item.railways.light_gray_conductor_cap": "薄灰色の車掌帽",
+ 	"item.railways.light_gray_incomplete_conductor_cap": "組み立て中の薄灰色の車掌帽",
+ 	"item.railways.lime_conductor_cap": "黄緑色の車掌帽",
+ 	"item.railways.lime_incomplete_conductor_cap": "組み立て中の黄緑色の車掌帽",
+ 	"item.railways.magenta_conductor_cap": "赤紫色の車掌帽",
+ 	"item.railways.magenta_incomplete_conductor_cap": "組み立て中の赤紫色の車掌帽",
+ 	"item.railways.orange_conductor_cap": "橙色の車掌帽",
+ 	"item.railways.orange_incomplete_conductor_cap": "組み立て中の橙色の車掌帽",
+ 	"item.railways.pink_conductor_cap": "桃色の車掌帽",
+ 	"item.railways.pink_incomplete_conductor_cap": "組み立て中の桃色の車掌帽",
+ 	"item.railways.purple_conductor_cap": "紫色の車掌帽",
+ 	"item.railways.purple_incomplete_conductor_cap": "組み立て中の紫色の車掌帽",
+ 	"item.railways.red_conductor_cap": "赤色の車掌帽",
+ 	"item.railways.red_incomplete_conductor_cap": "組み立て中の赤色の車掌帽",
+ 	"item.railways.track_incomplete_acacia": "組み立て中のアカシアの線路",
+ 	"item.railways.track_incomplete_birch": "組み立て中のシラカバの線路",
+ 	"item.railways.track_incomplete_crimson": "組み立て中の真紅の線路",
+ 	"item.railways.track_incomplete_dark_oak": "組み立て中のダークオークの線路",
+ 	"item.railways.track_incomplete_jungle": "組み立て中のジャングルの線路",
+ 	"item.railways.track_incomplete_oak": "組み立て中のオークの線路",
+ 	"item.railways.track_incomplete_spruce": "組み立て中のトウヒの線路",
+ 	"item.railways.track_incomplete_warped": "組み立て中の歪んだ線路",
+ 	"item.railways.white_conductor_cap": "白色の車掌帽",
+ 	"item.railways.white_incomplete_conductor_cap": "組み立て中の白色の車掌帽",
+ 	"item.railways.yellow_conductor_cap": "黄色の車掌帽",
+ 	"item.railways.yellow_incomplete_conductor_cap": "組み立て中の黄色の車掌帽",
+
+ 	"itemGroup.railways": "Create Railways",
+
+ 	"railways.ponder.conductor_constructing.header": "車掌の組み立て",
+ 	"railways.ponder.conductor_constructing.text_1": "車掌は安山岩ケーシングで構築します。",
+ 	"railways.ponder.conductor_redstoning.header": "車掌による遠隔レッドストーン制御",
+ 	"railways.ponder.conductor_redstoning.text_1": "車掌はプレイヤーが視線を向けるとボタンを押します。",
+ 	"railways.ponder.conductor_redstoning.text_2": "プレイヤーが視線を送るとレバーを切り替えます。",
+ 	"railways.ponder.conductor_redstoning.text_3": "自分とは違う色の車掌帽を被っている場合、レッドストーン操作をしません。",
+ 	"railways.ponder.conductor_toolboxing.header": "車掌による工具箱運搬",
+ 	"railways.ponder.conductor_toolboxing.text_1": "工具箱は車掌に装備させても正常に機能します。",
+ 	"railways.ponder.train_semaphore.header": "腕木式信号機を利用した信号状態の可視化",
+ 	"railways.ponder.train_semaphore.text_1": "腕木式信号機は鉄道信号機の上にあるポールに設置します",
+ 	"railways.ponder.train_semaphore.text_2": "ポールは様々な素材で作成できます",
+ 	"railways.ponder.train_semaphore.text_3": "真下にある現在の信号機の状態を表示します",
+ 	"railways.ponder.train_semaphore.text_4": "真鍮モードの信号に有効な複数の経路がある場合...",
+ 	"railways.ponder.train_semaphore.text_5": "...２つ目の腕木式信号機を１つ目の上に追加することが出来ます",
+ 	"railways.ponder.train_semaphore.text_6": "利用可能な経路のいずれかが塞がれた場合、下部の腕木式信号機が閉じます",
+ 	"railways.ponder.train_semaphore.text_7": "全ての経路が塞がれた場合、上部の腕木式信号機が閉じます",
+ 	"railways.ponder.train_semaphore.text_8": "真鍮信号以外に腕木式信号機を２つ設置した場合、２つとも同時に閉じます",
+
+
+ 
+
+ 	"create.railways.semaphore.search_mode": "腕木の動き",
+ 	"create.railways.semaphore.search_mode.search_down": "下向き",
+ 	"create.railways.semaphore.search_mode.search_up": "上向き"
+
+ 
+
+}
