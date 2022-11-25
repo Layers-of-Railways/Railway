@@ -15,6 +15,7 @@
     "MixinTrackBlockItem",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
+    "MixinTrackTileEntity",
     "MixinTrainHatOffsets"
   ],
   "client": [

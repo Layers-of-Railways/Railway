@@ -29,17 +29,20 @@ public class CRBlockPartials {
   public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
   public static final Map<TrackMaterial, TrackModelHolder> TRACK_PARTS = new EnumMap<>(TrackMaterial.class);
 
-  public static final PartialModel SEMAPHORE_ARM_RED=block("semaphore/red_arm");
-  public static final PartialModel SEMAPHORE_ARM_YELLOW=block("semaphore/yellow_arm");
-  public static final PartialModel SEMAPHORE_ARM_RED_FLIPPED=block("semaphore/red_arm_flipped");
-  public static final PartialModel SEMAPHORE_ARM_YELLOW_FLIPPED=block("semaphore/yellow_arm_flipped");
-  public static final PartialModel SEMAPHORE_ARM_RED_UPSIDE_DOWN=block("semaphore/red_arm_down");
-  public static final PartialModel SEMAPHORE_ARM_YELLOW_UPSIDE_DOWN=block("semaphore/yellow_arm_down");
-  public static final PartialModel SEMAPHORE_ARM_RED_FLIPPED_UPSIDE_DOWN=block("semaphore/red_arm_flipped_down");
-  public static final PartialModel SEMAPHORE_ARM_YELLOW_FLIPPED_UPSIDE_DOWN=block("semaphore/yellow_arm_flipped_down");
-  public static final PartialModel SEMAPHORE_LAMP_RED=block("semaphore/red_lamp");
-  public static final PartialModel SEMAPHORE_LAMP_YELLOW=block("semaphore/yellow_lamp");
-  public static final PartialModel SEMAPHORE_LAMP_WHITE=block("semaphore/white_lamp");
+  public static final PartialModel
+      SEMAPHORE_ARM_RED=block("semaphore/red_arm"),
+      SEMAPHORE_ARM_YELLOW=block("semaphore/yellow_arm"),
+      SEMAPHORE_ARM_RED_FLIPPED=block("semaphore/red_arm_flipped"),
+      SEMAPHORE_ARM_YELLOW_FLIPPED=block("semaphore/yellow_arm_flipped"),
+      SEMAPHORE_ARM_RED_UPSIDE_DOWN=block("semaphore/red_arm_down"),
+      SEMAPHORE_ARM_YELLOW_UPSIDE_DOWN=block("semaphore/yellow_arm_down"),
+      SEMAPHORE_ARM_RED_FLIPPED_UPSIDE_DOWN=block("semaphore/red_arm_flipped_down"),
+      SEMAPHORE_ARM_YELLOW_FLIPPED_UPSIDE_DOWN=block("semaphore/yellow_arm_flipped_down"),
+      SEMAPHORE_LAMP_RED=block("semaphore/red_lamp"),
+      SEMAPHORE_LAMP_YELLOW=block("semaphore/yellow_lamp"),
+      SEMAPHORE_LAMP_WHITE=block("semaphore/white_lamp");
+
+  public static final PartialModel TRACK_CASING = block("track_casing");
 
   private static PartialModel createBlock(String path) {
     return new PartialModel(Create.asResource("block/" + path));
