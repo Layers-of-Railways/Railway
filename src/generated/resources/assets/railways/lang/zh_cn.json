@@ -59,7 +59,7 @@
 	"item.railways.yellow_conductor_cap": "黄色列车长帽",
 	"item.railways.yellow_incomplete_conductor_cap": "黄色列车长帽（半成品）",
 
-	"itemGroup.railways": "机械动力：铁路",
+	"itemGroup.railways": "机械动力：汽鸣铁道",
 
 	"railways.ponder.conductor_constructing.header": "创建一个指挥机器人",
 	"railways.ponder.conductor_constructing.text_1": "指挥机器人由安山机壳组成。",
