@@ -8,13 +8,14 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(value = TrackPlacement.PlacementInfo.class, remap = false)
 public abstract class MixinTrackPlacement_PlacementInfo implements IHasTrackMaterial {
-  private static TrackMaterial trackMaterial;
+  private TrackMaterial trackMaterial;
 
   @Override
   public TrackMaterial getMaterial() {
     if (trackMaterial == null) {
       Railways.LOGGER.error("TrackPlacement$Placement info material is null. this is bad");
       trackMaterial = TrackMaterial.ANDESITE;
+      throw new RuntimeException("TrackPlacement$Placement info material is null. this is bad");
     }
     return trackMaterial;
   }

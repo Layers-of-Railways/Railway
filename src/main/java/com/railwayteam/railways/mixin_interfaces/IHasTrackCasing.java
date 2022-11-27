@@ -12,6 +12,12 @@ public interface IHasTrackCasing {
   SlabBlock getTrackCasing();
   void setTrackCasing(@Nullable SlabBlock trackCasing);
 
+  default boolean isAlternate() {
+    return false;
+  }
+
+  default void setAlternate(boolean alternate) {}
+
   static @Nullable SlabBlock getTrackCasing(Level world, BlockPos pos) {
     if (world.getBlockEntity(pos) instanceof IHasTrackCasing te) {
       return te.getTrackCasing();
@@ -25,6 +31,22 @@ public interface IHasTrackCasing {
       world.setBlockAndUpdate(pos, state.setValue(TrackBlock.HAS_TE, true));
     if (world.getBlockEntity(pos) instanceof IHasTrackCasing te) {
       te.setTrackCasing(trackCasing);
+    }
+  }
+
+  static boolean isAlternate(Level world, BlockPos pos) {
+    if (world.getBlockEntity(pos) instanceof IHasTrackCasing te) {
+      return te.isAlternate();
+    }
+    return false;
+  }
+
+  static boolean setAlternateModel(Level world, BlockPos pos, boolean useAlternateModel) {
+    if (world.getBlockEntity(pos) instanceof IHasTrackCasing te) {
+      te.setAlternate(useAlternateModel);
+      return true;
+    } else {
+      return false;
     }
   }
 }

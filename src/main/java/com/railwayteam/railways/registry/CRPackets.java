@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
+import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
 import com.railwayteam.railways.util.packet.JukeboxCartPacket;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
@@ -25,6 +26,7 @@ public enum CRPackets {
   // Client to Server
   MOUNTED_TOOLBOX_DISPOSE_ALL(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new, PLAY_TO_SERVER),
   MOUNTED_TOOLBOX_EQUIP(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new, PLAY_TO_SERVER),
+  SLAB_USE_ON_CURVE(SlabUseOnCurvePacket.class, SlabUseOnCurvePacket::new, PLAY_TO_SERVER),
 
   // Server to Client
   JUKEBOX_CART_UPDATE(JukeboxCartPacket.class, JukeboxCartPacket::new, PLAY_TO_CLIENT),

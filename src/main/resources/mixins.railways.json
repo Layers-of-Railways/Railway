@@ -25,7 +25,8 @@
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
-    "client.MixinTrackRenderer"
+    "client.MixinTrackRenderer",
+    "client.MixinCurvedTrackInteraction"
   ],
   "minVersion": "0.8"
 }

@@ -57,82 +57,91 @@ public abstract class MixinTrackPlacement {
     }
   }
 
-  private static ItemStack stackArgument;
+  @Inject(method = "tryConnect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target="Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement;placeTracks(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
+  private static void setupMaterial_before_place(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
+    if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
+      ((IHasTrackMaterial) info).setMaterial(hasTrackMaterial.getMaterial());
+    } else {
+      Railways.LOGGER.info("Weird stack for tryConnect: "+stack);
+    }
+  }
+
+  private static final ThreadLocal<ItemStack> stackArgument = new ThreadLocal<>();
 
   @Inject(method = "tryConnect", at = @At("HEAD"))
   private static void saveStack(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    stackArgument = stack;
+    stackArgument.set(stack);
   }
 
   @Inject(method = "tryConnect", at = @At("RETURN"))
   private static void resetStack(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    stackArgument = null;
+    stackArgument.set(null);
   }
 
   @Redirect(method = "tryConnect", at = @At(value = "INVOKE", opcode = Opcodes.GETSTATIC,
       target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"))
   private static boolean replaceTrack(BlockEntry<?> instance, ItemStack itemStack) {
-    return CRTags.AllBlockTags.TRACKS.matches(stackArgument) && itemStack.is(stackArgument.getItem());
+    return CRTags.AllBlockTags.TRACKS.matches(stackArgument.get()) && itemStack.is(stackArgument.get().getItem());
   }
 
-  private static TrackPlacement.PlacementInfo infoArgument = null;
+  private static final ThreadLocal<TrackPlacement.PlacementInfo> infoArgument = new ThreadLocal<>();
 
   @Inject(method = "placeTracks", at = @At("HEAD"))
   private static void saveInfo(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    infoArgument = info;
+    infoArgument.set(info);
   }
 
   @Inject(method = "placeTracks", at = @At("RETURN"))
   private static void resetInfo(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    infoArgument = null;
+    infoArgument.set(null);
   }
 
   @SuppressWarnings({"MixinAnnotationTarget", "InvalidInjectorMethodSignature"})
   @ModifyVariable(method = "placeTracks", at = @At(value = "STORE", ordinal = 0), ordinal = 4, require = 1, remap = false)
   private static BlockState modifyToPlace(BlockState value) {
-    return BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument).getMaterial().getTrackBlock().get(), value);
+    return BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument.get()).getMaterial().getTrackBlock().get(), value);
   }
 
-  private static BlockState relevantState = null;
-  private static BlockState stateAtPosVar = null;
-  private static TrackPlacement.PlacementInfo infoArgument2 = null;
+  private static final ThreadLocal<BlockState> relevantState = new ThreadLocal<>();
+  private static final ThreadLocal<BlockState> stateAtPosVar = new ThreadLocal<>();
+  private static final ThreadLocal<TrackPlacement.PlacementInfo> infoArgument2 = new ThreadLocal<>();
 
   @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1, remap = true))
   private static void setRelevantState1(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    relevantState = state1;
-    infoArgument2 = info;
+    relevantState.set(state1);
+    infoArgument2.set(info);
   }
 
   @Inject(method = "placeTracks", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 2, remap = true))
   private static void setRelevantState2(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    relevantState = state2;
-    infoArgument2 = info;
+    relevantState.set(state2);
+    infoArgument2.set(info);
   }
 
   @Redirect(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", remap = true),
       slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1, remap = true)))
   private static BlockState storeStateAtPos(Level level, BlockPos pos) {
-    stateAtPosVar = level.getBlockState(pos);
-    return stateAtPosVar;
+    stateAtPosVar.set(level.getBlockState(pos));
+    return stateAtPosVar.get();
   }
 
   @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z",
       ordinal = 2, shift = At.Shift.AFTER, remap = true))
   private static void resetStates(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
-    relevantState = null;
-    stateAtPosVar = null;
-    infoArgument2 = null;
+    relevantState.set(null);
+    stateAtPosVar.set(null);
+    infoArgument2.set(null);
   }
 
   @ModifyArg(method = "placeTracks", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/block/ProperWaterloggedBlock;withWater(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"),
       slice = @Slice(from = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/block/ProperWaterloggedBlock;withWater(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1)), index = 1)
   private static BlockState modifyBaseBlock(BlockState value) {
 //    Railways.LOGGER.info("modifyBaseBlock, relevantStatePre: " + relevantState);
-    if (infoArgument2 == null) {
+    if (infoArgument2.get() == null) {
       return value;
     }
-    relevantState = BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument2).getMaterial().getTrackBlock().get(), relevantState);
+    relevantState.set(BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument2.get()).getMaterial().getTrackBlock().get(), relevantState.get()));
 //    Railways.LOGGER.info("relevantStatePost: " + relevantState + ", stateAtPosVar: " + stateAtPosVar);
-    return (CRTags.AllBlockTags.TRACKS.matches(stateAtPosVar.getBlock()) ? stateAtPosVar : relevantState).setValue(TrackBlock.HAS_TE, true);
+    return (CRTags.AllBlockTags.TRACKS.matches(stateAtPosVar.get().getBlock()) ? stateAtPosVar.get() : relevantState.get()).setValue(TrackBlock.HAS_TE, true);
   }
 }

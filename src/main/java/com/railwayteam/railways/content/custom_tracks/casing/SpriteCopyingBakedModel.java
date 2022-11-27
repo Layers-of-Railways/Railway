@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_tracks.models;
+package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.railwayteam.railways.Railways;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -35,10 +35,10 @@ public class SpriteCopyingBakedModel implements BakedModel {
       //Railways.LOGGER.warn("Overridesprite: "+ overrideSprite.toString());
     }
     for (BakedQuad quad : baseModel.getQuads(pState, pSide, pRand)) {
-      if (overrideSprite == null) {
+      if (overrideSprite == null || overrideQuad == null) {
         Railways.LOGGER.error("No overriding sprites found for side "+(pSide==null?"null":pSide.toString())+" blockstate: "+(pState==null?"null":pState.toString()));
       }
-      quads.add(new BakedQuad(transformVertices(quad.getVertices(), quad.getSprite(), overrideQuad), quad.getTintIndex(), quad.getDirection(),
+      quads.add(new BakedQuad(transformVertices(quad.getVertices(), quad.getSprite(), (overrideQuad!=null?overrideQuad:quad)), quad.getTintIndex(), quad.getDirection(),
           overrideSprite != null ? overrideSprite : quad.getSprite(), true));
     }
     return quads;

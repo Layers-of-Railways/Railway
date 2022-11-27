@@ -31,6 +31,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   Map<BlockPos, BezierConnection> connections;
 
   protected SlabBlock trackCasing;
+  protected boolean isAlternateModel;
 
   protected MixinTrackTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
@@ -44,6 +45,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   @Override
   public void setTrackCasing(@Nullable SlabBlock trackCasing) {
     this.trackCasing = trackCasing;
+    notifyUpdate();
     if (this.trackCasing == null && this.level != null) { //Clean up the tile entity if it is no longer needed
       if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
           .orElse(TrackShape.NONE)
@@ -54,6 +56,17 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
         level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_TE, false));
       AllPackets.channel.send(packetTarget(), new RemoveTileEntityPacket(worldPosition));
     }
+  }
+
+  @Override
+  public boolean isAlternate() {
+    return isAlternateModel;
+  }
+
+  @Override
+  public void setAlternate(boolean alternate) {
+    this.isAlternateModel = alternate;
+    notifyUpdate();
   }
 
   // Track casings require a TE to function, so prevent it from being removed.
@@ -78,10 +91,17 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
     if (this.getTrackCasing() != null) {
       tag.putString("TrackCasing", this.getTrackCasing().getRegistryName().toString());
     }
+    tag.putBoolean("AlternateModel", this.isAlternate());
   }
 
   @Inject(method = "read", at = @At("RETURN"), remap = false)
   private void readCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
+    if (tag.contains("AlternateModel")) {
+      this.setAlternate(tag.getBoolean("AlternateModel"));
+    } else {
+      this.setAlternate(false);
+    }
+
     if (tag.contains("TrackCasing")) {
       ResourceLocation casingName = ResourceLocation.of(tag.getString("TrackCasing"), ':');
       if (ForgeRegistries.BLOCKS.containsKey(casingName)) {

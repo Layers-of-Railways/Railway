@@ -34,17 +34,22 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
     if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock) {
       if (world.isClientSide) return InteractionResult.SUCCESS;
       SlabBlock currentCasing = IHasTrackCasing.getTrackCasing(world, pos);
-      handStack.shrink(1);
-      if (currentCasing != null) {
-        ItemStack casingStack = new ItemStack(currentCasing);
-        if (handStack.isEmpty()) {
-          handStack = casingStack;
-        } else if (!player.addItem(casingStack)) {
-          player.drop(casingStack, false);
+      if (currentCasing == slabBlock) {
+        return (IHasTrackCasing.setAlternateModel(world, pos, !IHasTrackCasing.isAlternate(world, pos))) ?
+            InteractionResult.SUCCESS : InteractionResult.FAIL;
+      } else {
+        handStack.shrink(1);
+        if (currentCasing != null) {
+          ItemStack casingStack = new ItemStack(currentCasing);
+          if (handStack.isEmpty()) {
+            handStack = casingStack;
+          } else if (!player.addItem(casingStack)) {
+            player.drop(casingStack, false);
+          }
         }
+        player.setItemInHand(hand, handStack);
+        IHasTrackCasing.setTrackCasing(world, pos, slabBlock);
       }
-      player.setItemInHand(hand, handStack);
-      IHasTrackCasing.setTrackCasing(world, pos, slabBlock);
       return InteractionResult.SUCCESS;
     } else if (handStack.isEmpty()) {
       SlabBlock currentCasing = IHasTrackCasing.getTrackCasing(world, pos);
