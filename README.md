@@ -1,6 +1,5 @@
-<h1 align="center">Create Steam 'n Rails</h1>
-<br><br>
-<img src="https://discordapp.com/api/guilds/706277846389227612/widget.png?style=banner3" alt="Discord Banner 3" align="right"/>
+<h1 align="center">Steam n' Rails <br>
+	<a href="https://discord.com/invite/gcgfkca4rq"><img src="https://img.shields.io/discord/929394649884405761?color=5865f2&label=Discord&style=flat" alt="Discord"></a>
 
 **Create Steam 'n Rails** is an addon mod for Create that aims to extend Create's train and steam systems. Current features include custom tracks, semaphores, and conductors.
 
