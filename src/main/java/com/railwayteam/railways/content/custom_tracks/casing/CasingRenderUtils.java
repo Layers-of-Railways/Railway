@@ -31,6 +31,10 @@ public abstract class CasingRenderUtils {
 
   private static final HashMap<Pair<PartialModel, SlabBlock>, PartialModel> reTexturedModels = new HashMap<>();
 
+  public static void clearModelCache() {
+    reTexturedModels.clear();
+  }
+
   public static PartialModel reTexture(PartialModel model, SlabBlock block) {
     Pair<PartialModel, SlabBlock> key = Pair.of(model, block);
     if (!reTexturedModels.containsKey(key)) { //TODO make a `/snr reload casings` command to clear this cache

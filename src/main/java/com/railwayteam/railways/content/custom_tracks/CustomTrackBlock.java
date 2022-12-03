@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
 
@@ -28,8 +29,8 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
     return this.material;
   }
 
-  @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  @Nullable
+  public static InteractionResult casingUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     ItemStack handStack = player.getItemInHand(hand);
     if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock) {
       if (world.isClientSide) return InteractionResult.SUCCESS;
@@ -61,6 +62,6 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
         return InteractionResult.SUCCESS;
       }
     }
-    return super.use(state, world, pos, player, hand, hit);
+    return null;
   }
 }

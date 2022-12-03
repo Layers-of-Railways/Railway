@@ -4,6 +4,7 @@ import com.railwayteam.railways.base.data.lang.LangMerger;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
+import com.railwayteam.railways.registry.CRCommands;
 import com.simibubi.create.foundation.ModFilePackResources;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
@@ -17,6 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -113,6 +115,11 @@ public class Railways {
   public void registerModelLayers (EntityRenderersEvent.RegisterLayerDefinitions event) {
     event.registerLayerDefinition(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     event.registerLayerDefinition(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
+  }
+
+  @SubscribeEvent
+  public void registerCommands(RegisterCommandsEvent event) {
+    CRCommands.register(event.getDispatcher());
   }
 
   public static CreateRegistrate registrate() {
