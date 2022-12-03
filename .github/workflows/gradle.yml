@@ -38,7 +38,7 @@ jobs:
           args: ./build/libs/*.*
 
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: railways-nightly-${{ steps.get_hash.outputs.sha_short }}
           path: build/libs/
