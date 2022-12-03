@@ -38,8 +38,8 @@ version = "${minecraft_version}-${mod_version}"
 if (System.getenv("DEV") == "true") {
     version = "${minecraft_version}-${mod_version}-dev-${getGitHash()}"
 }
-if (System.getenv("RAILWAYS_VERSION") != null) {
-    version = "${minecraft_version}-"+System.getenv("RAILWAYS_VERSION");
+if (System.getenv("CI") == "true") {
+    version = "${minecraft_version}-nightly-${getGitHash()}";
 }
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Steam_Rails"
