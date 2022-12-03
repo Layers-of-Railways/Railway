@@ -1,6 +1,8 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
+import com.jozufozu.flywheel.api.Material;
 import com.jozufozu.flywheel.core.PartialModel;
+import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -8,29 +10,38 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class CasingRenderUtils {
-  public static PartialModel reTexture(PartialModel model, SlabBlock block) {
-    BakedModel slabModel = Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(block.defaultBlockState());
-    BakedModel texturedCasing = new SpriteCopyingBakedModel(model.get(), slabModel);
 
-    return RuntimeFakePartialModel.make(Railways.asResource("runtime_casing"), texturedCasing);
+  private static final HashMap<Pair<PartialModel, SlabBlock>, PartialModel> reTexturedModels = new HashMap<>();
+
+  public static PartialModel reTexture(PartialModel model, SlabBlock block) {
+    Pair<PartialModel, SlabBlock> key = Pair.of(model, block);
+    if (!reTexturedModels.containsKey(key)) { //TODO make a `/snr reload casings` command to clear this cache
+      BakedModel slabModel = Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(block.defaultBlockState());
+      BakedModel texturedCasing = new SpriteCopyingBakedModel(model.get(), slabModel);
+      PartialModel texturedPartial = RuntimeFakePartialModel.make(Railways.asResource("runtime_casing"), texturedCasing);
+      reTexturedModels.put(key, texturedPartial);
+      return texturedPartial;
+    }
+
+    return reTexturedModels.get(key);
   }
   public static void renderBezierCasings(PoseStack ms, Level level, PartialModel texturedPartial, BlockState state, VertexConsumer vb, BezierConnection bc) {
     int heightDiff = Math.abs(bc.tePositions.get(false).getY() - bc.tePositions.get(true).getY());
@@ -53,7 +64,6 @@ public abstract class CasingRenderUtils {
     } else {
       ms.pushPose();
       BlockPos tePosition = bc.tePositions.getFirst();
-      BlockState air = Blocks.AIR.defaultBlockState();
       BezierConnection.SegmentAngles[] segments = bc.getBakedSegments();
 
       TransformStack.cast(ms)
@@ -112,5 +122,10 @@ public abstract class CasingRenderUtils {
       }
     }
     return positions.stream().toList();
+  }
+
+  public static ModelData makeCasingInstance(PartialModel baseModel, SlabBlock slabBlock, Material<ModelData> mat) {
+    PartialModel texturedPartial = reTexture(baseModel, slabBlock);
+    return mat.getModel(texturedPartial).createInstance();
   }
 }

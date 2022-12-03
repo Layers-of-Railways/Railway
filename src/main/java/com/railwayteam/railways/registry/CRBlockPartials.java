@@ -65,11 +65,16 @@ public class CRBlockPartials {
     public final ModelTransform transform;
     public final List<ModelTransform> additionalTransforms = new ArrayList<>();
 
-    protected TrackCasingSpec altSpec;
+    private TrackCasingSpec altSpec;
+    private final int topSurfacePixelHeight;
 
-    public TrackCasingSpec(PartialModel model, ModelTransform transform) {
+    private double xShift = 0;
+    private double zShift = 0;
+
+    public TrackCasingSpec(PartialModel model, ModelTransform transform, int topSurfacePixelHeight) {
       this.model = model;
       this.transform = transform;
+      this.topSurfacePixelHeight = topSurfacePixelHeight;
     }
 
     public TrackCasingSpec addTransform(ModelTransform transform) {
@@ -89,6 +94,24 @@ public class CRBlockPartials {
     public TrackCasingSpec getAltSpec() {
       return altSpec!=null ? altSpec : this;
     }
+
+    public int getTopSurfacePixelHeight(boolean alt) {
+      return (alt && altSpec!=null) ? altSpec.topSurfacePixelHeight : topSurfacePixelHeight;
+    }
+
+    public TrackCasingSpec overlayShift(double x, double z) {
+      this.xShift = x;
+      this.zShift = z;
+      return this;
+    }
+
+    public double getXShift() {
+      return xShift;
+    }
+
+    public double getZShift() {
+      return zShift;
+    }
   }
 
   public static final EnumMap<TrackShape, TrackCasingSpec> TRACK_CASINGS = new EnumMap<>(TrackShape.class);
@@ -103,39 +126,39 @@ public class CRBlockPartials {
     PartialModel nd = block("track_casing/nd");
     PartialModel cr_o = block("track_casing/cr_o");
 
-    TrackCasingSpec spec_3x3 = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TrackCasingSpec spec_3x3 = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
         .addTransform(1, 1).addTransform(0, 1).addTransform(-1, 1)
         .addTransform(1, 0).addTransform(-1, 0)
         .addTransform(1, -1).addTransform(0, -1).addTransform(-1, -1);
 
-    TrackCasingSpec flat_x = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TrackCasingSpec flat_x = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
         .addTransform(0, 1).addTransform(0, -1);
-    TrackCasingSpec flat_z = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TrackCasingSpec flat_z = new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
         .addTransform(1, 0).addTransform(-1, 0);
 
-    TRACK_CASINGS.put(TrackShape.XO, new TrackCasingSpec(xo, ModelTransform.ZERO).withAltSpec(flat_x));
-    TRACK_CASINGS.put(TrackShape.ZO, new TrackCasingSpec(zo, ModelTransform.ZERO).withAltSpec(flat_z));
+    TRACK_CASINGS.put(TrackShape.XO, new TrackCasingSpec(xo, ModelTransform.ZERO, 8).withAltSpec(flat_x));
+    TRACK_CASINGS.put(TrackShape.ZO, new TrackCasingSpec(zo, ModelTransform.ZERO, 8).withAltSpec(flat_z));
 
 
-    TRACK_CASINGS.put(TrackShape.PD, new TrackCasingSpec(pd, ModelTransform.ZERO)
-            .withAltSpec(new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TRACK_CASINGS.put(TrackShape.PD, new TrackCasingSpec(pd, ModelTransform.ZERO, 8)
+            .withAltSpec(new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
                 .addTransform(1, 0).addTransform(1, -1)
                 .addTransform(0, 1).addTransform(-1, 1)
             ));
-    TRACK_CASINGS.put(TrackShape.ND, new TrackCasingSpec(nd, ModelTransform.ZERO)
-        .withAltSpec(new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TRACK_CASINGS.put(TrackShape.ND, new TrackCasingSpec(nd, ModelTransform.ZERO, 8)
+        .withAltSpec(new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
             .addTransform(-1, 0).addTransform(-1, -1)
             .addTransform(0, 1).addTransform(1, 1)
         ));
 
-    TRACK_CASINGS.put(TrackShape.TE, new TrackCasingSpec(xo, ModelTransform.ZERO).withAltSpec(flat_x));
-    TRACK_CASINGS.put(TrackShape.TW, new TrackCasingSpec(xo, ModelTransform.ZERO).withAltSpec(flat_x));
-    TRACK_CASINGS.put(TrackShape.TN, new TrackCasingSpec(zo, ModelTransform.ZERO).withAltSpec(flat_z));
-    TRACK_CASINGS.put(TrackShape.TS, new TrackCasingSpec(zo, ModelTransform.ZERO).withAltSpec(flat_z));
+    TRACK_CASINGS.put(TrackShape.TE, new TrackCasingSpec(xo, ModelTransform.ZERO, 8).withAltSpec(flat_x));
+    TRACK_CASINGS.put(TrackShape.TW, new TrackCasingSpec(xo, ModelTransform.ZERO, 8).withAltSpec(flat_x));
+    TRACK_CASINGS.put(TrackShape.TN, new TrackCasingSpec(zo, ModelTransform.ZERO, 8).withAltSpec(flat_z));
+    TRACK_CASINGS.put(TrackShape.TS, new TrackCasingSpec(zo, ModelTransform.ZERO, 8).withAltSpec(flat_z));
 
-    TRACK_CASINGS.put(TrackShape.CR_O, new TrackCasingSpec(cr_o, ModelTransform.ZERO).withAltSpec(spec_3x3));
+    TRACK_CASINGS.put(TrackShape.CR_O, new TrackCasingSpec(cr_o, ModelTransform.ZERO, 8).withAltSpec(spec_3x3));
 
-    TRACK_CASINGS.put(TrackShape.CR_D, new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO)
+    TRACK_CASINGS.put(TrackShape.CR_D, new TrackCasingSpec(TRACK_CASING_FLAT, ModelTransform.ZERO, 3)
         .addTransform(1, 2).addTransform(0, 2).addTransform(-1, 2)
         .addTransform(2, 1).addTransform(1, 1).addTransform(0, 1).addTransform(-1, 1).addTransform(-2, 1)
         .addTransform(2, 0).addTransform(1, 0).addTransform(-1, 0).addTransform(-2, 0)
@@ -148,11 +171,12 @@ public class CRBlockPartials {
     TRACK_CASINGS.put(TrackShape.CR_PDZ, spec_3x3);
     TRACK_CASINGS.put(TrackShape.CR_NDX, spec_3x3);
     TRACK_CASINGS.put(TrackShape.CR_NDZ, spec_3x3);
-  }
 
-  /*public static ModelTransform getTransform() {
-    return ModelTransform.of(-0.5d, 0, 0, 0, 45, 0);
-  }*/
+    TRACK_CASINGS.put(TrackShape.AN, new TrackCasingSpec(block("track_casing/an"), ModelTransform.ZERO, 5).overlayShift(0, 3/16f));
+    TRACK_CASINGS.put(TrackShape.AS, new TrackCasingSpec(block("track_casing/as"), ModelTransform.ZERO, 5).overlayShift(0, -3/16f));
+    TRACK_CASINGS.put(TrackShape.AE, new TrackCasingSpec(block("track_casing/ae"), ModelTransform.ZERO, 5).overlayShift(-3/16f, 0));
+    TRACK_CASINGS.put(TrackShape.AW, new TrackCasingSpec(block("track_casing/aw"), ModelTransform.ZERO, 5).overlayShift(3/16f, 0));
+  }
 
   private static PartialModel createBlock(String path) {
     return new PartialModel(Create.asResource("block/" + path));

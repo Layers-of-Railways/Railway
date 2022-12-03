@@ -16,10 +16,8 @@ import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,9 +26,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.simibubi.create.AllBlockPartials.*;
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.reTexture;
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.renderBezierCasings;
+import static com.simibubi.create.AllBlockPartials.*;
 
 @Mixin(value = TrackRenderer.class, remap = false)
 public class MixinTrackRenderer {
@@ -84,7 +82,7 @@ public class MixinTrackRenderer {
   }
 
   @Inject(method = "renderSafe(Lcom/simibubi/create/content/logistics/trains/track/TrackTileEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
-      at = @At("HEAD"), remap = false)
+      at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = false)
   private void renderCasing(TrackTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
     SlabBlock casingBlock = ((IHasTrackCasing) te).getTrackCasing();
     if (casingBlock != null) {
@@ -120,20 +118,9 @@ public class MixinTrackRenderer {
 
   @Inject(method = "renderBezierTurn", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"), remap = false)
   private static void renderCurveCasings(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
-    //List<Vec3> casingPositions = CustomTrackBlock.casingPositions(bc);
-    BlockPos tePosition = bc.tePositions.getFirst();
-//    BlockEntity te = level.getBlockEntity(tePosition);
-    if (true) {//te != null) {
-      SlabBlock casingBlock = ((IHasTrackCasing) bc).getTrackCasing();//((IHasTrackCasing) te).getTrackCasing();
-      if (casingBlock != null) {
-//        PartialModel model = CRBlockPartials.TRACK_CASING_FLAT_THICK;
-//        BakedModel slabModel = Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(casingBlock.defaultBlockState());
-//        BakedModel texturedCasing = new SpriteCopyingBakedModel(model.get(), slabModel);
-
-//        PartialModel texturedPartial = RuntimeFakePartialModel.make(Railways.asResource("runtime_casing"), texturedCasing);
-
-        renderBezierCasings(ms, level, reTexture(CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock), casingBlock.defaultBlockState(), vb, bc);
-      }
+    SlabBlock casingBlock = ((IHasTrackCasing) bc).getTrackCasing();
+    if (casingBlock != null) {
+      renderBezierCasings(ms, level, reTexture(CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock), casingBlock.defaultBlockState(), vb, bc);
     }
   }
 }
