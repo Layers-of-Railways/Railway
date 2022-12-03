@@ -15,7 +15,13 @@ jobs:
       - name: Get latest commit hash
         id: get_hash
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-  
+
+      - name: Send building message to discord
+        uses: realRobotix/action-discord-notifier@release-master
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message-title: "Building mod from branch ${{ steps.get_branch.outputs.branch }}"
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
