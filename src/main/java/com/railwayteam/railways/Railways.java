@@ -4,19 +4,25 @@ import com.railwayteam.railways.base.data.lang.LangMerger;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
+import com.railwayteam.railways.registry.CRCommands;
+import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.foundation.ModFilePackResources;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.MavenVersionStringHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,9 +36,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.forgespi.language.IModFileInfo;
+import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.forgespi.locating.IModFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 @Mod(Railways.MODID)
 public class Railways {
@@ -40,6 +49,7 @@ public class Railways {
 	public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static final ModSetup setup = new ModSetup();
+  public static final String VERSION = getVersion();
 
   private static final NonNullSupplier<CreateRegistrate> REGISTRATE = CreateRegistrate.lazy(MODID);
 
@@ -115,7 +125,35 @@ public class Railways {
     event.registerLayerDefinition(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
   }
 
+  @SubscribeEvent
+  public void registerCommands(RegisterCommandsEvent event) {
+    CRCommands.register(event.getDispatcher());
+  }
+
+  @SubscribeEvent
+  public void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    if (event.getPlayer() instanceof ServerPlayer serverPlayer) {
+      PacketSender.notifyServerVersion(() -> serverPlayer);
+    }
+  }
+
   public static CreateRegistrate registrate() {
     return REGISTRATE.get();
+  }
+
+  private static String getVersion() {
+    String versionString = "UNKNOWN";
+
+    List<IModInfo> infoList = ModList.get().getModFileById(MODID).getMods();
+    if (infoList.size() > 1) {
+      LOGGER.error("Multiple mods for MOD_ID: "+MODID);
+    }
+    for (IModInfo info : infoList) {
+      if (info.getModId().equals(MODID)) {
+        versionString = MavenVersionStringHelper.artifactVersionToString(info.getVersion());
+        break;
+      }
+    }
+    return versionString;
   }
 }

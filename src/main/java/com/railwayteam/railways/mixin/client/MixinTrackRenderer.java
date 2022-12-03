@@ -4,11 +4,20 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
+import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
+import com.simibubi.create.content.logistics.trains.track.TrackShape;
+import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.foundation.render.CachedBufferer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SlabBlock;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,9 +26,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.simibubi.create.AllBlockPartials.TRACK_TIE;
-import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_LEFT;
-import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_RIGHT;
+import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.reTexture;
+import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.renderBezierCasings;
+import static com.simibubi.create.AllBlockPartials.*;
 
 @Mixin(value = TrackRenderer.class, remap = false)
 public class MixinTrackRenderer {
@@ -70,5 +79,48 @@ public class MixinTrackRenderer {
       }
     }
     return TRACK_SEGMENT_RIGHT;
+  }
+
+  @Inject(method = "renderSafe(Lcom/simibubi/create/content/logistics/trains/track/TrackTileEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+      at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = false)
+  private void renderCasing(TrackTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
+    SlabBlock casingBlock = ((IHasTrackCasing) te).getTrackCasing();
+    if (casingBlock != null) {
+      TrackShape shape = te.getBlockState().getValue(TrackBlock.SHAPE);
+      if (CRBlockPartials.TRACK_CASINGS.containsKey(shape)) {
+        ms.pushPose();
+        CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
+        if (((IHasTrackCasing) te).isAlternate())
+          spec = spec.getAltSpec();
+        CRBlockPartials.ModelTransform transform = spec.transform;
+
+        PartialModel texturedPartial = reTexture(spec.model, casingBlock);
+
+        CachedBufferer.partial(reTexture(spec.model, casingBlock), casingBlock.defaultBlockState())
+            .rotateX(transform.rx()).rotateY(transform.ry()).rotateZ(transform.rz())
+            .translate(transform.x(), transform.y(), transform.z())
+            .light(light)
+            .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+
+        for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
+          CachedBufferer.partial(texturedPartial, casingBlock.defaultBlockState())
+              .rotateX(additionalTransform.rx()).rotateY(additionalTransform.ry()).rotateZ(additionalTransform.rz())
+              .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z())
+              .light(light)
+              .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+        }
+        ms.popPose();
+      } else {
+        TextUtils.renderDebugText(ms, buffer, light, 1, true, "No casing for shape " + shape);
+      }
+    }
+  }
+
+  @Inject(method = "renderBezierTurn", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"), remap = false)
+  private static void renderCurveCasings(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
+    SlabBlock casingBlock = ((IHasTrackCasing) bc).getTrackCasing();
+    if (casingBlock != null) {
+      renderBezierCasings(ms, level, reTexture(CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock), casingBlock.defaultBlockState(), vb, bc);
+    }
   }
 }

@@ -1,10 +1,7 @@
 package com.railwayteam.railways.content.semaphore;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.content.contraptions.components.structureMovement.mounted.CartAssemblerBlock;
-import com.simibubi.create.content.logistics.block.belts.tunnel.BrassTunnelTileEntity;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalTileEntity;
 import com.simibubi.create.foundation.gui.AllIcons;
@@ -13,7 +10,6 @@ import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.INamedIconOptions;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollOptionBehaviour;
-import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
@@ -22,7 +18,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
 
 import java.lang.ref.WeakReference;
@@ -73,8 +68,10 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
         searchMode.withCallback(setting -> {
             this.cachedSignalTE = new WeakReference<>(null);
         });
-        this.setSearchUpsideDown(startSearchingUpsideDownMap.get(this.getBlockPos()));
-        startSearchingUpsideDownMap.remove(this.getBlockPos());
+        if (startSearchingUpsideDownMap.containsKey(this.getBlockPos())) {
+            this.setSearchUpsideDown(startSearchingUpsideDownMap.get(this.getBlockPos()));
+            startSearchingUpsideDownMap.remove(this.getBlockPos());
+        }
     }
     @Override
     public void tick() {
@@ -176,7 +173,7 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
         }
     }
 
-    private class SemaphoreValueBoxTransform extends CenteredSideValueBoxTransform {
+    private static class SemaphoreValueBoxTransform extends CenteredSideValueBoxTransform {
 
         public SemaphoreValueBoxTransform() {
             super((state, d) -> {

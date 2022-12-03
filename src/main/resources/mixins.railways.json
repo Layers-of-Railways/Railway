@@ -15,16 +15,20 @@
     "MixinTrackBlockItem",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
-    "MixinTrainHatOffsets"
+    "MixinTrackTileEntity",
+    "MixinTrainHatOffsets",
+    "MixinTrackBlock"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",
     "client.MixinBlueprintOverlayRenderer",
+    "client.MixinCurvedTrackInteraction",
     "client.MixinPonderIndex",
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
-    "client.MixinTrackRenderer"
+    "client.MixinTrackRenderer",
+    "client.MixinTrackBlockClient"
   ],
   "minVersion": "0.8"
 }

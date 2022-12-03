@@ -3,7 +3,9 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
+import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
 import com.railwayteam.railways.util.packet.JukeboxCartPacket;
+import com.railwayteam.railways.util.packet.ModVersionPacket;
 import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
@@ -22,13 +24,18 @@ import java.util.function.Supplier;
 import static net.minecraftforge.network.NetworkDirection.*;
 
 public enum CRPackets {
+  //TODO add a packet to check if the server and client are using a different version of the mod, if so, warn the player that there may be problems
+  // (Don't force disconnect, since debug versions of the mod may only have changes that don't prevent compatibility)
+
   // Client to Server
   MOUNTED_TOOLBOX_DISPOSE_ALL(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new, PLAY_TO_SERVER),
   MOUNTED_TOOLBOX_EQUIP(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new, PLAY_TO_SERVER),
+  SLAB_USE_ON_CURVE(SlabUseOnCurvePacket.class, SlabUseOnCurvePacket::new, PLAY_TO_SERVER),
 
   // Server to Client
   JUKEBOX_CART_UPDATE(JukeboxCartPacket.class, JukeboxCartPacket::new, PLAY_TO_CLIENT),
-  MOUNTED_TOOLBOX_SYNC(MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::new, PLAY_TO_CLIENT)
+  MOUNTED_TOOLBOX_SYNC(MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::new, PLAY_TO_CLIENT),
+  MOD_VERSION_ANNOUNCE(ModVersionPacket.class, ModVersionPacket::new, PLAY_TO_CLIENT)
   ;
   public static final ResourceLocation CHANNEL_ID = new ResourceLocation(Railways.MODID, "main");
   public static final int PROTOCOL_VER = 2;
