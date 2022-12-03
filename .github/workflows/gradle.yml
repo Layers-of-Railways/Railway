@@ -17,6 +17,7 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Send building message to discord
+        if: github.event_name == 'push'
         uses: realRobotix/action-discord-notifier@release-master
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
@@ -37,6 +38,7 @@ jobs:
           arguments: build
   
       - name: Send built file to discord
+        if: github.event_name == 'push'
         uses: sinshutu/upload-to-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
