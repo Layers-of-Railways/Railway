@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
+import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
@@ -288,6 +289,14 @@ public class ConductorEntity extends AbstractGolem {
 
   public boolean canUseBlock (BlockState state) {
     return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER);
+  }
+
+  @Override
+  public void die(@NotNull DamageSource pDamageSource) {
+    super.die(pDamageSource);
+    if (this.level.isClientSide) {
+      IMountedToolboxHandler.onUnload(this);
+    }
   }
 
   @Override

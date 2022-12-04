@@ -37,6 +37,7 @@ public interface IMountedToolboxHandler {
         .keySet()
         .stream()
         .map(conductors.get(world)::get)
+        .filter(ce -> ce != null && ce.isAlive() && !ce.isRemoved())
         .filter(p -> distance(location, p.position()) < maxRange * maxRange)
         .sorted(Comparator.comparingDouble(p -> distance(location, p.position())))
         .limit(maxAmount)
