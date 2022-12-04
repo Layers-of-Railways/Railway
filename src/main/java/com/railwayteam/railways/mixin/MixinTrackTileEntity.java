@@ -70,7 +70,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   }
 
   // Track casings require a TE to function, so prevent it from being removed.
-  @Inject(method = "removeConnection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"), cancellable = true, remap = false)
+  @Inject(method = "removeConnection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", remap = true), cancellable = true, remap = false)
   private void preventTileRemoval(BlockPos target, CallbackInfo ci) {
     if (getTrackCasing() != null) {
       notifyUpdate();

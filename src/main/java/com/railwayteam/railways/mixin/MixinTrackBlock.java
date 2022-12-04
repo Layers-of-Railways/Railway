@@ -83,7 +83,7 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
     return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, stacks);
   }
 
-  @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+  @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
   private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
     InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
     if (result != null) {
