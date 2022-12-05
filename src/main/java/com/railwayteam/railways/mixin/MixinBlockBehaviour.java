@@ -23,7 +23,7 @@ public class MixinBlockBehaviour {
   @Inject(method = "getDrops", at = @At("RETURN"), cancellable = true)
   private void addTrackCasingDrops(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> cir) {
     List<ItemStack> superList = cir.getReturnValue();
-    if (builder.getParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
+    if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
       superList.add(new ItemStack(casing.getTrackCasing()));
     }
     cir.setReturnValue(superList);

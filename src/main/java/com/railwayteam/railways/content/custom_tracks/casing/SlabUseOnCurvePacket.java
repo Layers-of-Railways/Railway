@@ -14,6 +14,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 public class SlabUseOnCurvePacket extends TileEntityConfigurationPacket<TrackTileEntity> {
 
@@ -51,16 +52,14 @@ public class SlabUseOnCurvePacket extends TileEntityConfigurationPacket<TrackTil
         casingAble.setAlternate(!casingAble.isAlternate());
         return InteractionResult.SUCCESS;
       } else {
-        handStack.shrink(1);
-        if (currentCasing != null) {
-          ItemStack casingStack = new ItemStack(currentCasing);
-          if (handStack.isEmpty()) {
-            handStack = casingStack;
-          } else if (!player.addItem(casingStack)) {
-            player.drop(casingStack, false);
+        if (!player.isCreative()) {
+          handStack.shrink(1);
+          if (currentCasing != null) {
+            ItemStack casingStack = new ItemStack(currentCasing);
+            ItemHandlerHelper.giveItemToPlayer(player, casingStack);
           }
+          player.setItemInHand(hand, handStack);
         }
-        player.setItemInHand(hand, handStack);
         casingAble.setTrackCasing(slabBlock);
       }
       return InteractionResult.SUCCESS;
@@ -69,7 +68,8 @@ public class SlabUseOnCurvePacket extends TileEntityConfigurationPacket<TrackTil
       if (currentCasing != null) {
         handStack = new ItemStack(currentCasing);
         casingAble.setTrackCasing(null);
-        player.setItemInHand(hand, handStack);
+        if (!player.isCreative())
+          ItemHandlerHelper.giveItemToPlayer(player, handStack);
         return InteractionResult.SUCCESS;
       }
     }

@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.custom_tracks;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
@@ -39,16 +41,14 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
         return (IHasTrackCasing.setAlternateModel(world, pos, !IHasTrackCasing.isAlternate(world, pos))) ?
             InteractionResult.SUCCESS : InteractionResult.FAIL;
       } else {
-        handStack.shrink(1);
-        if (currentCasing != null) {
-          ItemStack casingStack = new ItemStack(currentCasing);
-          if (handStack.isEmpty()) {
-            handStack = casingStack;
-          } else if (!player.addItem(casingStack)) {
-            player.drop(casingStack, false);
+        if (!player.isCreative()) {
+          handStack.shrink(1);
+          player.setItemInHand(hand, handStack);
+          if (currentCasing != null) {
+            ItemStack casingStack = new ItemStack(currentCasing);
+            ItemHandlerHelper.giveItemToPlayer(player, casingStack);
           }
         }
-        player.setItemInHand(hand, handStack);
         IHasTrackCasing.setTrackCasing(world, pos, slabBlock);
       }
       return InteractionResult.SUCCESS;
@@ -58,7 +58,8 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
         if (world.isClientSide) return InteractionResult.SUCCESS;
         handStack = new ItemStack(currentCasing);
         IHasTrackCasing.setTrackCasing(world, pos, null);
-        player.setItemInHand(hand, handStack);
+        if (!player.isCreative())
+          ItemHandlerHelper.giveItemToPlayer(player, handStack);
         return InteractionResult.SUCCESS;
       }
     }
