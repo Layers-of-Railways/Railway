@@ -48,7 +48,9 @@ public class ConductorCapItem extends ArmorItem {
   public InteractionResult useOn (UseOnContext ctx) {
     Level level  = ctx.getLevel();
     BlockPos pos = ctx.getClickedPos();
-    if (!level.isClientSide && isCasing(level, pos)) {
+    if (isCasing(level, pos)) {
+      if (level.isClientSide)
+        return InteractionResult.SUCCESS;
       level.removeBlock(pos, false);
       ConductorEntity.spawn(level, pos, ctx.getItemInHand().copy());
       if (ctx.getPlayer() != null && !ctx.getPlayer().isCreative()) {
