@@ -91,13 +91,14 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
     }
   }
 
-  @Override
+  /* Moved to MixinBlockBehaviour
   @SuppressWarnings("deprecation")
+  @Override
   public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootContext.@NotNull Builder builder) {
     List<ItemStack> superList = super.getDrops(state, builder);
     if (builder.getParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
       superList.add(new ItemStack(casing.getTrackCasing()));
     }
     return superList;
-  }
+  }*/
 }
