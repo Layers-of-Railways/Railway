@@ -30,7 +30,8 @@ public enum TrackMaterial {
   JUNGLE("Jungle", Lazy.of(() -> CRBlocks.JUNGLE_TRACK), new ResourceLocation("block/jungle_planks"), Blocks.JUNGLE_SLAB),
   OAK("Oak", Lazy.of(() -> CRBlocks.OAK_TRACK), new ResourceLocation("block/oak_planks"), Blocks.OAK_SLAB),
   SPRUCE("Spruce", Lazy.of(() -> CRBlocks.SPRUCE_TRACK), new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
-  WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET))
+  WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
+  BLACKSTONE("Blackstone", Lazy.of(() -> CRBlocks.BLACKSTONE_TRACK), new ResourceLocation("block/blackstone"), Ingredient.of(Blocks.BLACKSTONE_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
   ;
 
   public final String langName;
