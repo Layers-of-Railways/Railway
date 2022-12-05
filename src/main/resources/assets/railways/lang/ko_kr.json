@@ -76,7 +76,7 @@
 	"railways.ponder.train_semaphore.text_2": "완목 신호기의 기둥은 여러가지 재료로 만들 수 있습니다.",
 	"railways.ponder.train_semaphore.text_3": "완목 신호기는 기둥 아래 기차 신호기의 현재 상태를 보여줍니다.",
 	"railways.ponder.train_semaphore.text_4": "만약 황동 기차 신호기에 유효한 출구 경로가 여럿 존재한다면...",
-	"railways.ponder.train_semaphore.text_5": "... 두 번째 완목 신호기를 기존 완목 신호기 위에 설치할 수 있습니다.",
+	"railways.ponder.train_semaphore.text_5": "...두 번째 완목 신호기를 기존 완목 신호기 위에 설치할 수 있습니다.",
 	"railways.ponder.train_semaphore.text_6": "이제 아래쪽 완목 신호기는 사용 가능한 경로 중 하나라도 막혔을 때 닫힙니다.",
 	"railways.ponder.train_semaphore.text_7": "위쪽 완목 신호기는 모든 경로가 막혔을 때 닫힙니다.",
 	"railways.ponder.train_semaphore.text_8": "2개의 완목 신호기가 비 황동 기차 신호기 위에 설치되었다면, 둘은 동시에 닫힙니다.",
