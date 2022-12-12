@@ -1,5 +1,7 @@
 {
 
+	"_": "Readme: my German is far from perfect (my English isn’t great either), so the translation needs correction/review.",
+	
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.semaphore": "Formsignal",
@@ -80,18 +82,18 @@
 	"railways.ponder.train_semaphore.text_1": "Formsignale werden auf Masten über Zugsignale platziert.",
 	"railways.ponder.train_semaphore.text_2": "Formsignal-Masten können aus verschiedenen Materialen gebaut werden.",
 	"railways.ponder.train_semaphore.text_3": "Formsignale zeigen die aktuellen Zustände der Signale unter den Masten.",
-	"railways.ponder.train_semaphore.text_4": "If a brass signal has multiple valid exit paths...",
-	"railways.ponder.train_semaphore.text_5": "... a second semaphore can be placed above the first",
-	"railways.ponder.train_semaphore.text_6": "The bottom semaphore will now close if any of the available paths are blocked",
-	"railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
-	"railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously",
+	"railways.ponder.train_semaphore.text_4": "Falls ein Messing-Signal mehrere valide Ausgangswege hat...",
+	"railways.ponder.train_semaphore.text_5": "... kann ein zweites Formsignal über das Erste platziert werden.",
+	"railways.ponder.train_semaphore.text_6": "Der untere Formsignal schließt sich, falls einer der Wege blockiert ist.",
+	"railways.ponder.train_semaphore.text_7": "Der obere Formsignal schließt sich, falls alle Wege blockiert sind.",
+	"railways.ponder.train_semaphore.text_8": "2 Formsignale schließen sich gleichzeitig, wenn beide auf einen nicht-Messing-Signal platziert sind.",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
-	"create.railways.semaphore.search_mode": "Signal Search Direction",
-	"create.railways.semaphore.search_mode.search_down": "Down",
-	"create.railways.semaphore.search_mode.search_up": "Up",
+	"create.railways.semaphore.search_mode": "Signal Suchrichtung",
+	"create.railways.semaphore.search_mode.search_down": "Unten",
+	"create.railways.semaphore.search_mode.search_up": "Oben",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 
