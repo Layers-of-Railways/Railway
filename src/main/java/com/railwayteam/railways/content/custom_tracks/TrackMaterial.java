@@ -17,6 +17,7 @@ import net.minecraftforge.common.util.Lazy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -97,7 +98,7 @@ public enum TrackMaterial {
   }
 
   public String resName() {
-    return this.name().toLowerCase();
+    return this.name().toLowerCase(Locale.ROOT);
   }
 
   public static TrackMaterial deserialize(String serializedName) {
