@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
@@ -44,6 +45,8 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
 
   @Override
   public void setTrackCasing(@Nullable SlabBlock trackCasing) {
+    if (trackCasing != null && CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(trackCasing)) //sanity check
+      return;
     this.trackCasing = trackCasing;
     notifyUpdate();
     if (this.trackCasing == null && this.level != null && !this.level.isClientSide) { //Clean up the tile entity if it is no longer needed

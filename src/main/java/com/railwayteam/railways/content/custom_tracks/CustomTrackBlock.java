@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.custom_tracks;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -34,7 +35,8 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
   @Nullable
   public static InteractionResult casingUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
     ItemStack handStack = player.getItemInHand(hand);
-    if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock) {
+    if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
+        !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
       if (world.isClientSide) return InteractionResult.SUCCESS;
       SlabBlock currentCasing = IHasTrackCasing.getTrackCasing(world, pos);
       if (currentCasing == slabBlock) {

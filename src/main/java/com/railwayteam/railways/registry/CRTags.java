@@ -50,8 +50,8 @@ public class CRTags {
 
   public enum AllBlockTags {
     TRACKS,
-    SEMAPHORE_POLES(MOD,MOD.optionalDefault,false)
-
+    SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
+    TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
     ;
 
     public final TagKey<Block> tag;
