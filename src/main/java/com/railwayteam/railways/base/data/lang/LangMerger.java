@@ -1,12 +1,16 @@
 package com.railwayteam.railways.base.data.lang;
 
+import com.google.common.hash.Hashing;
+import com.google.common.hash.HashingOutputStream;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.ponder.PonderScene;
 import com.simibubi.create.foundation.utility.FilesHelper;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -14,8 +18,10 @@ import net.minecraft.util.GsonHelper;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -66,7 +72,7 @@ public class LangMerger implements DataProvider {
 	}
 
 	@Override
-	public void run(HashCache cache) throws IOException {
+	public void run(@NotNull CachedOutput cache) throws IOException {
 		Path path = this.gen.getOutputFolder()
 			.resolve("assets/" + Railways.MODID + "/lang/" + "en_us.json");
 
@@ -214,24 +220,19 @@ public class LangMerger implements DataProvider {
 				.getAsJsonObject());
 	}
 
-	private void save(HashCache cache, List<Object> dataIn, int missingKeys, Path target, String message)
+	@SuppressWarnings("deprecation")
+	private void save(CachedOutput cache, List<Object> dataIn, int missingKeys, Path target, String message)
 		throws IOException {
-		String data = createString(dataIn, missingKeys);
-//		data = JavaUnicodeEscaper.outsideOf(0, 0x7f)
-//			.translate(data);
-		String hash = DataProvider.SHA1.hashUnencodedChars(data)
-			.toString();
-		if (!Objects.equals(cache.getHash(target), hash) || !Files.exists(target)) {
-			Files.createDirectories(target.getParent());
+		Create.LOGGER.info(message);
 
-			try (BufferedWriter bufferedwriter = Files.newBufferedWriter(target)) {
-				Railways.LOGGER.info(message);
-				bufferedwriter.write(data);
-				bufferedwriter.close();
-			}
-		}
+		ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+		HashingOutputStream hashingoutputstream = new HashingOutputStream(Hashing.sha1(), bytearrayoutputstream);
 
-		cache.putNew(target, hash);
+		Writer writer = new OutputStreamWriter(hashingoutputstream, StandardCharsets.UTF_8);
+		writer.append(createString(dataIn, missingKeys));
+		writer.close();
+
+		cache.writeIfNeeded(target, bytearrayoutputstream.toByteArray(), hashingoutputstream.hash());
 	}
 
 	protected String createString(List<Object> data, int missingKeys) {

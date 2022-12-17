@@ -100,8 +100,13 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
       cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
   private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
     compound.putString("Material", getMaterial().resName()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
-    if (getTrackCasing() != null)
-      compound.putString("Casing", getTrackCasing().getRegistryName().toString());
+    if (getTrackCasing() != null) {
+      if (ForgeRegistries.BLOCKS.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
+        Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());
+      } else {
+        compound.putString("Casing", ForgeRegistries.BLOCKS.getKey(getTrackCasing()).toString());
+      }
+    }
     compound.putBoolean("ShiftDown", isAlternate());
     cir.setReturnValue(compound);
   }
@@ -111,7 +116,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     buffer.writeEnum(getMaterial()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal
     buffer.writeBoolean(getTrackCasing() != null);
     if (getTrackCasing() != null) {
-      buffer.writeResourceLocation(getTrackCasing().getRegistryName());
+      buffer.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(getTrackCasing()));
       buffer.writeBoolean(isAlternate());
     }
   }
@@ -123,6 +128,10 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
       setMaterial(TrackMaterial.deserialize(compound.getString("Material")));
     }
     if (compound.contains("Casing", Tag.TAG_STRING)) {
+      if (compound.getString("Casing").equals("minecraft:block")) {
+        Railways.LOGGER.error("NBTCtor trackCasing was minecraft:block!!! for BezierConnection: primary="+tePositions.getFirst()+", secondary="+tePositions.getSecond());
+      }
+      //Railways.LOGGER.warn("NBTCtor: Casing="+compound.getString("Casing"));
       setTrackCasing((SlabBlock) ForgeRegistries.BLOCKS.getValue(ResourceLocation.of(compound.getString("Casing"), ':')));
     }
     if (compound.contains("ShiftDown", Tag.TAG_BYTE)) {

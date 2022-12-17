@@ -48,10 +48,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -207,7 +207,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   protected void openToolbox(Player player) {
-    NetworkHooks.openGui((ServerPlayer) player, this.toolboxHolder, this.toolboxHolder::sendToContainer);
+    NetworkHooks.openScreen((ServerPlayer) player, this.toolboxHolder, this.toolboxHolder::sendToContainer);
   }
 
   @Override
@@ -513,7 +513,7 @@ public class ConductorEntity extends AbstractGolem {
 
   @Override
   public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-    if (isCarryingToolbox() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    if (isCarryingToolbox() && capability == ForgeCapabilities.ITEM_HANDLER) {
       return toolboxHolder.getInventoryProvider().cast();
     }
     return super.getCapability(capability, facing);

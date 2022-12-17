@@ -46,7 +46,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   public void setTrackCasing(@Nullable SlabBlock trackCasing) {
     this.trackCasing = trackCasing;
     notifyUpdate();
-    if (this.trackCasing == null && this.level != null) { //Clean up the tile entity if it is no longer needed
+    if (this.trackCasing == null && this.level != null && !this.level.isClientSide) { //Clean up the tile entity if it is no longer needed
       if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
           .orElse(TrackShape.NONE)
           .isPortal())
@@ -89,7 +89,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   @Inject(method = "write", at = @At("RETURN"), remap = false)
   private void writeCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
     if (this.getTrackCasing() != null) {
-      tag.putString("TrackCasing", this.getTrackCasing().getRegistryName().toString());
+      tag.putString("TrackCasing", ForgeRegistries.BLOCKS.getKey(getTrackCasing()).toString());
     }
     tag.putBoolean("AlternateModel", this.isAlternate());
   }

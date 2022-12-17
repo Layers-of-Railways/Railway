@@ -35,7 +35,7 @@ public class MixinReplaceTrackCheck {
       "clientTick()V",
       "onClickInput",
       "drawCurveSelection(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V",
-      "drawCustomBlockSelection(Lnet/minecraftforge/client/event/DrawSelectionEvent$HighlightBlock;)V"
+      "drawCustomBlockSelection(Lnet/minecraftforge/client/event/RenderHighlightEvent$Block;)V"
   }, at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), require = 0, expect = 0, remap = false)
   private static boolean staticCustomTrackCheck(BlockEntry<?> instance, ItemStack itemStack) { //.isIn static
     return check(instance, itemStack);
@@ -54,7 +54,7 @@ public class MixinReplaceTrackCheck {
 
   @SuppressWarnings("target")
   @Redirect(method = {
-      "setRemovedNotDueToChunkUnload()V",
+      "remove()V",
       "canBreak(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
       "getConnected(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;ZLcom/simibubi/create/content/logistics/trains/TrackNodeLocation;)Ljava/util/Collection;"
   }, at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)

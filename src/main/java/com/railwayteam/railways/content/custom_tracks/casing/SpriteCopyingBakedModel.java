@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +25,7 @@ public class SpriteCopyingBakedModel implements BakedModel {
   }
 
   @Override
-  public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, Random pRand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, RandomSource pRand) {
     ArrayList<BakedQuad> quads = new ArrayList<>();
     TextureAtlasSprite overrideSprite = null;
     BakedQuad overrideQuad = null;

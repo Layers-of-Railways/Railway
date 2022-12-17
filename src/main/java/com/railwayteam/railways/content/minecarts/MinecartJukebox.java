@@ -5,6 +5,7 @@ import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.Level;
@@ -53,6 +55,11 @@ public class MinecartJukebox extends MinecartBlock {
   @Override
   public ItemStack getPickResult() {
     return CRItems.ITEM_JUKEBOXCART.asStack();
+  }
+
+  @Override
+  protected Item getDropItem() {
+    return CRItems.ITEM_JUKEBOXCART.get();
   }
 
   @NotNull
@@ -125,7 +132,7 @@ public class MinecartJukebox extends MinecartBlock {
   @OnlyIn(Dist.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
-      super(event, SoundSource.RECORDS);
+      super(event, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
     }
 
     @Override

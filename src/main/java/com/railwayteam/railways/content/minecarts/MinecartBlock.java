@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.minecarts;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -37,5 +38,10 @@ public class MinecartBlock extends AbstractMinecart {
     if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
       this.spawnAtLocation(content.getBlock());
     }
+  }
+
+  @Override
+  protected Item getDropItem() {
+    return null;
   }
 }

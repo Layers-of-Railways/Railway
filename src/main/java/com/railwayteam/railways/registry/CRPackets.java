@@ -24,9 +24,6 @@ import java.util.function.Supplier;
 import static net.minecraftforge.network.NetworkDirection.*;
 
 public enum CRPackets {
-  //TODO add a packet to check if the server and client are using a different version of the mod, if so, warn the player that there may be problems
-  // (Don't force disconnect, since debug versions of the mod may only have changes that don't prevent compatibility)
-
   // Client to Server
   MOUNTED_TOOLBOX_DISPOSE_ALL(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new, PLAY_TO_SERVER),
   MOUNTED_TOOLBOX_EQUIP(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new, PLAY_TO_SERVER),
@@ -86,7 +83,7 @@ public enum CRPackets {
       channel.messageBuilder(type, index++, direction)
           .encoder(encoder)
           .decoder(decoder)
-          .consumer(handler)
+          .consumerNetworkThread(handler)
           .add();
     }
   }

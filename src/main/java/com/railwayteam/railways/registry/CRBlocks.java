@@ -19,7 +19,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-import static com.simibubi.create.AllTags.pickaxeOnly;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRBlocks {
