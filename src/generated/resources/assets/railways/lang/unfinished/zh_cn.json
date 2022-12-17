@@ -1,12 +1,12 @@
 {
-	"_": "Missing Localizations: 2",
+	"_": "Missing Localizations: 1",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.semaphore": "臂板信号机",
 	"block.railways.track_acacia": "金合欢木列车轨道",
 	"block.railways.track_birch": "白桦木列车轨道",
-	"block.railways.track_blackstone": "UNLOCALIZED: Blackstone Train Track",
+	"block.railways.track_blackstone": "黑石列车轨道",
 	"block.railways.track_crimson": "绯红木列车轨道",
 	"block.railways.track_dark_oak": "深色橡木列车轨道",
 	"block.railways.track_jungle": "丛林木列车轨道",
