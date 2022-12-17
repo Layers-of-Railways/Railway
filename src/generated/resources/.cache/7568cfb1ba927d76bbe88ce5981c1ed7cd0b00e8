@@ -1,4 +1,4 @@
-// 1.19.2	2022-12-16T16:33:03.490483861	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2022-12-17T09:16:01.950517776	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 67fc0caff071c6513c049d37890b668e1b6a27a6 assets/railways/blockstates/semaphore.json
 1df66317484a16f93d1b1847a5a549ef57e1d878 assets/railways/blockstates/track_acacia.json
 cdd1e87cbac1c4b5d165300648cc680da13d474b assets/railways/blockstates/track_birch.json
@@ -6,11 +6,12 @@ cdd1e87cbac1c4b5d165300648cc680da13d474b assets/railways/blockstates/track_birch
 c5df1476d3b773c1d90feb4502433b6df28324b2 assets/railways/blockstates/track_crimson.json
 61486be7bd21a686718de123dba6ffe1160b9fbd assets/railways/blockstates/track_dark_oak.json
 45d72bed0c496e98ce7a031a586b2174ace32a59 assets/railways/blockstates/track_jungle.json
+6feb51a2030580f058495746762d955c9b76c832 assets/railways/blockstates/track_mangrove.json
 614b7fff8d1edf16cdf9009b240360142d7460dc assets/railways/blockstates/track_oak.json
 ec04aeda6b37674ace22f1db68fd615b31f23ab0 assets/railways/blockstates/track_spruce.json
 dee9dd9aa83e4e835e26188e7667e47b715b6227 assets/railways/blockstates/track_warped.json
-85044eb060c60aed75473f6dac42a57dfb092087 assets/railways/lang/en_ud.json
-90459304158329e6f8ee1cdd114bd4464d381c4a assets/railways/lang/en_us.json
+512f0ec522ef6ed3ab81a4c5238946e7f55a415f assets/railways/lang/en_ud.json
+30d4013c6158433ed4c8d881a1b11bf4c15c3873 assets/railways/lang/en_us.json
 428ca1115dc9b9bb26293c063c418c31aac27404 assets/railways/models/block/track/acacia/ascending.json
 f529f6606c3718b6a93f724dfe27860f2c59f447 assets/railways/models/block/track/acacia/cross_d1_xo.json
 a9c842dc7fcaf7bd8c4f75e1090a444c2994109b assets/railways/models/block/track/acacia/cross_d1_zo.json
@@ -101,6 +102,21 @@ a358c2212715f5ea915e998a20f22066d90e88a9 assets/railways/models/block/track/jung
 3e74888f338c83e90a335a037a32ac83298bb2c7 assets/railways/models/block/track/jungle/tie.json
 e7e8ca2017d3c8e70e32ac2bc0c7c20707225c24 assets/railways/models/block/track/jungle/x_ortho.json
 fd165e88a8e56e314bb64840f4862414d9fde9f6 assets/railways/models/block/track/jungle/z_ortho.json
+9b9b2885fe69b3645f4441c96b5e154c49355be2 assets/railways/models/block/track/mangrove/ascending.json
+0c5fe7881977f43745691aff86d1b39a2eb93afa assets/railways/models/block/track/mangrove/cross_d1_xo.json
+e42cfbeb8265c5faf684f982ea1d88164a93ae54 assets/railways/models/block/track/mangrove/cross_d1_zo.json
+594aff431caf52f8637106e2a32f4c8d3a5d083f assets/railways/models/block/track/mangrove/cross_d2_xo.json
+89e3e15470ca3f9366ad227f157e02fa07239163 assets/railways/models/block/track/mangrove/cross_d2_zo.json
+1eadb1d77be3b6047a9061cf94d6d46433f03c11 assets/railways/models/block/track/mangrove/cross_diag.json
+b4900cb39a17b6972d04fb319ebd3c4da889153a assets/railways/models/block/track/mangrove/cross_ortho.json
+fe2984515f2d949cf179faafa56683f69ce29846 assets/railways/models/block/track/mangrove/diag.json
+da42c6beefe8f1bef219fe61f589a506cff68345 assets/railways/models/block/track/mangrove/diag_2.json
+4a29cdcd6f317534cd1eef99c3ccef67046b8ef8 assets/railways/models/block/track/mangrove/segment_left.json
+44692964850bcdc8c27aab627469e5eef185fae6 assets/railways/models/block/track/mangrove/segment_right.json
+5fc9ddd220298eb23cfcbe5d77066931ce2414d4 assets/railways/models/block/track/mangrove/teleport.json
+9962803a4870ed31e473963dfcc81e52a22aee48 assets/railways/models/block/track/mangrove/tie.json
+a47c5d25d12829627a7e200bb16f69fc88e7d527 assets/railways/models/block/track/mangrove/x_ortho.json
+01f113d4ed02e5dfa25a868735efdbac5f37ff13 assets/railways/models/block/track/mangrove/z_ortho.json
 f682344711587eed39ac3bd39dc391df3467c350 assets/railways/models/block/track/oak/ascending.json
 dd1dd72fe17c16d08cb44be50159967bbaa8805a assets/railways/models/block/track/oak/cross_d1_xo.json
 9a33a71ae9dc848dd5e251742bc5736e26451ad9 assets/railways/models/block/track/oak/cross_d1_zo.json
@@ -188,10 +204,12 @@ d0fa1d5c784ee1079381ab7998defec6e38f3a8b assets/railways/models/item/track_incom
 e40ceac1e041e5d5f6a91b90ccd4d5b1a973b71d assets/railways/models/item/track_incomplete_crimson.json
 62c29b94e28545c430d3f3b1b43bdfa9ff37b364 assets/railways/models/item/track_incomplete_dark_oak.json
 6d031e2bb3dfa050f40b87f2c3870e8112689d35 assets/railways/models/item/track_incomplete_jungle.json
+5e604bb00687182330e95cc469f8efb97a5fa90f assets/railways/models/item/track_incomplete_mangrove.json
 cbe463f6b2f946fa84fd9acf000afd7acf57a462 assets/railways/models/item/track_incomplete_oak.json
 d58ad57d87962e522f21382a641cd8fefad28714 assets/railways/models/item/track_incomplete_spruce.json
 c3f4b76f76b3a8d8b401b412c672232239e88ef9 assets/railways/models/item/track_incomplete_warped.json
 9ff58861708897e8d4d261ede421a4e8e67edccc assets/railways/models/item/track_jungle.json
+76fe68f21ef2e8de1caf338f56f5677ab1285ef9 assets/railways/models/item/track_mangrove.json
 be828e81eb0f76d0b3c6ae969f38ff4a3172e560 assets/railways/models/item/track_oak.json
 ba24c1b1152aa2b124226f5d9e28e4e367fee6ab assets/railways/models/item/track_spruce.json
 502ad8307c31d2d281491a04c775484485a6139a assets/railways/models/item/track_warped.json
@@ -199,8 +217,8 @@ ba24c1b1152aa2b124226f5d9e28e4e367fee6ab assets/railways/models/item/track_spruc
 0a188dcaa247da3d5a07b44c508dd5cf07c7a90e assets/railways/models/item/white_incomplete_conductor_cap.json
 1a1d337b0a8acb6dff74680b7a14fa18dc5abf5e assets/railways/models/item/yellow_conductor_cap.json
 235a16e8b671df6d31ceeca6890f4c76ca0112a8 assets/railways/models/item/yellow_incomplete_conductor_cap.json
-2e03b9d61411291314dafcda746c46abedf4d423 data/forge/tags/blocks/relocation_not_supported.json
-2e03b9d61411291314dafcda746c46abedf4d423 data/minecraft/tags/blocks/mineable/pickaxe.json
+1e675de45f02e1072cb7708bea5e3cc3933e2488 data/forge/tags/blocks/relocation_not_supported.json
+1e675de45f02e1072cb7708bea5e3cc3933e2488 data/minecraft/tags/blocks/mineable/pickaxe.json
 954e6bbdc34ea4c30e5104f46d874b930a762ed0 data/railways/advancements/recipes/railways/benchcart.json
 6e341b78327df920ea0379ae807420212892ebac data/railways/advancements/recipes/railways/dying_existing_cap_black.json
 008f9a977ec9f0b0c85e0f00e746fd2e25a029cc data/railways/advancements/recipes/railways/dying_existing_cap_blue.json
@@ -226,6 +244,7 @@ dab13e105c214b8adccf2cb7ee9694d275a3e2ea data/railways/loot_tables/blocks/track_
 af317ebeee3a1d799a5b9a63b4117e8178df4181 data/railways/loot_tables/blocks/track_crimson.json
 4d7cd5b953f85b24d92a8c120908658e4ff6421e data/railways/loot_tables/blocks/track_dark_oak.json
 ffcac5de891f7b758ab7075bb8a13be6ae7ad766 data/railways/loot_tables/blocks/track_jungle.json
+ebe680e3446ccd17e10d97ec6cb2eb1f98724d90 data/railways/loot_tables/blocks/track_mangrove.json
 fa072a8eea6a8ae3d87ac4df5c1c20bf2156e459 data/railways/loot_tables/blocks/track_oak.json
 9a342e2e53eac84214041adf712104956bed60aa data/railways/loot_tables/blocks/track_spruce.json
 8545de65d738bb8a56e18e4c51fa088f8994076c data/railways/loot_tables/blocks/track_warped.json
@@ -248,5 +267,5 @@ c953d6bb0e1726dc8d8fcd53b02768bcc21c3efe data/railways/recipes/dying_existing_ca
 fd586a7b154099c4a78acfd4a9f6b0812c579bc6 data/railways/recipes/dying_existing_cap_white.json
 83c5ea589ffddf5a81ae7381a5f26fa721761177 data/railways/recipes/dying_existing_cap_yellow.json
 eb5e5ed0ae918528c891f8ff5b5e655c15b3c637 data/railways/recipes/jukeboxcart.json
-6fdf6c968f96b28647c8e2ac0280e8bc131c2721 data/railways/tags/blocks/tracks.json
+ebd305cb5550d52c230e26fcd4be264df238d740 data/railways/tags/blocks/tracks.json
 688a4b055e8ffd1fad216727c01807f0017dcac2 data/railways/tags/items/conductor_caps.json
