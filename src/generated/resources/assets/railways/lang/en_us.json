@@ -2,6 +2,8 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"_": "Thank you for translating Create Steam 'n Rails!",
+
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_birch": "Birch Train Track",
@@ -82,6 +84,10 @@
 	"railways.ponder.train_semaphore.text_6": "The bottom semaphore will now close if any of the available paths are blocked",
 	"railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
 	"railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously",
+
+	"create.railways.semaphore.search_mode": "Signal Search Direction",
+	"create.railways.semaphore.search_mode.search_down": "Down",
+	"create.railways.semaphore.search_mode.search_up": "Up",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",

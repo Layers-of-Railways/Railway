@@ -1,7 +1,9 @@
 {
-	"_": "Missing Localizations: 4",
+	"_": "Missing Localizations: 5",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
+
+	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Semáforo",
 	"block.railways.track_acacia": "Vía de tren de acacia",
@@ -83,6 +85,10 @@
 	"railways.ponder.train_semaphore.text_6": "El semáforo de abajo se cerrará si cualquiera de las trayectorias están bloqueadas",
 	"railways.ponder.train_semaphore.text_7": "El semáforo de arriba se cerrará si todas las trayectorias están bloquedas",
 	"railways.ponder.train_semaphore.text_8": "Cuando colocas 2 semáforos en una señal que no sea de latón, los dos se cerrarán simultáneamente",
+
+	"create.railways.semaphore.search_mode": "Orientación de semáforo",
+	"create.railways.semaphore.search_mode.search_down": "Arriba",
+	"create.railways.semaphore.search_mode.search_up": "Abajo",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
