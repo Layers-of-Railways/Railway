@@ -69,7 +69,7 @@
 	"railways.ponder.conductor_redstoning.text_1": "Conducteurs kunnen knoppen indrukken wanneer een speler naar ze kijkt.",
 	"railways.ponder.conductor_redstoning.text_2": "Conducteurs kunnen ook hendels omschakelen.",
 	"railways.ponder.conductor_redstoning.text_3": "Conducteurs activeren geen Redstone wanneer een speler een andere kleur pet heeft dan zij.",
-	"railways.ponder.conductor_toolboxing.header": "Gereedschapskisten Transporteren met Conducteurs",
+	"railways.ponder.conductor_toolboxing.header": "Gereedschapskisten transporteren met Conducteurs",
 	"railways.ponder.conductor_toolboxing.text_1": "Gereedschapskisten werken normaal wanneer ze zijn uitgerust op een Conducteur.",
 	"railways.ponder.train_semaphore.header": "Visualiseer signalen",
 	"railways.ponder.train_semaphore.text_1": "Semaforen worden geplaats op palen boven Treinsignalen",
