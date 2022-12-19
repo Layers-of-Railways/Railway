@@ -8,6 +8,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -27,13 +28,19 @@ public class SpriteCopyingBakedModel implements BakedModel {
   @Override
   public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, RandomSource pRand) {
     ArrayList<BakedQuad> quads = new ArrayList<>();
-    TextureAtlasSprite overrideSprite = null;
+    TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon(ModelData.EMPTY);
     BakedQuad overrideQuad = null;
     List<BakedQuad> sourceQuads = spriteSourceModel.getQuads(pState, pSide, pRand);
     if (sourceQuads.size() > 0) {
       overrideSprite = sourceQuads.get(0).getSprite();
       overrideQuad = sourceQuads.get(0);
       //Railways.LOGGER.warn("Overridesprite: "+ overrideSprite.toString());
+    } else if (pSide != null) {
+      List<BakedQuad> nullQuads = spriteSourceModel.getQuads(pState, null, pRand);
+      if (nullQuads.size() > 0) {
+        overrideSprite = nullQuads.get(0).getSprite();
+        overrideQuad = nullQuads.get(0);
+      }
     }
     for (BakedQuad quad : baseModel.getQuads(pState, pSide, pRand)) {
       if (overrideSprite == null || overrideQuad == null) {

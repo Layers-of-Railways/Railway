@@ -130,6 +130,6 @@ public abstract class CasingRenderUtils {
 
   public static ModelData makeCasingInstance(PartialModel baseModel, SlabBlock slabBlock, Material<ModelData> mat) {
     PartialModel texturedPartial = reTexture(baseModel, slabBlock);
-    return mat.getModel(texturedPartial).createInstance();
+    return mat.getModel(texturedPartial, slabBlock.defaultBlockState()).createInstance();
   }
 }
