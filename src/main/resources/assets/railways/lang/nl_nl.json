@@ -72,21 +72,21 @@
 	"railways.ponder.conductor_toolboxing.header": "Gereedschapskisten Transporteren met Conducteurs",
 	"railways.ponder.conductor_toolboxing.text_1": "Gereedschapskisten werken normaal wanneer ze zijn uitgerust op een Conducteur.",
 	"railways.ponder.train_semaphore.header": "Visualiseer signalen",
-	"railways.ponder.train_semaphore.text_1": "Semaphores are placed on poles above Train Signals",
-	"railways.ponder.train_semaphore.text_2": "Semaphore poles can be made of different materials",
-	"railways.ponder.train_semaphore.text_3": "Semaphores show the current state of the signal below the pole",
-	"railways.ponder.train_semaphore.text_4": "If a brass signal has multiple valid exit paths...",
-	"railways.ponder.train_semaphore.text_5": "... a second semaphore can be placed above the first",
-	"railways.ponder.train_semaphore.text_6": "The bottom semaphore will now close if any of the available paths are blocked",
-	"railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
-	"railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously",
+	"railways.ponder.train_semaphore.text_1": "Semaforen worden geplaats op palen boven Treinsignalen",
+	"railways.ponder.train_semaphore.text_2": "Semafoor palen kunenn gemaakt worden van verschillende materialen",
+	"railways.ponder.train_semaphore.text_3": "Semaforen laten the huidige status van het signaal onder de paal zien",
+	"railways.ponder.train_semaphore.text_4": "Als een Brons signaal meerdere mogelijke uitgangen heeft...",
+	"railways.ponder.train_semaphore.text_5": "... kan een tweede semafoor boven de andere worden geplaats",
+	"railways.ponder.train_semaphore.text_6": "The onderse semafoor zal nu sluiten als een van de mogelijke wegen worden gebruikt",
+	"railways.ponder.train_semaphore.text_7": "The bovenste semafoor zal sluiten als alle wegen worden gebruikt",
+	"railways.ponder.train_semaphore.text_8": "Wanneer 2 semaforen zijn geplaats op een niet-brons signaal, sluiten ze tegelijk",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
-	"create.railways.semaphore.search_mode": "Signal Search Direction",
-	"create.railways.semaphore.search_mode.search_down": "Down",
-	"create.railways.semaphore.search_mode.search_up": "Up",
+	"create.railways.semaphore.search_mode": "Signaal zoek directie",
+	"create.railways.semaphore.search_mode.search_down": "Naar Beneden",
+	"create.railways.semaphore.search_mode.search_up": "Naar boven",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 
