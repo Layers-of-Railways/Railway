@@ -1,6 +1,6 @@
 {
 
-	"_": "Readme: my German is far from perfect (my English isn’t great either). If there are mistakes, please let me know or edit the file where needed.",
+	"_": "Readme: my German is far from perfect (my English isn’t great either). If there are mistakes, please let me know or edit the file where needed. Thank you",
 	
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -68,9 +68,9 @@
 	"railways.ponder.conductor_constructing.header": "Bau eines Zugführers",
 	"railways.ponder.conductor_constructing.text_1": "Zugführer werden mit Andesitrahmen konstruiert.",
 	"railways.ponder.conductor_redstoning.header": "Redstone Fernsteuerung mit Zugführern",
-	"railways.ponder.conductor_redstoning.text_1": "Zugführer können Knöpfe drücken, wenn Spieler die angucken.",
-	"railways.ponder.conductor_redstoning.text_2": "Zugführer schalten auch Hebel um, wenn Spieler die angucken.",
-	"railways.ponder.conductor_redstoning.text_3": "Zugführer aktivieren keinen Redstone, falls Spieler andersfarbige Eisenbahnermütze aufhaben als die.",
+	"railways.ponder.conductor_redstoning.text_1": "Zugführer können Knöpfe drücken, wenn Spieler sie angucken.",
+	"railways.ponder.conductor_redstoning.text_2": "Zugführer schalten auch Hebel um, wenn Spieler sie angucken.",
+	"railways.ponder.conductor_redstoning.text_3": "Zugführer aktivieren kein Redstone, falls Spieler andersfarbige Eisenbahnermützen aufhaben als sie.",
 	"railways.ponder.conductor_toolboxing.header": "Werkzeugkastentransport mit Zugführern",
 	"railways.ponder.conductor_toolboxing.text_1": "Von Zugführern getragene Werkzeugkästen funktionieren normal.",
 	"railways.ponder.train_semaphore.header": "Visualisierung der Signalzustände mit Formsignalen",
