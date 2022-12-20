@@ -12,6 +12,7 @@
 	"block.railways.track_oak": "Eikenhouten Treinspoor",
 	"block.railways.track_spruce": "Sparrenhouten Treinspoor",
 	"block.railways.track_warped": "Spookachtige Houten Treinspoor",
+	"block.railways.track_mangrove": "Mangrovehouten Treinspoor",
 
 	"entity.railways.benchcart": "Mijnkar met Werkbank",
 	"entity.railways.conductor": "Conducteur",
@@ -56,6 +57,7 @@
 	"item.railways.track_incomplete_oak": "Onvolledig Eikenhouten Treinspoor",
 	"item.railways.track_incomplete_spruce": "Onvolledig Sparrenhouten Treinspoor",
 	"item.railways.track_incomplete_warped": "Onvolledig Spookachtig Houten Treinspoor",
+	"item.railways.track_incomplete_mangrove": "Onvolledig Mangrovehouten Treinspoor",
 	"item.railways.white_conductor_cap": "Witte Conducteurspet",
 	"item.railways.white_incomplete_conductor_cap": "Onvolledige Conducteurspet",
 	"item.railways.yellow_conductor_cap": "Gele Conducteurspet",
