@@ -136,6 +136,8 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_minecraft_version}-${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_minecraft_version}-${curios_version}")
 
+//    runtimeOnly fg.deobf("curse.maven:create_deco-509285:4183385") //debug create deco vertical slabs
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
