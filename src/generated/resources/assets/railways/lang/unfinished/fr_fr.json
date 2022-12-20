@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 5",
+	"_": "Missing Localizations: 4",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Sémaphore",
 	"block.railways.track_acacia": "Voie en acacia",
@@ -85,10 +83,6 @@
 	"railways.ponder.train_semaphore.text_6": "le sémaphore du bas va se farmer si l' intersection est bloqué",
 	"railways.ponder.train_semaphore.text_7": "le sémaphore du haut va se farmer si les chemin son bloqué",
 	"railways.ponder.train_semaphore.text_8": "si le sémaphore n'est pas sur fonction laiton, les deux vont se fermer simultanément",
-
-	"create.railways.semaphore.search_mode": "Recherche de la direction du signal",
-	"create.railways.semaphore.search_mode.search_down": "Bas",
-	"create.railways.semaphore.search_mode.search_up": "Haut",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",

@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 4",
+	"_": "Missing Localizations: 3",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "臂板信号机",
 	"block.railways.track_acacia": "金合欢木列车轨道",
@@ -85,10 +83,6 @@
 	"railways.ponder.train_semaphore.text_6": "如果有任一可用信号区间被阻塞，底部的信号机将会关闭",
 	"railways.ponder.train_semaphore.text_7": "如果所有信号区间都被阻塞，顶部的信号机将会关闭",
 	"railways.ponder.train_semaphore.text_8": "当两个臂板信号机都放置在非黄铜信号机上时，它们会同时关闭",
-
-	"create.railways.semaphore.search_mode": "信号来源方向",
-	"create.railways.semaphore.search_mode.search_down": "下方",
-	"create.railways.semaphore.search_mode.search_up": "上方",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",

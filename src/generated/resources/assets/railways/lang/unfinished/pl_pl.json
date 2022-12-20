@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 3",
+	"_": "Missing Localizations: 2",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Semafor",
 	"block.railways.track_acacia": "Akacjowy tor kolejowy",
@@ -85,10 +83,6 @@
 	"railways.ponder.train_semaphore.text_6": "Dolny semafor się teraz zamknie, jeżeli jakaś z dostępnych dróg będzie zablokowana.",
 	"railways.ponder.train_semaphore.text_7": "Górny semafor się zamknie, jeżeli wszystkie drogi są zablokowane",
 	"railways.ponder.train_semaphore.text_8": "Gdy 2 semafory będą postawione na zwyczajnym sygnale, oba zamkną się jednocześnie.",
-
-	"create.railways.semaphore.search_mode": "Wyszukiwanie kierunku sygnału",
-	"create.railways.semaphore.search_mode.search_down": "Dół",
-	"create.railways.semaphore.search_mode.search_up": "Góra",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
