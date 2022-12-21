@@ -24,19 +24,8 @@ public class TrainUtils {
     public static Train splitTrain(Train train, int numberOffEnd) {
         if (train.carriages.size() <= numberOffEnd)
             return train;
-        /*things needing changing:
-            train.stress
-                original train: done
-                new train:      unnecessary
-            train.carriageSpacing
-                original train: done
-                new train:      done
-
-            lastCarriage.train   done
-            lastCarriage.storage
-            lastCarriage.forEachPresentEntity(e -> e.trainId);
-
-            newTrain
+        /*things needing updating:
+        Train.doubleEnded
         */
         Carriage[] lastCarriages = new Carriage[numberOffEnd];
         Integer[] lastCarriageSpacings = new Integer[numberOffEnd - 1];
@@ -55,7 +44,8 @@ public class TrainUtils {
         ((AccessorTrain) train).snr_setStress(newStress);
 //        train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
 
-        Train newTrain = new Train(UUID.randomUUID(), train.owner, train.graph, List.of(lastCarriages), List.of(lastCarriageSpacings), train.doubleEnded);
+        Train newTrain = new Train(UUID.randomUUID(), train.owner, train.graph, List.of(lastCarriages), List.of(lastCarriageSpacings), Arrays.stream(lastCarriages).anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls()));
+        train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
         newTrain.name = Component.literal("Split off from: "+train.name.getString());
 //        lastCarriage.setTrain(newTrain);
 //        lastCarriage.storage = null; //since storage is per-carriage, not per-train, this should be fine
@@ -88,7 +78,7 @@ public class TrainUtils {
                 cce -> CRPackets.channel.send(PacketDistributor.ALL.noArg(), new CarriageContraptionEntityUpdatePacket(cce, newTrain))
             )
         );
-        CRPackets.channel.send(PacketDistributor.ALL.noArg(), new ChopTrainEndPacket(train, numberOffEnd));
+        CRPackets.channel.send(PacketDistributor.ALL.noArg(), new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
         return newTrain;
     }

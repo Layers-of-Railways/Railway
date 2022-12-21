@@ -18,21 +18,25 @@ import java.util.function.Supplier;
 public class ChopTrainEndPacket extends SimplePacketBase {
     final UUID trainId;
     final int numberOfCarriages;
+    final boolean doubleEnded;
 
-    public ChopTrainEndPacket(Train train, int numberOfCarriages) {
+    public ChopTrainEndPacket(Train train, int numberOfCarriages, boolean doubleEnded) {
         trainId = train.id;
         this.numberOfCarriages = numberOfCarriages;
+        this.doubleEnded = doubleEnded;
     }
 
     public ChopTrainEndPacket(FriendlyByteBuf buf) {
         trainId = buf.readUUID();
         numberOfCarriages = buf.readInt();
+        doubleEnded = buf.readBoolean();
     }
 
     @Override
     public void write(FriendlyByteBuf buffer) {
         buffer.writeUUID(this.trainId);
         buffer.writeInt(this.numberOfCarriages);
+        buffer.writeBoolean(this.doubleEnded);
     }
 
     @Override
@@ -55,6 +59,7 @@ public class ChopTrainEndPacket extends SimplePacketBase {
                 double[] newStress = new double[originalStress.length - numberOfCarriages];
                 System.arraycopy(originalStress, 0, newStress, 0, newStress.length);
                 ((AccessorTrain) train).snr_setStress(newStress);
+                train.doubleEnded = doubleEnded;
             }
         }
     }

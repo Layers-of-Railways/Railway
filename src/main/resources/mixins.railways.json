@@ -18,6 +18,7 @@
     "MixinTrackBlockItem",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
+    "MixinTrackTargetingBehavior_RenderedTrackOverlayType",
     "MixinTrackTileEntity",
     "MixinTrainHatOffsets"
   ],
@@ -25,14 +26,14 @@
     "client.AccessorToolboxHandlerClient",
     "client.MixinBlueprintOverlayRenderer",
     "client.MixinCarriageContraptionEntity",
+    "client.MixinCarriageContraptionInstance",
     "client.MixinCurvedTrackInteraction",
     "client.MixinPonderIndex",
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackBlockClient",
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
-    "client.MixinTrackRenderer",
-    "client.MixinCarriageContraptionInstance"
+    "client.MixinTrackRenderer"
   ],
   "minVersion": "0.8"
 }
