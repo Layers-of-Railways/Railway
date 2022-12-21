@@ -4,9 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
-import com.railwayteam.railways.util.packet.JukeboxCartPacket;
-import com.railwayteam.railways.util.packet.ModVersionPacket;
-import com.railwayteam.railways.util.packet.MountedToolboxSyncPacket;
+import com.railwayteam.railways.util.packet.*;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -32,7 +30,9 @@ public enum CRPackets {
   // Server to Client
   JUKEBOX_CART_UPDATE(JukeboxCartPacket.class, JukeboxCartPacket::new, PLAY_TO_CLIENT),
   MOUNTED_TOOLBOX_SYNC(MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::new, PLAY_TO_CLIENT),
-  MOD_VERSION_ANNOUNCE(ModVersionPacket.class, ModVersionPacket::new, PLAY_TO_CLIENT)
+  MOD_VERSION_ANNOUNCE(ModVersionPacket.class, ModVersionPacket::new, PLAY_TO_CLIENT),
+  CARRIAGE_CONTRAPTION_ENTITY_UPDATE(CarriageContraptionEntityUpdatePacket.class, CarriageContraptionEntityUpdatePacket::new, PLAY_TO_CLIENT),
+  CHOP_TRAIN_END(ChopTrainEndPacket.class, ChopTrainEndPacket::new, PLAY_TO_CLIENT),
   ;
   public static final ResourceLocation CHANNEL_ID = new ResourceLocation(Railways.MODID, "main");
   public static final int PROTOCOL_VER = 2;
