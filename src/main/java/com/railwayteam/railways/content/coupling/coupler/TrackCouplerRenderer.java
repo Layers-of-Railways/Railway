@@ -3,8 +3,11 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.simibubi.create.content.logistics.trains.GraphLocation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
+import com.simibubi.create.content.logistics.trains.TrackEdge;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -31,6 +34,20 @@ public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTi
     private void renderEdgePoint(TrackCouplerTileEntity te, PoseStack ms, MultiBufferSource buffer,
                                  int light, int overlay, TrackTargetingBehaviour<TrackCoupler> target) {
         BlockPos pos = te.getBlockPos();
+        boolean offsetToSide = false;
+
+        try {
+            GraphLocation graphLocation = target.determineGraphLocation();
+            TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
+            for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
+                try {
+                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint()) {
+                        offsetToSide = true;
+                        break;
+                    }
+                } catch (Exception ignored) {}
+            }
+        } catch (Exception ignored) {}
 
         BlockPos targetPosition = target.getGlobalPosition();
         Level level = te.getLevel();
@@ -45,7 +62,7 @@ public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTi
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
             buffer, light, overlay, te.areEdgePointsOk() ?
                 CustomTrackOverlayRendering.getCouplerOverlayModel(te.getAllowedOperationMode().canCouple, te.getAllowedOperationMode().canDecouple) :
-                CRBlockPartials.COUPLER_NONE, 1);
+                CRBlockPartials.COUPLER_NONE, 1, offsetToSide);
         ms.popPose();
     }
 }

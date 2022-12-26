@@ -101,7 +101,6 @@ public class TrainUtils {
      * Adds the carriages of backTrain onto the end of frontTrain.
      */
     public static Train combineTrains(Train frontTrain, Train backTrain, Vec3 itemDropPos, Level itemDropLevel, int carriageSpacing) {
-        //TODO navigation
         frontTrain.carriages.addAll(backTrain.carriages);
         backTrain.carriages.clear();
 

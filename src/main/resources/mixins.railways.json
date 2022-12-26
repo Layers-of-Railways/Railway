@@ -15,6 +15,7 @@
     "MixinBezierConnection",
     "MixinBlockBehaviour",
     "MixinReplaceTrackCheck",
+    "MixinSignalBoundary",
     "MixinToolboxHandler",
     "MixinTrackBlock",
     "MixinTrackBlockItem",

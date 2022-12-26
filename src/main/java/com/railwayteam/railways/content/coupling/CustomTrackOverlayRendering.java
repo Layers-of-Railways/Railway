@@ -52,14 +52,21 @@ public class CustomTrackOverlayRendering {
                                      BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
                                      EdgePointType<?> type, float scale) {
         if (CUSTOM_OVERLAYS.containsKey(type))
-            renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, CUSTOM_OVERLAYS.get(type), scale);
+            renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, CUSTOM_OVERLAYS.get(type), scale, false);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
+                                     BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
+                                     PartialModel model, float scale) {
+        renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, model, scale, false);
     }
 
     //Copied from TrackTargetingBehaviour
     @OnlyIn(Dist.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                               BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                              PartialModel model, float scale) {
+                              PartialModel model, float scale, boolean offsetToSide) {
         if (level instanceof SchematicWorld && !(level instanceof PonderWorld))
             return;
 
@@ -76,7 +83,7 @@ public class CustomTrackOverlayRendering {
             CachedBufferer.partial(partial, trackState)
                 .translate(.5, 0, .5)
                 .scale(scale)
-                .translate(-.5, 0, -.5)
+                .translate(offsetToSide ? .5 : -.5, 0, -.5)
                 .light(LevelRenderer.getLightColor(level, pos))
                 .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
 
