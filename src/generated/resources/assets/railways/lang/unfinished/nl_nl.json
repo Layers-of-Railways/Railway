@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 20",
+	"_": "Missing Localizations: 21",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Semafoor",
 	"block.railways.track_acacia": "Acacia Treinspoor",
@@ -71,12 +69,15 @@
 
 	"railways.ponder.conductor_constructing.header": "Een Conducteur Bouwen",
 	"railways.ponder.conductor_constructing.text_1": "Conducteurs worden gemaakt met een Andesiet Omhulsel.",
+
 	"railways.ponder.conductor_redstoning.header": "Bestuur Redstone met een Conducteur",
 	"railways.ponder.conductor_redstoning.text_1": "Conducteurs kunnen knoppen indrukken wanneer een speler naar ze kijkt.",
 	"railways.ponder.conductor_redstoning.text_2": "Conducteurs kunnen ook hendels omschakelen.",
 	"railways.ponder.conductor_redstoning.text_3": "Conducteurs activeren geen Redstone wanneer een speler een andere kleur pet heeft dan zij.",
+
 	"railways.ponder.conductor_toolboxing.header": "Gereedschapskisten Transporteren met Conducteurs",
 	"railways.ponder.conductor_toolboxing.text_1": "Gereedschapskisten werken normaal wanneer ze zijn uitgerust op een Conducteur.",
+
 	"railways.ponder.train_semaphore.header": "Visualiseer signalen",
 	"railways.ponder.train_semaphore.text_1": "Semaforen worden geplaatst op palen boven Treinsignalen",
 	"railways.ponder.train_semaphore.text_2": "Semafoor palen kunnen gemaakt worden van verschillende materialen",
@@ -99,6 +100,9 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
@@ -115,12 +119,10 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
-	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
-	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
-	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
-	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }

@@ -18,6 +18,7 @@
     "MixinToolboxHandler",
     "MixinTrackBlock",
     "MixinTrackBlockItem",
+    "MixinTrackEdgePoint",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
     "MixinTrackTargetingBlockItem",

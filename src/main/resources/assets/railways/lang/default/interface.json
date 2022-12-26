@@ -9,8 +9,7 @@
   "railways.display_source.coupler.decoupling": "Decoupling: ",
   "railways.coupler.edge_spacing": "Carriage Spacing",
   "railways.coupler.edge_spacing.meters": "Meters",
-  "create.railways.coupler.coupling_mode": "Coupling Mode",
-  "create.railways.coupler.coupling_mode.coupling": "Coupling",
-  "create.railways.coupler.coupling_mode.decoupling": "Decoupling",
-  "create.railways.coupler.coupling_mode.both": "Coupling & Decoupling"
+  "railways.coupler.mode.coupling": "-> Coupling",
+  "railways.coupler.mode.decoupling": "-> Decoupling",
+  "railways.coupler.mode.both": "-> Coupling & Decoupling"
 }

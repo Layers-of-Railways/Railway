@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 24",
+	"_": "Missing Localizations: 25",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Semáforo",
 	"block.railways.track_acacia": "Vía de tren de acacia",
@@ -71,12 +69,15 @@
 
 	"railways.ponder.conductor_constructing.header": "Construir un maquinista",
 	"railways.ponder.conductor_constructing.text_1": "Los maquinistas son construidos con un revestimiento de Andesita.",
+
 	"railways.ponder.conductor_redstoning.header": "Redstone remota con maquinistas",
 	"railways.ponder.conductor_redstoning.text_1": "Los maquinistas pueden pulsar botones cuando un jugador los mira.",
 	"railways.ponder.conductor_redstoning.text_2": "Los maquinistas pueden tambien activar palancas cuando un jugador los mira.",
 	"railways.ponder.conductor_redstoning.text_3": "Los maquinistas no activan redstone si el jugador lleva puesta una gorra de otro color.",
+
 	"railways.ponder.conductor_toolboxing.header": "Transporte de cajas de herramientas con maquinistas",
 	"railways.ponder.conductor_toolboxing.text_1": "Las cajas de herramientas funcionan igual cuando los maquinistas las llevan.",
+
 	"railways.ponder.train_semaphore.header": "Visualizando estados de señal usando semáforos",
 	"railways.ponder.train_semaphore.text_1": "Los semáforos se colocan en postes encima de señales de tren",
 	"railways.ponder.train_semaphore.text_2": "Los postes del semáforo pueden ser de diferentes materiales",
@@ -99,6 +100,9 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
@@ -115,12 +119,10 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
-	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
-	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
-	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
-	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }

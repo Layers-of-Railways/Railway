@@ -3,14 +3,11 @@ package com.railwayteam.railways.base.data.lang;
 import com.google.common.base.Supplier;
 import com.google.gson.JsonElement;
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.ponder.PonderLocalization;
+import com.simibubi.create.foundation.data.LangPartial;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.foundation.utility.Lang;
 
-public enum CRLangPartials {
+public enum CRLangPartials implements LangPartial {
 	INTERFACE("UI & Messages"),
 //	TOOLTIPS("Item Descriptions"),
 
@@ -29,7 +26,7 @@ public enum CRLangPartials {
 		this.provider = customProvider;
 	}
 
-	public String getDisplay() {
+	public String getDisplayName() {
 		return display;
 	}
 

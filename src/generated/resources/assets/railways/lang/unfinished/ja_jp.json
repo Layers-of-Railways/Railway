@@ -1,9 +1,7 @@
 {
-	"_": "Missing Localizations: 22",
+	"_": "Missing Localizations: 23",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "腕木式信号機",
 	"block.railways.track_acacia": "アカシアの鉄道用線路",
@@ -71,12 +69,15 @@
 
 	"railways.ponder.conductor_constructing.header": "車掌の組み立て",
 	"railways.ponder.conductor_constructing.text_1": "車掌は安山岩ケーシングで構築します。",
+
 	"railways.ponder.conductor_redstoning.header": "車掌による遠隔レッドストーン制御",
 	"railways.ponder.conductor_redstoning.text_1": "車掌はプレイヤーが視線を向けるとボタンを押します。",
 	"railways.ponder.conductor_redstoning.text_2": "プレイヤーが視線を送るとレバーを切り替えます。",
 	"railways.ponder.conductor_redstoning.text_3": "自分とは違う色の車掌帽を被っている場合、レッドストーン操作をしません。",
+
 	"railways.ponder.conductor_toolboxing.header": "車掌による工具箱運搬",
 	"railways.ponder.conductor_toolboxing.text_1": "工具箱は車掌に装備させても正常に機能します。",
+
 	"railways.ponder.train_semaphore.header": "腕木式信号機を利用した信号状態の可視化",
 	"railways.ponder.train_semaphore.text_1": "腕木式信号機は鉄道信号機の上にあるポールに設置します",
 	"railways.ponder.train_semaphore.text_2": "ポールは様々な素材で作成できます",
@@ -99,6 +100,9 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
@@ -115,12 +119,10 @@
 
 	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
 
-	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
-	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
-	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
-	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }

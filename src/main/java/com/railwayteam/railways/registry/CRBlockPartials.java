@@ -180,7 +180,8 @@ public class CRBlockPartials {
     public static final PartialModel
         COUPLER_COUPLE = block("track_overlay/coupler_couple"),
         COUPLER_DECOUPLE = block("track_overlay/coupler_decouple"),
-        COUPLER_BOTH = block("track_overlay/coupler_both");
+        COUPLER_BOTH = block("track_overlay/coupler_both"),
+        COUPLER_NONE = block("track_overlay/coupler_none");
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));

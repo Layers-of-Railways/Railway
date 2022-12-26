@@ -2,8 +2,6 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
-	"_": "Thank you for translating Create Steam 'n Rails!",
-
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_birch": "Birch Train Track",
@@ -70,12 +68,15 @@
 
 	"railways.ponder.conductor_constructing.header": "Constructing a Conductor",
 	"railways.ponder.conductor_constructing.text_1": "Conductors are constructed with an andesite casing.",
+
 	"railways.ponder.conductor_redstoning.header": "Remote Redstone with Conductors",
 	"railways.ponder.conductor_redstoning.text_1": "Conductors can press buttons when a player looks at them.",
 	"railways.ponder.conductor_redstoning.text_2": "Conductors also toggle levers when a player looks at them.",
 	"railways.ponder.conductor_redstoning.text_3": "Conductors do not activate redstone if a player is wearing a different-colored cap from them.",
+
 	"railways.ponder.conductor_toolboxing.header": "Toolbox Transport with Conductors",
 	"railways.ponder.conductor_toolboxing.text_1": "Toolboxes function normally when equipped on Conductors.",
+
 	"railways.ponder.train_semaphore.header": "Visualizing Signal states using Semaphores",
 	"railways.ponder.train_semaphore.text_1": "Semaphores are placed on poles above Train Signals",
 	"railways.ponder.train_semaphore.text_2": "Semaphore poles can be made of different materials",
@@ -98,6 +99,9 @@
 
 	"railways.coupler.edge_spacing": "Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "Meters",
+	"railways.coupler.mode.coupling": "-> Coupling",
+	"railways.coupler.mode.decoupling": "-> Decoupling",
+	"railways.coupler.mode.both": "-> Coupling & Decoupling",
 
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
@@ -114,12 +118,10 @@
 
 	"railways.coupler.edge_spacing": "Carriage Spacing",
 	"railways.coupler.edge_spacing.meters": "Meters",
+	"railways.coupler.mode.coupling": "-> Coupling",
+	"railways.coupler.mode.decoupling": "-> Decoupling",
+	"railways.coupler.mode.both": "-> Coupling & Decoupling",
 
-	"create.railways.coupler.coupling_mode": "Coupling Mode",
-	"create.railways.coupler.coupling_mode.coupling": "Coupling",
-	"create.railways.coupler.coupling_mode.decoupling": "Decoupling",
-	"create.railways.coupler.coupling_mode.both": "Coupling & Decoupling",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }

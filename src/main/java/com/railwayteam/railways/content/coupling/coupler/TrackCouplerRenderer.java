@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.coupling.coupler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
@@ -42,7 +43,9 @@ public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTi
         ms.pushPose();
         ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-            buffer, light, overlay, CustomTrackOverlayRendering.getCouplerOverlayModel(te.areEdgePointsOk(), !te.areEdgePointsOk()), 1);
+            buffer, light, overlay, te.areEdgePointsOk() ?
+                CustomTrackOverlayRendering.getCouplerOverlayModel(te.getAllowedOperationMode().canCouple, te.getAllowedOperationMode().canDecouple) :
+                CRBlockPartials.COUPLER_NONE, 1);
         ms.popPose();
     }
 }

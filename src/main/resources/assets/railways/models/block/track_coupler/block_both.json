@@ -3,8 +3,8 @@
 	"parent": "block/block",
 	"textures": {
 		"0": "create:block/signal_box_top",
-		"1": "railways:block/coupler_powered",
-		"particle": "railways:block/coupler_powered"
+		"1": "railways:block/coupler_box_dual",
+		"particle": "railways:block/coupler_box_dual"
 	},
 	"elements": [
 		{

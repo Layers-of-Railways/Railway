@@ -3,7 +3,6 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.railwayteam.railways.registry.CRIcons;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
@@ -15,19 +14,17 @@ import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.CenteredSideValueBoxTransform;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.INamedIconOptions;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -36,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class TrackCouplerTileEntity extends SmartTileEntity implements ITransformableTE {
@@ -51,7 +49,6 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     public TrackTargetingBehaviour<TrackCoupler> edgePoint;
     public TrackTargetingBehaviour<TrackCoupler> secondEdgePoint;
     protected ScrollValueBehaviour edgeSpacingScroll;
-    protected ScrollOptionBehaviour<AllowedOperationMode> allowedOperationMode;
 
     public TrackCouplerTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -75,6 +72,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         lastAnalogOutput = tag.getInt("AnalogOutput");
         edgeSpacing = tag.getInt("EdgeSpacing");
         lastEdgeSpacing = tag.getInt("LastEdgeSpacing");
+        invalidateRenderBoundingBox();
     }
 
     @Override
@@ -88,11 +86,6 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
         edgeSpacingScroll.requiresWrench();
         behaviours.add(edgeSpacingScroll);
-
-        allowedOperationMode = new ScrollOptionBehaviour<>(AllowedOperationMode.class, Lang.translateDirect("railways.coupler.coupling_mode"),
-            this, new TrackCouplerValueBoxTransform(false));
-        allowedOperationMode.requiresWrench();
-        behaviours.add(allowedOperationMode);
     }
 
     @Override
@@ -172,6 +165,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         BlockState trackState = edgePoint.getTrackBlockState();
         BlockState secondaryTrackState = getSecondaryTrackState();
         if (trackState != cachedTrackState || secondaryTrackState != cachedSecondaryTrackState || edgeSpacing != lastEdgeSpacing) {
+            invalidateRenderBoundingBox();
             cachedTrackState = trackState;
             cachedSecondaryTrackState = secondaryTrackState;
             lastEdgeSpacing = edgeSpacing;
@@ -241,24 +235,32 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     /**
      * Carriage must have its wheels on the point for it to count
      */
-    @Nullable protected Carriage getCarriageOnPoint(@NotNull Train train, @NotNull TrackCoupler coupler, boolean leading) {
+    @Nullable protected Carriage getCarriageOnPoint(@NotNull Train train, @NotNull TrackCoupler coupler, @NotNull TrackTargetingBehaviour<TrackCoupler> edgePoint, boolean leading) {
         for (Carriage carriage : train.carriages) {
-            if (isCarriageWheelOnPoint(carriage, coupler, leading))
+            if (isCarriageWheelOnPoint(carriage, coupler, edgePoint, leading))
                 return carriage;
         }
         return null;
     }
 
-    protected boolean isCarriageWheelOnPoint(Carriage carriage, TrackCoupler coupler, boolean leading) {
+    protected boolean isCarriageWheelOnPoint(Carriage carriage, TrackCoupler coupler, TrackTargetingBehaviour<TrackCoupler> edgePoint, boolean leading) {
         TravellingPoint relevantPoint = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
-        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (coupler.position + 0.5)) < .75;
+        double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
+        Vec3 wheelPosition = relevantPoint.getPosition();
+        Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());
+//        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
+        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && wheelPosition.distanceToSqr(couplerSpatialPosition) < .75*.75;
+    }
+
+    public AllowedOperationMode getAllowedOperationMode() {
+        return getBlockState().getValue(TrackCouplerBlock.MODE);
     }
     
     public OperationInfo getOperationInfo() {
         OperationInfo info = getOperationInfo(false);
         if (info.mode == OperationMode.NONE)
             info = getOperationInfo(true);
-        if (!info.mode.permitted(allowedOperationMode.get()))
+        if (!info.mode.permitted(getAllowedOperationMode()))
             return OperationInfo.NONE;
         return info;
     }
@@ -266,21 +268,24 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     protected OperationInfo getOperationInfo(boolean reversed) {
         TrackCoupler coupler1 = reversed ? getSecondaryCoupler() : getCoupler();
         TrackCoupler coupler2 = reversed ? getCoupler() : getSecondaryCoupler();
+
+        TrackTargetingBehaviour<TrackCoupler> edgePoint1 = reversed ? secondEdgePoint : edgePoint;
+        TrackTargetingBehaviour<TrackCoupler> edgePoint2 = reversed ? edgePoint : secondEdgePoint;
         if (coupler1 != null && coupler2 != null && coupler1.isActivated() && coupler2.isActivated()) {
             Train primaryTrain = Create.RAILWAYS.trains.get(coupler1.getCurrentTrain());
             Train secondaryTrain = Create.RAILWAYS.trains.get(coupler2.getCurrentTrain());
             if (primaryTrain != null && primaryTrain == secondaryTrain) {
                 //Decoupling, if back wheels of a carriage are on the secondary coupler and the front wheels of the carriage behind it are on the primary coupler
-                Carriage frontCarriage = getCarriageOnPoint(primaryTrain, coupler2, false);
+                Carriage frontCarriage = getCarriageOnPoint(primaryTrain, coupler2, edgePoint2, false);
                 if (frontCarriage != null && primaryTrain.carriages.indexOf(frontCarriage) < primaryTrain.carriages.size() - 1) {
                     Carriage backCarriage = primaryTrain.carriages.get(primaryTrain.carriages.indexOf(frontCarriage) + 1);
-                    if (isCarriageWheelOnPoint(backCarriage, coupler1, true))
+                    if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true))
                         return new OperationInfo(OperationMode.DECOUPLING, frontCarriage, backCarriage);
                 }
             } else if (primaryTrain != null && secondaryTrain != null) {
                 //Coupling if the front wheels of primaryTrain are on coupler1 and the back wheels of secondaryTrain are on coupler2
-                Carriage primaryCarriage = getCarriageOnPoint(primaryTrain, coupler1, true);
-                Carriage secondaryCarriage = getCarriageOnPoint(secondaryTrain, coupler2, false);
+                Carriage primaryCarriage = getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, true);
+                Carriage secondaryCarriage = getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, false);
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
                     secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
                     return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
@@ -306,27 +311,26 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         }
     }
 
-    public enum AllowedOperationMode implements INamedIconOptions {
-        BOTH(CRIcons.I_COUPLING_BOTH),
-        COUPLING(CRIcons.I_COUPLING_COUPLE),
-        DECOUPLING(CRIcons.I_COUPLING_DECOUPLE);
+    public enum AllowedOperationMode implements StringRepresentable {
+        BOTH(true, true),
+        COUPLING(true, false),
+        DECOUPLING(false, true);
 
-        private final String translationKey;
-        private final AllIcons icon;
+        public final boolean canCouple;
+        public final boolean canDecouple;
 
-        AllowedOperationMode(AllIcons icon) {
-            this.icon = icon;
-            this.translationKey = "railways.coupler.coupling_mode." + Lang.asId(name());
+        AllowedOperationMode(boolean canCouple, boolean canDecouple) {
+            this.canCouple = canCouple;
+            this.canDecouple = canDecouple;
         }
 
         @Override
-        public AllIcons getIcon() {
-            return icon;
+        public @NotNull String getSerializedName() {
+            return this.name().toLowerCase(Locale.ROOT);
         }
 
-        @Override
-        public String getTranslationKey() {
-            return translationKey;
+        public Component getTranslatedName() {
+            return Components.translatable("railways.coupler.mode." + getSerializedName());
         }
     }
 
@@ -339,9 +343,9 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             out += 2;
         OperationMode mode = getOperationMode();
         if (mode == OperationMode.DECOUPLING)
-            return 15;
+            out += 4;
         else if (mode == OperationMode.COUPLING)
-            return 14;
+            out += 8;
         return out;
     }
 

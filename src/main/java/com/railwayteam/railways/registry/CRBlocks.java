@@ -80,12 +80,16 @@ public class CRBlocks {
           .properties(p -> p.color(MaterialColor.PODZOL))
           .properties(p -> p.noOcclusion())
           .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-          .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
+          .blockstate((c, p) -> {
+              p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
+                  .modelFile(AssetLookup.partialBaseModel(c, p, state.getValue(TrackCouplerBlock.MODE).getSerializedName()))
+                  .build(), TrackCouplerBlock.POWERED);
+          })
           .transform(pickaxeOnly())
           .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
           .lang("Train Coupler")
           .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
-          .transform(customItemModel("_", "block"))
+          .transform(customItemModel("_", "block_both"))
           .register();
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);

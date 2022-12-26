@@ -7,7 +7,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -17,21 +20,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEntity>, IWrenchable {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	public static final EnumProperty<TrackCouplerTileEntity.AllowedOperationMode> MODE = EnumProperty.create("mode", TrackCouplerTileEntity.AllowedOperationMode.class);
 
 	public TrackCouplerBlock(Properties pProperties) {
 		super(pProperties);
-		registerDefaultState(defaultBlockState().setValue(POWERED, false));
+		registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(MODE, TrackCouplerTileEntity.AllowedOperationMode.BOTH));
 	}
 
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-		super.createBlockStateDefinition(pBuilder.add(POWERED));
+		super.createBlockStateDefinition(pBuilder.add(POWERED).add(MODE));
 	}
 
 	@Nullable
@@ -106,5 +111,19 @@ public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEnti
 	@Override
 	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
 		return false;
+	}
+
+	@Override
+	public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+		Level level = context.getLevel();
+		if (level.isClientSide)
+			return InteractionResult.SUCCESS;
+		BlockPos pos = context.getClickedPos();
+		BlockState newState = state.cycle(MODE);
+		level.setBlock(pos, newState, 3);
+		Player player = context.getPlayer();
+		if (player != null)
+			player.displayClientMessage(newState.getValue(MODE).getTranslatedName(), true);
+		return InteractionResult.SUCCESS;
 	}
 }
