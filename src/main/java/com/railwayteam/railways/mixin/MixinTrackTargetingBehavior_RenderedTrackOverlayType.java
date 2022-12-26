@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+/*package com.railwayteam.railways.mixin;
 
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import org.spongepowered.asm.mixin.Final;
@@ -37,4 +37,4 @@ public abstract class MixinTrackTargetingBehavior_RenderedTrackOverlayType {
         MixinTrackTargetingBehavior_RenderedTrackOverlayType.$VALUES = variants.toArray(new TrackTargetingBehaviour.RenderedTrackOverlayType[0]);
         return variant;
     }
-}
+}*/

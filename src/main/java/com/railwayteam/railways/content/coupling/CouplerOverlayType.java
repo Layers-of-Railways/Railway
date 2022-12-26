@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.coupling;
+/*package com.railwayteam.railways.content.coupling;
 
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import org.jetbrains.annotations.Nullable;
@@ -11,4 +11,4 @@ public class CouplerOverlayType {
         if (decouple) return TrackTargetingBehaviour.RenderedTrackOverlayType.valueOf("COUPLER_DECOUPLE");
         return null;
     }
-}
+}*/

@@ -5,7 +5,6 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
@@ -23,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static com.railwayteam.railways.content.coupling.CouplerOverlayType.getCouplerOverlayType;
+//import static com.railwayteam.railways.content.coupling.CouplerOverlayType.getCouplerOverlayType;
 
 @Mixin(TrackBlock.class)
 public class MixinTrackBlockClient {
@@ -58,7 +57,7 @@ public class MixinTrackBlockClient {
             }
         }
     }
-
+/*
     @Inject(method = "prepareTrackOverlay", at = @At(value = "NEW", target="java/lang/IncompatibleClassChangeError"), remap = false, cancellable = true, require = 1)
     private void changeOverlayType(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir) {
         PartialModel model = null;
@@ -70,5 +69,5 @@ public class MixinTrackBlockClient {
             model = CRBlockPartials.COUPLER_DECOUPLE;
         }
         cir.setReturnValue(model);
-    }
+    }*/
 }

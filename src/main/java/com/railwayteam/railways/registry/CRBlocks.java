@@ -1,6 +1,9 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
+import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
+import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
@@ -9,6 +12,8 @@ import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
+import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -19,8 +24,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static com.simibubi.create.content.logistics.block.display.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class CRBlocks {
 
@@ -66,6 +72,20 @@ public class CRBlocks {
           .item(SemaphoreItem::new).transform(customItemModel())
 
           .addLayer(() -> RenderType::translucent)
+          .register();
+
+  public static final BlockEntry<TrackCouplerBlock> TRACK_COUPLER =
+      REGISTRATE.block("track_coupler", TrackCouplerBlock::new)
+          .initialProperties(SharedProperties::softMetal)
+          .properties(p -> p.color(MaterialColor.PODZOL))
+          .properties(p -> p.noOcclusion())
+          .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+          .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
+          .transform(pickaxeOnly())
+          .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
+          .lang("Train Coupler")
+          .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
+          .transform(customItemModel("_", "block"))
           .register();
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);

@@ -2,10 +2,13 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"_": "Thank you for translating Create Steam 'n Rails!",
+
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_birch": "Birch Train Track",
 	"block.railways.track_blackstone": "Blackstone Train Track",
+	"block.railways.track_coupler": "Train Coupler",
 	"block.railways.track_crimson": "Crimson Train Track",
 	"block.railways.track_dark_oak": "Dark Oak Train Track",
 	"block.railways.track_jungle": "Jungle Train Track",
@@ -83,12 +86,39 @@
 	"railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
 	"railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously",
 
+	"create.railways.semaphore.search_mode": "Signal Search Direction",
+	"create.railways.semaphore.search_mode.search_down": "Down",
+	"create.railways.semaphore.search_mode.search_up": "Up",
+
+	"railways.display_source.track_coupler_info": "Track Coupler Information",
+	"railways.display_source.coupler.no_action": "No Available Actions",
+	"railways.display_source.coupler.coupling": "Coupling: ",
+	"railways.display_source.coupler.coupling.to": "to: ",
+	"railways.display_source.coupler.decoupling": "Decoupling: ",
+
+	"railways.coupler.edge_spacing": "Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "Meters",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
 	"create.railways.semaphore.search_mode": "Signal Search Direction",
 	"create.railways.semaphore.search_mode.search_down": "Down",
 	"create.railways.semaphore.search_mode.search_up": "Up",
+
+	"railways.display_source.track_coupler_info": "Track Coupler Information",
+	"railways.display_source.coupler.no_action": "No Available Actions",
+	"railways.display_source.coupler.coupling": "Coupling: ",
+	"railways.display_source.coupler.coupling.to": "to: ",
+	"railways.display_source.coupler.decoupling": "Decoupling: ",
+
+	"railways.coupler.edge_spacing": "Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "Meters",
+
+	"create.railways.coupler.coupling_mode": "Coupling Mode",
+	"create.railways.coupler.coupling_mode.coupling": "Coupling",
+	"create.railways.coupler.coupling_mode.decoupling": "Decoupling",
+	"create.railways.coupler.coupling_mode.both": "Coupling & Decoupling",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 

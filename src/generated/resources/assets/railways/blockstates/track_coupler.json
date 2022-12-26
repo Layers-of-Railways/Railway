@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "railways:block/track_coupler/block"
+    },
+    "powered=true": {
+      "model": "railways:block/track_coupler/block_powered"
+    }
+  }
+}

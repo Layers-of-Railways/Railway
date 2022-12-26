@@ -1,12 +1,15 @@
 {
-	"_": "Missing Localizations: 2",
+	"_": "Missing Localizations: 22",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
+
+	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "腕木式信号機",
 	"block.railways.track_acacia": "アカシアの鉄道用線路",
 	"block.railways.track_birch": "シラカバの鉄道用線路",
 	"block.railways.track_blackstone": "ブラックストーンの鉄道用線路",
+	"block.railways.track_coupler": "UNLOCALIZED: Train Coupler",
 	"block.railways.track_crimson": "真紅の鉄道用線路",
 	"block.railways.track_dark_oak": "ダークオークの鉄道用線路",
 	"block.railways.track_jungle": "ジャングルの鉄道用線路",
@@ -84,12 +87,39 @@
 	"railways.ponder.train_semaphore.text_7": "全ての経路が塞がれた場合、上部の腕木式信号機が閉じます",
 	"railways.ponder.train_semaphore.text_8": "真鍮信号以外に腕木式信号機を２つ設置した場合、２つとも同時に閉じます",
 
+	"create.railways.semaphore.search_mode": "腕木の動き",
+	"create.railways.semaphore.search_mode.search_down": "下向き",
+	"create.railways.semaphore.search_mode.search_up": "上向き",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
 	"create.railways.semaphore.search_mode": "腕木の動き",
 	"create.railways.semaphore.search_mode.search_down": "下向き",
 	"create.railways.semaphore.search_mode.search_up": "上向き",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
+	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
+	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
+	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
+	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 

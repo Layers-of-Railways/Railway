@@ -5,9 +5,11 @@
   "refmap": "mixins.railways.refmap.json",
   "mixins": [
     "AccessorCarriageContraptionEntity",
+    "AccessorScheduleRuntime",
     "AccessorToolboxInventory",
     "AccessorToolboxTileEntity",
     "AccessorTrackPlacement_PlacementInfo",
+    "AccessorTrackTargetingBehavior",
     "AccessorTrain",
     "MixinAllTileEntities",
     "MixinBezierConnection",
@@ -18,8 +20,10 @@
     "MixinTrackBlockItem",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
-    "MixinTrackTargetingBehavior_RenderedTrackOverlayType",
+    "MixinTrackTargetingBlockItem",
+    "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
+    "MixinTrain",
     "MixinTrainHatOffsets"
   ],
   "client": [
@@ -33,7 +37,8 @@
     "client.MixinTrackBlockClient",
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
-    "client.MixinTrackRenderer"
+    "client.MixinTrackRenderer",
+    "client.MixinTrackTargetingClient"
   ],
   "minVersion": "0.8"
 }

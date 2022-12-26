@@ -1,12 +1,15 @@
 {
-	"_": "Missing Localizations: 3",
+	"_": "Missing Localizations: 23",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
+
+	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "臂板信号机",
 	"block.railways.track_acacia": "金合欢木列车轨道",
 	"block.railways.track_birch": "白桦木列车轨道",
 	"block.railways.track_blackstone": "黑石列车轨道",
+	"block.railways.track_coupler": "UNLOCALIZED: Train Coupler",
 	"block.railways.track_crimson": "绯红木列车轨道",
 	"block.railways.track_dark_oak": "深色橡木列车轨道",
 	"block.railways.track_jungle": "丛林木列车轨道",
@@ -84,12 +87,39 @@
 	"railways.ponder.train_semaphore.text_7": "如果所有信号区间都被阻塞，顶部的信号机将会关闭",
 	"railways.ponder.train_semaphore.text_8": "当两个臂板信号机都放置在非黄铜信号机上时，它们会同时关闭",
 
+	"create.railways.semaphore.search_mode": "信号来源方向",
+	"create.railways.semaphore.search_mode.search_down": "下方",
+	"create.railways.semaphore.search_mode.search_up": "上方",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
 	"create.railways.semaphore.search_mode": "信号来源方向",
 	"create.railways.semaphore.search_mode.search_down": "下方",
 	"create.railways.semaphore.search_mode.search_up": "上方",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
+	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
+	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
+	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
+	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 

@@ -1,12 +1,15 @@
 {
-	"_": "Missing Localizations: 4",
+	"_": "Missing Localizations: 24",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
+
+	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Sémaphore",
 	"block.railways.track_acacia": "Voie en acacia",
 	"block.railways.track_birch": "Voie en bouleau",
 	"block.railways.track_blackstone": "UNLOCALIZED: Blackstone Train Track",
+	"block.railways.track_coupler": "UNLOCALIZED: Train Coupler",
 	"block.railways.track_crimson": "Voie carmin",
 	"block.railways.track_dark_oak": "Voie en en chêne noir",
 	"block.railways.track_jungle": "Voie en acajou",
@@ -84,12 +87,39 @@
 	"railways.ponder.train_semaphore.text_7": "le sémaphore du haut va se farmer si les chemin son bloqué",
 	"railways.ponder.train_semaphore.text_8": "si le sémaphore n'est pas sur fonction laiton, les deux vont se fermer simultanément",
 
+	"create.railways.semaphore.search_mode": "Recherche de la direction du signal",
+	"create.railways.semaphore.search_mode.search_down": "Bas",
+	"create.railways.semaphore.search_mode.search_up": "Haut",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
 	"create.railways.semaphore.search_mode": "Recherche de la direction du signal",
 	"create.railways.semaphore.search_mode.search_down": "Bas",
 	"create.railways.semaphore.search_mode.search_up": "Haut",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+
+	"create.railways.coupler.coupling_mode": "UNLOCALIZED: Coupling Mode",
+	"create.railways.coupler.coupling_mode.coupling": "UNLOCALIZED: Coupling",
+	"create.railways.coupler.coupling_mode.decoupling": "UNLOCALIZED: Decoupling",
+	"create.railways.coupler.coupling_mode.both": "UNLOCALIZED: Coupling & Decoupling",
 
 	"_": "Thank you for translating Create Steam 'n Rails!"
 
