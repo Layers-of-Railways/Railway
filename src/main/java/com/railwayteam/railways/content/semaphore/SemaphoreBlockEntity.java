@@ -137,18 +137,18 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
                 SignalBlock.SignalType stateType = blockState.getValue(SignalBlock.TYPE);
 
 
-                if (semaphoresBelow == 0) {
-                    currentPos = this.isSearchingUpsideDown()?worldPosition.below():worldPosition.above();
+                if (semaphoresBelow == 0 != this.isSearchingUpsideDown()) {
+                    currentPos = this.isSearchingUpsideDown()?currentPos.below():worldPosition.above();
                     //if the signal is a cross-signal, and this semaphore is at the bottom of the stack,
                     //count upwards to find other semaphores. if one is found this semaphore becomes caution-type
                     for (int j = i + 1; j < 16; j++) {
                         blockState = level.getBlockState(currentPos);
                         blockEntity = level.getBlockEntity(currentPos);
-                        if (blockEntity instanceof SemaphoreBlockEntity semaphore && semaphore.isSearchingUpsideDown() == this.isSearchingUpsideDown()) {
+                        if (blockEntity instanceof SemaphoreBlockEntity semaphore && semaphore != this && semaphore.isSearchingUpsideDown() == this.isSearchingUpsideDown()) {
                             isDistantSignal = true;
                             break;
                         }
-                        if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
+                        if (blockEntity != this && !CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                             break;
                         }
                         currentPos = this.isSearchingUpsideDown()?currentPos.below():currentPos.above();
@@ -160,7 +160,7 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
                 break;
 
             }
-            if(blockEntity instanceof SemaphoreBlockEntity)
+            if(blockEntity instanceof SemaphoreBlockEntity && blockEntity != this)
             {
                 semaphoresBelow++;
                 if(semaphoresBelow>1)
