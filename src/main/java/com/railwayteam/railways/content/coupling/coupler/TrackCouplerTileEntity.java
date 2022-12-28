@@ -43,8 +43,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     private boolean edgePointsOk = false;
     private boolean lastReportedPower = false;
     private int lastAnalogOutput = 0;
-    protected int edgeSpacing = 3;
-    private int lastEdgeSpacing = 3;
+    protected int edgeSpacing = 5;
+    private int lastEdgeSpacing = 5;
 
     public TrackTargetingBehaviour<TrackCoupler> edgePoint;
     public TrackTargetingBehaviour<TrackCoupler> secondEdgePoint;
@@ -72,6 +72,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         lastAnalogOutput = tag.getInt("AnalogOutput");
         edgeSpacing = tag.getInt("EdgeSpacing");
         lastEdgeSpacing = tag.getInt("LastEdgeSpacing");
+        edgeSpacingScroll.setValue(edgeSpacing);
         invalidateRenderBoundingBox();
     }
 
@@ -80,7 +81,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
-        edgeSpacingScroll.between(3, 8);
+        edgeSpacingScroll.between(5, 10);
         edgeSpacingScroll.withUnit(i -> Components.translatable("railways.coupler.edge_spacing.meters"));
         edgeSpacingScroll.withFormatter(i -> i + "m");
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
@@ -128,7 +129,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 Train backTrain = info.backCarriage.train;
                 if (frontTrain == backTrain)
                     break;
-                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing() + 2);
+                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing());
                 break;
             case NONE:
                 break;
@@ -176,6 +177,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 secondEdgePoint.createEdgePoint();
                 if (isOkExceptGraph())
                     ((AccessorTrackTargetingBehavior) secondEdgePoint).setTargetDirection(((AccessorTrackTargetingBehavior) edgePoint).getTargetDirection().opposite());
+                sendData();
             }
         }
         updateOK();
@@ -244,12 +246,15 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
 
     protected boolean isCarriageWheelOnPoint(Carriage carriage, TrackCoupler coupler, TrackTargetingBehaviour<TrackCoupler> edgePoint, boolean leading) {
-        TravellingPoint relevantPoint = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
+        TravellingPoint relevantPoint = leading ? carriage.leadingBogey().leading() : carriage.trailingBogey().trailing();
+        TravellingPoint relevantPoint2 = leading ? carriage.leadingBogey().trailing() : carriage.trailingBogey().leading();
         double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
-        Vec3 wheelPosition = relevantPoint.getPosition();
+        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5);
         Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());
 //        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
-        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && wheelPosition.distanceToSqr(couplerSpatialPosition) < .75*.75;
+        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2) ||
+            coupler.isPrimary(relevantPoint2.node1) || coupler.isPrimary(relevantPoint2.node2)) &&
+            wheelPosition.distanceToSqr(couplerSpatialPosition) < .75 * .75;
     }
 
     public AllowedOperationMode getAllowedOperationMode() {
