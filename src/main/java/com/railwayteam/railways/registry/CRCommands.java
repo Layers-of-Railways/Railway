@@ -4,6 +4,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.ClearCasingCacheCommand;
+import com.railwayteam.railways.registry.commands.SplitTrainCommand;
+import com.railwayteam.railways.registry.commands.TrainInfoCommand;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +26,8 @@ public class CRCommands {
         .requires(cs -> cs.hasPermission(0))
         // general purpose
         .then(ClearCasingCacheCommand.register())
+        .then(SplitTrainCommand.register())
+        .then(TrainInfoCommand.register())
 
         // utility
 //        .then(util)

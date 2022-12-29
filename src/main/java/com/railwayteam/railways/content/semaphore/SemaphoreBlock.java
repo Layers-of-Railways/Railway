@@ -1,5 +1,7 @@
 package com.railwayteam.railways.content.semaphore;
 
+import com.railwayteam.railways.Config;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;

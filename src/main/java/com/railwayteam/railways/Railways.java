@@ -1,13 +1,15 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.base.data.lang.LangMerger;
+import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
+import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.foundation.ModFilePackResources;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -92,10 +94,11 @@ public class Railways {
     DataGenerator gen = event.getGenerator();
     if (event.includeServer()) {
       gen.addProvider(true, new RailwaysSequencedAssemblyRecipeGen(gen));
+      gen.addProvider(true, new RailwaysStandardRecipeGen(gen));
     }
     if (event.includeClient()) {
       PonderLocalization.provideRegistrateLang(REGISTRATE);
-      gen.addProvider(true, new LangMerger(gen));
+      gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
     }
 
   }

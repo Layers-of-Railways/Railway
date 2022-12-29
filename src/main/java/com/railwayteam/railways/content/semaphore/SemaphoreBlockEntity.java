@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.semaphore;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
@@ -126,6 +127,7 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
         isDistantSignal=false;
         BlockPos currentPos = this.isSearchingUpsideDown()?worldPosition.above():worldPosition.below();
         int semaphoresBelow = 0;
+        boolean constantOrder = !(getBlockState().getValue(SemaphoreBlock.UPSIDE_DOWN) && Config.SEMAPHORES_FLIP_YELLOW_ORDER.get());
         //count downwards from the semaphore along the pole blocks, until a signal is reached
         for (int i = 0; i < 16; i++) {
             BlockState blockState = level.getBlockState(currentPos);
@@ -137,8 +139,8 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
                 SignalBlock.SignalType stateType = blockState.getValue(SignalBlock.TYPE);
 
 
-                if (semaphoresBelow == 0) {
-                    currentPos = this.isSearchingUpsideDown()?worldPosition.below():worldPosition.above();
+                if (semaphoresBelow == 0 != (this.isSearchingUpsideDown() && constantOrder)) {
+                    currentPos = this.isSearchingUpsideDown()?(constantOrder?currentPos:worldPosition).below():worldPosition.above();
                     //if the signal is a cross-signal, and this semaphore is at the bottom of the stack,
                     //count upwards to find other semaphores. if one is found this semaphore becomes caution-type
                     for (int j = i + 1; j < 16; j++) {
