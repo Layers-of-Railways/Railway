@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 31",
+	"_": "Missing Localizations: 29",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -11,7 +11,7 @@
 	"block.railways.track_crimson": "真紅の鉄道用線路",
 	"block.railways.track_dark_oak": "ダークオークの鉄道用線路",
 	"block.railways.track_jungle": "ジャングルの鉄道用線路",
-	"block.railways.track_mangrove": "UNLOCALIZED: Mangrove Train Track",
+	"block.railways.track_mangrove": "マングローブの鉄道用線路",
 	"block.railways.track_oak": "オークの鉄道用線路",
 	"block.railways.track_spruce": "トウヒの鉄道用線路",
 	"block.railways.track_warped": "歪んだ鉄道用線路",
@@ -56,7 +56,7 @@
 	"item.railways.track_incomplete_crimson": "組み立て中の真紅の鉄道用線路",
 	"item.railways.track_incomplete_dark_oak": "組み立て中のダークオークの鉄道用線路",
 	"item.railways.track_incomplete_jungle": "組み立て中のジャングルの鉄道用線路",
-	"item.railways.track_incomplete_mangrove": "UNLOCALIZED: Incomplete Mangrove Track",
+	"item.railways.track_incomplete_mangrove": "組み立て中のマングローブの鉄道用線路",
 	"item.railways.track_incomplete_oak": "組み立て中のオークの鉄道用線路",
 	"item.railways.track_incomplete_spruce": "組み立て中のトウヒの鉄道用線路",
 	"item.railways.track_incomplete_warped": "組み立て中の歪んだ鉄道用線路",
