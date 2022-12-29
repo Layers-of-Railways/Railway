@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 22",
+	"_": "Missing Localizations: 29",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -112,6 +112,14 @@
 	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
 	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
+
+	"railways.tooltip.coupler.header": "UNLOCALIZED: Coupler Information",
+	"railways.tooltip.coupler.mode": "UNLOCALIZED: Coupler Mode:",
+	"railways.tooltip.coupler.train1": "UNLOCALIZED: §lTrain 1: §r%s",
+	"railways.tooltip.coupler.train2": "UNLOCALIZED: §lTrain 2: §r%s",
+	"railways.tooltip.coupler.action.none": "UNLOCALIZED: Action: None available",
+	"railways.tooltip.coupler.action.coupling": "UNLOCALIZED: Action: Coupling",
+	"railways.tooltip.coupler.action.decoupling": "UNLOCALIZED: Action: Decoupling",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

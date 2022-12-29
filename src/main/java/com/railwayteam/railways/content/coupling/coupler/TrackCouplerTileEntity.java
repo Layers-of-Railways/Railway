@@ -1,11 +1,13 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
+import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
 import com.simibubi.create.content.logistics.trains.entity.Carriage;
@@ -18,9 +20,8 @@ import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import com.simibubi.create.foundation.tileEntity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.foundation.utility.*;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,8 +36,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.UUID;
 
-public class TrackCouplerTileEntity extends SmartTileEntity implements ITransformableTE {
+public class TrackCouplerTileEntity extends SmartTileEntity implements ITransformableTE, IHaveGoggleInformation {
 
     private BlockState cachedTrackState = null;
     private BlockState cachedSecondaryTrackState = null;
@@ -45,6 +47,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     private int lastAnalogOutput = 0;
     protected int edgeSpacing = 5;
     private int lastEdgeSpacing = 5;
+    private ClientInfo clientInfo;
 
     public TrackTargetingBehaviour<TrackCoupler> edgePoint;
     public TrackTargetingBehaviour<TrackCoupler> secondEdgePoint;
@@ -62,6 +65,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         tag.putInt("AnalogOutput", lastAnalogOutput);
         tag.putInt("EdgeSpacing", edgeSpacing);
         tag.putInt("LastEdgeSpacing", lastEdgeSpacing);
+        if (clientPacket && clientInfo != null)
+            tag.put("ClientInfo", clientInfo.write());
     }
 
     @Override
@@ -73,6 +78,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         edgeSpacing = tag.getInt("EdgeSpacing");
         lastEdgeSpacing = tag.getInt("LastEdgeSpacing");
         edgeSpacingScroll.setValue(edgeSpacing);
+        if (clientPacket)
+            clientInfo = new ClientInfo(tag.getCompound("ClientInfo"));
         invalidateRenderBoundingBox();
     }
 
@@ -117,6 +124,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
 
     protected void onPowered() {
+        if (level == null || level.isClientSide)
+            return;
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
             case DECOUPLING:
@@ -163,6 +172,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     @Override
     public void lazyTick() {
         super.lazyTick();
+        if (level == null || level.isClientSide)
+            return;
         BlockState trackState = edgePoint.getTrackBlockState();
         BlockState secondaryTrackState = getSecondaryTrackState();
         if (trackState != cachedTrackState || secondaryTrackState != cachedSecondaryTrackState || edgeSpacing != lastEdgeSpacing) {
@@ -180,6 +191,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 sendData();
             }
         }
+        clientInfo = new ClientInfo();
+        sendData();
         updateOK();
     }
 
@@ -378,5 +391,83 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             return VecHelper.voxelSpace(8, 8, 16);
         }
 
+    }
+
+    private class ClientInfo {
+
+        public OperationMode mode;
+        public String trainName1;
+        public String trainName2;
+
+        public ClientInfo() {
+            mode = getOperationMode();
+            trainName1 = "None";
+            trainName2 = "None";
+            if (getCoupler() != null && getCoupler().isActivated()) {
+                UUID trainId = getCoupler().getCurrentTrain();
+                Train train = Create.RAILWAYS.trains.get(trainId);
+                if (train != null)
+                    trainName1 = train.name.getString();
+            }
+            if (getSecondaryCoupler() != null && getSecondaryCoupler().isActivated()) {
+                UUID trainId = getSecondaryCoupler().getCurrentTrain();
+                Train train = Create.RAILWAYS.trains.get(trainId);
+                if (train != null)
+                    trainName2 = train.name.getString();
+            }
+        }
+
+        public ClientInfo(CompoundTag tag) {
+            mode = NBTHelper.readEnum(tag, "mode", OperationMode.class);
+            trainName1 = tag.getString("trainName1");
+            trainName2 = tag.getString("trainName2");
+        }
+
+        public CompoundTag write() {
+            CompoundTag tag = new CompoundTag();
+            NBTHelper.writeEnum(tag, "mode", mode);
+            tag.putString("trainName1", trainName1);
+            tag.putString("trainName2", trainName2);
+            return tag;
+        }
+    }
+
+    private static LangBuilder b() {
+        return Lang.builder(Railways.MODID);
+    }
+
+    /**
+     * this method will be called when looking at a TileEntity that implemented this
+     * interface
+     *
+     * @param tooltip
+     * @param isPlayerSneaking
+     * @return {@code true} if the tooltip creation was successful and should be
+     * displayed, or {@code false} if the overlay should not be displayed
+     */
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        b().translate("tooltip.coupler.header").forGoggles(tooltip);
+        b().translate("tooltip.coupler.mode")
+            .style(ChatFormatting.YELLOW)
+            .forGoggles(tooltip);
+        b().translate("coupler.mode."+getAllowedOperationMode().getSerializedName())
+            .style(ChatFormatting.YELLOW)
+            .forGoggles(tooltip);
+
+        String train1 = clientInfo == null ? "None" : clientInfo.trainName1;
+        String train2 = clientInfo == null ? "None" : clientInfo.trainName2;
+        OperationMode operationMode = clientInfo == null ? OperationMode.NONE : clientInfo.mode;
+        b().translate("tooltip.coupler.train1", train1)
+            .style(ChatFormatting.GOLD)
+            .forGoggles(tooltip);
+        b().translate("tooltip.coupler.train2", train2)
+            .style(ChatFormatting.GOLD)
+            .forGoggles(tooltip);
+
+        b().translate("tooltip.coupler.action."+operationMode.name().toLowerCase(Locale.ROOT))
+            .style(ChatFormatting.GREEN)
+            .forGoggles(tooltip);
+        return true;
     }
 }

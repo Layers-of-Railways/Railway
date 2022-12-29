@@ -112,6 +112,14 @@
 	"railways.schedule.condition.loaded": "Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "Waiting for chunk load",
 
+	"railways.tooltip.coupler.header": "Coupler Information",
+	"railways.tooltip.coupler.mode": "Coupler Mode:",
+	"railways.tooltip.coupler.train1": "§lTrain 1: §r%s",
+	"railways.tooltip.coupler.train2": "§lTrain 2: §r%s",
+	"railways.tooltip.coupler.action.none": "Action: None available",
+	"railways.tooltip.coupler.action.coupling": "Action: Coupling",
+	"railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
+
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 
