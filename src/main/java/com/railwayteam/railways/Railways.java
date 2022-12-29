@@ -2,6 +2,7 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
+import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRCommands;
@@ -93,6 +94,7 @@ public class Railways {
     DataGenerator gen = event.getGenerator();
     if (event.includeServer()) {
       gen.addProvider(true, new RailwaysSequencedAssemblyRecipeGen(gen));
+      gen.addProvider(true, new RailwaysStandardRecipeGen(gen));
     }
     if (event.includeClient()) {
       PonderLocalization.provideRegistrateLang(REGISTRATE);

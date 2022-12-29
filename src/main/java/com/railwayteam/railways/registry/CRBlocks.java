@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -52,6 +53,9 @@ public class CRBlocks {
   }
 
   public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
+  static {
+    REGISTRATE.startSection(AllSections.LOGISTICS);
+  }
   public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
           .initialProperties(SharedProperties::softMetal)
           //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()

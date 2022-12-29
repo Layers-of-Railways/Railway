@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 19",
+	"_": "Missing Localizations: 25",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -112,6 +112,16 @@
 	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
 	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
+
+
+	"_": "->------------------------]  Item Descriptions  [------------------------<-",
+
+	"block.railways.track_coupler.tooltip": "UNLOCALIZED: TRAIN COUPLER",
+	"block.railways.track_coupler.tooltip.summary": "UNLOCALIZED: Bind to a track under the _middle_ of a train's _front bogey_, then scroll on top with a wrench to extend the coupler under another train's _rear bogey_.",
+	"block.railways.track_coupler.tooltip.condition1": "UNLOCALIZED: When the right carriages are over the track points, and the Coupler is in the right mode",
+	"block.railways.track_coupler.tooltip.behaviour1": "UNLOCALIZED: Providing a _redstone signal_ will _couple_ the two trains together.",
+	"block.railways.track_coupler.tooltip.condition2": "UNLOCALIZED: When a different track targeting block (such as a Train Signal) is bound to the same track",
+	"block.railways.track_coupler.tooltip.behaviour2": "UNLOCALIZED: The coupler icon will _move_ to the side, and they will _coexist_.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 

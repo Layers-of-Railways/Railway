@@ -9,7 +9,7 @@ import com.simibubi.create.foundation.utility.Lang;
 
 public enum CRLangPartials implements LangPartial {
 	INTERFACE("UI & Messages"),
-//	TOOLTIPS("Item Descriptions"),
+	TOOLTIPS("Item Descriptions"),
 
 	;
 
