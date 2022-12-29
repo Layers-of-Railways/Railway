@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 23",
+	"_": "Missing Localizations: 18",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -88,22 +88,6 @@
 	"railways.ponder.train_semaphore.text_7": "Górny semafor się zamknie, jeżeli wszystkie drogi są zablokowane",
 	"railways.ponder.train_semaphore.text_8": "Gdy 2 semafory będą postawione na zwyczajnym sygnale, oba zamkną się jednocześnie.",
 
-	"create.railways.semaphore.search_mode": "Wyszukiwanie kierunku sygnału",
-	"create.railways.semaphore.search_mode.search_down": "Dół",
-	"create.railways.semaphore.search_mode.search_up": "Góra",
-
-	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
-	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
-	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
-	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
-	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
-
-	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
-	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
-	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
-	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
-	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
-
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
@@ -122,6 +106,12 @@
 	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
 	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
 	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
+
+	"railways.schedule.instruction.redstone_link": "UNLOCALIZED: Power Redstone Link",
+	"railways.schedule.instruction.redstone_link.power": "UNLOCALIZED: Power Level: %s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
+	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
+	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 

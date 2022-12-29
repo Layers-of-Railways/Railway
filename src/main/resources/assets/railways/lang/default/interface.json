@@ -11,5 +11,12 @@
   "railways.coupler.edge_spacing.meters": "Meters",
   "railways.coupler.mode.coupling": "-> Coupling",
   "railways.coupler.mode.decoupling": "-> Decoupling",
-  "railways.coupler.mode.both": "-> Coupling & Decoupling"
+  "railways.coupler.mode.both": "-> Coupling & Decoupling",
+
+  "railways.schedule.instruction.redstone_link": "Power Redstone Link",
+  "railways.schedule.instruction.redstone_link.power": "Power Level: %s",
+  "railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
+
+  "railways.schedule.condition.loaded": "Chunk Loaded",
+  "railways.schedule.condition.loaded.status": "Waiting for chunk load"
 }
