@@ -34,6 +34,7 @@ public enum CRPackets {
     CARRIAGE_CONTRAPTION_ENTITY_UPDATE(CarriageContraptionEntityUpdatePacket.class, CarriageContraptionEntityUpdatePacket::new, PLAY_TO_CLIENT),
     CHOP_TRAIN_END(ChopTrainEndPacket.class, ChopTrainEndPacket::new, PLAY_TO_CLIENT),
     ADD_TRAIN_END(AddTrainEndPacket.class, AddTrainEndPacket::new, PLAY_TO_CLIENT),
+    TRACK_COUPLER_CLIENT_INFO(TrackCouplerClientInfoPacket.class, TrackCouplerClientInfoPacket::new, PLAY_TO_CLIENT),
     ;
     public static final ResourceLocation CHANNEL_ID = new ResourceLocation(Railways.MODID, "main");
     public static final int PROTOCOL_VER = 2;

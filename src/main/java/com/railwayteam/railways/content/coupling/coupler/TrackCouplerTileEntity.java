@@ -4,6 +4,8 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.packet.TrackCouplerClientInfoPacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
@@ -30,6 +32,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -65,8 +68,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         tag.putInt("AnalogOutput", lastAnalogOutput);
         tag.putInt("EdgeSpacing", edgeSpacing);
         tag.putInt("LastEdgeSpacing", lastEdgeSpacing);
-        if (clientPacket && clientInfo != null)
-            tag.put("ClientInfo", clientInfo.write());
+        //if (clientPacket && clientInfo != null)
+        //    tag.put("ClientInfo", clientInfo.write());
     }
 
     @Override
@@ -78,8 +81,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         edgeSpacing = tag.getInt("EdgeSpacing");
         lastEdgeSpacing = tag.getInt("LastEdgeSpacing");
         edgeSpacingScroll.setValue(edgeSpacing);
-        if (clientPacket)
-            clientInfo = new ClientInfo(tag.getCompound("ClientInfo"));
+        //if (clientPacket)
+        //    clientInfo = new ClientInfo(tag.getCompound("ClientInfo"));
         invalidateRenderBoundingBox();
     }
 
@@ -191,8 +194,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 sendData();
             }
         }
-        clientInfo = new ClientInfo();
-        sendData();
+        clientInfo = new ClientInfo(this);
+        CRPackets.channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(getBlockPos())), new TrackCouplerClientInfoPacket(this));
         updateOK();
     }
 
@@ -316,6 +319,14 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         return getOperationInfo().mode;
     }
 
+    public ClientInfo getClientInfo() {
+        return clientInfo;
+    }
+
+    public void setClientInfo(ClientInfo info) {
+        clientInfo = info;
+    }
+
     public record OperationInfo(OperationMode mode, Carriage frontCarriage, Carriage backCarriage) {
         public static final OperationInfo NONE = new OperationInfo(OperationMode.NONE, null, null);
     }
@@ -393,24 +404,24 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
 
     }
 
-    private class ClientInfo {
+    public static class ClientInfo {
 
         public OperationMode mode;
         public String trainName1;
         public String trainName2;
 
-        public ClientInfo() {
-            mode = getOperationMode();
+        protected ClientInfo(TrackCouplerTileEntity te) {
+            mode = te.getOperationMode();
             trainName1 = "None";
             trainName2 = "None";
-            if (getCoupler() != null && getCoupler().isActivated()) {
-                UUID trainId = getCoupler().getCurrentTrain();
+            if (te.getCoupler() != null && te.getCoupler().isActivated()) {
+                UUID trainId = te.getCoupler().getCurrentTrain();
                 Train train = Create.RAILWAYS.trains.get(trainId);
                 if (train != null)
                     trainName1 = train.name.getString();
             }
-            if (getSecondaryCoupler() != null && getSecondaryCoupler().isActivated()) {
-                UUID trainId = getSecondaryCoupler().getCurrentTrain();
+            if (te.getSecondaryCoupler() != null && te.getSecondaryCoupler().isActivated()) {
+                UUID trainId = te.getSecondaryCoupler().getCurrentTrain();
                 Train train = Create.RAILWAYS.trains.get(trainId);
                 if (train != null)
                     trainName2 = train.name.getString();
