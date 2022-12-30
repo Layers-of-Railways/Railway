@@ -108,7 +108,7 @@
 
 	"railways.schedule.instruction.redstone_link": "Aktiviere Redstone-Verbindung",
 	"railways.schedule.instruction.redstone_link.power": "Leistungsstufe: %s",
-	"railways.schedule.instruction.redstone_link.power_edit_box": "Listungsstufe",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "Leistungsstufe",
 	"railways.schedule.condition.loaded": "Chunk geladen",
 	"railways.schedule.condition.loaded.status": "Warte darauf das der Chunk geladen ist.",
 
