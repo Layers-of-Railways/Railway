@@ -3,12 +3,9 @@
   "ingredient": {
     "item": "minecraft:blackstone_slab"
   },
-  "loops": 1,
-  "results": [
-    {
-      "item": "railways:track_blackstone"
-    }
-  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_blackstone"
+  },
   "sequence": [
     {
       "type": "create:deploying",
@@ -56,7 +53,10 @@
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "railways:track_incomplete_blackstone"
-  }
+  "results": [
+    {
+      "item": "railways:track_blackstone"
+    }
+  ],
+  "loops": 1
 }
