@@ -35,13 +35,8 @@ public class MinecartBlock extends AbstractMinecart {
   @Override
   public void destroy(DamageSource source) {
     super.destroy(source);
-/*    if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+    if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
       this.spawnAtLocation(content.getBlock());
-    }*/
-  }
-
-  @Override
-  protected Item getDropItem() {
-    return null;
+    }
   }
 }

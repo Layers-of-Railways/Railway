@@ -61,9 +61,4 @@ public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
   public ItemStack getPickResult() {
     return CRItems.ITEM_BENCHCART.asStack();
   }
-
-  @Override
-  protected Item getDropItem() {
-    return CRItems.ITEM_BENCHCART.get();
-  }
 }

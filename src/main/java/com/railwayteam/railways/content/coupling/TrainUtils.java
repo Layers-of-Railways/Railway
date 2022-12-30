@@ -10,8 +10,8 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.entity.*;
 import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -55,7 +55,7 @@ public class TrainUtils {
 
         Train newTrain = new Train(UUID.randomUUID(), train.owner, train.graph, new ArrayList<>(List.of(lastCarriages)), new ArrayList<>(List.of(lastCarriageSpacings)), Arrays.stream(lastCarriages).anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls()));
         train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
-        newTrain.name = Component.literal("Split off from: "+train.name.getString());
+        newTrain.name = Components.literal("Split off from: "+train.name.getString());
 //        lastCarriage.setTrain(newTrain);
 //        lastCarriage.storage = null; //since storage is per-carriage, not per-train, this should be fine
         for (int i = 0; i < lastCarriages.length; i++) {

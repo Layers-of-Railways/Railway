@@ -24,7 +24,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.client.IItemRenderProperties;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -63,11 +63,11 @@ public class ConductorCapItem extends ArmorItem {
   }
 
   @Override
-  public void initializeClient (Consumer<IClientItemExtensions> consumer) {
-    consumer.accept(new IClientItemExtensions() {
+  public void initializeClient (Consumer<IItemRenderProperties> consumer) {
+    consumer.accept(new IItemRenderProperties() {
       @Nonnull
       @Override
-      public Model getGenericArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+      public Model getBaseArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
         ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION));
         model.setProperties(_default);

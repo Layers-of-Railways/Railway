@@ -21,7 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.MavenVersionStringHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -36,6 +35,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.forgespi.language.IModFileInfo;
 import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.forgespi.locating.IModFile;
@@ -93,12 +93,12 @@ public class Railways {
   public static void gatherData(GatherDataEvent event) {
     DataGenerator gen = event.getGenerator();
     if (event.includeServer()) {
-      gen.addProvider(true, new RailwaysSequencedAssemblyRecipeGen(gen));
-      gen.addProvider(true, new RailwaysStandardRecipeGen(gen));
+      gen.addProvider(new RailwaysSequencedAssemblyRecipeGen(gen));
+      gen.addProvider(new RailwaysStandardRecipeGen(gen));
     }
     if (event.includeClient()) {
       PonderLocalization.provideRegistrateLang(REGISTRATE);
-      gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
+      gen.addProvider(new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
     }
 
   }
