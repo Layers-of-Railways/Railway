@@ -6,6 +6,7 @@
 	"block.railways.track_acacia": "金合欢木列车轨道",
 	"block.railways.track_birch": "白桦木列车轨道",
 	"block.railways.track_blackstone": "黑石列车轨道",
+	"block.railways.track_coupler": "列车连挂器",
 	"block.railways.track_crimson": "绯红木列车轨道",
 	"block.railways.track_dark_oak": "深色橡木列车轨道",
 	"block.railways.track_jungle": "丛林木列车轨道",
@@ -49,6 +50,7 @@
 	"item.railways.red_incomplete_conductor_cap": "红色列车长帽（半成品）",
 	"item.railways.track_incomplete_acacia": "金合欢木列车轨道（半成品）",
 	"item.railways.track_incomplete_birch": "白桦木列车轨道（半成品）",
+	"item.railways.track_incomplete_blackstone": "黑石列车轨道（半成品）",
 	"item.railways.track_incomplete_crimson": "绯红木列车轨道（半成品）",
 	"item.railways.track_incomplete_dark_oak": "深色橡木列车轨道（半成品）",
 	"item.railways.track_incomplete_jungle": "丛林木列车轨道（半成品）",
@@ -87,6 +89,42 @@
 	"create.railways.semaphore.search_mode.search_down": "下方",
 	"create.railways.semaphore.search_mode.search_up": "上方",
 
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"railways.display_source.track_coupler_info": "列车连挂器",
+	"railways.display_source.coupler.no_action": "无可用操作",
+	"railways.display_source.coupler.coupling": "耦合模式: ",
+	"railways.display_source.coupler.coupling.to": "to: ",
+	"railways.display_source.coupler.decoupling": "脱钩：",
+
+	"railways.coupler.edge_spacing": "转向架的间距",
+	"railways.coupler.edge_spacing.meters": "米",
+	"railways.coupler.mode.coupling": "-> 连挂",
+	"railways.coupler.mode.decoupling": "-> 脱钩",
+	"railways.coupler.mode.both": "-> 连挂和脱钩",
+
+	"railways.schedule.instruction.redstone_link": "充能红石信号",
+	"railways.schedule.instruction.redstone_link.power": "信号强度：%s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "信号强度",
+	"railways.schedule.condition.loaded": "区块被加载",
+	"railways.schedule.condition.loaded.status": "等待区块被加载",
+
+	"railways.tooltip.coupler.header": "连挂器信息：",
+	"railways.tooltip.coupler.mode": "连挂模式:",
+	"railways.tooltip.coupler.train1": "§l列车1：§r%s",
+	"railways.tooltip.coupler.train2": "§l列车2: §r%s",
+	"railways.tooltip.coupler.action.none": "将进行的操作：无可用操作",
+	"railways.tooltip.coupler.action.coupling": "将进行的操作：连钩",
+	"railways.tooltip.coupler.action.decoupling": "将进行的操作：脱钩",
+
+
+	"_": "->------------------------]  Item Descriptions  [------------------------<-",
+
+	"block.railways.track_coupler.tooltip": "列车连挂器",
+	"block.railways.track_coupler.tooltip.summary": "绑定到车厢_前端_转向架的_中部_，接着使用扳手在连挂器顶部滚动鼠标滚轮，调整另一端至前方车厢_后端_转向架的下方",
+	"block.railways.track_coupler.tooltip.condition1": "当正确的车厢位于轨道耦合点上方，且连挂器处于正确的模式时",
+	"block.railways.track_coupler.tooltip.behaviour1": "提供一个_红石信号_时将会把两个车厢_相连_在一起",
+	"block.railways.track_coupler.tooltip.condition2": "当不同的铁路元件（比如列车信号机）绑定在同一个轨道上时",
+	"block.railways.track_coupler.tooltip.behaviour2": "连挂器的图标将会_移动_到一侧，不同的图标将会_共存_",
+
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }
