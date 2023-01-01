@@ -91,7 +91,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
-        edgeSpacingScroll.between(5, 10);
+        edgeSpacingScroll.between(3, 10);
         edgeSpacingScroll.withUnit(i -> Components.translatable("railways.coupler.edge_spacing.meters"));
         edgeSpacingScroll.withFormatter(i -> i + "m");
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
