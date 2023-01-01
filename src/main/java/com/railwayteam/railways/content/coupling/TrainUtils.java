@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.coupling;
 
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrain;
+import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
@@ -90,6 +91,18 @@ public class TrainUtils {
         );
         CRPackets.channel.send(PacketDistributor.ALL.noArg(), new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
+        if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).getIndex() >= train.carriages.size()) {
+            int newIndex = ((IIndexedSchedule) train).getIndex() - train.carriages.size();
+            ((IIndexedSchedule) newTrain).setIndex(newIndex);
+
+            newTrain.runtime.read(train.runtime.write());
+            if (train.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
+                newTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
+                ((AccessorScheduleRuntime) newTrain.runtime).setCooldown(0);
+            }
+            train.runtime.discardSchedule();
+        }
+
         return newTrain;
     }
 
@@ -101,6 +114,7 @@ public class TrainUtils {
      * Adds the carriages of backTrain onto the end of frontTrain.
      */
     public static Train combineTrains(Train frontTrain, Train backTrain, Vec3 itemDropPos, Level itemDropLevel, int carriageSpacing) {
+        int frontTrainSize = frontTrain.carriages.size();
         frontTrain.carriages.addAll(backTrain.carriages);
         backTrain.carriages.clear();
 
@@ -134,6 +148,7 @@ public class TrainUtils {
         frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(cce -> CRPackets.channel.send(PacketDistributor.ALL.noArg(), new CarriageContraptionEntityUpdatePacket(cce, frontTrain))));
 //        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(CarriageContraptionEntity::syncCarriage));
         if (frontTrain.runtime.getSchedule() == null && backTrain.runtime.getSchedule() != null) {
+            ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
             frontTrain.runtime.read(backTrain.runtime.write());
             if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
                 frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
