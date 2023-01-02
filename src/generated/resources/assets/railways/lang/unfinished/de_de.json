@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 31",
+	"_": "Missing Localizations: 36",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -120,6 +120,9 @@
 	"railways.tooltip.coupler.action.none": "UNLOCALIZED: Action: None available",
 	"railways.tooltip.coupler.action.coupling": "UNLOCALIZED: Action: Coupling",
 	"railways.tooltip.coupler.action.decoupling": "UNLOCALIZED: Action: Decoupling",
+	"railways.tooltip.coupler.error.mode_not_permitted": "UNLOCALIZED: Action not permitted in current mode",
+	"railways.tooltip.coupler.error.missing_train": "UNLOCALIZED: Requires both couplers to be occupied",
+	"railways.tooltip.coupler.error.carriage_alignment": "UNLOCALIZED: Carriage(s) not aligned properly",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
@@ -130,6 +133,9 @@
 	"block.railways.track_coupler.tooltip.behaviour1": "UNLOCALIZED: Providing a _redstone signal_ will _couple_ the two trains together.",
 	"block.railways.track_coupler.tooltip.condition2": "UNLOCALIZED: When a different track targeting block (such as a Train Signal) is bound to the same track",
 	"block.railways.track_coupler.tooltip.behaviour2": "UNLOCALIZED: The coupler icon will _move_ to the side, and they will _coexist_.",
+
+	"block.create.track_station.tooltip": "UNLOCALIZED: TRAIN STATION",
+	"block.create.track_station.tooltip.summary": "UNLOCALIZED: A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 

@@ -12,13 +12,16 @@
     "AccessorTrackTargetingBehavior",
     "AccessorTrain",
     "MixinAllTileEntities",
+    "MixinAutoScheduleDiscard",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
     "MixinReplaceTrackCheck",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
+    "MixinSignalBlock",
     "MixinSignalBoundary",
+    "MixinStationBlock",
     "MixinToolboxHandler",
     "MixinTrackBlock",
     "MixinTrackBlockItem",
@@ -29,8 +32,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTrainHatOffsets",
-    "MixinAutoScheduleDiscard"
+    "MixinTrainHatOffsets"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",

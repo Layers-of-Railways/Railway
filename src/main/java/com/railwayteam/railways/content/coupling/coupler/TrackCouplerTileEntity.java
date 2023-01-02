@@ -27,6 +27,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,6 +51,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     private int lastAnalogOutput = 0;
     protected int edgeSpacing = 5;
     private int lastEdgeSpacing = 5;
+    private MutableComponent error = null;
     private ClientInfo clientInfo;
 
     public TrackTargetingBehaviour<TrackCoupler> edgePoint;
@@ -172,6 +174,14 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         return getDesiredSecondaryEdgePos().map(pos -> edgePoint.getWorld().getBlockState(pos.offset(this.getBlockPos()))).orElse(null);
     }
 
+    private void setError(Component component) {
+        error = Components.empty().append(component);
+    }
+
+    private void clearErrors() {
+        error = null;
+    }
+
     @Override
     public void lazyTick() {
         super.lazyTick();
@@ -194,9 +204,10 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 sendData();
             }
         }
-        clientInfo = new ClientInfo(this);
-        CRPackets.channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(getBlockPos())), new TrackCouplerClientInfoPacket(this));
         updateOK();
+        clientInfo = new ClientInfo(this);
+        clearErrors();
+        CRPackets.channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(getBlockPos())), new TrackCouplerClientInfoPacket(this));
     }
 
     private boolean isOkExceptGraph() {
@@ -237,7 +248,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
 
     public boolean areEdgePointsOk() {
-        return edgePointsOk;
+        return (level!=null && level.isClientSide) ? clientInfo.edgePointsOk : edgePointsOk;
     }
 
     @Nullable
@@ -270,7 +281,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
 //        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
         return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2) ||
             coupler.isPrimary(relevantPoint2.node1) || coupler.isPrimary(relevantPoint2.node2)) &&
-            wheelPosition.distanceToSqr(couplerSpatialPosition) < .75 * .75;
+            wheelPosition.distanceToSqr(couplerSpatialPosition) < .8 * .8;
     }
 
     public AllowedOperationMode getAllowedOperationMode() {
@@ -278,11 +289,20 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
     
     public OperationInfo getOperationInfo() {
+        clearErrors();
         OperationInfo info = getOperationInfo(false);
-        if (info.mode == OperationMode.NONE)
+        if (info.mode == OperationMode.NONE) {
+            MutableComponent backupError = error;
+            clearErrors();
             info = getOperationInfo(true);
-        if (!info.mode.permitted(getAllowedOperationMode()))
+            if (info.mode == OperationMode.NONE)
+                error = backupError;
+        }
+        if (!info.mode.permitted(getAllowedOperationMode())) {
+            clearErrors();
+            setError(Components.translatable("railways.tooltip.coupler.error.mode_not_permitted"));
             return OperationInfo.NONE;
+        }
         return info;
     }
 
@@ -298,10 +318,16 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             if (primaryTrain != null && primaryTrain == secondaryTrain) {
                 //Decoupling, if back wheels of a carriage are on the secondary coupler and the front wheels of the carriage behind it are on the primary coupler
                 Carriage frontCarriage = getCarriageOnPoint(primaryTrain, coupler2, edgePoint2, false);
+                if (frontCarriage == null)
+                    setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
                 if (frontCarriage != null && primaryTrain.carriages.indexOf(frontCarriage) < primaryTrain.carriages.size() - 1) {
                     Carriage backCarriage = primaryTrain.carriages.get(primaryTrain.carriages.indexOf(frontCarriage) + 1);
                     if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true))
                         return new OperationInfo(OperationMode.DECOUPLING, frontCarriage, backCarriage);
+                    else
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+                } else {
+                    setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
                 }
             } else if (primaryTrain != null && secondaryTrain != null) {
                 //Coupling if the front wheels of primaryTrain are on coupler1 and the back wheels of secondaryTrain are on coupler2
@@ -310,7 +336,13 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
                     secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
                     return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
+                else
+                    setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+            } else {
+                setError(Components.translatable("railways.tooltip.coupler.error.missing_train"));
             }
+        } else {
+            setError(Components.translatable("railways.tooltip.coupler.error.missing_train"));
         }
         return OperationInfo.NONE;
     }
@@ -409,6 +441,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         public OperationMode mode;
         public String trainName1;
         public String trainName2;
+        public boolean edgePointsOk;
+        public MutableComponent error;
 
         protected ClientInfo(TrackCouplerTileEntity te) {
             mode = te.getOperationMode();
@@ -426,12 +460,16 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 if (train != null)
                     trainName2 = train.name.getString();
             }
+            edgePointsOk = te.edgePointsOk;
+            error = te.error;
         }
 
         public ClientInfo(CompoundTag tag) {
             mode = NBTHelper.readEnum(tag, "mode", OperationMode.class);
             trainName1 = tag.getString("trainName1");
             trainName2 = tag.getString("trainName2");
+            edgePointsOk = tag.getBoolean("edgePointsOk");
+            error = tag.contains("error") ? Component.Serializer.fromJson(tag.getString("error")) : null;
         }
 
         public CompoundTag write() {
@@ -439,6 +477,9 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             NBTHelper.writeEnum(tag, "mode", mode);
             tag.putString("trainName1", trainName1);
             tag.putString("trainName2", trainName2);
+            tag.putBoolean("edgePointsOk", edgePointsOk);
+            if (error != null)
+                tag.putString("error", Component.Serializer.toJson(error));
             return tag;
         }
     }
@@ -479,6 +520,11 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         b().translate("tooltip.coupler.action."+operationMode.name().toLowerCase(Locale.ROOT))
             .style(ChatFormatting.GREEN)
             .forGoggles(tooltip);
+        if (clientInfo.error != null) {
+            b().add(clientInfo.error)
+                .style(ChatFormatting.DARK_RED)
+                .forGoggles(tooltip);
+        }
         return true;
     }
 }

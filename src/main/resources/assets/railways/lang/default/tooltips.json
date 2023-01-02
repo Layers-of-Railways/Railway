@@ -4,5 +4,8 @@
   "block.railways.track_coupler.tooltip.condition1": "When the right carriages are over the track points, and the Coupler is in the right mode",
   "block.railways.track_coupler.tooltip.behaviour1": "Providing a _redstone signal_ will _couple_ the two trains together.",
   "block.railways.track_coupler.tooltip.condition2": "When a different track targeting block (such as a Train Signal) is bound to the same track",
-  "block.railways.track_coupler.tooltip.behaviour2": "The coupler icon will _move_ to the side, and they will _coexist_."
+  "block.railways.track_coupler.tooltip.behaviour2": "The coupler icon will _move_ to the side, and they will _coexist_.",
+
+  "block.create.track_station.tooltip": "TRAIN STATION",
+  "block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer."
 }
