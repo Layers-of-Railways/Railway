@@ -29,7 +29,8 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTrainHatOffsets"
+    "MixinTrainHatOffsets",
+    "MixinAutoScheduleDiscard"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",
