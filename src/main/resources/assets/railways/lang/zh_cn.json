@@ -66,12 +66,15 @@
 
 	"railways.ponder.conductor_constructing.header": "创建一个指挥机器人",
 	"railways.ponder.conductor_constructing.text_1": "指挥机器人由安山机壳组成",
+	
 	"railways.ponder.conductor_redstoning.header": "借助指挥机器人远程操控红石元件",
 	"railways.ponder.conductor_redstoning.text_1": "指挥机器人可以在玩家注视它时按下按钮",
 	"railways.ponder.conductor_redstoning.text_2": "它同样可以在玩家注视它时拉动拉杆",
 	"railways.ponder.conductor_redstoning.text_3": "当玩家戴着与其颜色不一致的列车长帽时，指挥机器人不会激活红石元件",
+	
 	"railways.ponder.conductor_toolboxing.header": "使用指挥机器人运输工具箱",
 	"railways.ponder.conductor_toolboxing.text_1": "工具箱装备在指挥机器人身上时，其功能正常",
+	
 	"railways.ponder.train_semaphore.header": "使用臂板信号机可视化信号状态",
 	"railways.ponder.train_semaphore.text_1": "将臂板信号机放置在列车信号机上方的杆上",
 	"railways.ponder.train_semaphore.text_2": "臂板信号机下方的支柱可由不同材料组成",
