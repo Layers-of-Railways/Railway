@@ -115,7 +115,7 @@
 	"railways.tooltip.coupler.train1": "§l列车1：§r%s",
 	"railways.tooltip.coupler.train2": "§l列车2: §r%s",
 	"railways.tooltip.coupler.action.none": "将进行的操作：无可用操作",
-	"railways.tooltip.coupler.action.coupling": "将进行的操作：连钩",
+	"railways.tooltip.coupler.action.coupling": "将进行的操作：连挂",
 	"railways.tooltip.coupler.action.decoupling": "将进行的操作：脱钩",
 
 
