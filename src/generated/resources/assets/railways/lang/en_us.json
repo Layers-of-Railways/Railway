@@ -120,8 +120,8 @@
 	"railways.tooltip.coupler.action.coupling": "Action: Coupling",
 	"railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
 	"railways.tooltip.coupler.error.mode_not_permitted": "Action not permitted in current mode",
-	"railways.tooltip.coupler.error.missing_train": "Requires both couplers to be occupied",
-	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly",
+	"railways.tooltip.coupler.error.missing_train": "Requires both track points to be occupied",
+	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

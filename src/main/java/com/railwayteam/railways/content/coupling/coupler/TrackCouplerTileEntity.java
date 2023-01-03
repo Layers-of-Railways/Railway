@@ -248,7 +248,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
 
     public boolean areEdgePointsOk() {
-        return (level!=null && level.isClientSide) ? clientInfo.edgePointsOk : edgePointsOk;
+        return (level!=null && level.isClientSide && clientInfo != null) ? clientInfo.edgePointsOk : edgePointsOk;
     }
 
     @Nullable
