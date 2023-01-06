@@ -3,14 +3,15 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
+import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.logistics.trains.DimensionPalette;
 import com.simibubi.create.content.logistics.trains.TrackGraph;
 import com.simibubi.create.content.logistics.trains.TrackNode;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
+import com.simibubi.create.content.logistics.trains.entity.*;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
+import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
@@ -32,6 +33,14 @@ import java.util.*;
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule {
     @Shadow public TrackGraph graph;
 
+    @Shadow public Navigation navigation;
+    @Shadow public double speed;
+
+    @Shadow public abstract void arriveAt(GlobalStation station);
+
+    @Shadow public abstract void leaveStation();
+
+    @Shadow public ScheduleRuntime runtime;
     public Set<UUID> occupiedCouplers;
     protected int index = 0;
 
@@ -74,6 +83,19 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
                 occupiedCouplers.add(trackCoupler.getId());
                 return false;
             }
+
+            if (((IWaypointableNavigation) navigation).isWaypointMode() && couple.getFirst()instanceof GlobalStation station) {
+                if (!station.canApproachFrom(couple.getSecond()
+                    .getSecond()) || navigation.destination != station)
+                    return false;
+                //speed = 0; // No slowing down
+                navigation.distanceToDestination = 0;
+                ((AccessorNavigation) navigation).getCurrentPath().clear();
+                arriveAt(navigation.destination);
+                navigation.destination = null;
+                return true;
+            }
+
             return originalListener.test(distance, couple);
         });
     }

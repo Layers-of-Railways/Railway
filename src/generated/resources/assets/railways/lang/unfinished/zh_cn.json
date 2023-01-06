@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 37",
+	"_": "Missing Localizations: 39",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -110,6 +110,10 @@
 	"railways.schedule.instruction.redstone_link": "UNLOCALIZED: Power Redstone Link",
 	"railways.schedule.instruction.redstone_link.power": "UNLOCALIZED: Power Level: %s",
 	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
+	"railways.schedule.instruction.waypoint_destination": "UNLOCALIZED: Waypoint through Station",
+
+	"create.schedule.instruction.waypoint_destination.summary": "UNLOCALIZED: Next waypoint:",
+
 	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
 

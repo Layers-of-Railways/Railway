@@ -5,6 +5,7 @@
   "refmap": "mixins.railways.refmap.json",
   "mixins": [
     "AccessorCarriageContraptionEntity",
+    "AccessorNavigation",
     "AccessorScheduleRuntime",
     "AccessorToolboxInventory",
     "AccessorToolboxTileEntity",
@@ -16,6 +17,7 @@
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
+    "MixinNavigation",
     "MixinReplaceTrackCheck",
     "MixinScheduleItem",
     "MixinScheduleRuntime",

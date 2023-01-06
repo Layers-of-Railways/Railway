@@ -109,6 +109,10 @@
 	"railways.schedule.instruction.redstone_link": "Power Redstone Link",
 	"railways.schedule.instruction.redstone_link.power": "Power Level: %s",
 	"railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
+	"railways.schedule.instruction.waypoint_destination": "Waypoint through Station",
+
+	"create.schedule.instruction.waypoint_destination.summary": "Next waypoint:",
+
 	"railways.schedule.condition.loaded": "Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "Waiting for chunk load",
 

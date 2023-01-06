@@ -1,11 +1,11 @@
-// 1.19.2	2023-01-02T15:59:21.16766091	Steam 'n Rails's lang merger
-3a8466fd7ab5435f86f9b438e68f50f26bff614d assets/railways/lang/en_us.json
-24c3c57f92e167f6d5a85fefecab5c0cf941de46 assets/railways/lang/unfinished/de_at.json
-2ca21e68a0695885dd2585081a13c67e003b361d assets/railways/lang/unfinished/de_de.json
-9824d0862190942e6afe40cafdf8c073b171be19 assets/railways/lang/unfinished/es_es.json
-5a5461d8f60c1d7f77d03909009a61543be7cccc assets/railways/lang/unfinished/fr_fr.json
-56e82dd24900c9d7ecbbed32bef987c5f1af82be assets/railways/lang/unfinished/ja_jp.json
-9a4287997689a548fcde79f9e090f20e86fa1181 assets/railways/lang/unfinished/ko_kr.json
-50eedb97466495b8ee26ac3f911e82bb89003840 assets/railways/lang/unfinished/nl_nl.json
-95f1c6c9d3da88871e2194c7e55904cc53238313 assets/railways/lang/unfinished/pl_pl.json
-608edd57471c65e28f85c1aeea1bbbe4bc73120f assets/railways/lang/unfinished/zh_cn.json
+// 1.19.2	2023-01-05T20:27:36.778674734	Steam 'n Rails's lang merger
+313ffa1ebfcceabe9e4f55c134852cacc0de187a assets/railways/lang/en_us.json
+e67966dd91008216c970411f1e77639d89edc195 assets/railways/lang/unfinished/de_at.json
+4ed9659d4907175346eee29b06b8676dd31ae753 assets/railways/lang/unfinished/de_de.json
+3e584147116c9be4145b799238d02b1695f36ee4 assets/railways/lang/unfinished/es_es.json
+75ac876dfd00a34c7c492f8ca8d9b2a79d366428 assets/railways/lang/unfinished/fr_fr.json
+7517dbd7448d8c6616f73683c56b5333564addaa assets/railways/lang/unfinished/ja_jp.json
+f39e75f653fd632d56f3dfb2b0937517be5134aa assets/railways/lang/unfinished/ko_kr.json
+02868a61d0b649448786852d56ea4a55bacc9b49 assets/railways/lang/unfinished/nl_nl.json
+8fcd585edf776c5a364f13f2442f5f7b4e84d712 assets/railways/lang/unfinished/pl_pl.json
+ce45faf2a6085badd52bc4350accc8412ab43e88 assets/railways/lang/unfinished/zh_cn.json
