@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 36",
+	"_": "Missing Localizations: 38",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -12,6 +12,7 @@
 	"block.railways.track_dark_oak": "Donkereikenhouten Treinspoor",
 	"block.railways.track_jungle": "Oerwoudhouten Treinspoor",
 	"block.railways.track_mangrove": "Mangrovehouten Treinspoor",
+	"block.railways.track_monorail": "UNLOCALIZED: Monorail Train Track",
 	"block.railways.track_oak": "Eikenhouten Treinspoor",
 	"block.railways.track_spruce": "Sparrenhouten Treinspoor",
 	"block.railways.track_warped": "Spookachtige Houten Treinspoor",
@@ -57,6 +58,7 @@
 	"item.railways.track_incomplete_dark_oak": "Onvolledig Donkereikenhouten Treinspoor",
 	"item.railways.track_incomplete_jungle": "Onvolledig Oerwoudhouten Treinspoor",
 	"item.railways.track_incomplete_mangrove": "Onvolledig Mangrovehouten Treinspoor",
+	"item.railways.track_incomplete_monorail": "UNLOCALIZED: Incomplete Monorail Track",
 	"item.railways.track_incomplete_oak": "Onvolledig Eikenhouten Treinspoor",
 	"item.railways.track_incomplete_spruce": "Onvolledig Sparrenhouten Treinspoor",
 	"item.railways.track_incomplete_warped": "Onvolledig Spookachtig Houten Treinspoor",

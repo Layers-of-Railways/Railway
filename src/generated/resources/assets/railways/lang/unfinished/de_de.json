@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 38",
+	"_": "Missing Localizations: 40",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -12,6 +12,7 @@
 	"block.railways.track_dark_oak": "Schwarzeichenholzgleis",
 	"block.railways.track_jungle": "Tropenholzgleis",
 	"block.railways.track_mangrove": "UNLOCALIZED: Mangrove Train Track",
+	"block.railways.track_monorail": "UNLOCALIZED: Monorail Train Track",
 	"block.railways.track_oak": "Eichenholzgleis",
 	"block.railways.track_spruce": "Fichtenholzgleis",
 	"block.railways.track_warped": "Wirrgleis",
@@ -57,6 +58,7 @@
 	"item.railways.track_incomplete_dark_oak": "Unfertiges Schwarzeichenholzgleis",
 	"item.railways.track_incomplete_jungle": "Unfertiges Tropenholzgleis",
 	"item.railways.track_incomplete_mangrove": "UNLOCALIZED: Incomplete Mangrove Track",
+	"item.railways.track_incomplete_monorail": "UNLOCALIZED: Incomplete Monorail Track",
 	"item.railways.track_incomplete_oak": "Unfertiges Eichenholzgleis",
 	"item.railways.track_incomplete_spruce": "Unfertiges Fichtenholzgleis",
 	"item.railways.track_incomplete_warped": "Unfertiges Wirrgleis",

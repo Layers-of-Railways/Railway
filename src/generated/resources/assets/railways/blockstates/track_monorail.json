@@ -1,0 +1,256 @@
+{
+  "variants": {
+    "shape=ae,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=ae,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=ae,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=ae,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=an,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=an,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=an,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=an,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=as,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=as,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=as,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=as,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=aw,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=aw,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=aw,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=aw,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=cr_d,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_d,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_d,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_d,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndx,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndx,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndx,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndx,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndz,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndz,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndz,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_ndz,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_o,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_o,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_o,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_o,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdx,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdx,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdx,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdx,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdz,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdz,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdz,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=cr_pdz,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=nd,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=nd,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=nd,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=nd,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=none,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=none,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=none,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=none,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=pd,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=pd,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=pd,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=pd,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=te,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=te,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=te,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=te,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 270
+    },
+    "shape=tn,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=tn,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=tn,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=tn,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 180
+    },
+    "shape=ts,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=ts,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=ts,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=ts,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=tw,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=tw,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=tw,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=tw,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail",
+      "y": 90
+    },
+    "shape=xo,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=xo,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=xo,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=xo,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=zo,turn=false,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=zo,turn=false,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=zo,turn=true,waterlogged=false": {
+      "model": "railways:block/monorail/monorail"
+    },
+    "shape=zo,turn=true,waterlogged=true": {
+      "model": "railways:block/monorail/monorail"
+    }
+  }
+}

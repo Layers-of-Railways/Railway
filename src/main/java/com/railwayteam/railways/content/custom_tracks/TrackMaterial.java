@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.custom_tracks;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
@@ -34,6 +35,7 @@ public enum TrackMaterial {
   WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
   BLACKSTONE("Blackstone", Lazy.of(() -> CRBlocks.BLACKSTONE_TRACK), new ResourceLocation("block/blackstone"), Ingredient.of(Blocks.BLACKSTONE_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
   MANGROVE("Mangrove", Lazy.of(() -> CRBlocks.MANGROVE_TRACK), new ResourceLocation("block/mangrove_planks"), Ingredient.of(Blocks.MANGROVE_SLAB)),
+  MONORAIL("Monorail", Lazy.of(() -> CRBlocks.MONORAIL_TRACK), Railways.asResource("block/monorail/monorail"), Ingredient.EMPTY, Ingredient.EMPTY, false, TrackType.MONORAIL)
   ;
 
   public final String langName;
@@ -42,6 +44,7 @@ public enum TrackMaterial {
   public final Ingredient sleeperIngredient;
   public final Ingredient railsIngredient;
   public final ResourceLocation particle;
+  public final TrackType trackType;
 
   TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, ItemLike... items) {
     this(langName, trackBlock, particle, Ingredient.of(items));
@@ -57,6 +60,10 @@ public enum TrackMaterial {
   }
 
   TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, boolean createBuiltin) {
+    this(langName, trackBlock, particle, sleeperIngredient, railsIngredient, createBuiltin, TrackType.STANDARD);
+  }
+
+  TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, boolean createBuiltin, TrackType trackType) {
     this.langName = langName;
     this.trackBlock = trackBlock;
 //    Railways.LOGGER.info("Building track_material: "+this.langName+", trackBlock:"+this.trackBlock);
@@ -64,6 +71,7 @@ public enum TrackMaterial {
     this.sleeperIngredient = sleeperIngredient;
     this.railsIngredient = railsIngredient;
     this.particle = particle;
+    this.trackType = trackType;
   }
 
   public BlockEntry<? extends TrackBlock> getTrackBlock() {
@@ -104,5 +112,10 @@ public enum TrackMaterial {
 
   public static TrackMaterial deserialize(String serializedName) {
     return valueOf(serializedName.toUpperCase());
+  }
+
+  public enum TrackType {
+    STANDARD,
+    MONORAIL
   }
 }

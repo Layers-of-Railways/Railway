@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
@@ -17,8 +18,12 @@ import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
@@ -34,6 +39,11 @@ public class CRBlocks {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
   private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material) {
+    return makeTrack(material, new CustomTrackBlockStateGenerator()::generate);
+  }
+
+  private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material,
+                                                        NonNullBiConsumer<DataGenContext<Block, CustomTrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
     return REGISTRATE.block("track_" + material.resName(), material::create)
         .initialProperties(Material.STONE)
         .properties(p -> p.color(MaterialColor.METAL)
@@ -42,7 +52,7 @@ public class CRBlocks {
             .noOcclusion())
         .addLayer(() -> RenderType::cutoutMipped)
         .transform(pickaxeOnly())
-        .blockstate(new CustomTrackBlockStateGenerator()::generate)
+        .blockstate(blockstateGen)
         .tag(AllTags.AllBlockTags.RELOCATION_NOT_SUPPORTED.tag)
         .tag(CRTags.AllBlockTags.TRACKS.tag)
         .lang(material.langName + " Train Track")
@@ -106,6 +116,7 @@ public class CRBlocks {
   public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
   public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(TrackMaterial.BLACKSTONE);
   public static final BlockEntry<CustomTrackBlock> MANGROVE_TRACK = makeTrack(TrackMaterial.MANGROVE);
+  public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(TrackMaterial.MONORAIL, new MonorailBlockStateGenerator()::generate);
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)

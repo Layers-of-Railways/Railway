@@ -24,3 +24,6 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 /server/
+
+# Custom
+/src/main/resources/assets/create/

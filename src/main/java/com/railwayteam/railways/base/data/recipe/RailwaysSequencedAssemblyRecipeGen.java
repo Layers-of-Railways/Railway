@@ -46,6 +46,8 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
     }
 
     for (TrackMaterial material : TrackMaterial.allCustom()) {
+      if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) continue;
+
       TRACKS.put(material, create("track_" + material.resName(), b -> b.require(material.sleeperIngredient)
           .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
           .addOutput(material.getTrackBlock().get(), 1)
