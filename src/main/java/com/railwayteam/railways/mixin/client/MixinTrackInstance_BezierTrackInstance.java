@@ -67,4 +67,14 @@ public class MixinTrackInstance_BezierTrackInstance {
     }
     return TRACK_SEGMENT_RIGHT;
   }
+
+  @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/BezierConnection;getSegmentCount()I", remap = false))
+  private int messWithCtor(BezierConnection instance) {
+    return ((IHasTrackMaterial) instance).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL ? 0 : instance.getSegmentCount();
+  }
+
+  @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/BezierConnection;getBakedSegments()[Lcom/simibubi/create/content/logistics/trains/BezierConnection$SegmentAngles;", remap = false))
+  private BezierConnection.SegmentAngles[] messWithCtor2(BezierConnection instance) {
+    return ((IHasTrackMaterial) instance).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL ? new BezierConnection.SegmentAngles[0] : instance.getBakedSegments();
+  }
 }
