@@ -34,10 +34,12 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTrainHatOffsets"
+    "MixinTrainHatOffsets",
+    "client.AccessorInstance"
   ],
   "client": [
     "client.AccessorToolboxHandlerClient",
+    "client.MixinBezierConnectionClient",
     "client.MixinBlueprintOverlayRenderer",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
@@ -48,8 +50,7 @@
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
     "client.MixinTrackRenderer",
-    "client.MixinTrackTargetingClient",
-    "client.MixinBezierConnectionClient"
+    "client.MixinTrackTargetingClient"
   ],
   "minVersion": "0.8"
 }
