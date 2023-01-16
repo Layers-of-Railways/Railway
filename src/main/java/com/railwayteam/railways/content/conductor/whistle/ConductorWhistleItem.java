@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.conductor.whistle;
 import com.railwayteam.railways.registry.CRSounds;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,17 +33,12 @@ public class ConductorWhistleItem extends Item {
         Player player = ctx.getPlayer();
 
         if (isTrack(level, pos)) {
-            if (level.isClientSide)
-                ctx.getLevel().playSound(player, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.PLAYERS, 1f, 1f);
-                return InteractionResult.SUCCESS;
-
-
-
-//            level.removeBlock(pos, false);
-//            ConductorEntity.spawn(level, pos, ctx.getItemInHand().copy());
-//            if (ctx.getPlayer() != null && !ctx.getPlayer().isCreative()) {
-//                ctx.getItemInHand().shrink(1);
-//                return InteractionResult.CONSUME;
+            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(),
+                    SoundSource.BLOCKS, 2f, 1f);
+//            if (level.isClientSide) {
+//                System.out.println("reached sound line");
+//                level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 2f, 1f);
+//                //return InteractionResult.SUCCESS;
 //            }
         }
         return super.useOn(ctx);
