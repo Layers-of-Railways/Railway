@@ -3,14 +3,14 @@ package com.railwayteam.railways.content.coupling;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
+import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.content.logistics.trains.track.*;
 import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -118,6 +118,18 @@ public class CustomTrackOverlayRendering {
 
                 msr.translate(offset.subtract(Vec3.atBottomCenterOf(pos)));
                 msr.translate(0, -4 / 16f, 0);
+                // Translate more for slabs or monorails
+                IHasTrackCasing casingBc = (IHasTrackCasing) bc;
+                if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+                    msr.translate(0, 14/16f, 0);
+                } else if (casingBc.getTrackCasing() != null) {
+                    // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
+                    if (bc.tePositions.getFirst().getY() == bc.tePositions.getSecond().getY()) {
+                        msr.translate(0, 1 / 16f, 0);
+                    } else if (!casingBc.isAlternate()) {
+                        msr.translate(0, 4 / 16f, 0);
+                    }
+                }
             } else
                 return null;
         }
@@ -129,6 +141,19 @@ public class CustomTrackOverlayRendering {
             diff = axis.scale(direction.getStep())
                 .normalize();
             normal = ((ITrackBlock) state.getBlock()).getUpNormal(world, pos, state);
+        }
+
+        //Shift for casings and monorails
+        if (bezierPoint == null && state.getBlock() instanceof IHasTrackMaterial material && material.getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+            msr.translate(0, 14/16f, 0);
+        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+            IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
+            TrackShape shape = state.getValue(TrackBlock.SHAPE);
+            if (casingTE.getTrackCasing() != null) {
+                CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
+                if (spec != null)
+                    msr.translate(spec.getXShift(), (spec.getTopSurfacePixelHeight(casingTE.isAlternate()) - 2)/16f, spec.getZShift());
+            }
         }
 
         Vec3 angles = TrackRenderer.getModelAngles(normal, diff);

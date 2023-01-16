@@ -186,7 +186,8 @@ public class CRBlockPartials {
     public static final PartialModel
         MONORAIL_SEGMENT_TOP = block("monorail/monorail/segment_top"),
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
-        MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle");
+        MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
+        MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay");
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));
