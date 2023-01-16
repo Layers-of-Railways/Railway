@@ -2,10 +2,12 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
+import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
+import com.simibubi.create.content.curiosities.ExperienceNuggetItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -16,6 +18,7 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -23,6 +26,9 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.function.Supplier;
+
+import static com.simibubi.create.AllTags.forgeItemTag;
+import static com.simibubi.create.Create.REGISTRATE;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -35,6 +41,11 @@ public class CRItems {
   static {
     REGISTRATE.creativeModeTab(() -> itemGroup, "Create Railways");
   }
+
+  public static final ItemEntry<ConductorWhistleItem> CONDUCTOR_WHISTLE =
+          REGISTRATE.item("conductor_whistle", ConductorWhistleItem::new)
+                  .lang("Conductor's Whistle")
+                  .register();
 
   public static final TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
 

@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 29",
+	"_": "Missing Localizations: 57",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -88,6 +88,43 @@
 	"railways.ponder.train_semaphore.text_7": "The bovenste semafoor zal sluiten als alle wegen worden geblockeerd",
 	"railways.ponder.train_semaphore.text_8": "Wanneer 2 semaforen zijn geplaatst op een niet-brons signaal, sluiten ze tegelijk",
 
+	"create.railways.semaphore.search_mode": "Signaal zoek directie",
+	"create.railways.semaphore.search_mode.search_down": "Naar Beneden",
+	"create.railways.semaphore.search_mode.search_up": "Naar boven",
+
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
+
+	"railways.schedule.instruction.redstone_link": "UNLOCALIZED: Power Redstone Link",
+	"railways.schedule.instruction.redstone_link.power": "UNLOCALIZED: Power Level: %s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
+	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
+	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
+
+	"railways.tooltip.coupler.header": "UNLOCALIZED: Coupler Information",
+	"railways.tooltip.coupler.mode": "UNLOCALIZED: Coupler Mode:",
+	"railways.tooltip.coupler.train1": "UNLOCALIZED: §lTrain 1: §r%s",
+	"railways.tooltip.coupler.train2": "UNLOCALIZED: §lTrain 2: §r%s",
+	"railways.tooltip.coupler.action.none": "UNLOCALIZED: Action: None available",
+	"railways.tooltip.coupler.action.coupling": "UNLOCALIZED: Action: Coupling",
+	"railways.tooltip.coupler.action.decoupling": "UNLOCALIZED: Action: Decoupling",
+
+	"block.railways.track_coupler.tooltip": "UNLOCALIZED: TRAIN COUPLER",
+	"block.railways.track_coupler.tooltip.summary": "UNLOCALIZED: Bind to a track under the _middle_ of a train's _front bogey_, then scroll on top with a wrench to extend the coupler under another train's _rear bogey_.",
+	"block.railways.track_coupler.tooltip.condition1": "UNLOCALIZED: When the right carriages are over the track points, and the Coupler is in the right mode",
+	"block.railways.track_coupler.tooltip.behaviour1": "UNLOCALIZED: Providing a _redstone signal_ will _couple_ the two trains together.",
+	"block.railways.track_coupler.tooltip.condition2": "UNLOCALIZED: When a different track targeting block (such as a Train Signal) is bound to the same track",
+	"block.railways.track_coupler.tooltip.behaviour2": "UNLOCALIZED: The coupler icon will _move_ to the side, and they will _coexist_.",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
@@ -115,8 +152,8 @@
 
 	"railways.tooltip.coupler.header": "UNLOCALIZED: Coupler Information",
 	"railways.tooltip.coupler.mode": "UNLOCALIZED: Coupler Mode:",
-	"railways.tooltip.coupler.train1": "UNLOCALIZED: §lTrain 1: §r%s",
-	"railways.tooltip.coupler.train2": "UNLOCALIZED: §lTrain 2: §r%s",
+	"railways.tooltip.coupler.train1": "UNLOCALIZED: Â§lTrain 1: Â§r%s",
+	"railways.tooltip.coupler.train2": "UNLOCALIZED: Â§lTrain 2: Â§r%s",
 	"railways.tooltip.coupler.action.none": "UNLOCALIZED: Action: None available",
 	"railways.tooltip.coupler.action.coupling": "UNLOCALIZED: Action: Coupling",
 	"railways.tooltip.coupler.action.decoupling": "UNLOCALIZED: Action: Decoupling",
