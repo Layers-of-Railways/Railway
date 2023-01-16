@@ -19,6 +19,8 @@ public class CRShapes {
     public static final VoxelShaper
         SEMAPHORE = shape(4,0,4,12,16,12)
             .forDirectional(NORTH);
+    public static final VoxelShape
+        MONORAIL_COLLISION = shape(0, 0, 0, 16, 16, 14).build();
 
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);

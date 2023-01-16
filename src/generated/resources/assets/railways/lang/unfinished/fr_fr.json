@@ -1,8 +1,9 @@
 {
-	"_": "Missing Localizations: 42",
+	"_": "Missing Localizations: 43",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.mono_bogey": "UNLOCALIZED: Mono Bogey",
 	"block.railways.semaphore": "Sémaphore",
 	"block.railways.track_acacia": "Voie en acacia",
 	"block.railways.track_birch": "Voie en bouleau",
