@@ -102,7 +102,7 @@
 	"railways.coupler.edge_spacing.meters": "米",
 	"railways.coupler.mode.coupling": "-> 连挂",
 	"railways.coupler.mode.decoupling": "-> 脱钩",
-	"railways.coupler.mode.both": "-> 连挂和脱钩",
+	"railways.coupler.mode.both": "-> 连挂与脱钩",
 
 	"railways.schedule.instruction.redstone_link": "充能红石信号",
 	"railways.schedule.instruction.redstone_link.power": "信号强度：%s",
@@ -122,9 +122,9 @@
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 
 	"block.railways.track_coupler.tooltip": "列车连挂器",
-	"block.railways.track_coupler.tooltip.summary": "绑定到车厢_前端_转向架的_中部_，接着使用扳手在连挂器顶部滚动鼠标滚轮，调整另一端至前方车厢_后端_转向架的下方",
+	"block.railways.track_coupler.tooltip.summary": "绑定到车厢_前端_转向架的_中部_，接着使用扳手对着连挂器顶部滚动鼠标滚轮，调整另一端至前方车厢_后端_转向架的下方",
 	"block.railways.track_coupler.tooltip.condition1": "当正确的车厢位于轨道连挂点上方，且连挂器处于正确的模式时",
-	"block.railways.track_coupler.tooltip.behaviour1": "提供一个_红石信号_时将会把两个车厢_相连_在一起",
+	"block.railways.track_coupler.tooltip.behaviour1": "提供一个_红石信号_，将会把两个车厢_相连_在一起",
 	"block.railways.track_coupler.tooltip.condition2": "当不同的铁路元件（比如列车信号机）绑定在同一个轨道上时",
 	"block.railways.track_coupler.tooltip.behaviour2": "连挂器的图标将会_移动_到一侧，不同的图标将会_共存_",
 
