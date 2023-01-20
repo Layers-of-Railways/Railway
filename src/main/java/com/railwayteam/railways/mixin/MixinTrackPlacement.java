@@ -4,13 +4,10 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.BlockStateUtils;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
-import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +27,7 @@ public abstract class MixinTrackPlacement {
       target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;curve:Lcom/simibubi/create/content/logistics/trains/BezierConnection;",
       ordinal = 0, shift = At.Shift.AFTER),
       locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-  private static void setupMaterial_0(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1, double[] intersect, boolean parallel, boolean skipCurve, Vec3 cross2, double a1, double a2, double angle, double ascend, double absAscend, boolean slope, Vec3 offset1, Vec3 offset2, BlockPos targetPos1, BlockPos targetPos2) {
+  private static void setupMaterial_0(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
     setupMaterial(level, player, pos2, state2, stack, girder, maximiseTurn, cir, lookVec, lookAngle, info);
   }
 
@@ -39,8 +36,8 @@ public abstract class MixinTrackPlacement {
       target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;valid:Z",
       ordinal = 0),
       locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-  private static void setupMaterial_1(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1, double[] intersect, boolean parallel, boolean skipCurve, Vec3 cross2, double a1, double a2, double angle, double ascend, double absAscend, boolean slope, double dist, Vec3 offset1, Vec3 offset2, BlockPos targetPos1, BlockPos targetPos2) {
-          setupMaterial(level, player, pos2, state2, stack, girder, maximiseTurn, cir, lookVec, lookAngle, info);
+  private static void setupMaterial_1(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
+    setupMaterial(level, player, pos2, state2, stack, girder, maximiseTurn, cir, lookVec, lookAngle, info);
   }
 
   private static void setupMaterial(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
@@ -52,7 +49,7 @@ public abstract class MixinTrackPlacement {
   }
 
   @Inject(method = "tryConnect", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
-  private static void setupMaterial_2(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1) {
+  private static void setupMaterial_2(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
       ((IHasTrackMaterial) info).setMaterial(hasTrackMaterial.getMaterial());
     } else {
@@ -61,7 +58,7 @@ public abstract class MixinTrackPlacement {
   }
 
   @Inject(method = "tryConnect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target="Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement;placeTracks(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
-  private static void setupMaterial_before_place(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1, double[] intersect, boolean parallel, boolean skipCurve, Vec3 cross2, double a1, double a2, double angle, double ascend, double absAscend, boolean slope, double dist, Vec3 offset1, Vec3 offset2, BlockPos targetPos1, BlockPos targetPos2) {
+  private static void setupMaterial_before_place(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
       ((IHasTrackMaterial) info).setMaterial(hasTrackMaterial.getMaterial());
     } else {

@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d2_zo",
   "textures": {
+    "particle": "minecraft:block/spruce_planks",
     "0": "railways:block/track/spruce/standard_track_spruce",
     "1": "railways:block/track/spruce/standard_track_mip_spruce",
-    "2": "railways:block/track/spruce/standard_track_crossing_spruce",
-    "particle": "minecraft:block/spruce_planks"
+    "2": "railways:block/track/spruce/standard_track_crossing_spruce"
   }
 }

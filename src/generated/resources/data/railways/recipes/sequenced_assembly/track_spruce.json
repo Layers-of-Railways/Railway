@@ -3,12 +3,9 @@
   "ingredient": {
     "item": "minecraft:spruce_slab"
   },
-  "loops": 1,
-  "results": [
-    {
-      "item": "railways:track_spruce"
-    }
-  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_spruce"
+  },
   "sequence": [
     {
       "type": "create:deploying",
@@ -66,7 +63,10 @@
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "railways:track_incomplete_spruce"
-  }
+  "results": [
+    {
+      "item": "railways:track_spruce"
+    }
+  ],
+  "loops": 1
 }

@@ -31,7 +31,7 @@ public class ClientEvents {
             .getDescriptionId(stack);
 
         if (translationKey.startsWith(ITEM_PREFIX) || translationKey.startsWith(BLOCK_PREFIX))
-            if (TooltipHelper.hasTooltip(stack, event.getEntity())) {
+            if (TooltipHelper.hasTooltip(stack, event.getPlayer())) {
                 List<Component> itemTooltip = event.getToolTip();
                 List<Component> toolTip = new ArrayList<>();
                 toolTip.add(itemTooltip.remove(0));

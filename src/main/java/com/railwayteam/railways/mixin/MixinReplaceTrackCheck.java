@@ -35,7 +35,7 @@ public class MixinReplaceTrackCheck {
       "clientTick()V",
       "onClickInput",
       "drawCurveSelection(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V",
-      "drawCustomBlockSelection(Lnet/minecraftforge/client/event/RenderHighlightEvent$Block;)V"
+      "drawCustomBlockSelection(Lnet/minecraftforge/client/event/DrawSelectionEvent$HighlightBlock;)V"
   }, at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), require = 0, expect = 0, remap = false)
   private static boolean staticCustomTrackCheck(BlockEntry<?> instance, ItemStack itemStack) { //.isIn static
     return check(instance, itemStack);

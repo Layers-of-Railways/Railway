@@ -3,12 +3,9 @@
   "ingredient": {
     "item": "minecraft:birch_slab"
   },
-  "loops": 1,
-  "results": [
-    {
-      "item": "railways:track_birch"
-    }
-  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_birch"
+  },
   "sequence": [
     {
       "type": "create:deploying",
@@ -66,7 +63,10 @@
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "railways:track_incomplete_birch"
-  }
+  "results": [
+    {
+      "item": "railways:track_birch"
+    }
+  ],
+  "loops": 1
 }

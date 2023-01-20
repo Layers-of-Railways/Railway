@@ -3,12 +3,9 @@
   "ingredient": {
     "item": "minecraft:dark_oak_slab"
   },
-  "loops": 1,
-  "results": [
-    {
-      "item": "railways:track_dark_oak"
-    }
-  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_dark_oak"
+  },
   "sequence": [
     {
       "type": "create:deploying",
@@ -66,7 +63,10 @@
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "railways:track_incomplete_dark_oak"
-  }
+  "results": [
+    {
+      "item": "railways:track_dark_oak"
+    }
+  ],
+  "loops": 1
 }

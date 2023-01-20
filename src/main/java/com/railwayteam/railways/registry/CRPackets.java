@@ -85,7 +85,7 @@ public enum CRPackets {
             channel.messageBuilder(type, index++, direction)
                 .encoder(encoder)
                 .decoder(decoder)
-                .consumerNetworkThread(handler)
+                .consumer(handler)
                 .add();
         }
     }

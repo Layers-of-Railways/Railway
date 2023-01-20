@@ -33,7 +33,6 @@ public enum TrackMaterial {
   SPRUCE("Spruce", Lazy.of(() -> CRBlocks.SPRUCE_TRACK), new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
   WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
   BLACKSTONE("Blackstone", Lazy.of(() -> CRBlocks.BLACKSTONE_TRACK), new ResourceLocation("block/blackstone"), Ingredient.of(Blocks.BLACKSTONE_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
-  MANGROVE("Mangrove", Lazy.of(() -> CRBlocks.MANGROVE_TRACK), new ResourceLocation("block/mangrove_planks"), Ingredient.of(Blocks.MANGROVE_SLAB)),
   ;
 
   public final String langName;
