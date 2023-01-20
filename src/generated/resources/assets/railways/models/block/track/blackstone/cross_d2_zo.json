@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d2_zo",
   "textures": {
-    "particle": "minecraft:block/blackstone",
     "0": "railways:block/track/blackstone/standard_track_blackstone",
     "1": "railways:block/track/blackstone/standard_track_mip_blackstone",
-    "2": "railways:block/track/blackstone/standard_track_crossing_blackstone"
+    "2": "railways:block/track/blackstone/standard_track_crossing_blackstone",
+    "particle": "minecraft:block/blackstone"
   }
 }

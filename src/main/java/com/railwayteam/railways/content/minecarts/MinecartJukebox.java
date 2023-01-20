@@ -57,6 +57,11 @@ public class MinecartJukebox extends MinecartBlock {
     return CRItems.ITEM_JUKEBOXCART.asStack();
   }
 
+  @Override
+  protected Item getDropItem() {
+    return CRItems.ITEM_JUKEBOXCART.get();
+  }
+
   @NotNull
   @Override
   public InteractionResult interact (@NotNull Player player, @NotNull InteractionHand hand) {
@@ -127,7 +132,7 @@ public class MinecartJukebox extends MinecartBlock {
   @OnlyIn(Dist.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
-      super(event, SoundSource.RECORDS);
+      super(event, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
     }
 
     @Override

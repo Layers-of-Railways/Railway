@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,8 +23,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEntity>, IWrenchable {
 
@@ -104,7 +103,7 @@ public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEnti
 	}
 
 	@Override
-	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
+	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
 		if (pState.getValue(POWERED) && !pLevel.hasNeighborSignal(pPos))
 			pLevel.setBlock(pPos, pState.cycle(POWERED), 2);
 	}

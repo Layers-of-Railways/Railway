@@ -22,7 +22,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -153,7 +153,7 @@ public class MixinToolboxHandlerClient {
 
   @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", remap = true), //remap=true is ESSENTIAL
       method = "renderOverlay", locals = LocalCapture.CAPTURE_FAILHARD, remap = false, cancellable = true, require = 1)
-  private static void inj$renderOverlay(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height, CallbackInfo ci, Minecraft mc, int x, int y, Player player, CompoundTag persistentData, CompoundTag compound) {
+  private static void inj$renderOverlay(ForgeGui gui, PoseStack poseStack, float partialTicks, int width, int height, CallbackInfo ci, Minecraft mc, int x, int y, Player player, CompoundTag persistentData, CompoundTag compound) {
     poseStack.pushPose();
     for (int slot = 0; slot < 9; slot++) {
       String key = String.valueOf(slot);

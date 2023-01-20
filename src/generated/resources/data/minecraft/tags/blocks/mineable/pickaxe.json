@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "railways:track_coupler",
     "railways:track_acacia",
@@ -10,6 +9,7 @@
     "railways:track_oak",
     "railways:track_spruce",
     "railways:track_warped",
-    "railways:track_blackstone"
+    "railways:track_blackstone",
+    "railways:track_mangrove"
   ]
 }

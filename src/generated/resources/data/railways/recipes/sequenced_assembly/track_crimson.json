@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:crimson_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_crimson"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_crimson"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -53,10 +56,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_crimson"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_crimson"
+  }
 }

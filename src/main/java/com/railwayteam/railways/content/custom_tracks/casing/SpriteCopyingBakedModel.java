@@ -6,8 +6,9 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -25,9 +26,9 @@ public class SpriteCopyingBakedModel implements BakedModel {
   }
 
   @Override
-  public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, Random pRand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, RandomSource pRand) {
     ArrayList<BakedQuad> quads = new ArrayList<>();
-    TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon(EmptyModelData.INSTANCE);
+    TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon(ModelData.EMPTY);
     BakedQuad overrideQuad = null;
     List<BakedQuad> sourceQuads = spriteSourceModel.getQuads(pState, pSide, pRand);
     if (sourceQuads.size() > 0) {
