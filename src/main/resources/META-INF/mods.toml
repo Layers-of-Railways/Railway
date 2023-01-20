@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[43,)"
 issueTrackerURL="https://github.com/Layers-of-Railways/Railway/issues"
 license="MIT"
 [[mods]]
@@ -18,13 +18,13 @@ license="MIT"
 [[dependencies.railways]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[38.0,)" #mandatory
+    versionRange="[43,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.railways]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18, 1.19)"
+    versionRange="[1.19, 1.20)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.railways]]

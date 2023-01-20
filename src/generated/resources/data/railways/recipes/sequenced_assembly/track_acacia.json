@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:acacia_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_acacia"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_acacia"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -63,10 +66,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_acacia"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_acacia"
+  }
 }

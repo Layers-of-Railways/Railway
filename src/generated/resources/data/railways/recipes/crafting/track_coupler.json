@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "\u003d",
-    "#",
-    "T"
-  ],
   "key": {
-    "\u003d": {
-      "item": "create:iron_sheet"
-    },
     "#": {
       "item": "minecraft:redstone"
+    },
+    "=": {
+      "item": "create:iron_sheet"
     },
     "T": {
       "item": "create:railway_casing"
     }
   },
+  "pattern": [
+    "=",
+    "#",
+    "T"
+  ],
   "result": {
     "item": "railways:track_coupler"
   }

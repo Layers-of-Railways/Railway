@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class CommonEvents {
     @SubscribeEvent
-    public static void onWorldTick(TickEvent.WorldTickEvent event) {
+    public static void onWorldTick(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.START)
             return;
-        Level level = event.world;
+        Level level = event.level;
         RedstoneLinkInstruction.tick(level);
     }
 }
