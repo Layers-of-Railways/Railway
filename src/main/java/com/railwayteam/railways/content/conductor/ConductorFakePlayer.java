@@ -2,8 +2,10 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.foundation.utility.Components;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.Connection;
-import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
@@ -40,7 +42,7 @@ public class ConductorFakePlayer extends FakePlayer {
 
   @Override
   public Component getDisplayName () {
-    return Component.translatable(Railways.MODID + "." + "conductor_name");
+    return Components.translatable(Railways.MODID + "." + "conductor_name");
   }
 
   @Override
@@ -69,7 +71,6 @@ public class ConductorFakePlayer extends FakePlayer {
     public void send (Packet<?> packet) {}
 
     @Override
-    public void send(Packet<?> pPacket, @Nullable PacketSendListener pListener) {
-    }
+    public void send(Packet<?> pPacket, @Nullable GenericFutureListener<? extends Future<? super Void>> pFutureListeners) {}
   }
 }

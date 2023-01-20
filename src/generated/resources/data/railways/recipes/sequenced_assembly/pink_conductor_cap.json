@@ -3,12 +3,9 @@
   "ingredient": {
     "item": "minecraft:pink_wool"
   },
-  "loops": 1,
-  "results": [
-    {
-      "item": "railways:pink_conductor_cap"
-    }
-  ],
+  "transitionalItem": {
+    "item": "railways:pink_incomplete_conductor_cap"
+  },
   "sequence": [
     {
       "type": "create:cutting",
@@ -56,7 +53,10 @@
       ]
     }
   ],
-  "transitionalItem": {
-    "item": "railways:pink_incomplete_conductor_cap"
-  }
+  "results": [
+    {
+      "item": "railways:pink_conductor_cap"
+    }
+  ],
+  "loops": 1
 }

@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 31",
+	"_": "Missing Localizations: 29",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -11,7 +11,6 @@
 	"block.railways.track_crimson": "Szkarłatny tor kolejowy",
 	"block.railways.track_dark_oak": "Ciemnodębowy tor kolejowy",
 	"block.railways.track_jungle": "Dżunglowy tor kolejowy",
-	"block.railways.track_mangrove": "UNLOCALIZED: Mangrove Train Track",
 	"block.railways.track_oak": "Dębowy tor kolejowy",
 	"block.railways.track_spruce": "Świerkowy tor kolejowy",
 	"block.railways.track_warped": "Spaczony tor kolejowy",
@@ -56,7 +55,6 @@
 	"item.railways.track_incomplete_crimson": "Niedokończone Crimson Track",
 	"item.railways.track_incomplete_dark_oak": "Niedokończone Dark Oak Track",
 	"item.railways.track_incomplete_jungle": "Niedokończone Jungle Track",
-	"item.railways.track_incomplete_mangrove": "UNLOCALIZED: Incomplete Mangrove Track",
 	"item.railways.track_incomplete_oak": "Niedokończone Oak Track",
 	"item.railways.track_incomplete_spruce": "Niedokończone Spruce Track",
 	"item.railways.track_incomplete_warped": "Niedokończone Warped Track",
