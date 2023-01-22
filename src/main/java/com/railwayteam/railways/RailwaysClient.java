@@ -1,5 +1,7 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -14,5 +16,6 @@ public class RailwaysClient {
     CRPonderIndex.register();
     CRBlockPartials.init();
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
+    Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
   }
 }

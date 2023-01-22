@@ -50,7 +50,8 @@
     "client.MixinTrackInstance_BezierTrackInstance",
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
-    "client.AccessorInstance"
+    "client.AccessorInstance",
+    "client.MixinTrainPacket"
   ],
   "minVersion": "0.8"
 }

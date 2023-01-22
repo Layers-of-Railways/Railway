@@ -1,12 +1,16 @@
 package com.railwayteam.railways.events;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.Create;
+import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,5 +43,24 @@ public class ClientEvents {
                     .addInformation(toolTip);
                 itemTooltip.addAll(0, toolTip);
             }
+    }
+
+    @SubscribeEvent
+    public static void tickTrains(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.START || DummyRailwayMarkerHandler.getInstance() == null) return;
+        Level level = Minecraft.getInstance().level;
+        long ticks = level == null ? 1 : level.getGameTime();
+        if (ticks % Config.JOURNEYMAP_REMOVE_OBSOLETE_TICKS.get() == 0) {
+            DummyRailwayMarkerHandler.getInstance().removeObsolete();
+            DummyRailwayMarkerHandler.getInstance().reloadMarkers();
+        }
+//            DummyRailwayMarkerHandler.getInstance().removeObsolete(CreateClient.RAILWAYS.trains.keySet());
+
+        if (ticks % Config.JOURNEYMAP_UPDATE_TICKS.get() == 0) {
+            DummyRailwayMarkerHandler.getInstance().runUpdates();
+/*            for (Train train : CreateClient.RAILWAYS.trains.values()) {
+                DummyRailwayMarkerHandler.getInstance().addOrUpdateTrain(train);
+            }*/
+        }
     }
 }
