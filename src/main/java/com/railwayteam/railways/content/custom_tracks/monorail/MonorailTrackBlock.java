@@ -34,7 +34,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class MonorailTrackBlock extends CustomTrackBlock {
+public class MonorailTrackBlock extends CustomTrackBlock{
     public MonorailTrackBlock(Properties properties, TrackMaterial material) {
         super(properties, material);
     }
@@ -43,6 +43,11 @@ public class MonorailTrackBlock extends CustomTrackBlock {
     public BlockState getBogeyAnchor(BlockGetter world, BlockPos pos, BlockState state) {
         return CRBlocks.MONO_BOGEY.getDefaultState()
             .setValue(BlockStateProperties.HORIZONTAL_AXIS, state.getValue(SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return CRShapes.MONORAIL_COLLISION;
     }
 
     @Override
