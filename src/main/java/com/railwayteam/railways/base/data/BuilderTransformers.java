@@ -15,13 +15,13 @@ import net.minecraft.world.level.block.SoundType;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class BuilderTransformers {
-    public static <B extends MonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monobogey() {
+    public static <B extends MonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monobogey(boolean upsideDown) {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .properties(p -> p.noOcclusion())
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
-                .getExistingFile(p.modLoc("block/bogey/monorail/top"))))
+                .getExistingFile(p.modLoc("block/bogey/monorail/top" + (upsideDown ? "_upside_down" : "")))))
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 }

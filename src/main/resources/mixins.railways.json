@@ -51,7 +51,8 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.AccessorInstance",
-    "client.MixinTrainPacket"
+    "client.MixinTrainPacket",
+    "client.MixinBogeyInstance_Frame"
   ],
   "minVersion": "0.8"
 }

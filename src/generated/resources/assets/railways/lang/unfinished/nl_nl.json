@@ -1,9 +1,10 @@
 {
-	"_": "Missing Localizations: 39",
+	"_": "Missing Localizations: 40",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.mono_bogey": "UNLOCALIZED: Mono Bogey",
+	"block.railways.mono_bogey_upside_down": "UNLOCALIZED: Mono Bogey Upside Down",
 	"block.railways.semaphore": "Semafoor",
 	"block.railways.track_acacia": "Acacia Treinspoor",
 	"block.railways.track_birch": "Berkenhouten Treinspoor",

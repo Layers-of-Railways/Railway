@@ -120,9 +120,17 @@ public class CRBlocks {
   public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(TrackMaterial.MONORAIL, new MonorailBlockStateGenerator()::generate);
 
   public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
-      REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
+      REGISTRATE.block("mono_bogey", p -> new MonoBogeyBlock(p, false))
           .properties(p -> p.color(MaterialColor.PODZOL))
-          .transform(BuilderTransformers.monobogey())
+          .transform(BuilderTransformers.monobogey(false))
+          .lang("Monorail Bogey")
+          .register();
+
+  public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY_UPSIDE_DOWN =
+      REGISTRATE.block("mono_bogey_upside_down", p -> new MonoBogeyBlock(p, true))
+          .properties(p -> p.color(MaterialColor.PODZOL))
+          .transform(BuilderTransformers.monobogey(true))
+          .lang("Upside Down Monorail Bogey")
           .register();
 
   /*

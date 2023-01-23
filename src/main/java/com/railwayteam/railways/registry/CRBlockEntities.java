@@ -32,7 +32,7 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<MonoBogeyTileEntity> MONO_BOGEY = REGISTRATE
         .tileEntity("mono_bogey", MonoBogeyTileEntity::new)
         .renderer(() -> BogeyTileEntityRenderer::new)
-        .validBlocks(CRBlocks.MONO_BOGEY)
+        .validBlocks(CRBlocks.MONO_BOGEY, CRBlocks.MONO_BOGEY_UPSIDE_DOWN)
         .register();
 
 

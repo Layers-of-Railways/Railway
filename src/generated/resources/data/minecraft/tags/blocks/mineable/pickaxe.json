@@ -12,6 +12,7 @@
     "railways:track_blackstone",
     "railways:track_mangrove",
     "railways:track_monorail",
-    "railways:mono_bogey"
+    "railways:mono_bogey",
+    "railways:mono_bogey_upside_down"
   ]
 }

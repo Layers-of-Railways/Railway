@@ -1,9 +1,10 @@
 {
-	"_": "Missing Localizations: 42",
+	"_": "Missing Localizations: 43",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.mono_bogey": "UNLOCALIZED: Mono Bogey",
+	"block.railways.mono_bogey_upside_down": "UNLOCALIZED: Mono Bogey Upside Down",
 	"block.railways.semaphore": "臂板信号机",
 	"block.railways.track_acacia": "金合欢木列车轨道",
 	"block.railways.track_birch": "白桦木列车轨道",

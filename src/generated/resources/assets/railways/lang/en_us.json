@@ -3,6 +3,7 @@
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.mono_bogey": "Mono Bogey",
+	"block.railways.mono_bogey_upside_down": "Mono Bogey Upside Down",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_birch": "Birch Train Track",

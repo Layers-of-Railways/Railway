@@ -4,7 +4,9 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
@@ -19,6 +21,7 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -52,9 +55,12 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
-    public MonoBogeyBlock(Properties pProperties) {
+    protected final boolean upsideDown;
+
+    public MonoBogeyBlock(Properties pProperties, boolean upsideDown) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+        this.upsideDown = upsideDown;
     }
 
     @Override
@@ -85,17 +91,17 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
 
     @Override
     public double getWheelPointSpacing() {
-        return 2; //TODO
+        return 2;
     }
 
     @Override
     public double getWheelRadius() {
-        return 6.5; //TODO
+        return 6 / 16d;
     }
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 7 / 32f, 1);
+        return new Vec3(0, 5 / 32f, 25 / 32f);
     } //TODO
 
     @Override
@@ -125,44 +131,41 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
                 ms.mulPose(Vector3f.YP.rotationDegrees(90));
         }
 
-        ms.translate(0, -1.5 - 1 / 128f, 0);
+        ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? -1 : 1), 0);
 
         VertexConsumer vb = buffers.getBuffer(RenderType.cutoutMipped());
         BlockState air = Blocks.AIR.defaultBlockState();
-
-        for (int i : Iterate.zeroAndOne)
-            CachedBufferer.block(AllBlocks.SHAFT.getDefaultState()
-                    .setValue(ShaftBlock.AXIS, Direction.Axis.Z))
-                .translate(-.5f, .25f, i * -1)
-                .centre()
-                .rotateZ(wheelAngle)
-                .unCentre()
-                .light(light)
-                .renderInto(ms, vb);
 
         renderBogey(wheelAngle, ms, light, vb, air);
     }
 
     private void renderBogey(float wheelAngle, PoseStack ms, int light, VertexConsumer vb, BlockState air) {
-        CachedBufferer.partial(AllBlockPartials.BOGEY_FRAME, air)
+        CachedBufferer.partial(CRBlockPartials.MONOBOGEY_FRAME, air)
+            .rotateZ(upsideDown ? 180 : 0)
             .scale(1 - 1 / 512f)
             .light(light)
             .renderInto(ms, vb);
 
-        for (int side : Iterate.positiveAndNegative) {
-            ms.pushPose();
-            CachedBufferer.partial(AllBlockPartials.SYMMETRY_CROSSPLANE, air)
-                .translate(0, 12 / 16f, side)
-                .rotateX(wheelAngle)
-                .light(light)
-                .renderInto(ms, vb);
-            ms.popPose();
+//        wheelAngle = (Minecraft.getInstance().level.getGameTime() % 40) / 40f * 360;
+
+        for (boolean left : Iterate.trueAndFalse) {
+            for (int front : Iterate.positiveAndNegative) {
+                ms.pushPose();
+                CachedBufferer.partial(CRBlockPartials.MONOBOGEY_WHEEL, air)
+                    .translate(left ? -12 / 16f : 12 / 16f, upsideDown ? -13 /16f : 3 / 16f, front * 15 / 16f) //base position
+                    .rotateY(left ? wheelAngle : -wheelAngle)
+                    .translate(15/16f, 0, 0/16f)
+                    .light(light)
+                    .renderInto(ms, vb);
+                ms.popPose();
+            }
         }
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public BogeyInstance createInstance(MaterialManager materialManager, CarriageBogey bogey) {
-        return new BogeyInstance.Frame(bogey, materialManager); //TODO
+        return ((IBogeyFrameCanBeMonorail<BogeyInstance.Frame>) (Object) new BogeyInstance.Frame(bogey, materialManager)).setMonorail(upsideDown);
     }
 
     @Override
