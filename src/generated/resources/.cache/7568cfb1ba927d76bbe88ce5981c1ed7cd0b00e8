@@ -1,4 +1,4 @@
-// 1.19.2	2023-01-22T21:21:48.567125047	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-01-23T21:24:27.2514962	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 5d9b75675765808807b7f443ad4163fd0c8aaf99 assets/railways/blockstates/mono_bogey.json
 989e79c7a03122323f45e9d37bde406d13485dc8 assets/railways/blockstates/mono_bogey_upside_down.json
 67fc0caff071c6513c049d37890b668e1b6a27a6 assets/railways/blockstates/semaphore.json
@@ -14,8 +14,8 @@ a9d9be49f78a3859b1a6a76ae609a493bb0453b2 assets/railways/blockstates/track_monor
 614b7fff8d1edf16cdf9009b240360142d7460dc assets/railways/blockstates/track_oak.json
 ec04aeda6b37674ace22f1db68fd615b31f23ab0 assets/railways/blockstates/track_spruce.json
 dee9dd9aa83e4e835e26188e7667e47b715b6227 assets/railways/blockstates/track_warped.json
-133ce6972f286d3881d3c4d8d44cf18e08d7a05f assets/railways/lang/en_ud.json
-ac5c0af708f473942cdd60705a1e7f2e653968be assets/railways/lang/en_us.json
+c5a189cf6dd1224a78545150e782e2d082503368 assets/railways/lang/en_ud.json
+067d38cade54583ac45b519a455169e83b3d9a66 assets/railways/lang/en_us.json
 428ca1115dc9b9bb26293c063c418c31aac27404 assets/railways/models/block/track/acacia/ascending.json
 f529f6606c3718b6a93f724dfe27860f2c59f447 assets/railways/models/block/track/acacia/cross_d1_xo.json
 a9c842dc7fcaf7bd8c4f75e1090a444c2994109b assets/railways/models/block/track/acacia/cross_d1_zo.json
