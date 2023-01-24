@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
@@ -64,17 +65,15 @@ public class MixinTrackBlockOutline {
                 renderShape(s, ms, vb, holdingTrack ? !isJunction : null);
                 event.setCanceled(true);
             });
-
-
-
             ms.popPose();
         }
 
-        else if(blockstate.getBlock() instanceof MonorailTrackBlock) {
+        if(blockstate.getBlock() instanceof MonorailTrackBlock) {
             monorailWalkShapes(shape, TransformStack.cast(ms), s -> {
                 renderShape(s, ms, vb, holdingTrack ? !isJunction : null);
                 event.setCanceled(true);
             });
+            ms.popPose();
         }
     }
 
@@ -167,10 +166,9 @@ public class MixinTrackBlockOutline {
         renderer.accept(LONG_ORTHO);
     }
 
-    private static final VoxelShape MONORAIL_LONG_CROSS =
-            Shapes.or(TrackVoxelShapes.longOrthogonalZ(), TrackVoxelShapes.longOrthogonalX());
-    private static final VoxelShape MONORAIL_LONG_ORTHO = TrackVoxelShapes.longOrthogonalZ();
-    private static final VoxelShape MONORAIL_LONG_ORTHO_OFFSET = TrackVoxelShapes.longOrthogonalZOffset();
+    private static final VoxelShape MONORAIL_LONG_CROSS = Shapes.or(MonorailTrackVoxelShapes.longOrthogonalZ(), MonorailTrackVoxelShapes.longOrthogonalX());
+    private static final VoxelShape MONORAIL_LONG_ORTHO = MonorailTrackVoxelShapes.longOrthogonalZ();
+    private static final VoxelShape MONORAIL_LONG_ORTHO_OFFSET = MonorailTrackVoxelShapes.longOrthogonalZOffset();
 
     private static void monorailWalkShapes(TrackShape shape, TransformStack msr, Consumer<VoxelShape> renderer) {
         float angle45 = Mth.PI / 4;

@@ -81,9 +81,9 @@ public class MonorailTrackBlock extends CustomTrackBlock{
             case CR_D:
                 return CRShapes.MONORAIL_TRACK_CROSS_DIAG;
             case CR_NDX:
-                return TRACK_CROSS_ORTHO_DIAG.get(Direction.SOUTH);
+                return CRShapes.MONORAIL_TRACK_CROSS_ORTHO_DIAG.get(Direction.SOUTH);
             case CR_NDZ:
-                return TRACK_CROSS_DIAG_ORTHO.get(Direction.SOUTH);
+                return CRShapes.MONORAIL_TRACK_CROSS_DIAG_ORTHO.get(Direction.SOUTH);
             case CR_O:
                 return CRShapes.MONORAIL_TRACK_CROSS;
             case CR_PDX:

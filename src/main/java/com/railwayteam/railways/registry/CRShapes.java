@@ -1,5 +1,6 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
 import com.simibubi.create.content.logistics.trains.track.TrackVoxelShapes;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.core.Direction;
@@ -26,10 +27,10 @@ public class CRShapes {
 
 
     public static final VoxelShaper
-    MONORAIL_TRACK_ORTHO = shape(TrackVoxelShapes.orthogonal()).forHorizontal(NORTH),
-    MONORAIL_TRACK_ASC = shape(TrackVoxelShapes.ascending()).forHorizontal(SOUTH),
-    MONORAIL_TRACK_DIAG = shape(TrackVoxelShapes.diagonal()).forHorizontal(SOUTH),
-    MONORAIL_TRACK_ORTHO_LONG = shape(TrackVoxelShapes.longOrthogonalZOffset()).forHorizontal(SOUTH),
+    MONORAIL_TRACK_ORTHO = shape(MonorailTrackVoxelShapes.orthogonal()).forHorizontal(NORTH),
+    MONORAIL_TRACK_ASC = shape(MonorailTrackVoxelShapes.ascending()).forHorizontal(SOUTH),
+    MONORAIL_TRACK_DIAG = shape(MonorailTrackVoxelShapes.diagonal()).forHorizontal(SOUTH),
+    MONORAIL_TRACK_ORTHO_LONG = shape(MonorailTrackVoxelShapes.longOrthogonalZOffset()).forHorizontal(SOUTH),
     MONORAIL_TRACK_CROSS_ORTHO_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST))
             .forHorizontal(SOUTH),
     MONORAIL_TRACK_CROSS_DIAG_ORTHO =
