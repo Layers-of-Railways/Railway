@@ -4,6 +4,7 @@ import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,6 +21,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
 
 public class ConductorWhistleItem extends Item {
 
@@ -41,6 +43,10 @@ public class ConductorWhistleItem extends Item {
         if (isTrack(level, pos)) {
             level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(),
                     SoundSource.BLOCKS, 2f, 1f);
+
+
+            loc.graph.addPoint(edgePointType, point);
+
 
 
         }
