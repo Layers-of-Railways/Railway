@@ -17,10 +17,10 @@ import java.util.UUID;
 public abstract class MixinGlobalRailwayManager {
     @Shadow public Map<UUID, Train> trains;
 
-    @Inject(method = "clientTick", at = @At("HEAD"))
+/*    @Inject(method = "clientTick", at = @At("HEAD"))
     private void showTrainDebug(CallbackInfo ci) {
         if (KineticDebugger.isActive())
             for (Train train : trains.values())
                 TravellingPointVisualizer.debugTrain(train);
-    }
+    }*/
 }
