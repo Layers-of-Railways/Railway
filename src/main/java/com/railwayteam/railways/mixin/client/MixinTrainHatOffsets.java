@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.simibubi.create.content.logistics.trains.management.schedule.TrainHatOffsets;

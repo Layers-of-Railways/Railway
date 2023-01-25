@@ -36,8 +36,7 @@
     "MixinTrackTargetingBlockItem",
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
-    "MixinTrain",
-    "MixinTrainHatOffsets"
+    "MixinTrain"
   ],
   "client": [
     "client.AccessorBogeyInstance",
@@ -58,7 +57,8 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainPacket",
-    "client.MixinTrackBlockOutline"
+    "client.MixinTrackBlockOutline",
+    "client.MixinTrainHatOffsets"
   ],
   "minVersion": "0.8"
 }
