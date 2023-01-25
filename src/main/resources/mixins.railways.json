@@ -30,7 +30,6 @@
     "MixinToolboxHandler",
     "MixinTrackBlock",
     "MixinTrackBlockItem",
-    "MixinTrackBlockOutline",
     "MixinTrackEdgePoint",
     "MixinTrackPlacement",
     "MixinTrackPlacement_PlacementInfo",
@@ -58,7 +57,8 @@
     "client.MixinTrackInstance_BezierTrackInstance",
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
-    "client.MixinTrainPacket"
+    "client.MixinTrainPacket",
+    "client.MixinTrackBlockOutline"
   ],
   "minVersion": "0.8"
 }

@@ -19,35 +19,28 @@ import static net.minecraft.core.Direction.WEST;
 public class CRShapes {
 
     public static final VoxelShaper
-        SEMAPHORE = shape(4,0,4,12,16,12)
-            .forDirectional(NORTH);
+        SEMAPHORE = shape(4, 0, 4, 12, 16, 12)
+        .forDirectional(NORTH);
 
     public static final VoxelShape
-        MONORAIL_COLLISION = shape(0, 0, 0, 16, 16, 16).build();
+        MONORAIL_COLLISION = shape(0, 0, 0, 16, 15, 16).build(); //This HAS to be less than a full block, or else monorails try to go diagonal
 
 
     public static final VoxelShaper
-    MONORAIL_TRACK_ORTHO = shape(MonorailTrackVoxelShapes.orthogonal()).forHorizontal(NORTH),
-    MONORAIL_TRACK_ASC = shape(MonorailTrackVoxelShapes.ascending()).forHorizontal(SOUTH),
-    MONORAIL_TRACK_DIAG = shape(MonorailTrackVoxelShapes.diagonal()).forHorizontal(SOUTH),
-    MONORAIL_TRACK_ORTHO_LONG = shape(MonorailTrackVoxelShapes.longOrthogonalZOffset()).forHorizontal(SOUTH),
-    MONORAIL_TRACK_CROSS_ORTHO_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST))
+        MONORAIL_TRACK_ORTHO = shape(MonorailTrackVoxelShapes.orthogonal()).forHorizontal(NORTH),
+        MONORAIL_TRACK_ASC = shape(MonorailTrackVoxelShapes.ascending()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_DIAG = shape(MonorailTrackVoxelShapes.diagonal()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_ORTHO_LONG = shape(MonorailTrackVoxelShapes.longOrthogonalZOffset()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_CROSS_ORTHO_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST))
             .forHorizontal(SOUTH),
-    MONORAIL_TRACK_CROSS_DIAG_ORTHO =
-    shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(SOUTH))
-            .forHorizontal(SOUTH);
+        MONORAIL_TRACK_CROSS_DIAG_ORTHO =
+            shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(SOUTH))
+                .forHorizontal(SOUTH);
 
     public static final VoxelShape
-
-    MONORAIL_TRACK_CROSS = shape(MONORAIL_TRACK_ORTHO.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST))
-            .build(),
-
-    MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST))
-            .build(),
-
-    MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
-
-
+        MONORAIL_TRACK_CROSS = shape(MONORAIL_TRACK_ORTHO.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST)).build(),
+        MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST)).build(),
+        MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
 
 
     private static Builder shape(VoxelShape shape) {
