@@ -7,6 +7,7 @@ import com.mojang.math.Vector3f;
 import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.trains.IBogeyBlock;
 import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
@@ -47,7 +48,7 @@ import java.util.EnumSet;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyTileEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyTileEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement, IPotentiallyUpsideDownBogey {
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
@@ -57,6 +58,24 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
         this.upsideDown = upsideDown;
+    }
+
+    @Override
+    public boolean isUpsideDown() {
+        return upsideDown;
+    }
+
+    @Override
+    public BlockState getVersion(BlockState base, boolean upsideDown) {
+        if (!base.hasProperty(AXIS))
+            return base;
+        if (upsideDown) {
+            return CRBlocks.MONO_BOGEY_UPSIDE_DOWN.getDefaultState().setValue(AXIS, base.getValue(AXIS))
+                .setValue(WATERLOGGED, base.getOptionalValue(WATERLOGGED).orElse(false));
+        } else {
+            return CRBlocks.MONO_BOGEY.getDefaultState().setValue(AXIS, base.getValue(AXIS))
+                .setValue(WATERLOGGED, base.getOptionalValue(WATERLOGGED).orElse(false));
+        }
     }
 
     @Override
@@ -97,8 +116,8 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 5 / 32f, 25 / 32f);
-    } //TODO
+        return new Vec3(0, upsideDown ? -37 / 32f : 5 / 32f, 25 / 32f);
+    }
 
     @Override
     public boolean allowsSingleBogeyCarriage() {
@@ -127,7 +146,7 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
                 ms.mulPose(Vector3f.YP.rotationDegrees(90));
         }
 
-        ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? -1 : 1), 0);
+        ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? (state == null ? 43 / 128f : -1) : 1), 0);
 
         VertexConsumer vb = buffers.getBuffer(RenderType.cutoutMipped());
         BlockState air = Blocks.AIR.defaultBlockState();

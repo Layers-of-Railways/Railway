@@ -1,10 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogey;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.logistics.trains.DimensionPalette;
 import com.simibubi.create.content.logistics.trains.TrackGraph;
 import com.simibubi.create.content.logistics.trains.TrackNode;
@@ -15,6 +17,8 @@ import com.simibubi.create.content.logistics.trains.management.schedule.Schedule
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
@@ -23,6 +27,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -140,5 +145,23 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         NBTHelper.iterateCompoundList(tag.getList("OccupiedCouplers", Tag.TAG_COMPOUND),
             c -> ((IOccupiedCouplers) train).getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).setIndex(tag.getInt("ScheduleHolderIndex"));
+    }
+
+    private CarriageContraptionEntity entityInUse;
+
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;"))
+    private Contraption saveCarriageContraptionEntity(CarriageContraptionEntity instance) {
+        entityInUse = instance;
+        return instance.getContraption();
+    }
+
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;"))
+    private BlockPos moveHangingCarriageDown(BlockPos instance, Direction pDirection, int pDistance) {
+        BlockPos ret = instance.relative(pDirection, pDistance);
+        if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogey pudb && pudb.isUpsideDown()) {
+            ret = ret.below(2);
+        }
+        entityInUse = null;
+        return ret;
     }
 }

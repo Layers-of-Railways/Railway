@@ -8,21 +8,11 @@ import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.contraptions.particle.CubeParticleData;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
@@ -115,7 +105,7 @@ public class MonorailTrackBlock extends CustomTrackBlock{
     @Override
     @OnlyIn(Dist.CLIENT)
     public PartialModel prepareAssemblyOverlay(BlockGetter world, BlockPos pos, BlockState state, Direction direction,
-                                               PoseStack ms) { //TODO move up
+                                               PoseStack ms) {
         TransformStack.cast(ms)
             .rotateCentered(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(direction)))
             .translateY(14/16f);

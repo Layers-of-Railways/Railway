@@ -6,10 +6,8 @@ import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
 import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,6 +53,8 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
                 .getModel(CRBlockPartials.MONOBOGEY_WHEEL)
                 .createInstances(wheels);
             materialManager = null;
+            for (ModelData shaft : ((AccessorBogeyInstance) this).getShafts())
+                shaft.delete();
         }
         this.isMonorailUpsideDown = upsideDown;
         this.isMonorail = true;
@@ -82,13 +82,13 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
             }
 
             frame.setTransform(ms)
-                .translateY(isMonorailUpsideDown ? 3 : 0)
+                .translateY(isMonorailUpsideDown ? 1 : 0)
                 .rotateZ(isMonorailUpsideDown ? 180 : 0);
 
             for (boolean left : Iterate.trueAndFalse) {
-                for (int front : Iterate.positiveAndNegative) {//todo move wheels when upside down
+                for (int front : Iterate.positiveAndNegative) {
                     wheels[(left ? 1 : 0) + (front + 1)].setTransform(ms)
-                        .translate(left ? -12 / 16f : 12 / 16f, isMonorailUpsideDown ? -3 /16f : 3 / 16f, front * 15 / 16f) //base position
+                        .translate(left ? -12 / 16f : 12 / 16f, isMonorailUpsideDown ? 35 /16f - 2 : 3 / 16f, front * 15 / 16f) //base position
                         .rotateY(left ? wheelAngle : -wheelAngle)
                         .translate(15/16f, 0, 0/16f);
                 }

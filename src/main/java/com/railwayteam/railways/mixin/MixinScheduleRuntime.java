@@ -7,6 +7,7 @@ import com.simibubi.create.content.logistics.trains.management.schedule.Schedule
 import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
 import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
 import net.minecraft.world.level.Level;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,12 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ScheduleRuntime.class, remap = false)
-public class MixinScheduleRuntime {
+public abstract class MixinScheduleRuntime {
     @Shadow Schedule schedule;
 
     @Shadow public int currentEntry;
 
     @Shadow public ScheduleRuntime.State state;
+
+    @Shadow public boolean isAutoSchedule;
+
+    @Shadow public abstract void discardSchedule();
 
     @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
     private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
@@ -38,6 +43,13 @@ public class MixinScheduleRuntime {
             state = ScheduleRuntime.State.PRE_TRANSIT;
             currentEntry++;
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/trains/management/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
+    private void discardAutoSchedule(Level level, CallbackInfo ci) {
+        if (isAutoSchedule) {
+            discardSchedule();
         }
     }
 }
