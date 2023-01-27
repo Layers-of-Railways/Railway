@@ -37,7 +37,7 @@ public abstract class MixinContraption {
 /*    @Redirect(method = "searchMovedStructure", at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD, target = "Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;anchor:Lnet/minecraft/core/BlockPos;"))
     private void handleHangingBogey(Contraption instance, BlockPos value) {
         if (instance instanceof CarriageContraption && anchorState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
-            instance.anchor = value.above(2); //FIXME this causes rotation issues, move anchor position of bogey instead
+            instance.anchor = value.above(2); //FIXEDME this causes rotation issues, move anchor position of bogey instead
         } else {
             instance.anchor = value;
         }

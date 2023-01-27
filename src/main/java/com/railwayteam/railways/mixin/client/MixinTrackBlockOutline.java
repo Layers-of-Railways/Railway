@@ -60,11 +60,6 @@ public abstract class MixinTrackBlockOutline {
         }
     }
 
-    /*
-    TODO:
-        drawCurveSelection
-     */
-
     private static boolean tmpCurveIsMonorail = false;
     private static boolean persistentCurveIsMonorail = false;
 

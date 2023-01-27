@@ -21,7 +21,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,6 +35,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.*;
+
+import static com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock.isUpsideDown;
 
 @Mixin(value = Train.class, remap = false)
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule {
@@ -163,5 +167,38 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         }
         entityInUse = null;
         return ret;
+    }
+
+    private Carriage tmpCarriage;
+    private Carriage tmpPrevCarriage;
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void resetTmpCarriagesHead(Level level, CallbackInfo ci) {
+        tmpCarriage = tmpPrevCarriage = null;
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void storeTmpCarriages(Level level, CallbackInfo ci, double distance, Carriage previousCarriage, int carriageCount, boolean stalled,
+                                   double maxStress, int i, Carriage carriage) {
+        tmpCarriage = carriage;
+        tmpPrevCarriage = previousCarriage;
+    }
+
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D")) //TODO set carriages right before this
+    private double adjustDistanceTo(Vec3 instance, Vec3 pVec) {
+        if (tmpCarriage != null && tmpPrevCarriage != null) {
+            if (isUpsideDown(tmpCarriage.leadingBogey()) != isUpsideDown(tmpPrevCarriage.trailingBogey())) {
+                tmpCarriage = tmpPrevCarriage = null;
+                //account for 2 block height difference
+                return Math.sqrt(instance.distanceToSqr(pVec)-4);
+            }
+        }
+        tmpCarriage = tmpPrevCarriage = null;
+        return instance.distanceTo(pVec);
+    }
+
+    @Inject(method = "tick", at = @At("RETURN"))
+    private void resetTmpCarriagesReturn(Level level, CallbackInfo ci) {
+        tmpCarriage = tmpPrevCarriage = null;
     }
 }
