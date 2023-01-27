@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
@@ -19,6 +20,20 @@ public class MixinCarriageContraptionEntityRenderer {
     @Overwrite
     public static void translateBogey(PoseStack ms, CarriageBogey bogey, int bogeySpacing, float viewYRot,
                                       float viewXRot, float partialTicks) {
-        MonoBogeyBlock.translateBogey(ms, bogey, bogeySpacing, viewYRot, viewXRot, partialTicks);
+        boolean selfUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey);
+        boolean leadingUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey.carriage.leadingBogey());
+        TransformStack.cast(ms)
+            .rotateY(viewYRot + 90)
+            .rotateX(-viewXRot)
+            .rotateY(180)
+            .translate(0, 0, ((AccessorCarriageBogey)bogey).isLeading() ? 0 : -bogeySpacing)
+            .rotateY(-180)
+            .rotateX(viewXRot)
+            .rotateY(-viewYRot - 90)
+            .rotateY(((AccessorCarriageBogey) bogey).getYaw().getValue(partialTicks))
+            .rotateX(((AccessorCarriageBogey) bogey).getPitch().getValue(partialTicks))
+            .translate(0, .5f, 0) //END ORIGINAL
+            .rotateZ(IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey) ? 180 : 0)
+            .translateY(selfUpsideDown != leadingUpsideDown ? 2 : 0);
     }
 }

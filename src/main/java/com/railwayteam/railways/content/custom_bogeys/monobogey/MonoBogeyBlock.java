@@ -156,31 +156,6 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
         renderBogey(wheelAngle, ms, light, vb, air);
     }
 
-    /**
-     * Deprecated because this a temporary testing setup
-     */
-    @Deprecated
-    public static void translateBogey(PoseStack ms, CarriageBogey bogey, int bogeySpacing, float viewYRot,
-                                      float viewXRot, float partialTicks) {
-        boolean selfUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey);
-        boolean leadingUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey.carriage.leadingBogey());
-        TransformStack.cast(ms)
-            .rotateY(viewYRot + 90)
-            .rotateX(-viewXRot)
-            .rotateY(180)
-            .translate(0, 0, ((AccessorCarriageBogey)bogey).isLeading() ? 0 : -bogeySpacing)
-            .rotateY(-180)
-            .rotateX(viewXRot)
-            .rotateY(-viewYRot - 90)
-            .rotateY(((AccessorCarriageBogey) bogey).getYaw().getValue(partialTicks))
-            .rotateX(((AccessorCarriageBogey) bogey).getPitch().getValue(partialTicks))
-            .translate(0, .5f, 0) //END ORIGINAL
-            .rotateZ(IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey) ? 180 : 0)
-            .translateY(selfUpsideDown != leadingUpsideDown ?
-                (2) :
-                0); //FIXME hanging monobogeys can't pathfind to stations anymore
-    }
-
     private void renderBogey(float wheelAngle, PoseStack ms, int light, VertexConsumer vb, BlockState air) {
         CachedBufferer.partial(CRBlockPartials.MONOBOGEY_FRAME, air)
 //            .rotateZ(upsideDown ? 180 : 0)
