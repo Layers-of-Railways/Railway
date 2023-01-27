@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.custom_bogeys.monobogey;
 
 import com.jozufozu.flywheel.api.MaterialManager;
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -147,7 +148,7 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
                 ms.mulPose(Vector3f.YP.rotationDegrees(90));
         }
 
-        ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? (state == null ? 43 / 128f : -1) : 1), 0);
+        ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? (state == null ? 1 : -1) : 1), 0);
 
         VertexConsumer vb = buffers.getBuffer(RenderType.cutoutMipped());
         BlockState air = Blocks.AIR.defaultBlockState();
@@ -155,9 +156,34 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
         renderBogey(wheelAngle, ms, light, vb, air);
     }
 
+    /**
+     * Deprecated because this a temporary testing setup
+     */
+    @Deprecated
+    public static void translateBogey(PoseStack ms, CarriageBogey bogey, int bogeySpacing, float viewYRot,
+                                      float viewXRot, float partialTicks) {
+        boolean selfUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey);
+        boolean leadingUpsideDown = IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey.carriage.leadingBogey());
+        TransformStack.cast(ms)
+            .rotateY(viewYRot + 90)
+            .rotateX(-viewXRot)
+            .rotateY(180)
+            .translate(0, 0, ((AccessorCarriageBogey)bogey).isLeading() ? 0 : -bogeySpacing)
+            .rotateY(-180)
+            .rotateX(viewXRot)
+            .rotateY(-viewYRot - 90)
+            .rotateY(((AccessorCarriageBogey) bogey).getYaw().getValue(partialTicks))
+            .rotateX(((AccessorCarriageBogey) bogey).getPitch().getValue(partialTicks))
+            .translate(0, .5f, 0) //END ORIGINAL
+            .rotateZ(IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey) ? 180 : 0)
+            .translateY(selfUpsideDown != leadingUpsideDown ?
+                (2) :
+                0); //FIXME hanging monobogeys can't pathfind to stations anymore
+    }
+
     private void renderBogey(float wheelAngle, PoseStack ms, int light, VertexConsumer vb, BlockState air) {
         CachedBufferer.partial(CRBlockPartials.MONOBOGEY_FRAME, air)
-            .rotateZ(upsideDown ? 180 : 0)
+//            .rotateZ(upsideDown ? 180 : 0)
             .scale(1 - 1 / 512f)
             .light(light)
             .renderInto(ms, vb);
@@ -168,7 +194,7 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
             for (int front : Iterate.positiveAndNegative) {
                 ms.pushPose();
                 CachedBufferer.partial(CRBlockPartials.MONOBOGEY_WHEEL, air)
-                    .translate(left ? -12 / 16f : 12 / 16f, upsideDown ? -13 /16f : 3 / 16f, front * 15 / 16f) //base position
+                    .translate(left ? -12 / 16f : 12 / 16f, 3 / 16f, front * 15 / 16f) //base position
                     .rotateY(left ? wheelAngle : -wheelAngle)
                     .translate(15/16f, 0, 0/16f)
                     .light(light)

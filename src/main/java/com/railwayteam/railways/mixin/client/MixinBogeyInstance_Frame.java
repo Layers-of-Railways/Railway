@@ -4,7 +4,6 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.core.Materials;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
@@ -84,15 +83,17 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
                 return;
             }
 
-            frame.setTransform(ms)
-                .translateY(isMonorailUpsideDown ?
-                    (isLeadingBogeyUpsideDown ? 3 : 1) :
+            frame.setTransform(ms);
+/*                .translateY(isMonorailUpsideDown ?
+                    (isLeadingBogeyUpsideDown ? 3 : 1) : //this should all happen in CarriageContraptionEntityRenderer.translateBogey
                     (isLeadingBogeyUpsideDown ? 2 : 0))
                 .rotateZ(isMonorailUpsideDown ? 180 : 0);
 
             float wheelY = isMonorailUpsideDown ? 35 /16f : 3 / 16f;
             if (isMonorailUpsideDown != isLeadingBogeyUpsideDown)
-                wheelY += isLeadingBogeyUpsideDown ? 2 : -2;
+                wheelY += isLeadingBogeyUpsideDown ? 2 : -2;*/
+
+            float wheelY = 3 / 16f;
 
             for (boolean left : Iterate.trueAndFalse) {
                 for (int front : Iterate.positiveAndNegative) {

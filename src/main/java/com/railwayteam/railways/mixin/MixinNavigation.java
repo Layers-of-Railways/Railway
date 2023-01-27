@@ -25,7 +25,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation {
     @Override
     public boolean isWaypointMode() {
         try {
-            return train.runtime.getSchedule() != null && train.runtime.currentEntry < train.runtime.getSchedule().entries.size() &&
+            return !train.manualTick && !train.runtime.paused && !train.runtime.completed && train.runtime.getSchedule() != null && train.runtime.currentEntry < train.runtime.getSchedule().entries.size() &&
                 train.runtime.getSchedule().entries.get(train.runtime.currentEntry).instruction instanceof WaypointDestinationInstruction;
         } catch (Exception e) {
             e.printStackTrace();

@@ -48,6 +48,7 @@
     "client.MixinBlueprintOverlayRenderer",
     "client.MixinBogeyInstance_Frame",
     "client.MixinCarriageContraptionEntity",
+    "client.MixinCarriageContraptionEntityRenderer",
     "client.MixinCarriageContraptionInstance",
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
