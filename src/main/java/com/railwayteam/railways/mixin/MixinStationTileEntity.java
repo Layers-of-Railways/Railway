@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogey;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.logistics.trains.*;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraption;
@@ -90,19 +90,19 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
     @Redirect(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"))
     private Block preventUpsideDownBogeyOnTop(BlockState instance) {
         Block block = instance.getBlock();
-        return (block instanceof IPotentiallyUpsideDownBogey pubd && pubd.isUpsideDown()) ? Blocks.AIR : block;
+        return (block instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) ? Blocks.AIR : block;
     }
 
     @Inject(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void includeUpsideDownBogeys(CallbackInfo ci, int prevLength, BlockPos targetPosition, BlockState trackState, ITrackBlock track, BlockPos.MutableBlockPos currentPos, BlockPos bogeyOffset, int MAX_LENGTH, int MAX_BOGEY_COUNT, int bogeyIndex, int maxBogeyCount, int i, BlockState potentialBogeyState) {
-        if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogey pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
+        if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
             /*bogeyTypes[bogeyIndex] = bogey;
             bogeyLocations[bogeyIndex] = i;
             bogeyIndex++;*/
         } else {
             BlockPos upsideDownBogeyOffset = new BlockPos(bogeyOffset.getX(), bogeyOffset.getY() * -1, bogeyOffset.getZ());
             potentialBogeyState = level.getBlockState(upsideDownBogeyOffset.offset(currentPos));
-            if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && bogey instanceof IPotentiallyUpsideDownBogey potentiallyUpsideDownBogey &&
+            if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && bogey instanceof IPotentiallyUpsideDownBogeyBlock potentiallyUpsideDownBogey &&
                 potentiallyUpsideDownBogey.isUpsideDown() && bogeyIndex < bogeyLocations.length) {
                 bogeyTypes[bogeyIndex] = bogey;
                 bogeyLocations[bogeyIndex] = i;
@@ -138,7 +138,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
     @Inject(method = "trackClicked", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;offset(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/core/BlockPos;", ordinal = 1), cancellable = true)
     private void placeUpsideDownBogey(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState bogeyAnchor;
-        if (player.getViewXRot(1.0F) < 0 && (bogeyAnchor = track.getBogeyAnchor(level, pos, state)).getBlock() instanceof IPotentiallyUpsideDownBogey pudb) {
+        if (player.getViewXRot(1.0F) < 0 && (bogeyAnchor = track.getBogeyAnchor(level, pos, state)).getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pudb) {
             BlockPos targetPos = pos.offset(new BlockPos(track.getUpNormal(level, pos, state).multiply(-1, -1, -1)));
             if (level.getBlockState(targetPos)
                 .getDestroySpeed(level, targetPos) == -1) {

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogey;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;
@@ -28,18 +28,18 @@ public abstract class MixinContraption {
     @Inject(method = "searchMovedStructure", at = @At("RETURN"))
     private void moveHangingAnchor(Level world, BlockPos pos, Direction forcedDirection, CallbackInfoReturnable<Boolean> cir) {
         /*Contraption this_ = (Contraption) (Object) this;
-        if (this_ instanceof CarriageContraption && anchorState.getBlock() instanceof IPotentiallyUpsideDownBogey pudb && pudb.isUpsideDown()) {
+        if (this_ instanceof CarriageContraption && anchorState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
             this.anchor = this.anchor.above(2);
         }*/
         this.anchorState = null;
     }
 
-    @Redirect(method = "searchMovedStructure", at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD, target = "Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;anchor:Lnet/minecraft/core/BlockPos;"))
+/*    @Redirect(method = "searchMovedStructure", at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD, target = "Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;anchor:Lnet/minecraft/core/BlockPos;"))
     private void handleHangingBogey(Contraption instance, BlockPos value) {
-        if (instance instanceof CarriageContraption && anchorState.getBlock() instanceof IPotentiallyUpsideDownBogey pudb && pudb.isUpsideDown()) {
-            instance.anchor = value.above(2);
+        if (instance instanceof CarriageContraption && anchorState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
+            instance.anchor = value.above(2); //FIXME this causes rotation issues, move anchor position of bogey instead
         } else {
             instance.anchor = value;
         }
-    }
+    }*/
 }

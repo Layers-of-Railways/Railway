@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlockPartials;
@@ -48,7 +49,7 @@ import java.util.EnumSet;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyTileEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement, IPotentiallyUpsideDownBogey {
+public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogeyBlock, ITE<MonoBogeyTileEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
@@ -116,7 +117,7 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, upsideDown ? -37 / 32f : 5 / 32f, 25 / 32f);
+        return new Vec3(0, upsideDown ? 26 / 32f : 5 / 32f, 25 / 32f);
     }
 
     @Override
@@ -180,7 +181,11 @@ public class MonoBogeyBlock extends Block implements IBogeyBlock, ITE<MonoBogeyT
     @Override
     @SuppressWarnings("unchecked")
     public BogeyInstance createInstance(MaterialManager materialManager, CarriageBogey bogey) {
-        return ((IBogeyFrameCanBeMonorail<BogeyInstance.Frame>) (Object) new BogeyInstance.Frame(bogey, materialManager)).setMonorail(upsideDown);
+        return ((IBogeyFrameCanBeMonorail<BogeyInstance.Frame>) (Object) new BogeyInstance.Frame(bogey, materialManager))
+            .setMonorail(
+                upsideDown,
+                IPotentiallyUpsideDownBogeyBlock.isUpsideDown(((AccessorCarriageBogey)bogey.carriage.leadingBogey()).getType())
+            );
     }
 
     @Override

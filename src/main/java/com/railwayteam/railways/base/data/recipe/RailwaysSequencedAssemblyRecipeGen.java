@@ -10,6 +10,7 @@ import com.simibubi.create.content.contraptions.components.saw.CuttingRecipe;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -57,6 +58,15 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
           .addStep(PressingRecipe::new, rb -> rb)
       ));
     }
+
+    TRACKS.put(TrackMaterial.MONORAIL, create("track_monorail", b -> b.require(Ingredients.girder())
+        .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(TrackMaterial.MONORAIL).get())
+        .addOutput(new ItemStack(TrackMaterial.MONORAIL.getTrackBlock().get(), 6), 1)
+        .loops(1)
+        .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.metalBracket()))
+        .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironSheet()))
+        .addStep(PressingRecipe::new, rb -> rb)
+    ));
   }
 
   @Override

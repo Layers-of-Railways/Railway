@@ -1,6 +1,7 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import net.minecraft.data.DataGenerator;
@@ -56,6 +57,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static TagKey<Item> zincNugget() {
       return AllTags.forgeItemTag("nuggets/zinc");
+    }
+
+    public static ItemLike girder() {
+      return AllBlocks.METAL_GIRDER.get();
+    }
+
+    public static ItemLike metalBracket() {
+      return AllBlocks.METAL_BRACKET.get();
+    }
+
+    public static ItemLike ironSheet() {
+      return AllItems.IRON_SHEET.get();
     }
   }
 }

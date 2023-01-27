@@ -8,13 +8,13 @@
 	"elements": [
 		{
 			"from": [2, 10, 2],
-			"to": [14, 12, 14],
+			"to": [14, 14, 14],
 			"rotation": {"angle": 0, "axis": "z", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [11.75, 0, 13.25, 0.25], "rotation": 180, "texture": "#0"},
-				"east": {"uv": [4.5, 3.75, 6, 4], "rotation": 180, "texture": "#0"},
-				"south": {"uv": [11.75, 0, 13.25, 0.25], "rotation": 180, "texture": "#0"},
-				"west": {"uv": [4.5, 3.75, 6, 4], "rotation": 180, "texture": "#0"},
+				"north": {"uv": [11.75, 0, 13.25, 0.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [4.5, 3.75, 6, 4.25], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [11.75, 0, 13.25, 0.5], "rotation": 180, "texture": "#0"},
+				"west": {"uv": [4.5, 3.75, 6, 4.25], "rotation": 180, "texture": "#0"},
 				"up": {"uv": [2.25, 4.25, 3.75, 5.75], "rotation": 180, "texture": "#0"},
 				"down": {"uv": [2.25, 4.25, 3.75, 5.75], "rotation": 180, "texture": "#0"}
 			}
@@ -39,8 +39,6 @@
 			"name": "group",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"nbt": "{}",
-			"armAnimationEnabled": false,
 			"children": [0, 1]
 		}
 	]

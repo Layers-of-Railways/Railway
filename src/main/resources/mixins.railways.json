@@ -18,6 +18,7 @@
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
+    "MixinCarriageBogey",
     "MixinContraption",
     "MixinNavigation",
     "MixinReplaceTrackCheck",
@@ -36,7 +37,8 @@
     "MixinTrackTargetingBlockItem",
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
-    "MixinTrain"
+    "MixinTrain",
+    "MixinTravellingPoint"
   ],
   "client": [
     "client.AccessorBogeyInstance",
@@ -52,13 +54,13 @@
     "client.MixinPonderIndex",
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackBlockClient",
+    "client.MixinTrackBlockOutline",
     "client.MixinTrackInstance",
     "client.MixinTrackInstance_BezierTrackInstance",
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
-    "client.MixinTrainPacket",
-    "client.MixinTrackBlockOutline",
-    "client.MixinTrainHatOffsets"
+    "client.MixinTrainHatOffsets",
+    "client.MixinTrainPacket"
   ],
   "minVersion": "0.8"
 }

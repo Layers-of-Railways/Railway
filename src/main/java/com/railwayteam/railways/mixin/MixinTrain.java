@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogey;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
@@ -158,7 +158,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
     @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;"))
     private BlockPos moveHangingCarriageDown(BlockPos instance, Direction pDirection, int pDistance) {
         BlockPos ret = instance.relative(pDirection, pDistance);
-        if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogey pudb && pudb.isUpsideDown()) {
+        if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
             ret = ret.below(2);
         }
         entityInUse = null;

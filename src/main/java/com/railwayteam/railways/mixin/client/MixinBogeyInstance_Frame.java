@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.core.Materials;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
@@ -26,6 +27,7 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
     @Shadow @Final private ModelData[] wheels;
     private boolean isMonorail = false;
     private boolean isMonorailUpsideDown = false;
+    private boolean isLeadingBogeyUpsideDown = false;
 
     private MaterialManager materialManager;
 
@@ -35,7 +37,7 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
     }
 
     @Override
-    public BogeyInstance.Frame setMonorail(boolean upsideDown) {
+    public BogeyInstance.Frame setMonorail(boolean upsideDown, boolean leadingUpsideDown) {
         if (!this.isMonorail && materialManager != null) {
             frame.delete();
             frame = materialManager.defaultSolid()
@@ -57,6 +59,7 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
                 shaft.delete();
         }
         this.isMonorailUpsideDown = upsideDown;
+        this.isLeadingBogeyUpsideDown = leadingUpsideDown;
         this.isMonorail = true;
         return (BogeyInstance.Frame) (Object) this;
     }
@@ -82,13 +85,19 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
             }
 
             frame.setTransform(ms)
-                .translateY(isMonorailUpsideDown ? 1 : 0)
+                .translateY(isMonorailUpsideDown ?
+                    (isLeadingBogeyUpsideDown ? 3 : 1) :
+                    (isLeadingBogeyUpsideDown ? 2 : 0))
                 .rotateZ(isMonorailUpsideDown ? 180 : 0);
+
+            float wheelY = isMonorailUpsideDown ? 35 /16f : 3 / 16f;
+            if (isMonorailUpsideDown != isLeadingBogeyUpsideDown)
+                wheelY += isLeadingBogeyUpsideDown ? 2 : -2;
 
             for (boolean left : Iterate.trueAndFalse) {
                 for (int front : Iterate.positiveAndNegative) {
                     wheels[(left ? 1 : 0) + (front + 1)].setTransform(ms)
-                        .translate(left ? -12 / 16f : 12 / 16f, isMonorailUpsideDown ? 35 /16f - 2 : 3 / 16f, front * 15 / 16f) //base position
+                        .translate(left ? -12 / 16f : 12 / 16f, wheelY, front * 15 / 16f) //base position
                         .rotateY(left ? wheelAngle : -wheelAngle)
                         .translate(15/16f, 0, 0/16f);
                 }

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogey;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.simibubi.create.content.contraptions.components.structureMovement.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
@@ -19,11 +19,11 @@ public abstract class MixinAbstractContraptionEntity {
     @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/components/structureMovement/AbstractContraptionEntity;makeStructureTransform()Lcom/simibubi/create/content/contraptions/components/structureMovement/StructureTransform;"))
     private StructureTransform changeTransformForHangingBogeys(AbstractContraptionEntity instance) {
         StructureTransform transform = makeStructureTransform();
-        if (((Object) this) instanceof CarriageContraptionEntity) { //no it isn't always false, silly intellij
-            if (((AccessorCarriageBogey) ((AccessorCarriageContraptionEntity) this).snr_getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogey pudb && pudb.isUpsideDown()) {
-                transform.offset = transform.offset.above(2);
+        /*if (((Object) this) instanceof CarriageContraptionEntity) { //no it isn't always false, silly intellij
+            if (((AccessorCarriageBogey) ((AccessorCarriageContraptionEntity) this).snr_getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
+                transform.offset = transform.offset.below(2);
             }
-        }
+        }*/
         return transform;
     }
 }

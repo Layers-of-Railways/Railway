@@ -1,4 +1,4 @@
-// 1.19.2	2023-01-24T20:12:59.284079992	Railways' Sequenced Assembly Recipes
+// 1.19.2	2023-01-25T17:43:50.984169839	Railways' Sequenced Assembly Recipes
 dcf809b6586fe8953ee4e80fdd08bf7c6e475393 data/railways/recipes/sequenced_assembly/black_conductor_cap.json
 8922d5cf9bbff9da461f75d803b9e975318d0468 data/railways/recipes/sequenced_assembly/blue_conductor_cap.json
 b5b1ddd26226d78d7b8cc5125e3fb8791c7ab525 data/railways/recipes/sequenced_assembly/brown_conductor_cap.json
@@ -20,6 +20,7 @@ c072e0120b3e33757eda66716160ac0e6365a58b data/railways/recipes/sequenced_assembl
 31f95f7b878bcab108aaffa900146d493940b139 data/railways/recipes/sequenced_assembly/track_dark_oak.json
 0e1cd2342f75c6f455a6b71fc085ea1cfb03220d data/railways/recipes/sequenced_assembly/track_jungle.json
 473d4c04bbcdc5693cf984a1c890c5dd44cce79e data/railways/recipes/sequenced_assembly/track_mangrove.json
+a559e820a38b98674963794b5255ab76d68080f9 data/railways/recipes/sequenced_assembly/track_monorail.json
 3087ed241e32f01808fe81593b46efde05af7f3e data/railways/recipes/sequenced_assembly/track_oak.json
 248189630ee5cd9f7fd6cd5b8848424fab9ef0ef data/railways/recipes/sequenced_assembly/track_spruce.json
 9caca91203127330dec0e1b14a7291db556e0c85 data/railways/recipes/sequenced_assembly/track_warped.json
