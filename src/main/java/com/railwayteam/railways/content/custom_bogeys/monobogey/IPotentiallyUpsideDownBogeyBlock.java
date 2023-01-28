@@ -10,7 +10,7 @@ public interface IPotentiallyUpsideDownBogeyBlock extends IBogeyBlock {
     BlockState getVersion(BlockState base, boolean upsideDown);
 
     static boolean isUpsideDown(Object object) {
-        if (object instanceof AccessorCarriageBogey bogey && isUpsideDown(bogey.getType()))
+        if (object instanceof CarriageBogey bogey && isUpsideDown(((AccessorCarriageBogey)bogey).getType()))
             return true;
         return object instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown();
     }

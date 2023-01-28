@@ -153,12 +153,12 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
         VertexConsumer vb = buffers.getBuffer(RenderType.cutoutMipped());
         BlockState air = Blocks.AIR.defaultBlockState();
 
-        renderBogey(wheelAngle, ms, light, vb, air);
+        renderBogey(wheelAngle, ms, light, vb, air, state != null && upsideDown);
     }
 
-    private void renderBogey(float wheelAngle, PoseStack ms, int light, VertexConsumer vb, BlockState air) {
+    private void renderBogey(float wheelAngle, PoseStack ms, int light, VertexConsumer vb, BlockState air, boolean renderUpsideDown) {
         CachedBufferer.partial(CRBlockPartials.MONOBOGEY_FRAME, air)
-//            .rotateZ(upsideDown ? 180 : 0)
+            .rotateZ(renderUpsideDown ? 180 : 0)
             .scale(1 - 1 / 512f)
             .light(light)
             .renderInto(ms, vb);
@@ -169,7 +169,7 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
             for (int front : Iterate.positiveAndNegative) {
                 ms.pushPose();
                 CachedBufferer.partial(CRBlockPartials.MONOBOGEY_WHEEL, air)
-                    .translate(left ? -12 / 16f : 12 / 16f, 3 / 16f, front * 15 / 16f) //base position
+                    .translate(left ? -12 / 16f : 12 / 16f, renderUpsideDown ? -13 /16f : 3 / 16f, front * 15 / 16f) //base position
                     .rotateY(left ? wheelAngle : -wheelAngle)
                     .translate(15/16f, 0, 0/16f)
                     .light(light)

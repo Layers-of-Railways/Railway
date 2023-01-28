@@ -33,7 +33,7 @@ public class MixinCarriageContraptionEntityRenderer {
             .rotateY(((AccessorCarriageBogey) bogey).getYaw().getValue(partialTicks))
             .rotateX(((AccessorCarriageBogey) bogey).getPitch().getValue(partialTicks))
             .translate(0, .5f, 0) //END ORIGINAL
-            .rotateZ(IPotentiallyUpsideDownBogeyBlock.isUpsideDown(bogey) ? 180 : 0)
+            .rotateZ(selfUpsideDown ? 180 : 0)
             .translateY(selfUpsideDown != leadingUpsideDown ? 2 : 0);
     }
 }
