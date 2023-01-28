@@ -72,7 +72,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
         return newValue;
     }
 
-    @ModifyVariable(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1, shift = At.Shift.AFTER),
+    @ModifyVariable(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1, shift = At.Shift.AFTER, remap = true),
         name = "bogeyIndex")
     private int setRealBogeyIndex(int value) {
         int newValue = value + (bogeyIndexAdd ? 1 : 0);
@@ -87,13 +87,13 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
         Arrays.fill(upsideDownBogeys, false);
     }
 
-    @Redirect(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"))
+    @Redirect(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true))
     private Block preventUpsideDownBogeyOnTop(BlockState instance) {
         Block block = instance.getBlock();
         return (block instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) ? Blocks.AIR : block;
     }
 
-    @Inject(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1, remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void includeUpsideDownBogeys(CallbackInfo ci, int prevLength, BlockPos targetPosition, BlockState trackState, ITrackBlock track, BlockPos.MutableBlockPos currentPos, BlockPos bogeyOffset, int MAX_LENGTH, int MAX_BOGEY_COUNT, int bogeyIndex, int maxBogeyCount, int i, BlockState potentialBogeyState) {
         if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
             /*bogeyTypes[bogeyIndex] = bogey;
@@ -135,7 +135,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
         return pos == null ? null : pos.above((storedBogeyIdx + 1 < upsideDownBogeys.length && upsideDownBogeys[storedBogeyIdx + 1]) ? 2 : 0);
     }
 
-    @Inject(method = "trackClicked", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;offset(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/core/BlockPos;", ordinal = 1), cancellable = true)
+    @Inject(method = "trackClicked", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;offset(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/core/BlockPos;", remap = true, ordinal = 1), cancellable = true)
     private void placeUpsideDownBogey(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState bogeyAnchor;
         if (player.getViewXRot(1.0F) < 0 && (bogeyAnchor = track.getBogeyAnchor(level, pos, state)).getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pudb) {
