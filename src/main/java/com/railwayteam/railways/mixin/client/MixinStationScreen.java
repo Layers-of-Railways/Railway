@@ -44,6 +44,8 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
 
         openLeft = new IconButton(x + 8 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_LEFT);
         openLeft.withCallback(() -> {
+            if (te.getStation() != null)
+                station = te.getStation();
             boolean shouldOpenLeft = station == null || !((ISidedStation) station).opensLeft();
             AllPackets.channel.sendToServer(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
             openLeftIndicator.state = shouldOpenLeft ? Indicator.State.ON : Indicator.State.OFF;
@@ -56,6 +58,8 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
 
         openRight = new IconButton(x + 8 + 20 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_RIGHT);
         openRight.withCallback(() -> {
+            if (te.getStation() != null)
+                station = te.getStation();
             boolean shouldOpenRight = station == null || !((ISidedStation) station).opensRight();
             AllPackets.channel.sendToServer(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
             openRightIndicator.state = shouldOpenRight ? Indicator.State.ON : Indicator.State.OFF;
