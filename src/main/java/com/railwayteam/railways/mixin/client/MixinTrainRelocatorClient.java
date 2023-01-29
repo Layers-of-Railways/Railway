@@ -2,7 +2,6 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
-import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.entity.TrainRelocator;

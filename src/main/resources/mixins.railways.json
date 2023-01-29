@@ -27,6 +27,8 @@
     "MixinScheduleRuntime",
     "MixinSignalBlock",
     "MixinSignalBoundary",
+    "MixinSlidingDoorMovementBehaviour",
+    "MixinSlidingDoorTileEntity",
     "MixinStationBlock",
     "MixinStationEditPacket",
     "MixinStationTileEntity",
@@ -40,9 +42,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTravellingPoint",
-    "client.MixinSuperGlueSelectionHandler",
-    "client.MixinTrainRelocatorClient"
+    "MixinTravellingPoint"
   ],
   "client": [
     "client.AccessorBogeyInstance",
@@ -58,6 +58,7 @@
     "client.MixinGlobalRailwayManager",
     "client.MixinPonderIndex",
     "client.MixinStationScreen",
+    "client.MixinSuperGlueSelectionHandler",
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackBlockClient",
     "client.MixinTrackBlockOutline",
@@ -66,7 +67,8 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
-    "client.MixinTrainPacket"
+    "client.MixinTrainPacket",
+    "client.MixinTrainRelocatorClient"
   ],
   "minVersion": "0.8"
 }

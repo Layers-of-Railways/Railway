@@ -133,6 +133,15 @@
 
 	"railways.station.train_limit": "Limit Trains",
 
+	"create.sliding_door.mode": "Open Mode",
+	"create.sliding_door.mode.manual": "Manual",
+	"create.sliding_door.mode.auto": "Automatic",
+	"create.sliding_door.mode.station_right": "Station Right",
+	"create.sliding_door.mode.station_left": "Station Left",
+
+	"railways.station.open_left": "Open Left Doors",
+	"railways.station.open_right": "Open Right Doors",
+
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 

@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.ILimited;
+import com.railwayteam.railways.mixin_interfaces.ISidedStation;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.GraphLocation;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
@@ -14,8 +15,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = StationEditPacket.class, remap = false)
-public abstract class MixinStationEditPacket implements ILimited {
+public abstract class MixinStationEditPacket implements ILimited, ISidedStation {
     private Boolean limitEnabled;
+    private Boolean openRight;
+    private Boolean openLeft;
 
     @Override
     public void setLimitEnabled(boolean limitEnabled) {
@@ -27,12 +30,45 @@ public abstract class MixinStationEditPacket implements ILimited {
         return limitEnabled;
     }
 
+    @Override
+    public boolean opensRight() {
+        return openRight;
+    }
+
+    @Override
+    public boolean opensLeft() {
+        return openLeft;
+    }
+
+    @Override
+    public void setOpensRight(boolean opensRight) {
+        this.openRight = opensRight;
+    }
+
+    @Override
+    public void setOpensLeft(boolean opensLeft) {
+        this.openLeft = opensLeft;
+    }
+
     @Inject(method = "writeSettings", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;writeBoolean(Z)Lio/netty/buffer/ByteBuf;", ordinal = 3, remap = true), cancellable = true)
     private void writeLimitEnabled(FriendlyByteBuf buffer, CallbackInfo ci) {
         buffer.writeBoolean(limitEnabled != null);
         if (limitEnabled != null) {
             buffer.writeBoolean(limitEnabled);
             ci.cancel();
+            return;
+        }
+        buffer.writeBoolean(openRight != null);
+        if (openRight != null) {
+            buffer.writeBoolean(openRight);
+            ci.cancel();
+            return;
+        }
+        buffer.writeBoolean(openLeft != null);
+        if (openLeft != null) {
+            buffer.writeBoolean(openLeft);
+            ci.cancel();
+            return;
         }
     }
 
@@ -41,6 +77,17 @@ public abstract class MixinStationEditPacket implements ILimited {
         if (buffer.readBoolean()) {
             limitEnabled = buffer.readBoolean();
             ci.cancel();
+            return;
+        }
+        if (buffer.readBoolean()) {
+            openRight = buffer.readBoolean();
+            ci.cancel();
+            return;
+        }
+        if (buffer.readBoolean()) {
+            openLeft = buffer.readBoolean();
+            ci.cancel();
+            return;
         }
     }
 
@@ -51,6 +98,24 @@ public abstract class MixinStationEditPacket implements ILimited {
             GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
             if (station != null && graphLocation != null) {
                 ((ILimited) station).setLimitEnabled(limitEnabled);
+                Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);
+                Create.RAILWAYS.markTracksDirty();
+            }
+        }
+        if (openRight != null) {
+            GlobalStation station = te.getStation();
+            GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
+            if (station != null && graphLocation != null) {
+                ((ISidedStation) station).setOpensRight(openRight);
+                Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);
+                Create.RAILWAYS.markTracksDirty();
+            }
+        }
+        if (openLeft != null) {
+            GlobalStation station = te.getStation();
+            GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
+            if (station != null && graphLocation != null) {
+                ((ISidedStation) station).setOpensLeft(openLeft);
                 Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);
                 Create.RAILWAYS.markTracksDirty();
             }

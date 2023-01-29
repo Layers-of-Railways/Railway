@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 44",
+	"_": "Missing Localizations: 51",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -133,6 +133,15 @@
 	"railways.tooltip.coupler.error.carriage_alignment": "UNLOCALIZED: Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
 
 	"railways.station.train_limit": "UNLOCALIZED: Limit Trains",
+
+	"create.sliding_door.mode": "UNLOCALIZED: Open Mode",
+	"create.sliding_door.mode.manual": "UNLOCALIZED: Manual",
+	"create.sliding_door.mode.auto": "UNLOCALIZED: Automatic",
+	"create.sliding_door.mode.station_right": "UNLOCALIZED: Station Right",
+	"create.sliding_door.mode.station_left": "UNLOCALIZED: Station Left",
+
+	"railways.station.open_left": "UNLOCALIZED: Open Left Doors",
+	"railways.station.open_right": "UNLOCALIZED: Open Right Doors",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
