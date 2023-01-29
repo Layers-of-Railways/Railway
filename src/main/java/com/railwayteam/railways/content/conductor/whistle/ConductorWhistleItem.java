@@ -22,7 +22,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -119,6 +121,13 @@ public class ConductorWhistleItem extends Item {
 
     }
 
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        if(pPlayer.isSteppingCarefully()){ // needs a second check to see if a train is on its way.
+            //cancel request. Takes linked conductor id from whistle NBT and discards the autoschedule + resumes the old one.
+        }
+        return InteractionResultHolder.pass(pPlayer.getItemInHand(pUsedHand));
+    }
 
 
     @SubscribeEvent
