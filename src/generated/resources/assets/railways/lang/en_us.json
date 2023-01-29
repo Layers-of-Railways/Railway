@@ -131,6 +131,8 @@
 	"railways.tooltip.coupler.error.missing_train": "Requires both track points to be occupied",
 	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
 
+	"railways.station.train_limit": "Limit Trains",
+
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 

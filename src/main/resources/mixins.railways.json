@@ -20,6 +20,7 @@
     "MixinBlockBehaviour",
     "MixinCarriageBogey",
     "MixinContraption",
+    "MixinGlobalStation",
     "MixinNavigation",
     "MixinReplaceTrackCheck",
     "MixinScheduleItem",
@@ -27,6 +28,7 @@
     "MixinSignalBlock",
     "MixinSignalBoundary",
     "MixinStationBlock",
+    "MixinStationEditPacket",
     "MixinStationTileEntity",
     "MixinToolboxHandler",
     "MixinTrackBlock",
@@ -38,7 +40,8 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTravellingPoint"
+    "MixinTravellingPoint",
+    "client.MixinSuperGlueSelectionHandler"
   ],
   "client": [
     "client.AccessorBogeyInstance",
@@ -53,6 +56,7 @@
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
     "client.MixinPonderIndex",
+    "client.MixinStationScreen",
     "client.MixinToolboxHandlerClient",
     "client.MixinTrackBlockClient",
     "client.MixinTrackBlockOutline",

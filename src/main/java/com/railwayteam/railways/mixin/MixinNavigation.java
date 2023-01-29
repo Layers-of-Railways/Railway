@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
+import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.simibubi.create.content.logistics.trains.TrackNode;
 import com.simibubi.create.content.logistics.trains.entity.Navigation;
@@ -60,5 +61,10 @@ public abstract class MixinNavigation implements IWaypointableNavigation {
         if (((IWaypointableNavigation) instance).isWaypointMode())
             return 10;
         return instance.distanceToDestination;
+    }
+
+    @Redirect(method = "search(DDZLcom/simibubi/create/content/logistics/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/logistics/trains/entity/Train;"))
+    private Train replacePresentTrain(GlobalStation instance) {
+        return ((ILimitedGlobalStation) instance).orDisablingTrain(instance.getPresentTrain(), train);
     }
 }

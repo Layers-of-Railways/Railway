@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 42",
+	"_": "Missing Localizations: 43",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -131,6 +131,8 @@
 	"railways.tooltip.coupler.error.mode_not_permitted": "UNLOCALIZED: Action not permitted in current mode",
 	"railways.tooltip.coupler.error.missing_train": "UNLOCALIZED: Requires both track points to be occupied",
 	"railways.tooltip.coupler.error.carriage_alignment": "UNLOCALIZED: Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
+
+	"railways.station.train_limit": "UNLOCALIZED: Limit Trains",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
