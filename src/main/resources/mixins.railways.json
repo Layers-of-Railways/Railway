@@ -41,7 +41,8 @@
     "MixinTrackTileEntity",
     "MixinTrain",
     "MixinTravellingPoint",
-    "client.MixinSuperGlueSelectionHandler"
+    "client.MixinSuperGlueSelectionHandler",
+    "client.MixinTrainRelocatorClient"
   ],
   "client": [
     "client.AccessorBogeyInstance",
