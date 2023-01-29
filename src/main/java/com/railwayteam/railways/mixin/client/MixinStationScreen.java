@@ -27,7 +27,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
         super(te, station);
     }
 
-    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/StationScreen;tickTrainDisplay()V"))
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/StationScreen;tickTrainDisplay()V", remap = false), remap = true)
     private void initCheckbox(CallbackInfo ci) {
         int x = guiLeft;
         int y = guiTop;
