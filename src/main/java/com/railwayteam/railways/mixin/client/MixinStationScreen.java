@@ -31,7 +31,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
     private void initCheckbox(CallbackInfo ci) {
         int x = guiLeft;
         int y = guiTop;
-        limitEnableCheckbox = new Checkbox(x + 8, y + background.height - 26, 50, 20, Components.translatable("railways.station.train_limit"), te.getStation() != null && ((ILimited) te.getStation()).isLimitEnabled()) {
+        limitEnableCheckbox = new Checkbox(x + 8, y + background.height - 26, 50, 20, Components.translatable("railways.station.train_limit"), station != null && ((ILimited) station).isLimitEnabled()) {
             @Override
             public void onPress() {
                 super.onPress();
@@ -44,26 +44,26 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
 
         openLeft = new IconButton(x + 8 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_LEFT);
         openLeft.withCallback(() -> {
-            boolean shouldOpenLeft = te.getStation() == null || !((ISidedStation) te.getStation()).opensLeft();
+            boolean shouldOpenLeft = station == null || !((ISidedStation) station).opensLeft();
             AllPackets.channel.sendToServer(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
             openLeftIndicator.state = shouldOpenLeft ? Indicator.State.ON : Indicator.State.OFF;
         });
         openLeft.setToolTip(Components.translatable("railways.station.open_left"));
         addRenderableWidget(openLeft);
         openLeftIndicator = new Indicator(x + 8 + buttonXOffset, y + background.height - 27, Components.translatable("railways.station.open_left"));
-        openLeftIndicator.state = (te.getStation() != null && ((ISidedStation) te.getStation()).opensLeft()) ? Indicator.State.ON : Indicator.State.OFF;
+        openLeftIndicator.state = (station != null && ((ISidedStation) station).opensLeft()) ? Indicator.State.ON : Indicator.State.OFF;
         addRenderableWidget(openLeftIndicator);
 
         openRight = new IconButton(x + 8 + 20 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_RIGHT);
         openRight.withCallback(() -> {
-            boolean shouldOpenRight = te.getStation() == null || !((ISidedStation) te.getStation()).opensRight();
+            boolean shouldOpenRight = station == null || !((ISidedStation) station).opensRight();
             AllPackets.channel.sendToServer(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
             openRightIndicator.state = shouldOpenRight ? Indicator.State.ON : Indicator.State.OFF;
         });
         openRight.setToolTip(Components.translatable("railways.station.open_right"));
         addRenderableWidget(openRight);
         openRightIndicator = new Indicator(x + 8 + 20 + buttonXOffset, y + background.height - 27, Components.translatable("railways.station.open_right"));
-        openRightIndicator.state = (te.getStation() != null && ((ISidedStation) te.getStation()).opensRight()) ? Indicator.State.ON : Indicator.State.OFF;
+        openRightIndicator.state = (station != null && ((ISidedStation) station).opensRight()) ? Indicator.State.ON : Indicator.State.OFF;
         addRenderableWidget(openRightIndicator);
     }
 }
