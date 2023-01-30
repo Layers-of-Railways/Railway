@@ -75,7 +75,7 @@
 
 	"railways.ponder.conductor_redstoning.header": "Redstone remota con maquinistas",
 	"railways.ponder.conductor_redstoning.text_1": "Los maquinistas pueden pulsar botones cuando un jugador los mira.",
-	"railways.ponder.conductor_redstoning.text_2": "Los maquinistas pueden también activar palancas cuando un jugador los mira.",
+	"railways.ponder.conductor_redstoning.text_2": "Los maquinistas también pueden activar palancas cuando un jugador los mira.",
 	"railways.ponder.conductor_redstoning.text_3": "Los maquinistas no activan redstone si el jugador lleva puesta una gorra de otro color.",
 
 	"railways.ponder.conductor_toolboxing.header": "Transporte de cajas de herramientas con maquinistas",
@@ -98,7 +98,7 @@
 	"create.railways.semaphore.search_mode.search_down": "Arriba",
 	"create.railways.semaphore.search_mode.search_up": "Abajo",
 
-	"railways.display_source.track_coupler_info": "Información del enganche de vagones",
+	"railways.display_source.track_coupler_info": "Información del acople de vagones",
 	"railways.display_source.coupler.no_action": "Acciones no disponibles",
 	"railways.display_source.coupler.coupling": "Acoplar: ",
 	"railways.display_source.coupler.coupling.to": "a: ",
