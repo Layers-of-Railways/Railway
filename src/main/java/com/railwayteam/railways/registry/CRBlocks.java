@@ -1,6 +1,8 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
+import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
@@ -94,6 +96,19 @@ public class CRBlocks {
           .lang("Train Coupler")
           .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
           .transform(customItemModel("_", "block_both"))
+          .register();
+
+  public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
+      REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
+          .initialProperties(SharedProperties::wooden)
+          .properties(p -> p.color(MaterialColor.COLOR_BROWN))
+          .properties(p -> p.noOcclusion())
+          .properties(p -> p.sound(SoundType.WOOD))
+          .properties(p -> p.instabreak())
+          .blockstate((c, p) -> p.simpleBlock(c.get()))
+          .lang("Conductor Whistle")
+          .item(ConductorWhistleItem::new)
+          .build()
           .register();
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);

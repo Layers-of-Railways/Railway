@@ -1,25 +1,38 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
+import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.TrackGraph;
-import com.simibubi.create.content.logistics.trains.TrackGraphHelper;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.logistics.trains.*;
+import com.simibubi.create.content.logistics.trains.entity.Carriage;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
+import com.simibubi.create.content.logistics.trains.management.schedule.Schedule;
+import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleEntry;
+import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
+import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduledDelay;
+import com.simibubi.create.content.logistics.trains.management.schedule.destination.DestinationInstruction;
 import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -30,39 +43,115 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem.withGraphLocation;
 
-public class ConductorWhistleItem extends Item {
+public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
-    public ConductorWhistleItem(Item.Properties properties) {
-        super(properties);
+    public static final String SPECIAL_MARKER = "<ConductorFlag>";
+
+    public ConductorWhistleItem(Block block, Item.Properties properties) {
+        super(block, properties, EdgePointType.STATION);
     }
 
     static boolean isTrack (Block block) { return CRTags.AllBlockTags.TRACKS.matches(block); }
     static boolean isTrack (BlockState state) { return CRTags.AllBlockTags.TRACKS.matches(state); }
     static boolean isTrack (Level level, BlockPos pos) { return isTrack(level.getBlockState(pos)); }
 
-    @Nonnull
     @Override
-    public InteractionResult useOn (UseOnContext ctx) {
-        Level level  = ctx.getLevel();
-        BlockPos pos = ctx.getClickedPos();
-        Player player = ctx.getPlayer();
+    public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) { //Not worth the effort
+        return false;
+    }
+
+    private static InteractionResult fail(Player player, String message) {
+        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), true);
+        return InteractionResult.FAIL;
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        CompoundTag tag = stack.getTag();
+        if (tag != null && tag.hasUUID("SelectedTrain") && tag.hasUUID("SelectedConductor")) {
+            UUID trainId = tag.getUUID("SelectedTrain");
+            UUID conductorId = tag.getUUID("SelectedConductor");
+            String trainName = "NOT FOUND";
+            GlobalRailwayManager railways = Create.RAILWAYS.sided(level);
+            if (railways != null && railways.trains.containsKey(trainId))
+                trainName = railways.trains.get(trainId).name.getString();
+
+            tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
+            tooltip.add(Components.translatable("railways.whistle.tool.conductor_id", conductorId.toString()));
+            tooltip.add(Components.translatable("railways.whistle.tool.train_id", trainName, trainId.toString()));
+        } else {
+            tooltip.add(Components.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
+        }
+    }
+
+    @Override
+    public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack pStack, @NotNull Player pPlayer,
+                                                           @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
+        if (pPlayer.level.isClientSide)
+            return InteractionResult.PASS;
+        if (pInteractionTarget instanceof ConductorEntity conductor && conductor.getVehicle() instanceof CarriageContraptionEntity cce) {
+            Train train = cce.getCarriage().train;
+            if (train.owner == pPlayer.getUUID()) {
+                CompoundTag stackTag = pStack.getOrCreateTag();
+                stackTag.putUUID("SelectedTrain", train.id);
+                stackTag.putUUID("SelectedConductor", conductor.getUUID());
+                pPlayer.displayClientMessage(Components.translatable("railways.whistle.set"), true);
+                pStack.setTag(stackTag);
+                pPlayer.setItemInHand(pUsedHand, pStack);
+                AllSoundEvents.PECULIAR_BELL_USE.play(pPlayer.level, null, conductor.getX(), conductor.getY(), conductor.getZ(), .5f, 1.1f);
+                return InteractionResult.SUCCESS;
+            } else {
+                pPlayer.displayClientMessage(Component.translatable("railways.whistle.not_owner").withStyle(ChatFormatting.RED), true);
+                return InteractionResult.FAIL;
+            }
+        }
+        return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext pContext) {
+        ItemStack stack = pContext.getItemInHand();
+        BlockPos pos = pContext.getClickedPos();
+        Level level = pContext.getLevel();
         BlockState state = level.getBlockState(pos);
-        ItemStack stack = ctx.getItemInHand();
+        Player player = pContext.getPlayer();
+
+        if (player == null)
+            return InteractionResult.FAIL;
+
+        if (player.isSteppingCarefully() && stack.hasTag()) {
+            if (level.isClientSide)
+                return InteractionResult.SUCCESS;
+            player.displayClientMessage(Components.translatable("railways.whistle.clear"), true);
+            stack.setTag(null);
+            AllSoundEvents.CONTROLLER_CLICK.play(level, null, pos, 1, .5f);
+            return InteractionResult.SUCCESS;
+        }
 
         if (state.getBlock() instanceof ITrackBlock track) {
             if (level.isClientSide)
@@ -70,81 +159,119 @@ public class ConductorWhistleItem extends Item {
 
             Vec3 lookAngle = player.getLookAngle();
             boolean front = track.getNearestTrackAxis(level, pos, state, lookAngle)
-                    .getSecond() == Direction.AxisDirection.POSITIVE;
+                .getSecond() == Direction.AxisDirection.POSITIVE;
             EdgePointType<?> type = getType(stack);
 
-            MutableObject<TrackTargetingBlockItem.OverlapResult> result = new MutableObject<>(null);
+            MutableObject<OverlapResult> result = new MutableObject<>(null);
             withGraphLocation(level, pos, front, null, type, (overlap, location) -> result.setValue(overlap));
 
             if (result.getValue().feedback != null) {
                 player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                        .withStyle(ChatFormatting.RED), true);
+                    .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
 
-            CompoundTag stackTag = stack.getOrCreateTag();
+            CompoundTag stackTag = stack.getTag();
+
+            if (stackTag == null || !stackTag.hasUUID("SelectedTrain") || !stackTag.hasUUID("SelectedConductor"))
+                return fail(player, "not_bound");
+
+            UUID trainId = stackTag.getUUID("SelectedTrain");
+            UUID conductorId = stackTag.getUUID("SelectedConductor");
+            if (!Create.RAILWAYS.trains.containsKey(trainId))
+                return fail(player, "train_missing");
+
+            Train train = Create.RAILWAYS.trains.get(trainId);
+            boolean foundConductor = false;
+            for (Carriage carriage : train.carriages) {
+                if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
+                    foundConductor = true;
+                    break;
+                }
+            }
+
+            if (!foundConductor)
+                return fail(player, "conductor_missing");
+
             stackTag.put("SelectedPos", NbtUtils.writeBlockPos(pos));
             stackTag.putBoolean("SelectedDirection", front);
-            player.displayClientMessage(Lang.translateDirect("whistle.used"), true);
+            stackTag.remove("Bezier");
             stack.setTag(stackTag);
-            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 2f, 1f);
 
-            List<Vec3> trackAxes = track.getTrackAxes(level, pos, state);
-            Direction.AxisDirection targetDirection = AccessorTrackTargetingBehavior.getTargetDirection();
-            GraphLocation loc = TrackGraphHelper.getGraphLocationAt(level, pos,targetDirection,trackAxes.get(0));
-            loc.graph.addPoint(edgePointType, point);
+            Direction[] directions = new Direction[] { Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP };
+            Direction successDirection = null;
+            for (Direction direction : directions) {
+                BlockPos placePos = pos.relative(direction);
+                Vec3 hitPos = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)
+                    .add(direction.getStepX() * 0.5, direction.getStepY() * 0.5, direction.getStepZ() * 0.5);
+                if (level.getBlockState(placePos).canBeReplaced(new BlockPlaceContext(level, player, pContext.getHand(), stack, new BlockHitResult(hitPos, direction.getOpposite(), placePos, false)))) {
+                    successDirection = direction;
+                    break;
+                }
+            }
+
+            if (successDirection == null) {
+                stackTag.remove("SelectedPos");
+                stackTag.remove("SelectedDirection");
+                stack.setTag(stackTag);
+                return fail(player, "no_space");
+            }
+
+            // have to own train if: non-auto schedule is in progress
+            if (train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != player) {
+                stackTag.remove("SelectedPos");
+                stackTag.remove("SelectedDirection");
+                stack.setTag(stackTag);
+                return fail(player, "not_owner");
+            }
+
+            if (train.runtime.getSchedule() != null && !train.runtime.isAutoSchedule) {
+                ItemStack scheduleStack = train.runtime.returnSchedule();
+                if (!player.addItem(scheduleStack))
+                    player.drop(scheduleStack, false);
+            }
+
+            BlockPos placePos = pos.relative(successDirection);
+
+            String stationName = SPECIAL_MARKER+placePos.toShortString();
+
+            BlockState placeState = CRBlocks.CONDUCTOR_WHISTLE_FLAG.getDefaultState();
+            level.setBlock(placePos, placeState, 11);
+            CompoundTag teTag = new CompoundTag();
+            teTag.putString("Name", stationName);
+            teTag.putBoolean("TargetDirection", stackTag.getBoolean("SelectedDirection"));
+            BlockPos selectedPos = NbtUtils.readBlockPos(stackTag.getCompound("SelectedPos"));
+            teTag.put("TargetTrack", NbtUtils.writeBlockPos(selectedPos.subtract(placePos)));
+            stackTag.put("BlockEntityTag", teTag);
+            stack.setTag(stackTag);
+
+            updateCustomBlockEntityTag(placePos, level, player, stack, placeState);
+            stackTag.remove("SelectedPos");
+            stackTag.remove("SelectedDirection");
+            stackTag.remove("BlockEntityTag");
+            stack.setTag(stackTag);
+
+            player.displayClientMessage(Components.translatable("railways.whistle.success"), true);
+            AllSoundEvents.CONTROLLER_CLICK.play(level, null, pos, 1, 1);
+
+            Schedule schedule = new Schedule();
+            ScheduleEntry entry = new ScheduleEntry();
+            DestinationInstruction instruction = new DestinationInstruction();
+            ScheduledDelay condition = new ScheduledDelay();
+            condition.getData().putInt("Value", 0);
+            instruction.getData().putString("Text", stationName);
+            entry.instruction = instruction;
+            if (entry.conditions.size() == 0)
+                entry.conditions.add(new ArrayList<>());
+            entry.conditions.get(0).add(condition);
+            schedule.entries.add(entry);
+            schedule.cyclic = false;
+            train.runtime.setSchedule(schedule, true);
+            ((AccessorScheduleRuntime) train.runtime).setCooldown(10);
             return InteractionResult.SUCCESS;
         }
-
-//        if (isTrack(level, pos)) {
-//            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(),
-//                    SoundSource.BLOCKS, 2f, 1f);
-//
-//
-//
-//
-//        public BezierTrackPointLocation getTargetBezier() {return targetBezier;}
-//
-//        public GraphLocation determineGraphLocation() {
-//            BlockState state = getTrackBlockState();
-//            ITrackBlock track = getTrack();
-//            List<Vec3> trackAxes = track.getTrackAxes(level, pos, state);
-//            Direction.AxisDirection targetDirection = AccessorTrackTargetingBehavior.getTargetDirection();
-//
-//            return targetBezier != null
-//                    ? TrackGraphHelper.getBezierGraphLocationAt(level, pos, targetDirection, targetBezier)
-//                    : TrackGraphHelper.getGraphLocationAt(level, pos, targetDirection, trackAxes.get(0));
-//        }
-
-        return super.useOn(ctx);
-
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if(pPlayer.isSteppingCarefully()){ // needs a second check to see if a train is on its way.
-            //cancel request. Takes linked conductor id from whistle NBT and discards the autoschedule + resumes the old one.
-        }
-        return InteractionResultHolder.pass(pPlayer.getItemInHand(pUsedHand));
-    }
-
-
-    @SubscribeEvent
-    public static void interactWithConductor(PlayerInteractEvent.EntityInteractSpecific event) {
-        Entity entity = event.getTarget();
-        Player player = event.getEntity();
-        if (player == null || entity == null)
-            return;
-        if (player.isSpectator())
-            return;
-
-        Entity rootVehicle = entity.getRootVehicle();
-        if (!(rootVehicle instanceof CarriageContraptionEntity))
-            return;
-        if (!(entity instanceof LivingEntity living))
-            return;
-
+        return InteractionResult.FAIL;
     }
 }
 

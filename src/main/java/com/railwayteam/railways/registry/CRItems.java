@@ -42,11 +42,6 @@ public class CRItems {
     REGISTRATE.creativeModeTab(() -> itemGroup, "Create Railways");
   }
 
-  public static final ItemEntry<ConductorWhistleItem> CONDUCTOR_WHISTLE =
-          REGISTRATE.item("conductor_whistle", ConductorWhistleItem::new)
-                  .lang("Conductor's Whistle")
-                  .register();
-
   public static final TagKey<Item> CONDUCTOR_CAPS = makeItemTag(Railways.MODID, "conductor_caps");
 
   public static TagKey<Item> makeForgeItemTag(String path) {
