@@ -1,5 +1,7 @@
 package com.railwayteam.railways.content.semaphore;
 
+import com.railwayteam.railways.Config;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
@@ -81,7 +83,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         Vec3 look = context.getPlayer().getLookAngle();
         Vec3 cross = look.cross(new Vec3(facing.step()));
         boolean flipped = cross.y<0;
-        boolean upside_down = context.getClickedFace() == Direction.DOWN;
+        boolean upside_down = context.getClickedFace() == Direction.DOWN && !Config.SIMPLIFIED_SEMAPHORE_PLACEMENT.get();
 
         return state.setValue(FACING,facing).setValue(FLIPPED,flipped).setValue(UPSIDE_DOWN,upside_down);
     }
@@ -96,7 +98,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             if (context.getClickedFace() == state.getValue(FACING))
             {
                 rotated = state.cycle(FLIPPED);
-            } else if (context.getClickedFace() == state.getValue(FACING).getOpposite()) {
+            } else if (context.getClickedFace() == state.getValue(FACING).getOpposite() && !Config.SIMPLIFIED_SEMAPHORE_PLACEMENT.get()) {
                 rotated = state.cycle(UPSIDE_DOWN);
                 upsideDownChanged = true;
             }
@@ -217,7 +219,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
                 Vec3 look = player.getLookAngle();
                 Vec3 cross = look.cross(new Vec3(facing.step()));
                 boolean flipped = cross.y<0;
-                boolean upsideDown = offsetDirection == Direction.DOWN;
+                boolean upsideDown = offsetDirection == Direction.DOWN && !Config.SIMPLIFIED_SEMAPHORE_PLACEMENT.get();
 
                 return PlacementOffset.success(newPos, x -> x.setValue(FLIPPED,flipped).setValue(FACING,facing).setValue(UPSIDE_DOWN,upsideDown));
             }

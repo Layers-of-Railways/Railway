@@ -14,11 +14,14 @@ import java.nio.file.Path;
 public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
+    public static final String CATEGORY_SEMAPHORE = "semaphore";
 
     public static final ForgeConfigSpec COMMON_CONFIG;
     public static final ForgeConfigSpec CLIENT_CONFIG;
 
-    public static ForgeConfigSpec.BooleanValue HIBYE;
+//    public static ForgeConfigSpec.BooleanValue HIBYE;
+    public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
+    public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
 
 
     static {
@@ -27,7 +30,9 @@ public class Config {
         ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
 
         COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
-        setupOneConfigCategory(COMMON_BUILDER);
+        setupGeneralCategory(COMMON_BUILDER);
+        COMMON_BUILDER.pop().comment("Semaphore settings").push(CATEGORY_SEMAPHORE);
+        setupSemaphoreCategory(COMMON_BUILDER);
         COMMON_BUILDER.pop();
 
 
@@ -35,9 +40,16 @@ public class Config {
         CLIENT_CONFIG = CLIENT_BUILDER.build();
     }
 
-    private static void setupOneConfigCategory(ForgeConfigSpec.Builder COMMON_BUILDER) {
+    private static void setupGeneralCategory(ForgeConfigSpec.Builder COMMON_BUILDER) {
         //ROLLER_SU = COMMON_BUILDER.comment("Base SU for the Rolling Machine").defineInRange("rollingMachineSU", 4, 0, Integer.MAX_VALUE);
-        HIBYE = COMMON_BUILDER.comment("sorceror").define("hibye", false);
+//        HIBYE = COMMON_BUILDER.comment("sorceror").define("hibye", false);
+    }
+
+    private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {
+        SIMPLIFIED_SEMAPHORE_PLACEMENT = builder.comment("Simplified semaphore placement").define("simplifiedSemaphorePlacement", true);
+        //Whether yellow is above red when semaphores are flipped upside-down
+        SEMAPHORES_FLIP_YELLOW_ORDER = builder.comment("Whether semaphore color order is reversed when the semaphores are oriented upside-down")
+            .define("semaphoresFlipYellowOrder", false);
     }
 
     public static void loadConfig(ForgeConfigSpec spec, Path path) {

@@ -1,14 +1,13 @@
 {
-	"_": "Missing Localizations: 5",
+	"_": "Missing Localizations: 33",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
-
-	"_": "UNLOCALIZED: Thank you for translating Create Steam 'n Rails!",
 
 	"block.railways.semaphore": "Semáforo",
 	"block.railways.track_acacia": "Vía de tren de acacia",
 	"block.railways.track_birch": "Vía de tren de abedul",
 	"block.railways.track_blackstone": "UNLOCALIZED: Blackstone Train Track",
+	"block.railways.track_coupler": "UNLOCALIZED: Train Coupler",
 	"block.railways.track_crimson": "Vía de tren carmesí",
 	"block.railways.track_dark_oak": "Vía de tren de roble oscuro",
 	"block.railways.track_jungle": "Vía de tren de jungla",
@@ -70,12 +69,15 @@
 
 	"railways.ponder.conductor_constructing.header": "Construir un maquinista",
 	"railways.ponder.conductor_constructing.text_1": "Los maquinistas son construidos con un revestimiento de Andesita.",
+
 	"railways.ponder.conductor_redstoning.header": "Redstone remota con maquinistas",
 	"railways.ponder.conductor_redstoning.text_1": "Los maquinistas pueden pulsar botones cuando un jugador los mira.",
 	"railways.ponder.conductor_redstoning.text_2": "Los maquinistas pueden tambien activar palancas cuando un jugador los mira.",
 	"railways.ponder.conductor_redstoning.text_3": "Los maquinistas no activan redstone si el jugador lleva puesta una gorra de otro color.",
+
 	"railways.ponder.conductor_toolboxing.header": "Transporte de cajas de herramientas con maquinistas",
 	"railways.ponder.conductor_toolboxing.text_1": "Las cajas de herramientas funcionan igual cuando los maquinistas las llevan.",
+
 	"railways.ponder.train_semaphore.header": "Visualizando estados de señal usando semáforos",
 	"railways.ponder.train_semaphore.text_1": "Los semáforos se colocan en postes encima de señales de tren",
 	"railways.ponder.train_semaphore.text_2": "Los postes del semáforo pueden ser de diferentes materiales",
@@ -86,10 +88,6 @@
 	"railways.ponder.train_semaphore.text_7": "El semáforo de arriba se cerrará si todas las trayectorias están bloquedas",
 	"railways.ponder.train_semaphore.text_8": "Cuando colocas 2 semáforos en una señal que no sea de latón, los dos se cerrarán simultáneamente",
 
-	"create.railways.semaphore.search_mode": "Orientación de semáforo",
-	"create.railways.semaphore.search_mode.search_down": "Arriba",
-	"create.railways.semaphore.search_mode.search_up": "Abajo",
-
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
@@ -97,6 +95,42 @@
 	"create.railways.semaphore.search_mode.search_down": "Arriba",
 	"create.railways.semaphore.search_mode.search_up": "Abajo",
 
-	"_": "Thank you for translating Create Steam 'n Rails!"
+	"railways.display_source.track_coupler_info": "UNLOCALIZED: Track Coupler Information",
+	"railways.display_source.coupler.no_action": "UNLOCALIZED: No Available Actions",
+	"railways.display_source.coupler.coupling": "UNLOCALIZED: Coupling: ",
+	"railways.display_source.coupler.coupling.to": "UNLOCALIZED: to: ",
+	"railways.display_source.coupler.decoupling": "UNLOCALIZED: Decoupling: ",
+
+	"railways.coupler.edge_spacing": "UNLOCALIZED: Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "UNLOCALIZED: Meters",
+	"railways.coupler.mode.coupling": "UNLOCALIZED: -> Coupling",
+	"railways.coupler.mode.decoupling": "UNLOCALIZED: -> Decoupling",
+	"railways.coupler.mode.both": "UNLOCALIZED: -> Coupling & Decoupling",
+
+	"railways.schedule.instruction.redstone_link": "UNLOCALIZED: Power Redstone Link",
+	"railways.schedule.instruction.redstone_link.power": "UNLOCALIZED: Power Level: %s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "UNLOCALIZED: Power Level",
+	"railways.schedule.condition.loaded": "UNLOCALIZED: Chunk Loaded",
+	"railways.schedule.condition.loaded.status": "UNLOCALIZED: Waiting for chunk load",
+
+	"railways.tooltip.coupler.header": "UNLOCALIZED: Coupler Information",
+	"railways.tooltip.coupler.mode": "UNLOCALIZED: Coupler Mode:",
+	"railways.tooltip.coupler.train1": "UNLOCALIZED: §lTrain 1: §r%s",
+	"railways.tooltip.coupler.train2": "UNLOCALIZED: §lTrain 2: §r%s",
+	"railways.tooltip.coupler.action.none": "UNLOCALIZED: Action: None available",
+	"railways.tooltip.coupler.action.coupling": "UNLOCALIZED: Action: Coupling",
+	"railways.tooltip.coupler.action.decoupling": "UNLOCALIZED: Action: Decoupling",
+
+
+	"_": "->------------------------]  Item Descriptions  [------------------------<-",
+
+	"block.railways.track_coupler.tooltip": "UNLOCALIZED: TRAIN COUPLER",
+	"block.railways.track_coupler.tooltip.summary": "UNLOCALIZED: Bind to a track under the _middle_ of a train's _front bogey_, then scroll on top with a wrench to extend the coupler under another train's _rear bogey_.",
+	"block.railways.track_coupler.tooltip.condition1": "UNLOCALIZED: When the right carriages are over the track points, and the Coupler is in the right mode",
+	"block.railways.track_coupler.tooltip.behaviour1": "UNLOCALIZED: Providing a _redstone signal_ will _couple_ the two trains together.",
+	"block.railways.track_coupler.tooltip.condition2": "UNLOCALIZED: When a different track targeting block (such as a Train Signal) is bound to the same track",
+	"block.railways.track_coupler.tooltip.behaviour2": "UNLOCALIZED: The coupler icon will _move_ to the side, and they will _coexist_.",
+
+	"_": "Thank you for translating Steam 'n Rails!"
 
 }

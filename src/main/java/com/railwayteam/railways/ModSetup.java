@@ -14,6 +14,8 @@ public class ModSetup {
     CREntities.register();
     CRPackets.registerPackets();
     CRTags.register();
+    CREdgePointTypes.register();
+    CRSchedule.register();
   }
 }
 
