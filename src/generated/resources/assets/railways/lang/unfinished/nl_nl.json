@@ -129,7 +129,7 @@
 	"block.railways.track_coupler.tooltip.condition1": "Wanneer de juiste wagens over de spoor punten, en de Koppelaar in de juiste stand is",
 	"block.railways.track_coupler.tooltip.behaviour1": "Geef een _redstone signaal_ en de twee treinen zullen samen _koppelen_.",
 	"block.railways.track_coupler.tooltip.condition2": "Wanneer een ander spoor gericht blok (zoals een trein signaal) is verbonden aan hetzelfde spoor",
-	"block.railways.track_coupler.tooltip.behaviour2": "Het koppelaar icoon zal _bewegen_ naar de zijkant, and zullen naast elkaar  bestaan.",
+	"block.railways.track_coupler.tooltip.behaviour2": "Het koppelaar icoon zal _bewegen_ naar de zijkant, and zullen naast elkaar bestaan.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 
