@@ -2,14 +2,19 @@ package com.railwayteam.railways.content.conductor.whistle;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +28,13 @@ public class ConductorWhistleFlagRenderer extends SmartTileEntityRenderer<Conduc
     protected void renderSafe(ConductorWhistleFlagTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
         renderEdgePoint(te, ms, buffer, light, overlay);
+
+        ItemStack cap = CRItems.ITEM_CONDUCTOR_CAP.get(te.getColor()).asStack();
+        Minecraft mc = Minecraft.getInstance();
+
+        ms.pushPose();
+        mc.getItemRenderer().renderStatic(cap, ItemTransforms.TransformType.HEAD, light, overlay, ms, buffer, 0);
+        ms.popPose();
     }
 
     private void renderEdgePoint(ConductorWhistleFlagTileEntity te, PoseStack ms, MultiBufferSource buffer,

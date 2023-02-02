@@ -120,6 +120,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 CompoundTag stackTag = pStack.getOrCreateTag();
                 stackTag.putUUID("SelectedTrain", train.id);
                 stackTag.putUUID("SelectedConductor", conductor.getUUID());
+                stackTag.putByte("SelectedColor", conductor.getEntityData().get(ConductorEntity.COLOR));
                 pPlayer.displayClientMessage(Components.translatable("railways.whistle.set"), true);
                 pStack.setTag(stackTag);
                 pPlayer.setItemInHand(pUsedHand, pStack);
@@ -240,6 +241,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             level.setBlock(placePos, placeState, 11);
             CompoundTag teTag = new CompoundTag();
             teTag.putString("Name", stationName);
+            teTag.putByte("SelectedColor", stackTag.getByte("SelectedColor"));
             teTag.putBoolean("TargetDirection", stackTag.getBoolean("SelectedDirection"));
             BlockPos selectedPos = NbtUtils.readBlockPos(stackTag.getCompound("SelectedPos"));
             teTag.put("TargetTrack", NbtUtils.writeBlockPos(selectedPos.subtract(placePos)));

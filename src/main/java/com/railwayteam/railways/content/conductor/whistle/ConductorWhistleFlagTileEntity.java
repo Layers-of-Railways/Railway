@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
@@ -12,6 +13,8 @@ import com.simibubi.create.content.logistics.trains.management.schedule.destinat
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,6 +25,7 @@ public class ConductorWhistleFlagTileEntity extends SmartTileEntity implements I
 
     public TrackTargetingBehaviour<GlobalStation> station;
     private boolean tickedOnce = false;
+    private DyeColor color = DyeColor.RED;
 
     public ConductorWhistleFlagTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -30,6 +34,10 @@ public class ConductorWhistleFlagTileEntity extends SmartTileEntity implements I
 
     protected String targetStationName() {
         return ConductorWhistleItem.SPECIAL_MARKER+this.getBlockPos().toShortString();
+    }
+
+    DyeColor getColor() {
+        return color;
     }
 
     @Override
@@ -74,5 +82,17 @@ public class ConductorWhistleFlagTileEntity extends SmartTileEntity implements I
     public void addBehaviours(List<TileEntityBehaviour> behaviours) {
         station = new TrackTargetingBehaviour<>(this, EdgePointType.STATION);
         behaviours.add(station);
+    }
+
+    @Override
+    protected void write(CompoundTag tag, boolean clientPacket) {
+        super.write(tag, clientPacket);
+        tag.putByte("SelectedColor", ConductorEntity.idFrom(color));
+    }
+
+    @Override
+    protected void read(CompoundTag tag, boolean clientPacket) {
+        super.read(tag, clientPacket);
+        color = ConductorEntity.colorFrom(tag.getByte("SelectedColor"));
     }
 }

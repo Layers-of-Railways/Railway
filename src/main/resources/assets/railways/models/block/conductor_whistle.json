@@ -1,0 +1,22 @@
+{
+	"credit": "By Slimeist",
+	"parent": "minecraft:block",
+	"textures": {
+		"0": "railways:block/conductor_whistle",
+		"particle": "railways:block/conductor_whistle"
+	},
+	"elements": [
+		{
+			"from": [7, 0, 7],
+			"to": [9, 13, 9],
+			"faces": {
+				"north": {"uv": [9, 3, 11, 16], "texture": "#0"},
+				"east": {"uv": [1, 2, 3, 15], "texture": "#0"},
+				"south": {"uv": [5, 2, 7, 15], "texture": "#0"},
+				"west": {"uv": [13, 0, 15, 13], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+			}
+		}
+	]
+}
