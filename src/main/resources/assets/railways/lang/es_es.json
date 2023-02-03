@@ -1,21 +1,20 @@
 {
-
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
+	"_": "First translation by: muriplz | Second translation by: AndreSk_",
 	"block.railways.semaphore": "Semáforo",
 	"block.railways.track_acacia": "Vía de tren de acacia",
 	"block.railways.track_birch": "Vía de tren de abedul",
+	"block.railways.track_blackstone": "Blackstone Train Track",
+	"block.railways.track_coupler": "Train Coupler",
 	"block.railways.track_crimson": "Vía de tren carmesí",
 	"block.railways.track_dark_oak": "Vía de tren de roble oscuro",
 	"block.railways.track_jungle": "Vía de tren de jungla",
+	"block.railways.track_mangrove": "Mangrove Train Track",
 	"block.railways.track_oak": "Vía de tren de roble",
 	"block.railways.track_spruce": "Vía de tren de abeto",
 	"block.railways.track_warped": "Vía de tren distorsionada",
-
 	"entity.railways.benchcart": "Vagoneta con mesa de trabajo",
 	"entity.railways.conductor": "Maquinista",
 	"entity.railways.jukeboxcart": "Vagoneta con tocadiscos",
-
 	"item.railways.benchcart": "Vagoneta con mesa de crafteo",
 	"item.railways.black_conductor_cap": "Gorra de maquinista negra",
 	"item.railways.black_incomplete_conductor_cap": "Gorra de maquinista negra incompleta",
@@ -48,9 +47,11 @@
 	"item.railways.red_incomplete_conductor_cap": "Gorra de maquinista roja incompleta",
 	"item.railways.track_incomplete_acacia": "Vía de tren de acacia incompleta",
 	"item.railways.track_incomplete_birch": "Vía de tren de abedul incompleta",
+	"item.railways.track_incomplete_blackstone": "Incomplete Blackstone Track",
 	"item.railways.track_incomplete_crimson": "Vía de tren carmesí incompleta",
 	"item.railways.track_incomplete_dark_oak": "Vía de tren de roble oscuro incompleta",
 	"item.railways.track_incomplete_jungle": "Vía de tren de jungla incompleta",
+	"item.railways.track_incomplete_mangrove": "Incomplete Mangrove Track",
 	"item.railways.track_incomplete_oak": "Vía de tren de roble incompleta",
 	"item.railways.track_incomplete_spruce": "Vía de tren de abeto incompleta",
 	"item.railways.track_incomplete_warped": "Vía de tren distorsionada incompleta",
@@ -58,9 +59,7 @@
 	"item.railways.white_incomplete_conductor_cap": "Gorra de maquinista blanca incompleta",
 	"item.railways.yellow_conductor_cap": "Gorra de maquinista amarilla",
 	"item.railways.yellow_incomplete_conductor_cap": "Gorra de maquinista amarilla incompleta",
-
 	"itemGroup.railways": "Create Railways",
-
 	"railways.ponder.conductor_constructing.header": "Construir un maquinista",
 	"railways.ponder.conductor_constructing.text_1": "Los maquinistas son construidos con un revestimiento de Andesita.",
 	"railways.ponder.conductor_redstoning.header": "Redstone remota con maquinistas",
@@ -78,14 +77,35 @@
 	"railways.ponder.train_semaphore.text_6": "El semáforo de abajo se cerrará si cualquiera de las trayectorias están bloqueadas",
 	"railways.ponder.train_semaphore.text_7": "El semáforo de arriba se cerrará si todas las trayectorias están bloquedas",
 	"railways.ponder.train_semaphore.text_8": "Cuando colocas 2 semáforos en una señal que no sea de latón, los dos se cerrarán simultáneamente",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "Orientación de semáforo",
 	"create.railways.semaphore.search_mode.search_down": "Arriba",
 	"create.railways.semaphore.search_mode.search_up": "Abajo",
-
-	"_": "First translation by: muriplz | Second translation by: AndreSk_"
-
+	"railways.display_source.track_coupler_info": "Track Coupler Information",
+	"railways.display_source.coupler.no_action": "No Available Actions",
+	"railways.display_source.coupler.coupling": "Coupling: ",
+	"railways.display_source.coupler.coupling.to": "to: ",
+	"railways.display_source.coupler.decoupling": "Decoupling: ",
+	"railways.coupler.edge_spacing": "Carriage Spacing",
+	"railways.coupler.edge_spacing.meters": "Meters",
+	"railways.coupler.mode.coupling": "-> Coupling",
+	"railways.coupler.mode.decoupling": "-> Decoupling",
+	"railways.coupler.mode.both": "-> Coupling & Decoupling",
+	"railways.schedule.instruction.redstone_link": "Power Redstone Link",
+	"railways.schedule.instruction.redstone_link.power": "Power Level: %s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
+	"railways.schedule.condition.loaded": "Chunk Loaded",
+	"railways.schedule.condition.loaded.status": "Waiting for chunk load",
+	"railways.tooltip.coupler.header": "Coupler Information",
+	"railways.tooltip.coupler.mode": "Coupler Mode:",
+	"railways.tooltip.coupler.train1": "§lTrain 1: §r%s",
+	"railways.tooltip.coupler.train2": "§lTrain 2: §r%s",
+	"railways.tooltip.coupler.action.none": "Action: None available",
+	"railways.tooltip.coupler.action.coupling": "Action: Coupling",
+	"railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
+	"block.railways.track_coupler.tooltip": "TRAIN COUPLER",
+	"block.railways.track_coupler.tooltip.summary": "Bind to a track under the _middle_ of a train's _front bogey_, then scroll on top with a wrench to extend the coupler under another train's _rear bogey_.",
+	"block.railways.track_coupler.tooltip.condition1": "When the right carriages are over the track points, and the Coupler is in the right mode",
+	"block.railways.track_coupler.tooltip.behaviour1": "Providing a _redstone signal_ will _couple_ the two trains together.",
+	"block.railways.track_coupler.tooltip.condition2": "When a different track targeting block (such as a Train Signal) is bound to the same track",
+	"block.railways.track_coupler.tooltip.behaviour2": "The coupler icon will _move_ to the side, and they will _coexist_."
 }
