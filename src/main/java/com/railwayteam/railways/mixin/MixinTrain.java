@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
+import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.logistics.trains.DimensionPalette;
@@ -28,10 +29,21 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.*;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule {
     @Shadow public TrackGraph graph;
 
     public Set<UUID> occupiedCouplers;
+    protected int index = 0;
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @Override
     public Set<UUID> getOccupiedCouplers() {
@@ -89,11 +101,13 @@ public abstract class MixinTrain implements IOccupiedCouplers {
 
     @Inject(method = "write", at = @At("RETURN"))
     private void writeOccupiedCouplers(DimensionPalette dimensions, CallbackInfoReturnable<CompoundTag> cir) {
-        cir.getReturnValue().put("OccupiedCouplers", NBTHelper.writeCompoundList(occupiedCouplers, uid -> {
+        CompoundTag tag = cir.getReturnValue();
+        tag.put("OccupiedCouplers", NBTHelper.writeCompoundList(occupiedCouplers, uid -> {
             CompoundTag compoundTag = new CompoundTag();
             compoundTag.putUUID("Id", uid);
             return compoundTag;
         }));
+        tag.putInt("ScheduleHolderIndex", index);
     }
 
     @Inject(method = "read", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
@@ -103,5 +117,6 @@ public abstract class MixinTrain implements IOccupiedCouplers {
 
         NBTHelper.iterateCompoundList(tag.getList("OccupiedCouplers", Tag.TAG_COMPOUND),
             c -> ((IOccupiedCouplers) train).getOccupiedCouplers().add(c.getUUID("Id")));
+        ((IIndexedSchedule) train).setIndex(tag.getInt("ScheduleHolderIndex"));
     }
 }

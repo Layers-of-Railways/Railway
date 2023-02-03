@@ -20,6 +20,7 @@ public class Config {
     public static final ForgeConfigSpec CLIENT_CONFIG;
 
 //    public static ForgeConfigSpec.BooleanValue HIBYE;
+    public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
 
 
@@ -45,6 +46,7 @@ public class Config {
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {
+        SIMPLIFIED_SEMAPHORE_PLACEMENT = builder.comment("Simplified semaphore placement").define("simplifiedSemaphorePlacement", true);
         //Whether yellow is above red when semaphores are flipped upside-down
         SEMAPHORES_FLIP_YELLOW_ORDER = builder.comment("Whether semaphore color order is reversed when the semaphores are oriented upside-down")
             .define("semaphoresFlipYellowOrder", false);

@@ -4,24 +4,25 @@
 	
 	"block.railways.mono_bogey": "单轨转向架",
 	"block.railways.mono_bogey_upside_down": "倒置单轨转向架",
+
 	"block.railways.semaphore": "臂板信号机",
 	"block.railways.track_acacia": "金合欢木列车轨道",
 	"block.railways.track_birch": "白桦木列车轨道",
 	"block.railways.track_blackstone": "黑石列车轨道",
+
 	"block.railways.track_coupler": "列车连挂器",
 	"block.railways.track_crimson": "绯红木列车轨道",
 	"block.railways.track_dark_oak": "深色橡木列车轨道",
 	"block.railways.track_jungle": "丛林木列车轨道",
 	"block.railways.track_mangrove": "红树列车轨道",
 	"block.railways.track_monorail": "单轨列车轨道",
+
 	"block.railways.track_oak": "橡木列车轨道",
 	"block.railways.track_spruce": "云杉木列车轨道",
 	"block.railways.track_warped": "诡异木列车轨道",
-
 	"entity.railways.benchcart": "工作台矿车",
 	"entity.railways.conductor": "指挥机器人",
 	"entity.railways.jukeboxcart": "唱片机矿车",
-
 	"item.railways.benchcart": "工作台矿车",
 	"item.railways.black_conductor_cap": "黑色列车长帽",
 	"item.railways.black_incomplete_conductor_cap": "黑色列车长帽（半成品）",
@@ -54,12 +55,14 @@
 	"item.railways.red_incomplete_conductor_cap": "红色列车长帽（半成品）",
 	"item.railways.track_incomplete_acacia": "金合欢木列车轨道（半成品）",
 	"item.railways.track_incomplete_birch": "白桦木列车轨道（半成品）",
+
 	"item.railways.track_incomplete_blackstone": "黑石列车轨道（半成品）",
 	"item.railways.track_incomplete_crimson": "绯红木列车轨道（半成品）",
 	"item.railways.track_incomplete_dark_oak": "深色橡木列车轨道（半成品）",
 	"item.railways.track_incomplete_jungle": "丛林木列车轨道（半成品）",
 	"item.railways.track_incomplete_mangrove": "红树列车轨道（半成品）",
 	"item.railways.track_incomplete_monorail": "单轨列车轨道（半成品）",
+
 	"item.railways.track_incomplete_oak": "橡木列车轨道（半成品）",
 	"item.railways.track_incomplete_spruce": "云杉木列车轨道（半成品）",
 	"item.railways.track_incomplete_warped": "诡异木列车轨道（半成品）",
@@ -67,9 +70,7 @@
 	"item.railways.white_incomplete_conductor_cap": "白色列车长帽（半成品）",
 	"item.railways.yellow_conductor_cap": "黄色列车长帽",
 	"item.railways.yellow_incomplete_conductor_cap": "黄色列车长帽（半成品）",
-
 	"itemGroup.railways": "机械动力：汽鸣铁道",
-
 	"railways.ponder.conductor_constructing.header": "创建一个指挥机器人",
 	"railways.ponder.conductor_constructing.text_1": "指挥机器人由安山机壳组成",
 	
@@ -90,10 +91,6 @@
 	"railways.ponder.train_semaphore.text_6": "如果有任一可用信号区间被阻塞，底部的信号机将会关闭",
 	"railways.ponder.train_semaphore.text_7": "如果所有信号区间都被阻塞，顶部的信号机将会关闭",
 	"railways.ponder.train_semaphore.text_8": "当两个臂板信号机都放置在非黄铜信号机上时，它们会同时关闭",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "信号来源方向",
 	"create.railways.semaphore.search_mode.search_down": "下方",
 	"create.railways.semaphore.search_mode.search_up": "上方",
@@ -158,3 +155,4 @@
 	"_": "Thank you for translating Steam 'n Rails!"
 
 }
+
