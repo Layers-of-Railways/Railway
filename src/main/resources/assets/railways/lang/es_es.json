@@ -23,6 +23,7 @@
 	"entity.railways.jukeboxcart": "Vagoneta con tocadiscos",
 
 	"item.railways.benchcart": "Vagoneta con mesa de trabajo",
+
 	"item.railways.black_conductor_cap": "Gorra de maquinista negra",
 	"item.railways.black_incomplete_conductor_cap": "Gorra de maquinista negra incompleta",
 	"item.railways.blue_conductor_cap": "Gorra de maquinista azul",
@@ -54,6 +55,7 @@
 	"item.railways.red_incomplete_conductor_cap": "Gorra de maquinista roja incompleta",
 	"item.railways.track_incomplete_acacia": "Vía de tren de acacia incompleta",
 	"item.railways.track_incomplete_birch": "Vía de tren de abedul incompleta",
+
 	"item.railways.track_incomplete_blackstone": "Vía de tren de piedra negra incompleta",
 	"item.railways.track_incomplete_crimson": "Vía de tren carmesí incompleta",
 	"item.railways.track_incomplete_dark_oak": "Vía de tren de roble oscuro incompleta",
@@ -67,6 +69,7 @@
 	"item.railways.white_incomplete_conductor_cap": "Gorra de maquinista blanca incompleta",
 	"item.railways.yellow_conductor_cap": "Gorra de maquinista amarilla",
 	"item.railways.yellow_incomplete_conductor_cap": "Gorra de maquinista amarilla incompleta",
+
 
 	"itemGroup.railways": "Create Railways",
 
@@ -145,5 +148,4 @@
 	"block.create.track_station.tooltip.summary": "Un _desplegador_ que sostenga una _llave inglesa_ puede ensamblar y desensamblar trenes automáticamente al interactuar con una _estación_. _Pista_: puedes usar tolvas para darle una llave inglesa a un desplegador.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
-
 }
