@@ -1,7 +1,5 @@
 {
-
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
+	"_": "Thank you for translating Create Steam 'n Rails!",
 	"block.railways.semaphore": "Semafoor",
 	"block.railways.track_acacia": "Acacia Treinspoor",
 	"block.railways.track_birch": "Berkenhouten Treinspoor",
@@ -9,15 +7,13 @@
 	"block.railways.track_crimson": "Helrode Houten Treinspoor",
 	"block.railways.track_dark_oak": "Donkereikenhouten Treinspoor",
 	"block.railways.track_jungle": "Oerwoudhouten Treinspoor",
+	"block.railways.track_mangrove": "Mangrovehouten Treinspoor",
 	"block.railways.track_oak": "Eikenhouten Treinspoor",
 	"block.railways.track_spruce": "Sparrenhouten Treinspoor",
 	"block.railways.track_warped": "Spookachtige Houten Treinspoor",
-	"block.railways.track_mangrove": "Mangrovehouten Treinspoor",
-
 	"entity.railways.benchcart": "Mijnkar met Werkbank",
 	"entity.railways.conductor": "Conducteur",
 	"entity.railways.jukeboxcart": "Mijnkar met Platenspeler",
-
 	"item.railways.benchcart": "Mijnkar met Werkbank",
 	"item.railways.black_conductor_cap": "Zwarte Conducteurspet",
 	"item.railways.black_incomplete_conductor_cap": "Onvolledige Zwarte Conducteurspet",
@@ -54,17 +50,15 @@
 	"item.railways.track_incomplete_crimson": "Onvolledig Helrode Houten Treinspoor",
 	"item.railways.track_incomplete_dark_oak": "Onvolledig Donkereikenhouten Treinspoor",
 	"item.railways.track_incomplete_jungle": "Onvolledig Oerwoudhouten Treinspoor",
+	"item.railways.track_incomplete_mangrove": "Onvolledig Mangrovehouten Treinspoor",
 	"item.railways.track_incomplete_oak": "Onvolledig Eikenhouten Treinspoor",
 	"item.railways.track_incomplete_spruce": "Onvolledig Sparrenhouten Treinspoor",
 	"item.railways.track_incomplete_warped": "Onvolledig Spookachtig Houten Treinspoor",
-	"item.railways.track_incomplete_mangrove": "Onvolledig Mangrovehouten Treinspoor",
 	"item.railways.white_conductor_cap": "Witte Conducteurspet",
-	"item.railways.white_incomplete_conductor_cap": "Onvolledige Conducteurspet",
+	"item.railways.white_incomplete_conductor_cap": "Onvolledige Witte Conducteurspet",
 	"item.railways.yellow_conductor_cap": "Gele Conducteurspet",
 	"item.railways.yellow_incomplete_conductor_cap": "Onvolledige Gele Conducteurspet",
-
 	"itemGroup.railways": "Create Treinsporen",
-
 	"railways.ponder.conductor_constructing.header": "Een Conducteur Bouwen",
 	"railways.ponder.conductor_constructing.text_1": "Conducteurs worden gemaakt met een Andesiet Omhulsel.",
 	"railways.ponder.conductor_redstoning.header": "Bestuur Redstone met een Conducteur",
@@ -82,14 +76,7 @@
 	"railways.ponder.train_semaphore.text_6": "The onderse semafoor zal nu sluiten als een van de mogelijke wegen worden geblockeerd",
 	"railways.ponder.train_semaphore.text_7": "The bovenste semafoor zal sluiten als alle wegen worden geblockeerd",
 	"railways.ponder.train_semaphore.text_8": "Wanneer 2 semaforen zijn geplaatst op een niet-brons signaal, sluiten ze tegelijk",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "Signaal zoek directie",
 	"create.railways.semaphore.search_mode.search_down": "Naar Beneden",
-	"create.railways.semaphore.search_mode.search_up": "Naar boven",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
-
+	"create.railways.semaphore.search_mode.search_up": "Naar boven"
 }

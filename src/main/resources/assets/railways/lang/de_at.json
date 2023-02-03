@@ -1,9 +1,5 @@
 {
-	
-	"_": "This translation is not yet complete, if you find any mistakes, please let me know or change the translation where it is needed.",
-	
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
+	"_": "Thank you for translating Create Steam 'n Rails!",
 	"block.railways.semaphore": "Formsignal",
 	"block.railways.track_acacia": "Akazienholzgleis",
 	"block.railways.track_birch": "Birkenholzgleis",
@@ -14,11 +10,9 @@
 	"block.railways.track_oak": "Eichenholzgleis",
 	"block.railways.track_spruce": "Fichtenholzgleis",
 	"block.railways.track_warped": "Wirrgleis",
-
 	"entity.railways.benchcart": "Werkbanklore",
 	"entity.railways.conductor": "Zugführer",
 	"entity.railways.jukeboxcart": "Plattenspielerlore",
-
 	"item.railways.benchcart": "Werkbanklore",
 	"item.railways.black_conductor_cap": "Schwarze Eisenbahnermütze",
 	"item.railways.black_incomplete_conductor_cap": "Unfertige schwarze Eisenbahnermütze",
@@ -62,9 +56,6 @@
 	"item.railways.white_incomplete_conductor_cap": "Unfertige weiße Eisenbahnermütze",
 	"item.railways.yellow_conductor_cap": "Gelbe Eisenbahnermütze",
 	"item.railways.yellow_incomplete_conductor_cap": "Unfertige gelbe Eisenbahnermütze",
-
-	"itemGroup.railways": "Create Railways",
-
 	"railways.ponder.conductor_constructing.header": "Bau eines Zugführers",
 	"railways.ponder.conductor_constructing.text_1": "Zugführer werden mit Andesitrahmen konstruiert.",
 	"railways.ponder.conductor_redstoning.header": "Redstone Fernsteuerung mit Zugführern",
@@ -82,14 +73,7 @@
 	"railways.ponder.train_semaphore.text_6": "Das untere Formsignal schließt sich, falls einer der Wege blockiert ist.",
 	"railways.ponder.train_semaphore.text_7": "Das obere Formsignal schließt sich, falls alle Wege blockiert sind.",
 	"railways.ponder.train_semaphore.text_8": "2 Formsignale schließen sich gleichzeitig, wenn beide über einem nicht-Messing-Signal platziert sind.",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "Signal Suchrichtung",
 	"create.railways.semaphore.search_mode.search_down": "Unten",
-	"create.railways.semaphore.search_mode.search_up": "Oben",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
-
+	"create.railways.semaphore.search_mode.search_up": "Oben"
 }
