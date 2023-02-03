@@ -1,21 +1,20 @@
 {
-	"credit": "By Slimeist",
-	"parent": "minecraft:block",
+	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "railways:block/conductor_whistle",
-		"particle": "railways:block/conductor_whistle"
+		"pole": "railways:block/flagpole",
+		"particle": "railways:block/flagpole"
 	},
 	"elements": [
 		{
 			"from": [7, 0, 7],
-			"to": [9, 13, 9],
+			"to": [9, 14, 9],
 			"faces": {
-				"north": {"uv": [9, 3, 11, 16], "texture": "#0"},
-				"east": {"uv": [1, 2, 3, 15], "texture": "#0"},
-				"south": {"uv": [5, 2, 7, 15], "texture": "#0"},
-				"west": {"uv": [13, 0, 15, 13], "texture": "#0"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
-				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+				"north": {"uv": [0, 0, 2, 14], "texture": "#pole"},
+				"east": {"uv": [0, 0, 2, 14], "texture": "#pole"},
+				"south": {"uv": [0, 0, 2, 14], "texture": "#pole"},
+				"west": {"uv": [0, 0, 2, 14], "texture": "#pole"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#pole"},
+				"down": {"uv": [0, 0, 2, 2], "texture": "#pole"}
 			}
 		}
 	]
