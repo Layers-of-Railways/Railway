@@ -1,6 +1,8 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
+import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagTileEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerTileEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
@@ -21,6 +23,11 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<TrackCouplerTileEntity> TRACK_COUPLER = REGISTRATE.tileEntity("track_coupler", TrackCouplerTileEntity::new)
         .validBlocks(CRBlocks.TRACK_COUPLER)
         .renderer(() -> TrackCouplerRenderer::new)
+        .register();
+
+    public static final BlockEntityEntry<ConductorWhistleFlagTileEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.tileEntity("conductor_whistle", ConductorWhistleFlagTileEntity::new)
+        .validBlocks(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
+        .renderer(() -> ConductorWhistleFlagRenderer::new)
         .register();
 
 

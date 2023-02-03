@@ -22,6 +22,7 @@ public class Config {
 //    public static ForgeConfigSpec.BooleanValue HIBYE;
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
+    public static ForgeConfigSpec.BooleanValue CONDUCTOR_WHISTLE_REQUIRES_OWNING;
 
 
     static {
@@ -40,9 +41,10 @@ public class Config {
         CLIENT_CONFIG = CLIENT_BUILDER.build();
     }
 
-    private static void setupGeneralCategory(ForgeConfigSpec.Builder COMMON_BUILDER) {
+    private static void setupGeneralCategory(ForgeConfigSpec.Builder builder) {
         //ROLLER_SU = COMMON_BUILDER.comment("Base SU for the Rolling Machine").defineInRange("rollingMachineSU", 4, 0, Integer.MAX_VALUE);
 //        HIBYE = COMMON_BUILDER.comment("sorceror").define("hibye", false);
+        CONDUCTOR_WHISTLE_REQUIRES_OWNING = builder.comment("Conductor whistle is limited to the owner of a train").define("mustOwnBoundTrain", false);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

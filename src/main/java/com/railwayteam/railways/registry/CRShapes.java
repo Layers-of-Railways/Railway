@@ -20,6 +20,10 @@ public class CRShapes {
         SEMAPHORE = shape(4,0,4,12,16,12)
             .forDirectional(NORTH);
 
+    public static final VoxelShape CONDUCTOR_WHISTLE_FLAG = shape(7, 0, 7, 9, 14, 9)
+        .add(9, 8, 8-0.01, 16, 14, 8+0.01)
+        .build();
+
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);
     }

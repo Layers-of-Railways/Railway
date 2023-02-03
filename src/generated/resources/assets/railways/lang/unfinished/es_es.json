@@ -1,9 +1,10 @@
 {
+	"_": "Missing Localizations: 47",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
-	"block.railways.mono_bogey": "Vagón de monorraíl",
-	"block.railways.mono_bogey_upside_down": "Vagón de monorraíl colgante",
+	"block.railways.conductor_whistle": "UNLOCALIZED: Conductor Whistle",
+
 	"block.railways.semaphore": "Semáforo",
 	"block.railways.track_acacia": "Vía de tren de acacia",
 	"block.railways.track_birch": "Vía de tren de abedul",
@@ -130,6 +131,20 @@
 	"railways.tooltip.coupler.error.mode_not_permitted": "Acción imposible en el modo actual",
 	"railways.tooltip.coupler.error.missing_train": "Requiere ocupar ambos puntos",
 	"railways.tooltip.coupler.error.carriage_alignment": "Vagones no alineados correctamente. Pista: El centro del vagón debe estar exactamente encima del punto de acople",
+
+	"railways.whistle.tool.bound": "UNLOCALIZED: Bound to:",
+	"railways.whistle.tool.conductor_id": "UNLOCALIZED: Conductor: §6%s§r",
+	"railways.whistle.tool.train_id": "UNLOCALIZED: Train: §e%1$s§r (§6%2$s§r)",
+	"railways.whistle.tool.bound_usage": "UNLOCALIZED: Use on a track to summon the bound train!",
+	"railways.whistle.tool.not_bound": "UNLOCALIZED: Not bound, use on a conductor riding a train to bind.",
+	"railways.whistle.set": "UNLOCALIZED: Bound whistle.",
+	"railways.whistle.not_owner": "UNLOCALIZED: You must be the owner of the train to bind the whistle.",
+	"railways.whistle.clear": "UNLOCALIZED: Cleared whistle binding.",
+	"railways.whistle.failure.not_bound": "UNLOCALIZED: Whistle must be bound first.",
+	"railways.whistle.failure.train_missing": "UNLOCALIZED: Bound train not found.",
+	"railways.whistle.failure.conductor_missing": "UNLOCALIZED: Conductor not found or it was not riding the bound train.",
+	"railways.whistle.failure.no_space": "UNLOCALIZED: No space to place flag.",
+	"railways.whistle.failure.not_owner": "UNLOCALIZED: You must be the owner of the train to cancel its schedule.",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

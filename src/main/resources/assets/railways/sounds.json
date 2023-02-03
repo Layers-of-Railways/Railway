@@ -1,0 +1,8 @@
+{
+  "conductor_whistle": {
+    "subtitle": "sounds.railways.conductor_whistle",
+    "sounds": [
+      "railways:conductor_whistle"
+    ]
+  }
+}

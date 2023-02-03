@@ -1,7 +1,11 @@
 {
-	"_": "Missing Localizations: 29",
+
+	"_": "Missing Localizations: 43",
+
+
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.conductor_whistle": "UNLOCALIZED: Conductor Whistle",
 	"block.railways.semaphore": "Semafoor",
 	"block.railways.track_acacia": "Acacia Treinspoor",
 	"block.railways.track_birch": "Berkenhouten Treinspoor",
@@ -119,6 +123,20 @@
 	"railways.tooltip.coupler.action.none": "Actie: Niks mogelijk",
 	"railways.tooltip.coupler.action.coupling": "Actie: Koppelen",
 	"railways.tooltip.coupler.action.decoupling": "Actie: Onkoppelen",
+
+	"railways.whistle.tool.bound": "UNLOCALIZED: Bound to:",
+	"railways.whistle.tool.conductor_id": "UNLOCALIZED: Conductor: §6%s§r",
+	"railways.whistle.tool.train_id": "UNLOCALIZED: Train: §e%1$s§r (§6%2$s§r)",
+	"railways.whistle.tool.bound_usage": "UNLOCALIZED: Use on a track to summon the bound train!",
+	"railways.whistle.tool.not_bound": "UNLOCALIZED: Not bound, use on a conductor riding a train to bind.",
+	"railways.whistle.set": "UNLOCALIZED: Bound whistle.",
+	"railways.whistle.not_owner": "UNLOCALIZED: You must be the owner of the train to bind the whistle.",
+	"railways.whistle.clear": "UNLOCALIZED: Cleared whistle binding.",
+	"railways.whistle.failure.not_bound": "UNLOCALIZED: Whistle must be bound first.",
+	"railways.whistle.failure.train_missing": "UNLOCALIZED: Bound train not found.",
+	"railways.whistle.failure.conductor_missing": "UNLOCALIZED: Conductor not found or it was not riding the bound train.",
+	"railways.whistle.failure.no_space": "UNLOCALIZED: No space to place flag.",
+	"railways.whistle.failure.not_owner": "UNLOCALIZED: You must be the owner of the train to cancel its schedule.",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
