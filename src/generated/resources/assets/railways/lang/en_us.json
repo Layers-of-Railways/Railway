@@ -121,6 +121,20 @@
 	"railways.tooltip.coupler.action.coupling": "Action: Coupling",
 	"railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
 
+	"railways.whistle.tool.bound": "Bound to:",
+	"railways.whistle.tool.conductor_id": "Conductor: §6%s§r",
+	"railways.whistle.tool.train_id": "Train: §e%1$s§r (§6%2$s§r)",
+	"railways.whistle.tool.bound_usage": "Use on a track to summon the bound train!",
+	"railways.whistle.tool.not_bound": "Not bound, use on a conductor riding a train to bind.",
+	"railways.whistle.set": "Bound whistle.",
+	"railways.whistle.not_owner": "You must be the owner of the train to bind the whistle.",
+	"railways.whistle.clear": "Cleared whistle binding.",
+	"railways.whistle.failure.not_bound": "Whistle must be bound first.",
+	"railways.whistle.failure.train_missing": "Bound train not found.",
+	"railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
+	"railways.whistle.failure.no_space": "No space to place flag.",
+	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
+
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 

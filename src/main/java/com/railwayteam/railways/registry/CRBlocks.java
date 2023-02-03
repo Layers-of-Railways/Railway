@@ -105,10 +105,15 @@ public class CRBlocks {
           .properties(p -> p.noOcclusion())
           .properties(p -> p.sound(SoundType.WOOD))
           .properties(p -> p.instabreak())
-          .blockstate((c, p) -> p.simpleBlock(c.get()))
+          .properties(p -> p.noLootTable())
+          .properties(p -> p.noCollission())
+          .blockstate((c, p) -> p.getVariantBuilder(c.get())
+              .forAllStates(state -> ConfiguredModel.builder()
+                  .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
+                  .build()))
           .lang("Conductor Whistle")
           .item(ConductorWhistleItem::new)
-          .build()
+          .transform(customItemModel())
           .register();
 
   public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);

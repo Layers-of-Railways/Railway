@@ -1,5 +1,7 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
+import com.railwayteam.railways.Config;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
@@ -7,6 +9,7 @@ import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
@@ -86,6 +89,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
     private static InteractionResult fail(Player player, String message) {
         player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), true);
+        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), false);
         return InteractionResult.FAIL;
     }
 
@@ -102,8 +106,9 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 trainName = railways.trains.get(trainId).name.getString();
 
             tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
-            tooltip.add(Components.translatable("railways.whistle.tool.conductor_id", conductorId.toString()));
-            tooltip.add(Components.translatable("railways.whistle.tool.train_id", trainName, trainId.toString()));
+            tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.conductor_id", conductorId.toString().substring(0, 5)));
+            tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.train_id", trainName, trainId.toString().substring(0, 5)));
+            tooltip.add(Components.translatable("railways.whistle.tool.bound_usage"));
         } else {
             tooltip.add(Components.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
         }
@@ -116,7 +121,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             return InteractionResult.PASS;
         if (pInteractionTarget instanceof ConductorEntity conductor && conductor.getVehicle() instanceof CarriageContraptionEntity cce) {
             Train train = cce.getCarriage().train;
-            if (train.owner == pPlayer.getUUID()) {
+            if (train.owner == pPlayer.getUUID() || !Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get()) {
                 CompoundTag stackTag = pStack.getOrCreateTag();
                 stackTag.putUUID("SelectedTrain", train.id);
                 stackTag.putUUID("SelectedConductor", conductor.getUUID());
@@ -220,7 +225,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             }
 
             // have to own train if: non-auto schedule is in progress
-            if (train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != player) {
+            if (Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != player) {
                 stackTag.remove("SelectedPos");
                 stackTag.remove("SelectedDirection");
                 stack.setTag(stackTag);

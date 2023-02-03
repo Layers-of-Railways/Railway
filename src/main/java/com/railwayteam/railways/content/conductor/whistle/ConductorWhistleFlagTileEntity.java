@@ -48,7 +48,8 @@ public class ConductorWhistleFlagTileEntity extends SmartTileEntity implements I
 
         if (station.getEdgePoint() == null)
             station.tick();
-        station.getEdgePoint().name = targetStationName();
+        if (station.getEdgePoint() != null)
+            station.getEdgePoint().name = targetStationName();
 
         if (tickedOnce) {
             boolean found = false;
