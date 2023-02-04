@@ -35,6 +35,7 @@ public enum CRPackets {
     CHOP_TRAIN_END(ChopTrainEndPacket.class, ChopTrainEndPacket::new, PLAY_TO_CLIENT),
     ADD_TRAIN_END(AddTrainEndPacket.class, AddTrainEndPacket::new, PLAY_TO_CLIENT),
     TRACK_COUPLER_CLIENT_INFO(TrackCouplerClientInfoPacket.class, TrackCouplerClientInfoPacket::new, PLAY_TO_CLIENT),
+    TRAIN_MARKER_DATA_UPDATE(TrainMarkerDataUpdatePacket.class, TrainMarkerDataUpdatePacket::new, PLAY_TO_CLIENT),
     ;
     public static final ResourceLocation CHANNEL_ID = new ResourceLocation(Railways.MODID, "main");
     public static final int PROTOCOL_VER = 2;

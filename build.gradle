@@ -39,7 +39,7 @@ if (System.getenv("DEV") == "true") {
     version = "${minecraft_version}-${mod_version}-dev-${getGitHash()}"
 }
 if (System.getenv("CI") == "true") {
-    version = "${minecraft_version}-nightly-${getGitHash()}";
+    version = "${minecraft_version}-nightly-${getGitHash()}"
 }
 group = 'com.github.spirolateral.railway' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Steam_Rails"
@@ -120,6 +120,10 @@ repositories {
         // curios
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        name = "JourneyMap (Public)"
+        url = "https://jm.gserv.me/repository/maven-public/"
+    }
 }
 
 dependencies {
@@ -137,6 +141,10 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_minecraft_version}-${curios_version}")
 
 //    runtimeOnly fg.deobf("curse.maven:create_deco-509285:4183385") //debug create deco vertical slabs
+
+//Disable journeymap to test if mod runs without it
+    compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: project.journeymap_api_forge_version, changing: true) //must remain for compilation
+    //runtimeOnly fg.deobf("curse.maven:journeymap-${project.jm_project_id}:${project.jm_forge_file_id}")  // this has to be disabled for datagen to work
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
@@ -209,4 +217,16 @@ buildConfig {
 
     version = project.version
     packageName = project.group
+}
+
+task resolveAllDependencies {
+    description "Resolves all transitive dependencies (e.g. to build offline later)."
+
+    doLast {
+        configurations.all {
+            if (it.canBeResolved) {
+                it.resolve()
+            }
+        }
+    }
 }

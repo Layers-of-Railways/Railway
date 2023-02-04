@@ -72,10 +72,10 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
       this.rightArm.xRot += (-(float)Math.PI / 2f);
       this.leftArm.xRot += (-(float)Math.PI / 2f);
       this.rightLeg.xRot = -1.4137167F;
-      this.rightLeg.yRot = ((float)Math.PI / 20f);
+      this.rightLeg.yRot = (-(float)Math.PI / 20f);
       this.rightLeg.zRot = 0.07853982F;
       this.leftLeg.xRot = -1.4137167F;
-      this.leftLeg.yRot = (-(float)Math.PI / 20f);
+      this.leftLeg.yRot = ((float)Math.PI / 20f);
       this.leftLeg.zRot = -0.07853982F;
     }
   }

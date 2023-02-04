@@ -184,6 +184,14 @@ public class CRBlockPartials {
         COUPLER_BOTH = block("track_overlay/coupler_both"),
         COUPLER_NONE = block("track_overlay/coupler_none");
 
+    public static final PartialModel
+        MONORAIL_SEGMENT_TOP = block("monorail/monorail/segment_top"),
+        MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
+        MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
+        MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay"),
+        MONOBOGEY_FRAME = block("bogey/monorail/frame"),
+        MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
+
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));
     }
@@ -199,8 +207,17 @@ public class CRBlockPartials {
         }
 
         for (TrackMaterial material : TrackMaterial.allCustom()) {
-            String prefix = "track/" + material.resName() + "/";
-            TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "tie"), block(prefix + "segment_left"), block(prefix + "segment_right")));
+            String prefix;
+            switch (material.trackType) {
+                case STANDARD -> {
+                    prefix = "track/" + material.resName() + "/";
+                    TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "tie"), block(prefix + "segment_left"), block(prefix + "segment_right")));
+                }
+                case MONORAIL -> {
+                    prefix = "monorail/" + material.resName() + "/";
+                    TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "monorail_half"), block("empty"), block("empty")));
+                }
+            }
         }
     }
 

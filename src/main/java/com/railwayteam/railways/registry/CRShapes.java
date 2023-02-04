@@ -1,5 +1,7 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
+import com.simibubi.create.content.logistics.trains.track.TrackVoxelShapes;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
@@ -17,8 +19,29 @@ import static net.minecraft.core.Direction.WEST;
 public class CRShapes {
 
     public static final VoxelShaper
-        SEMAPHORE = shape(4,0,4,12,16,12)
-            .forDirectional(NORTH);
+        SEMAPHORE = shape(4, 0, 4, 12, 16, 12)
+        .forDirectional(NORTH);
+
+    public static final VoxelShape
+        MONORAIL_COLLISION = shape(0, 0, 0, 16, 15, 16).build(); //This HAS to be less than a full block, or else monorails try to go diagonal
+
+
+    public static final VoxelShaper
+        MONORAIL_TRACK_ORTHO = shape(MonorailTrackVoxelShapes.orthogonal()).forHorizontal(NORTH),
+        MONORAIL_TRACK_ASC = shape(MonorailTrackVoxelShapes.ascending()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_DIAG = shape(MonorailTrackVoxelShapes.diagonal()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_ORTHO_LONG = shape(MonorailTrackVoxelShapes.longOrthogonalZOffset()).forHorizontal(SOUTH),
+        MONORAIL_TRACK_CROSS_ORTHO_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST))
+            .forHorizontal(SOUTH),
+        MONORAIL_TRACK_CROSS_DIAG_ORTHO =
+            shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(SOUTH))
+                .forHorizontal(SOUTH);
+
+    public static final VoxelShape
+        MONORAIL_TRACK_CROSS = shape(MONORAIL_TRACK_ORTHO.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST)).build(),
+        MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST)).build(),
+        MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
+
 
     public static final VoxelShape CONDUCTOR_WHISTLE_FLAG = shape(7, 0, 7, 9, 14, 9)
         .add(9, 8, 8-0.01, 16, 14, 8+0.01)

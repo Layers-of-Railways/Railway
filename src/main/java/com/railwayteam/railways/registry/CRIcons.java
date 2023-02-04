@@ -27,10 +27,19 @@ public class CRIcons extends AllIcons {
 
     public static final CRIcons
         I_SEARCH_DOWN = newRow(),
-        I_SEARCH_UP = next(),
+        I_SEARCH_UP = next();
+    public static final CRIcons
         I_COUPLING_BOTH = newRow(),
         I_COUPLING_COUPLE = next(),
         I_COUPLING_DECOUPLE = next();
+    public static final CRIcons
+        I_DOOR_MANUAL = newRow(),
+        I_DOOR_AUTO = next(),
+        I_DOOR_STATION_RIGHT = next(),
+        I_DOOR_STATION_LEFT = next();
+    public static final CRIcons
+        I_STATION_OPEN_LEFT = newRow(),
+        I_STATION_OPEN_RIGHT = next();
 
     public CRIcons(int x, int y) {
         super(x, y);

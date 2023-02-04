@@ -1,0 +1,21 @@
+{
+	"credit": "By Slimeist",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "railways:block/monorail/track_assembly_overlay",
+		"particle": "railways:block/monorail/track_assembly_overlay"
+	},
+	"elements": [
+		{
+			"from": [-0.25, -14.25, 0],
+			"to": [16.25, 2.25, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -3.75, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#1"}
+			}
+		}
+	]
+}

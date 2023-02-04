@@ -1,37 +1,55 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
+import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
 import com.simibubi.create.content.logistics.trains.DimensionPalette;
 import com.simibubi.create.content.logistics.trains.TrackGraph;
 import com.simibubi.create.content.logistics.trains.TrackNode;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
+import com.simibubi.create.content.logistics.trains.entity.*;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
+import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.*;
 
+import static com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock.isUpsideDown;
+
 @Mixin(value = Train.class, remap = false)
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule {
     @Shadow public TrackGraph graph;
 
+    @Shadow public Navigation navigation;
+    @Shadow public double speed;
+
+    @Shadow public abstract void arriveAt(GlobalStation station);
+
+    @Shadow public abstract void leaveStation();
+
+    @Shadow public ScheduleRuntime runtime;
     public Set<UUID> occupiedCouplers;
     protected int index = 0;
 
@@ -74,6 +92,19 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
                 occupiedCouplers.add(trackCoupler.getId());
                 return false;
             }
+
+            if (((IWaypointableNavigation) navigation).isWaypointMode() && couple.getFirst()instanceof GlobalStation station) {
+                if (!station.canApproachFrom(couple.getSecond()
+                    .getSecond()) || navigation.destination != station)
+                    return false;
+                //speed = 0; // No slowing down
+                navigation.distanceToDestination = 0;
+                ((AccessorNavigation) navigation).getCurrentPath().clear();
+                arriveAt(navigation.destination);
+                navigation.destination = null;
+                return true;
+            }
+
             return originalListener.test(distance, couple);
         });
     }
@@ -118,5 +149,56 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         NBTHelper.iterateCompoundList(tag.getList("OccupiedCouplers", Tag.TAG_COMPOUND),
             c -> ((IOccupiedCouplers) train).getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).setIndex(tag.getInt("ScheduleHolderIndex"));
+    }
+
+    private CarriageContraptionEntity entityInUse;
+
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;"))
+    private Contraption saveCarriageContraptionEntity(CarriageContraptionEntity instance) {
+        entityInUse = instance;
+        return instance.getContraption();
+    }
+
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;"))
+    private BlockPos moveHangingCarriageDown(BlockPos instance, Direction pDirection, int pDistance) {
+        BlockPos ret = instance.relative(pDirection, pDistance);
+        if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
+            ret = ret.below(2);
+        }
+        entityInUse = null;
+        return ret;
+    }
+
+    private Carriage tmpCarriage;
+    private Carriage tmpPrevCarriage;
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void resetTmpCarriagesHead(Level level, CallbackInfo ci) {
+        tmpCarriage = tmpPrevCarriage = null;
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void storeTmpCarriages(Level level, CallbackInfo ci, double distance, Carriage previousCarriage, int carriageCount, boolean stalled,
+                                   double maxStress, int i, Carriage carriage) {
+        tmpCarriage = carriage;
+        tmpPrevCarriage = previousCarriage;
+    }
+
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D")) //TODO set carriages right before this
+    private double adjustDistanceTo(Vec3 instance, Vec3 pVec) {
+        if (tmpCarriage != null && tmpPrevCarriage != null) {
+            if (isUpsideDown(tmpCarriage.leadingBogey()) != isUpsideDown(tmpPrevCarriage.trailingBogey())) {
+                tmpCarriage = tmpPrevCarriage = null;
+                //account for 2 block height difference
+                return Math.sqrt(instance.distanceToSqr(pVec)-4);
+            }
+        }
+        tmpCarriage = tmpPrevCarriage = null;
+        return instance.distanceTo(pVec);
+    }
+
+    @Inject(method = "tick", at = @At("RETURN"))
+    private void resetTmpCarriagesReturn(Level level, CallbackInfo ci) {
+        tmpCarriage = tmpPrevCarriage = null;
     }
 }

@@ -17,6 +17,9 @@
   "railways.schedule.instruction.redstone_link.power": "Power Level: %s",
   "railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
 
+  "railways.schedule.instruction.waypoint_destination": "Waypoint through Station",
+  "create.schedule.instruction.waypoint_destination.summary": "Next waypoint:",
+
   "railways.schedule.condition.loaded": "Chunk Loaded",
   "railways.schedule.condition.loaded.status": "Waiting for chunk load",
 
@@ -27,6 +30,22 @@
   "railways.tooltip.coupler.action.none": "Action: None available",
   "railways.tooltip.coupler.action.coupling": "Action: Coupling",
   "railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
+
+
+  "railways.tooltip.coupler.error.mode_not_permitted": "Action not permitted in current mode",
+  "railways.tooltip.coupler.error.missing_train": "Requires both track points to be occupied",
+  "railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
+
+  "railways.station.train_limit": "Limit Trains",
+
+  "create.sliding_door.mode": "Open Mode",
+  "create.sliding_door.mode.manual": "Manual",
+  "create.sliding_door.mode.auto": "Automatic",
+  "create.sliding_door.mode.station_right": "Station Right",
+  "create.sliding_door.mode.station_left": "Station Left",
+
+  "railways.station.open_left": "Open Left Doors",
+  "railways.station.open_right": "Open Right Doors"
 
   "railways.whistle.tool.bound": "Bound to:",
   "railways.whistle.tool.conductor_id": "Conductor: §6%s§r",

@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.content.schedule.StationLoadedCondition;
+import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
 import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.utility.Pair;
@@ -16,6 +17,7 @@ public class CRSchedule {
 
     static {
         registerInstruction("redstone_link", RedstoneLinkInstruction::new);
+        registerInstruction("waypoint_destination", WaypointDestinationInstruction::new);
         registerCondition("loaded", StationLoadedCondition::new);
     }
 
