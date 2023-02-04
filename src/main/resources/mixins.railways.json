@@ -15,7 +15,6 @@
     "AccessorTrain",
     "MixinAbstractContraptionEntity",
     "MixinAllTileEntities",
-    "MixinAutoScheduleDiscard",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
@@ -44,8 +43,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrackTileEntity",
     "MixinTrain",
-    "MixinTravellingPoint",
-    "MixinTrainHatOffsets"
+    "MixinTravellingPoint"
   ],
   "client": [
     "client.AccessorBogeyInstance",

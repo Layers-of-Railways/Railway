@@ -45,7 +45,7 @@
   "create.sliding_door.mode.station_left": "Station Left",
 
   "railways.station.open_left": "Open Left Doors",
-  "railways.station.open_right": "Open Right Doors"
+  "railways.station.open_right": "Open Right Doors",
 
   "railways.whistle.tool.bound": "Bound to:",
   "railways.whistle.tool.conductor_id": "Conductor: §6%s§r",
