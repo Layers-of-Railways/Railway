@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "create:brass_nugget"
+    }
+  ],
+  "result": {
+    "item": "railways:conductor_whistle"
+  }
+}

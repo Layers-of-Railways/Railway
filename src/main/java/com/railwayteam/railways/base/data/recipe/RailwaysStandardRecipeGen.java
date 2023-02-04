@@ -3,6 +3,7 @@ package com.railwayteam.railways.base.data.recipe;
 import com.google.common.base.Supplier;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -13,6 +14,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -39,6 +41,11 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("=")
             .pattern("#")
             .pattern("T"));
+
+    GeneratedRecipe CONDUCTOR_WHISTLE = create(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
+        .unlockedByTag(() -> CRTags.AllItemTags.CONDUCTOR_CAPS.tag)
+        .viaShapeless(b -> b.requires(Items.COPPER_INGOT)
+            .requires(AllItems.BRASS_NUGGET.get()));
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);

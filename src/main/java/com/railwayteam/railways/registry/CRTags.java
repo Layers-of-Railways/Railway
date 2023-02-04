@@ -10,14 +10,17 @@ import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
+import static com.simibubi.create.AllTags.NameSpace.FORGE;
 import static com.simibubi.create.AllTags.optionalTag;
 
 public class CRTags {
@@ -135,6 +138,89 @@ public class CRTags {
 
     public void includeAll(TagKey<Block> child) {
       REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.tag(tag)
+          .addTag(child));
+    }
+  }
+
+  public enum AllItemTags {
+    CONDUCTOR_CAPS
+    ;
+
+    public final TagKey<Item> tag;
+    public final boolean alwaysDatagen;
+
+    AllItemTags() {
+      this(NameSpace.MOD);
+    }
+
+    AllItemTags(NameSpace namespace) {
+      this(namespace, namespace.optionalDefault, namespace.alwaysDatagenDefault);
+    }
+
+    AllItemTags(NameSpace namespace, String path) {
+      this(namespace, path, namespace.optionalDefault, namespace.alwaysDatagenDefault);
+    }
+
+    AllItemTags(NameSpace namespace, boolean optional, boolean alwaysDatagen) {
+      this(namespace, null, optional, alwaysDatagen);
+    }
+
+    AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
+      ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
+      if (optional) {
+        tag = optionalTag(ForgeRegistries.ITEMS, id);
+      } else {
+        tag = ItemTags.create(id);
+      }
+      this.alwaysDatagen = alwaysDatagen;
+    }
+
+    @SuppressWarnings("deprecation")
+    public boolean matches(Item item) {
+      return item.builtInRegistryHolder()
+          .is(tag);
+    }
+
+    public boolean matches(ItemStack stack) {
+      return stack.is(tag);
+    }
+
+    public void add(Item... values) {
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
+          .add(values));
+    }
+
+    public void addOptional(Mods mod, String... ids) {
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
+        TagsProvider.TagAppender<Item> builder = prov.tag(tag);
+        for (String id : ids)
+          builder.addOptional(mod.asResource(id));
+      });
+    }
+
+    public void addOptional(String namespace, String... ids) {
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
+        TagsProvider.TagAppender<Item> builder = prov.tag(tag);
+        for (String id : ids)
+          builder.addOptional(new ResourceLocation(namespace, id));
+      });
+    }
+
+    public void addOptional(ResourceLocation location) {
+      addOptional(location.getNamespace(), location.getPath());
+    }
+
+    public void includeIn(TagKey<Item> parent) {
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(parent)
+          .addTag(tag));
+    }
+
+    public void includeIn(AllTags.AllItemTags parent) {
+      includeIn(parent.tag);
+    }
+
+    public void includeAll(TagKey<Item> child) {
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
           .addTag(child));
     }
   }
