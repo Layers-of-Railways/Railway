@@ -27,6 +27,7 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
+    public static ForgeConfigSpec.BooleanValue CONDUCTOR_WHISTLE_REQUIRES_OWNING;
 
 
     static {
@@ -54,6 +55,7 @@ public class Config {
 //        HIBYE = COMMON_BUILDER.comment("sorceror").define("hibye", false);
         FAR_TRAIN_SYNC_TICKS = builder.comment("Outside-of-render-distance train sync time (in ticks)").defineInRange("farTrainUpdateTicks", 200, 10, 600);
         NEAR_TRAIN_SYNC_TICKS = builder.comment("In-render-distance train sync time (in ticks)").defineInRange("nearTrainUpdateTicks", 1, 1, 600);
+        CONDUCTOR_WHISTLE_REQUIRES_OWNING = builder.comment("Conductor whistle is limited to the owner of a train").define("mustOwnBoundTrain", false);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

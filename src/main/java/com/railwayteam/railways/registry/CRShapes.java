@@ -43,6 +43,10 @@ public class CRShapes {
         MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
 
 
+    public static final VoxelShape CONDUCTOR_WHISTLE_FLAG = shape(7, 0, 7, 9, 14, 9)
+        .add(9, 8, 8-0.01, 16, 14, 8+0.01)
+        .build();
+
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);
     }

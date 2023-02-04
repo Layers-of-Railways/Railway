@@ -1,7 +1,5 @@
 {
-
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
+	"_": "Thank you for translating Create Steam 'n Rails! No problem! -cmkpi :)",
 	"block.railways.semaphore": "Semafor",
 	"block.railways.track_acacia": "Akacjowy tor kolejowy",
 	"block.railways.track_birch": "Brzozowy tor kolejowy",
@@ -12,11 +10,9 @@
 	"block.railways.track_oak": "Dębowy tor kolejowy",
 	"block.railways.track_spruce": "Świerkowy tor kolejowy",
 	"block.railways.track_warped": "Spaczony tor kolejowy",
-
 	"entity.railways.benchcart": "Wagonik ze stołem rzemieślniczym",
 	"entity.railways.conductor": "Konduktor",
 	"entity.railways.jukeboxcart": "Wagonik z szafą grającą",
-
 	"item.railways.benchcart": "Wagonik ze stołem rzemieślniczym",
 	"item.railways.black_conductor_cap": "Czarna czapka konduktorska",
 	"item.railways.black_incomplete_conductor_cap": "Niedokończona czarna czapka konduktorska",
@@ -60,9 +56,6 @@
 	"item.railways.white_incomplete_conductor_cap": "Niedokończona biała czapka konduktorska",
 	"item.railways.yellow_conductor_cap": "Żółta czapka konduktorska",
 	"item.railways.yellow_incomplete_conductor_cap": "Niedokończona żółta czapka konduktorska",
-
-	"itemGroup.railways": "Create Railways",
-
 	"railways.ponder.conductor_constructing.header": "Tworzenie konduktora",
 	"railways.ponder.conductor_constructing.text_1": "Konduktorzy są tworzeni przy użyciu andezytowej obudowy.",
 	"railways.ponder.conductor_redstoning.header": "Bezprzewodowy redstone z użyciem konduktorów",
@@ -80,14 +73,7 @@
 	"railways.ponder.train_semaphore.text_6": "Dolny semafor się teraz zamknie, jeżeli jakaś z dostępnych dróg będzie zablokowana.",
 	"railways.ponder.train_semaphore.text_7": "Górny semafor się zamknie, jeżeli wszystkie drogi są zablokowane",
 	"railways.ponder.train_semaphore.text_8": "Gdy 2 semafory będą postawione na zwyczajnym sygnale, oba zamkną się jednocześnie.",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "Wyszukiwanie kierunku sygnału",
 	"create.railways.semaphore.search_mode.search_down": "Dół",
-	"create.railways.semaphore.search_mode.search_up": "Góra",
-
-	"_": "Thank you for translating Create Steam 'n Rails! No problem! -cmkpi :)"
-
+	"create.railways.semaphore.search_mode.search_up": "Góra"
 }

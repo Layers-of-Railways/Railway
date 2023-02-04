@@ -1,0 +1,16 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"particle": "railways:block/flagpole"
+	},
+	"elements": [
+		{
+			"from": [9, 8, 8],
+			"to": [16, 14, 8],
+			"faces": {
+				"north": {"uv": [0, 0, 7, 6], "texture": "#flag"},
+				"south": {"uv": [0, 0, 7, 6], "texture": "#flag"}
+			}
+		}
+	]
+}
