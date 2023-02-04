@@ -21,5 +21,6 @@ public class RailwaysClient {
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
     registerCustomCap("Slimeist", "slimeist");
     registerCustomCap("bosbesballon", "bosbesballon");
+    registerCustomCap("SpottyTheTurtle", "turtle");
   }
 }
