@@ -151,6 +151,7 @@
 	"railways.whistle.set": "Bound whistle.",
 	"railways.whistle.not_owner": "You must be the owner of the train to bind the whistle.",
 	"railways.whistle.clear": "Cleared whistle binding.",
+	"railways.whistle.success": "Train is on it's way",
 	"railways.whistle.failure.not_bound": "Whistle must be bound first.",
 	"railways.whistle.failure.train_missing": "Bound train not found.",
 	"railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
