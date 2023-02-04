@@ -1,0 +1,145 @@
+{
+	"credit": "By Slimeist",
+	"texture_size": [64, 32],
+	"textures": {
+		"2": "entity/slime/slime",
+		"particle": "entity/slime/slime"
+	},
+	"elements": [
+		{
+			"name": "outer",
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"faces": {
+				"north": {"uv": [2, 4, 4, 8], "texture": "#2"},
+				"east": {"uv": [0, 4, 2, 8], "texture": "#2"},
+				"south": {"uv": [6, 4, 8, 8], "texture": "#2"},
+				"west": {"uv": [4, 4, 6, 8], "texture": "#2"},
+				"up": {"uv": [4, 4, 2, 0], "texture": "#2"},
+				"down": {"uv": [6, 0, 4, 4], "texture": "#2"}
+			}
+		},
+		{
+			"name": "outer",
+			"from": [5, 8, 5],
+			"to": [11, 14, 11],
+			"faces": {
+				"north": {"uv": [2, 4, 4, 8], "texture": "#2"},
+				"east": {"uv": [0, 4, 2, 8], "texture": "#2"},
+				"south": {"uv": [6, 4, 8, 8], "texture": "#2"},
+				"west": {"uv": [4, 4, 6, 8], "texture": "#2"},
+				"up": {"uv": [4, 4, 2, 0], "texture": "#2"},
+				"down": {"uv": [6, 0, 4, 4], "texture": "#2"}
+			}
+		},
+		{
+			"name": "outer",
+			"from": [5.75, 13.75, 5.75],
+			"to": [10.25, 18.25, 10.25],
+			"faces": {
+				"north": {"uv": [2, 4, 4, 8], "texture": "#2"},
+				"east": {"uv": [0, 4, 2, 8], "texture": "#2"},
+				"south": {"uv": [6, 4, 8, 8], "texture": "#2"},
+				"west": {"uv": [4, 4, 6, 8], "texture": "#2"},
+				"up": {"uv": [4, 4, 2, 0], "texture": "#2"},
+				"down": {"uv": [6, 0, 4, 4], "texture": "#2"}
+			}
+		},
+		{
+			"from": [5, 1, 5],
+			"to": [11, 7, 11],
+			"faces": {
+				"north": {"uv": [1.5, 11, 3, 14], "texture": "#2"},
+				"east": {"uv": [0, 11, 1.5, 14], "texture": "#2"},
+				"south": {"uv": [4.5, 11, 6, 14], "texture": "#2"},
+				"west": {"uv": [3, 11, 4.5, 14], "texture": "#2"},
+				"up": {"uv": [3, 11, 1.5, 8], "texture": "#2"},
+				"down": {"uv": [4.5, 8, 3, 11], "texture": "#2"}
+			}
+		},
+		{
+			"name": "right eye",
+			"from": [4.75, 4, 3.75],
+			"to": [6.75, 6, 5.75],
+			"faces": {
+				"north": {"uv": [8.5, 3, 9, 4], "texture": "#2"},
+				"east": {"uv": [8, 3, 8.5, 4], "texture": "#2"},
+				"south": {"uv": [9.5, 3, 10, 4], "texture": "#2"},
+				"west": {"uv": [9, 3, 9.5, 4], "texture": "#2"},
+				"up": {"uv": [9, 3, 8.5, 2], "texture": "#2"},
+				"down": {"uv": [9.5, 2, 9, 3], "texture": "#2"}
+			}
+		},
+		{
+			"name": "left eye",
+			"from": [9.25, 4, 3.75],
+			"to": [11.25, 6, 5.75],
+			"faces": {
+				"north": {"uv": [8.5, 1, 9, 2], "texture": "#2"},
+				"east": {"uv": [8, 1, 8.5, 2], "texture": "#2"},
+				"south": {"uv": [9.5, 1, 10, 2], "texture": "#2"},
+				"west": {"uv": [9, 1, 9.5, 2], "texture": "#2"},
+				"up": {"uv": [9, 1, 8.5, 0], "texture": "#2"},
+				"down": {"uv": [9.5, 0, 9, 1], "texture": "#2"}
+			}
+		},
+		{
+			"name": "mouth",
+			"from": [7, 2, 3.75],
+			"to": [8, 3, 4.75],
+			"faces": {
+				"north": {"uv": [8.25, 4.5, 8.5, 5], "texture": "#2"},
+				"east": {"uv": [8, 4.5, 8.25, 5], "texture": "#2"},
+				"south": {"uv": [8.75, 4.5, 9, 5], "texture": "#2"},
+				"west": {"uv": [8.5, 4.5, 8.75, 5], "texture": "#2"},
+				"up": {"uv": [8.5, 4.5, 8.25, 4], "texture": "#2"},
+				"down": {"uv": [8.75, 4, 8.5, 4.5], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 3, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"ground": {
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.62, 0.62, 0.62]
+		},
+		"head": {
+			"translation": [0, 14, -0.25]
+		},
+		"fixed": {
+			"rotation": [0, 180, 0],
+			"scale": [0.67, 0.67, 0.67]
+		}
+	},
+	"groups": [
+		{
+			"name": "slime",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"nbt": "{}",
+			"armAnimationEnabled": false,
+			"children": [0, 1, 2, 3, 4, 5, 6]
+		}
+	]
+}

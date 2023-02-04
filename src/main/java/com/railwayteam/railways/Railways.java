@@ -80,7 +80,7 @@ public class Railways {
 
     MOD_EVENT_BUS.addListener(RailwaysClient::clientSetup);
 
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RailwaysClient::clientRegister);
+    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RailwaysClient::clientCtor);
   }
 
   private void setup(final FMLCommonSetupEvent event) {

@@ -29,6 +29,11 @@ public class CRBlockPartials {
     public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
     public static final Map<TrackMaterial, TrackModelHolder> TRACK_PARTS = new EnumMap<>(TrackMaterial.class);
     public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
+    public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
+
+    public static void registerCustomCap(String itemName, String modelLoc) {
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+    }
 
     public static final PartialModel
         SEMAPHORE_ARM_RED = block("semaphore/red_arm"),

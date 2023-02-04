@@ -1,11 +1,14 @@
 package com.railwayteam.railways.content.conductor;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -69,7 +72,10 @@ public class ConductorCapItem extends ArmorItem {
       @Override
       public Model getGenericArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
         EntityModelSet set = Minecraft.getInstance().getEntityModels();
-        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION));
+        String name = itemStack.getHoverName().getString();
+        PartialModel override = CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.getOrDefault(name, null);
+        //override = CRBlockPartials.TOOLBOX_BODIES.get(DyeColor.BLUE);
+        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION), override);
         model.setProperties(_default);
         return model;
       }
