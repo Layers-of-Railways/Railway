@@ -197,7 +197,7 @@ public class CRBlocks {
             .properties(p -> p.noOcclusion())
             .properties(p -> p.sound(SoundType.WOOD))
             .properties(p -> p.instabreak())
-            .properties(p -> p.noLootTable())
+            .properties(p -> p.noDrops())
             .properties(p -> p.noCollission())
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
                 .forAllStates(state -> ConfiguredModel.builder()

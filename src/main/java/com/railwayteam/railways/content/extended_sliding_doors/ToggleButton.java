@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.extended_sliding_doors;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -40,9 +41,9 @@ public class ToggleButton extends AbstractButton {
         pNarrationElementOutput.add(NarratedElementType.TITLE, this.createNarrationMessage());
         if (this.active) {
             if (this.isFocused()) {
-                pNarrationElementOutput.add(NarratedElementType.USAGE, Component.translatable("narration.checkbox.usage.focused"));
+                pNarrationElementOutput.add(NarratedElementType.USAGE, Components.translatable("narration.checkbox.usage.focused"));
             } else {
-                pNarrationElementOutput.add(NarratedElementType.USAGE, Component.translatable("narration.checkbox.usage.hovered"));
+                pNarrationElementOutput.add(NarratedElementType.USAGE, Components.translatable("narration.checkbox.usage.hovered"));
             }
         }
 

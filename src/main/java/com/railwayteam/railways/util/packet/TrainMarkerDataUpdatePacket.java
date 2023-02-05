@@ -6,6 +6,7 @@ import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
@@ -38,7 +39,7 @@ public class TrainMarkerDataUpdatePacket extends SimplePacketBase { //TODO parti
                 buf.readInt(),
                 buf.readUUID(),
                 buf.readUtf(),
-                buf.readResourceKey(Registry.DIMENSION_REGISTRY),
+                ResourceKey.create(Registry.DIMENSION_REGISTRY, buf.readResourceLocation()),
                 buf.readBlockPos(),
                 buf.readBoolean()
         );
@@ -51,7 +52,7 @@ public class TrainMarkerDataUpdatePacket extends SimplePacketBase { //TODO parti
         buffer.writeInt(data.carriageCount());
         buffer.writeUUID(Optional.ofNullable(data.owner()).orElse(NULL_ID));
         buffer.writeUtf(data.destination());
-        buffer.writeResourceKey(data.dimension());
+        buffer.writeResourceLocation(data.dimension().location());
         buffer.writeBlockPos(data.pos());
         buffer.writeBoolean(data.incomplete());
     }

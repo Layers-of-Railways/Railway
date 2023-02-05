@@ -1,33 +1,27 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
 import com.railwayteam.railways.Config;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
-import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.*;
+import com.simibubi.create.content.logistics.trains.GlobalRailwayManager;
+import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.entity.Carriage;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
 import com.simibubi.create.content.logistics.trains.management.schedule.Schedule;
 import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleEntry;
-import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
 import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduledDelay;
 import com.simibubi.create.content.logistics.trains.management.schedule.destination.DestinationInstruction;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
-import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.ChatFormatting;
@@ -36,12 +30,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -51,24 +42,16 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem.withGraphLocation;
 
 public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
@@ -132,7 +115,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 AllSoundEvents.PECULIAR_BELL_USE.play(pPlayer.level, null, conductor.getX(), conductor.getY(), conductor.getZ(), .5f, 1.1f);
                 return InteractionResult.SUCCESS;
             } else {
-                pPlayer.displayClientMessage(Component.translatable("railways.whistle.not_owner").withStyle(ChatFormatting.RED), true);
+                pPlayer.displayClientMessage(Components.translatable("railways.whistle.not_owner").withStyle(ChatFormatting.RED), true);
                 return InteractionResult.FAIL;
             }
         }

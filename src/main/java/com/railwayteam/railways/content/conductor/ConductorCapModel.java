@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.client.ForgeHooksClient;
 import org.jetbrains.annotations.Nullable;
 
 public class ConductorCapModel<T extends LivingEntity> extends Model implements HeadedModel {
@@ -70,7 +71,8 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			poseStack.translate(0, -0.25d, 0);
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
 			poseStack.scale(0.625F, -0.625F, -0.625F);
-			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
+			ForgeHooksClient.handleCameraTransforms(poseStack, override.get(), ItemTransforms.TransformType.HEAD, false);
+//			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
 			poseStack.translate(-0.5, -0.5, -0.5);
 			CachedBufferer.partial(override, Blocks.AIR.defaultBlockState())
 				.light(packedLight)

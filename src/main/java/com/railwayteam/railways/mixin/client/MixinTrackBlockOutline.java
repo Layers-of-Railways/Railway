@@ -25,7 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.RenderHighlightEvent;
+import net.minecraftforge.client.event.DrawSelectionEvent;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +45,7 @@ public abstract class MixinTrackBlockOutline {
     private static void renderShape(VoxelShape s, PoseStack ms, VertexConsumer vb, Boolean valid) {}
 
     @Inject(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", remap = true), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void replaceShapes(RenderHighlightEvent.Block event, CallbackInfo ci, Minecraft mc, BlockHitResult target, BlockPos pos,
+    private static void replaceShapes(DrawSelectionEvent.HighlightBlock event, CallbackInfo ci, Minecraft mc, BlockHitResult target, BlockPos pos,
                                       BlockState blockstate, VertexConsumer vb, Vec3 camPos, PoseStack ms, boolean holdingTrack) {
         if (blockstate.getBlock() instanceof MonorailTrackBlock) {
             TrackShape shape = blockstate.getValue(TrackBlock.SHAPE);
