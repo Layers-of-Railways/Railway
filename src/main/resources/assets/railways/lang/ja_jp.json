@@ -1,4 +1,5 @@
 {
+	"_": "Steam 'n Railsを翻訳していただきありがとうございます!",
 	"block.railways.semaphore": "腕木式信号機",
 	"block.railways.track_acacia": "アカシアの鉄道用線路",
 	"block.railways.track_birch": "シラカバの鉄道用線路",
@@ -58,6 +59,7 @@
 	"item.railways.white_incomplete_conductor_cap": "組み立て中の白色の車掌帽",
 	"item.railways.yellow_conductor_cap": "黄色の車掌帽",
 	"item.railways.yellow_incomplete_conductor_cap": "組み立て中の黄色の車掌帽",
+	"itemGroup.railways": "Create 鉄道",
 	"railways.ponder.conductor_constructing.header": "車掌の組み立て",
 	"railways.ponder.conductor_constructing.text_1": "車掌は安山岩ケーシングで構築します。",
 	"railways.ponder.conductor_redstoning.header": "車掌による遠隔レッドストーン制御",
