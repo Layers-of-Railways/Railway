@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 73",
+	"_": "Missing Localizations: 74",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -156,6 +156,7 @@
 	"railways.whistle.tool.bound_usage": "UNLOCALIZED: Use on a track to summon the bound train!",
 	"railways.whistle.tool.not_bound": "UNLOCALIZED: Not bound, use on a conductor riding a train to bind.",
 	"railways.whistle.set": "UNLOCALIZED: Bound whistle.",
+	"railways.whistle.success": "UNLOCALIZED: Train is on the way",
 	"railways.whistle.not_owner": "UNLOCALIZED: You must be the owner of the train to bind the whistle.",
 	"railways.whistle.clear": "UNLOCALIZED: Cleared whistle binding.",
 	"railways.whistle.failure.not_bound": "UNLOCALIZED: Whistle must be bound first.",

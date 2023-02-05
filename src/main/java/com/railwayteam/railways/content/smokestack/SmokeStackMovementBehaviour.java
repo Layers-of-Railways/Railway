@@ -2,16 +2,16 @@ package com.railwayteam.railways.content.smokestack;
 
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.util.RandomSource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
-    private LerpedFloat chanceChaser;
-    private LerpedFloat speedMultiplierChaser;
+    private final Map<Integer, LerpedFloat> chanceChasers = new HashMap<>();
+    private final Map<Integer, LerpedFloat> speedMultiplierChasers = new HashMap<>();
 
     @Override
     public void tick(MovementContext context) {
@@ -19,10 +19,19 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             || !context.state.getValue(SmokeStackBlock.ENABLED))
             return;
 
-        if (chanceChaser == null)
+        int key = context.hashCode();
+
+        LerpedFloat chanceChaser = chanceChasers.get(key);
+        LerpedFloat speedMultiplierChaser = speedMultiplierChasers.get(key);
+
+        if (chanceChaser == null) {
             chanceChaser = LerpedFloat.linear();
-        if (speedMultiplierChaser == null)
+            chanceChasers.put(key, chanceChaser);
+        }
+        if (speedMultiplierChaser == null) {
             speedMultiplierChaser = LerpedFloat.linear();
+            speedMultiplierChasers.put(key, speedMultiplierChaser);
+        }
 
         float chanceModifierTarget = (Math.abs(context.getAnimationSpeed()) + 100) / 800;
         chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
@@ -35,7 +44,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
         }*/
 
-        chanceChaser.chase(chanceModifierTarget, chanceModifierTarget>chanceChaser.getValue() ? 0.1 : 0.01, LerpedFloat.Chaser.EXP);
+        chanceChaser.chase(chanceModifierTarget, chanceModifierTarget>chanceChaser.getChaseTarget() ? 0.1 : 0.01, LerpedFloat.Chaser.LINEAR);
         chanceChaser.tickChaser();
         float chanceModifier = chanceChaser.getValue();
 
@@ -56,7 +65,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         RandomSource random = context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
         double speedModifierTarget = 5 * (0.5+maxModifier);
-        speedMultiplierChaser.chase(speedModifierTarget, 0.2, LerpedFloat.Chaser.EXP);
+        speedMultiplierChaser.chase(speedModifierTarget, 0.4, LerpedFloat.Chaser.LINEAR);
         speedMultiplierChaser.tickChaser();
         if (random.nextFloat() < type.particleSpawnChance * chanceModifier) {
             for(int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {

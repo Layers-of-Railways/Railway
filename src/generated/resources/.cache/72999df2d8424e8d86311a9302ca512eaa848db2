@@ -1,5 +1,17 @@
-// 1.19.2	2023-02-04T19:02:44.757553601	Steam 'n Rails Standard Recipes
+// 1.19.2	2023-02-05T11:30:24.699379115	Steam 'n Rails Standard Recipes
 36ca85e602cc8a2a50cbfe97ce058c51c1201a05 data/railways/advancements/recipes/railways/crafting/conductor_whistle.json
+757d488c678ae0889a25e6bc752c0162f4ab8e5b data/railways/advancements/recipes/railways/crafting/smokestack_caboosestyle.json
+4c39a211a35f71f1e299ca9e6ab50f5a13273cee data/railways/advancements/recipes/railways/crafting/smokestack_coalburner.json
+24e5e4e0519a2a4081da43b4e851826115fa172b data/railways/advancements/recipes/railways/crafting/smokestack_diesel.json
+8981b175ee405c936e0f52b8292cf101104e4a95 data/railways/advancements/recipes/railways/crafting/smokestack_oilburner.json
+38f30604e357798c9d28d0c6a9734d78fde69e35 data/railways/advancements/recipes/railways/crafting/smokestack_streamlined.json
+6926058074d737e5c9a07d948c61487c78303e88 data/railways/advancements/recipes/railways/crafting/smokestack_woodburner.json
 9048a9b9b7d79b491b101fd67a46e146e43876d3 data/railways/advancements/recipes/railways/crafting/track_coupler.json
 c1d9582f7280217b93b7443beb950c1fa7909e27 data/railways/recipes/crafting/conductor_whistle.json
+a73fa6416cb2146f92c8681dc7711288a435ccee data/railways/recipes/crafting/smokestack_caboosestyle.json
+5c6253c463afa25306043f893ba55fe1fd2cb504 data/railways/recipes/crafting/smokestack_coalburner.json
+72ff5c6430a0237270bd8190acf446796cbd297b data/railways/recipes/crafting/smokestack_diesel.json
+120b28f8913e642aab9b2ab17acdd5c33bcedd4f data/railways/recipes/crafting/smokestack_oilburner.json
+4656dd8f1266550130d35f8db29f3b50a05614ab data/railways/recipes/crafting/smokestack_streamlined.json
+6f1c25c7af60476e039cbe4dd1ae1d502fb0873b data/railways/recipes/crafting/smokestack_woodburner.json
 81bc322210d253e95b8f0c6f36e19aeb57ac2e1c data/railways/recipes/crafting/track_coupler.json

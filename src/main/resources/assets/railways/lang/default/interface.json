@@ -54,6 +54,7 @@
   "railways.whistle.tool.not_bound": "Not bound, use on a conductor riding a train to bind.",
 
   "railways.whistle.set": "Bound whistle.",
+  "railways.whistle.success": "Train is on the way",
   "railways.whistle.not_owner": "You must be the owner of the train to bind the whistle.",
   "railways.whistle.clear": "Cleared whistle binding.",
 

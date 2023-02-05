@@ -29,5 +29,8 @@ public class RailwaysClient {
     registerCustomCap("RileyHighline", "rileyhighline");
     registerCustomSkin("RileyHighline", "rileyhighline");
     preventTiltingCap("RileyHighline");
+
+    registerCustomCap("TiesToetToet", "tiestoettoet");
+    preventTiltingCap("TiesToetToet");
   }
 }
