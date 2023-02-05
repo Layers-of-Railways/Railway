@@ -16,9 +16,9 @@
     "railways:mono_bogey_upside_down",
     "railways:smokestack_caboosestyle",
     "railways:smokestack_coalburner",
-    "railways:smokestack_diesel",
     "railways:smokestack_oilburner",
     "railways:smokestack_streamlined",
-    "railways:smokestack_woodburner"
+    "railways:smokestack_woodburner",
+    "railways:smokestack_diesel"
   ]
 }

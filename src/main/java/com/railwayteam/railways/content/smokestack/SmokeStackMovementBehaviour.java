@@ -10,8 +10,23 @@ import java.util.Map;
 
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
+    private final boolean renderAsNormalTileEntity;
+
     private final Map<Integer, LerpedFloat> chanceChasers = new HashMap<>();
     private final Map<Integer, LerpedFloat> speedMultiplierChasers = new HashMap<>();
+
+    public SmokeStackMovementBehaviour() {
+        this(false);
+    }
+
+    public SmokeStackMovementBehaviour(boolean renderAsNormalTileEntity) {
+        this.renderAsNormalTileEntity = renderAsNormalTileEntity;
+    }
+
+    @Override
+    public boolean renderAsNormalTileEntity() {
+        return renderAsNormalTileEntity;
+    }
 
     @Override
     public void tick(MovementContext context) {
@@ -35,6 +50,10 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
         float chanceModifierTarget = (Math.abs(context.getAnimationSpeed()) + 100) / 800;
         chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
+
+        if (context.contraption.presentTileEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
+            notifiable.notifySpeed(chanceModifierTarget);
+        }
 
 /*        Carriage carriage;
         if (context.contraption.entity instanceof CarriageContraptionEntity cce && (carriage = cce.getCarriage()) != null) {

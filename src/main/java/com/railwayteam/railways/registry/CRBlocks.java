@@ -15,6 +15,7 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStat
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.AxisSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.tender.TenderBlock;
@@ -85,9 +86,9 @@ public class CRBlocks {
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape) {
-        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_"+variant);
+        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_" + variant);
         MovementBehaviour movementBehaviour = new SmokeStackMovementBehaviour();
-        return REGISTRATE.block("smokestack_"+variant, p -> rotates ? new AxisSmokeStackBlock(p, type, shape) : new SmokeStackBlock(p, type, shape))
+        return REGISTRATE.block("smokestack_" + variant, p -> rotates ? new AxisSmokeStackBlock(p, type, shape) : new SmokeStackBlock(p, type, shape))
             .initialProperties(SharedProperties::softMetal)
             .blockstate((c, p) -> {
 //                rotates ? p.axisBlock(c.get(), p.models().getExistingFile(modelLoc)) : null
@@ -112,7 +113,7 @@ public class CRBlocks {
             .onRegister(AllMovementBehaviours.movementBehaviour(movementBehaviour))
             .lang(description)
             .item()
-            .model((c, p) -> p.withExistingParent("item/"+c.getName(), modelLoc))
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), modelLoc))
             .build()
             .register();
     }
@@ -222,12 +223,29 @@ public class CRBlocks {
     woodburner
      */
     public static final BlockEntry<SmokeStackBlock>
-        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10/16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK)),
+        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK)),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK),
-        DIESEL_STACK = makeSmokeStack("diesel", new SmokeStackBlock.SmokeStackType(0.5, 0.25, 0.5), "Diesel Smokestack", CRShapes.DIESEL_STACK),
         OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", CRShapes.OIL_STACK),
         STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", CRShapes.STREAMLINED_STACK),
-        WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12/16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK);
+        WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK);
+
+    public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, new SmokeStackBlock.SmokeStackType(0.5, 0.25, 0.5), ShapeWrapper.wrapped(CRShapes.DIESEL_STACK)))
+        .initialProperties(SharedProperties::softMetal)
+        .blockstate((c, p) -> p.getVariantBuilder(c.get())
+            .forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
+                .build()))
+        .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .properties(p -> p.noOcclusion())
+        .addLayer(() -> RenderType::cutoutMipped)
+        .transform(pickaxeOnly())
+        .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true)))
+        .lang("Diesel Smokestack")
+        .item()
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))
+        .build()
+        .register();
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
