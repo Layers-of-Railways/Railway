@@ -14,9 +14,13 @@ import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
+import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.AllSections;
+import com.simibubi.create.content.curiosities.girder.ConnectedGirderModel;
+import com.simibubi.create.content.curiosities.girder.GirderBlock;
+import com.simibubi.create.content.curiosities.girder.GirderBlockStateGenerator;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -26,6 +30,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -33,6 +38,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
+import static com.simibubi.create.Create.REGISTRATE;
 import static com.simibubi.create.content.logistics.block.display.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
@@ -66,10 +72,29 @@ public class CRBlocks {
             .register();
     }
 
+    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description) {
+        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_"+variant);
+        return REGISTRATE.block("smokestack_"+variant, p -> new SmokeStackBlock(p, type))
+            .initialProperties(SharedProperties::softMetal)
+            .blockstate((c, p) -> p.horizontalBlock(c.get(), p.models().getExistingFile(modelLoc)))
+            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(p -> p.noOcclusion())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(pickaxeOnly())
+            .lang(description)
+            .item()
+            .model((c, p) -> p.withExistingParent("item/"+c.getName(), modelLoc))
+            .build()
+            .register();
+    }
+
     public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
+
     static {
         REGISTRATE.startSection(AllSections.LOGISTICS);
     }
+
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
         .initialProperties(SharedProperties::softMetal)
         //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()
@@ -78,9 +103,9 @@ public class CRBlocks {
             .forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(prov.models().getExistingFile(prov.modLoc(
                     "block/semaphore/block" +
-                        (state.getValue(SemaphoreBlock.FULL) ?"_full":"") +
-                        (state.getValue(SemaphoreBlock.FLIPPED) ?"_flipped":"") +
-                        (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ?"_down":""))))
+                        (state.getValue(SemaphoreBlock.FULL) ? "_full" : "") +
+                        (state.getValue(SemaphoreBlock.FLIPPED) ? "_flipped" : "") +
+                        (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ? "_down" : ""))))
                 .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
                 .build()
             )
@@ -137,23 +162,44 @@ public class CRBlocks {
             .lang("Upside Down Monorail Bogey")
             .register();
 
-  public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
-      REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
-          .initialProperties(SharedProperties::wooden)
-          .properties(p -> p.color(MaterialColor.COLOR_BROWN))
-          .properties(p -> p.noOcclusion())
-          .properties(p -> p.sound(SoundType.WOOD))
-          .properties(p -> p.instabreak())
-          .properties(p -> p.noLootTable())
-          .properties(p -> p.noCollission())
-          .blockstate((c, p) -> p.getVariantBuilder(c.get())
-              .forAllStates(state -> ConfiguredModel.builder()
-                  .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
-                  .build()))
-          .lang("Conductor Whistle")
-          .item(ConductorWhistleItem::new)
-          .transform(customItemModel())
-          .register();
+    public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
+        REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.color(MaterialColor.COLOR_BROWN))
+            .properties(p -> p.noOcclusion())
+            .properties(p -> p.sound(SoundType.WOOD))
+            .properties(p -> p.instabreak())
+            .properties(p -> p.noLootTable())
+            .properties(p -> p.noCollission())
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                    .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
+                    .build()))
+            .lang("Conductor Whistle")
+            .item(ConductorWhistleItem::new)
+            .transform(customItemModel())
+            .register();
+
+    static {
+        REGISTRATE.startSection(AllSections.PALETTES);
+    }
+
+    /*
+    smokestacks:
+    caboosestyle
+    coalburner
+    diesel
+    oilburner
+    streamlined
+    woodburner
+     */
+    public static final BlockEntry<SmokeStackBlock>
+        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 0.5, 0.5), "Caboose Smokestack"),
+        COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack"),
+        DIESEL_STACK = makeSmokeStack("diesel", new SmokeStackBlock.SmokeStackType(0.5, 0.25, 0.5), "Diesel Smokestack"),
+        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(0.5, 0.5, 0.5), "Oilburner Smokestack"),
+        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(0.5, 0.5, 0.5), "Streamlined Smokestack"),
+        WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 0.5, 0.5), "Woodburner Smokestack");
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
@@ -177,5 +223,6 @@ public class CRBlocks {
     .register();*/
 
     @SuppressWarnings("EmptyMethod")
-    public static void register() {}
+    public static void register() {
+    }
 }

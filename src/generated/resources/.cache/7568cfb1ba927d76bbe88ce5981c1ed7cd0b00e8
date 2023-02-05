@@ -1,8 +1,14 @@
-// 1.19.2	2023-02-03T18:00:21.402709088	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-02-04T17:50:29.136727134	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 add50e4ac876613427cfca4f7f4ab804ba1cd4e8 assets/railways/blockstates/conductor_whistle.json
 5d9b75675765808807b7f443ad4163fd0c8aaf99 assets/railways/blockstates/mono_bogey.json
 989e79c7a03122323f45e9d37bde406d13485dc8 assets/railways/blockstates/mono_bogey_upside_down.json
 67fc0caff071c6513c049d37890b668e1b6a27a6 assets/railways/blockstates/semaphore.json
+dcf3d3801bef9f219432fbcf1b3466a0dbc2f5c1 assets/railways/blockstates/smokestack_caboosestyle.json
+2fd15e57ead162267d9641651b92b6c20984987a assets/railways/blockstates/smokestack_coalburner.json
+a58a1cd7a13a46ab5181cc9845a6618428cfa86e assets/railways/blockstates/smokestack_diesel.json
+73f1e348afa9dda163c689f28e95a87f267ea069 assets/railways/blockstates/smokestack_oilburner.json
+586703bc5edfed5f119cf62a427ba8960fe9a0e7 assets/railways/blockstates/smokestack_streamlined.json
+b2e758ebd54190b1259587776f419126e08e4bdd assets/railways/blockstates/smokestack_woodburner.json
 1df66317484a16f93d1b1847a5a549ef57e1d878 assets/railways/blockstates/track_acacia.json
 cdd1e87cbac1c4b5d165300648cc680da13d474b assets/railways/blockstates/track_birch.json
 2a8d1abb52b6a2f7283c106ed571220081112b43 assets/railways/blockstates/track_blackstone.json
@@ -15,8 +21,8 @@ a9d9be49f78a3859b1a6a76ae609a493bb0453b2 assets/railways/blockstates/track_monor
 614b7fff8d1edf16cdf9009b240360142d7460dc assets/railways/blockstates/track_oak.json
 ec04aeda6b37674ace22f1db68fd615b31f23ab0 assets/railways/blockstates/track_spruce.json
 dee9dd9aa83e4e835e26188e7667e47b715b6227 assets/railways/blockstates/track_warped.json
-8587320f64c856ae39a38034227681935d674e37 assets/railways/lang/en_ud.json
-26611b7db5746a8526b5c39f66a2cfd08dd15365 assets/railways/lang/en_us.json
+1724dc4dc87e4189c972f687816a90ebbcaf3f94 assets/railways/lang/en_ud.json
+3859b67e01d542e92af763a5928827f2c05c3fc5 assets/railways/lang/en_us.json
 428ca1115dc9b9bb26293c063c418c31aac27404 assets/railways/models/block/track/acacia/ascending.json
 f529f6606c3718b6a93f724dfe27860f2c59f447 assets/railways/models/block/track/acacia/cross_d1_xo.json
 a9c842dc7fcaf7bd8c4f75e1090a444c2994109b assets/railways/models/block/track/acacia/cross_d1_zo.json
@@ -199,6 +205,12 @@ ba64c5f00b4690a4b7e1a3b192301639f6d57cbb assets/railways/models/item/purple_inco
 1c920bec770e3d76626d4ffa89ea646f6a6e3bc7 assets/railways/models/item/red_conductor_cap.json
 6d8542066740e95e2e9fe908d69fa84ebe64c4a7 assets/railways/models/item/red_incomplete_conductor_cap.json
 9a37be942ff176443a7c7fd94991d3bd242902ff assets/railways/models/item/semaphore.json
+1a9b2e1d8e9afb74f8eb944352ebb3ba9407b4ab assets/railways/models/item/smokestack_caboosestyle.json
+4b8482cf10c1ec5227c5d328cbee0206887874ee assets/railways/models/item/smokestack_coalburner.json
+7e79a98002417a0beee22188fd2404fb04d81cde assets/railways/models/item/smokestack_diesel.json
+35772d0a2911db5224082c3170c8fabdd484b98b assets/railways/models/item/smokestack_oilburner.json
+fb6878e99baebb9d80ecefde0bfa2162108e0cb3 assets/railways/models/item/smokestack_streamlined.json
+fcbdd3174a97dbb42588aef6739cb7de6d9ae3a9 assets/railways/models/item/smokestack_woodburner.json
 cbef3359c6c639f4569ab5759193a62a15608d31 assets/railways/models/item/track_acacia.json
 746f355be8b9e03f5a4fef77a23881100f5ac6dc assets/railways/models/item/track_birch.json
 245301d5dd27f61a34a9a480c3f6fa65ff817134 assets/railways/models/item/track_blackstone.json
@@ -228,7 +240,7 @@ ba24c1b1152aa2b124226f5d9e28e4e367fee6ab assets/railways/models/item/track_spruc
 235a16e8b671df6d31ceeca6890f4c76ca0112a8 assets/railways/models/item/yellow_incomplete_conductor_cap.json
 c7cc5ee39afd14cdcd06e432988a6ffc6c99e4f6 data/forge/tags/blocks/relocation_not_supported.json
 609b449c61e0d333812114d789e67e78486a57b6 data/minecraft/tags/blocks/mineable/axe.json
-5d82d9b33f22c0e545d94655d8c25ca3fb3ea927 data/minecraft/tags/blocks/mineable/pickaxe.json
+50c5b1509226cebf3596ff542001024a83bbb7a4 data/minecraft/tags/blocks/mineable/pickaxe.json
 954e6bbdc34ea4c30e5104f46d874b930a762ed0 data/railways/advancements/recipes/railways/benchcart.json
 6e341b78327df920ea0379ae807420212892ebac data/railways/advancements/recipes/railways/dying_existing_cap_black.json
 008f9a977ec9f0b0c85e0f00e746fd2e25a029cc data/railways/advancements/recipes/railways/dying_existing_cap_blue.json
@@ -250,6 +262,12 @@ b704a463495123ad07b093da7a07752474bc8737 data/railways/advancements/recipes/rail
 fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/mono_bogey.json
 fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/mono_bogey_upside_down.json
 d3b49bab3d0bb05643438f36a4d244598d952b8a data/railways/loot_tables/blocks/semaphore.json
+474da4da71cfd9cf0198eb3254828026e377f634 data/railways/loot_tables/blocks/smokestack_caboosestyle.json
+821642ae40968208c9539e126d7d4e8b9a9780d6 data/railways/loot_tables/blocks/smokestack_coalburner.json
+eebeb12b4e0122d8f1145c564539027128b92bf3 data/railways/loot_tables/blocks/smokestack_diesel.json
+506cc577c2e0f3b5ecb8af1fd80653661adcb990 data/railways/loot_tables/blocks/smokestack_oilburner.json
+f227f82da19cfc110684f3113394a1af121c31ef data/railways/loot_tables/blocks/smokestack_streamlined.json
+da63346375f44356a49c5b7c26e0c32a0dd03dff data/railways/loot_tables/blocks/smokestack_woodburner.json
 7d4a280740d24fe310103b23d7869fd8c912b64d data/railways/loot_tables/blocks/track_acacia.json
 10759363a13179019336d1a3c9605af3574ff6be data/railways/loot_tables/blocks/track_birch.json
 dab13e105c214b8adccf2cb7ee9694d275a3e2ea data/railways/loot_tables/blocks/track_blackstone.json

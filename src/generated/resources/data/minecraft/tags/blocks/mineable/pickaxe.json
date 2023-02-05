@@ -13,6 +13,12 @@
     "railways:track_mangrove",
     "railways:track_monorail",
     "railways:mono_bogey",
-    "railways:mono_bogey_upside_down"
+    "railways:mono_bogey_upside_down",
+    "railways:smokestack_caboosestyle",
+    "railways:smokestack_coalburner",
+    "railways:smokestack_diesel",
+    "railways:smokestack_oilburner",
+    "railways:smokestack_streamlined",
+    "railways:smokestack_woodburner"
   ]
 }

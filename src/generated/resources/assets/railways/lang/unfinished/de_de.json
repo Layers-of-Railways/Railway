@@ -1,5 +1,5 @@
 {
-	"_": "Missing Localizations: 65",
+	"_": "Missing Localizations: 71",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
@@ -7,6 +7,12 @@
 	"block.railways.mono_bogey": "UNLOCALIZED: Monorail Bogey",
 	"block.railways.mono_bogey_upside_down": "UNLOCALIZED: Upside Down Monorail Bogey",
 	"block.railways.semaphore": "Formsignal",
+	"block.railways.smokestack_caboosestyle": "UNLOCALIZED: Caboose Smokestack",
+	"block.railways.smokestack_coalburner": "UNLOCALIZED: Coalburner Smokestack",
+	"block.railways.smokestack_diesel": "UNLOCALIZED: Diesel Smokestack",
+	"block.railways.smokestack_oilburner": "UNLOCALIZED: Oilburner Smokestack",
+	"block.railways.smokestack_streamlined": "UNLOCALIZED: Streamlined Smokestack",
+	"block.railways.smokestack_woodburner": "UNLOCALIZED: Woodburner Smokestack",
 	"block.railways.track_acacia": "Akazienholzgleis",
 	"block.railways.track_birch": "Birkenholzgleis",
 	"block.railways.track_blackstone": "Schwarzsteingleis",

@@ -1,0 +1,6 @@
+# Made in Blockbench 4.6.1
+newmtl m_caboose
+map_Kd #caboose
+newmtl m_woodburner
+map_Kd #woodburner
+newmtl none

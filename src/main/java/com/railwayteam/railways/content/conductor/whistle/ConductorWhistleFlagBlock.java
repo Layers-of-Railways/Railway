@@ -29,13 +29,13 @@ public class ConductorWhistleFlagBlock extends Block implements ITE<ConductorWhi
     }
 
     @Override
-    @SuppressWarnings("deprecated")
+    @SuppressWarnings("deprecation")
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         ITE.onRemove(pState, pLevel, pPos, pNewState);
     }
 
     @Override
-    @SuppressWarnings("deprecated")
+    @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return CRShapes.CONDUCTOR_WHISTLE_FLAG;
     }

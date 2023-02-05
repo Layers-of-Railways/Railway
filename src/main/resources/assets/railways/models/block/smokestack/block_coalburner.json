@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "block/coalburner"
+		"1": "railways:block/smokestack/coalburner"
 	},
 	"elements": [
 		{

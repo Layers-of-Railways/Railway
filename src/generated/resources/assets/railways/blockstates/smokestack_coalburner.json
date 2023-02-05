@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "enabled=false,facing=east,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=false,facing=east,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=false,facing=east,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=false,facing=east,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=false,facing=north,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=false,facing=north,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=false,facing=north,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=false,facing=north,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=false,facing=south,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=false,facing=south,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=false,facing=south,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=false,facing=south,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=false,facing=west,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=false,facing=west,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=false,facing=west,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=false,facing=west,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=true,facing=east,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=true,facing=east,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=true,facing=east,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=true,facing=east,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 90
+    },
+    "enabled=true,facing=north,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=true,facing=north,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=true,facing=north,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=true,facing=north,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner"
+    },
+    "enabled=true,facing=south,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=true,facing=south,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=true,facing=south,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=true,facing=south,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 180
+    },
+    "enabled=true,facing=west,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=true,facing=west,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=true,facing=west,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    },
+    "enabled=true,facing=west,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_coalburner",
+      "y": 270
+    }
+  }
+}
