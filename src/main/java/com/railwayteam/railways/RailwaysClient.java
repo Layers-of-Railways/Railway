@@ -9,6 +9,9 @@ import com.railwayteam.railways.registry.CRPonderIndex;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomCap;
+import static com.railwayteam.railways.registry.CRBlockPartials.preventTiltingCap;
+import static com.railwayteam.railways.registry.CRBlockPartials.shouldPreventTiltingCap;
+import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomSkin;
 
 public class RailwaysClient {
   public static void clientSetup(FMLClientSetupEvent event) {
@@ -22,5 +25,9 @@ public class RailwaysClient {
     registerCustomCap("Slimeist", "slimeist");
     registerCustomCap("bosbesballon", "bosbesballon");
     registerCustomCap("SpottyTheTurtle", "turtle");
+
+    registerCustomCap("RileyHighline", "rileyhighline");
+    registerCustomSkin("RileyHighline", "rileyhighline");
+    preventTiltingCap("RileyHighline");
   }
 }

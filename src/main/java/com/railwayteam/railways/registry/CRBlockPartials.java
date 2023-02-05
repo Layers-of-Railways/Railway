@@ -2,11 +2,14 @@ package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -30,9 +33,23 @@ public class CRBlockPartials {
     public static final Map<TrackMaterial, TrackModelHolder> TRACK_PARTS = new EnumMap<>(TrackMaterial.class);
     public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
     public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
+    public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS = new HashMap<>();
+    public static final Set<String> NO_TILT_CAPS = new HashSet<>();
 
     public static void registerCustomCap(String itemName, String modelLoc) {
         CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+    }
+
+    public static void preventTiltingCap(String itemName) {
+        NO_TILT_CAPS.add(itemName);
+    }
+
+    public static boolean shouldPreventTiltingCap(ItemStack itemStack) {
+        return itemStack.getItem() instanceof ConductorCapItem && NO_TILT_CAPS.contains(itemStack.getHoverName().getString());
+    }
+
+    public static void registerCustomSkin(String itemName, String textureLoc) {
+        CUSTOM_CONDUCTOR_SKINS.put(itemName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
     }
 
     public static final PartialModel

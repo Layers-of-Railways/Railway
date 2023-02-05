@@ -1,14 +1,14 @@
-// 1.19.2	2023-02-04T17:50:29.136727134	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-02-04T19:02:44.758592982	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 add50e4ac876613427cfca4f7f4ab804ba1cd4e8 assets/railways/blockstates/conductor_whistle.json
 5d9b75675765808807b7f443ad4163fd0c8aaf99 assets/railways/blockstates/mono_bogey.json
 989e79c7a03122323f45e9d37bde406d13485dc8 assets/railways/blockstates/mono_bogey_upside_down.json
 67fc0caff071c6513c049d37890b668e1b6a27a6 assets/railways/blockstates/semaphore.json
-dcf3d3801bef9f219432fbcf1b3466a0dbc2f5c1 assets/railways/blockstates/smokestack_caboosestyle.json
-2fd15e57ead162267d9641651b92b6c20984987a assets/railways/blockstates/smokestack_coalburner.json
-a58a1cd7a13a46ab5181cc9845a6618428cfa86e assets/railways/blockstates/smokestack_diesel.json
-73f1e348afa9dda163c689f28e95a87f267ea069 assets/railways/blockstates/smokestack_oilburner.json
-586703bc5edfed5f119cf62a427ba8960fe9a0e7 assets/railways/blockstates/smokestack_streamlined.json
-b2e758ebd54190b1259587776f419126e08e4bdd assets/railways/blockstates/smokestack_woodburner.json
+1c80b64ea14a77d53d8b72ebc2dcb925e35db155 assets/railways/blockstates/smokestack_caboosestyle.json
+903665fc7717f223ff28f62a8dd09c8809e7724d assets/railways/blockstates/smokestack_coalburner.json
+81780d58813c3bded5dc14ab633cb04bb808610e assets/railways/blockstates/smokestack_diesel.json
+0c5a246f3641548c3880f61453e30376fa4523c1 assets/railways/blockstates/smokestack_oilburner.json
+295f50a34c5b305a647b883a8216bc1a8b134d38 assets/railways/blockstates/smokestack_streamlined.json
+05a66234bf2264b3ae245e052aab139df2a0636e assets/railways/blockstates/smokestack_woodburner.json
 1df66317484a16f93d1b1847a5a549ef57e1d878 assets/railways/blockstates/track_acacia.json
 cdd1e87cbac1c4b5d165300648cc680da13d474b assets/railways/blockstates/track_birch.json
 2a8d1abb52b6a2f7283c106ed571220081112b43 assets/railways/blockstates/track_blackstone.json

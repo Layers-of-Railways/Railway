@@ -1,8 +1,10 @@
 {
+	"parent": "block/block",
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "railways:block/smokestack/oilburner"
+		"0": "railways:block/smokestack/oilburner",
+		"particle": "railways:block/smokestack/oilburner"
 	},
 	"elements": [
 		{

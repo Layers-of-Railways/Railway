@@ -1,8 +1,10 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.logistics.trains.IBogeyBlock;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.entity.TrainRelocator;
 import net.minecraft.world.phys.Vec3;
@@ -27,8 +29,14 @@ public class MixinTrainRelocatorClient {
         try {
             if (CreateClient.RAILWAYS.trains.containsKey(relocatingTrain)) {
                 Train train = CreateClient.RAILWAYS.trains.get(relocatingTrain);
-                if (((AccessorCarriageBogey) train.carriages.get(0).leadingBogey()).getType() instanceof MonoBogeyBlock) {
+                IBogeyBlock type = ((AccessorCarriageBogey) train.carriages.get(0).leadingBogey()).getType();
+                if (type instanceof MonoBogeyBlock mbb) {
                     result = result.add(0, 1.0d, 0);
+                    if (mbb.isUpsideDown()) {
+                        result = result.subtract(0, 1.5, 0);
+                    }
+                } else if (type instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
+                    result = result.subtract(0, 0.5, 0);
                 }
             }
         } catch (Exception e) {

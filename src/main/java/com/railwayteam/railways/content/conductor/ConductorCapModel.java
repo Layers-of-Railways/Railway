@@ -31,15 +31,17 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	private final ModelPart cap;
 	@Nullable
 	private final PartialModel override;
+	private final boolean doNotTilt;
 
 	public ConductorCapModel(ModelPart root) {
-		this(root, null);
+		this(root, null, false);
 	}
 
-	public ConductorCapModel (ModelPart root, PartialModel override) {
+	public ConductorCapModel (ModelPart root, PartialModel override, boolean doNotTilt) {
 		super(override == null ? RenderType::armorCutoutNoCull : rl -> RenderType.cutout());
 		this.cap = root.getChild("cap");
 		this.override = override;
+		this.doNotTilt = doNotTilt;
 	}
 
 	public static LayerDefinition createBodyLayer () {
@@ -86,6 +88,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	}
 
 	public void setProperties (HumanoidModel<?> base) {
-		this.cap.copyFrom(base.hat);
+		this.cap.copyFrom(doNotTilt ? base.head : base.hat);
 	}
 }

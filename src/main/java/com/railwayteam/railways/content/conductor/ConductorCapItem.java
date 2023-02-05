@@ -75,7 +75,7 @@ public class ConductorCapItem extends ArmorItem {
         String name = itemStack.getHoverName().getString();
         PartialModel override = CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.getOrDefault(name, null);
         //override = CRBlockPartials.TOOLBOX_BODIES.get(DyeColor.BLUE);
-        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION), override);
+        ConductorCapModel<?> model = new ConductorCapModel<>(set.bakeLayer(ConductorCapModel.LAYER_LOCATION), override, CRBlockPartials.shouldPreventTiltingCap(itemStack));
         model.setProperties(_default);
         return model;
       }

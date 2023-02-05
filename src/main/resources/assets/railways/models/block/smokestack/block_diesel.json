@@ -1,4 +1,5 @@
 {
+	"parent": "block/block",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"6": "railways:block/smokestack/diesel",
