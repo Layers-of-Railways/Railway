@@ -1,0 +1,97 @@
+{
+	"credit": "By Slimeist",
+	"texture_size": [64, 64],
+	"textures": {
+		"1": "railways:item/dev_caps/turtle"
+	},
+	"elements": [
+		{
+			"name": "Hat",
+			"from": [3.5, 1.5, 3.5],
+			"to": [12.5, 4.5, 12.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 1.96299, 5.05709]},
+			"faces": {
+				"north": {"uv": [2.25, 2.25, 4.5, 3], "texture": "#1"},
+				"east": {"uv": [0, 2.25, 2.25, 3], "texture": "#1"},
+				"south": {"uv": [6.75, 2.25, 9, 3], "texture": "#1"},
+				"west": {"uv": [4.5, 2.25, 6.75, 3], "texture": "#1"},
+				"up": {"uv": [4.5, 2.25, 2.25, 0], "texture": "#1"},
+				"down": {"uv": [6.75, 0, 4.5, 2.25], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Hat",
+			"from": [3.5, 2.13112, 0.44135],
+			"to": [12.5, 2.13112, 3.44135],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 1.96299, 5.05709]},
+			"faces": {
+				"north": {"uv": [2.25, 3.75, 4.5, 3.75], "texture": "#1"},
+				"east": {"uv": [1.5, 3.75, 2.25, 3.75], "texture": "#1"},
+				"south": {"uv": [5.25, 3.75, 7.5, 3.75], "texture": "#1"},
+				"west": {"uv": [4.5, 3.75, 5.25, 3.75], "texture": "#1"},
+				"up": {"uv": [4.5, 3.75, 2.25, 3], "texture": "#1"},
+				"down": {"uv": [6.75, 3, 4.5, 3.75], "texture": "#1"}
+			}
+		},
+		{
+			"from": [7, 1.25, -6.75],
+			"to": [9, 3.25, -3.75],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 19, 1]},
+			"faces": {
+				"north": {"uv": [1.25, 6.5, 1.75, 7], "texture": "#1"},
+				"east": {"uv": [0.5, 6.5, 1.25, 7], "texture": "#1"},
+				"south": {"uv": [2.5, 6.5, 3, 7], "texture": "#1"},
+				"west": {"uv": [1.75, 6.5, 2.5, 7], "texture": "#1"},
+				"up": {"uv": [1.75, 6.5, 1.25, 5.75], "texture": "#1"},
+				"down": {"uv": [2.25, 5.75, 1.75, 6.5], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-1, 0, 0],
+			"translation": [0, 2.5, -0.75],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-1, 0, 0],
+			"translation": [0, 2.5, -0.75],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 53, 2],
+			"translation": [0.13, 7.2, 2.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 53, 2],
+			"translation": [0.13, 7.2, 2.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"ground": {
+			"translation": [0, 5.25, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, 3.75, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"head": {
+			"translation": [0, 14.5, 0],
+			"scale": [1.62, 1.62, 1.62]
+		},
+		"fixed": {
+			"translation": [0, 4.25, -1.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "Hat",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		},
+		2
+	]
+}

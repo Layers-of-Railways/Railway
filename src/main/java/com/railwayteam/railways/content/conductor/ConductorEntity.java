@@ -276,12 +276,12 @@ public class ConductorEntity extends AbstractGolem {
     return looking;
   }
 
-  static DyeColor colorFrom (byte b) {
+  public static DyeColor colorFrom (byte b) {
     if (b >= 16) return null;
     return DyeColor.byId(b);
   }
 
-  static byte idFrom (DyeColor color) {
+  public static byte idFrom (DyeColor color) {
     int c = color.getId();
     if (c >= 16) return 16;
     return (byte)c;

@@ -1,0 +1,32 @@
+{
+	"credit": "By ToOpa",
+	"parent": "block/block",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "railways:block/monorail/monorail",
+		"particle": "railways:block/monorail/monorail"
+	},
+	"elements": [
+		{
+			"from": [-6, -5, 0],
+			"to": [6, 5, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [8, 2, 11, 4.5], "texture": "#0"},
+				"east": {"uv": [2, 7.75, 0, 10.25], "texture": "#0"},
+				"south": {"uv": [4, 7.75, 7, 10.25], "texture": "#0"},
+				"west": {"uv": [0, 7.75, 2, 10.25], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Beam X",
+			"origin": [8, 13, 8],
+			"color": 0,
+			"nbt": "{}",
+			"armAnimationEnabled": false,
+			"children": [0]
+		}
+	]
+}

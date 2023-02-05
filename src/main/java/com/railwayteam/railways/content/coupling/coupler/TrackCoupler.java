@@ -1,11 +1,16 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.DimensionPalette;
+import com.simibubi.create.content.logistics.trains.TrackEdge;
 import com.simibubi.create.content.logistics.trains.TrackGraph;
 import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalPropagator;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SingleTileEdgePoint;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.UUID;
 
@@ -38,6 +43,23 @@ public class TrackCoupler extends SingleTileEdgePoint {
     public void keepAlive(Train train) {
         activated = 8;
         currentTrain = train.id;
+    }
+
+    @Override
+    public void tileAdded(BlockEntity tile, boolean front) {
+        super.tileAdded(tile, front);
+        notifyTrains(tile.getLevel());
+    }
+
+    private void notifyTrains(Level level) {
+        TrackGraph graph = Create.RAILWAYS.sided(level)
+            .getGraph(level, edgeLocation.getFirst());
+        if (graph == null)
+            return;
+        TrackEdge edge = graph.getConnection(edgeLocation.map(graph::locateNode));
+        if (edge == null)
+            return;
+        SignalPropagator.notifyTrains(graph, edge);
     }
 
     @Override

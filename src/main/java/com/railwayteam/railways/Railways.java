@@ -19,6 +19,7 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.MavenVersionStringHelper;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -60,7 +61,7 @@ public class Railways {
   	instance = this;
 
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
     MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -75,11 +76,11 @@ public class Railways {
     MinecraftForge.EVENT_BUS.register(this);
 
     Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
-    Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
 
     MOD_EVENT_BUS.addListener(RailwaysClient::clientSetup);
 
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RailwaysClient::clientRegister);
+    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> RailwaysClient::clientCtor);
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -130,6 +131,11 @@ public class Railways {
   @SubscribeEvent
   public void registerCommands(RegisterCommandsEvent event) {
     CRCommands.register(event.getDispatcher());
+  }
+
+  @SubscribeEvent
+  public void registerClientCommands(RegisterClientCommandsEvent event) {
+    CRCommands.registerClient(event.getDispatcher());
   }
 
   @SubscribeEvent

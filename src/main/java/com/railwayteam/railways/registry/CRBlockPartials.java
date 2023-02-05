@@ -2,11 +2,14 @@ package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -28,6 +31,26 @@ public class CRBlockPartials {
 
     public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
     public static final Map<TrackMaterial, TrackModelHolder> TRACK_PARTS = new EnumMap<>(TrackMaterial.class);
+    public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
+    public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
+    public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS = new HashMap<>();
+    public static final Set<String> NO_TILT_CAPS = new HashSet<>();
+
+    public static void registerCustomCap(String itemName, String modelLoc) {
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+    }
+
+    public static void preventTiltingCap(String itemName) {
+        NO_TILT_CAPS.add(itemName);
+    }
+
+    public static boolean shouldPreventTiltingCap(ItemStack itemStack) {
+        return itemStack.getItem() instanceof ConductorCapItem && NO_TILT_CAPS.contains(itemStack.getHoverName().getString());
+    }
+
+    public static void registerCustomSkin(String itemName, String textureLoc) {
+        CUSTOM_CONDUCTOR_SKINS.put(itemName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
+    }
 
     public static final PartialModel
         SEMAPHORE_ARM_RED = block("semaphore/red_arm"),
@@ -183,6 +206,16 @@ public class CRBlockPartials {
         COUPLER_BOTH = block("track_overlay/coupler_both"),
         COUPLER_NONE = block("track_overlay/coupler_none");
 
+    public static final PartialModel
+        MONORAIL_SEGMENT_TOP = block("monorail/monorail/segment_top"),
+        MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
+        MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
+        MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay"),
+        MONOBOGEY_FRAME = block("bogey/monorail/frame"),
+        MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
+
+    public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
+
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));
     }
@@ -192,12 +225,23 @@ public class CRBlockPartials {
     }
 
     static {
-        for (DyeColor color : DyeColor.values())
+        for (DyeColor color : DyeColor.values()) {
             TOOLBOX_BODIES.put(color, createBlock(Lang.asId(color.name()) + "_toolbox"));
+            CONDUCTOR_WHISTLE_FLAGS.put(color, block("conductor_whistle/flag_"+Lang.asId(color.name())));
+        }
 
         for (TrackMaterial material : TrackMaterial.allCustom()) {
-            String prefix = "track/" + material.resName() + "/";
-            TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "tie"), block(prefix + "segment_left"), block(prefix + "segment_right")));
+            String prefix;
+            switch (material.trackType) {
+                case STANDARD -> {
+                    prefix = "track/" + material.resName() + "/";
+                    TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "tie"), block(prefix + "segment_left"), block(prefix + "segment_right")));
+                }
+                case MONORAIL -> {
+                    prefix = "monorail/" + material.resName() + "/";
+                    TRACK_PARTS.put(material, new TrackModelHolder(block(prefix + "monorail_half"), block("empty"), block("empty")));
+                }
+            }
         }
     }
 

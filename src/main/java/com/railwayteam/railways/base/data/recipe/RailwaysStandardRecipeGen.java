@@ -3,6 +3,7 @@ package com.railwayteam.railways.base.data.recipe;
 import com.google.common.base.Supplier;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -13,13 +14,16 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
@@ -39,6 +43,62 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("=")
             .pattern("#")
             .pattern("T"));
+
+    GeneratedRecipe CONDUCTOR_WHISTLE = create(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
+        .unlockedByTag(() -> CRTags.AllItemTags.CONDUCTOR_CAPS.tag)
+        .viaShapeless(b -> b.requires(Items.COPPER_INGOT)
+            .requires(AllItems.BRASS_NUGGET.get()));
+
+    GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .pattern("# #")
+            .pattern("# #")
+            .pattern("#+#")
+        );
+
+    GeneratedRecipe DIESEL_STACK = create(CRBlocks.DIESEL_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .define('*', AllItems.PROPELLER.get())
+            .pattern("#*#")
+            .pattern(" + ")
+        );
+
+    GeneratedRecipe CABOOSE_STACK = create(CRBlocks.CABOOSESTYLE_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .define('.', Items.IRON_NUGGET)
+            .pattern(".#.")
+            .pattern(" + ")
+        );
+
+    GeneratedRecipe OILBURNER_STACK = create(CRBlocks.OILBURNER_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .pattern("# #")
+            .pattern("#+#")
+        );
+
+    GeneratedRecipe STREAMLINED_STACK = create(CRBlocks.STREAMLINED_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .pattern("#+#")
+        );
+
+    GeneratedRecipe WOODBURNER_STACK = create(CRBlocks.WOODBURNER_STACK)
+        .unlockedBy(() -> Blocks.CAMPFIRE)
+        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
+            .define('+', Blocks.CAMPFIRE)
+            .define('.', Items.IRON_NUGGET)
+            .pattern(".#.")
+            .pattern("#+#")
+        );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);

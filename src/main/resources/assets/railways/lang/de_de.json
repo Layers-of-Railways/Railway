@@ -1,24 +1,20 @@
 {
-
-	"_": "Readme: my German is far from perfect (my English isn’t great either). If there are mistakes, please let me know or edit the file where needed. Thank you",
-	
-	"_": "->------------------------]  Game Elements  [------------------------<-",
-
+	"_": "Vielen Dank für die Übersetzung von Create Railways!",
 	"block.railways.semaphore": "Formsignal",
 	"block.railways.track_acacia": "Akazienholzgleis",
 	"block.railways.track_birch": "Birkenholzgleis",
 	"block.railways.track_blackstone": "Schwarzsteingleis",
+	"block.railways.track_coupler": "Zugkuppler",
 	"block.railways.track_crimson": "Karmesingleis",
 	"block.railways.track_dark_oak": "Schwarzeichenholzgleis",
 	"block.railways.track_jungle": "Tropenholzgleis",
+	"block.railways.track_mangrove": "Mangrovenholzgleis",
 	"block.railways.track_oak": "Eichenholzgleis",
 	"block.railways.track_spruce": "Fichtenholzgleis",
 	"block.railways.track_warped": "Wirrgleis",
-
 	"entity.railways.benchcart": "Werkbanklore",
 	"entity.railways.conductor": "Zugführer",
 	"entity.railways.jukeboxcart": "Plattenspielerlore",
-
 	"item.railways.benchcart": "Werkbanklore",
 	"item.railways.black_conductor_cap": "Schwarze Eisenbahnermütze",
 	"item.railways.black_incomplete_conductor_cap": "Unfertige schwarze Eisenbahnermütze",
@@ -55,6 +51,7 @@
 	"item.railways.track_incomplete_crimson": "Unfertiges Karmesingleis",
 	"item.railways.track_incomplete_dark_oak": "Unfertiges Schwarzeichenholzgleis",
 	"item.railways.track_incomplete_jungle": "Unfertiges Tropenholzgleis",
+	"item.railways.track_incomplete_mangrove": "Unfertiges Mangrovenholzgleis",
 	"item.railways.track_incomplete_oak": "Unfertiges Eichenholzgleis",
 	"item.railways.track_incomplete_spruce": "Unfertiges Fichtenholzgleis",
 	"item.railways.track_incomplete_warped": "Unfertiges Wirrgleis",
@@ -62,9 +59,7 @@
 	"item.railways.white_incomplete_conductor_cap": "Unfertige weiße Eisenbahnermütze",
 	"item.railways.yellow_conductor_cap": "Gelbe Eisenbahnermütze",
 	"item.railways.yellow_incomplete_conductor_cap": "Unfertige gelbe Eisenbahnermütze",
-
 	"itemGroup.railways": "Create Railways",
-
 	"railways.ponder.conductor_constructing.header": "Bau eines Zugführers",
 	"railways.ponder.conductor_constructing.text_1": "Zugführer werden mit Andesitrahmen konstruiert.",
 	"railways.ponder.conductor_redstoning.header": "Redstone Fernsteuerung mit Zugführern",
@@ -82,14 +77,35 @@
 	"railways.ponder.train_semaphore.text_6": "Das untere Formsignal schließt sich, falls einer der Wege blockiert ist.",
 	"railways.ponder.train_semaphore.text_7": "Das obere Formsignal schließt sich, falls alle Wege blockiert sind.",
 	"railways.ponder.train_semaphore.text_8": "2 Formsignale schließen sich gleichzeitig, wenn beide auf einen nicht-Messing-Signal platziert sind.",
-
-
-	"_": "->------------------------]  UI & Messages  [------------------------<-",
-
 	"create.railways.semaphore.search_mode": "Signal Suchrichtung",
 	"create.railways.semaphore.search_mode.search_down": "Unten",
 	"create.railways.semaphore.search_mode.search_up": "Oben",
-
-	"_": "Thank you for translating Create Steam 'n Rails!"
-
+	"railways.display_source.track_coupler_info": "Zugkupplerbeschreibung",
+	"railways.display_source.coupler.no_action": "Keine verfügbaren Aktionen",
+	"railways.display_source.coupler.coupling": "Kuppeln: ",
+	"railways.display_source.coupler.coupling.to": "bis: ",
+	"railways.display_source.coupler.decoupling": "Abkuppeln: ",
+	"railways.coupler.edge_spacing": "Wagenabstand",
+	"railways.coupler.edge_spacing.meters": "Meter",
+	"railways.coupler.mode.coupling": "-> Kuppeln",
+	"railways.coupler.mode.decoupling": "-> Abkuppeln",
+	"railways.coupler.mode.both": "Kupplung und Abkupplung",
+	"railways.schedule.instruction.redstone_link": "Redstone-Link aktivieren",
+	"railways.schedule.instruction.redstone_link.power": "Signalstärke: %s",
+	"railways.schedule.instruction.redstone_link.power_edit_box": "Signalstärke",
+	"railways.schedule.condition.loaded": "Chunk geladen",
+	"railways.schedule.condition.loaded.status": "Auf geladenen Chunk warten",
+	"railways.tooltip.coupler.header": "Kupplerbeschreibung",
+	"railways.tooltip.coupler.mode": "Kupplermodus:",
+	"railways.tooltip.coupler.train1": "§lZug 1: §r%s",
+	"railways.tooltip.coupler.train2": "§lZug 2: §r%s",
+	"railways.tooltip.coupler.action.none": "Aktion nicht verfügbar",
+	"railways.tooltip.coupler.action.coupling": "Aktion: Kupplung",
+	"railways.tooltip.coupler.action.decoupling": "Aktion: Entkoppelung",
+	"block.railways.track_coupler.tooltip": "Zugkuppler",
+	"block.railways.track_coupler.tooltip.summary": "Binde den Zugkuppler zu der Schiene unter der _Mitte_ des _vorderen Drehgestells_ und drehe dann oben mit einem Schraubenschlüssel, um den Kuppler unter dem _hinteren Drehgestell_ eines anderen Zuges auszufahren.",
+	"block.railways.track_coupler.tooltip.condition1": "Wenn die richtigen Wagen über den Gleisweichen sind und der Kuppler im richtigen Modus ist",
+	"block.railways.track_coupler.tooltip.behaviour1": "Wenn ein _Redstone-Signal_ gegeben wird, werden die beiden Züge _zusammengekoppelt_.",
+	"block.railways.track_coupler.tooltip.condition2": "Wenn ein anderer Gleis-Zielblock (wie ein Zugsignal) an das gleiche Gleis gebunden ist",
+	"block.railways.track_coupler.tooltip.behaviour2": "Das Kuppler-Symbol wird sich _bewegen_ und sie werden _miteinander koexistieren_."
 }

@@ -1,0 +1,45 @@
+{
+	"credit": "By the Railway Team",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "railways:block/monorail/monorail_bogey",
+		"particle": "create:block/bogey/particle"
+	},
+	"elements": [
+		{
+			"from": [2, 10, 2],
+			"to": [14, 14, 14],
+			"rotation": {"angle": 0, "axis": "z", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [11.75, 0, 13.25, 0.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [4.5, 3.75, 6, 4.25], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [11.75, 0, 13.25, 0.5], "rotation": 180, "texture": "#0"},
+				"west": {"uv": [4.5, 3.75, 6, 4.25], "rotation": 180, "texture": "#0"},
+				"up": {"uv": [2.25, 4.25, 3.75, 5.75], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [2.25, 4.25, 3.75, 5.75], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [0, 0, 0],
+			"to": [16, 10, 16],
+			"rotation": {"angle": 0, "axis": "z", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [4.5, 1.25, 6.5, 2.5], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [4.5, 0, 6.5, 1.25], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [4.5, 1.25, 6.5, 2.5], "rotation": 180, "texture": "#0"},
+				"west": {"uv": [4.5, 0, 6.5, 1.25], "rotation": 180, "texture": "#0"},
+				"up": {"uv": [2, 4, 4, 6], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [0, 4, 2, 6], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

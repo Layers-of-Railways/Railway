@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.ClearCasingCacheCommand;
+import com.railwayteam.railways.registry.commands.ReloadJourneymapCommand;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
 import net.minecraft.commands.CommandSourceStack;
@@ -25,7 +26,7 @@ public class CRCommands {
     LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(Commands.literal("railways")
         .requires(cs -> cs.hasPermission(0))
         // general purpose
-        .then(ClearCasingCacheCommand.register())
+        //.then(ClearCasingCacheCommand.register())
         .then(SplitTrainCommand.register())
         .then(TrainInfoCommand.register())
 
@@ -42,6 +43,27 @@ public class CRCommands {
     dispatcher.getRoot()
         .addChild(buildRedirect("snr", railwaysRoot));
 
+  }
+
+  public static void registerClient(CommandDispatcher<CommandSourceStack> dispatcher) {
+    LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(Commands.literal("railways_client")
+            .requires(cs -> cs.hasPermission(0))
+            // general purpose
+            .then(ClearCasingCacheCommand.register())
+            .then(ReloadJourneymapCommand.register())
+
+        // utility
+//        .then(util)
+    );
+
+//    railwaysRoot.addChild(buildRedirect("u", util));
+
+    CommandNode<CommandSourceStack> snrc = dispatcher.findNode(Collections.singleton("snrc"));
+    if (snrc != null)
+      return;
+
+    dispatcher.getRoot()
+        .addChild(buildRedirect("snrc", railwaysRoot));
   }
 
 /*  private static LiteralCommandNode<CommandSourceStack> buildUtilityCommands() {

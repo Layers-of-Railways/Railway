@@ -114,6 +114,9 @@ public class TrainUtils {
      * Adds the carriages of backTrain onto the end of frontTrain.
      */
     public static Train combineTrains(Train frontTrain, Train backTrain, Vec3 itemDropPos, Level itemDropLevel, int carriageSpacing) {
+        if (frontTrain.derailed || backTrain.derailed) {
+            return frontTrain;
+        }
         int frontTrainSize = frontTrain.carriages.size();
         frontTrain.carriages.addAll(backTrain.carriages);
         backTrain.carriages.clear();
@@ -155,8 +158,19 @@ public class TrainUtils {
                 ((AccessorScheduleRuntime) frontTrain.runtime).setCooldown(0);
             }
         } else if (backTrain.runtime.getSchedule() != null) {
-            ItemStack stack = backTrain.runtime.returnSchedule();
-            Containers.dropItemStack(itemDropLevel, itemDropPos.x, itemDropPos.y, itemDropPos.z, stack);
+            if (frontTrain.runtime.completed) {
+                ItemStack stack = frontTrain.runtime.returnSchedule();
+                Containers.dropItemStack(itemDropLevel, itemDropPos.x, itemDropPos.y, itemDropPos.z, stack);
+                ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
+                frontTrain.runtime.read(backTrain.runtime.write());
+                if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
+                    frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
+                    ((AccessorScheduleRuntime) frontTrain.runtime).setCooldown(0);
+                }
+            } else {
+                ItemStack stack = backTrain.runtime.returnSchedule();
+                Containers.dropItemStack(itemDropLevel, itemDropPos.x, itemDropPos.y, itemDropPos.z, stack);
+            }
         }
         return frontTrain;
     }
