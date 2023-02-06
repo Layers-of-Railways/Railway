@@ -35,5 +35,15 @@ public class RailwaysClient {
 
     registerCustomCap("LemmaEOF", "headphones");
     preventTiltingCap("LemmaEOF");
+
+    registerCustomCap("To0pa", "stonks_hat");
+    registerCustomCap("Furti_Two", "stonks_hat_blue");
+    registerCustomCap("Aypierre", "stonks_hat_red");
+
+    preventTiltingCap("To0pa");
+    preventTiltingCap("Furti_Two");
+    preventTiltingCap("Aypierre");
+
+    registerCustomCap("NeonCityDrifter", "neoncitydrifter");
   }
 }

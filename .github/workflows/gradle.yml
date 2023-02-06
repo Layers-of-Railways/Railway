@@ -3,8 +3,8 @@ name: Java CI with Gradle
 on:
   workflow_dispatch:
   push:
-    branches:
-      '!l10n_1.19/dev'
+    branches-ignore:
+      'l10n_1.19/dev'
   pull_request:
 
 jobs:
