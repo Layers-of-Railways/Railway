@@ -32,5 +32,8 @@ public class RailwaysClient {
 
     registerCustomCap("TiesToetToet", "tiestoettoet");
     preventTiltingCap("TiesToetToet");
+
+    registerCustomCap("LemmaEOF", "headphones");
+    preventTiltingCap("LemmaEOF");
   }
 }
