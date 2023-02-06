@@ -2,6 +2,8 @@ package com.railwayteam.railways.content.coupling.coupler;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
+import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRPackets;
@@ -13,6 +15,7 @@ import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
 import com.simibubi.create.content.logistics.trains.entity.Carriage;
+import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
@@ -275,8 +278,10 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     protected boolean isCarriageWheelOnPoint(Carriage carriage, TrackCoupler coupler, TrackTargetingBehaviour<TrackCoupler> edgePoint, boolean leading) {
         TravellingPoint relevantPoint = leading ? carriage.leadingBogey().leading() : carriage.trailingBogey().trailing();
         TravellingPoint relevantPoint2 = leading ? carriage.leadingBogey().trailing() : carriage.trailingBogey().leading();
+        CarriageBogey relevantBogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
+        boolean upsideDown = ((AccessorCarriageBogey) relevantBogey).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown();
         double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
-        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5);
+        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5).add(0, upsideDown ? 2 : 0, 0);
         Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());
 //        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
         return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2) ||

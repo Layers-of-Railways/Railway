@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CurvedTrackInteraction.class)
 public abstract class MixinCurvedTrackInteraction {
-  @Inject(method = "onClickInput", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), locals = LocalCapture.CAPTURE_FAILHARD,
+  @Inject(method = "onClickInput", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;", remap = true), locals = LocalCapture.CAPTURE_FAILHARD,
       cancellable = true)
   private static void encaseTrackSend(InputEvent.ClickInputEvent event, CallbackInfoReturnable<Boolean> cir,
                                       TrackBlockOutline.BezierPointSelection result, Minecraft mc, LocalPlayer player,
