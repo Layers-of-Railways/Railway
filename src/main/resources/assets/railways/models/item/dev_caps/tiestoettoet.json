@@ -5,7 +5,7 @@
 		"1": "railways:entity/conductor"
 	},
 	"loader": "forge:obj",
-	"flip_v": true,
+	"flip-v": true,
 	"model": "railways:models/item/dev_caps/tiestoettoet.obj",
 	"display": {
 		"thirdperson_righthand": {

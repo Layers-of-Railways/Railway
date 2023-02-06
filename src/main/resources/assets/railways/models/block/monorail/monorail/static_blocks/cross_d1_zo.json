@@ -1,6 +1,6 @@
 {
 	"parent": "railways:block/monorail/monorail/static_blocks/obj_track",
 	"loader": "forge:obj",
-	"flip_v": true,
+	"flip-v": true,
 	"model": "railways:models/block/monorail/monorail/static_blocks/cross_d1_zo.obj"
 }
