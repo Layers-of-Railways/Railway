@@ -43,5 +43,7 @@ public class RailwaysClient {
     preventTiltingCap("To0pa");
     preventTiltingCap("Furti_Two");
     preventTiltingCap("Aypierre");
+
+    registerCustomCap("NeonCityDrifter", "neoncitydrifter");
   }
 }
