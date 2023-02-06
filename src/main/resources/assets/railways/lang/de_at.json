@@ -1,6 +1,11 @@
 {
 	"_": "Thank you for translating Create Steam 'n Rails!",
+	"block.railways.conductor_whistle": "Lockführer-Pfeife",
+	"block.railways.mono_bogey": "Einschienenbahn-Drehgestell",
+	"block.railways.mono_bogey_upside_down": "Schwebebahn-Drehgestell",
 	"block.railways.semaphore": "Formsignal",
+	"block.railways.smokestack_caboosestyle": "Begleitwaagen Schornstein",
+	"block.railways.smokestack_coalburner": "Kohlewaagen Schornstein",
 	"block.railways.track_acacia": "Akazienholzgleis",
 	"block.railways.track_birch": "Birkenholzgleis",
 	"block.railways.track_blackstone": "Schwarzsteingleis",
