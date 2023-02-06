@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
@@ -85,9 +86,11 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
 
   @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
   private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
-    InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
-    if (result != null) {
-      cir.setReturnValue(result);
+    if (!(((Object) this) instanceof MonorailTrackBlock)) {
+      InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
+      if (result != null) {
+        cir.setReturnValue(result);
+      }
     }
   }
 

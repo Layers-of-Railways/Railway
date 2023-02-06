@@ -1,6 +1,8 @@
 package com.railwayteam.railways.mixin.client;
 
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
+import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.track.CurvedTrackInteraction;
@@ -27,16 +29,19 @@ public abstract class MixinCurvedTrackInteraction {
   private static void encaseTrackSend(InputEvent.InteractionKeyMappingTriggered event, CallbackInfoReturnable<Boolean> cir,
                                       TrackBlockOutline.BezierPointSelection result, Minecraft mc, LocalPlayer player,
                                       ClientLevel level, ItemStack heldItem) {
-    if (heldItem.isEmpty() || heldItem.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
-        !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
-      CRPackets.channel.sendToServer(new SlabUseOnCurvePacket(result.te()
-          .getBlockPos(),
-          result.loc()
-              .curveTarget(),
-          new BlockPos(result.vec())
-      ));
-      player.swing(InteractionHand.MAIN_HAND);
-      cir.setReturnValue(true);
+    if (result.te().getConnections() == null || !result.te().getConnections().containsKey(result.loc().curveTarget()) ||
+        ((IHasTrackMaterial) result.te().getConnections().get(result.loc().curveTarget())).getMaterial().trackType != TrackMaterial.TrackType.MONORAIL) {
+      if (heldItem.isEmpty() || heldItem.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
+          !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
+        CRPackets.channel.sendToServer(new SlabUseOnCurvePacket(result.te()
+            .getBlockPos(),
+            result.loc()
+                .curveTarget(),
+            new BlockPos(result.vec())
+        ));
+        player.swing(InteractionHand.MAIN_HAND);
+        cir.setReturnValue(true);
+      }
     }
   }
 }
