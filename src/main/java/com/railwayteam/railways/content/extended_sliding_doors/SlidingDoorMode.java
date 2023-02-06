@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public enum SlidingDoorMode implements INamedIconOptions {
-    MANUAL(CRIcons.I_DOOR_MANUAL), //shouldOpen -> noChange; shouldUpdate -> never;
     AUTO(CRIcons.I_DOOR_AUTO), //shouldOpen -> noChange; shouldUpdate -> noChange;
+    MANUAL(CRIcons.I_DOOR_MANUAL), //shouldOpen -> noChange; shouldUpdate -> never;
     STATION_RIGHT(CRIcons.I_DOOR_STATION_RIGHT, true), //shouldOpen -> &= at right station; shouldUpdate -> noChange;
     STATION_LEFT(CRIcons.I_DOOR_STATION_LEFT, true); //shouldOpen -> &= at left station; shouldUpdate -> noChange;
 

@@ -77,8 +77,8 @@ public abstract class MixinGlobalStation implements ILimitedGlobalStation, ISide
     @Inject(method = "read(Lnet/minecraft/nbt/CompoundTag;ZLcom/simibubi/create/content/logistics/trains/DimensionPalette;)V", at = @At("TAIL"))
     private void readLimit(CompoundTag nbt, boolean migration, DimensionPalette dimensions, CallbackInfo ci) {
         limitEnabled = nbt.getBoolean("LimitEnabled");
-        openRight = nbt.getBoolean("OpenRight");
-        openLeft = nbt.getBoolean("OpenLeft");
+        openRight = !nbt.contains("OpenRight") || nbt.getBoolean("OpenRight");
+        openLeft = !nbt.contains("OpenLeft") || nbt.getBoolean("OpenLeft");
     }
 
     @Inject(method = "read(Lnet/minecraft/network/FriendlyByteBuf;Lcom/simibubi/create/content/logistics/trains/DimensionPalette;)V", at = @At("TAIL"))

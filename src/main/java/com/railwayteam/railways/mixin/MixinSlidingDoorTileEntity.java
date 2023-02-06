@@ -21,7 +21,7 @@ public class MixinSlidingDoorTileEntity implements SlidingDoorMode.IHasDoorMode 
         SlidingDoorTileEntity this_ = (SlidingDoorTileEntity) (Object) this;
         doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform());
         doorModeScroll.requiresWrench();
-        doorModeScroll.value = doorModeScroll.scrollableValue = 1;
+//        doorModeScroll.value = doorModeScroll.scrollableValue = 1;
         behaviours.add(doorModeScroll);
     }
 
