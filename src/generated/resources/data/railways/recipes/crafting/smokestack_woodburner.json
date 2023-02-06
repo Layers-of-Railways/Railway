@@ -1,5 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
+  "pattern": [
+    ".#.",
+    "#+#"
+  ],
   "key": {
     "#": {
       "item": "create:iron_sheet"
@@ -11,10 +15,6 @@
       "item": "minecraft:iron_nugget"
     }
   },
-  "pattern": [
-    ".#.",
-    "#+#"
-  ],
   "result": {
     "item": "railways:smokestack_woodburner"
   }

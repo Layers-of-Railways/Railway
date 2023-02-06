@@ -4,12 +4,12 @@
       "model": "railways:block/bogey/monorail/top",
       "y": 90
     },
+    "axis=z,waterlogged=false": {
+      "model": "railways:block/bogey/monorail/top"
+    },
     "axis=x,waterlogged=true": {
       "model": "railways:block/bogey/monorail/top",
       "y": 90
-    },
-    "axis=z,waterlogged=false": {
-      "model": "railways:block/bogey/monorail/top"
     },
     "axis=z,waterlogged=true": {
       "model": "railways:block/bogey/monorail/top"

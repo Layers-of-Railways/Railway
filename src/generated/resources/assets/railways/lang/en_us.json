@@ -2,7 +2,16 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.conductor_whistle": "Conductor Whistle",
+	"block.railways.mono_bogey": "Monorail Bogey",
+	"block.railways.mono_bogey_upside_down": "Upside Down Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
+	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
+	"block.railways.smokestack_coalburner": "Coalburner Smokestack",
+	"block.railways.smokestack_diesel": "Diesel Smokestack",
+	"block.railways.smokestack_oilburner": "Oilburner Smokestack",
+	"block.railways.smokestack_streamlined": "Streamlined Smokestack",
+	"block.railways.smokestack_woodburner": "Woodburner Smokestack",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_birch": "Birch Train Track",
 	"block.railways.track_blackstone": "Blackstone Train Track",
@@ -10,6 +19,7 @@
 	"block.railways.track_crimson": "Crimson Train Track",
 	"block.railways.track_dark_oak": "Dark Oak Train Track",
 	"block.railways.track_jungle": "Jungle Train Track",
+	"block.railways.track_monorail": "Monorail Train Track",
 	"block.railways.track_oak": "Oak Train Track",
 	"block.railways.track_spruce": "Spruce Train Track",
 	"block.railways.track_warped": "Warped Train Track",
@@ -54,6 +64,7 @@
 	"item.railways.track_incomplete_crimson": "Incomplete Crimson Track",
 	"item.railways.track_incomplete_dark_oak": "Incomplete Dark Oak Track",
 	"item.railways.track_incomplete_jungle": "Incomplete Jungle Track",
+	"item.railways.track_incomplete_monorail": "Incomplete Monorail Track",
 	"item.railways.track_incomplete_oak": "Incomplete Oak Track",
 	"item.railways.track_incomplete_spruce": "Incomplete Spruce Track",
 	"item.railways.track_incomplete_warped": "Incomplete Warped Track",
@@ -107,6 +118,10 @@
 	"railways.schedule.instruction.redstone_link": "Power Redstone Link",
 	"railways.schedule.instruction.redstone_link.power": "Power Level: %s",
 	"railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
+	"railways.schedule.instruction.waypoint_destination": "Waypoint through Station",
+
+	"create.schedule.instruction.waypoint_destination.summary": "Next waypoint:",
+
 	"railways.schedule.condition.loaded": "Chunk Loaded",
 	"railways.schedule.condition.loaded.status": "Waiting for chunk load",
 
@@ -117,6 +132,35 @@
 	"railways.tooltip.coupler.action.none": "Action: None available",
 	"railways.tooltip.coupler.action.coupling": "Action: Coupling",
 	"railways.tooltip.coupler.action.decoupling": "Action: Decoupling",
+	"railways.tooltip.coupler.error.mode_not_permitted": "Action not permitted in current mode",
+	"railways.tooltip.coupler.error.missing_train": "Requires both track points to be occupied",
+	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
+
+	"railways.station.train_limit": "Limit Trains",
+
+	"create.sliding_door.mode": "Open Mode",
+	"create.sliding_door.mode.manual": "Manual",
+	"create.sliding_door.mode.auto": "Automatic",
+	"create.sliding_door.mode.station_right": "Station Right",
+	"create.sliding_door.mode.station_left": "Station Left",
+
+	"railways.station.open_left": "Open Left Doors",
+	"railways.station.open_right": "Open Right Doors",
+
+	"railways.whistle.tool.bound": "Bound to:",
+	"railways.whistle.tool.conductor_id": "Conductor: §6%s§r",
+	"railways.whistle.tool.train_id": "Train: §e%1$s§r (§6%2$s§r)",
+	"railways.whistle.tool.bound_usage": "Use on a track to summon the bound train!",
+	"railways.whistle.tool.not_bound": "Not bound, use on a conductor riding a train to bind.",
+	"railways.whistle.set": "Bound whistle.",
+	"railways.whistle.success": "Train is on the way",
+	"railways.whistle.not_owner": "You must be the owner of the train to bind the whistle.",
+	"railways.whistle.clear": "Cleared whistle binding.",
+	"railways.whistle.failure.not_bound": "Whistle must be bound first.",
+	"railways.whistle.failure.train_missing": "Bound train not found.",
+	"railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
+	"railways.whistle.failure.no_space": "No space to place flag.",
+	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
@@ -127,6 +171,9 @@
 	"block.railways.track_coupler.tooltip.behaviour1": "Providing a _redstone signal_ will _couple_ the two trains together.",
 	"block.railways.track_coupler.tooltip.condition2": "When a different track targeting block (such as a Train Signal) is bound to the same track",
 	"block.railways.track_coupler.tooltip.behaviour2": "The coupler icon will _move_ to the side, and they will _coexist_.",
+
+	"block.create.track_station.tooltip": "TRAIN STATION",
+	"block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 

@@ -1,7 +1,7 @@
 {
   "parent": "railways:block/smokestack/obj_smokestack",
   "loader": "forge:obj",
-  "flip_v": true,
+  "flip-v": true,
   "model": "railways:models/block/smokestack/block_woodburner.obj",
   "textures": {
     "particle": "railways:block/smokestack/woodburner"

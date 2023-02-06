@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
-  "key": {
-    "#": {
-      "item": "create:iron_sheet"
-    },
-    "*": {
-      "item": "create:propeller"
-    },
-    "+": {
-      "item": "minecraft:campfire"
-    }
-  },
   "pattern": [
     "#*#",
     " + "
   ],
+  "key": {
+    "#": {
+      "item": "create:iron_sheet"
+    },
+    "+": {
+      "item": "minecraft:campfire"
+    },
+    "*": {
+      "item": "create:propeller"
+    }
+  },
   "result": {
     "item": "railways:smokestack_diesel"
   }

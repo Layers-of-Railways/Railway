@@ -1,9 +1,18 @@
 {
-	"_": "Missing Localizations: 0",
+	"_": "Missing Localizations: 40",
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.conductor_whistle": "UNLOCALIZED: Conductor Whistle",
+	"block.railways.mono_bogey": "UNLOCALIZED: Monorail Bogey",
+	"block.railways.mono_bogey_upside_down": "UNLOCALIZED: Upside Down Monorail Bogey",
 	"block.railways.semaphore": "腕木式信号機",
+	"block.railways.smokestack_caboosestyle": "UNLOCALIZED: Caboose Smokestack",
+	"block.railways.smokestack_coalburner": "UNLOCALIZED: Coalburner Smokestack",
+	"block.railways.smokestack_diesel": "UNLOCALIZED: Diesel Smokestack",
+	"block.railways.smokestack_oilburner": "UNLOCALIZED: Oilburner Smokestack",
+	"block.railways.smokestack_streamlined": "UNLOCALIZED: Streamlined Smokestack",
+	"block.railways.smokestack_woodburner": "UNLOCALIZED: Woodburner Smokestack",
 	"block.railways.track_acacia": "アカシアの鉄道用線路",
 	"block.railways.track_birch": "シラカバの鉄道用線路",
 	"block.railways.track_blackstone": "ブラックストーンの鉄道用線路",
@@ -11,6 +20,7 @@
 	"block.railways.track_crimson": "真紅の鉄道用線路",
 	"block.railways.track_dark_oak": "ダークオークの鉄道用線路",
 	"block.railways.track_jungle": "ジャングルの鉄道用線路",
+	"block.railways.track_monorail": "UNLOCALIZED: Monorail Train Track",
 	"block.railways.track_oak": "オークの鉄道用線路",
 	"block.railways.track_spruce": "トウヒの鉄道用線路",
 	"block.railways.track_warped": "歪んだ鉄道用線路",
@@ -55,6 +65,7 @@
 	"item.railways.track_incomplete_crimson": "組み立て中の真紅の鉄道用線路",
 	"item.railways.track_incomplete_dark_oak": "組み立て中のダークオークの鉄道用線路",
 	"item.railways.track_incomplete_jungle": "組み立て中のジャングルの鉄道用線路",
+	"item.railways.track_incomplete_monorail": "UNLOCALIZED: Incomplete Monorail Track",
 	"item.railways.track_incomplete_oak": "組み立て中のオークの鉄道用線路",
 	"item.railways.track_incomplete_spruce": "組み立て中のトウヒの鉄道用線路",
 	"item.railways.track_incomplete_warped": "組み立て中の歪んだ鉄道用線路",
@@ -63,7 +74,7 @@
 	"item.railways.yellow_conductor_cap": "黄色の車掌帽",
 	"item.railways.yellow_incomplete_conductor_cap": "組み立て中の黄色の車掌帽",
 
-	"itemGroup.railways": "Create Railways",
+	"itemGroup.railways": "Create 鉄道",
 
 	"railways.ponder.conductor_constructing.header": "車掌の組み立て",
 	"railways.ponder.conductor_constructing.text_1": "車掌は安山岩ケーシングで構築します。",
@@ -108,6 +119,10 @@
 	"railways.schedule.instruction.redstone_link": "レッドストーンリンクの信号強度",
 	"railways.schedule.instruction.redstone_link.power": "信号強度: %s",
 	"railways.schedule.instruction.redstone_link.power_edit_box": "信号強度",
+	"railways.schedule.instruction.waypoint_destination": "UNLOCALIZED: Waypoint through Station",
+
+	"create.schedule.instruction.waypoint_destination.summary": "UNLOCALIZED: Next waypoint:",
+
 	"railways.schedule.condition.loaded": "チャンクロードされたら",
 	"railways.schedule.condition.loaded.status": "チャンクロードを待っています",
 
@@ -118,6 +133,35 @@
 	"railways.tooltip.coupler.action.none": "動作: 可能な動作無し",
 	"railways.tooltip.coupler.action.coupling": "動作: 連結",
 	"railways.tooltip.coupler.action.decoupling": "動作: 解放",
+	"railways.tooltip.coupler.error.mode_not_permitted": "UNLOCALIZED: Action not permitted in current mode",
+	"railways.tooltip.coupler.error.missing_train": "UNLOCALIZED: Requires both track points to be occupied",
+	"railways.tooltip.coupler.error.carriage_alignment": "UNLOCALIZED: Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
+
+	"railways.station.train_limit": "UNLOCALIZED: Limit Trains",
+
+	"create.sliding_door.mode": "UNLOCALIZED: Open Mode",
+	"create.sliding_door.mode.manual": "UNLOCALIZED: Manual",
+	"create.sliding_door.mode.auto": "UNLOCALIZED: Automatic",
+	"create.sliding_door.mode.station_right": "UNLOCALIZED: Station Right",
+	"create.sliding_door.mode.station_left": "UNLOCALIZED: Station Left",
+
+	"railways.station.open_left": "UNLOCALIZED: Open Left Doors",
+	"railways.station.open_right": "UNLOCALIZED: Open Right Doors",
+
+	"railways.whistle.tool.bound": "UNLOCALIZED: Bound to:",
+	"railways.whistle.tool.conductor_id": "UNLOCALIZED: Conductor: §6%s§r",
+	"railways.whistle.tool.train_id": "UNLOCALIZED: Train: §e%1$s§r (§6%2$s§r)",
+	"railways.whistle.tool.bound_usage": "UNLOCALIZED: Use on a track to summon the bound train!",
+	"railways.whistle.tool.not_bound": "UNLOCALIZED: Not bound, use on a conductor riding a train to bind.",
+	"railways.whistle.set": "UNLOCALIZED: Bound whistle.",
+	"railways.whistle.success": "UNLOCALIZED: Train is on the way",
+	"railways.whistle.not_owner": "UNLOCALIZED: You must be the owner of the train to bind the whistle.",
+	"railways.whistle.clear": "UNLOCALIZED: Cleared whistle binding.",
+	"railways.whistle.failure.not_bound": "UNLOCALIZED: Whistle must be bound first.",
+	"railways.whistle.failure.train_missing": "UNLOCALIZED: Bound train not found.",
+	"railways.whistle.failure.conductor_missing": "UNLOCALIZED: Conductor not found or it was not riding the bound train.",
+	"railways.whistle.failure.no_space": "UNLOCALIZED: No space to place flag.",
+	"railways.whistle.failure.not_owner": "UNLOCALIZED: You must be the owner of the train to cancel its schedule.",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
@@ -128,6 +172,9 @@
 	"block.railways.track_coupler.tooltip.behaviour1": "_レッドストーン信号_を送ると、2つの列車が_連結_されます。",
 	"block.railways.track_coupler.tooltip.condition2": "別の鉄道関連ブロック(鉄道信号機など)が同じ線路の場所に設置されている場合",
 	"block.railways.track_coupler.tooltip.behaviour2": "連結アイコンが横に_移動_し、_共存_します。",
+
+	"block.create.track_station.tooltip": "UNLOCALIZED: TRAIN STATION",
+	"block.create.track_station.tooltip.summary": "UNLOCALIZED: A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
 
 	"_": "Thank you for translating Steam 'n Rails!"
 
