@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "[${forge_version},)"
+issueTrackerURL = "https://github.com/Layers-of-Railways/Railway/issues"
+license = "MIT"
+
+[[mods]]
+modId = "railways"
+version = "${version}"
+displayName = "Create: Steam 'n Rails"
+authors = "The Railways Team"
+description = '''Customization and extension of Create rail systems and steam system
+    Features include:
+        Custom track types for all vanilla woods
+        Conductors that can operate redstone and carry toolboxes
+        and more to come...'''
+logoFile = "icon.png"
+
+[[dependencies.railways]]
+modId = "forge"
+mandatory = true
+versionRange = "[${forge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.railways]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.railways]]
+modId="create"
+mandatory=true
+versionRange="${create_version}"
+ordering="NONE"
+side="BOTH"

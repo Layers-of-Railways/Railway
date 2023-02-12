@@ -45,10 +45,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-@Mod(Railways.MODID)
 public class Railways {
   public static final String MODID = "railways";
-  public static Railways instance;
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static final ModSetup setup = new ModSetup();
   public static final String VERSION = getVersion();
@@ -57,9 +55,7 @@ public class Railways {
 
   public static IEventBus MOD_EVENT_BUS;
 
-  public Railways() {
-  	instance = this;
-
+  public static void init() {
   	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
