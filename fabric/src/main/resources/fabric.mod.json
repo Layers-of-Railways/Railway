@@ -15,7 +15,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.railwaysteam.railways.fabric.RailwaysFabric"
+      "com.railwayteam.railways.fabric.RailwaysImpl"
+    ],
+    "client": [
+      "com.railwayteam.railways.fabric.RailwaysClientImpl"
     ]
   },
   "mixins": [

@@ -2,22 +2,31 @@ package com.railwayteam.railways;
 
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
+import com.railwayteam.railways.content.conductor.ConductorCapModel;
+import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
-import com.railwayteam.railways.registry.CRBlockPartials;
-import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.railwayteam.railways.registry.CRPonderIndex;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import com.railwayteam.railways.registry.*;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+
+import java.util.function.Supplier;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomCap;
 import static com.railwayteam.railways.registry.CRBlockPartials.preventTiltingCap;
-import static com.railwayteam.railways.registry.CRBlockPartials.shouldPreventTiltingCap;
 import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomSkin;
 
 public class RailwaysClient {
-  public static void clientSetup(FMLClientSetupEvent event) {
-  }
 
-  public static void clientCtor() {
+  public static void init() {
+    registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
+    registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
+
+    registerBuiltinPack("legacy_semaphore", "Steam 'n Rails Legacy Semaphores");
+    registerBuiltinPack("green_signals", "Steam 'n Rails Green Signals");
+
+    // TODO ARCH: client commands
+
     CRPonderIndex.register();
     CRBlockPartials.init();
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
@@ -45,5 +54,15 @@ public class RailwaysClient {
     preventTiltingCap("Aypierre");
 
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
+  }
+
+  @ExpectPlatform
+  public static void registerModelLayer(ModelLayerLocation layer, Supplier<LayerDefinition> definition) {
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static void registerBuiltinPack(String id, String name) {
+    throw new AssertionError();
   }
 }
