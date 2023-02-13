@@ -7,10 +7,10 @@ import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -21,7 +21,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
     private MonorailAngles[] bakedMonorails;
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public MonorailAngles[] getBakedMonorails() {
         if (bakedMonorails != null)
             return bakedMonorails;

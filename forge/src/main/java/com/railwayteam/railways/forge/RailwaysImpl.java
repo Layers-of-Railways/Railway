@@ -1,7 +1,6 @@
 package com.railwayteam.railways.forge;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.RailwaysClient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.MavenVersionStringHelper;
 import net.minecraftforge.eventbus.api.IEventBus;

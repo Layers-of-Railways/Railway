@@ -5,6 +5,8 @@ import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.utility.Components;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -18,8 +20,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,7 +46,7 @@ public class ConductorFakePlayer extends FakePlayer {
   }
 
   @Override
-  @OnlyIn(Dist.CLIENT)
+  @Environment(EnvType.CLIENT)
   public float getEyeHeight (Pose pose) { return 0; }
 
   @Override

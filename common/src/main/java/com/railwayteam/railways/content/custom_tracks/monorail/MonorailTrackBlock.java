@@ -10,6 +10,8 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.AngleHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -20,8 +22,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
@@ -103,7 +103,7 @@ public class MonorailTrackBlock extends CustomTrackBlock{
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public PartialModel prepareAssemblyOverlay(BlockGetter world, BlockPos pos, BlockState state, Direction direction,
                                                PoseStack ms) {
         TransformStack.cast(ms)

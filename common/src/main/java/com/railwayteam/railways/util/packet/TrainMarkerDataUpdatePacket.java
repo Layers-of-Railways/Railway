@@ -4,11 +4,11 @@ import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.compat.journeymap.TrainMarkerData;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -63,7 +63,7 @@ public class TrainMarkerDataUpdatePacket extends SimplePacketBase { //TODO parti
         context.get().setPacketHandled(true);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private void __handle(Supplier<NetworkEvent.Context> supplier) {
         if (!data.incomplete())
             DummyRailwayMarkerHandler.getInstance().registerData(id, data);

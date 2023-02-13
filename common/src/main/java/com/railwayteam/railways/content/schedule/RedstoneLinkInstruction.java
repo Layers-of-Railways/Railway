@@ -15,6 +15,8 @@ import com.simibubi.create.content.logistics.trains.management.schedule.Schedule
 import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.gui.ModularGuiLineBuilder;
 import com.simibubi.create.foundation.utility.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -24,8 +26,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.*;
 
@@ -137,7 +137,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void initConfigurationWidgets(ModularGuiLineBuilder builder) {
         builder.addScrollInput(20, 101, (si, l) -> {
             si.withRange(1, 16)

@@ -16,13 +16,13 @@ import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackInstance;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +38,7 @@ import static com.simibubi.create.AllBlockPartials.TRACK_TIE;
 import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_LEFT;
 import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_RIGHT;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.logistics.trains.track.TrackInstance$BezierTrackInstance", remap = false)
 public abstract class MixinTrackInstance_BezierTrackInstance {
 

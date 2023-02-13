@@ -6,7 +6,6 @@ import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 
 public class ReloadJourneymapCommand {

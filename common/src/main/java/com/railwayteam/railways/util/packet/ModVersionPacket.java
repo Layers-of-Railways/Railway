@@ -3,11 +3,11 @@ package com.railwayteam.railways.util.packet;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import com.simibubi.create.foundation.utility.Components;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -36,7 +36,7 @@ public class ModVersionPacket extends SimplePacketBase {
     context.get().setPacketHandled(true);
   }
 
-  @OnlyIn(Dist.CLIENT)
+  @Environment(EnvType.CLIENT)
   private void __handle(Supplier<NetworkEvent.Context> supplier) {
     if (!Railways.VERSION.equals(version) && Minecraft.getInstance().player != null) {
       String msg = "Steam 'n Rails version mismatch: Server is using version "+version+", you are using version "+Railways.VERSION+". This may cause problems.";

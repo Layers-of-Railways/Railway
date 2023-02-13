@@ -3,6 +3,8 @@ package com.railwayteam.railways.content.minecarts;
 import com.mojang.math.Vector3d;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -20,8 +22,6 @@ import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class MinecartJukebox extends MinecartBlock {
@@ -29,7 +29,7 @@ public class MinecartJukebox extends MinecartBlock {
   private int cooldownCount = 0;
 
   private ItemStack disc = ItemStack.EMPTY;
-  @OnlyIn(Dist.CLIENT)
+  @Environment(EnvType.CLIENT)
   private JukeboxCartSoundInstance sound;
 
   public MinecartJukebox (EntityType<?> type, Level level) {
@@ -115,7 +115,7 @@ public class MinecartJukebox extends MinecartBlock {
     __insertRecord(ItemStack.EMPTY);
   }
 
-  @OnlyIn(Dist.CLIENT)
+  @Environment(EnvType.CLIENT)
   // clientside
   private void startPlaying () {
     if (!this.disc.isEmpty()) {
@@ -124,7 +124,7 @@ public class MinecartJukebox extends MinecartBlock {
     }
   }
 
-  @OnlyIn(Dist.CLIENT)
+  @Environment(EnvType.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
       super(event, SoundSource.RECORDS);
