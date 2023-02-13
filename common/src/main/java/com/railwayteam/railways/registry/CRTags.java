@@ -7,20 +7,17 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.recipe.Mods;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.providers.ProviderType;
+import net.minecraft.core.Registry;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
-import static com.simibubi.create.AllTags.NameSpace.FORGE;
 import static com.simibubi.create.AllTags.optionalTag;
 
 public class CRTags {
@@ -78,11 +75,7 @@ public class CRTags {
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      if (optional) {
-        tag = optionalTag(ForgeRegistries.BLOCKS, id);
-      } else {
-        tag = BlockTags.create(id);
-      }
+      tag = optionalTag(Registry.BLOCK, id);
       if (alwaysDatagen) {
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.tag(tag));
       }
@@ -167,11 +160,7 @@ public class CRTags {
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      if (optional) {
-        tag = optionalTag(ForgeRegistries.ITEMS, id);
-      } else {
-        tag = ItemTags.create(id);
-      }
+      tag = optionalTag(Registry.ITEM, id);
       this.alwaysDatagen = alwaysDatagen;
     }
 
