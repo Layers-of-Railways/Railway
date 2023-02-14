@@ -21,7 +21,7 @@ public class SplitTrainCommand {
           .then(Commands.argument("train_id", UuidArgument.uuid())
               .executes(ctx -> {
                   UUID trainId = UuidArgument.getUuid(ctx, "train_id");
-//          DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CasingRenderUtils::clearModelCache);
+//          Env.CLIENT.runIfCurrent(() -> CasingRenderUtils::clearModelCache);
                   return execute(ctx, trainId, 1);
               })
               .then(Commands.argument("number", IntegerArgumentType.integer(1))
@@ -36,7 +36,7 @@ public class SplitTrainCommand {
               .executes(ctx -> {
                   String name = StringArgumentType.getString(ctx, "train_name");
                   UUID trainId = Create.RAILWAYS.trains.values().stream().filter(t -> t.name.getString().equals(name)).findFirst().map(t -> t.id).orElse(null);
-//          DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CasingRenderUtils::clearModelCache);
+//          Env.CLIENT.runIfCurrent(() -> CasingRenderUtils::clearModelCache);
                   return execute(ctx, trainId, 1);
               })
               .then(Commands.argument("number", IntegerArgumentType.integer(1))

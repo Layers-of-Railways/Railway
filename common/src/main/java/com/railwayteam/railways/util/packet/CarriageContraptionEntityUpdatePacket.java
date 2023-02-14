@@ -2,6 +2,7 @@ package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.mixin.AccessorCarriageContraptionEntity;
 import com.railwayteam.railways.mixin_interfaces.IUpdateCount;
+import com.railwayteam.railways.multiloader.environment.Env;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
@@ -43,7 +44,7 @@ public class CarriageContraptionEntityUpdatePacket extends SimplePacketBase {
 
   @Override
   public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.__handle(context)));
+    context.get().enqueueWork(() -> Env.CLIENT.runIfCurrent(() -> () -> this.__handle(context)));
     context.get().setPacketHandled(true);
   }
 

@@ -18,7 +18,7 @@ public class TrainInfoCommand {
       .then(Commands.argument("name", StringArgumentType.string())
         .executes(ctx -> {
           String trainName = StringArgumentType.getString(ctx, "name");
-//          DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> CasingRenderUtils::clearModelCache);
+//          Env.CLIENT.runIfCurrent(() -> CasingRenderUtils::clearModelCache);
           long count = Create.RAILWAYS.trains.values().stream().filter(t -> t.name.getString().equals(trainName)).count();
           Train train = Create.RAILWAYS.trains.values().stream().filter(t -> t.name.getString().equals(trainName)).findFirst().orElse(null);
           if (train == null) {

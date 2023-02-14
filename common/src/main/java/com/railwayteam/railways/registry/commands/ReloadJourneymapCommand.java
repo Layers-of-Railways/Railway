@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry.commands;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
+import com.railwayteam.railways.multiloader.environment.Env;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.SharedSuggestionProvider;
 
@@ -15,7 +16,7 @@ public class ReloadJourneymapCommand {
             .executes(ctx -> {
                 SharedSuggestionProvider source = ctx.getSource();
                 if (Mods.JOURNEYMAP.isLoaded()) {
-                    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
+                    Env.CLIENT.runIfCurrent(() -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
 
                     sendSuccess(source, Components.literal("Reloaded journeymap"));
                     return 1;

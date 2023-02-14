@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.multiloader.environment.Env;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import com.simibubi.create.foundation.utility.Components;
 import net.fabricmc.api.EnvType;
@@ -32,7 +33,7 @@ public class ModVersionPacket extends SimplePacketBase {
 
   @Override
   public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(()-> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, ()-> ()-> this.__handle(context)));
+    context.get().enqueueWork(()-> Env.CLIENT.runIfCurrent(()-> ()-> this.__handle(context)));
     context.get().setPacketHandled(true);
   }
 

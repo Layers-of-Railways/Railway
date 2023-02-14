@@ -1,10 +1,9 @@
 package com.railwayteam.railways.forge;
 
 import com.railwayteam.railways.Railways;
-import net.minecraftforge.api.distmarker.Dist;
+import com.railwayteam.railways.multiloader.environment.Env;
 import net.minecraftforge.common.util.MavenVersionStringHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -20,7 +19,7 @@ public class RailwaysImpl {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
 		Railways.init();
 		//noinspection Convert2MethodRef
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> RailwaysClientImpl.init());
+		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
 	}
 
 	public static String findVersion() {

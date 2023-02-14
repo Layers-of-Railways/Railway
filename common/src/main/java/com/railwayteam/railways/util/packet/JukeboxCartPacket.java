@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
+import com.railwayteam.railways.multiloader.environment.Env;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -36,7 +37,7 @@ public class JukeboxCartPacket extends SimplePacketBase {
 
   @Override
   public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> this.__handle(context)));
+    context.get().enqueueWork(() -> Env.CLIENT.runIfCurrent(() -> () -> this.__handle(context)));
     context.get().setPacketHandled(true);
   }
 
