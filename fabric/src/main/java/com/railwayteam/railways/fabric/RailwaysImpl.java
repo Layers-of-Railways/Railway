@@ -8,6 +8,7 @@ public class RailwaysImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Railways.init();
+		CommonEventsImpl.init();
 	}
 
 	public static String findVersion() {

@@ -3,20 +3,13 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
-import com.railwayteam.railways.content.conductor.ConductorCapModel;
-import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.CRCommands;
-import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
@@ -63,13 +56,6 @@ public class Railways {
   @SubscribeEvent
   public void registerCommands(RegisterCommandsEvent event) {
     CRCommands.register(event.getDispatcher());
-  }
-
-  @SubscribeEvent
-  public void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-    if (event.getEntity() instanceof ServerPlayer serverPlayer) {
-      PacketSender.notifyServerVersion(() -> serverPlayer);
-    }
   }
 
   public static CreateRegistrate registrate() {

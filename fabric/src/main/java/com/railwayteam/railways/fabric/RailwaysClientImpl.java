@@ -22,6 +22,7 @@ public class RailwaysClientImpl implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		RailwaysClient.init();
+		ClientEventsImpl.init();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!

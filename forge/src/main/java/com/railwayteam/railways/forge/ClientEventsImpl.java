@@ -1,0 +1,24 @@
+package com.railwayteam.railways.forge;
+
+import com.railwayteam.railways.events.ClientEvents;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+@EventBusSubscriber(Dist.CLIENT)
+public class ClientEventsImpl {
+	@SubscribeEvent
+	public static void onTooltip(ItemTooltipEvent event) {
+		ClientEvents.onTooltip(event.getItemStack(), event.getFlags(), event.getToolTip());
+	}
+
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
+		if (event.phase == Phase.START)
+			ClientEvents.onClientTickStart(Minecraft.getInstance());
+	}
+}

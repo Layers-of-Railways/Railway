@@ -7,47 +7,44 @@ import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientEvents {
     private static final String ITEM_PREFIX = "item." + Railways.MODID;
     private static final String BLOCK_PREFIX = "block." + Railways.MODID;
 
-    @SubscribeEvent
-    public static void addToItemTooltip(ItemTooltipEvent event) {
+    public static void onTooltip(ItemStack stack, TooltipFlag flags, List<Component> tooltip) {
         if (!AllConfigs.CLIENT.tooltips.get())
             return;
-        if (event.getEntity() == null)
+
+        Player player = Minecraft.getInstance().player;
+        if (player == null)
             return;
 
-        ItemStack stack = event.getItemStack();
         String translationKey = stack.getItem()
             .getDescriptionId(stack);
 
         if (translationKey.startsWith(ITEM_PREFIX) || translationKey.startsWith(BLOCK_PREFIX))
-            if (TooltipHelper.hasTooltip(stack, event.getPlayer())) {
-                List<Component> itemTooltip = event.getToolTip();
+            if (TooltipHelper.hasTooltip(stack, player)) {
                 List<Component> toolTip = new ArrayList<>();
-                toolTip.add(itemTooltip.remove(0));
+                toolTip.add(tooltip.remove(0));
                 TooltipHelper.getTooltip(stack)
                     .addInformation(toolTip);
-                itemTooltip.addAll(0, toolTip);
+                tooltip.addAll(0, toolTip);
             }
     }
 
-    @SubscribeEvent
-    public static void tickTrains(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.START || DummyRailwayMarkerHandler.getInstance() == null) return;
-        Level level = Minecraft.getInstance().level;
+    public static void onClientTickStart(Minecraft mc) {
+        if (DummyRailwayMarkerHandler.getInstance() == null)
+            return;
+
+        Level level = mc.level;
         long ticks = level == null ? 1 : level.getGameTime();
         if (ticks % Config.JOURNEYMAP_REMOVE_OBSOLETE_TICKS.get() == 0) {
             DummyRailwayMarkerHandler.getInstance().removeObsolete();
