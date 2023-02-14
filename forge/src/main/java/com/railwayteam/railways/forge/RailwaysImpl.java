@@ -1,15 +1,23 @@
 package com.railwayteam.railways.forge;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.environment.Env;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.common.util.MavenVersionStringHelper;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forgespi.language.IModInfo;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 @Mod(Railways.MODID)
 public class RailwaysImpl {
@@ -40,5 +48,18 @@ public class RailwaysImpl {
 
 	public static void finalizeRegistrate() {
 		Railways.registrate().registerEventListeners(bus);
+	}
+
+	private static final Set<BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean>> commandConsumers = new HashSet<>();
+
+	public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
+		commandConsumers.add(consumer);
+	}
+
+	@SubscribeEvent
+	public static void onCommandRegistration(RegisterCommandsEvent event) {
+		CommandSelection selection = event.getEnvironment();
+		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
+		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
 	}
 }

@@ -13,7 +13,7 @@ import java.util.Collections;
 import static net.minecraft.commands.Commands.literal;
 
 public class CRCommands {
-  public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+  public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
 
     LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(literal("railways")
         .requires(cs -> cs.hasPermission(0))

@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
@@ -8,12 +9,15 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.BiConsumer;
 
 public class Railways {
   public static final String MODID = "railways";
@@ -33,7 +37,7 @@ public class Railways {
     Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
     Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
 
-
+    registerCommands(CRCommands::register);
   }
 
   public static ResourceLocation asResource(String name) {
@@ -53,11 +57,6 @@ public class Railways {
 
   }
 
-  @SubscribeEvent
-  public void registerCommands(RegisterCommandsEvent event) {
-    CRCommands.register(event.getDispatcher());
-  }
-
   public static CreateRegistrate registrate() {
     return REGISTRATE;
   }
@@ -69,6 +68,11 @@ public class Railways {
 
   @ExpectPlatform
   public static void finalizeRegistrate() {
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
     throw new AssertionError();
   }
 }
