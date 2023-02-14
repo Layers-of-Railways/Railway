@@ -1,33 +1,52 @@
 package com.railwayteam.railways.forge;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.simibubi.create.foundation.ModFilePackResources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.forgespi.locating.IModFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RailwaysClientImpl {
 	public static void init() {
 		RailwaysClient.init();
+		RailwaysImpl.bus.addListener(RailwaysClientImpl::onClientCommandRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onModelLayerRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onBuiltinPackRegistration);
 	}
 
+	// region -- Client Commands ---
+
+	private static final Set<Consumer<CommandDispatcher<SharedSuggestionProvider>>> clientCommandConsumers = new HashSet<>();
+
+	public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
+		clientCommandConsumers.add(consumer);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!
+	public static void onClientCommandRegistration(RegisterClientCommandsEvent event) {
+		CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+		CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
+		clientCommandConsumers.forEach(consumer -> consumer.accept(casted));
+	}
+
+	// endregion
+
 	// region --- Model Layers ---
-	// forge: must store and save for event
 
 	private static final Map<ModelLayerLocation, Supplier<LayerDefinition>> modelLayers = new HashMap<>();
 
@@ -43,7 +62,6 @@ public class RailwaysClientImpl {
 	// endregion
 
 	// region --- Built-in Packs ---
-	// forge: must store and save for event
 
 	private record PackInfo(String id, String name) {}
 	private static final List<PackInfo> packs = new ArrayList<>();

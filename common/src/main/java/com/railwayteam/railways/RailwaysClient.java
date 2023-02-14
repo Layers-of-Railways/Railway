@@ -1,5 +1,6 @@
 package com.railwayteam.railways;
 
+import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
@@ -9,7 +10,9 @@ import com.railwayteam.railways.registry.*;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.commands.SharedSuggestionProvider;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomCap;
@@ -25,7 +28,7 @@ public class RailwaysClient {
     registerBuiltinPack("legacy_semaphore", "Steam 'n Rails Legacy Semaphores");
     registerBuiltinPack("green_signals", "Steam 'n Rails Green Signals");
 
-    // TODO ARCH: client commands
+    registerClientCommands(CRCommandsClient::register);
 
     CRPonderIndex.register();
     CRBlockPartials.init();
@@ -54,6 +57,11 @@ public class RailwaysClient {
     preventTiltingCap("Aypierre");
 
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
+  }
+
+  @ExpectPlatform
+  public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
+    throw new AssertionError();
   }
 
   @ExpectPlatform
