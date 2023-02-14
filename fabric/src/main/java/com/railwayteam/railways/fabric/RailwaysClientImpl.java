@@ -3,6 +3,7 @@ package com.railwayteam.railways.fabric;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
+import com.railwayteam.railways.fabric.events.ClientEventsFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
@@ -22,7 +23,7 @@ public class RailwaysClientImpl implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		RailwaysClient.init();
-		ClientEventsImpl.init();
+		ClientEventsFabric.init();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!

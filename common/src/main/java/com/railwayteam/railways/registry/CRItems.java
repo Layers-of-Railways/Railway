@@ -11,6 +11,7 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -25,7 +26,7 @@ import java.util.function.Supplier;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
-  public static final CreativeModeTab itemGroup = new CreativeModeTab(Railways.MODID) {
+  public static final CreativeModeTab itemGroup = new CreativeModeTab(nextTabId(), Railways.MODID) {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
@@ -104,7 +105,7 @@ public class CRItems {
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
             .requires(CONDUCTOR_CAPS)
-            .requires(color.getTag())
+            .requires(getTag(color))
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
             .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());
@@ -121,6 +122,17 @@ public class CRItems {
   private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
     return REGISTRATE.item(name, SequencedAssemblyItem::new)
         .register();
+  }
+
+  // despite seeming useless at first glance, this is needed. The 2 impls are different.
+  @ExpectPlatform
+  public static TagKey<Item> getTag(DyeColor color) {
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static int nextTabId() {
+    throw new AssertionError();
   }
 
   @SuppressWarnings("EmptyMethod")

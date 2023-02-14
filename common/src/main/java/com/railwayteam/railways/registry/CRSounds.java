@@ -1,25 +1,20 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.Railways;
-import net.minecraft.resources.ResourceLocation;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class CRSounds {
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Railways.MODID);
+    public static final Supplier<SoundEvent> CONDUCTOR_WHISTLE = registerSoundEvent("conductor_whistle");
 
-    public static final RegistryObject<SoundEvent> CONDUCTOR_WHISTLE = registerSoundEvent();
-
-
-
-    private static RegistryObject<SoundEvent> registerSoundEvent() {
-        return SOUND_EVENTS.register("conductor_whistle", () -> new SoundEvent(new ResourceLocation(Railways.MODID, "conductor_whistle")));
+    @ExpectPlatform
+    public static Supplier<SoundEvent> registerSoundEvent(String name) {
+        throw new AssertionError();
     }
 
-    public static void register(IEventBus eventBus) {
-        SOUND_EVENTS.register(eventBus);
+    @ExpectPlatform
+    public static void register() {
+        throw new AssertionError();
     }
 }

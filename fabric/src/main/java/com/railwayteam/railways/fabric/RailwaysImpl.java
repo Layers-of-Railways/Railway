@@ -2,6 +2,7 @@ package com.railwayteam.railways.fabric;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.fabric.events.CommonEventsFabric;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -13,7 +14,7 @@ public class RailwaysImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Railways.init();
-		CommonEventsImpl.init();
+		CommonEventsFabric.init();
 	}
 
 	public static String findVersion() {

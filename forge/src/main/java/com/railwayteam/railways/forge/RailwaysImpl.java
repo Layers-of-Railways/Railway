@@ -2,7 +2,7 @@ package com.railwayteam.railways.forge;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.multiloader.environment.Env;
+import com.railwayteam.railways.multiloader.Env;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.common.util.MavenVersionStringHelper;

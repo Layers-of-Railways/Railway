@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge;
+package com.railwayteam.railways.forge.events;
 
 import com.railwayteam.railways.events.ClientEvents;
 import net.minecraft.client.Minecraft;
@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber(Dist.CLIENT)
-public class ClientEventsImpl {
+public class ClientEventsForge {
 	@SubscribeEvent
 	public static void onTooltip(ItemTooltipEvent event) {
 		ClientEvents.onTooltip(event.getItemStack(), event.getFlags(), event.getToolTip());

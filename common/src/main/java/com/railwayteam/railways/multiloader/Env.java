@@ -1,4 +1,4 @@
-package com.railwayteam.railways.multiloader.environment;
+package com.railwayteam.railways.multiloader;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 

@@ -1,7 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.mixin.AccessorTrain;
-import com.railwayteam.railways.multiloader.environment.Env;
+import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;

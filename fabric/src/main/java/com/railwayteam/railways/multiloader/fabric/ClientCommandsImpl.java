@@ -1,4 +1,4 @@
-package com.railwayteam.railways.multiloader.commands.fabric;
+package com.railwayteam.railways.multiloader.fabric;
 
 import com.railwayteam.railways.Railways;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;

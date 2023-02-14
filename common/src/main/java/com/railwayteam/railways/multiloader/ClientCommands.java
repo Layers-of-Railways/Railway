@@ -1,4 +1,4 @@
-package com.railwayteam.railways.multiloader.commands;
+package com.railwayteam.railways.multiloader;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

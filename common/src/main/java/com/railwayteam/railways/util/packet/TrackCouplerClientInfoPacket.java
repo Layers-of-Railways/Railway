@@ -1,15 +1,13 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerTileEntity;
-import com.railwayteam.railways.multiloader.environment.Env;
+import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fml.DistExecutor;

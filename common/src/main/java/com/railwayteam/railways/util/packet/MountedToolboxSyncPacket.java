@@ -1,7 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.railwayteam.railways.multiloader.environment.Env;
+import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

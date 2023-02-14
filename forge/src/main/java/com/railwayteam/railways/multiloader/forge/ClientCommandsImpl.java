@@ -1,4 +1,4 @@
-package com.railwayteam.railways.multiloader.commands.forge;
+package com.railwayteam.railways.multiloader.forge;
 
 import com.railwayteam.railways.Railways;
 import net.minecraft.commands.SharedSuggestionProvider;

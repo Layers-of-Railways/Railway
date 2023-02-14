@@ -10,7 +10,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 
 import java.util.Collections;
 
-import static com.railwayteam.railways.multiloader.commands.ClientCommands.literal;
+import static com.railwayteam.railways.multiloader.ClientCommands.literal;
 
 public class CRCommandsClient {
 	public static void register(CommandDispatcher<SharedSuggestionProvider> dispatcher) {
