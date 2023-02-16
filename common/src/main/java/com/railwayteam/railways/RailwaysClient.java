@@ -30,6 +30,8 @@ public class RailwaysClient {
 
     registerClientCommands(CRCommandsClient::register);
 
+    CRPackets.PACKETS.registerS2CListener();
+
     CRPonderIndex.register();
     CRBlockPartials.init();
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);

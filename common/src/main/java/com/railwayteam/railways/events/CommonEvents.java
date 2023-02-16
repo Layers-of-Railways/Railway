@@ -2,6 +2,7 @@ package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
+import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.railwayteam.railways.util.packet.TrainMarkerDataUpdatePacket;
@@ -18,17 +19,17 @@ public class CommonEvents {
         for (Train train : Create.RAILWAYS.trains.values()) {
             long offsetTicks = ticks + train.id.hashCode();
             if (offsetTicks % Config.FAR_TRAIN_SYNC_TICKS.get() == 0) {
-                CRPackets.channel.send(PacketDistributor.ALL.noArg(), new TrainMarkerDataUpdatePacket(train));
+                CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainMarkerDataUpdatePacket(train));
             }
             if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) {
                 Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
                 if (trainEntity != null)
-                    CRPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> trainEntity), new TrainMarkerDataUpdatePacket(train));
+                    CRPackets.PACKETS.sendTo(PlayerSelection.tracking(trainEntity), new TrainMarkerDataUpdatePacket(train));
             }
         }
     }
 
     public static void onPlayerJoin(ServerPlayer player) {
-        PacketSender.notifyServerVersion(() -> player);
+        PacketSender.notifyServerVersion(player);
     }
 }

@@ -2,22 +2,19 @@ package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.compat.journeymap.TrainMarkerData;
-import com.railwayteam.railways.multiloader.Env;
+import com.railwayteam.railways.multiloader.S2CPacket;
 import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
-public class TrainMarkerDataUpdatePacket extends SimplePacketBase { //TODO partial sync with only pos + dimension
+public class TrainMarkerDataUpdatePacket implements S2CPacket { //TODO partial sync with only pos + dimension
 
     private static final UUID NULL_ID = new UUID(0, 0);
 
@@ -59,13 +56,8 @@ public class TrainMarkerDataUpdatePacket extends SimplePacketBase { //TODO parti
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(()-> Env.CLIENT.runIfCurrent(()-> ()-> this.__handle(context)));
-        context.get().setPacketHandled(true);
-    }
-
     @Environment(EnvType.CLIENT)
-    private void __handle(Supplier<NetworkEvent.Context> supplier) {
+    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
         if (!data.incomplete())
             DummyRailwayMarkerHandler.getInstance().registerData(id, data);
     }

@@ -57,7 +57,7 @@ public class MountedToolboxScreen extends AbstractSimiContainerScreen<MountedToo
     addRenderableWidget(confirmButton);
 
     disposeButton = new IconButton(leftPos + 30 + 81, topPos + 69, AllIcons.I_TOOLBOX);
-    disposeButton.withCallback(() -> CRPackets.channel.sendToServer(new MountedToolboxDisposeAllPacket(menu.contentHolder)));
+    disposeButton.withCallback(() -> CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(menu.contentHolder)));
     disposeButton.setToolTip(Lang.translateDirect("toolbox.depositBox"));
     addRenderableWidget(disposeButton);
 

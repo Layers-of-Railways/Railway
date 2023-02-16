@@ -3,13 +3,13 @@ package com.railwayteam.railways.mixin.client;
 import com.railwayteam.railways.mixin_interfaces.ILimited;
 import com.railwayteam.railways.mixin_interfaces.ISidedStation;
 import com.railwayteam.railways.registry.CRIcons;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.AbstractStationScreen;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationScreen;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.gui.widget.Indicator;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.gui.components.Checkbox;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +35,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             @Override
             public void onPress() {
                 super.onPress();
-                AllPackets.channel.sendToServer(ILimited.makeLimitEnabledPacket(te.getBlockPos(), this.selected()));
+                CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(te.getBlockPos(), this.selected()));
             }
         };
         addRenderableWidget(limitEnableCheckbox);
@@ -47,7 +47,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             if (te.getStation() != null)
                 station = te.getStation();
             boolean shouldOpenLeft = station == null || !((ISidedStation) station).opensLeft();
-            AllPackets.channel.sendToServer(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
+            CRPackets.PACKETS.send(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
             openLeftIndicator.state = shouldOpenLeft ? Indicator.State.ON : Indicator.State.OFF;
         });
         openLeft.setToolTip(Components.translatable("railways.station.open_left"));
@@ -61,7 +61,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             if (te.getStation() != null)
                 station = te.getStation();
             boolean shouldOpenRight = station == null || !((ISidedStation) station).opensRight();
-            AllPackets.channel.sendToServer(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
+            CRPackets.PACKETS.send(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
             openRightIndicator.state = shouldOpenRight ? Indicator.State.ON : Indicator.State.OFF;
         });
         openRight.setToolTip(Components.translatable("railways.station.open_right"));

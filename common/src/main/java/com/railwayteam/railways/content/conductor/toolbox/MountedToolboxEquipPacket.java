@@ -1,10 +1,10 @@
 package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.simibubi.create.content.curiosities.toolbox.ItemReturnInvWrapper;
+import com.railwayteam.railways.multiloader.C2SPacket;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -13,12 +13,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.network.NetworkEvent.Context;
 
-import java.util.function.Supplier;
-
-public class MountedToolboxEquipPacket extends SimplePacketBase {
+public class MountedToolboxEquipPacket implements C2SPacket {
 
 	private Integer toolboxCarrierId = null;
 	private final int slot;
@@ -47,69 +43,64 @@ public class MountedToolboxEquipPacket extends SimplePacketBase {
 	}
 
 	@Override
-	public void handle(Supplier<Context> context) {
-		Context ctx = context.get();
-		ctx.enqueueWork(() -> {
-			ServerPlayer player = ctx.getSender();
-			Level world = player.level;
+	public void handle(ServerPlayer player, FriendlyByteBuf buf) {
+		Level world = player.level;
 
-			if (toolboxCarrierId == null) {
-				ToolboxHandler.unequip(player, hotbarSlot, false);
-				ToolboxHandler.syncData(player);
-				return;
-			}
-
-			Entity entity = world.getEntity(toolboxCarrierId);
-
-			double maxRange = ToolboxHandler.getMaxRange(player);
-			if (player.distanceToSqr(entity) > maxRange
-				* maxRange)
-				return;
-			if (!(entity instanceof ConductorEntity conductorEntity))
-				return;
-
+		if (toolboxCarrierId == null) {
 			ToolboxHandler.unequip(player, hotbarSlot, false);
+			ToolboxHandler.syncData(player);
+			return;
+		}
 
-			if (slot < 0 || slot >= 8) {
-				ToolboxHandler.syncData(player);
-				return;
-			}
+		Entity entity = world.getEntity(toolboxCarrierId);
 
-			if (!conductorEntity.isCarryingToolbox())
-				return;
+		double maxRange = ToolboxHandler.getMaxRange(player);
+		if (player.distanceToSqr(entity) > maxRange
+				* maxRange)
+			return;
+		if (!(entity instanceof ConductorEntity conductorEntity))
+			return;
 
-			MountedToolboxHolder toolboxHolder = conductorEntity.getToolboxHolder();
+		ToolboxHandler.unequip(player, hotbarSlot, false);
 
-			ItemStack playerStack = player.getInventory().getItem(hotbarSlot);
-			if (!playerStack.isEmpty() && !ToolboxInventory.canItemsShareCompartment(playerStack,
+		if (slot < 0 || slot >= 8) {
+			ToolboxHandler.syncData(player);
+			return;
+		}
+
+		if (!conductorEntity.isCarryingToolbox())
+			return;
+
+		MountedToolboxHolder toolboxHolder = conductorEntity.getToolboxHolder();
+
+		ItemStack playerStack = player.getInventory().getItem(hotbarSlot);
+		if (!playerStack.isEmpty() && !ToolboxInventory.canItemsShareCompartment(playerStack,
 				toolboxHolder.inventory.filters.get(slot))) {
-				toolboxHolder.inventory.inLimitedMode(inventory -> {
-					ItemStack remainder = ItemHandlerHelper.insertItemStacked(inventory, playerStack, false);
-					if (!remainder.isEmpty())
-						remainder = ItemHandlerHelper.insertItemStacked(new ItemReturnInvWrapper(player.getInventory()),
+			toolboxHolder.inventory.inLimitedMode(inventory -> {
+				ItemStack remainder = ItemHandlerHelper.insertItemStacked(inventory, playerStack, false);
+				if (!remainder.isEmpty())
+					remainder = ItemHandlerHelper.insertItemStacked(new ItemReturnInvWrapper(player.getInventory()),
 							remainder, false);
-					if (remainder.getCount() != playerStack.getCount())
-						player.getInventory().setItem(hotbarSlot, remainder);
-				});
-			}
+				if (remainder.getCount() != playerStack.getCount())
+					player.getInventory().setItem(hotbarSlot, remainder);
+			});
+		}
 
-			CompoundTag compound = player.getPersistentData()
+		CompoundTag compound = player.getPersistentData()
 				.getCompound("CreateToolboxData");
-			String key = String.valueOf(hotbarSlot);
+		String key = String.valueOf(hotbarSlot);
 
-			CompoundTag data = new CompoundTag();
-			data.putInt("Slot", slot);
-			data.putUUID("EntityUUID", conductorEntity.getUUID());
-			data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
-			compound.put(key, data);
+		CompoundTag data = new CompoundTag();
+		data.putInt("Slot", slot);
+		data.putUUID("EntityUUID", conductorEntity.getUUID());
+		data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
+		compound.put(key, data);
 
-			player.getPersistentData()
+		player.getPersistentData()
 				.put("CreateToolboxData", compound);
 
-			toolboxHolder.connectPlayer(slot, player, hotbarSlot);
-			ToolboxHandler.syncData(player);
-		});
-		ctx.setPacketHandled(true);
+		toolboxHolder.connectPlayer(slot, player, hotbarSlot);
+		ToolboxHandler.syncData(player);
 	}
 
 }

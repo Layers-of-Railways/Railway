@@ -1,12 +1,13 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
+import com.railwayteam.railways.multiloader.PlayerSelection;
+import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
 import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.tileEntity.RemoveTileEntityPacket;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import net.minecraft.core.BlockPos;
@@ -57,7 +58,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
       BlockState blockState = this.level.getBlockState(worldPosition);
       if (blockState.hasProperty(TrackBlock.HAS_TE))
         level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_TE, false));
-      AllPackets.channel.send(packetTarget(), new RemoveTileEntityPacket(worldPosition));
+      CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveTileEntityPacket(worldPosition));
     }
   }
 

@@ -4,8 +4,10 @@
   "package": "com.railwayteam.railways.forge.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "ClientPacketListenerMixin"
   ],
   "mixins": [
+    "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1

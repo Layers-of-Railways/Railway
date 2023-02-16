@@ -1,8 +1,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
-import com.railwayteam.railways.multiloader.Env;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.railwayteam.railways.multiloader.S2CPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -10,21 +9,17 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Supplier;
-
-public class JukeboxCartPacket extends SimplePacketBase {
+public class JukeboxCartPacket implements S2CPacket {
   final int id;
   final ItemStack record;
 
-  public JukeboxCartPacket (Entity target, ItemStack disc) {
+  public JukeboxCartPacket(Entity target, ItemStack disc) {
     id = target.getId();
     record = disc;
   }
 
-  public JukeboxCartPacket (FriendlyByteBuf buf) {
+  public JukeboxCartPacket(FriendlyByteBuf buf) {
     id = buf.readInt();
     record = buf.readItem();
   }
@@ -32,18 +27,13 @@ public class JukeboxCartPacket extends SimplePacketBase {
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeInt(this.id);
-    buffer.writeItemStack(this.record, false);
+    buffer.writeItem(this.record);
   }
 
   @Override
-  public void handle(Supplier<NetworkEvent.Context> context) {
-    context.get().enqueueWork(() -> Env.CLIENT.runIfCurrent(() -> () -> this.__handle(context)));
-    context.get().setPacketHandled(true);
-  }
-
   @Environment(EnvType.CLIENT)
-  private void __handle (Supplier<NetworkEvent.Context> supplier) {
-    Level level = Minecraft.getInstance().level;
+  public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+    Level level = mc.level;
     if (level != null) {
       Entity target = level.getEntity(this.id);
       if (target instanceof MinecartJukebox juke) {

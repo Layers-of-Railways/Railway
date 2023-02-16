@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.coupling;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrain;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
+import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
@@ -10,14 +11,12 @@ import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.trains.entity.*;
 import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,8 +72,8 @@ public class TrainUtils {
         newTrain.collectInitiallyOccupiedSignalBlocks();
         train.updateSignalBlocks = true;
         Create.RAILWAYS.addTrain(newTrain);
-        AllPackets.channel.send(PacketDistributor.ALL.noArg(), new TrainPacket(newTrain, true));
-//        AllPackets.channel.send(PacketDistributor.ALL.noArg(), new TrainPacket(train, true));
+        CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(newTrain, true));
+//        CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, true));
 
         Arrays.stream(lastCarriages).forEach(c -> c.forEachPresentEntity(CarriageContraptionEntity::syncCarriage));
 //        lastCarriage.forEachPresentEntity(CarriageContraptionEntity::syncCarriage);
@@ -84,12 +83,13 @@ public class TrainUtils {
         //DONE clientside carriages need to update carriage.train and cce.trainId
         // if we update cce.trainId and set cce.carriage to null and call cce.bindCarriage() and then
         // set cce.carriage.train to the correct train, we should be good (try skipping this last line to test some stuff)
+        PlayerSelection allPlayers = PlayerSelection.all();
         Arrays.stream(lastCarriages).forEach(
             c -> c.forEachPresentEntity(
-                cce -> CRPackets.channel.send(PacketDistributor.ALL.noArg(), new CarriageContraptionEntityUpdatePacket(cce, newTrain))
+                cce -> CRPackets.PACKETS.sendTo(allPlayers, new CarriageContraptionEntityUpdatePacket(cce, newTrain))
             )
         );
-        CRPackets.channel.send(PacketDistributor.ALL.noArg(), new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
+        CRPackets.PACKETS.sendTo(allPlayers, new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
         if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).getIndex() >= train.carriages.size()) {
             int newIndex = ((IIndexedSchedule) train).getIndex() - train.carriages.size();
@@ -147,8 +147,11 @@ public class TrainUtils {
         }
         frontTrain.collectInitiallyOccupiedSignalBlocks();
         Create.RAILWAYS.removeTrain(backTrain.id);
-        CRPackets.channel.send(PacketDistributor.ALL.noArg(), new AddTrainEndPacket(frontTrain, backTrain, carriageSpacing, backTrain.doubleEnded));
-        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(cce -> CRPackets.channel.send(PacketDistributor.ALL.noArg(), new CarriageContraptionEntityUpdatePacket(cce, frontTrain))));
+        PlayerSelection allPlayers = PlayerSelection.all();
+        CRPackets.PACKETS.sendTo(allPlayers, new AddTrainEndPacket(frontTrain, backTrain, carriageSpacing, backTrain.doubleEnded));
+        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(cce ->
+                CRPackets.PACKETS.sendTo(allPlayers, new CarriageContraptionEntityUpdatePacket(cce, frontTrain))
+        ));
 //        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(CarriageContraptionEntity::syncCarriage));
         if (frontTrain.runtime.getSchedule() == null && backTrain.runtime.getSchedule() != null) {
             ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);

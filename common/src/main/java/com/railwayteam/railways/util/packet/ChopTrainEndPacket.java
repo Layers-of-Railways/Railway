@@ -1,22 +1,18 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.mixin.AccessorTrain;
-import com.railwayteam.railways.multiloader.Env;
+import com.railwayteam.railways.multiloader.S2CPacket;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
-public class ChopTrainEndPacket extends SimplePacketBase {
+public class ChopTrainEndPacket implements S2CPacket {
     final UUID trainId;
     final int numberOfCarriages;
     final boolean doubleEnded;
@@ -41,14 +37,9 @@ public class ChopTrainEndPacket extends SimplePacketBase {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> Env.CLIENT.runIfCurrent(() -> () -> this.__handle(context)));
-        context.get().setPacketHandled(true);
-    }
-
     @Environment(EnvType.CLIENT)
-    private void __handle (Supplier<NetworkEvent.Context> supplier) {
-        Level level = Minecraft.getInstance().level;
+    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+        Level level = mc.level;
         if (level != null) {
             Train train = CreateClient.RAILWAYS.trains.get(trainId);
             if (train != null) {

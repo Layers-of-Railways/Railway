@@ -2,7 +2,7 @@ package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerTileEntity;
 import com.railwayteam.railways.multiloader.Env;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
+import com.railwayteam.railways.multiloader.S2CPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -10,12 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Supplier;
-
-public class TrackCouplerClientInfoPacket extends SimplePacketBase {
+public class TrackCouplerClientInfoPacket implements S2CPacket {
     final BlockPos blockPos;
     final TrackCouplerTileEntity.ClientInfo info;
 
@@ -36,14 +32,9 @@ public class TrackCouplerClientInfoPacket extends SimplePacketBase {
     }
 
     @Override
-    public void handle(Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> Env.CLIENT.runIfCurrent(() -> () -> this.__handle(context)));
-        context.get().setPacketHandled(true);
-    }
-
     @Environment(EnvType.CLIENT)
-    private void __handle (Supplier<NetworkEvent.Context> supplier) {
-        Level level = Minecraft.getInstance().level;
+    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+        Level level = mc.level;
         if (level != null) {
             BlockEntity te = level.getBlockEntity(blockPos);
             if (te instanceof TrackCouplerTileEntity couplerTile)

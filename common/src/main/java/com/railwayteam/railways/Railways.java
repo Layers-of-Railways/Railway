@@ -5,6 +5,7 @@ import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.registry.CRCommands;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
@@ -38,6 +39,7 @@ public class Railways {
     Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
 
     registerCommands(CRCommands::register);
+    CRPackets.PACKETS.registerC2SListener();
   }
 
   public static ResourceLocation asResource(String name) {

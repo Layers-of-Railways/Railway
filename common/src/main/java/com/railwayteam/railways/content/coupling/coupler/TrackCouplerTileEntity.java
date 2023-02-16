@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
+import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.TrackCouplerClientInfoPacket;
@@ -28,12 +29,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -207,7 +208,9 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         updateOK();
         clientInfo = new ClientInfo(this);
         clearErrors();
-        CRPackets.channel.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(getBlockPos())), new TrackCouplerClientInfoPacket(this));
+        if (level instanceof ServerLevel serverLevel) {
+            CRPackets.PACKETS.sendTo(PlayerSelection.tracking(serverLevel, getBlockPos()), new TrackCouplerClientInfoPacket(this));
+        }
     }
 
     private boolean isOkExceptGraph() {

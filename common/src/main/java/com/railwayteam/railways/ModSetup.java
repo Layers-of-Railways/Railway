@@ -13,7 +13,6 @@ public class ModSetup {
     CRContainerTypes.register();
     CREntities.register();
     CRSounds.register();
-    CRPackets.registerPackets();
     CRTags.register();
     CREdgePointTypes.register();
     CRSchedule.register();

@@ -33,7 +33,7 @@ public abstract class MixinCurvedTrackInteraction {
         ((IHasTrackMaterial) result.te().getConnections().get(result.loc().curveTarget())).getMaterial().trackType != TrackMaterial.TrackType.MONORAIL) {
       if (heldItem.isEmpty() || heldItem.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
           !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
-        CRPackets.channel.sendToServer(new SlabUseOnCurvePacket(result.te()
+        CRPackets.PACKETS.send(new SlabUseOnCurvePacket(result.te()
             .getBlockPos(),
             result.loc()
                 .curveTarget(),

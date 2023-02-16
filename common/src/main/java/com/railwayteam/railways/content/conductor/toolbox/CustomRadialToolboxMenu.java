@@ -20,7 +20,6 @@ import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
-import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Lang;
@@ -293,15 +292,15 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 			else if (state == State.SELECT_BOX)
 				toolboxObjects.forEach(obj -> {
 					if (obj instanceof ToolboxTileEntity te)
-						AllPackets.channel.sendToServer(new ToolboxDisposeAllPacket(te.getBlockPos()));
+						CRPackets.PACKETS.send(new ToolboxDisposeAllPacket(te.getBlockPos()));
 					else if (obj instanceof MountedToolboxHolder mt)
-						CRPackets.channel.sendToServer(new MountedToolboxDisposeAllPacket(mt.parent));
+						CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mt.parent));
 				});
 			else {
 				if (selectedObject instanceof ToolboxTileEntity te)
-					AllPackets.channel.sendToServer(new ToolboxDisposeAllPacket(te.getBlockPos()));
+					CRPackets.PACKETS.send(new ToolboxDisposeAllPacket(te.getBlockPos()));
 				else if (selectedObject instanceof MountedToolboxHolder mt)
-					CRPackets.channel.sendToServer(new MountedToolboxDisposeAllPacket(mt.parent));
+					CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mt.parent));
 			}
 			return;
 		}
@@ -311,17 +310,17 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 
 		if (state == State.DETACH) {
 			if (selected == UNEQUIP)
-				AllPackets.channel.sendToServer(
+				CRPackets.PACKETS.send(
 					new ToolboxEquipPacket(null, selected, minecraft.player.getInventory().selected));
 			return;
 		}
 
 		if (selected == UNEQUIP) {
 			if (selectedObject instanceof ToolboxTileEntity te)
-				AllPackets.channel.sendToServer(new ToolboxEquipPacket(te.getBlockPos(), selected,
+				CRPackets.PACKETS.send(new ToolboxEquipPacket(te.getBlockPos(), selected,
 						minecraft.player.getInventory().selected));
 			else if (selectedObject instanceof MountedToolboxHolder mt)
-				CRPackets.channel.sendToServer(new MountedToolboxEquipPacket(mt.parent, selected,
+				CRPackets.PACKETS.send(new MountedToolboxEquipPacket(mt.parent, selected,
 						minecraft.player.getInventory().selected));
 		}
 
@@ -345,10 +344,10 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 			return;
 
 		if (selectedObject instanceof ToolboxTileEntity te)
-			AllPackets.channel.sendToServer(new ToolboxEquipPacket(te.getBlockPos(), selected,
+			CRPackets.PACKETS.send(new ToolboxEquipPacket(te.getBlockPos(), selected,
 				minecraft.player.getInventory().selected));
 		else if (selectedObject instanceof MountedToolboxHolder mt)
-			CRPackets.channel.sendToServer(new MountedToolboxEquipPacket(mt.parent, selected,
+			CRPackets.PACKETS.send(new MountedToolboxEquipPacket(mt.parent, selected,
 					minecraft.player.getInventory().selected));
 	}
 
@@ -431,10 +430,10 @@ public class CustomRadialToolboxMenu extends AbstractSimiScreen {
 			if (state == State.SELECT_ITEM_UNEQUIP && selected == UNEQUIP) {
 				if (toolboxObjects.size() > 1) {
 					if (selectedObject instanceof ToolboxTileEntity te)
-						AllPackets.channel.sendToServer(new ToolboxEquipPacket(te.getBlockPos(), selected,
+						CRPackets.PACKETS.send(new ToolboxEquipPacket(te.getBlockPos(), selected,
 							minecraft.player.getInventory().selected));
 					else if (selectedObject instanceof MountedToolboxHolder mt)
-						CRPackets.channel.sendToServer(new MountedToolboxEquipPacket(mt.parent, selected,
+						CRPackets.PACKETS.send(new MountedToolboxEquipPacket(mt.parent, selected,
 								minecraft.player.getInventory().selected));
 					state = State.SELECT_BOX;
 					return true;
