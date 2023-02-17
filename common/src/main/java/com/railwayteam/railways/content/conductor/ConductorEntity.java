@@ -6,7 +6,6 @@ import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -46,21 +45,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+// note: item handler capability is implemented on forge in CommonEventsForge, fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
 
-
+  // FIXME: cannot have custom serializers! This will explode!
   private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
     public void write(FriendlyByteBuf buf, @NotNull Job job) {
       buf.writeEnum(job);
@@ -89,13 +82,9 @@ public class ConductorEntity extends AbstractGolem {
   private ConductorFakePlayer fakePlayer = null;
   MountedToolboxHolder toolboxHolder = null;
 
-  public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
+  public ConductorEntity(EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
-  }
-
-  @Override
-  public float getStepHeight() {
-    return 0.5f;
+    this.maxUpStep = 0.5f;
   }
 
   @Override
@@ -175,8 +164,8 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public void equipToolbox(ItemStack stack) {
-    if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ToolboxBlock) {
-      toolboxHolder = new MountedToolboxHolder(this, ((ToolboxBlock) blockItem.getBlock()).getColor());
+    if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ToolboxBlock toolbox) {
+      toolboxHolder = new MountedToolboxHolder(this, toolbox.getColor());
       toolboxHolder.readFromItem(stack);
       toolboxHolder.sendData();
       getEntityData().set(JOB, Job.TOOLBOX_CARRIER);
@@ -207,7 +196,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   protected void openToolbox(Player player) {
-    NetworkHooks.openGui((ServerPlayer) player, this.toolboxHolder, this.toolboxHolder::sendToContainer);
+    player.openMenu(toolboxHolder);
   }
 
   @Override
@@ -508,30 +497,6 @@ public class ConductorEntity extends AbstractGolem {
       getEntityData().set(JOB, Job.valueOf(nbt.getString("job")));
     } else {
       getEntityData().set(JOB, Job.DEFAULT);
-    }
-  }
-
-  @Override
-  public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-    if (isCarryingToolbox() && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return toolboxHolder.getInventoryProvider().cast();
-    }
-    return super.getCapability(capability, facing);
-  }
-
-  @Override
-  public void invalidateCaps() {
-    super.invalidateCaps();
-    if (isCarryingToolbox()) {
-      toolboxHolder.invalidateCaps();
-    }
-  }
-
-  @Override
-  public void reviveCaps() {
-    super.reviveCaps();
-    if (isCarryingToolbox()) {
-      toolboxHolder.reviveCaps();
     }
   }
 
