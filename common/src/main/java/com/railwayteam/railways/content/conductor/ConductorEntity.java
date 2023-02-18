@@ -416,14 +416,10 @@ public class ConductorEntity extends AbstractGolem {
           ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fake);
         BlockHitResult hitResult = level.clip(context);
         //Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());
-        Event.Result useBlock    = Event.Result.DEFAULT;
         if (!pos.equals(hitResult.getBlockPos()))
           return;
-        if (!state.getShape(level, pos).isEmpty()) {
-          PlayerInteractEvent.RightClickBlock event = ForgeHooks.onRightClickBlock(fake, InteractionHand.MAIN_HAND, pos, hitResult);
-          useBlock = event.getUseBlock();
-        }
-        if (useBlock != Event.Result.DENY) {
+        boolean canUse = state.getShape(level, pos).isEmpty() || EntityUtils.handleUseEvent(fake, InteractionHand.MAIN_HAND, hitResult);
+        if (canUse) {
           state.use(level, fake, InteractionHand.MAIN_HAND, hitResult);
         }
       }

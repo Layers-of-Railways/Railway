@@ -3,6 +3,7 @@ package com.railwayteam.railways.util.fabric;
 import com.railwayteam.railways.fabric.ConductorFakePlayerFabric;
 import com.simibubi.create.foundation.utility.fabric.ReachUtil;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
@@ -11,10 +12,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.Random;
 
@@ -46,5 +50,10 @@ public class EntityUtilsImpl {
 
 	public static double getReachDistance(Player player) {
 		return ReachUtil.reach(player);
+	}
+
+	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
+		InteractionResult result = UseBlockCallback.EVENT.invoker().interact(player, player.level, hand, hit);
+		return result != InteractionResult.FAIL;
 	}
 }

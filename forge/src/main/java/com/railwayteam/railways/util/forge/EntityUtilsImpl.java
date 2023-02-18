@@ -4,9 +4,14 @@ import com.railwayteam.railways.forge.ConductorFakePlayerForge;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class EntityUtilsImpl {
@@ -24,5 +29,10 @@ public class EntityUtilsImpl {
 
 	public static double getReachDistance(Player player) {
 		return player.getReachDistance();
+	}
+
+	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
+		PlayerInteractEvent.RightClickBlock event = ForgeHooks.onRightClickBlock(player, InteractionHand.MAIN_HAND, hit.getBlockPos(), hit);
+		return event.getResult() != Result.DENY;
 	}
 }

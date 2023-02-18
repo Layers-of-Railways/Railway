@@ -4,9 +4,12 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Contract;
 
 public class EntityUtils {
 	@ExpectPlatform
@@ -29,6 +32,16 @@ public class EntityUtils {
 
 	@ExpectPlatform
 	public static double getReachDistance(Player player) {
+		throw new AssertionError();
+	}
+
+	/**
+	 * Fire a use event.
+	 * @return true if the use is allowed, false otherwise
+	 */
+	@ExpectPlatform
+	@Contract // shut
+	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
 		throw new AssertionError();
 	}
 }

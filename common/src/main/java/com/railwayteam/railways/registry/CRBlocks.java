@@ -147,7 +147,7 @@ public class CRBlocks {
         .register();
 
     public static final BlockEntry<TrackCouplerBlock> TRACK_COUPLER =
-        REGISTRATE.block("track_coupler", TrackCouplerBlock::new)
+        REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.color(MaterialColor.PODZOL))
             .properties(p -> p.noOcclusion())

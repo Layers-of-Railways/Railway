@@ -3,16 +3,14 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.simibubi.create.content.contraptions.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ITE;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,14 +23,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEntity>, IWrenchable {
+public abstract class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEntity>, IWrenchable {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 	public static final EnumProperty<TrackCouplerTileEntity.AllowedOperationMode> MODE = EnumProperty.create("mode", TrackCouplerTileEntity.AllowedOperationMode.class);
 
-	public TrackCouplerBlock(Properties pProperties) {
+	protected TrackCouplerBlock(Properties pProperties) {
 		super(pProperties);
 		registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(MODE, TrackCouplerTileEntity.AllowedOperationMode.BOTH));
+	}
+
+	@ExpectPlatform
+	public static TrackCouplerBlock create(Properties properties) {
+		throw new AssertionError();
 	}
 
 	@Override
@@ -69,11 +72,6 @@ public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEnti
 	}
 
 	@Override
-	public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-		return true;
-	}
-
-	@Override
 	public Class<TrackCouplerTileEntity> getTileEntityClass() {
 		return TrackCouplerTileEntity.class;
 	}
@@ -107,11 +105,6 @@ public class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEnti
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
 		if (pState.getValue(POWERED) && !pLevel.hasNeighborSignal(pPos))
 			pLevel.setBlock(pPos, pState.cycle(POWERED), 2);
-	}
-
-	@Override
-	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
-		return false;
 	}
 
 	@Override
