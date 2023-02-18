@@ -15,7 +15,7 @@ public class ReloadJourneymapCommand {
             .requires(cs -> cs.hasPermission(0))
             .executes(ctx -> {
                 SharedSuggestionProvider source = ctx.getSource();
-                if (Mods.JOURNEYMAP.isLoaded()) {
+                if (Mods.JOURNEYMAP.isLoaded) {
                     Env.CLIENT.runIfCurrent(() -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
 
                     sendSuccess(source, Components.literal("Reloaded journeymap"));

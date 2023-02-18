@@ -1,7 +1,10 @@
 package com.railwayteam.railways.multiloader;
 
+import com.mojang.authlib.GameProfile;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +20,11 @@ public class EntityUtils {
 	 */
 	@ExpectPlatform
 	public static void givePlayerItem(Player player, ItemStack stack) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
+	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
 		throw new AssertionError();
 	}
 }

@@ -1,11 +1,10 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.railwayteam.railways.mixin.client.AccessorPartialModel;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.unsafe.UnsafeHacks;
 
-import java.lang.reflect.Field;
 import java.time.Clock;
 
 public class RuntimeFakePartialModel extends PartialModel {
@@ -19,14 +18,15 @@ public class RuntimeFakePartialModel extends PartialModel {
   }
 
   public static RuntimeFakePartialModel make(ResourceLocation loc, BakedModel bakedModel) {
-    RuntimeFakePartialModel partialModel = UnsafeHacks.newInstance(RuntimeFakePartialModel.class);
-    try {
-      Field modelLocField = PartialModel.class.getDeclaredField("modelLocation");
-      UnsafeHacks.setField(modelLocField, partialModel, runtime_ify(loc, bakedModel));
-    } catch (NoSuchFieldException e) {
-      e.printStackTrace();
-    }
+    boolean tooLate = AccessorPartialModel.getTooLate();
+    AccessorPartialModel.setTooLate(false);
+
+    RuntimeFakePartialModel partialModel = new RuntimeFakePartialModel(runtime_ify(loc, bakedModel));
     partialModel.bakedModel = bakedModel;
+
+    AccessorPartialModel.getALL().remove(partialModel);
+    AccessorPartialModel.setTooLate(tooLate);
+
     return partialModel;
   }
 }

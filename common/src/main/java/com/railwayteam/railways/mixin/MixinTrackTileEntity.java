@@ -11,13 +11,13 @@ import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import com.simibubi.create.foundation.tileEntity.RemoveTileEntityPacket;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -82,7 +82,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
     }
   }
 
-  @Inject(method = "removeInboundConnections", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/network/simple/SimpleChannel;send(Lnet/minecraftforge/network/PacketDistributor$PacketTarget;Ljava/lang/Object;)V"), cancellable = true, remap = false)
+  @Inject(method = "removeInboundConnections", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/tileEntity/RemoveTileEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V"), cancellable = true, remap = false)
   private void preventTileRemoval2(CallbackInfo ci) {
     if (getTrackCasing() != null) {
       notifyUpdate();
@@ -93,7 +93,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   @Inject(method = "write", at = @At("RETURN"), remap = false)
   private void writeCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
     if (this.getTrackCasing() != null) {
-      tag.putString("TrackCasing", ForgeRegistries.BLOCKS.getKey(getTrackCasing()).toString());
+      tag.putString("TrackCasing", Registry.BLOCK.getKey(getTrackCasing()).toString());
     }
     tag.putBoolean("AlternateModel", this.isAlternate());
   }
@@ -108,8 +108,8 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
 
     if (tag.contains("TrackCasing")) {
       ResourceLocation casingName = ResourceLocation.of(tag.getString("TrackCasing"), ':');
-      if (ForgeRegistries.BLOCKS.containsKey(casingName)) {
-        Block casingBlock = ForgeRegistries.BLOCKS.getValue(casingName);
+      if (Registry.BLOCK.containsKey(casingName)) {
+        Block casingBlock = Registry.BLOCK.get(casingName);
         if (casingBlock instanceof SlabBlock slab) {
           this.setTrackCasing(slab);
           return;

@@ -2,7 +2,9 @@ package com.railwayteam.railways.content.conductor;
 
 import com.jozufozu.flywheel.util.WeakHashSet;
 import com.jozufozu.flywheel.util.WorldAttached;
+import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
+import com.railwayteam.railways.multiloader.EntityUtils;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
@@ -50,9 +52,15 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
+  public static final GameProfile FAKE_PLAYER_PROFILE = new GameProfile(
+          UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
+          "[Conductor]"
+  );
+
   public static final WorldAttached<WeakHashSet<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new WeakHashSet<>());
 
   // FIXME: cannot have custom serializers! This will explode!
@@ -81,7 +89,7 @@ public class ConductorEntity extends AbstractGolem {
   // keep this small for performance (plus conductors are smol)
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
 
-  private ConductorFakePlayer fakePlayer = null;
+  private ServerPlayer fakePlayer = null;
   MountedToolbox toolbox = null;
 
   public ConductorEntity(EntityType<? extends AbstractGolem> type, Level level) {
@@ -234,7 +242,8 @@ public class ConductorEntity extends AbstractGolem {
   @Override
   public void tick() {
     super.tick();
-    if (fakePlayer == null && !level.isClientSide) fakePlayer = new ConductorFakePlayer((ServerLevel)level);
+    if (fakePlayer == null && level instanceof ServerLevel serverLevel)
+      fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel);
     if (toolbox != null) toolbox.tick();
   }
 
@@ -396,7 +405,7 @@ public class ConductorEntity extends AbstractGolem {
       BlockPos pos     = this.conductor.getEntityData().get(BLOCK);
       BlockState state = level.getBlockState(pos);
       Block block      = state.getBlock();
-      ConductorFakePlayer fake = this.conductor.fakePlayer;
+      ServerPlayer fake = this.conductor.fakePlayer;
 
       // -- activate a button or lever --
       if (this.conductor.canReach(pos) && this.conductor.canUseBlock(state) && fake != null) {

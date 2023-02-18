@@ -1,8 +1,10 @@
 package com.railwayteam.railways.content.custom_tracks;
 
+import com.jozufozu.flywheel.util.Lazy;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -14,7 +16,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.common.util.Lazy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,18 +25,18 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public enum TrackMaterial {
-    ANDESITE("Andesite", Lazy.of(() -> AllBlocks.TRACK), Create.asResource("block/palettes/stone_types/polished/andesite_cut_polished"), Ingredient.EMPTY, Ingredient.EMPTY, true),
+    ANDESITE("Andesite", () -> AllBlocks.TRACK, Create.asResource("block/palettes/stone_types/polished/andesite_cut_polished"), Ingredient.EMPTY, Ingredient.EMPTY, true),
 
-    ACACIA("Acacia", Lazy.of(() -> CRBlocks.ACACIA_TRACK), new ResourceLocation("block/acacia_planks"), Blocks.ACACIA_SLAB),
-    BIRCH("Birch", Lazy.of(() -> CRBlocks.BIRCH_TRACK), new ResourceLocation("block/birch_planks"), Blocks.BIRCH_SLAB),
-    CRIMSON("Crimson", Lazy.of(() -> CRBlocks.CRIMSON_TRACK), new ResourceLocation("block/crimson_planks"), Ingredient.of(Blocks.CRIMSON_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
-    DARK_OAK("Dark Oak", Lazy.of(() -> CRBlocks.DARK_OAK_TRACK), new ResourceLocation("block/dark_oak_planks"), Blocks.DARK_OAK_SLAB),
-    JUNGLE("Jungle", Lazy.of(() -> CRBlocks.JUNGLE_TRACK), new ResourceLocation("block/jungle_planks"), Blocks.JUNGLE_SLAB),
-    OAK("Oak", Lazy.of(() -> CRBlocks.OAK_TRACK), new ResourceLocation("block/oak_planks"), Blocks.OAK_SLAB),
-    SPRUCE("Spruce", Lazy.of(() -> CRBlocks.SPRUCE_TRACK), new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
-    WARPED("Warped", Lazy.of(() -> CRBlocks.WARPED_TRACK), new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
-    BLACKSTONE("Blackstone", Lazy.of(() -> CRBlocks.BLACKSTONE_TRACK), new ResourceLocation("block/blackstone"), Ingredient.of(Blocks.BLACKSTONE_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
-    MONORAIL("Monorail", Lazy.of(() -> CRBlocks.MONORAIL_TRACK), Railways.asResource("block/monorail/monorail"), Ingredient.EMPTY, Ingredient.EMPTY, false, TrackType.MONORAIL)
+    ACACIA("Acacia", () -> CRBlocks.ACACIA_TRACK, new ResourceLocation("block/acacia_planks"), Blocks.ACACIA_SLAB),
+    BIRCH("Birch", () -> CRBlocks.BIRCH_TRACK, new ResourceLocation("block/birch_planks"), Blocks.BIRCH_SLAB),
+    CRIMSON("Crimson", () -> CRBlocks.CRIMSON_TRACK, new ResourceLocation("block/crimson_planks"), Ingredient.of(Blocks.CRIMSON_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
+    DARK_OAK("Dark Oak", () -> CRBlocks.DARK_OAK_TRACK, new ResourceLocation("block/dark_oak_planks"), Blocks.DARK_OAK_SLAB),
+    JUNGLE("Jungle", () -> CRBlocks.JUNGLE_TRACK, new ResourceLocation("block/jungle_planks"), Blocks.JUNGLE_SLAB),
+    OAK("Oak", () -> CRBlocks.OAK_TRACK, new ResourceLocation("block/oak_planks"), Blocks.OAK_SLAB),
+    SPRUCE("Spruce", () -> CRBlocks.SPRUCE_TRACK, new ResourceLocation("block/spruce_planks"), Blocks.SPRUCE_SLAB),
+    WARPED("Warped", () -> CRBlocks.WARPED_TRACK, new ResourceLocation("block/warped_planks"), Ingredient.of(Blocks.WARPED_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
+    BLACKSTONE("Blackstone", () -> CRBlocks.BLACKSTONE_TRACK, new ResourceLocation("block/blackstone"), Ingredient.of(Blocks.BLACKSTONE_SLAB), Ingredient.of(Items.GOLD_NUGGET)),
+    MONORAIL("Monorail", () -> CRBlocks.MONORAIL_TRACK, Railways.asResource("block/monorail/monorail"), Ingredient.EMPTY, Ingredient.EMPTY, false, TrackType.MONORAIL)
     ;
 
     public final String langName;
@@ -51,8 +52,13 @@ public enum TrackMaterial {
     }
 
     TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient) {
-        this(langName, trackBlock, particle, sleeperIngredient, Ingredient.fromValues(
-            Stream.of(new Ingredient.TagValue(Ingredients.ironNugget()), new Ingredient.TagValue(Ingredients.zincNugget()))), false);
+        this(langName, trackBlock, particle, sleeperIngredient,
+                Ingredient.fromValues(Stream.of(
+                        AccessorIngredient_TagValue.railway$create(Ingredients.ironNugget()),
+                        AccessorIngredient_TagValue.railway$create(Ingredients.zincNugget()))
+                ),
+                false
+        );
     }
 
     TrackMaterial(String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient) {

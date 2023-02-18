@@ -7,6 +7,7 @@
     "AccessorBlockEntity",
     "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
+    "AccessorIngredient_TagValue",
     "AccessorNavigation",
     "AccessorScheduleRuntime",
     "AccessorToolboxInventory",
@@ -49,6 +50,7 @@
   "client": [
     "client.AccessorBogeyInstance",
     "client.AccessorInstance",
+    "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
     "client.MixinBezierConnectionClient",
     "client.MixinBlueprintOverlayRenderer",

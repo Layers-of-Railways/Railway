@@ -7,12 +7,12 @@ import com.simibubi.create.content.logistics.trains.IBogeyBlock;
 import com.simibubi.create.content.logistics.trains.TrackGraph;
 import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -45,7 +45,7 @@ public class MixinTravellingPoint implements IBogeyTypeAwareTravellingPoint {
     private static void readType(CompoundTag tag, TrackGraph graph, DimensionPalette dimensions, CallbackInfoReturnable<TravellingPoint> cir) {
         if (tag.contains("Type", Tag.TAG_STRING))
             ((IBogeyTypeAwareTravellingPoint) cir.getReturnValue())
-                .setType((IBogeyBlock) ForgeRegistries.BLOCKS.getValue(
+                .setType((IBogeyBlock) Registry.BLOCK.get(
                     new ResourceLocation(tag.getString("Type"))
                 ));
     }
