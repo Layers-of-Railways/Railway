@@ -14,17 +14,19 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.forgespi.locating.IModFile;
 
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+@EventBusSubscriber
 public class RailwaysClientImpl {
 	public static void init() {
 		RailwaysClient.init();
-		RailwaysImpl.bus.addListener(RailwaysClientImpl::onClientCommandRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onModelLayerRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onBuiltinPackRegistration);
 	}
@@ -38,6 +40,7 @@ public class RailwaysClientImpl {
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!
+	@SubscribeEvent
 	public static void onClientCommandRegistration(RegisterClientCommandsEvent event) {
 		CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 		CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
