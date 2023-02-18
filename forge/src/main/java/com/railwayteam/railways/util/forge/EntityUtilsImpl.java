@@ -21,4 +21,8 @@ public class EntityUtilsImpl {
 	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
 		return new ConductorFakePlayerForge(level);
 	}
+
+	public static double getReachDistance(Player player) {
+		return player.getReachDistance();
+	}
 }

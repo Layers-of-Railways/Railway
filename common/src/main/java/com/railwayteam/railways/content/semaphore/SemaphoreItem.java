@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.semaphore;
 
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
 import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
 import net.minecraft.core.BlockPos;
@@ -33,7 +34,7 @@ public class SemaphoreItem extends BlockItem {
             pos = pos.offset(pContext.getClickedFace().getOpposite().getNormal());
         }
         BlockState state = world.getBlockState(pos);
-        double pHitDistance = player.getReachDistance();
+        double pHitDistance = EntityUtils.getReachDistance(player);
         Vec3 eyePos = player.getEyePosition();
         Vec3 viewVec = player.getViewVector(0);
         Vec3 endPos = eyePos.add(viewVec.x * pHitDistance, viewVec.y * pHitDistance, viewVec.z * pHitDistance);

@@ -49,8 +49,7 @@ public abstract class MixinTrackBlockOutline {
             remap = false,
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;walkShapes(Lcom/simibubi/create/content/logistics/trains/track/TrackShape;Lcom/jozufozu/flywheel/util/transform/TransformStack;Ljava/util/function/Consumer;)V",
-                    remap = true
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;walkShapes(Lcom/simibubi/create/content/logistics/trains/track/TrackShape;Lcom/jozufozu/flywheel/util/transform/TransformStack;Ljava/util/function/Consumer;)V"
             )
     )
     private static void railway$walkMonorailInstead(TrackShape d, TransformStack shape, Consumer<VoxelShape> msr) {

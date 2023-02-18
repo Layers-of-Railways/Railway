@@ -1,6 +1,7 @@
 package com.railwayteam.railways.util.fabric;
 
 import com.railwayteam.railways.fabric.ConductorFakePlayerFabric;
+import com.simibubi.create.foundation.utility.fabric.ReachUtil;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.PlayerInventoryStorage;
@@ -41,5 +42,9 @@ public class EntityUtilsImpl {
 
 	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
 		return new ConductorFakePlayerFabric(level);
+	}
+
+	public static double getReachDistance(Player player) {
+		return ReachUtil.reach(player);
 	}
 }

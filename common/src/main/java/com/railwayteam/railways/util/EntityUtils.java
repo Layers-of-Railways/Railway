@@ -26,4 +26,9 @@ public class EntityUtils {
 	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
 		throw new AssertionError();
 	}
+
+	@ExpectPlatform
+	public static double getReachDistance(Player player) {
+		throw new AssertionError();
+	}
 }

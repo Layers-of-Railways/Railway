@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
+import com.railwayteam.railways.util.BlockStateUtils;
 import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
 import com.simibubi.create.content.logistics.trains.*;
 import com.simibubi.create.content.logistics.trains.entity.CarriageContraption;
@@ -151,8 +152,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
             bogeyAnchor = ProperWaterloggedBlock.withWater(level, pudb.getVersion(bogeyAnchor, true), pos);
             level.setBlock(targetPos, bogeyAnchor, 3);
             player.displayClientMessage(Lang.translateDirect("train_assembly.bogey_created"), true);
-            SoundType soundtype = bogeyAnchor.getBlock()
-                .getSoundType(state, level, pos, player);
+            SoundType soundtype = BlockStateUtils.getSoundType(bogeyAnchor, level, pos, player);
             level.playSound(null, pos, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F,
                 soundtype.getPitch() * 0.8F);
 
