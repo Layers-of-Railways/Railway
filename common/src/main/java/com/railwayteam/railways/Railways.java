@@ -52,8 +52,8 @@ public class Railways {
     // TODO ARCH: datagen
   public static void gatherData(DataGenerator gen, boolean client, boolean server) {
     if (server) {
-      gen.addProvider(new RailwaysSequencedAssemblyRecipeGen(gen));
-      gen.addProvider(new RailwaysStandardRecipeGen(gen));
+      gen.addProvider(RailwaysSequencedAssemblyRecipeGen.create(gen));
+      gen.addProvider(RailwaysStandardRecipeGen.create(gen));
     }
     if (client) {
       PonderLocalization.provideRegistrateLang(REGISTRATE);

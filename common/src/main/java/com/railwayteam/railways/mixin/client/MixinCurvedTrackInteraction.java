@@ -15,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraftforge.client.event.InputEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,13 +23,20 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CurvedTrackInteraction.class)
 public abstract class MixinCurvedTrackInteraction {
-  @Inject(method = "onClickInput", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"), locals = LocalCapture.CAPTURE_FAILHARD,
-      cancellable = true)
-  private static void encaseTrackSend(InputEvent.ClickInputEvent event, CallbackInfoReturnable<Boolean> cir,
+  @Inject(
+          method = "onClickInput",
+          remap = false,
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"
+          ),
+          locals = LocalCapture.CAPTURE_FAILHARD,
+          cancellable = true
+  )
+  private static void encaseTrackSend(CallbackInfoReturnable<Boolean> cir,
                                       TrackBlockOutline.BezierPointSelection result, Minecraft mc, LocalPlayer player,
                                       ClientLevel level, ItemStack heldItem) {
-    if (result.te().getConnections() == null || !result.te().getConnections().containsKey(result.loc().curveTarget()) ||
-        ((IHasTrackMaterial) result.te().getConnections().get(result.loc().curveTarget())).getMaterial().trackType != TrackMaterial.TrackType.MONORAIL) {
+    if (result.te().getConnections() == null || !result.te().getConnections().containsKey(result.loc().curveTarget()) || ((IHasTrackMaterial) result.te().getConnections().get(result.loc().curveTarget())).getMaterial().trackType != TrackMaterial.TrackType.MONORAIL) {
       if (heldItem.isEmpty() || heldItem.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
           !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
         CRPackets.PACKETS.send(new SlabUseOnCurvePacket(result.te()

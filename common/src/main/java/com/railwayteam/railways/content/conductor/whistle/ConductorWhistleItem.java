@@ -195,7 +195,10 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 BlockPos placePos = pos.relative(direction);
                 Vec3 hitPos = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)
                     .add(direction.getStepX() * 0.5, direction.getStepY() * 0.5, direction.getStepZ() * 0.5);
-                if (level.getBlockState(placePos).canBeReplaced(new BlockPlaceContext(level, player, pContext.getHand(), stack, new BlockHitResult(hitPos, direction.getOpposite(), placePos, false)))) {
+                BlockPlaceContext ctx = new BlockPlaceContext(
+                        player, pContext.getHand(), stack, new BlockHitResult(hitPos, direction.getOpposite(), placePos, false)
+                );
+                if (level.getBlockState(placePos).canBeReplaced(ctx)) {
                     successDirection = direction;
                     break;
                 }

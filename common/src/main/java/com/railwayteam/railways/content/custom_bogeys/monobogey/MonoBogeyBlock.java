@@ -198,8 +198,7 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos,
-                                       Player player) {
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         return AllBlocks.RAILWAY_CASING.asStack();
     }
 

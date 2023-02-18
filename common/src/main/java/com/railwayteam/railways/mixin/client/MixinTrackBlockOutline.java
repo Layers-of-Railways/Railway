@@ -1,8 +1,6 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
@@ -13,73 +11,96 @@ import com.simibubi.create.content.logistics.trains.track.*;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VoxelShaper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.DrawSelectionEvent;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.injection.*;
 
-import java.util.Iterator;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Mixin(value = TrackBlockOutline.class, remap = false)
 public abstract class MixinTrackBlockOutline {
     @Shadow
-    private static void renderShape(VoxelShape s, PoseStack ms, VertexConsumer vb, Boolean valid) {}
+    private static void walkShapes(TrackShape shape, TransformStack msr, Consumer<VoxelShape> renderer) {
+        throw new AssertionError();
+    }
 
-    @Inject(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;", remap = true), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void replaceShapes(DrawSelectionEvent.HighlightBlock event, CallbackInfo ci, Minecraft mc, BlockHitResult target, BlockPos pos,
-                                      BlockState blockstate, VertexConsumer vb, Vec3 camPos, PoseStack ms, boolean holdingTrack) {
-        if (blockstate.getBlock() instanceof MonorailTrackBlock) {
-            TrackShape shape = blockstate.getValue(TrackBlock.SHAPE);
-            boolean isJunction = shape.isJunction();
-            monorailWalkShapes(shape, TransformStack.cast(ms), s -> {
-                renderShape(s, ms, vb, holdingTrack ? !isJunction : null);
-                event.setCanceled(true);
-            });
+    private static boolean railway$renderingMonorail;
 
-            ms.popPose();
-            ci.cancel();
+    @ModifyVariable(
+            method = "drawCustomBlockSelection",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackShape;isJunction()Z",
+                    remap = true
+            )
+    )
+    private static BlockState replaceShapes(BlockState state) {
+        railway$renderingMonorail = state.getBlock() instanceof MonorailTrackBlock;
+        return state;
+    }
+
+    @Redirect(
+            method = "drawCustomBlockSelection",
+            remap = false,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;walkShapes(Lcom/simibubi/create/content/logistics/trains/track/TrackShape;Lcom/jozufozu/flywheel/util/transform/TransformStack;Ljava/util/function/Consumer;)V",
+                    remap = true
+            )
+    )
+    private static void railway$walkMonorailInstead(TrackShape d, TransformStack shape, Consumer<VoxelShape> msr) {
+        if (railway$renderingMonorail) {
+            monorailWalkShapes(d, shape, msr);
         }
+        walkShapes(d, shape, msr);
     }
 
     private static boolean tmpCurveIsMonorail = false;
     private static boolean persistentCurveIsMonorail = false;
 
-    @Inject(method = "pickCurves", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/BezierConnection;getStepLUT()[F"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void storeIsMonorail(CallbackInfo ci, Minecraft mc, LocalPlayer player, Vec3 origin, double maxRange, AttributeInstance range,
-                                        Vec3 target, Map turns, Iterator var8, TrackTileEntity te, Iterator var10, BezierConnection bc, AABB bounds) {
+    @ModifyVariable(
+            method = "pickCurves",
+            remap = false,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/content/logistics/trains/BezierConnection;getStepLUT()[F"
+            )
+    )
+    private static BezierConnection railway$storeMonorail(BezierConnection bc) {
         if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL)
             tmpCurveIsMonorail = true;
+        return bc;
     }
 
-    @Redirect(method = "pickCurves", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;"))
+    @Redirect(
+            method = "pickCurves",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;"
+            )
+    )
     private static VoxelShape replaceSelectionAABB(VoxelShaper instance, Direction direction) {
         VoxelShape shape = tmpCurveIsMonorail ? CRShapes.MONORAIL_TRACK_ORTHO.get(direction).move(0, 8/16f, 0) : instance.get(direction);
         tmpCurveIsMonorail = false;
         return shape;
     }
 
-    @Inject(method = "pickCurves", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;result:Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline$BezierPointSelection;", opcode = Opcodes.PUTSTATIC, ordinal = 1), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void storeIsMonorailPersistent(CallbackInfo ci, Minecraft mc, LocalPlayer player, Vec3 origin, double maxRange, AttributeInstance range, Vec3 target, Map turns, Iterator var8, TrackTileEntity te, Iterator var10, BezierConnection bc) {
+    @ModifyVariable(
+            method = "pickCurves",
+            remap = false,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/BezierTrackPointLocation;<init>(Lnet/minecraft/core/BlockPos;I)V"
+            )
+    )
+    private static BezierConnection railway$storePersistentMonorail(BezierConnection bc) {
         persistentCurveIsMonorail = ((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL;
+        return bc;
     }
 
     @Redirect(method = "drawCurveSelection", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;"))

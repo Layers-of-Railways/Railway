@@ -3,11 +3,11 @@ package com.railwayteam.railways.content.custom_tracks.casing;
 import com.railwayteam.railways.Railways;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.EmptyModelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class SpriteCopyingBakedModel implements BakedModel {
   @Override
   public List<BakedQuad> getQuads(@Nullable BlockState pState, @Nullable Direction pSide, Random pRand) {
     ArrayList<BakedQuad> quads = new ArrayList<>();
-    TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon(EmptyModelData.INSTANCE);
+    TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon();
     BakedQuad overrideQuad = null;
     List<BakedQuad> sourceQuads = spriteSourceModel.getQuads(pState, pSide, pRand);
     if (sourceQuads.size() > 0) {
@@ -84,6 +84,11 @@ public class SpriteCopyingBakedModel implements BakedModel {
   @Override
   public TextureAtlasSprite getParticleIcon() {
     return spriteSourceModel.getParticleIcon();
+  }
+
+  @Override
+  public ItemTransforms getTransforms() {
+    return ItemTransforms.NO_TRANSFORMS;
   }
 
   @Override
