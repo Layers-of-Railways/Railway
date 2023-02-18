@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
-import static com.simibubi.create.AllTags.optionalTag;
+import static com.railwayteam.railways.util.Utils.builder;
 
 public class CRTags {
 
@@ -77,7 +77,7 @@ public class CRTags {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
       tag = optionalTag(Registry.BLOCK, id);
       if (alwaysDatagen) {
-        REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.tag(tag));
+        REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> builder(prov, tag));
       }
     }
 
@@ -96,13 +96,13 @@ public class CRTags {
     }
 
     public void add(Block... values) {
-      REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.tag(tag)
+      REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> builder(prov, tag)
           .add(values));
     }
 
     public void addOptional(Mods mod, String... ids) {
       REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> {
-        TagsProvider.TagAppender<Block> builder = prov.tag(tag);
+        TagsProvider.TagAppender<Block> builder = builder(prov, tag);
         for (String id : ids)
           builder.addOptional(mod.asResource(id));
       });
@@ -110,7 +110,7 @@ public class CRTags {
 
     public void addOptional(String namespace, String... ids) {
       REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> {
-        TagsProvider.TagAppender<Block> builder = prov.tag(tag);
+        TagsProvider.TagAppender<Block> builder = builder(prov, tag);
         for (String id : ids)
           builder.addOptional(new ResourceLocation(namespace, id));
       });
@@ -130,7 +130,7 @@ public class CRTags {
     }
 
     public void includeAll(TagKey<Block> child) {
-      REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> prov.tag(tag)
+      REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, prov -> builder(prov, tag)
           .addTag(child));
     }
   }
@@ -175,13 +175,13 @@ public class CRTags {
     }
 
     public void add(Item... values) {
-      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> builder(prov, tag)
           .add(values));
     }
 
     public void addOptional(Mods mod, String... ids) {
       REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
-        TagsProvider.TagAppender<Item> builder = prov.tag(tag);
+        TagsProvider.TagAppender<Item> builder = builder(prov, tag);
         for (String id : ids)
           builder.addOptional(mod.asResource(id));
       });
@@ -189,7 +189,7 @@ public class CRTags {
 
     public void addOptional(String namespace, String... ids) {
       REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
-        TagsProvider.TagAppender<Item> builder = prov.tag(tag);
+        TagsProvider.TagAppender<Item> builder = builder(prov, tag);
         for (String id : ids)
           builder.addOptional(new ResourceLocation(namespace, id));
       });
@@ -209,11 +209,14 @@ public class CRTags {
     }
 
     public void includeAll(TagKey<Item> child) {
-      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
+      REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> builder(prov, tag)
           .addTag(child));
     }
   }
 
+  public static <T> TagKey<T> optionalTag(Registry<T> registry, ResourceLocation id) {
+    return TagKey.create(registry.key(), id);
+  }
 
   public static void register() {
     AllBlockTags.TRACKS.addOptional(AllBlocks.TRACK.getId());

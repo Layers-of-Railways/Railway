@@ -1,5 +1,8 @@
 package com.railwayteam.railways.util.forge;
 
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import net.minecraft.data.tags.TagsProvider.TagAppender;
+import net.minecraft.tags.TagKey;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -12,5 +15,9 @@ public class UtilsImpl {
 
 	public static Path configDir() {
 		return FMLPaths.CONFIGDIR.get();
+	}
+
+	public static <T> TagAppender<T> builder(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
+		return prov.tag(tag);
 	}
 }
