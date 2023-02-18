@@ -8,7 +8,9 @@ import com.simibubi.create.content.contraptions.components.deployer.DeployerAppl
 import com.simibubi.create.content.contraptions.components.press.PressingRecipe;
 import com.simibubi.create.content.contraptions.components.saw.CuttingRecipe;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipeBuilder;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -17,9 +19,14 @@ import java.util.EnumMap;
 import java.util.Locale;
 import java.util.function.UnaryOperator;
 
-public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
-  public RailwaysSequencedAssemblyRecipeGen(DataGenerator pGenerator) {
+public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
+  protected RailwaysSequencedAssemblyRecipeGen(DataGenerator pGenerator) {
     super(pGenerator);
+  }
+
+  @ExpectPlatform
+  public static RecipeProvider create(DataGenerator gen) {
+    throw new AssertionError();
   }
 
   protected GeneratedRecipe create(String name, UnaryOperator<SequencedAssemblyRecipeBuilder> transform) {

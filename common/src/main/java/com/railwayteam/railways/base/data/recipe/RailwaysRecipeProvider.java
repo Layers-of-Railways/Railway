@@ -1,16 +1,15 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.multiloader.CommonTag;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,8 +24,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     super(pGenerator);
   }
 
-  @Override
-  protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> p_200404_1_) {
+  public void registerRecipes(@NotNull Consumer<FinishedRecipe> p_200404_1_) {
     all.forEach(c -> c.register(p_200404_1_));
     Railways.LOGGER.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
   }
@@ -44,7 +42,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
   @SuppressWarnings("SameReturnValue")
   public static class Ingredients {
     public static TagKey<Item> string() {
-      return Tags.Items.STRING;
+      return CommonTag.STRING.resolve();
     }
 
     public static ItemLike precisionMechanism() {
@@ -52,11 +50,11 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     }
 
     public static TagKey<Item> ironNugget() {
-      return AllTags.forgeItemTag("nuggets/iron");
+      return CommonTag.IRON_NUGGETS.resolve();
     }
 
     public static TagKey<Item> zincNugget() {
-      return AllTags.forgeItemTag("nuggets/zinc");
+      return CommonTag.ZINC_NUGGETS.resolve();
     }
 
     public static ItemLike girder() {
