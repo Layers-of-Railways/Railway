@@ -3,7 +3,7 @@ package com.railwayteam.railways.content.conductor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllTags;
@@ -33,7 +33,7 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
   public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull T conductorEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
     ItemStack itemstack = conductorEntity.getToolboxDisplayStack();
     if (itemstack.is(AllTags.AllItemTags.TOOLBOXES.tag) && conductorEntity.isCarryingToolbox()) {
-      MountedToolboxHolder holder = conductorEntity.getToolboxHolder();
+      MountedToolbox holder = conductorEntity.getToolbox();
       BlockState blockState = ((BlockItem) itemstack.getItem()).getBlock().defaultBlockState();
       SuperByteBuffer body =
           CachedBufferer.partial(CRBlockPartials.TOOLBOX_BODIES.get(holder.getColor()), blockState);

@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class MountedToolboxHolder extends ToolboxTileEntity {
+public class MountedToolbox extends ToolboxTileEntity {
   protected final ConductorEntity parent;
 
-  public MountedToolboxHolder(ConductorEntity parent, DyeColor dyeColor) {
+  public MountedToolbox(ConductorEntity parent, DyeColor dyeColor) {
     super(AllTileEntities.TOOLBOX.get(), parent.blockPosition(), AllBlocks.TOOLBOXES.get(dyeColor).getDefaultState());
     this.parent = parent;
     setLevel(parent.level);
@@ -43,6 +43,7 @@ public class MountedToolboxHolder extends ToolboxTileEntity {
     return parent;
   }
 
+  @Override
   public void tick() {
     // keep saved block pos updated for updateOpenCount and tickAudio
     ((AccessorBlockEntity) this).setWorldPosition(parent.blockPosition());
@@ -50,7 +51,7 @@ public class MountedToolboxHolder extends ToolboxTileEntity {
   }
 
   @Override
-  protected void read(CompoundTag compound, boolean clientPacket) {
+  public void read(CompoundTag compound, boolean clientPacket) {
     super.read(compound, clientPacket);
     if (compound.contains("Color", CompoundTag.TAG_INT)) {
       DyeColor color = DyeColor.byId(compound.getInt("Color"));
@@ -76,6 +77,7 @@ public class MountedToolboxHolder extends ToolboxTileEntity {
     return players.stream().toList();
   }
 
+  @Override
   public void sendData() {
     if (level == null || level.isClientSide)
       return;
@@ -84,18 +86,20 @@ public class MountedToolboxHolder extends ToolboxTileEntity {
     PacketSender.syncMountedToolboxNBT(this.parent, nbt);
   }
 
+  @Override
   public void setChanged() {
     // override and do nothing, this isn't in-world
   }
 
-  public static MountedToolboxHolder read(ConductorEntity parent, CompoundTag compound) {
-    MountedToolboxHolder holder = new MountedToolboxHolder(parent, DyeColor.BROWN);
+  public static MountedToolbox read(ConductorEntity parent, CompoundTag compound) {
+    MountedToolbox holder = new MountedToolbox(parent, DyeColor.BROWN);
     holder.read(compound, false);
     return holder;
   }
 
+  @Override
   public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
-    return MountedToolboxContainer.create(id, inv, this.parent);
+    return MountedToolboxContainer.create(id, inv, this);
   }
 
   public ItemStack getDisplayStack() {

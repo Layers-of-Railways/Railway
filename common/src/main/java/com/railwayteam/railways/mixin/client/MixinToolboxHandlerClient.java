@@ -1,195 +1,124 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.railwayteam.railways.content.conductor.toolbox.CustomRadialToolboxMenu;
-import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
-import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
-import com.simibubi.create.AllKeys;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
+import com.railwayteam.railways.multiloader.EntityUtils;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandlerClient;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
-import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.AABB;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import java.util.Comparator;
-import java.util.List;
+import javax.annotation.Nullable;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
-import static com.simibubi.create.content.curiosities.toolbox.RadialToolboxMenu.State;
-import static com.simibubi.create.foundation.gui.AllGuiTextures.*;
 
 @Mixin(ToolboxHandlerClient.class)
 public class MixinToolboxHandlerClient {
 
-  @Shadow(remap = false)
-  static int COOLDOWN;
-
-  /**
-   * @author Slimeist
-   * @reason feat:(Mounted Conductor Toolboxes), Complex enough that mixins for every line would be basically necessary
-   */
-  @Overwrite(remap = false)
-  public static void onKeyInput(int key, boolean pressed) {
+  @Unique
+  @Nullable
+  private static ConductorEntity railway$getConductorForSlot(int slot) {
     Minecraft mc = Minecraft.getInstance();
-    if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)
-      return;
-
-    if (key != AllKeys.TOOLBELT.getBoundCode())
-      return;
-    if (COOLDOWN > 0)
-      return;
     LocalPlayer player = mc.player;
-    if (player == null)
-      return;
-    Level level = player.level;
+    CompoundTag toolboxData = EntityUtils.getPersistentData(player).getCompound("CreateToolboxData");
+    String slotKey = String.valueOf(slot);
 
-    //List<ToolboxTileEntity> toolboxes = ToolboxHandler.getNearest(player.level, player, 8);
-    List<Object> toolbox_like = IMountedToolboxHandler.getNearest(player.level, player, 8); //NOTE: changed here
-    List<ToolboxTileEntity> toolboxes = toolbox_like.stream()
-        .filter((obj) -> obj.getClass() == ToolboxTileEntity.class)
-        .map((obj) -> ((ToolboxTileEntity) obj))
-        .collect(Collectors.toList());
-
-    List<ConductorEntity> conductors = toolbox_like.stream()
-        .filter((obj) -> obj.getClass() == ConductorEntity.class && ((ConductorEntity) obj).isCarryingToolbox())
-        .map((obj) -> ((ConductorEntity) obj))
-        .toList();
-
-    toolbox_like.sort(Comparator.comparing((obj) -> {
-      if (obj.getClass() == ToolboxTileEntity.class) {
-        return ((ToolboxTileEntity) obj).getUniqueId();
-      } else if (obj.getClass() == ConductorEntity.class) {
-        ConductorEntity ce = (ConductorEntity) obj;
-        if (ce.isCarryingToolbox()) {
-          return ce.getToolboxHolder().getUniqueId();
-        }
-      }
-      return UUID.randomUUID();
-    })); //NOTE: changed here
-
-    CompoundTag compound = player.getPersistentData()
-        .getCompound("CreateToolboxData");
-
-    String slotKey = String.valueOf(player.getInventory().selected);
-    boolean equipped = compound.contains(slotKey);
-
-    if (equipped) {
-      if (compound.getCompound(slotKey).hasUUID("EntityUUID")) { //NOTE: changed here
-        UUID uuid = compound.getCompound(slotKey).getUUID("EntityUUID");
-        double max = IMountedToolboxHandler.getMaxRange(player);
-        List<ConductorEntity> entities = level.getEntitiesOfClass(ConductorEntity.class, AABB.ofSize(player.position(), 19, 19, 19))
-            .stream()
-            .filter((entity) -> entity != null && entity.getUUID().equals(uuid)).toList();
-        ConductorEntity ce;
-        if (!entities.isEmpty() && (ce = entities.get(0)).isCarryingToolbox()) {
-          boolean canReachToolbox = IMountedToolboxHandler.distance(player.position(), ce.position()) < max * max;
-          if (canReachToolbox) {
-            MountedToolboxHolder holder = ce.getToolboxHolder();
-            CustomRadialToolboxMenu screen = new CustomRadialToolboxMenu(toolboxes, conductors,
-                State.SELECT_ITEM_UNEQUIP, (holder == null ? null : holder.getParent()));
-            screen.prevSlot(compound.getCompound(slotKey)
-                .getInt("Slot"));
-            ScreenOpener.open(screen);
-            return;
-          }
-        }
-
-        ScreenOpener.open(new CustomRadialToolboxMenu(ImmutableList.of(), State.DETACH, null));
-        return;
-      } else {
-        BlockPos pos = NbtUtils.readBlockPos(compound.getCompound(slotKey)
-            .getCompound("Pos"));
-        double max = ToolboxHandler.getMaxRange(player);
-        boolean canReachToolbox = ToolboxHandler.distance(player.position(), pos) < max * max;
-
-        if (canReachToolbox) {
-          BlockEntity blockEntity = level.getBlockEntity(pos);
-          if (blockEntity instanceof ToolboxTileEntity) {
-            CustomRadialToolboxMenu screen = new CustomRadialToolboxMenu(toolboxes, conductors,
-                State.SELECT_ITEM_UNEQUIP, (ToolboxTileEntity) blockEntity);
-            screen.prevSlot(compound.getCompound(slotKey)
-                .getInt("Slot"));
-            ScreenOpener.open(screen);
-            return;
-          }
-        }
-
-        ScreenOpener.open(new CustomRadialToolboxMenu(ImmutableList.of(), State.DETACH, null));
-        return;
+    CompoundTag data = toolboxData.getCompound(slotKey);
+    if (!data.hasUUID("EntityUUID"))
+      return null;
+    UUID uuid = data.getUUID("EntityUUID");
+    // can't do UUID lookup on clients...
+    ConductorEntity conductor = null;
+    for (ConductorEntity ce : ConductorEntity.WITH_TOOLBOXES.get(mc.level)) {
+      if (ce.getUUID().equals(uuid)) {
+        conductor = ce;
+        break;
       }
     }
-
-    if (toolbox_like.isEmpty())
-      return;
-
-    if (toolboxes.size() == 1 && conductors.size() == 0)
-      ScreenOpener.open(new CustomRadialToolboxMenu(toolboxes, conductors, State.SELECT_ITEM, toolboxes.get(0)));
-    else if (toolboxes.size() == 0 && conductors.size() == 1)
-      ScreenOpener.open(new CustomRadialToolboxMenu(toolboxes, conductors, State.SELECT_ITEM, conductors.get(0)));
-    else
-      ScreenOpener.open(new CustomRadialToolboxMenu(toolboxes, conductors, State.SELECT_BOX, (ToolboxTileEntity) null));
+    return conductor;
   }
 
-  @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", remap = true), //remap=true is ESSENTIAL
-      method = "renderOverlay", locals = LocalCapture.CAPTURE_FAILHARD, remap = false, cancellable = true, require = 1)
-  private static void inj$renderOverlay(ForgeIngameGui gui, PoseStack poseStack, float partialTicks, int width, int height, CallbackInfo ci, Minecraft mc, int x, int y, Player player, CompoundTag persistentData, CompoundTag compound) {
-    poseStack.pushPose();
-    for (int slot = 0; slot < 9; slot++) {
-      String key = String.valueOf(slot);
-      if (!compound.contains(key))
-        continue;
-      if (compound.getCompound(key).hasUUID("EntityUUID")) {
-        double max = IMountedToolboxHandler.getMaxRange(player);
-        boolean selected = player.getInventory().selected == slot;
-        int offset = selected ? 1 : 0;
+  // region --- can reach selected ---
+  // when opening the radial menu, Create will check if the toolbox for the selected slot can be reached.
+  // for conductor toolboxes, we need to use the entity's pos instead of the stored BE pos (non-existent)
+  // the conductor is cached on first get (railway$conductorForSelectedSlot) and stored for second check.
 
-        UUID uuid = compound.getCompound(key).getUUID("EntityUUID");
-        List<ConductorEntity> entities = player.level.getEntitiesOfClass(ConductorEntity.class, AABB.ofSize(player.position(), 19, 19, 19))
-            .stream()
-            .filter((entity) -> entity != null && entity.getUUID().equals(uuid)).toList();
-        ConductorEntity ce;
-        boolean inRange = false;
-        if (!entities.isEmpty() && (ce = entities.get(0)).isCarryingToolbox()) {
-          inRange = IMountedToolboxHandler.distance(player.position(), ce.position()) < max * max;
-        }
-        AllGuiTextures texture = inRange
-            ? selected ? TOOLBELT_SELECTED_ON : TOOLBELT_HOTBAR_ON
-            : selected ? TOOLBELT_SELECTED_OFF : TOOLBELT_HOTBAR_OFF;
-        texture.render(poseStack, x + 20 * slot - offset, y + offset);
-      } else {
-        BlockPos pos = NbtUtils.readBlockPos(compound.getCompound(key)
-            .getCompound("Pos"));
-        double max = ToolboxHandler.getMaxRange(player);
-        boolean selected = player.getInventory().selected == slot;
-        int offset = selected ? 1 : 0;
-        AllGuiTextures texture = ToolboxHandler.distance(player.position(), pos) < max * max
-            ? selected ? TOOLBELT_SELECTED_ON : TOOLBELT_HOTBAR_ON
-            : selected ? TOOLBELT_SELECTED_OFF : TOOLBELT_HOTBAR_OFF;
-        texture.render(poseStack, x + 20 * slot - offset, y + offset);
-      }
-    }
-    poseStack.popPose();
-    ci.cancel();
+  @Unique
+  @Nullable
+  private static ConductorEntity railway$conductorForSelectedSlot;
+
+  @ModifyVariable(
+          method = "onKeyInput",
+          remap = false,
+          at = @At(
+                  value = "INVOKE_ASSIGN",
+                  target = "Lnet/minecraft/nbt/NbtUtils;readBlockPos(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/core/BlockPos;",
+                  remap = true
+          )
+  )
+  @SuppressWarnings("InvalidInjectorMethodSignature")
+  private static BlockPos railway$useConductorToolboxDistance(BlockPos pos) {
+    ConductorEntity conductor = railway$getConductorForSlot(Minecraft.getInstance().player.getInventory().selected);
+    railway$conductorForSelectedSlot = conductor;
+    return conductor == null ? pos : conductor.blockPosition();
   }
+
+  @ModifyVariable(
+          method = "onKeyInput",
+          remap = false,
+          at = @At(
+                  value = "INVOKE_ASSIGN",
+                  target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+                  remap = true
+          )
+  )
+  @SuppressWarnings("InvalidInjectorMethodSignature")
+  private static BlockEntity railway$getConductorToolbox(BlockEntity be) {
+    ConductorEntity conductor = railway$conductorForSelectedSlot;
+    return conductor == null ? be : conductor.getToolbox();
+  }
+
+  // endregion
+  // region --- reach toolbox for rendered slot ---
+  // out-of-reach toolboxes get a different texture in the radial menu.
+  // We need to use the entity pos here, but we need the index of the currently rendered slot to get it.
+  // slot is grabbed and stored for use when needed.
+
+  @Unique
+  private static int railway$currentRenderedSlot;
+
+  @ModifyArg(
+          method = "renderOverlay",
+          remap = false,
+          at = @At(
+                  value = "INVOKE",
+                  target = "Ljava/lang/String;valueOf(I)Ljava/lang/String;"
+          )
+  )
+  private static int railway$grabSlot(int slot) {
+    railway$currentRenderedSlot = slot;
+    return slot;
+  }
+
+  @ModifyVariable(
+          method = "renderOverlay",
+          remap = false,
+          at = @At(
+                  value = "INVOKE_ASSIGN",
+                  target = "Lnet/minecraft/nbt/NbtUtils;readBlockPos(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/core/BlockPos;",
+                  remap = true
+          )
+  )
+  @SuppressWarnings("InvalidInjectorMethodSignature")
+  private static BlockPos railway$useConductorToolboxForBackground(BlockPos pos) {
+    ConductorEntity conductor = railway$getConductorForSlot(railway$currentRenderedSlot);
+    return conductor == null ? pos : conductor.blockPosition();
+  }
+
+  // endregion
 }

@@ -2,7 +2,7 @@ package com.railwayteam.railways.forge.events;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.events.CommonEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +46,7 @@ public class CommonEventsForge {
 				public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
 					if (cap != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 						return LazyOptional.empty();
-					MountedToolboxHolder toolbox = conductor.getToolboxHolder();
+					MountedToolbox toolbox = conductor.getToolbox();
 					if (toolbox == null)
 						return LazyOptional.empty();
 					return toolbox.getCapability(cap);

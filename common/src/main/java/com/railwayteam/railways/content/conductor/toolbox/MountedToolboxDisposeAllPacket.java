@@ -3,13 +3,10 @@ package com.railwayteam.railways.content.conductor.toolbox;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper;
-import net.minecraft.nbt.CompoundTag;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 
 public class MountedToolboxDisposeAllPacket implements C2SPacket {
 
@@ -38,34 +35,18 @@ public class MountedToolboxDisposeAllPacket implements C2SPacket {
 					* maxRange)
 				return;
 
-			if (!conductorEntity.isCarryingToolbox())
+			MountedToolbox toolbox = conductorEntity.getToolbox();
+			if (toolbox == null)
 				return;
+			boolean sendData = doDisposal(toolbox, player, conductorEntity);
 
-			MountedToolboxHolder toolboxHolder = conductorEntity.getToolboxHolder();
-
-			CompoundTag compound = player.getPersistentData()
-					.getCompound("CreateToolboxData");
-			MutableBoolean sendData = new MutableBoolean(false);
-
-			toolboxHolder.inventory.inLimitedMode(inventory -> {
-				for (int i = 0; i < 36; i++) {
-					String key = String.valueOf(i);
-					if (compound.contains(key) && compound.getCompound(key).hasUUID("EntityUUID") && compound.getCompound(key).getUUID("EntityUUID")
-							.equals(conductorEntity.getUUID())) {
-						ToolboxHandler.unequip(player, i, true);
-						sendData.setTrue();
-					}
-
-					ItemStack itemStack = player.getInventory().getItem(i);
-					ItemStack remainder = ItemHandlerHelper.insertItemStacked(toolboxHolder.inventory, itemStack, false);
-					if (remainder.getCount() != itemStack.getCount())
-						player.getInventory().setItem(i, remainder);
-				}
-			});
-
-			if (sendData.booleanValue())
+			if (sendData)
 				ToolboxHandler.syncData(player);
 		}
 	}
 
+	@ExpectPlatform
+	public static boolean doDisposal(MountedToolbox toolbox, ServerPlayer player, ConductorEntity conductor) {
+		throw new AssertionError();
+	}
 }

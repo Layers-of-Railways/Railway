@@ -60,6 +60,7 @@
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
     "client.MixinPonderIndex",
+    "client.MixinRadialToolboxMenu",
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
     "client.MixinToolboxHandlerClient",

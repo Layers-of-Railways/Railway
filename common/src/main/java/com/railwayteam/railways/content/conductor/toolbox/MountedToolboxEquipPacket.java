@@ -1,10 +1,13 @@
 package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin.AccessorToolboxInventory;
+import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
+import com.railwayteam.railways.multiloader.EntityUtils;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -68,26 +71,23 @@ public class MountedToolboxEquipPacket implements C2SPacket {
 			return;
 		}
 
-		if (!conductorEntity.isCarryingToolbox())
+		MountedToolbox toolbox = conductorEntity.getToolbox();
+		if (toolbox == null)
 			return;
 
-		MountedToolboxHolder toolboxHolder = conductorEntity.getToolboxHolder();
+		ItemStack held = player.getInventory().getItem(hotbarSlot);
+		if (!held.isEmpty()) {
+			ToolboxInventory inv = ((AccessorToolboxTileEntity) toolbox).getInventory();
+			AccessorToolboxInventory invAccess = (AccessorToolboxInventory) inv;
 
-		ItemStack playerStack = player.getInventory().getItem(hotbarSlot);
-		if (!playerStack.isEmpty() && !ToolboxInventory.canItemsShareCompartment(playerStack,
-				toolboxHolder.inventory.filters.get(slot))) {
-			toolboxHolder.inventory.inLimitedMode(inventory -> {
-				ItemStack remainder = ItemHandlerHelper.insertItemStacked(inventory, playerStack, false);
-				if (!remainder.isEmpty())
-					remainder = ItemHandlerHelper.insertItemStacked(new ItemReturnInvWrapper(player.getInventory()),
-							remainder, false);
-				if (remainder.getCount() != playerStack.getCount())
-					player.getInventory().setItem(hotbarSlot, remainder);
-			});
+			ItemStack filterStack = invAccess.getFilters().get(slot);
+			if (!ToolboxInventory.canItemsShareCompartment(held, filterStack)) {
+				inv.inLimitedMode($ -> doEquip(player, hotbarSlot, held, inv));
+			}
 		}
 
-		CompoundTag compound = player.getPersistentData()
-				.getCompound("CreateToolboxData");
+		CompoundTag playerData = EntityUtils.getPersistentData(player);
+		CompoundTag compound = playerData.getCompound("CreateToolboxData");
 		String key = String.valueOf(hotbarSlot);
 
 		CompoundTag data = new CompoundTag();
@@ -96,11 +96,14 @@ public class MountedToolboxEquipPacket implements C2SPacket {
 		data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
 		compound.put(key, data);
 
-		player.getPersistentData()
-				.put("CreateToolboxData", compound);
+		playerData.put("CreateToolboxData", compound);
 
-		toolboxHolder.connectPlayer(slot, player, hotbarSlot);
+		toolbox.connectPlayer(slot, player, hotbarSlot);
 		ToolboxHandler.syncData(player);
 	}
 
+	@ExpectPlatform
+	public static void doEquip(ServerPlayer player, int hotbarSlot, ItemStack held, ToolboxInventory inv) {
+		throw new AssertionError();
+	}
 }

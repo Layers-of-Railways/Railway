@@ -1,7 +1,8 @@
 package com.railwayteam.railways.content.conductor;
 
-import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
-import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
+import com.jozufozu.flywheel.util.WeakHashSet;
+import com.jozufozu.flywheel.util.WorldAttached;
+import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.registry.CREntities;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
@@ -50,8 +51,9 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-// note: item handler capability is implemented on forge in CommonEventsForge, fabric does not have entity APIs
+// note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
+  public static final WorldAttached<WeakHashSet<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new WeakHashSet<>());
 
   // FIXME: cannot have custom serializers! This will explode!
   private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
@@ -80,7 +82,7 @@ public class ConductorEntity extends AbstractGolem {
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
 
   private ConductorFakePlayer fakePlayer = null;
-  MountedToolboxHolder toolboxHolder = null;
+  MountedToolbox toolbox = null;
 
   public ConductorEntity(EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
@@ -140,34 +142,43 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public boolean isCarryingToolbox() {
-    return toolboxHolder != null;
+    return toolbox != null;
   }
 
   public ItemStack getToolboxDisplayStack() {
     if (isCarryingToolbox()) {
-      return toolboxHolder.getDisplayStack();
+      return toolbox.getDisplayStack();
     }
     return ItemStack.EMPTY;
   }
 
+  protected void setToolbox(@Nullable MountedToolbox toolbox) {
+    this.toolbox = toolbox;
+    if (toolbox != null) {
+      WITH_TOOLBOXES.get(level).add(this);
+    } else {
+      WITH_TOOLBOXES.get(level).remove(this);
+    }
+  }
+
   @Nullable
-  public MountedToolboxHolder getToolboxHolder() {
-    return toolboxHolder;
+  public MountedToolbox getToolbox() {
+    return toolbox;
   }
 
   @NotNull
-  public MountedToolboxHolder getOrCreateToolboxHolder() {
-    if (toolboxHolder == null) {
-      toolboxHolder = new MountedToolboxHolder(this, DyeColor.BROWN);
+  public MountedToolbox getOrCreateToolboxHolder() {
+    if (!isCarryingToolbox()) {
+      setToolbox(new MountedToolbox(this, DyeColor.BROWN));
     }
-    return toolboxHolder;
+    return toolbox;
   }
 
   public void equipToolbox(ItemStack stack) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ToolboxBlock toolbox) {
-      toolboxHolder = new MountedToolboxHolder(this, toolbox.getColor());
-      toolboxHolder.readFromItem(stack);
-      toolboxHolder.sendData();
+      setToolbox(new MountedToolbox(this, toolbox.getColor()));
+      this.toolbox.readFromItem(stack);
+      this.toolbox.sendData();
       getEntityData().set(JOB, Job.TOOLBOX_CARRIER);
     }
   }
@@ -175,28 +186,28 @@ public class ConductorEntity extends AbstractGolem {
   @Override
   public void startSeenByPlayer(@NotNull ServerPlayer pServerPlayer) {
     super.startSeenByPlayer(pServerPlayer);
-    if (toolboxHolder != null)
-      toolboxHolder.sendData();
+    if (toolbox != null)
+      toolbox.sendData();
   }
 
   public ItemStack unequipToolbox() {
     getEntityData().set(JOB, Job.DEFAULT);
-    if (level.isClientSide || toolboxHolder == null) {
-      if (toolboxHolder != null)
-        toolboxHolder.setRemoved();
-      toolboxHolder = null;
+    if (level.isClientSide || toolbox == null) {
+      if (toolbox != null)
+        toolbox.setRemoved();
+      setToolbox(null);
       return ItemStack.EMPTY;
     }
-    toolboxHolder.unequipTracked();
-    ItemStack itemStack = toolboxHolder.getCloneItemStack();
-    toolboxHolder.setRemoved();
+    toolbox.unequipTracked();
+    ItemStack itemStack = toolbox.getCloneItemStack();
+    toolbox.setRemoved();
 
-    toolboxHolder = null;
+    setToolbox(null);
     return itemStack;
   }
 
   protected void openToolbox(Player player) {
-    player.openMenu(toolboxHolder);
+    player.openMenu(toolbox);
   }
 
   @Override
@@ -224,7 +235,7 @@ public class ConductorEntity extends AbstractGolem {
   public void tick() {
     super.tick();
     if (fakePlayer == null && !level.isClientSide) fakePlayer = new ConductorFakePlayer((ServerLevel)level);
-    if (toolboxHolder != null) toolboxHolder.tick();
+    if (toolbox != null) toolbox.tick();
   }
 
   public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
@@ -278,14 +289,6 @@ public class ConductorEntity extends AbstractGolem {
 
   public boolean canUseBlock (BlockState state) {
     return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER);
-  }
-
-  @Override
-  public void die(@NotNull DamageSource pDamageSource) {
-    super.die(pDamageSource);
-    if (this.level.isClientSide) {
-      IMountedToolboxHandler.onUnload(this);
-    }
   }
 
   @Override
@@ -344,18 +347,18 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canUse() {
-      return super.canUse() && conductor.isCarryingToolbox() && !conductor.getToolboxHolder().getConnectedPlayers().isEmpty();
+      return super.canUse() && conductor.isCarryingToolbox() && !conductor.getToolbox().getConnectedPlayers().isEmpty();
     }
 
     @Override
     public boolean canContinueToUse() {
-      return super.canContinueToUse() && conductor.isCarryingToolbox() && conductor.getToolboxHolder().getConnectedPlayers().contains(target) && target.isAlive() && !target.isSpectator();
+      return super.canContinueToUse() && conductor.isCarryingToolbox() && conductor.getToolbox().getConnectedPlayers().contains(target) && target.isAlive() && !target.isSpectator();
     }
 
     @Override
     public void start() {
       super.start();
-      List<Player> players = conductor.getToolboxHolder().getConnectedPlayers();
+      List<Player> players = conductor.getToolbox().getConnectedPlayers();
       target = players.get(conductor.random.nextInt(players.size()));
     }
 
@@ -471,9 +474,9 @@ public class ConductorEntity extends AbstractGolem {
     super.addAdditionalSaveData(nbt);
     nbt.put("target", NbtUtils.writeBlockPos(getEntityData().get(BLOCK)));
     nbt.putByte("color", getEntityData().get(COLOR));
-    if (toolboxHolder != null) {
+    if (toolbox != null) {
       CompoundTag toolboxTag = new CompoundTag();
-      toolboxHolder.write(toolboxTag, false);
+      toolbox.write(toolboxTag, false);
       nbt.put("toolboxHolder", toolboxTag);
     }
     nbt.putString("job", getEntityData().get(JOB).name());
@@ -489,9 +492,9 @@ public class ConductorEntity extends AbstractGolem {
       getEntityData().set(BLOCK, NbtUtils.readBlockPos(nbt.getCompound("target")));
     }
     if (nbt.contains("toolboxHolder", Tag.TAG_COMPOUND)) {
-      toolboxHolder = MountedToolboxHolder.read(this, nbt.getCompound("toolboxHolder"));
+      setToolbox(MountedToolbox.read(this, nbt.getCompound("toolboxHolder")));
     } else {
-      toolboxHolder = null;
+      setToolbox(null);
     }
     if (nbt.contains("job", Tag.TAG_STRING)) {
       getEntityData().set(JOB, Job.valueOf(nbt.getString("job")));
