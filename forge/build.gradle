@@ -51,6 +51,9 @@ dependencies {
 
     // if you would like to add integration with JEI, uncomment this line.
 //    modCompileOnly("mezz.jei:jei-${minecraft_version}:${jei_forge_version}:api")
+
+    // Test with JourneyMap in dev
+    modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
 }
 
 processResources {

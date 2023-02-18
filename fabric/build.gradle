@@ -21,7 +21,6 @@ configurations {
 
 repositories {
     // mavens for Fabric-exclusives
-    maven { url = "https://api.modrinth.com/maven" } // LazyDFU
     maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
     maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://cursemaven.com" } // Forge Config API Port
@@ -60,6 +59,9 @@ dependencies {
 //    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}")
 //    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${rei_version}")
 //    modCompileOnly("dev.emi:emi:${emi_version}")
+
+    // Test with JourneyMap in dev
+    modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-fabric")
 }
 
 processResources {

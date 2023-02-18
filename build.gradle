@@ -31,6 +31,8 @@ subprojects {
         maven { url = "https://dvs1.progwml6.com/files/maven/" } // JEI
         maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
         maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
+        maven { url = "https://jm.gserv.me/repository/maven-public/" } // JourneyMap API
+        maven { url = "https://api.modrinth.com/maven" } // LazyDFU, JourneyMap
         maven { // Flywheel
             url = "https://maven.tterrag.com/"
             content {
