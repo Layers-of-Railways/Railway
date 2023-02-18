@@ -5,10 +5,9 @@ import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.multiloader.C2SPacket;
+import com.railwayteam.railways.multiloader.EntityUtils;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
-import com.simibubi.create.foundation.tileEntity.SyncedTileEntity;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,7 +71,7 @@ public class SlabUseOnCurvePacket implements C2SPacket {
           handStack.shrink(1);
           if (currentCasing != null) {
             ItemStack casingStack = new ItemStack(currentCasing);
-            ItemHandlerHelper.giveItemToPlayer(player, casingStack);
+            EntityUtils.givePlayerItem(player, casingStack);
           }
           player.setItemInHand(hand, handStack);
         }
@@ -85,7 +84,7 @@ public class SlabUseOnCurvePacket implements C2SPacket {
         handStack = new ItemStack(currentCasing);
         casingAble.setTrackCasing(null);
         if (!player.isCreative())
-          ItemHandlerHelper.giveItemToPlayer(player, handStack);
+          EntityUtils.givePlayerItem(player, handStack);
         return InteractionResult.SUCCESS;
       }
     }

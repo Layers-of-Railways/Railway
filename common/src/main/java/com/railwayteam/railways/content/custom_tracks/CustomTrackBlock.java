@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.custom_tracks;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.multiloader.EntityUtils;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
@@ -48,7 +48,7 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
           player.setItemInHand(hand, handStack);
           if (currentCasing != null) {
             ItemStack casingStack = new ItemStack(currentCasing);
-            ItemHandlerHelper.giveItemToPlayer(player, casingStack);
+            EntityUtils.givePlayerItem(player, casingStack);
           }
         }
         IHasTrackCasing.setTrackCasing(world, pos, slabBlock);
@@ -61,7 +61,7 @@ public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
         handStack = new ItemStack(currentCasing);
         IHasTrackCasing.setTrackCasing(world, pos, null);
         if (!player.isCreative())
-          ItemHandlerHelper.giveItemToPlayer(player, handStack);
+          EntityUtils.givePlayerItem(player, handStack);
         return InteractionResult.SUCCESS;
       }
     }
