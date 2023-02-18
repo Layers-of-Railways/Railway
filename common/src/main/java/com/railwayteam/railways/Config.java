@@ -4,13 +4,9 @@ package com.railwayteam.railways;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.nio.file.Path;
 
-@Mod.EventBusSubscriber
 public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
@@ -69,11 +65,5 @@ public class Config {
         final CommentedFileConfig configData = CommentedFileConfig.builder(path).sync().autosave().writingMode(WritingMode.REPLACE).build();
         configData.load();
         spec.setConfig(configData);
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings({"unused", "EmptyMethod"})
-    public static void onLoad(final ModConfigEvent.Loading configEvent) {
-
     }
 }

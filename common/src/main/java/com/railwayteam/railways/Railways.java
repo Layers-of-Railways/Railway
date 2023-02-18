@@ -6,6 +6,7 @@ import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipe
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
@@ -13,11 +14,13 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.ModLoadingContext;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
 import java.util.function.BiConsumer;
 
 public class Railways {
@@ -29,14 +32,14 @@ public class Railways {
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
 
   public static void init() {
-  	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-
     ModSetup.register();
     finalizeRegistrate();
 
-    Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml"));
-    Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    registerConfig(Type.CLIENT, Config.CLIENT_CONFIG);
+    registerConfig(Type.SERVER, Config.SERVER_CONFIG);
+    Path configDir = Utils.configDir();
+    Config.loadConfig(Config.CLIENT_CONFIG, configDir.resolve(MODID + "-client.toml"));
+    Config.loadConfig(Config.SERVER_CONFIG, configDir.resolve(MODID + "-common.toml"));
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
@@ -75,6 +78,11 @@ public class Railways {
 
   @ExpectPlatform
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
     throw new AssertionError();
   }
 }

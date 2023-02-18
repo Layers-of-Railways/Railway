@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.custom_tracks;
 
-import com.jozufozu.flywheel.util.Lazy;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
