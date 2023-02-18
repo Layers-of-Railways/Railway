@@ -5,7 +5,7 @@ import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.multiloader.C2SPacket;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import net.minecraft.core.BlockPos;

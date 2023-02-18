@@ -4,7 +4,7 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorToolboxInventory;
 import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import dev.architectury.injectables.annotations.ExpectPlatform;

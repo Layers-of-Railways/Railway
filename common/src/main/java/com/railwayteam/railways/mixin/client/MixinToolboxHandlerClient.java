@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandlerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

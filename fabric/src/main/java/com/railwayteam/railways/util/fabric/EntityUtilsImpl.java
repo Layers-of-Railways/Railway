@@ -1,6 +1,5 @@
-package com.railwayteam.railways.multiloader.fabric;
+package com.railwayteam.railways.util.fabric;
 
-import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.fabric.ConductorFakePlayerFabric;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;

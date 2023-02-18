@@ -1,4 +1,4 @@
-package com.railwayteam.railways.multiloader.forge;
+package com.railwayteam.railways.util.forge;
 
 import com.railwayteam.railways.forge.ConductorFakePlayerForge;
 import net.minecraft.nbt.CompoundTag;

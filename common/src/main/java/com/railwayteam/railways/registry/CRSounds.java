@@ -1,20 +1,18 @@
 package com.railwayteam.railways.registry;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.railwayteam.railways.Railways;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.minecraft.core.Registry;
 import net.minecraft.sounds.SoundEvent;
 
-import java.util.function.Supplier;
-
 public class CRSounds {
-    public static final Supplier<SoundEvent> CONDUCTOR_WHISTLE = registerSoundEvent("conductor_whistle");
+    public static final RegistryEntry<SoundEvent> CONDUCTOR_WHISTLE = Railways.registrate()
+            .simple(
+                    "conductor_whistle",
+                    Registry.SOUND_EVENT_REGISTRY,
+                    () -> new SoundEvent(Railways.asResource("conductor_whistle"))
+            );
 
-    @ExpectPlatform
-    public static Supplier<SoundEvent> registerSoundEvent(String name) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static void register() {
-        throw new AssertionError();
     }
 }

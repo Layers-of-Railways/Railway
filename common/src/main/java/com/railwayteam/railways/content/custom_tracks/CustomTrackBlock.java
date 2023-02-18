@@ -1,9 +1,8 @@
 package com.railwayteam.railways.content.custom_tracks;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;

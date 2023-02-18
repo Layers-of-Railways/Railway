@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
 import net.minecraft.core.BlockPos;

@@ -6,6 +6,7 @@
   "client": [
   ],
   "mixins": [
+    "EnderManMixin"
   ],
   "injectors": {
     "defaultRequire": 1

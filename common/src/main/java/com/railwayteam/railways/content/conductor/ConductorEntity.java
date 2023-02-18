@@ -4,8 +4,9 @@ import com.jozufozu.flywheel.util.WeakHashSet;
 import com.jozufozu.flywheel.util.WorldAttached;
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
-import com.railwayteam.railways.multiloader.EntityUtils;
+import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.registry.CREntities;
+import com.railwayteam.railways.util.ItemUtils;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
@@ -276,7 +277,7 @@ public class ConductorEntity extends AbstractGolem {
       return false;
     boolean looking = false;
     ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-    if (isCorrectEngineerCap(helmet) || !helmet.isEnderMask(player, null)) {
+    if (isCorrectEngineerCap(helmet) || !ItemUtils.blocksEndermanView(helmet, player, null)) {
       Vec3 playerView = player.getViewVector(1f).normalize();
       Vec3 headLine   = this.getEyePosition().subtract(player.getEyePosition()).normalize();
       double angle    = playerView.dot(headLine); // a . b / |a||b| = cos theta

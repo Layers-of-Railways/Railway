@@ -1,6 +1,5 @@
-package com.railwayteam.railways.multiloader;
+package com.railwayteam.railways.util;
 
-import com.mojang.authlib.GameProfile;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

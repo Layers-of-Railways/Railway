@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
+import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
-  public static final CreativeModeTab itemGroup = new CreativeModeTab(nextTabId(), Railways.MODID) {
+  public static final CreativeModeTab itemGroup = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
@@ -97,7 +98,7 @@ public class CRItems {
               .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
               .lang("Incomplete " + colorName + " Conductor's Cap")
           .register());
-      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p-> new ConductorCapItem(p, color))
+      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p-> ConductorCapItem.create(p, color))
         .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
             .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
         .lang(colorName + " Conductor's Cap")
@@ -105,7 +106,7 @@ public class CRItems {
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
             .requires(CONDUCTOR_CAPS)
-            .requires(getTag(color))
+            .requires(ItemUtils.getTag(color))
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
             .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());
@@ -122,17 +123,6 @@ public class CRItems {
   private static ItemEntry<SequencedAssemblyItem> sequencedIngredient(String name) {
     return REGISTRATE.item(name, SequencedAssemblyItem::new)
         .register();
-  }
-
-  // despite seeming useless at first glance, this is needed. The 2 impls are different.
-  @ExpectPlatform
-  public static TagKey<Item> getTag(DyeColor color) {
-    throw new AssertionError();
-  }
-
-  @ExpectPlatform
-  public static int nextTabId() {
-    throw new AssertionError();
   }
 
   @SuppressWarnings("EmptyMethod")
