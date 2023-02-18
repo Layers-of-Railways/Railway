@@ -16,6 +16,8 @@
     "AccessorTrackTargetingBehavior",
     "AccessorTrain",
     "MixinAbstractContraptionEntity",
+    "MixinAbstractMinecart",
+    "MixinAbstractMinecart_Type",
     "MixinAllTileEntities",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",

@@ -3,27 +3,26 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
-import com.railwayteam.railways.content.minecarts.MinecartItem;
+import com.railwayteam.railways.content.minecarts.MinecartJukebox;
+import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.*;
 
 import javax.annotation.Nonnull;
 import java.util.EnumMap;
 import java.util.Locale;
-import java.util.function.Supplier;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -47,8 +46,8 @@ public class CRItems {
     return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(mod, path));
   }
 
-  private static ItemBuilder<? extends Item, ?> makeMinecart(String name, Supplier<EntityEntry<?>> entity) {
-    return REGISTRATE.item(name, (props)-> new MinecartItem(props, entity.get()))
+  private static ItemBuilder<? extends Item, ?> makeMinecart(String name, AbstractMinecart.Type type) {
+    return REGISTRATE.item(name, (props) -> new MinecartItem(type, props))
     .model((ctx,prov)-> prov.withExistingParent(name, prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/" + name)));
   }
 
@@ -73,12 +72,12 @@ public class CRItems {
     };
   }
 
-  public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", ()->CREntities.CART_BLOCK)
+  public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", MinecartWorkbench.TYPE)
       .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();
-  public static final ItemEntry<? extends Item> ITEM_JUKEBOXCART = makeMinecart("jukeboxcart", ()->CREntities.CART_JUKEBOX)
+  public static final ItemEntry<? extends Item> ITEM_JUKEBOXCART = makeMinecart("jukeboxcart", MinecartJukebox.TYPE)
       .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Jukebox")

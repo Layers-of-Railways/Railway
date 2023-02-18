@@ -3,33 +3,26 @@ package com.railwayteam.railways.content.minecarts;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MinecartBlock extends AbstractMinecart {
+public abstract class MinecartBlock extends AbstractMinecart {
   protected BlockState content;
 
-  public MinecartBlock (EntityType<?> type, Level level, Block content) {
+  public MinecartBlock(EntityType<?> type, Level level, Block content) {
     super(type, level);
     this.content = content.defaultBlockState();
   }
 
-  @Override
-  public Type getMinecartType() {
-    return null;
+  public MinecartBlock(EntityType<?> type, Level level, double x, double y, double z) {
+    super(type, level, x, y, z);
   }
 
   @Override
   public BlockState getDisplayBlockState() {
     return content;
-  }
-
-  @Override
-  public boolean canBeRidden() {
-    return false;
   }
 
   @Override

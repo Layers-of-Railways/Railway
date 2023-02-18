@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.minecarts;
 
 import com.mojang.math.Vector3d;
+import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
 import net.fabricmc.api.EnvType;
@@ -25,6 +26,8 @@ import net.minecraft.world.level.block.JukeboxBlock;
 import org.jetbrains.annotations.NotNull;
 
 public class MinecartJukebox extends MinecartBlock {
+  public static final Type TYPE = Type.valueOf("RAILWAY_JUKEBOX");
+
   private static final int COOLDOWN = 100; // ticks
   private int cooldownCount = 0;
 
@@ -32,8 +35,22 @@ public class MinecartJukebox extends MinecartBlock {
   @Environment(EnvType.CLIENT)
   private JukeboxCartSoundInstance sound;
 
-  public MinecartJukebox (EntityType<?> type, Level level) {
+  public MinecartJukebox(EntityType<?> type, Level level) {
     super(type, level, Blocks.JUKEBOX);
+  }
+
+  protected MinecartJukebox(Level level, double x, double y, double z) {
+    super(CREntities.CART_JUKEBOX.get(), level, x, y, z);
+  }
+
+  // need to detour through this or generics explode somehow
+  public static MinecartJukebox create(Level level, double x, double y, double z) {
+    return new MinecartJukebox(level, x, y, z);
+  }
+
+  @Override
+  public Type getMinecartType() {
+    return TYPE;
   }
 
   @Override

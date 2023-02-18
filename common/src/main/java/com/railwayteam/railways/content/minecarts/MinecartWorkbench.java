@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.minecarts;
 
+import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,11 +23,27 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
+  public static final Type TYPE = Type.valueOf("RAILWAY_WORKBENCH");
+
   private final double VALID_RANGE = 32d;
   private static final EntityTypeTest<Entity, MinecartWorkbench> test = EntityTypeTest.forClass(MinecartWorkbench.class);
 
-  public MinecartWorkbench (EntityType<?> type, Level level) {
+  public MinecartWorkbench(EntityType<?> type, Level level) {
     super(type, level, Blocks.CRAFTING_TABLE);
+  }
+
+  protected MinecartWorkbench(Level level, double x, double y, double z) {
+    super(CREntities.CART_BLOCK.get(), level, x, y, z);
+  }
+
+  // need to detour through this or generics explode somehow
+  public static MinecartWorkbench create(Level level, double x, double y, double z) {
+    return new MinecartWorkbench(level, x, y, z);
+  }
+
+  @Override
+  public Type getMinecartType() {
+    return TYPE;
   }
 
   @NotNull

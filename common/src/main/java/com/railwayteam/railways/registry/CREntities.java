@@ -3,7 +3,6 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.ConductorRenderer;
-import com.railwayteam.railways.content.minecarts.MinecartBlockRenderer;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.multiloader.EntityTypeConfigurator;
@@ -11,6 +10,8 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.MinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -25,12 +26,12 @@ public class CREntities {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
   public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
-      .renderer(()-> MinecartBlockRenderer::new)
+      .renderer(() -> ctx -> new MinecartRenderer<>(ctx, ModelLayers.MINECART))
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Workbench")
       .register();
   public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
-      .renderer(()-> MinecartBlockRenderer::new)
+      .renderer(() -> ctx -> new MinecartRenderer<>(ctx, ModelLayers.MINECART))
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Jukebox")
       .register();
