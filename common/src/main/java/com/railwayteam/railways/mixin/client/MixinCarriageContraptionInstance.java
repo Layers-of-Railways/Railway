@@ -36,7 +36,8 @@ public abstract class MixinCarriageContraptionInstance extends EntityInstance<Ca
         updateCount++;
     }
 
-    @Shadow private Couple<BogeyInstance> bogeys;
+    @Shadow(remap = false)
+    private Couple<BogeyInstance> bogeys;
 
     @Inject(method = "beginFrame", at = @At("HEAD"), remap = false)
     private void snr_refreshBogeys(CallbackInfo ci) {

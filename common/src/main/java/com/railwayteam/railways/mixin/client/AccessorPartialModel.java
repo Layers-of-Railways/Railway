@@ -8,17 +8,17 @@ import java.util.List;
 
 @Mixin(PartialModel.class)
 public interface AccessorPartialModel {
-	@Accessor
+	@Accessor(remap = false)
 	static List<PartialModel> getALL() {
 		throw new AssertionError();
 	}
 
-	@Accessor
+	@Accessor(remap = false)
 	static void setTooLate(boolean tooLate) {
 		throw new AssertionError();
 	}
 
-	@Accessor
+	@Accessor(remap = false)
 	static boolean getTooLate() {
 		throw new AssertionError();
 	}

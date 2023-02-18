@@ -43,35 +43,46 @@ import static com.simibubi.create.AllBlockPartials.TRACK_SEGMENT_RIGHT;
 public abstract class MixinTrackInstance_BezierTrackInstance {
 
     @Final
-    @Shadow(aliases = {"this$0"})
-    TrackInstance myOuter;
+    @Shadow(remap = false)
+    TrackInstance this$0;
 
     @Mutable
-    @Shadow @Final private ModelData[] ties;
+    @Shadow(remap = false)
+    @Final
+    private ModelData[] ties;
 
+    @Shadow(remap = false)
+    @Final
     @Mutable
-    @Shadow @Final private ModelData[] right;
+    private ModelData[] right;
 
+    @Shadow(remap = false)
+    @Final
     @Mutable
-    @Shadow @Final private ModelData[] left;
+    private ModelData[] left;
 
-    @Shadow @Final private TrackInstance this$0;
-
+    @Shadow(remap = false)
+    @Final
     @Mutable
-    @Shadow @Final private BlockPos[] tiesLightPos;
+    private BlockPos[] tiesLightPos;
 
+    @Shadow(remap = false)
+    @Final
     @Mutable
-    @Shadow @Final private BlockPos[] leftLightPos;
+    private BlockPos[] leftLightPos;
 
+    @Shadow(remap = false)
+    @Final
     @Mutable
-    @Shadow @Final private BlockPos[] rightLightPos;
+    private BlockPos[] rightLightPos;
 
-    @Shadow abstract void updateLight();
+    @Shadow(remap = false)
+    abstract void updateLight();
 
     @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
     private PartialModel replaceTie() {
-        BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
+        BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
             if (material.isCustom()) {
@@ -84,7 +95,7 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
     @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
     private PartialModel replaceSegLeft() {
-        BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
+        BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
             if (material.isCustom()) {
@@ -97,7 +108,7 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
     @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
     private PartialModel replaceSegRight() {
-        BezierConnection bc = ((IGetBezierConnection) myOuter).getBezierConnection();
+        BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
             if (material.isCustom()) {

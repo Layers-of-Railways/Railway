@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Train.class)
 public interface AccessorTrain {
-    @Accessor("stress")
+    @Accessor(value = "stress", remap = false)
     double[] snr_getStress();
 
-    @Accessor("stress")
+    @Accessor(value = "stress", remap = false)
     void snr_setStress(double[] stress);
 }

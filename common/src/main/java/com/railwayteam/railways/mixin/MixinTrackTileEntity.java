@@ -29,7 +29,7 @@ import java.util.Map;
 
 @Mixin(TrackTileEntity.class)
 public abstract class MixinTrackTileEntity extends SmartTileEntity implements IHasTrackCasing {
-  @Shadow
+  @Shadow(remap = false)
   Map<BlockPos, BezierConnection> connections;
 
   protected SlabBlock trackCasing;
