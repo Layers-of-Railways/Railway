@@ -124,8 +124,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
     @Override
     protected void writeAdditional(CompoundTag tag) {
-        tag.put("Frequency", freq.serializeEach(f -> f.getStack()
-            .serializeNBT()));
+        tag.put("Frequency", freq.serializeEach(f -> f.getStack().save(new CompoundTag())));
     }
 
     @Override
@@ -162,13 +161,16 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
         runtime.currentEntry++;
     }
 
-    private final class CustomRedstoneActor extends IntAttached<Couple<Frequency>> implements IRedstoneLinkable {
-
+    private final class CustomRedstoneActor implements IRedstoneLinkable {
+        private long ticks = 8;
         private final ScheduleRuntime runtime;
 
-        CustomRedstoneActor(ScheduleRuntime runtime) {
-            super(8, freq);
+        private CustomRedstoneActor(ScheduleRuntime runtime) {
             this.runtime = runtime;
+        }
+
+        public void decrement() {
+            ticks--;
         }
 
         @Override
@@ -177,7 +179,8 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
         }
 
         @Override
-        public void setReceivedStrength(int power) {}
+        public void setReceivedStrength(int power) {
+        }
 
         @Override
         public boolean isListening() {
@@ -186,12 +189,12 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
         @Override
         public boolean isAlive() {
-            return getFirst() > 0;
+            return ticks > 0;
         }
 
         @Override
         public Couple<Frequency> getNetworkKey() {
-            return getSecond();
+            return freq;
         }
 
         @Override
