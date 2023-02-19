@@ -19,4 +19,8 @@ public class UtilsImpl {
 	public static <T> TagAppender<T> builder(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
 		return prov.tag(tag);
 	}
+
+	public static boolean isDevEnv() {
+		return FabricLoader.getInstance().isDevelopmentEnvironment();
+	}
 }

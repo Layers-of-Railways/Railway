@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBloc
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRShapes;
+import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.*;
 import com.simibubi.create.foundation.utility.AngleHelper;
@@ -13,6 +14,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -27,6 +29,21 @@ public abstract class MixinTrackBlockOutline {
     @Shadow
     private static void walkShapes(TrackShape shape, TransformStack msr, Consumer<VoxelShape> renderer) {
         throw new AssertionError();
+    }
+
+    @ModifyArg(
+            method = {
+                    "drawCurveSelection",
+                    "drawCustomBlockSelection"
+            },
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",
+                    remap = true
+            )
+    )
+    private static ItemStack railway$allowCustomTracks(ItemStack held) {
+        return CustomTrackChecks.check(held);
     }
 
     private static boolean railway$renderingMonorail;

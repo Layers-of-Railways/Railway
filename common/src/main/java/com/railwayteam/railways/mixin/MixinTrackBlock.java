@@ -3,9 +3,9 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
+import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
@@ -19,14 +19,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
@@ -94,14 +92,15 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
     }
   }
 
-  /* Moved to MixinBlockBehaviour
-  @SuppressWarnings("deprecation")
-  @Override
-  public @NotNull List<ItemStack> getDrops(@NotNull BlockState state, LootContext.@NotNull Builder builder) {
-    List<ItemStack> superList = super.getDrops(state, builder);
-    if (builder.getParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
-      superList.add(new ItemStack(casing.getTrackCasing()));
-    }
-    return superList;
-  }*/
+  @ModifyArg(
+          method = "getConnected",
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+                  remap = true
+          )
+  )
+  private BlockState railway$checkCustomTracks(BlockState state) {
+    return CustomTrackChecks.check(state);
+  }
 }

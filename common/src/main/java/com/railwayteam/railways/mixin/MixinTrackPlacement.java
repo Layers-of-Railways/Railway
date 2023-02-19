@@ -99,7 +99,6 @@ public abstract class MixinTrackPlacement {
     infoArgument.set(null);
   }
 
-  @SuppressWarnings({"MixinAnnotationTarget", "InvalidInjectorMethodSignature"})
   @ModifyVariable(method = "placeTracks", at = @At(value = "STORE", ordinal = 0), ordinal = 4, require = 1, remap = false)
   private static BlockState modifyToPlace(BlockState value) {
     return BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument.get()).getMaterial().getTrackBlock().get(), value);

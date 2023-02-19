@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacke
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
+import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.logistics.trains.track.CurvedTrackInteraction;
@@ -21,18 +22,31 @@ import net.minecraft.world.level.block.SlabBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-@Mixin(CurvedTrackInteraction.class)
+@Mixin(value = CurvedTrackInteraction.class, remap = false)
 public abstract class MixinCurvedTrackInteraction {
-  @Inject(
+  @ModifyArg(
           method = "onClickInput",
-          remap = false,
           at = @At(
                   value = "INVOKE",
-                  target = "Lnet/minecraft/client/player/LocalPlayer;getMainHandItem()Lnet/minecraft/world/item/ItemStack;"
+                  target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",
+                  remap = true
+          )
+  )
+  private static ItemStack railway$allowCustomTracks(ItemStack held) {
+    return CustomTrackChecks.check(held);
+  }
+
+  @Inject(
+          method = "onClickInput",
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lnet/minecraft/client/player/LocalPlayer;getMainHandItem()Lnet/minecraft/world/item/ItemStack;",
+                  remap = true
           ),
           cancellable = true
   )

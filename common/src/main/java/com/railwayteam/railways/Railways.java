@@ -20,6 +20,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.nio.file.Path;
 import java.util.function.BiConsumer;
@@ -44,6 +45,9 @@ public class Railways {
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
+
+    if (Utils.isDevEnv()) // force all mixins to load in dev
+      MixinEnvironment.getCurrentEnvironment().audit();
   }
 
   public static ResourceLocation asResource(String name) {

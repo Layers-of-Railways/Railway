@@ -4,6 +4,7 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
@@ -23,13 +24,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(TrackTileEntity.class)
+@Mixin(value = TrackTileEntity.class, remap = false)
 public abstract class MixinTrackTileEntity extends SmartTileEntity implements IHasTrackCasing {
-  @Shadow(remap = false)
+  @Shadow
   Map<BlockPos, BezierConnection> connections;
 
   protected SlabBlock trackCasing;
@@ -37,6 +39,18 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
 
   protected MixinTrackTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
+  }
+
+  @ModifyArg(
+          method = "remove",
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+                  remap = true
+          )
+  )
+  private BlockState railway$allowCustomTracks(BlockState state) {
+    return CustomTrackChecks.check(state);
   }
 
   @Override
@@ -74,7 +88,15 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
   }
 
   // Track casings require a TE to function, so prevent it from being removed.
-  @Inject(method = "removeConnection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", remap = true), cancellable = true, remap = false)
+  @Inject(
+          method = "removeConnection",
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+                  remap = true
+          ),
+          cancellable = true
+  )
   private void preventTileRemoval(BlockPos target, CallbackInfo ci) {
     if (getTrackCasing() != null) {
       notifyUpdate();
@@ -82,7 +104,15 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
     }
   }
 
-  @Inject(method = "removeInboundConnections", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/tileEntity/RemoveTileEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V"), cancellable = true, remap = false)
+  @Inject(
+          method = "removeInboundConnections",
+          at = @At(
+                  value = "INVOKE",
+                  target = "Lcom/simibubi/create/foundation/tileEntity/RemoveTileEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
+                  remap = true
+          ),
+          cancellable = true
+  )
   private void preventTileRemoval2(CallbackInfo ci) {
     if (getTrackCasing() != null) {
       notifyUpdate();
@@ -90,7 +120,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
     }
   }
 
-  @Inject(method = "write", at = @At("RETURN"), remap = false)
+  @Inject(method = "write", at = @At("RETURN"))
   private void writeCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
     if (this.getTrackCasing() != null) {
       tag.putString("TrackCasing", Registry.BLOCK.getKey(getTrackCasing()).toString());
@@ -98,7 +128,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
     tag.putBoolean("AlternateModel", this.isAlternate());
   }
 
-  @Inject(method = "read", at = @At("RETURN"), remap = false)
+  @Inject(method = "read", at = @At("RETURN"))
   private void readCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
     if (tag.contains("AlternateModel")) {
       this.setAlternate(tag.getBoolean("AlternateModel"));
