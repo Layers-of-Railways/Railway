@@ -25,7 +25,8 @@ public class ClientPacketListenerMixin {
 					value = "INVOKE",
 					target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;)V",
 					remap = false
-			)
+			),
+			cancellable = true
 	)
 	private void railway$handleS2C(ClientboundCustomPayloadPacket packet, CallbackInfo ci) {
 		ResourceLocation id = packet.getIdentifier();

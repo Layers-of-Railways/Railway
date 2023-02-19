@@ -22,7 +22,8 @@ public class ServerGamePacketListenerImplMixin {
 			at = @At(
 					value = "INVOKE",
 					target = "Lnet/minecraftforge/network/NetworkHooks;onCustomPayload(Lnet/minecraftforge/network/ICustomPacket;Lnet/minecraft/network/Connection;)Z"
-			)
+			),
+			cancellable = true
 	)
 	private void railway$handleC2S(ServerboundCustomPayloadPacket packet, CallbackInfo ci) {
 		ResourceLocation id = packet.getIdentifier();
