@@ -32,6 +32,17 @@ dependencies {
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT")
 }
 
+processResources {
+    exclude("*") // resources will be copied into each loader project
+}
+
+sourceSets.main {
+    resources { // include generated resources in resources
+        srcDir("src/generated/resources")
+        exclude("src/generated/resources/.cache")
+    }
+}
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {

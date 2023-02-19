@@ -57,6 +57,18 @@ dependencies {
 }
 
 processResources {
+    // include common resources
+    from(rootProject.file("common/src/main/resources")) {
+        include("**/**")
+        duplicatesStrategy = DuplicatesStrategy.WARN
+    }
+    // and common generated resources
+    from(rootProject.file("common/src/generated/resources")) {
+        include("**/**")
+        exclude("**/.cache")
+        duplicatesStrategy = DuplicatesStrategy.WARN
+    }
+
     // set up properties for filling into metadata
     Map<String, String> properties = Map.of(
             "version", version,
