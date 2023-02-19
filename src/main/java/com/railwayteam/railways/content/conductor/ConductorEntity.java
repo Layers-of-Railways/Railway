@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.conductor;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxHolder;
 import com.railwayteam.railways.mixin_interfaces.IMountedToolboxHandler;
 import com.railwayteam.railways.registry.CREntities;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
 import net.minecraft.core.BlockPos;
@@ -216,6 +217,11 @@ public class ConductorEntity extends AbstractGolem {
       setColor (di.getDyeColor());
       if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
       return InteractionResult.SUCCESS;
+    } else if (player.getItemInHand(hand).getItem().equals(AllBlocks.ANDESITE_CASING.asStack().getItem())) {
+      if(this.getHealth()!=this.getMaxHealth()){
+        this.setHealth(this.getHealth()+1);
+        if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
+        return InteractionResult.SUCCESS;}
     } else if (!this.isCarryingToolbox() && isToolbox(player.getItemInHand(hand))) {
       this.equipToolbox(player.getItemInHand(hand));
       player.getItemInHand(hand).shrink(1);
