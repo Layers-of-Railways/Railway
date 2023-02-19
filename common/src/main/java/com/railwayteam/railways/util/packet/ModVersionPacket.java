@@ -29,7 +29,7 @@ public class ModVersionPacket implements S2CPacket {
 
   @Override
   @Environment(EnvType.CLIENT)
-  public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+  public void handle(Minecraft mc) {
     LocalPlayer player = mc.player;
     if (!Railways.VERSION.equals(version) && player != null) {
       String msg = "Steam 'n Rails version mismatch: Server is using version "+version+", you are using version "+Railways.VERSION+". This may cause problems.";

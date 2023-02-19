@@ -32,7 +32,7 @@ public class JukeboxCartPacket implements S2CPacket {
 
   @Override
   @Environment(EnvType.CLIENT)
-  public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+  public void handle(Minecraft mc) {
     Level level = mc.level;
     if (level != null) {
       Entity target = level.getEntity(this.id);

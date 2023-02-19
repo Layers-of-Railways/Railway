@@ -38,7 +38,7 @@ public class ChopTrainEndPacket implements S2CPacket {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+    public void handle(Minecraft mc) {
         Level level = mc.level;
         if (level != null) {
             Train train = CreateClient.RAILWAYS.trains.get(trainId);

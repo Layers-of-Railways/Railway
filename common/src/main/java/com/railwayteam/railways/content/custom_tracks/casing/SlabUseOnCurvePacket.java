@@ -45,7 +45,7 @@ public class SlabUseOnCurvePacket implements C2SPacket {
   }
 
   @Override
-  public void handle(ServerPlayer player, FriendlyByteBuf buf) {
+  public void handle(ServerPlayer player) {
     Level world = player.level;
     if (!world.isLoaded(pos))
       return;

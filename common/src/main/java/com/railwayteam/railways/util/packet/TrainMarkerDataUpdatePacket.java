@@ -57,7 +57,7 @@ public class TrainMarkerDataUpdatePacket implements S2CPacket { //TODO partial s
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+    public void handle(Minecraft mc) {
         if (!data.incomplete())
             DummyRailwayMarkerHandler.getInstance().registerData(id, data);
     }

@@ -1,7 +1,6 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerTileEntity;
-import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,7 +32,7 @@ public class TrackCouplerClientInfoPacket implements S2CPacket {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+    public void handle(Minecraft mc) {
         Level level = mc.level;
         if (level != null) {
             BlockEntity te = level.getBlockEntity(blockPos);

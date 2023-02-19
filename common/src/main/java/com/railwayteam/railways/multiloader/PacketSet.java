@@ -137,7 +137,7 @@ public abstract class PacketSet {
 		}
 		Function<FriendlyByteBuf, S2CPacket> factory = s2cPackets.get(i);
 		S2CPacket packet = factory.apply(buf);
-		packet.handle(mc, buf);
+		mc.execute(() -> packet.handle(mc));
 	}
 
 	@Internal
@@ -149,7 +149,7 @@ public abstract class PacketSet {
 		}
 		Function<FriendlyByteBuf, C2SPacket> factory = c2sPackets.get(i);
 		C2SPacket packet = factory.apply(buf);
-		packet.handle(sender, buf);
+		sender.server.execute(() -> packet.handle(sender));
 	}
 
 	@ExpectPlatform
@@ -180,7 +180,7 @@ public abstract class PacketSet {
 		}
 
 		@Override
-		public void handle(Minecraft mc, FriendlyByteBuf buffer) {
+		public void handle(Minecraft mc) {
 			if (CRPackets.PACKETS.version == serverVersion)
 				return;
 			Component error = Components.literal("Steam n' Rails on the client uses a different network format than the server.")

@@ -11,5 +11,5 @@ import net.minecraft.network.FriendlyByteBuf;
 public interface S2CPacket {
 	void write(FriendlyByteBuf buffer);
 	@Environment(EnvType.CLIENT)
-	void handle(Minecraft mc, FriendlyByteBuf buffer);
+	void handle(Minecraft mc);
 }
