@@ -32,10 +32,6 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  static {
-    REGISTRATE.creativeModeTab(() -> itemGroup, "Create Railways");
-  }
-
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
 
   public static TagKey<Item> makeForgeItemTag(String path) {

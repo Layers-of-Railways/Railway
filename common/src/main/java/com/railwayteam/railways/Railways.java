@@ -5,6 +5,7 @@ import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.registry.CRCommands;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -29,7 +30,7 @@ public class Railways {
   public static final ModSetup setup = new ModSetup();
   public static final String VERSION = findVersion();
 
-  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
+  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID).creativeModeTab(() -> CRItems.itemGroup);
 
   public static void init() {
     ModSetup.register();

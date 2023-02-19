@@ -24,9 +24,6 @@ import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.AllSections;
 import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.curiosities.girder.ConnectedGirderModel;
-import com.simibubi.create.content.curiosities.girder.GirderBlock;
-import com.simibubi.create.content.curiosities.girder.GirderBlockStateGenerator;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -47,7 +44,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-import static com.simibubi.create.Create.REGISTRATE;
 import static com.simibubi.create.content.logistics.block.display.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
