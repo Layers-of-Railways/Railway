@@ -122,7 +122,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             BlockPos currentPos = context.getClickedPos().below();
             for (int i = 0; i < 16; i++) {
                 BlockState blockState = world.getBlockState(currentPos);
-                if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                if (CRBlocks.SEMAPHORE.has(blockState)) {
                     BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
                     KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
                 } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
@@ -134,7 +134,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             currentPos = context.getClickedPos().above();
             for (int i = 0; i < 16; i++) {
                 BlockState blockState = world.getBlockState(currentPos);
-                if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+                if (CRBlocks.SEMAPHORE.has(blockState)) {
                     BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
                     KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
                 } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
@@ -158,7 +158,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         BlockPos currentPos = pos.below();
         for (int i = 0; i < 16; i++) {
             BlockState blockState = world.getBlockState(currentPos);
-            if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+            if (CRBlocks.SEMAPHORE.has(blockState)) {
                 BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
                 KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
             } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
@@ -170,7 +170,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
         currentPos = pos.above();
         for (int i = 0; i < 16; i++) {
             BlockState blockState = world.getBlockState(currentPos);
-            if (CRBlocks.SEMAPHORE.is(blockState.getBlock())) {
+            if (CRBlocks.SEMAPHORE.has(blockState)) {
                 BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
                 KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
             } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
@@ -193,7 +193,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
 
         @Override
         public Predicate<BlockState> getStatePredicate() {
-            return state -> CRBlocks.SEMAPHORE.is(state.getBlock()) || CRTags.AllBlockTags.SEMAPHORE_POLES.matches(state);
+            return state -> CRBlocks.SEMAPHORE.has(state) || CRTags.AllBlockTags.SEMAPHORE_POLES.matches(state);
         }
 
         @Override
@@ -251,7 +251,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
 
         @Override
         public Predicate<BlockState> getStatePredicate() {
-            return state -> CRBlocks.SEMAPHORE.is(state.getBlock());
+            return CRBlocks.SEMAPHORE::has;
         }
 
         @Override
