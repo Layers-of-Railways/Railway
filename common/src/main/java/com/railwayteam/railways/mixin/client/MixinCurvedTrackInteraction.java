@@ -1,14 +1,17 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial.TrackType;
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.registry.CRTags.AllBlockTags;
+import com.simibubi.create.content.logistics.trains.BezierConnection;
+import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.logistics.trains.track.CurvedTrackInteraction;
 import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline.BezierPointSelection;
+import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -19,7 +22,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.Map;
 
 @Mixin(CurvedTrackInteraction.class)
 public abstract class MixinCurvedTrackInteraction {
@@ -28,26 +32,37 @@ public abstract class MixinCurvedTrackInteraction {
           remap = false,
           at = @At(
                   value = "INVOKE",
-                  target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"
+                  target = "Lnet/minecraft/client/player/LocalPlayer;getMainHandItem()Lnet/minecraft/world/item/ItemStack;"
           ),
-          locals = LocalCapture.CAPTURE_FAILHARD,
           cancellable = true
   )
-  private static void encaseTrackSend(CallbackInfoReturnable<Boolean> cir,
-                                      TrackBlockOutline.BezierPointSelection result, Minecraft mc, LocalPlayer player,
-                                      ClientLevel level, ItemStack heldItem) {
-    if (result.te().getConnections() == null || !result.te().getConnections().containsKey(result.loc().curveTarget()) || ((IHasTrackMaterial) result.te().getConnections().get(result.loc().curveTarget())).getMaterial().trackType != TrackMaterial.TrackType.MONORAIL) {
-      if (heldItem.isEmpty() || heldItem.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
-          !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
-        CRPackets.PACKETS.send(new SlabUseOnCurvePacket(result.te()
-            .getBlockPos(),
-            result.loc()
-                .curveTarget(),
-            new BlockPos(result.vec())
-        ));
-        player.swing(InteractionHand.MAIN_HAND);
-        cir.setReturnValue(true);
+  private static void railway$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
+    BezierPointSelection result = TrackBlockOutline.result;
+    TrackTileEntity track = result.te();
+    BezierTrackPointLocation location = result.loc();
+    BlockPos curveTarget = location.curveTarget();
+    Map<BlockPos, BezierConnection> connections = track.getConnections();
+    BezierConnection connection = connections == null ? null : connections.get(curveTarget);
+
+    // allow encasing if no connection or not monorail
+    // todo: that doesn't seem right? same as old behavior though
+    if (connection == null || ((IHasTrackMaterial) connection).getMaterial().trackType != TrackType.MONORAIL) {
+      LocalPlayer player = Minecraft.getInstance().player;
+      ItemStack held = player.getMainHandItem();
+
+      // if non-empty, must be a valid slab
+      if (!held.isEmpty()) {
+        if (!(held.getItem() instanceof BlockItem block))
+          return;
+        if (!(block.getBlock() instanceof SlabBlock slab))
+          return;
+        if (AllBlockTags.TRACK_CASING_BLACKLIST.matches(slab))
+          return;
       }
+
+      CRPackets.PACKETS.send(new SlabUseOnCurvePacket(track.getBlockPos(), curveTarget, new BlockPos(result.vec())));
+      player.swing(InteractionHand.MAIN_HAND);
+      cir.setReturnValue(true);
     }
   }
 }
