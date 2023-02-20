@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.railwayteam.railways.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "mixins.railways.refmap.json",
+  "refmap": "Steam_Rails-common-refmap.json",
   "mixins": [
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
