@@ -57,6 +57,7 @@
     "client.AccessorInstance",
     "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
+    "client.AccessorTrackBlockOutline",
     "client.MixinBezierConnectionClient",
     "client.MixinBlueprintOverlayRenderer",
     "client.MixinBogeyInstance_Frame",
