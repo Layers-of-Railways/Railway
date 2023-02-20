@@ -4,15 +4,19 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
+import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.RegistrationListening;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -45,6 +49,12 @@ public class Railways {
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
+
+    RegistrationListening.whenBothRegistered(
+            Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("create", "track"),
+            Registry.BLOCK, CRBlocks.MONORAIL_TRACK.getId(), // last track
+            (type, block) -> TrackMaterial.addCustomValidTracks(type)
+    );
 
     if (Utils.isDevEnv()) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();

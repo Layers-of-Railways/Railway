@@ -5,6 +5,7 @@
   "refmap": "mixins.railways.refmap.json",
   "mixins": [
     "AccessorBlockEntity",
+    "AccessorBlockEntityType",
     "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
     "AccessorIngredient_TagValue",
@@ -18,7 +19,6 @@
     "MixinAbstractContraptionEntity",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
-    "MixinAllTileEntities",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",

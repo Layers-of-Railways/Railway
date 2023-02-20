@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.custom_tracks;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
@@ -13,13 +14,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -112,6 +112,13 @@ public enum TrackMaterial {
             list.add(material.getTrackBlock());
         }
         return list;
+    }
+
+    public static void addCustomValidTracks(BlockEntityType<?> type) {
+        AccessorBlockEntityType access = (AccessorBlockEntityType) type;
+        Set<Block> blocks = new HashSet<>(access.getValidBlocks());
+        allCustomBlocks().forEach(entry -> blocks.add(entry.get()));
+        access.setValidBlocks(blocks);
     }
 
     public String resName() {
