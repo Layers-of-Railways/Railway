@@ -73,12 +73,12 @@ allprojects {
     archivesBaseName = rootProject.archives_base_name
     group = rootProject.maven_group
 
-    version = "${minecraft_version}-${mod_version}"
+    version = "${mod_version}+${project.name}-${minecraft_version}"
     if (System.getenv("DEV") == "true") {
-        version = "${minecraft_version}-${mod_version}-dev-${getGitHash()}"
+        version += "-dev-${getGitHash()}"
     }
     if (System.getenv("CI") == "true") {
-        version = "${minecraft_version}-nightly-${getGitHash()}"
+        version += "-nightly-${getGitHash()}"
     }
 
     repositories {

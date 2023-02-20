@@ -21,7 +21,8 @@ public class ServerGamePacketListenerImplMixin {
 			method = "handleCustomPayload",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraftforge/network/NetworkHooks;onCustomPayload(Lnet/minecraftforge/network/ICustomPacket;Lnet/minecraft/network/Connection;)Z"
+					target = "Lnet/minecraftforge/network/NetworkHooks;onCustomPayload(Lnet/minecraftforge/network/ICustomPacket;Lnet/minecraft/network/Connection;)Z",
+					remap = false // forge method + names are moj
 			),
 			cancellable = true
 	)
