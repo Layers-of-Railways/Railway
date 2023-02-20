@@ -169,6 +169,13 @@ public abstract class PacketSet {
 		return new Builder(id, version).s2c(CheckVersionPacket.class, CheckVersionPacket::new);
 	}
 
+	/**
+	 * Send the player a packet with the current network version. If they do not match, the player will disconnect.
+	 */
+	public void onPlayerJoin(ServerPlayer player) {
+		sendTo(player, new CheckVersionPacket(version));
+	}
+
 	public record CheckVersionPacket(int serverVersion) implements S2CPacket {
 		public CheckVersionPacket(FriendlyByteBuf buf) {
 			this(buf.readVarInt());

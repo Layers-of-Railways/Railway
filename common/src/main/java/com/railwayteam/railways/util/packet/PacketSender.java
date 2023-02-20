@@ -19,6 +19,7 @@ public class PacketSender {
   }
 
   public static void notifyServerVersion(ServerPlayer player) {
+    CRPackets.PACKETS.onPlayerJoin(player);
     CRPackets.PACKETS.sendTo(player, new ModVersionPacket(Railways.VERSION));
   }
 }
