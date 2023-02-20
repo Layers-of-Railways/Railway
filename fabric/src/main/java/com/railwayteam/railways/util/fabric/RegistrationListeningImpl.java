@@ -8,39 +8,39 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class RegistrationListeningImpl {
 	private static final Map<Registry<?>, Callback<?>> callbacks = new HashMap<>();
 
-	public static <T, U> void addListener(Listener<T, U> listener) {
-		callbacks.computeIfAbsent(listener.registry1, Callback::new).addListener(listener);
-		callbacks.computeIfAbsent(listener.registry2, Callback::new).addListener(listener);
+	public static <T> void addListener(Listener<T> listener) {
+		//noinspection unchecked,rawtypes
+		callbacks.computeIfAbsent(listener.registry(), Callback::new).addListener((Listener) listener);
 	}
 
 	private static class Callback<T> implements RegistryEntryAddedCallback<T> {
-		protected final Multimap<ResourceLocation, Listener<?, ?>> listeners = HashMultimap.create();
-		protected final Set<ResourceLocation> beforeListeningStart;
+		private final Multimap<ResourceLocation, Listener<T>> listeners = HashMultimap.create();
+		private final Registry<T> registry;
+		private final Set<ResourceLocation> beforeListeningStart;
 
 		public Callback(Registry<T> registry) {
+			this.registry = registry;
 			RegistryEntryAddedCallback.event(registry).register(this);
 			beforeListeningStart = registry.keySet(); // returns unmodifiable set
 		}
 
-		protected void addListener(Listener<?, ?> listener) {
-			listeners.put(listener.id1, listener);
-			listeners.put(listener.id2, listener);
-			if (beforeListeningStart.contains(listener.id1))
-				listener.onRegister(listener.id1);
-			if (beforeListeningStart.contains(listener.id2))
-				listener.onRegister(listener.id2);
+		protected void addListener(Listener<T> listener) {
+			ResourceLocation id = listener.id();
+			// if already registered, don't store it
+			if (beforeListeningStart.contains(id))
+				listener.onRegister(registry.get(id));
+			else listeners.put(id, listener);
 		}
 
 		@Override
 		public void onEntryAdded(int rawId, ResourceLocation id, T object) {
-			listeners.get(id).forEach(listener -> listener.onRegister(id));
+			listeners.get(id).forEach(listener -> listener.onRegister(object));
 		}
 	}
 }

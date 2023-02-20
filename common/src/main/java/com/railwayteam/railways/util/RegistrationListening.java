@@ -5,8 +5,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class RegistrationListening {
+	public static <T> void whenRegistered(Registry<T> registry, ResourceLocation id, Consumer<T> consumer) {
+		addListener(new Listener<>(registry, id, consumer));
+	}
+
 	public static <T> void whenBothRegistered(Registry<T> registry, ResourceLocation id1, ResourceLocation id2, BiConsumer<T, T> consumer) {
 		whenBothRegistered(registry, id1, registry, id2, consumer);
 	}
@@ -14,46 +19,51 @@ public class RegistrationListening {
 	public static <T, U> void whenBothRegistered(Registry<T> registry1, ResourceLocation id1,
 												 Registry<U> registry2, ResourceLocation id2,
 												 BiConsumer<T, U> consumer) {
-		Listener<T, U> listener = new Listener<>(registry1, id1, registry2, id2, consumer);
-		addListener(listener);
+		DualListener<T, U> dual = new DualListener<>(registry1, id1, registry2, id2, consumer);
+		addListener(dual.listener1);
+		addListener(dual.listener2);
 	}
 
 	@ExpectPlatform
-	public static <T, U> void addListener(Listener<T, U> listener) {
+	public static <T> void addListener(Listener<T> listener) {
 		throw new AssertionError();
 	}
 
-	public static class Listener<T, U> {
-		public final Registry<T> registry1;
-		public final Registry<U> registry2;
-		public final BiConsumer<T, U> consumer;
-		public final ResourceLocation id1, id2;
+	public record Listener<T>(Registry<T> registry, ResourceLocation id, Consumer<T> consumer) {
+		public void onRegister(T obj) {
+			consumer.accept(obj);
+		}
+	}
 
-		private boolean firstRegistered, secondRegistered;
+	public static class DualListener<T, U> {
+		public final Listener<T> listener1;
+		public final Listener<U> listener2;
+		private final BiConsumer<T, U> consumer;
+		private T first;
+		private U second;
 
-		private Listener(Registry<T> registry1, ResourceLocation id1,
-						 Registry<U> registry2, ResourceLocation id2,
-						 BiConsumer<T, U> consumer) {
-			this.registry1 = registry1;
-			this.id1 = id1;
-			this.registry2 = registry2;
-			this.id2 = id2;
+		public DualListener(Registry<T> registry1, ResourceLocation id1,
+							Registry<U> registry2, ResourceLocation id2,
+							BiConsumer<T, U> consumer) {
 			this.consumer = consumer;
+			listener1 = new Listener<>(registry1, id1, this::firstRegistered);
+			listener2 = new Listener<>(registry2, id2, this::secondRegistered);
 		}
 
-		public void onRegister(ResourceLocation id) {
-			if (id.equals(id1))
-				firstRegistered = true;
-			if (id.equals(id2))
-				secondRegistered = true;
-			if (firstRegistered && secondRegistered)
+		private void firstRegistered(T first) {
+			this.first = first;
+			if (second != null)
 				bothRegistered();
 		}
 
-		public void bothRegistered() {
-			T t = registry1.get(id1);
-			U u = registry2.get(id2);
-			consumer.accept(t, u);
+		private void secondRegistered(U second) {
+			this.second = second;
+			if (first != null)
+				bothRegistered();
+		}
+
+		private void bothRegistered() {
+			consumer.accept(first, second);
 		}
 	}
 }
