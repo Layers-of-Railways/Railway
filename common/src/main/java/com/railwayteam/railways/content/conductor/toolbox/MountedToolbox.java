@@ -7,7 +7,10 @@ import com.railwayteam.railways.util.packet.PacketSender;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -121,5 +124,16 @@ public class MountedToolbox extends ToolboxTileEntity {
     tag.putUUID("UniqueId", getUniqueId());
 
     return stack;
+  }
+
+  @Override
+  public void sendToContainer(FriendlyByteBuf buffer) {
+    buffer.writeVarInt(parent.getId());
+    buffer.writeNbt(getUpdateTag());
+  }
+
+  @ExpectPlatform
+  public static void openMenu(ServerPlayer player, MountedToolbox toolbox) {
+    throw new AssertionError();
   }
 }

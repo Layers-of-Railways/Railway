@@ -216,7 +216,8 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   protected void openToolbox(Player player) {
-    player.openMenu(toolbox);
+    if (player instanceof ServerPlayer serverPlayer)
+      MountedToolbox.openMenu(serverPlayer, toolbox);
   }
 
   @Override

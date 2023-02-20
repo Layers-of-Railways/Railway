@@ -15,48 +15,41 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(RadialToolboxMenu.class)
+@Mixin(value = RadialToolboxMenu.class, remap = false)
 public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
-	@Shadow(remap = false)
+	@Shadow
 	private ToolboxTileEntity selectedBox;
-	@Shadow(remap = false)
+	@Shadow
 	private boolean scrollMode;
-	@Shadow(remap = false)
+	@Shadow
 	private int scrollSlot;
-	@Shadow(remap = false)
+	@Shadow
 	private int hoveredSlot;
-	@Shadow(remap = false)
+	@Shadow
 	private State state;
 
-	@Inject(
-			method = "lambda$removed$0",
-			remap = false,
-			at = @At("HEAD"),
-			cancellable = true
-	)
+	@Inject(method = "lambda$removed$0", at = @At("HEAD"), cancellable = true)
 	private static void railway$sendConductorToolboxDisposeAllPacketsToAll(ToolboxTileEntity te, CallbackInfo ci) {
-		if (!(te instanceof MountedToolbox mounted))
-			return;
-		CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
-		// lambda only sends packet
-		ci.cancel();
+		if (te instanceof MountedToolbox mounted) {
+			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
+			ci.cancel(); // lambda only sends packet, skip it
+		}
 	}
 
 	@Inject(
 			method = "removed",
-			remap = false,
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxDisposeAllPacket;<init>(Lnet/minecraft/core/BlockPos;)V"
+					target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxDisposeAllPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
+					remap = true
 			),
 			cancellable = true
 	)
 	private void railway$sendConductorToolboxDisposeAllPacket(CallbackInfo ci) {
-		if (!(selectedBox instanceof MountedToolbox mounted))
-			return;
-		CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
-		// returns early anyway after send
-		ci.cancel();
+		if (selectedBox instanceof MountedToolbox mounted) {
+			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
+			ci.cancel(); // returns early anyway after send
+		}
 	}
 
 	@Inject(

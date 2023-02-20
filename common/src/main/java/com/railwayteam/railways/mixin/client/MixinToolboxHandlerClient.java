@@ -17,11 +17,10 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-@Mixin(ToolboxHandlerClient.class)
+@Mixin(value = ToolboxHandlerClient.class, remap = false)
 public class MixinToolboxHandlerClient {
 
   @Unique
-  @Nullable
   private static ConductorEntity railway$getConductorForSlot(int slot) {
     Minecraft mc = Minecraft.getInstance();
     LocalPlayer player = mc.player;
@@ -54,15 +53,14 @@ public class MixinToolboxHandlerClient {
 
   @ModifyVariable(
           method = "onKeyInput",
-          remap = false,
           at = @At(
-                  value = "INVOKE_ASSIGN",
-                  target = "Lnet/minecraft/nbt/NbtUtils;readBlockPos(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/core/BlockPos;",
+                  value = "INVOKE",
+                  target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxHandler;getMaxRange(Lnet/minecraft/world/entity/player/Player;)D",
                   remap = true
           )
   )
-  @SuppressWarnings("InvalidInjectorMethodSignature")
   private static BlockPos railway$useConductorToolboxDistance(BlockPos pos) {
+    //noinspection ConstantConditions
     ConductorEntity conductor = railway$getConductorForSlot(Minecraft.getInstance().player.getInventory().selected);
     railway$conductorForSelectedSlot = conductor;
     return conductor == null ? pos : conductor.blockPosition();

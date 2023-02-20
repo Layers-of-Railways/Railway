@@ -4,6 +4,7 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
 import com.railwayteam.railways.util.EntityUtils;
+import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -30,8 +31,10 @@ public class MountedToolboxDisposeAllPacketImpl {
 						CompoundTag data = compound.getCompound(key);
 						if (data.hasUUID("EntityUUID")) {
 							UUID uuid = data.getUUID("EntityUUID");
-							if (uuid.equals(conductor.getUUID()))
+							if (uuid.equals(conductor.getUUID())) {
+								ToolboxHandler.unequip(player, i, true);
 								sendData.setTrue();
+							}
 						}
 					}
 

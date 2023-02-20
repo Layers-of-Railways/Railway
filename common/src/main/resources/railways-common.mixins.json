@@ -70,6 +70,7 @@
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
     "client.MixinToolboxHandlerClient",
+    "client.MixinToolboxScreen",
     "client.MixinTrackBlockClient",
     "client.MixinTrackBlockItem",
     "client.MixinTrackBlockOutline",

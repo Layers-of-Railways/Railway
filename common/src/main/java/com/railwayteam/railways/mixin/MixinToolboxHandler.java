@@ -31,9 +31,15 @@ import java.util.UUID;
 @Mixin(value = ToolboxHandler.class, remap = false)
 public abstract class MixinToolboxHandler {
 
-  @Shadow(remap = false)
+  @Shadow
   public static void syncData(Player player) {
     throw new AssertionError();
+  }
+
+  @Inject(method = { "onLoad", "onUnload" }, at = @At("HEAD"), cancellable = true)
+  private static void railway$keepMountedToolboxesOutOfMap(ToolboxTileEntity te, CallbackInfo ci) {
+    if (te instanceof MountedToolbox)
+      ci.cancel();
   }
 
   @Inject(
@@ -83,7 +89,7 @@ public abstract class MixinToolboxHandler {
       return be;
     UUID uuid = data.getUUID("EntityUUID");
     Entity entity = level.getEntity(uuid);
-    if (!(entity instanceof ConductorEntity conductor) || conductor.isCarryingToolbox())
+    if (!(entity instanceof ConductorEntity conductor) || !conductor.isCarryingToolbox())
       return be;
     return conductor.getToolbox();
   }
