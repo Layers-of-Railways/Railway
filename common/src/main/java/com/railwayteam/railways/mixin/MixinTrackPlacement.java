@@ -6,6 +6,7 @@ import com.railwayteam.railways.util.BlockStateUtils;
 import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
+import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
 import com.simibubi.create.content.logistics.trains.track.TrackPlacement.PlacementInfo;
@@ -95,18 +96,21 @@ public class MixinTrackPlacement {
 	private static BlockState railway$modifyFirstPlacedTrackBlockMaterial(BlockState original,
 																		  Level level, PlacementInfo info, BlockState state1, BlockState state2,
 																		  BlockPos targetPos1, BlockPos targetPos2, boolean simulate) {
-		TrackMaterial material = ((IHasTrackMaterial) info).getMaterial();
-		if (material != null) {
-			TrackBlock customTrack = material.getTrackBlock().get();
-			return BlockStateUtils.trackWith(customTrack, original);
-		}
-		return original;
+		return railway$doMaterialModification(original, level, targetPos1, info);
 	}
 
 	@ModifyVariable(method = "placeTracks", at = @At("HEAD"), ordinal = 1, argsOnly = true)
 	private static BlockState railway$modifySecondPlacedTrackBlockMaterial(BlockState original,
 																		  Level level, PlacementInfo info, BlockState state1, BlockState state2,
 																		  BlockPos targetPos1, BlockPos targetPos2, boolean simulate) {
+		return railway$doMaterialModification(original, level, targetPos2, info);
+	}
+
+	@Unique
+	private static BlockState railway$doMaterialModification(BlockState original, Level level, BlockPos pos, PlacementInfo info) {
+		BlockState existing = level.getBlockState(pos);
+		if (existing.getBlock() instanceof ITrackBlock)
+			return original; // don't interfere with existing tracks
 		TrackMaterial material = ((IHasTrackMaterial) info).getMaterial();
 		if (material != null) {
 			TrackBlock customTrack = material.getTrackBlock().get();
