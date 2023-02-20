@@ -23,6 +23,16 @@ subprojects {
 
     loom {
         silentMojangMappingsLicense()
+        runs {
+            client {
+                client()
+                vmArg("-Dmixin.debug.export=true")
+            }
+            server {
+                server()
+                vmArg("-Dmixin.debug.export=true")
+            }
+        }
     }
 
     repositories {
