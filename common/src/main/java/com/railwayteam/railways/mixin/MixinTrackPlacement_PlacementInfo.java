@@ -1,6 +1,5 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
@@ -13,9 +12,7 @@ public abstract class MixinTrackPlacement_PlacementInfo implements IHasTrackMate
   @Override
   public TrackMaterial getMaterial() {
     if (trackMaterial == null) {
-      Railways.LOGGER.error("TrackPlacement$Placement info material is null. this is bad");
-      trackMaterial = TrackMaterial.ANDESITE;
-      throw new RuntimeException("TrackPlacement$Placement info material is null. this is bad");
+      return IHasTrackMaterial.super.getMaterial();
     }
     return trackMaterial;
   }
