@@ -45,7 +45,7 @@ public class MixinTrackRenderer {
     @Nullable
     private static BezierConnection bezierConnection = null;
 
-    @Inject(method = "renderBezierTurn", at = @At("HEAD"), remap = false)
+    @Inject(method = "renderBezierTurn", at = @At("HEAD"))
     private static void storeBezierConnection(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         bezierConnection = bc;
     }
@@ -56,7 +56,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
+        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceTie() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -68,7 +68,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
+        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceSegLeft() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -80,7 +80,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"), remap = false)
+        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceSegRight() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -92,7 +92,7 @@ public class MixinTrackRenderer {
     }
 
     @Inject(method = "renderSafe(Lcom/simibubi/create/content/logistics/trains/track/TrackTileEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;", remap = true), remap = false)
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = true)
     private void renderCasing(TrackTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
         SlabBlock casingBlock = ((IHasTrackCasing) te).getTrackCasing();
         if (casingBlock != null) {
@@ -126,7 +126,7 @@ public class MixinTrackRenderer {
         }
     }
 
-    @Inject(method = "renderBezierTurn", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"), remap = false)
+    @Inject(method = "renderBezierTurn", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", remap = true), remap = false)
     private static void renderCurveCasings(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         SlabBlock casingBlock = ((IHasTrackCasing) bc).getTrackCasing();
         if (casingBlock != null) {
@@ -135,8 +135,8 @@ public class MixinTrackRenderer {
     }
 
     @Inject(method = "renderBezierTurn",
-        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER),
-        cancellable = true, remap = false)
+        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
+        cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
             renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());

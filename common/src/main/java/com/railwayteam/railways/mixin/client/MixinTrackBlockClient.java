@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 //import static com.railwayteam.railways.content.coupling.CouplerOverlayType.getCouplerOverlayType;
 
-@Mixin(TrackBlock.class)
+@Mixin(value = TrackBlock.class, remap = false)
 public class MixinTrackBlockClient {
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/jozufozu/flywheel/util/transform/TransformStack;translate(DDD)Ljava/lang/Object;", ordinal = 0),
@@ -50,7 +50,7 @@ public class MixinTrackBlockClient {
         }
     }
 
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;"),
+    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true),
         locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
     private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, TransformStack msr) {
         if (bezierPoint == null && state.getBlock() instanceof IHasTrackMaterial material && material.getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {

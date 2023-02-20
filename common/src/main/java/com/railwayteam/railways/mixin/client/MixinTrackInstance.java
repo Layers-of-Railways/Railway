@@ -60,12 +60,12 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackTileEn
     return bezierConnection;
   }
 
-  @Inject(method = "createInstance", at = @At("HEAD"), remap = false)
+  @Inject(method = "createInstance", at = @At("HEAD"))
   private void preCreateInstance(BezierConnection bc, CallbackInfoReturnable<?> cir) {
     this.bezierConnection = bc;
   }
 
-  @Inject(method = "update", at = @At(value = "RETURN", ordinal = 0), remap = false)
+  @Inject(method = "update", at = @At(value = "RETURN", ordinal = 0))
   private void updateWithoutConnections(CallbackInfo ci) { //otherwise it visually stays when an encased track is broken
     this.remove();
     makeCasingData(false);
@@ -73,23 +73,23 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackTileEn
         .addListener(this);
   }
 
-  @Inject(method = "update", at = @At(value = "RETURN", ordinal = 1), remap = false)
+  @Inject(method = "update", at = @At(value = "RETURN", ordinal = 1))
   private void updateWithConnections(CallbackInfo ci) {
     makeCasingData(true);
   }
 
-  @Inject(method = "updateLight", at = @At("HEAD"), remap = false)
+  @Inject(method = "updateLight", at = @At("HEAD"))
   private void snr_updateLight(CallbackInfo ci) {
     casingData.forEach((data) -> data.getFirst().updateLight(this.world, data.getSecond()));
   }
 
-  @Inject(method = "remove", at = @At("HEAD"), remap = false)
+  @Inject(method = "remove", at = @At("HEAD"))
   private void snr_remove(CallbackInfo ci) {
     casingData.forEach((data) -> data.getFirst().delete());
     casingData.clear();
   }
 
-  @Inject(method = "getVolume", at = @At(value = "INVOKE", target = "Ljava/util/List;addAll(Ljava/util/Collection;)Z"), remap = false, locals = LocalCapture.CAPTURE_FAILHARD)
+  @Inject(method = "getVolume", at = @At(value = "INVOKE", target = "Ljava/util/List;addAll(Ljava/util/Collection;)Z"), locals = LocalCapture.CAPTURE_FAILHARD)
   private void snr_getVolume(CallbackInfoReturnable<GridAlignedBB> cir, List<BlockPos> out) {
     out.add(this.pos);
   }

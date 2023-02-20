@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class MixinTrackBlockItem {
   @ModifyArg(
           method = "useOn",
+          remap = true,
           at = @At(
                   value = "INVOKE",
                   target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",

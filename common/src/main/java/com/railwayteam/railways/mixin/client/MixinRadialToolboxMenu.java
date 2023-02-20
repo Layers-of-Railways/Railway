@@ -38,6 +38,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 
 	@Inject(
 			method = "removed",
+			remap = true,
 			at = @At(
 					value = "INVOKE",
 					target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxDisposeAllPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
@@ -54,18 +55,20 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 
 	@Inject(
 			method = "removed",
-			remap = false,
+			remap = true,
 			at = {
 					// skip first one, unequip works fine
 					@At(
 							value = "INVOKE",
 							target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxEquipPacket;<init>(Lnet/minecraft/core/BlockPos;II)V",
-							ordinal = 1
+							ordinal = 1,
+							remap = true
 					),
 					@At(
 							value = "INVOKE",
 							target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxEquipPacket;<init>(Lnet/minecraft/core/BlockPos;II)V",
-							ordinal = 2
+							ordinal = 2,
+							remap = true
 					),
 			},
 			cancellable = true
@@ -84,10 +87,11 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 
 	@Inject(
 			method = "mouseClicked",
-			remap = false,
+			remap = true,
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxEquipPacket;<init>(Lnet/minecraft/core/BlockPos;II)V"
+					target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxEquipPacket;<init>(Lnet/minecraft/core/BlockPos;II)V",
+					remap = true
 			),
 			cancellable = true
 	)

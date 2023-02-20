@@ -37,7 +37,7 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
-    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = false), remap = false, cancellable = true)
+    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
     private static void checkGraphLocation(Level level, BlockPos pos, boolean front, BezierTrackPointLocation targetBezier, EdgePointType<?> type,
                                            BiConsumer<TrackTargetingBlockItem.OverlapResult, GraphLocation> callback, CallbackInfo ci) {
         if (type != CREdgePointTypes.COUPLER)
@@ -59,7 +59,7 @@ public class MixinTrackTargetingBlockItem {
     // (https://github.com/LudoCrypt/Noteblock-Expansion-Forge/blob/main/src/main/java/net/ludocrypt/nbexpand/mixin/NoteblockInstrumentMixin.java)
     @Mixin(value = TrackTargetingBlockItem.OverlapResult.class, remap = false)
     public static class MixinOverlapResult {
-        @Shadow(remap = false)
+        @Shadow
         @Final
         @Mutable
         private static TrackTargetingBlockItem.OverlapResult[] $VALUES;

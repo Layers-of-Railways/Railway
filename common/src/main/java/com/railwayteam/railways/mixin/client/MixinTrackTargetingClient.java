@@ -35,9 +35,8 @@ public abstract class MixinTrackTargetingClient {
     @Inject(method = "render", at = @At(
         value = "FIELD", opcode = Opcodes.GETSTATIC,
         target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/TrackTargetingClient;lastType:Lcom/simibubi/create/content/logistics/trains/management/edgePoint/EdgePointType;",
-        remap = false,
         ordinal = 0
-    ), cancellable = true, remap = false)
+    ), cancellable = true)
     private static void renderCustom(PoseStack ms, SuperRenderTypeBuffer buffer, CallbackInfo ci) {
         if (CustomTrackOverlayRendering.CUSTOM_OVERLAYS.containsKey(lastType)) {
             Minecraft mc = Minecraft.getInstance();

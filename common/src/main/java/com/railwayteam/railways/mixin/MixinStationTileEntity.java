@@ -116,21 +116,21 @@ public abstract class MixinStationTileEntity extends SmartTileEntity {
     private BlockPos overridenBogeyPosOffset = null;
     private int storedBogeyIdx = 0;
 
-    @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void storeBogeyData(UUID playerUUID, CallbackInfo ci, BlockPos trackPosition, BlockState trackState, ITrackBlock track, BlockPos bogeyOffset, TrackNodeLocation location, Vec3 centre, Collection ends, Vec3 targetOffset, List pointOffsets, int iPrevious, List points, Vec3 directionVec, TrackGraph graph, TrackNode secondNode, List<?> contraptions, List<?> carriages, List<?> spacing, boolean atLeastOneForwardControls, int bogeyIndex) {
         if (upsideDownBogeys[bogeyIndex])
             overridenBogeyPosOffset = trackPosition.offset(new BlockPos(bogeyOffset.getX(), bogeyOffset.getY() * -1, bogeyOffset.getZ()));
         storedBogeyIdx = bogeyIndex;
     }
 
-    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z"))
+    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true))
     private boolean assembleCorrectBogey(CarriageContraption instance, Level level, BlockPos bogeyPos) throws AssemblyException {
         boolean success = instance.assemble(level, overridenBogeyPosOffset != null ? overridenBogeyPosOffset.relative(assemblyDirection, bogeyLocations[storedBogeyIdx] + 1) : bogeyPos);
         overridenBogeyPosOffset = null;
         return success;
     }
 
-    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;getSecondBogeyPos()Lnet/minecraft/core/BlockPos;"))
+    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;getSecondBogeyPos()Lnet/minecraft/core/BlockPos;", remap = true))
     private BlockPos storeBogeyDataForOrderCheck(CarriageContraption instance) {
         BlockPos pos = instance.getSecondBogeyPos();
         return pos == null ? null : pos.above((storedBogeyIdx + 1 < upsideDownBogeys.length && upsideDownBogeys[storedBogeyIdx + 1]) ? 2 : 0);

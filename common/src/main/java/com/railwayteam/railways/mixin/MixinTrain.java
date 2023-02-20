@@ -109,7 +109,14 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         });
     }
 
-    @Inject(method = "lambda$backSignalListener$10", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = {
+                    "lambda$backSignalListener$12", // fabric
+                    "lambda$backSignalListener$10" // forge
+            },
+            at = @At("HEAD"),
+            cancellable = true
+    )
     private void backCouplerListener(Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple, CallbackInfoReturnable<Boolean> cir) {
         if (couple.getFirst() instanceof TrackCoupler coupler) {
             occupiedCouplers.remove(coupler.getId());
@@ -122,7 +129,14 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         occupiedCouplers.clear();
     }
 
-    @Inject(method = "lambda$collectInitiallyOccupiedSignalBlocks$18", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = {
+                    "lambda$collectInitiallyOccupiedSignalBlocks$20", // fabric
+                    "lambda$collectInitiallyOccupiedSignalBlocks$18" // forge
+            },
+            at = @At("HEAD"),
+            cancellable = true
+    )
     private void reAddOccupiedCouplers(MutableObject<UUID> prevGroup, Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple, CallbackInfoReturnable<Boolean> cir) {
         if (couple.getFirst() instanceof TrackCoupler coupler) {
             occupiedCouplers.add(coupler.getId());
@@ -159,7 +173,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         return instance.getContraption();
     }
 
-    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;"))
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;", remap = true))
     private BlockPos moveHangingCarriageDown(BlockPos instance, Direction pDirection, int pDistance) {
         BlockPos ret = instance.relative(pDirection, pDistance);
         if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
@@ -177,14 +191,14 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         tmpCarriage = tmpPrevCarriage = null;
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void storeTmpCarriages(Level level, CallbackInfo ci, double distance, Carriage previousCarriage, int carriageCount, boolean stalled,
                                    double maxStress, int i, Carriage carriage) {
         tmpCarriage = carriage;
         tmpPrevCarriage = previousCarriage;
     }
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D")) //TODO set carriages right before this
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D", remap = true)) //TODO set carriages right before this
     private double adjustDistanceTo(Vec3 instance, Vec3 pVec) {
         if (tmpCarriage != null && tmpPrevCarriage != null) {
             if (isUpsideDown(tmpCarriage.leadingBogey()) != isUpsideDown(tmpPrevCarriage.trailingBogey())) {

@@ -94,11 +94,7 @@ public abstract class MixinToolboxHandler {
     return conductor.getToolbox();
   }
 
-  @Inject(
-          method = "getNearest",
-          at = @At("RETURN"),
-          remap = false
-  )
+  @Inject(method = "getNearest", at = @At("RETURN"))
   private static void railway$findNearbyConductors(LevelAccessor world, Player player, int maxAmount,
                                                    CallbackInfoReturnable<List<ToolboxTileEntity>> cir) {
     List<ToolboxTileEntity> toolboxes = cir.getReturnValue();

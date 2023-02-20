@@ -41,7 +41,8 @@ public abstract class MixinTrackBlockOutline {
             method = "pickCurves",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/trains/track/BezierTrackPointLocation;<init>(Lnet/minecraft/core/BlockPos;I)V"
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/BezierTrackPointLocation;<init>(Lnet/minecraft/core/BlockPos;I)V",
+                    remap = true
             )
     )
     private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
@@ -53,7 +54,8 @@ public abstract class MixinTrackBlockOutline {
             method = "drawCurveSelection",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;renderShape(Lnet/minecraft/world/phys/shapes/VoxelShape;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Ljava/lang/Boolean;)V"
+                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;renderShape(Lnet/minecraft/world/phys/shapes/VoxelShape;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Ljava/lang/Boolean;)V",
+                    remap = true
             )
     )
     private static VoxelShape railway$renderCurvedMonorailShape(VoxelShape shape) {

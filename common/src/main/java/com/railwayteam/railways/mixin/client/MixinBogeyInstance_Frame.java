@@ -68,7 +68,7 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
         this.materialManager = materialManager;
     }
 
-    @Inject(method = "beginFrame", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/BogeyInstance;beginFrame(FLcom/mojang/blaze3d/vertex/PoseStack;)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "beginFrame", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/BogeyInstance;beginFrame(FLcom/mojang/blaze3d/vertex/PoseStack;)V", shift = At.Shift.AFTER, remap = true), cancellable = true)
     private void beginMonorailFrame(float wheelAngle, PoseStack ms, CallbackInfo ci) {
         if (isMonorail()) {
             ci.cancel();

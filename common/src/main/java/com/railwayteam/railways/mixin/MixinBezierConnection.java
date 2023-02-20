@@ -94,7 +94,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
   }
 
   @Inject(method = "write(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"),
-      cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
+      cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = true)
   private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
     compound.putString("Material", getMaterial().resName()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
     if (getTrackCasing() != null) {
@@ -108,7 +108,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     cir.setReturnValue(compound);
   }
 
-  @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = false)
+  @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
   private void netWrite(FriendlyByteBuf buffer, CallbackInfo ci) {
     buffer.writeEnum(getMaterial()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal
     buffer.writeBoolean(getTrackCasing() != null);
@@ -118,7 +118,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     }
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/BlockPos;)V", at = @At("RETURN"), remap = false)
+  @Inject(method = "<init>(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/BlockPos;)V", at = @At("RETURN"), remap = true)
   private void nbtConstructor(CompoundTag compound, BlockPos localTo, CallbackInfo ci) {
     setMaterial(TrackMaterial.ANDESITE);
     if (compound.contains("Material", Tag.TAG_STRING)) {
@@ -138,7 +138,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     }
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = false)
+  @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
   private void byteBufConstructor(FriendlyByteBuf buffer, CallbackInfo ci) {
     setMaterial(buffer.readEnum(TrackMaterial.class));
     if (buffer.readBoolean()) {
@@ -170,7 +170,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
 
   @SuppressWarnings("unchecked")
   @Redirect(method = {"spawnItems", "spawnDestroyParticles", "addItemsToPlayer"},
-      at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, target = "Lcom/simibubi/create/AllBlocks;TRACK:Lcom/tterrag/registrate/util/entry/BlockEntry;"), remap = false)
+      at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, target = "Lcom/simibubi/create/AllBlocks;TRACK:Lcom/tterrag/registrate/util/entry/BlockEntry;"))
   private BlockEntry<TrackBlock> redirectTrackSpawn() {
     return (BlockEntry<TrackBlock>) getMaterial().getTrackBlock();
   }

@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ItemModelShaper.class)
+@Mixin(value = ItemModelShaper.class, remap = false)
 public abstract class MixinItemModelShaper {
-    @Inject(method = "getItemModel(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/client/resources/model/BakedModel;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getItemModel(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/client/resources/model/BakedModel;", at = @At("HEAD"), cancellable = true, remap = true)
     private void addCustomConductorCapModels(ItemStack stack, CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() instanceof ConductorCapItem) {
             String name = stack.getHoverName().getString();
