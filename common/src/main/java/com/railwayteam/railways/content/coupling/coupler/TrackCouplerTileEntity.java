@@ -523,7 +523,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         b().translate("tooltip.coupler.action."+operationMode.name().toLowerCase(Locale.ROOT))
             .style(ChatFormatting.GREEN)
             .forGoggles(tooltip);
-        if (clientInfo.error != null) {
+        if (clientInfo != null && clientInfo.error != null) {
             b().add(clientInfo.error)
                 .style(ChatFormatting.DARK_RED)
                 .forGoggles(tooltip);
