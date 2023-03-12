@@ -20,6 +20,7 @@ public class CommonEvents {
         if (event.phase == TickEvent.Phase.START)
             return;
         Level level = event.world;
+        if (level.isClientSide) return;
         RedstoneLinkInstruction.tick(level);
         long ticks = level.getGameTime();
         for (Train train : Create.RAILWAYS.trains.values()) {
