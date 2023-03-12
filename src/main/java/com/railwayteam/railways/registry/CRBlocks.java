@@ -69,7 +69,7 @@ public class CRBlocks {
             .transform(pickaxeOnly())
             .blockstate(blockstateGen)
             .tag(AllTags.AllBlockTags.RELOCATION_NOT_SUPPORTED.tag)
-            .tag(CRTags.AllBlockTags.TRACKS.tag)
+            .tag(CRTags.AllBlockTags.TRACKS.tag) //TODO track api
             .lang(material.langName + " Train Track")
             .item(TrackBlockItem::new)
             .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))

@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = TrackPlacement.class, remap = false)
-public abstract class MixinTrackPlacement {
+public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
   @Inject(method = "tryConnect", at = @At(value = "FIELD",
       opcode = Opcodes.PUTFIELD,
       target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;curve:Lcom/simibubi/create/content/logistics/trains/BezierConnection;",
@@ -81,7 +81,7 @@ public abstract class MixinTrackPlacement {
     stackArgument.set(null);
   }
 
-  @Redirect(method = "tryConnect", at = @At(value = "INVOKE", opcode = Opcodes.GETSTATIC,
+  @Redirect(method = "tryConnect", at = @At(value = "INVOKE", opcode = Opcodes.GETSTATIC, //TODO track api
       target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"))
   private static boolean replaceTrack(BlockEntry<?> instance, ItemStack itemStack) {
     return CRTags.AllBlockTags.TRACKS.matches(stackArgument.get()) && itemStack.is(stackArgument.get().getItem());

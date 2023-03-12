@@ -210,7 +210,7 @@ public class TrackMaterial {
         }
 
         public static final TrackType STANDARD = new TrackType(Create.asResource("standard"), CustomTrackBlock::new);
-        public static final TrackType MONORAIL = new TrackType(Create.asResource("monorail"), MonorailTrackBlock::new);
+        public static final TrackType MONORAIL = new TrackType(Railways.asResource("monorail"), MonorailTrackBlock::new);
 
         public final ResourceLocation id;
         private final CustomTrackBlockFactory factory;
