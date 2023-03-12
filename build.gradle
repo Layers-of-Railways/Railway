@@ -144,7 +144,7 @@ dependencies {
 
 //Disable journeymap to test if mod runs without it
     compileOnly fg.deobf(group: 'info.journeymap', name: 'journeymap-api', version: project.journeymap_api_forge_version, changing: true) //must remain for compilation
-    runtimeOnly fg.deobf("curse.maven:journeymap-${project.jm_project_id}:${project.jm_forge_file_id}")  // this has to be disabled for datagen to work
+//    runtimeOnly fg.deobf("curse.maven:journeymap-${project.jm_project_id}:${project.jm_forge_file_id}")  // this has to be disabled for datagen to work
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }

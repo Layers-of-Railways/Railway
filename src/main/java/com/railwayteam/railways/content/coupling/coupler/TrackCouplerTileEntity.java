@@ -327,7 +327,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                     setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
                 if (frontCarriage != null && primaryTrain.carriages.indexOf(frontCarriage) < primaryTrain.carriages.size() - 1) {
                     Carriage backCarriage = primaryTrain.carriages.get(primaryTrain.carriages.indexOf(frontCarriage) + 1);
-                    if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true))
+                    if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true) &&
+                        Math.abs(primaryTrain.carriages.indexOf(frontCarriage) - primaryTrain.carriages.indexOf(backCarriage)) == 1) //Make sure that the carriages are actually next to each other
                         return new OperationInfo(OperationMode.DECOUPLING, frontCarriage, backCarriage);
                     else
                         setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
@@ -341,8 +342,15 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
                     secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
                     return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
-                else
-                    setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+                else {
+                    if (primaryCarriage != null && getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, true) != null) {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
+                    } else if (secondaryCarriage != null && getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, false) != null) {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
+                    } else {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+                    }
+                }
             } else {
                 setError(Components.translatable("railways.tooltip.coupler.error.missing_train"));
             }
