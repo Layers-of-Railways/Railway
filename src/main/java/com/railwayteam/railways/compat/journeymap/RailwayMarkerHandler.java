@@ -139,5 +139,15 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
     @Override
     public void reloadMarkers() {
         reload = true;
+        trainData.clear();
+        removeObsolete();
+    }
+
+    @Override
+    public void onJoinWorld() {
+        reload = true;
+        trainData.clear();
+        needingUpdates.clear();
+        removeObsolete();
     }
 }
