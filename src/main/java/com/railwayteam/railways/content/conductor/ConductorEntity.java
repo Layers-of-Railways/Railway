@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -57,6 +58,7 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConductorEntity extends AbstractGolem {
@@ -83,12 +85,21 @@ public class ConductorEntity extends AbstractGolem {
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
   public static final EntityDataAccessor<Job> JOB = SynchedEntityData.defineId(ConductorEntity.class, JOB_SERIALIZER);
+  public static final EntityDataAccessor<Boolean> HOLDING_SCHEDULES = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BOOLEAN);
 
   // keep this small for performance (plus conductors are smol)
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
 
   private ConductorFakePlayer fakePlayer = null;
   MountedToolboxHolder toolboxHolder = null;
+  private List<ItemStack> heldSchedules;
+
+  private List<ItemStack> getHeldSchedules() {
+    if (heldSchedules == null) {
+      heldSchedules = new ArrayList<>();
+    }
+    return heldSchedules;
+  }
 
   public ConductorEntity (EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
@@ -99,12 +110,27 @@ public class ConductorEntity extends AbstractGolem {
     return 0.5f;
   }
 
+  public boolean isHoldingSchedules() {
+    return !getHeldSchedules().isEmpty();
+  }
+
+  public boolean isHoldingSchedulesClient() {
+    return this.entityData.get(HOLDING_SCHEDULES);
+  }
+
+  public void addSchedule(ItemStack stack) {
+    if (stack.isEmpty()) return;
+    getHeldSchedules().add(stack.copy());
+    this.entityData.set(HOLDING_SCHEDULES, true);
+  }
+
   @Override
   protected void defineSynchedData () {
     super.defineSynchedData();
     this.entityData.define(COLOR, idFrom(defaultColor()));
     this.entityData.define(BLOCK, this.blockPosition());
     this.entityData.define(JOB, Job.DEFAULT);
+    this.entityData.define(HOLDING_SCHEDULES, this.isHoldingSchedules());
   }
 
   @Override
@@ -233,6 +259,13 @@ public class ConductorEntity extends AbstractGolem {
         openToolbox(player);
       }
       return InteractionResult.SUCCESS;
+    } else if (player.getItemInHand(hand).isEmpty() && !getHeldSchedules().isEmpty()) { //retrieve held schedules
+      for (ItemStack item : heldSchedules) {
+        if (!player.addItem(item)) {
+          player.drop(item, false);
+        }
+      }
+      this.entityData.set(HOLDING_SCHEDULES, false);
     }
     return super.mobInteract(player, hand);
   }
@@ -263,9 +296,13 @@ public class ConductorEntity extends AbstractGolem {
 
   public void setColor (DyeColor color) { getEntityData().set(COLOR, idFrom(color)); }
 
+  public DyeColor getColor() {
+    return colorFrom(this.entityData.get(COLOR));
+  }
+
   public boolean isCorrectEngineerCap (ItemStack hat) {
     if (hat.isEmpty()) return true;
-    return (hat.getItem() instanceof ConductorCapItem cap) && (cap.color == colorFrom(this.entityData.get(COLOR)));
+    return (hat.getItem() instanceof ConductorCapItem cap) && (cap.color == getColor());
   }
 
   boolean isLookingAtMe (Player player) {
@@ -493,6 +530,18 @@ public class ConductorEntity extends AbstractGolem {
       toolboxHolder.write(toolboxTag, false);
       nbt.put("toolboxHolder", toolboxTag);
     }
+    if (getHeldSchedules().size() != 0) {
+      ListTag schedulesTag = new ListTag();
+      boolean hasItem = false;
+      for (ItemStack heldSchedule : heldSchedules) {
+        if (!heldSchedule.isEmpty()) {
+          schedulesTag.add(heldSchedule.save(new CompoundTag()));
+          hasItem = true;
+        }
+      }
+      if (hasItem)
+        nbt.put("heldSchedules", schedulesTag);
+    }
     nbt.putString("job", getEntityData().get(JOB).name());
   }
 
@@ -515,6 +564,17 @@ public class ConductorEntity extends AbstractGolem {
     } else {
       getEntityData().set(JOB, Job.DEFAULT);
     }
+    getHeldSchedules().clear();
+    if (nbt.contains("heldSchedules", Tag.TAG_LIST)) {
+      ListTag schedulesTag = nbt.getList("heldSchedules", Tag.TAG_COMPOUND);
+      for (int i = 0; i < schedulesTag.size(); i++) {
+        ItemStack stack = ItemStack.of(schedulesTag.getCompound(i));
+        if (!stack.isEmpty())
+          getHeldSchedules().add(stack);
+      }
+    }
+    if (!level.isClientSide)
+      getEntityData().set(HOLDING_SCHEDULES, isHoldingSchedules());
   }
 
   @Override

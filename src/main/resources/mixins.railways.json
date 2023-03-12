@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "mixins.railways.refmap.json",
   "mixins": [
+    "AccessorCarriage",
     "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
     "AccessorNavigation",
