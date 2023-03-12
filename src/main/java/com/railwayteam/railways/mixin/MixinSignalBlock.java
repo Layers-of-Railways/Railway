@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(value = SignalBlock.class, remap = false)
-public abstract class MixinSignalBlock extends Block {
+public abstract class MixinSignalBlock extends Block { //TODO track api (ok not really, but this should just be in Create, if it already is, remove this)
 
     private MixinSignalBlock(Properties pProperties) {
         super(pProperties);

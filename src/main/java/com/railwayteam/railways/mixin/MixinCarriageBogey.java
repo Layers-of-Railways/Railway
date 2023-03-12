@@ -24,6 +24,6 @@ public class MixinCarriageBogey {
 
     @Inject(method = {"leading", "trailing"}, at = @At("HEAD"))
     private void setTravellingPointTypes(CallbackInfoReturnable<TravellingPoint> cir) {
-        points.forEach(point -> ((IBogeyTypeAwareTravellingPoint) point).setType(((AccessorCarriageBogey) carriage.leadingBogey()).getType()));
+        points.forEach(point -> ((IBogeyTypeAwareTravellingPoint) point).setType(((AccessorCarriageBogey) carriage.leadingBogey()).getType())); //TODO bogey api
     }
 }
