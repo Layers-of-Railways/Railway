@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 
 public interface IHasTrackMaterial {
   default TrackMaterial getMaterial() {

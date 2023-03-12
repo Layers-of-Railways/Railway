@@ -4,7 +4,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
@@ -15,18 +15,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Random;
-
-import static com.simibubi.create.AllShapes.*;
-import static com.simibubi.create.AllShapes.TRACK_ORTHO_LONG;
 
 public class MonorailTrackBlock extends CustomTrackBlock{
     public MonorailTrackBlock(Properties properties, TrackMaterial material) {

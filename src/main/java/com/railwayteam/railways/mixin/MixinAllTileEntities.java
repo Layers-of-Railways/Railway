@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllTileEntities;
 import com.tterrag.registrate.builders.BlockEntityBuilder;
@@ -22,15 +22,10 @@ public class MixinAllTileEntities {
           to = @At(value = "CONSTANT", args = "stringValue=fake_track")
       )
   )
-  private static BlockEntityBuilder<?, ?> addLegalTracks(BlockEntityBuilder<?, ?> instance, NonNullSupplier<? extends Block>[] blocks) {
+  private static BlockEntityBuilder<?, ?> addLegalTracks(BlockEntityBuilder<?, ?> instance, NonNullSupplier<? extends Block>[] blocks) { //TODO track api
     //Railways.LOGGER.info("TEST POS 1");
-    for (BlockEntry<? extends Block> blockEntry : TrackMaterial.allCustomBlocks()) {
-      if (blockEntry == null) {
-        Railways.LOGGER.error("blockEntry is null for some reason");
-        Railways.LOGGER.error("Acacia2: " + CRBlocks.ACACIA_TRACK);
-        Railways.LOGGER.error("Acacia3: " + TrackMaterial.ACACIA.getTrackBlock());
-        Railways.LOGGER.error("Acacia4: " + TrackMaterial.ACACIA.resName());
-      } else {
+    for (BlockEntry<? extends Block> blockEntry : TrackMaterial.allBlocks()) {
+      if (blockEntry != null) {
         instance.validBlock(blockEntry);
       }
     }

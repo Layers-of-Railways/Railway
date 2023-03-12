@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.custom_tracks;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.simibubi.create.content.logistics.trains.track.TrackShape;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;

@@ -1,7 +1,7 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
@@ -14,7 +14,9 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
@@ -31,7 +33,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
   }
 
   final EnumMap<DyeColor, GeneratedRecipe> CONDUCTOR_CAPS = new EnumMap<>(DyeColor.class);
-  final EnumMap<TrackMaterial, GeneratedRecipe> TRACKS = new EnumMap<>(TrackMaterial.class);
+  final Map<TrackMaterial, GeneratedRecipe> TRACKS = new HashMap<>();
   {
     for (DyeColor color : DyeColor.values()) {
       String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
@@ -46,7 +48,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
       ));
     }
 
-    for (TrackMaterial material : TrackMaterial.allCustom()) {
+    for (TrackMaterial material : TrackMaterial.allCustom(Railways.MODID)) { //TODO track api
       if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) continue;
 
       TRACKS.put(material, create("track_" + material.resName(), b -> b.require(material.sleeperIngredient)

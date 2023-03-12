@@ -1,9 +1,8 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
@@ -19,19 +18,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 
 @Mixin(value = TrackBlock.class, remap = false)
 public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial {
@@ -44,9 +38,9 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
    * @reason Need to add different types of items
    */
   @Overwrite
-  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
+  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) { //TODO track api
     int sameTypeTrackAmount = 1;
-    EnumMap<TrackMaterial, Integer> otherTrackAmounts = new EnumMap<>(TrackMaterial.class);
+    Map<TrackMaterial, Integer> otherTrackAmounts = new HashMap<>();
     int girderAmount = 0;
 
     if (te instanceof TrackTileEntity track) {

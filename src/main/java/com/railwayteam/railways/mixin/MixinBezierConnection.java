@@ -1,16 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.foundation.networking.AllPackets;
-import com.simibubi.create.foundation.tileEntity.RemoveTileEntityPacket;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.BlockPos;
@@ -24,10 +20,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -102,7 +96,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
   @Inject(method = "write(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"),
       cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = false)
   private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
-    compound.putString("Material", getMaterial().resName()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
+    compound.putString("Material", getMaterial().id.toString()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
     if (getTrackCasing() != null) {
       if (ForgeRegistries.BLOCKS.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
         Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());
@@ -116,7 +110,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
 
   @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = false)
   private void netWrite(FriendlyByteBuf buffer, CallbackInfo ci) {
-    buffer.writeEnum(getMaterial()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal
+    buffer.writeUtf(getMaterial().id.toString()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal
     buffer.writeBoolean(getTrackCasing() != null);
     if (getTrackCasing() != null) {
       buffer.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(getTrackCasing()));
@@ -146,7 +140,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
 
   @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = false)
   private void byteBufConstructor(FriendlyByteBuf buffer, CallbackInfo ci) {
-    setMaterial(buffer.readEnum(TrackMaterial.class));
+    setMaterial(TrackMaterial.deserialize(buffer.readUtf()));
     if (buffer.readBoolean()) {
       setTrackCasing((SlabBlock) ForgeRegistries.BLOCKS.getValue(buffer.readResourceLocation()));
       setAlternate(buffer.readBoolean());

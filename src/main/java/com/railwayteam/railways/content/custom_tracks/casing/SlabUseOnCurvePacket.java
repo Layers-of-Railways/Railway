@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.simibubi.create.content.logistics.trains.BezierConnection;

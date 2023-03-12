@@ -2,12 +2,10 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
-import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.minecarts.MinecartItem;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
-import com.simibubi.create.content.curiosities.ExperienceNuggetItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -18,17 +16,11 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Supplier;
-
-import static com.simibubi.create.AllTags.forgeItemTag;
-import static com.simibubi.create.Create.REGISTRATE;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -92,7 +84,7 @@ public class CRItems {
   public static final EnumMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);
   public static final EnumMap<DyeColor, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);
 
-  public static final EnumMap<TrackMaterial, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_TRACK = new EnumMap<>(TrackMaterial.class);
+  public static final Map<TrackMaterial, ItemEntry<SequencedAssemblyItem>> ITEM_INCOMPLETE_TRACK = new HashMap<>();
 
   static {
     for (DyeColor color : DyeColor.values()) {
@@ -117,7 +109,7 @@ public class CRItems {
         .register());
     }
 
-    for (TrackMaterial material : TrackMaterial.allCustom()) {
+    for (TrackMaterial material : TrackMaterial.allCustom(Railways.MODID)) { //TODO track api?
       ITEM_INCOMPLETE_TRACK.put(material, REGISTRATE.item("track_incomplete_" + material.resName(), SequencedAssemblyItem::new)
           .model((c, p) -> p.generated(c, Railways.asResource("item/track_incomplete/" + c.getName())))
           .lang("Incomplete " + material.langName + " Track")
