@@ -30,6 +30,6 @@ license="MIT"
 [[dependencies.railways]]
     modId="create"
     mandatory=true
-    versionRange="[0.5.0.g,)"
+    versionRange="[0.5.0.h,)"
     ordering="AFTER"
     side="BOTH"
