@@ -41,6 +41,9 @@ public class MixinSlidingDoorMovementBehaviour {
                     cir.setReturnValue(false);
                     return;
                 } else {
+                    if (train.currentlyBackwards) {
+                        mode = mode.flipped();
+                    }
                     if (!((((ISidedStation) station).opensLeft() && mode == SlidingDoorMode.STATION_LEFT) ||
                         (((ISidedStation) station).opensRight() && mode == SlidingDoorMode.STATION_RIGHT))) {
                         cir.setReturnValue(false);

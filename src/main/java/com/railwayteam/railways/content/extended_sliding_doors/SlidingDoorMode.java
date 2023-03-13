@@ -33,6 +33,14 @@ public enum SlidingDoorMode implements INamedIconOptions {
         this.stationBased = stationBased;
     }
 
+    public SlidingDoorMode flipped() {
+        if (stationBased) {
+            return this == STATION_LEFT ? STATION_RIGHT : STATION_LEFT;
+        } else {
+            return this;
+        }
+    }
+
     @Override
     public AllIcons getIcon() {
         return icon;
