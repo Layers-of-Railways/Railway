@@ -17,10 +17,10 @@ public class MonorailTrackBlockOutline {
 	public static final Map<VoxelShape, VoxelShape> TRACK_TO_MONORAIL = Map.of(
 			AllShapes.TRACK_ORTHO.get(Direction.EAST), CRShapes.MONORAIL_TRACK_ORTHO.get(Direction.EAST),
 			AllShapes.TRACK_ORTHO.get(Direction.SOUTH), CRShapes.MONORAIL_TRACK_ORTHO.get(Direction.SOUTH),
-			AllShapes.TRACK_CROSS, CRShapes.MONORAIL_TRACK_CROSS,
-			AccessorTrackBlockOutline.getLONG_ORTHO_OFFSET(), MONORAIL_LONG_ORTHO_OFFSET,
-			AccessorTrackBlockOutline.getLONG_ORTHO(), MONORAIL_LONG_ORTHO,
-			AccessorTrackBlockOutline.getLONG_CROSS(), MONORAIL_LONG_CROSS
+			AllShapes.TRACK_CROSS, CRShapes.MONORAIL_TRACK_CROSS
+//			AccessorTrackBlockOutline.getLONG_ORTHO_OFFSET(), MONORAIL_LONG_ORTHO_OFFSET,
+//			AccessorTrackBlockOutline.getLONG_ORTHO(), MONORAIL_LONG_ORTHO,
+//			AccessorTrackBlockOutline.getLONG_CROSS(), MONORAIL_LONG_CROSS
 	);
 
 	public static VoxelShape convert(Object o, boolean monorail) {

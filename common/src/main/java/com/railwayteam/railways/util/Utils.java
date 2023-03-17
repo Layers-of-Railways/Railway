@@ -20,11 +20,6 @@ public class Utils {
 	}
 
 	@ExpectPlatform
-	public static <T> TagAppender<T> builder(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
-		throw new AssertionError();
-	}
-
-	@ExpectPlatform
 	@Contract // shut
 	public static boolean isDevEnv() {
 		throw new AssertionError();

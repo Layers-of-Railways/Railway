@@ -11,9 +11,6 @@
     "railways:track_warped",
     "railways:track_blackstone",
     "railways:track_monorail",
-    {
-      "id": "create:track",
-      "required": false
-    }
+    "create:track"
   ]
 }

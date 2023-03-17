@@ -15,7 +15,7 @@ public class RailwaysSequencedAssemblyRecipeGenImpl extends RailwaysSequencedAss
 	}
 
 	public static RecipeProvider create(DataGenerator gen) {
-		RailwaysStandardRecipeGenImpl provider = new RailwaysStandardRecipeGenImpl(gen);
+		RailwaysSequencedAssemblyRecipeGenImpl provider = new RailwaysSequencedAssemblyRecipeGenImpl(gen);
 		return new FabricRecipeProvider((FabricDataGenerator) gen) {
 			@Override
 			protected void generateRecipes(Consumer<FinishedRecipe> exporter) {

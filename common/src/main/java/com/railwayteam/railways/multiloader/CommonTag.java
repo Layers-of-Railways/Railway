@@ -1,43 +1,57 @@
 package com.railwayteam.railways.multiloader;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.CRTagGen;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+
+import java.util.function.Consumer;
 
 /**
- * A pair of tags defining the same behavior with different formats across loaders.
+ * A common tag is a trio of tags: one for common, one for fabric, and one for forge.
+ * The common tag contains both loader tags and should only be used for querying.
+ * Content is added to both loader tags separately.
  */
-public abstract class CommonTag<T> {
-	protected final TagKey<T> forge;
-	protected final TagKey<T> fabric;
+public class CommonTag<T> {
+	public final TagKey<T> tag, fabric, forge;
 
-	public static final CommonTag<Item>
-			STRING = create(Registry.ITEM_REGISTRY, "string"),
-			IRON_NUGGETS = create(Registry.ITEM_REGISTRY, "nuggets/iron", "iron_nuggets"),
-			ZINC_NUGGETS = create(Registry.ITEM_REGISTRY, "nuggets/zinc", "zinc_nuggets");
-
-	protected CommonTag(TagKey<T> forge, TagKey<T> fabric) {
-		this.forge = forge;
+	public CommonTag(TagKey<T> common, TagKey<T> fabric, TagKey<T> forge) {
+		this.tag = common;
 		this.fabric = fabric;
+		this.forge = forge;
 	}
 
-	public abstract TagKey<T> resolve();
-
-	public static <T> CommonTag<T> create(ResourceKey<? extends Registry<T>> registry, String path) {
-		return create(registry, path, path);
+	public CommonTag(ResourceKey<? extends Registry<T>> registry, ResourceLocation common, ResourceLocation fabric, ResourceLocation forge) {
+		this(TagKey.create(registry, common), TagKey.create(registry, fabric), TagKey.create(registry, forge));
 	}
 
-	public static <T> CommonTag<T> create(ResourceKey<? extends Registry<T>> registry, String forgePath, String fabricPath) {
-		TagKey<T> forge = TagKey.create(registry, new ResourceLocation("forge", forgePath));
-		TagKey<T> fabric = TagKey.create(registry, new ResourceLocation("c", fabricPath));
-		return create(forge, fabric);
+	public static <T> CommonTag<T> conventional(ResourceKey<? extends Registry<T>> registry, String common, String fabric, String forge) {
+		return new CommonTag<>(
+				registry,
+				Railways.asResource("internal/" + common),
+				new ResourceLocation("c", fabric),
+				new ResourceLocation("forge", forge)
+		);
 	}
 
-	@ExpectPlatform
-	public static <T> CommonTag<T> create(TagKey<T> forge, TagKey<T> fabric) {
-		throw new AssertionError();
+	public static <T> CommonTag<T> conventional(ResourceKey<? extends Registry<T>> registry, String path) {
+		return conventional(registry, path, path, path);
+	}
+
+	public CommonTag<T> generateBoth(RegistrateTagsProvider<T> tags, Consumer<TagAppender<T>> consumer) {
+		consumer.accept(CRTagGen.tagAppender(tags, fabric));
+		consumer.accept(CRTagGen.tagAppender(tags, forge));
+		return this;
+	}
+
+	public CommonTag<T> generateCommon(RegistrateTagsProvider<T> tags) {
+		CRTagGen.tagAppender(tags, tag)
+				.addOptionalTag(fabric.location())
+				.addOptionalTag(forge.location());
+		return this;
 	}
 }

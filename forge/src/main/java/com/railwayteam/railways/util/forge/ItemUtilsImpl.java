@@ -1,20 +1,13 @@
 package com.railwayteam.railways.util.forge;
 
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class ItemUtilsImpl {
 	public static boolean blocksEndermanView(ItemStack stack, Player wearer, EnderMan enderman) {
 		return stack.isEnderMask(wearer, enderman);
-	}
-
-	public static TagKey<Item> getTag(DyeColor color) {
-		return color.getTag();
 	}
 
 	public static int nextTabId() {

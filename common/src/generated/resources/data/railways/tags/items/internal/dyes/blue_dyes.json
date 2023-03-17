@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:blue_dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes/blue",
+      "required": false
+    }
+  ]
+}

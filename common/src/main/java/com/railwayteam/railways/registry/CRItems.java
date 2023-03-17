@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
@@ -101,7 +102,7 @@ public class CRItems {
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
             .requires(CONDUCTOR_CAPS)
-            .requires(ItemUtils.getTag(color))
+            .requires(CommonTags.DYES.get(color).tag)
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
             .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());

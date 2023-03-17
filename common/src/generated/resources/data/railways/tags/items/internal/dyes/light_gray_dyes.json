@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:light_gray_dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes/light_gray",
+      "required": false
+    }
+  ]
+}

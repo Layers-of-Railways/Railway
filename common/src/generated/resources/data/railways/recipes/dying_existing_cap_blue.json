@@ -5,7 +5,7 @@
       "tag": "railways:conductor_caps"
     },
     {
-      "tag": "forge:dyes/blue"
+      "tag": "railways:internal/dyes/blue_dyes"
     }
   ],
   "result": {

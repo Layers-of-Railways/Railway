@@ -15,10 +15,10 @@
         },
         [
           {
-            "tag": "forge:nuggets/iron"
+            "tag": "railways:internal/nuggets/iron_nuggets"
           },
           {
-            "tag": "forge:nuggets/zinc"
+            "tag": "railways:internal/nuggets/zinc_nuggets"
           }
         ]
       ],
@@ -36,10 +36,10 @@
         },
         [
           {
-            "tag": "forge:nuggets/iron"
+            "tag": "railways:internal/nuggets/iron_nuggets"
           },
           {
-            "tag": "forge:nuggets/zinc"
+            "tag": "railways:internal/nuggets/zinc_nuggets"
           }
         ]
       ],

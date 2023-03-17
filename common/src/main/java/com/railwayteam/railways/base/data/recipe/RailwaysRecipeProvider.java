@@ -1,7 +1,7 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.multiloader.CommonTag;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.data.DataGenerator;
@@ -42,7 +42,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
   @SuppressWarnings("SameReturnValue")
   public static class Ingredients {
     public static TagKey<Item> string() {
-      return CommonTag.STRING.resolve();
+      return CommonTags.STRING.tag;
     }
 
     public static ItemLike precisionMechanism() {
@@ -50,11 +50,11 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     }
 
     public static TagKey<Item> ironNugget() {
-      return CommonTag.IRON_NUGGETS.resolve();
+      return CommonTags.IRON_NUGGETS.tag;
     }
 
     public static TagKey<Item> zincNugget() {
-      return CommonTag.ZINC_NUGGETS.resolve();
+      return CommonTags.ZINC_NUGGETS.tag;
     }
 
     public static ItemLike girder() {

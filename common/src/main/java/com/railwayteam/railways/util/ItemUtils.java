@@ -16,12 +16,6 @@ public class ItemUtils {
 		throw new AssertionError();
 	}
 
-	// despite seeming useless at first glance, this is needed. The 2 impls are different.
-	@ExpectPlatform
-	public static TagKey<Item> getTag(DyeColor color) {
-		throw new AssertionError();
-	}
-
 	@ExpectPlatform
 	public static int nextTabId() {
 		throw new AssertionError();

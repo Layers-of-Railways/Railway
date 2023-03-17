@@ -19,6 +19,7 @@ import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.tender.TenderBlock;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
@@ -68,7 +69,7 @@ public class CRBlocks {
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
             .blockstate(blockstateGen)
-            .tag(AllTags.AllBlockTags.RELOCATION_NOT_SUPPORTED.tag)
+            .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
             .tag(CRTags.AllBlockTags.TRACKS.tag)
             .lang(material.langName + " Train Track")
             .item(TrackBlockItem::new)

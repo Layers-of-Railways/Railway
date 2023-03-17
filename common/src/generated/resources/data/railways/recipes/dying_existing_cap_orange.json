@@ -5,7 +5,7 @@
       "tag": "railways:conductor_caps"
     },
     {
-      "tag": "forge:dyes/orange"
+      "tag": "railways:internal/dyes/orange_dyes"
     }
   ],
   "result": {

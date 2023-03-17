@@ -43,7 +43,7 @@
           "item": "railways:purple_incomplete_conductor_cap"
         },
         {
-          "tag": "forge:string"
+          "tag": "railways:internal/string"
         }
       ],
       "results": [

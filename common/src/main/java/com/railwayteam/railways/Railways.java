@@ -1,6 +1,7 @@
 package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.railwayteam.railways.base.data.CRTagGen;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
@@ -14,6 +15,7 @@ import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
+import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.Registry;
@@ -32,10 +34,10 @@ import java.util.function.BiConsumer;
 public class Railways {
   public static final String MODID = "railways";
   public static final Logger LOGGER = LogManager.getLogger(MODID);
-  public static final ModSetup setup = new ModSetup();
   public static final String VERSION = findVersion();
 
-  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID).creativeModeTab(() -> CRItems.itemGroup);
+  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
+          .creativeModeTab(() -> CRItems.itemGroup, "Create Railways");
 
   public static void init() {
     ModSetup.register();
@@ -64,17 +66,13 @@ public class Railways {
 		return new ResourceLocation(MODID, name);
 	}
 
-    // TODO ARCH: datagen
-  public static void gatherData(DataGenerator gen, boolean client, boolean server) {
-    if (server) {
-      gen.addProvider(RailwaysSequencedAssemblyRecipeGen.create(gen));
-      gen.addProvider(RailwaysStandardRecipeGen.create(gen));
-    }
-    if (client) {
-      PonderLocalization.provideRegistrateLang(REGISTRATE);
-      gen.addProvider(new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
-    }
-
+  public static void gatherData(DataGenerator gen) {
+    REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
+    REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
+    gen.addProvider(RailwaysSequencedAssemblyRecipeGen.create(gen));
+    gen.addProvider(RailwaysStandardRecipeGen.create(gen));
+    PonderLocalization.provideRegistrateLang(REGISTRATE);
+    gen.addProvider(new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
   }
 
   public static CreateRegistrate registrate() {

@@ -19,6 +19,9 @@
     ],
     "client": [
       "com.railwayteam.railways.fabric.RailwaysClientImpl"
+    ],
+    "fabric-datagen": [
+      "com.railwayteam.railways.fabric.RailwaysDataFabric"
     ]
   },
   "mixins": [
