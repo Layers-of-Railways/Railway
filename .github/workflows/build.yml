@@ -28,6 +28,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
+          distribution: temurin
 
       - name: setup Gradle
         uses: gradle/gradle-build-action@v2
