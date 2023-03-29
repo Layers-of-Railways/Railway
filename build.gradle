@@ -8,15 +8,6 @@ architectury {
     minecraft = rootProject.minecraft_version
 }
 
-def getGitHash = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'rev-parse', '--short', 'HEAD'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
-
 subprojects {
     apply plugin: "dev.architectury.loom"
     apply plugin: "io.github.juuxel.loom-quiltflower"
@@ -63,6 +54,13 @@ subprojects {
 
         // see each subproject for dependencies.
     }
+
+    tasks.register("moveBuiltJars", Copy) {
+        if (project.name == "common")
+            return
+        from file("build/libs/${archivesBaseName}-${version}.jar")
+        into rootProject.file("jars")
+    }
 }
 
 allprojects {
@@ -73,20 +71,12 @@ allprojects {
     archivesBaseName = rootProject.archives_base_name
     group = rootProject.maven_group
 
-    version = "${mod_version}+${project.name}-${minecraft_version}"
-    if (System.getenv("DEV") == "true") {
-        version += "-dev-${getGitHash()}"
-    }
-    if (System.getenv("CI") == "true") {
-        version += "-nightly-${getGitHash()}"
-    }
+    // Formats the mod version to include the loader, Minecraft version, and build number (if present)
+    // example: 1.0.0+fabric-1.18.2-100
+    String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
+    version = "${mod_version}+${project.name}-${minecraft_version}" + (buildNumber != null ? "-${buildNumber}" : "")
 
     repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
     }
 
     tasks.withType(JavaCompile) {
@@ -97,29 +87,3 @@ allprojects {
         withSourcesJar()
     }
 }
-
-// TODO ARCH: BELOW
-
-def hasUnstaged = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'status', '--porcelain'
-        standardOutput = stdout
-    }
-    def result = stdout.toString().replaceAll("M gradlew", "").trim()
-    if (!result.isEmpty())
-        println("Found stageable results:\n${result}\n")
-    return !result.isEmpty()
-}
-
-//buildConfig {
-//    buildConfigField 'String', 'MODID', "\"${modid}\""
-//    buildConfigField 'String', 'VERSION', "\"${project.version}\""
-//    buildConfigField 'String', 'DISPLAY_NAME', "\"${display_name}\""
-//    def gitstage = "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
-//    println("Using git stage ${gitstage}")
-//    buildConfigField "String", "GITHASH", gitstage
-//
-//    version = project.version
-//    packageName = project.group
-//}

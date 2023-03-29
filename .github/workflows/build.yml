@@ -1,0 +1,53 @@
+name: build
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      'l10n_1.19/dev'
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        java: [ 17 ]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: send building message to Discord
+        if: github.event_name != 'pull_request'
+        uses: realRobotix/action-discord-notifier@release-master
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message-title: "Building mod from ${{ github.ref }}"
+
+      - name: setup Java ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+
+      - name: setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: build
+        run: ./gradlew build
+
+      - name: collect built jars
+        run: ./gradlew moveBuiltJars
+
+      - name: capture build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: jars
+
+      - name: upload production builds to Discord
+        if: github.event_name != 'pull_request'
+        uses: sinshutu/upload-to-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: ./jars/*.jar
