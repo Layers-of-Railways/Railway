@@ -32,6 +32,8 @@ jobs:
 
       - name: setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: false
 
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
