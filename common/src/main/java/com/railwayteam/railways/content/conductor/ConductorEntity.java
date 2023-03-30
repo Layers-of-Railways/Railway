@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.jozufozu.flywheel.util.WeakHashSet;
-import com.jozufozu.flywheel.util.WorldAttached;
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.util.EntityUtils;
@@ -9,6 +8,7 @@ import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.util.ItemUtils;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.curiosities.toolbox.ToolboxBlock;
+import com.simibubi.create.foundation.utility.WorldAttached;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -52,7 +52,9 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
@@ -62,7 +64,7 @@ public class ConductorEntity extends AbstractGolem {
           "[Conductor]"
   );
 
-  public static final WorldAttached<WeakHashSet<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new WeakHashSet<>());
+  public static final WorldAttached<Set<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new HashSet<>());
 
   // FIXME: cannot have custom serializers! This will explode!
   private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
@@ -123,6 +125,17 @@ public class ConductorEntity extends AbstractGolem {
       .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
       .add(Attributes.ARMOR, 8.0D)
       .add(Attributes.ARMOR_TOUGHNESS, 8.0D);
+  }
+
+  @Override
+  public void remove(@NotNull RemovalReason reason) {
+    super.remove(reason);
+    WITH_TOOLBOXES.get(level).remove(this);
+  }
+
+  @Override
+  public void onClientRemoval() {
+    WITH_TOOLBOXES.get(level).remove(this);
   }
 
   @Override

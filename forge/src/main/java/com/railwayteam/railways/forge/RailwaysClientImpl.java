@@ -11,6 +11,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
@@ -23,7 +24,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@EventBusSubscriber
+@EventBusSubscriber(Dist.CLIENT)
 public class RailwaysClientImpl {
 	public static void init() {
 		RailwaysClient.init();

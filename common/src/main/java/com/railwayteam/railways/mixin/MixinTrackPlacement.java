@@ -118,16 +118,4 @@ public class MixinTrackPlacement {
 		}
 		return original;
 	}
-
-	@ModifyArg(
-			method = "clientTick",
-			at = @At(
-					value = "INVOKE",
-					target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",
-					remap = true
-			)
-	)
-	private static ItemStack railway$allowCustomTracks(ItemStack held) {
-		return CustomTrackChecks.check(held);
-	}
 }

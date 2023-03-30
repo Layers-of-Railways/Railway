@@ -10,9 +10,16 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -26,12 +33,12 @@ public class CREntities {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
   public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
-      .renderer(() -> ctx -> new MinecartRenderer<>(ctx, ModelLayers.MINECART))
+      .renderer(() -> CREntities::cartRenderer)
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Workbench")
       .register();
   public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
-      .renderer(() -> ctx -> new MinecartRenderer<>(ctx, ModelLayers.MINECART))
+      .renderer(() -> CREntities::cartRenderer)
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Jukebox")
       .register();
@@ -52,6 +59,11 @@ public class CREntities {
 
   private static <T> NonNullConsumer<T> configure(Consumer<EntityTypeConfigurator> consumer) {
       return builder -> consumer.accept(EntityTypeConfigurator.of(builder));
+  }
+
+  @Environment(EnvType.CLIENT)
+  private static EntityRenderer<AbstractMinecart> cartRenderer(Context ctx) {
+      return new MinecartRenderer<>(ctx, ModelLayers.MINECART);
   }
 
   @SuppressWarnings("EmptyMethod")
