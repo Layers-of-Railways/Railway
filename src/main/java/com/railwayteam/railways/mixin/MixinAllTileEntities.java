@@ -22,7 +22,7 @@ public class MixinAllTileEntities {
           to = @At(value = "CONSTANT", args = "stringValue=fake_track")
       )
   )
-  private static BlockEntityBuilder<?, ?> addLegalTracks(BlockEntityBuilder<?, ?> instance, NonNullSupplier<? extends Block>[] blocks) { //TODO track api
+  private static BlockEntityBuilder<?, ?> addLegalTracks(BlockEntityBuilder<?, ?> instance, NonNullSupplier<? extends Block>[] blocks) { //TODO _track api
     //Railways.LOGGER.info("TEST POS 1");
     for (BlockEntry<? extends Block> blockEntry : TrackMaterial.allBlocks()) {
       if (blockEntry != null) {

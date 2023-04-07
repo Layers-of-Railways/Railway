@@ -11,7 +11,7 @@ import static com.railwayteam.railways.mixin_interfaces.ITrackCheck.check;
 
 @Mixin(TrackBlockItem.class)
 public class MixinTrackBlockItem {
-  @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", remap = false)) //TODO track api
+  @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", remap = false)) //TODO _track api
   private boolean customCheck(BlockEntry<?> instance, ItemStack itemStack) {
     return check(instance, itemStack);
   }

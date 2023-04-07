@@ -7,7 +7,7 @@ import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(value = TrackPlacement.PlacementInfo.class, remap = false)
-public abstract class MixinTrackPlacement_PlacementInfo implements IHasTrackMaterial { //TODO track api
+public abstract class MixinTrackPlacement_PlacementInfo implements IHasTrackMaterial { //TODO _track api
   private TrackMaterial trackMaterial;
 
   @Override

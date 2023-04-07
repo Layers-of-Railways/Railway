@@ -115,7 +115,6 @@ public class TrackMaterial {
     public final ResourceLocation id;
     public final String langName;
     public final Supplier<BlockEntry<? extends TrackBlock>> trackBlock; //replace with supplier
-    public final boolean createBuiltin;
     public final Ingredient sleeperIngredient;
     public final Ingredient railsIngredient;
     public final ResourceLocation particle;
@@ -143,12 +142,11 @@ public class TrackMaterial {
         this(langName, trackBlock, particle, sleeperIngredient, railsIngredient, createBuiltin, TrackType.STANDARD);
     }*/
 
-    public TrackMaterial(ResourceLocation id, String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, boolean createBuiltin, TrackType trackType, TrackModelHolder modelHolder) {
+    public TrackMaterial(ResourceLocation id, String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, TrackType trackType, TrackModelHolder modelHolder) {
         this.id = id;
         this.langName = langName;
         this.trackBlock = trackBlock;
 //    Railways.LOGGER.info("Building track_material: "+this.langName+", trackBlock:"+this.trackBlock);
-        this.createBuiltin = createBuiltin;
         this.sleeperIngredient = sleeperIngredient;
         this.railsIngredient = railsIngredient;
         this.particle = particle;
@@ -166,7 +164,7 @@ public class TrackMaterial {
     }
 
     public boolean isCustom(String modId) {
-        return !createBuiltin && this.id.getNamespace().equals(modId);
+        return this.id.getNamespace().equals(modId);
     }
 
     public static TrackMaterial[] allCustom(String modid) {

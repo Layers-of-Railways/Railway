@@ -24,8 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = TrackPlacement.class, remap = false)
-public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
-  @Inject(method = "tryConnect", at = @At(value = "FIELD",
+public abstract class MixinTrackPlacement { //TODO _track api ALL OF IT (totally done)
+  @Inject(method = "tryConnect", at = @At(value = "FIELD", // DONE
       opcode = Opcodes.PUTFIELD,
       target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;curve:Lcom/simibubi/create/content/logistics/trains/BezierConnection;",
       ordinal = 0, shift = At.Shift.AFTER),
@@ -34,7 +34,7 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
     setupMaterial(level, player, pos2, state2, stack, girder, maximiseTurn, cir, lookVec, lookAngle, info);
   }
 
-  @Inject(method = "tryConnect", at = @At(value = "FIELD",
+  @Inject(method = "tryConnect", at = @At(value = "FIELD", // DONE
       opcode = Opcodes.PUTFIELD,
       target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;valid:Z",
       ordinal = 0),
@@ -43,6 +43,7 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
           setupMaterial(level, player, pos2, state2, stack, girder, maximiseTurn, cir, lookVec, lookAngle, info);
   }
 
+  // DONE
   private static void setupMaterial(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, TrackPlacement.PlacementInfo info) {
     if (((AccessorTrackPlacement_PlacementInfo) info).getCurve() != null) {
       if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
@@ -51,6 +52,7 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
     }
   }
 
+  // DONE
   @Inject(method = "tryConnect", at = @At(value = "RETURN", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
   private static void setupMaterial_2(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
@@ -60,6 +62,7 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
     }
   }
 
+  // DONE
   @Inject(method = "tryConnect", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target="Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement;placeTracks(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, slice = @Slice(from = @At(value = "RETURN", ordinal = 1)))
   private static void setupMaterial_before_place(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir, Vec3 lookVec, int lookAngle, int maxLength, TrackPlacement.PlacementInfo info, ITrackBlock track, Pair nearestTrackAxis, Vec3 axis2, Vec3 normal2, Vec3 normedAxis2, Vec3 end2, CompoundTag itemTag, CompoundTag selectionTag, BlockPos pos1, Vec3 axis1, Vec3 normedAxis1, Vec3 end1, Vec3 normal1, boolean front1, BlockState state1, double[] intersect, boolean parallel, boolean skipCurve, Vec3 cross2, double a1, double a2, double angle, double ascend, double absAscend, boolean slope, double dist, Vec3 offset1, Vec3 offset2, BlockPos targetPos1, BlockPos targetPos2) {
     if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof IHasTrackMaterial hasTrackMaterial) {
@@ -69,36 +72,40 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
     }
   }
 
-  private static final ThreadLocal<ItemStack> stackArgument = new ThreadLocal<>();
+  private static final ThreadLocal<ItemStack> stackArgument = new ThreadLocal<>(); // DONE
 
-  @Inject(method = "tryConnect", at = @At("HEAD"))
+  @Inject(method = "tryConnect", at = @At("HEAD")) // DONE
   private static void saveStack(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     stackArgument.set(stack);
   }
 
-  @Inject(method = "tryConnect", at = @At("RETURN"))
+  @Inject(method = "tryConnect", at = @At("RETURN")) // DONE
   private static void resetStack(Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack, boolean girder, boolean maximiseTurn, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     stackArgument.set(null);
   }
 
-  @Redirect(method = "tryConnect", at = @At(value = "INVOKE", opcode = Opcodes.GETSTATIC, //TODO track api
+  @Redirect(method = "tryConnect", at = @At(value = "INVOKE", opcode = Opcodes.GETSTATIC, //TODO _track api
       target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"))
   private static boolean replaceTrack(BlockEntry<?> instance, ItemStack itemStack) {
     return CRTags.AllBlockTags.TRACKS.matches(stackArgument.get()) && itemStack.is(stackArgument.get().getItem());
   }
 
+  // DONE
   private static final ThreadLocal<TrackPlacement.PlacementInfo> infoArgument = new ThreadLocal<>();
 
+  // DONE
   @Inject(method = "placeTracks", at = @At("HEAD"))
   private static void saveInfo(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     infoArgument.set(info);
   }
 
+  // DONE
   @Inject(method = "placeTracks", at = @At("RETURN"))
   private static void resetInfo(Level level, TrackPlacement.PlacementInfo info, BlockState state1, BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir) {
     infoArgument.set(null);
   }
 
+  // DONE
   @SuppressWarnings({"MixinAnnotationTarget", "InvalidInjectorMethodSignature"})
   @ModifyVariable(method = "placeTracks", at = @At(value = "STORE", ordinal = 0), ordinal = 4, require = 1, remap = false)
   private static BlockState modifyToPlace(BlockState value) {
@@ -145,6 +152,7 @@ public abstract class MixinTrackPlacement { //TODO track api ALL OF IT
     }
     relevantState.set(BlockStateUtils.trackWith(((IHasTrackMaterial) infoArgument2.get()).getMaterial().getTrackBlock().get(), relevantState.get()));
 //    Railways.LOGGER.info("relevantStatePost: " + relevantState + ", stateAtPosVar: " + stateAtPosVar);
+    // keep original block if it is already a track!
     return (CRTags.AllBlockTags.TRACKS.matches(stateAtPosVar.get().getBlock()) ? stateAtPosVar.get() : relevantState.get()).setValue(TrackBlock.HAS_TE, true);
   }
 }

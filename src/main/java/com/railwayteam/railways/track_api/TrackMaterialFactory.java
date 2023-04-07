@@ -15,7 +15,6 @@ public class TrackMaterialFactory {
     private final ResourceLocation id;
     private String langName;
     private Supplier<BlockEntry<? extends TrackBlock>> trackBlock;
-    private boolean createBuiltin = false;
     private Ingredient sleeperIngredient = Ingredient.EMPTY;
     private Ingredient railsIngredient = Ingredient.fromValues(Stream.of(new Ingredient.TagValue(RailwaysRecipeProvider.Ingredients.ironNugget()), new Ingredient.TagValue(RailwaysRecipeProvider.Ingredients.zincNugget())));
     private ResourceLocation particle;
@@ -40,7 +39,6 @@ public class TrackMaterialFactory {
     }
 
     public TrackMaterialFactory setBuiltin() {
-        this.createBuiltin = true;
         this.modelHolder = TrackMaterial.TrackModelHolder.DEFAULT;
         return this;
     }
@@ -110,6 +108,6 @@ public class TrackMaterialFactory {
             assert tieModel != null && leftSegmentModel != null && rightSegmentModel != null;
             modelHolder = new TrackMaterial.TrackModelHolder(tieModel, leftSegmentModel, rightSegmentModel);
         }
-        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, createBuiltin, trackType, modelHolder);
+        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, trackType, modelHolder);
     }
 }

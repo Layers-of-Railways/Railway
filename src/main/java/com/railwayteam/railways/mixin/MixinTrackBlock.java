@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.*;
 
 @Mixin(value = TrackBlock.class, remap = false)
-public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial { //TODO track api
+public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial { //TODO _track api
   public MixinTrackBlock(Properties pProperties) {
     super(pProperties);
   }
@@ -38,7 +38,7 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
    * @reason Need to add different types of items
    */
   @Overwrite
-  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) { //TODO track api
+  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) { //TODO _track api
     int sameTypeTrackAmount = 1;
     Map<TrackMaterial, Integer> otherTrackAmounts = new HashMap<>();
     int girderAmount = 0;
