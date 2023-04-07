@@ -28,10 +28,12 @@ public class CommonEvents {
             if (offsetTicks % Config.FAR_TRAIN_SYNC_TICKS.get() == 0) {
                 CRPackets.channel.send(PacketDistributor.ALL.noArg(), new TrainMarkerDataUpdatePacket(train));
             }
-            if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) {
-                Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
-                if (trainEntity != null)
-                    CRPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> trainEntity), new TrainMarkerDataUpdatePacket(train));
+            if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) { //DONE train *might* not have any carriages if it just got coupled, fix that
+                if (train.carriages.size() >= 1) {
+                    Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
+                    if (trainEntity != null)
+                        CRPackets.channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> trainEntity), new TrainMarkerDataUpdatePacket(train));
+                }
             }
         }
     }
