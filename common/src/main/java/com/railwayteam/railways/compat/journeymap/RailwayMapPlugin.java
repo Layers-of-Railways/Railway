@@ -1,7 +1,6 @@
 package com.railwayteam.railways.compat.journeymap;
 
 import com.railwayteam.railways.Railways;
-import journeymap.client.api.ClientPlugin;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.IClientPlugin;
 import journeymap.client.api.event.ClientEvent;
@@ -11,7 +10,6 @@ import java.util.EnumSet;
 
 import static journeymap.client.api.event.ClientEvent.Type.MAPPING_STOPPED;
 
-@ClientPlugin
 public class RailwayMapPlugin implements IClientPlugin {
     private IClientAPI api;
 

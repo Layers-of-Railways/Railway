@@ -69,10 +69,10 @@ public class Railways {
   public static void gatherData(DataGenerator gen) {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
-    gen.addProvider(RailwaysSequencedAssemblyRecipeGen.create(gen));
-    gen.addProvider(RailwaysStandardRecipeGen.create(gen));
+    gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
+    gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
-    gen.addProvider(new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
+    gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
   }
 
   public static CreateRegistrate registrate() {
