@@ -17,7 +17,9 @@ import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -26,10 +28,10 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.TriConsumer;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.nio.file.Path;
-import java.util.function.BiConsumer;
 
 public class Railways {
   public static final String MODID = "railways";
@@ -90,7 +92,7 @@ public class Railways {
   }
 
   @ExpectPlatform
-  public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
+  public static void registerCommands(TriConsumer<CommandDispatcher<CommandSourceStack>, CommandBuildContext, Commands.CommandSelection> consumer) {
     throw new AssertionError();
   }
 

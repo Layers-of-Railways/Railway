@@ -6,14 +6,16 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
 import com.simibubi.create.foundation.command.AllCommands;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 
 import java.util.Collections;
 
 import static net.minecraft.commands.Commands.literal;
 
 public class CRCommands {
-  public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
+  public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandBuildContext, Commands.CommandSelection commandSelection) {
 
     LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(literal("railways")
         .requires(cs -> cs.hasPermission(0))
