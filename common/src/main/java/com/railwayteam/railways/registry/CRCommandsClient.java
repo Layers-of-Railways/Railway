@@ -14,6 +14,8 @@ import static com.railwayteam.railways.multiloader.ClientCommands.literal;
 
 public class CRCommandsClient {
 	public static void register(CommandDispatcher<SharedSuggestionProvider> dispatcher) {
+		if (dispatcher == null)
+			return;
 		LiteralCommandNode<SharedSuggestionProvider> railwaysRoot = dispatcher.register(literal("railways_client")
 				.requires(cs -> cs.hasPermission(0))
 				.then(ClearCasingCacheCommand.register())
