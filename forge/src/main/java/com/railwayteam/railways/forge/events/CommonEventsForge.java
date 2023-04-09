@@ -24,14 +24,14 @@ import org.jetbrains.annotations.Nullable;
 @EventBusSubscriber
 public class CommonEventsForge {
 	@SubscribeEvent
-	public static void onWorldTick(TickEvent.WorldTickEvent event) {
+	public static void onWorldTick(TickEvent.LevelTickEvent event) {
 		if (event.phase == Phase.START)
-			CommonEvents.onWorldTickStart(event.world);
+			CommonEvents.onWorldTickStart(event.level);
 	}
 
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-		if (event.getPlayer() instanceof ServerPlayer player)
+		if (event.getEntity() instanceof ServerPlayer player)
 			CommonEvents.onPlayerJoin(player);
 	}
 

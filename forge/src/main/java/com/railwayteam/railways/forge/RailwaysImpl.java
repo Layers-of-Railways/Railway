@@ -61,7 +61,7 @@ public class RailwaysImpl {
 
 	@SubscribeEvent
 	public static void onCommandRegistration(RegisterCommandsEvent event) {
-		CommandSelection selection = event.getEnvironment();
+		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
 		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
 	}
