@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-
-import java.util.Random;
 
 public class EntityUtilsImpl {
 	public static CompoundTag getPersistentData(Entity entity) {
@@ -34,7 +33,7 @@ public class EntityUtilsImpl {
 			t.commit();
 
 			Level level = player.level;
-			Random r = level.random;
+			RandomSource r = level.random;
 			float pitch = ((r.nextFloat() - r.nextFloat()) * 0.7f + 1.0f) * 2.0f;
 			level.playSound(
 					null,
