@@ -46,6 +46,11 @@ public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
     return TYPE;
   }
 
+  @Override
+    protected Item getDropItem() {
+        return CRItems.ITEM_BENCHCART.get();
+    }
+
   @NotNull
   @Override
   public InteractionResult interact (@NotNull Player player, @NotNull InteractionHand hand) {

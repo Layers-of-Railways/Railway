@@ -54,6 +54,11 @@ public class MinecartJukebox extends MinecartBlock {
   }
 
   @Override
+  protected Item getDropItem() {
+    return CRItems.ITEM_JUKEBOXCART.get();
+  }
+
+  @Override
   public void tick () {
     super.tick();
     if (cooldownCount > 0) cooldownCount--;
@@ -144,7 +149,7 @@ public class MinecartJukebox extends MinecartBlock {
   @Environment(EnvType.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
-      super(event, SoundSource.RECORDS);
+      super(event, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
     }
 
     @Override
