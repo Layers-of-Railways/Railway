@@ -1,9 +1,8 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.BlockStateUtils;
-import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
@@ -22,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrackPlacement.class, remap = false)
-public class MixinTrackPlacement {
+public class MixinTrackPlacement { //TODO _track api ALL OF IT (totally done)
 	@ModifyVariable(
 			method = "tryConnect",
 			at = @At(

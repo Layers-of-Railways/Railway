@@ -60,8 +60,7 @@ public class ClientEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onWorldLoad(WorldEvent.Load event) {
+    public static void onClientWorldLoad(Level level) {
         DummyRailwayMarkerHandler.getInstance().onJoinWorld();
     }
 }

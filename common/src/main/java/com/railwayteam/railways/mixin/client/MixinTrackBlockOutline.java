@@ -1,15 +1,12 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlockOutline;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
-import com.railwayteam.railways.registry.CRShapes;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.*;
-import com.simibubi.create.foundation.utility.VoxelShaper;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;

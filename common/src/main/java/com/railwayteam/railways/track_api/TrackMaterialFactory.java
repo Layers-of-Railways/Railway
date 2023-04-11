@@ -2,6 +2,7 @@ package com.railwayteam.railways.track_api;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider;
+import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,10 @@ public class TrackMaterialFactory {
     private String langName;
     private Supplier<BlockEntry<? extends TrackBlock>> trackBlock;
     private Ingredient sleeperIngredient = Ingredient.EMPTY;
-    private Ingredient railsIngredient = Ingredient.fromValues(Stream.of(new Ingredient.TagValue(RailwaysRecipeProvider.Ingredients.ironNugget()), new Ingredient.TagValue(RailwaysRecipeProvider.Ingredients.zincNugget())));
+    private Ingredient railsIngredient = Ingredient.fromValues(Stream.of(
+            AccessorIngredient_TagValue.railway$create(RailwaysRecipeProvider.Ingredients.ironNugget()),
+            AccessorIngredient_TagValue.railway$create(RailwaysRecipeProvider.Ingredients.zincNugget())
+    ));
     private ResourceLocation particle;
     private TrackMaterial.TrackType trackType = TrackMaterial.TrackType.STANDARD;
     private TrackMaterial.TrackModelHolder modelHolder = null;

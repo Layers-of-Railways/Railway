@@ -6,6 +6,7 @@
   "mixins": [
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
+    "AccessorCarriage",
     "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
     "AccessorIngredient_TagValue",

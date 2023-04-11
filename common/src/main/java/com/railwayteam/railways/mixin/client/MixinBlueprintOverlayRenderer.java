@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.content.curiosities.tools.BlueprintOverlayRenderer;
 import com.simibubi.create.content.logistics.trains.track.TrackPlacement.PlacementInfo;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BlueprintOverlayRenderer.class, remap = false)
-public abstract class MixinBlueprintOverlayRenderer {
+public abstract class MixinBlueprintOverlayRenderer { //TODO _track api
 
   @Unique
   private static PlacementInfo railway$info = null;

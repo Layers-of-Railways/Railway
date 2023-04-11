@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
@@ -13,12 +14,15 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class TrackMaterial {
@@ -28,27 +32,27 @@ public class TrackMaterial {
     public static final TrackMaterial
         ANDESITE = make(Create.asResource("andesite"))
             .lang("Andesite")
-            .block(Lazy.of(() -> AllBlocks.TRACK))
+            .block(() -> AllBlocks.TRACK)
             .particle(Create.asResource("block/palettes/stone_types/polished/andesite_cut_polished"))
             .setBuiltin()
             .build(),
         ACACIA = make(Railways.asResource("acacia"))
             .lang("Acacia")
-            .block(Lazy.of(() -> CRBlocks.ACACIA_TRACK))
+            .block(() -> CRBlocks.ACACIA_TRACK)
             .particle(new ResourceLocation("block/acacia_planks"))
             .sleeper(Blocks.ACACIA_SLAB)
             .defaultModels()
             .build(),
         BIRCH = make(Railways.asResource("birch"))
             .lang("Birch")
-            .block(Lazy.of(() -> CRBlocks.BIRCH_TRACK))
+            .block(() -> CRBlocks.BIRCH_TRACK)
             .particle(new ResourceLocation("block/birch_planks"))
             .sleeper(Blocks.BIRCH_SLAB)
             .defaultModels()
             .build(),
         CRIMSON = make(Railways.asResource("crimson"))
             .lang("Crimson")
-            .block(Lazy.of(() -> CRBlocks.CRIMSON_TRACK))
+            .block(() -> CRBlocks.CRIMSON_TRACK)
             .particle(new ResourceLocation("block/crimson_planks"))
             .sleeper(Blocks.CRIMSON_SLAB)
             .rails(Items.GOLD_NUGGET)
@@ -56,35 +60,35 @@ public class TrackMaterial {
             .build(),
         DARK_OAK = make(Railways.asResource("dark_oak"))
             .lang("Dark Oak")
-            .block(Lazy.of(() -> CRBlocks.DARK_OAK_TRACK))
+            .block(() -> CRBlocks.DARK_OAK_TRACK)
             .particle(new ResourceLocation("block/dark_oak_planks"))
             .sleeper(Blocks.DARK_OAK_SLAB)
             .defaultModels()
             .build(),
         JUNGLE = make(Railways.asResource("jungle"))
             .lang("Jungle")
-            .block(Lazy.of(() -> CRBlocks.JUNGLE_TRACK))
+            .block(() -> CRBlocks.JUNGLE_TRACK)
             .particle(new ResourceLocation("block/jungle_planks"))
             .sleeper(Blocks.JUNGLE_SLAB)
             .defaultModels()
             .build(),
         OAK = make(Railways.asResource("oak"))
             .lang("Oak")
-            .block(Lazy.of(() -> CRBlocks.OAK_TRACK))
+            .block(() -> CRBlocks.OAK_TRACK)
             .particle(new ResourceLocation("block/oak_planks"))
             .sleeper(Blocks.OAK_SLAB)
             .defaultModels()
             .build(),
         SPRUCE = make(Railways.asResource("spruce"))
             .lang("Spruce")
-            .block(Lazy.of(() -> CRBlocks.SPRUCE_TRACK))
+            .block(() -> CRBlocks.SPRUCE_TRACK)
             .particle(new ResourceLocation("block/spruce_planks"))
             .sleeper(Blocks.SPRUCE_SLAB)
             .defaultModels()
             .build(),
         WARPED = make(Railways.asResource("warped"))
             .lang("Warped")
-            .block(Lazy.of(() -> CRBlocks.WARPED_TRACK))
+            .block(() -> CRBlocks.WARPED_TRACK)
             .particle(new ResourceLocation("block/warped_planks"))
             .sleeper(Blocks.WARPED_SLAB)
             .rails(Items.GOLD_NUGGET)
@@ -92,7 +96,7 @@ public class TrackMaterial {
             .build(),
         BLACKSTONE = make(Railways.asResource("blackstone"))
             .lang("Blackstone")
-            .block(Lazy.of(() -> CRBlocks.BLACKSTONE_TRACK))
+            .block(() -> CRBlocks.BLACKSTONE_TRACK)
             .particle(new ResourceLocation("block/blackstone"))
             .sleeper(Blocks.BLACKSTONE_SLAB)
             .rails(Items.GOLD_NUGGET)
@@ -100,7 +104,7 @@ public class TrackMaterial {
             .build(),
         MONORAIL = make(Railways.asResource("monorail"))
             .lang("Monorail")
-            .block(Lazy.of(() -> CRBlocks.MONORAIL_TRACK))
+            .block(() -> CRBlocks.MONORAIL_TRACK)
             .particle(Railways.asResource("block/monorail/monorail"))
             .trackType(TrackType.MONORAIL)
             .noRecipeGen()
@@ -184,6 +188,13 @@ public class TrackMaterial {
             list.add(material.getTrackBlock());
         }
         return list;
+    }
+
+    public static void addCustomValidTracks(BlockEntityType<?> type) {
+        AccessorBlockEntityType access = (AccessorBlockEntityType) type;
+        Set<Block> blocks = new HashSet<>(access.getValidBlocks());
+        allBlocks().forEach(entry -> blocks.add(entry.get()));
+        access.setValidBlocks(blocks);
     }
 
     public String resName() {
