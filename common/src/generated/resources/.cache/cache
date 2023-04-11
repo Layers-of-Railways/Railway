@@ -168,7 +168,7 @@ bb61766ac2b7162b70989a07756a1f4000200f98 assets\railways\models\block\track\oak\
 02d62d6af03c143eb04da99c6dadac8b91e5203f assets\railways\models\block\track\oak\x_ortho.json
 48cc2845a2bce81ff060bf841a9b2a333fd7e59d assets\railways\blockstates\track_spruce.json
 36152929e63794b7d45650cc6d3d12bd87ccc55a assets\railways\blockstates\track_jungle.json
-7bff3c85ffe603051e5dd77c6c80f2022c0332ba assets\railways\lang\en_us.json
+5926f19d97be2c089cb4affa12baf35294b6ef5b assets\railways\lang\en_us.json
 62daa8380815b5dc6fba36eb914dac4cd8e628f2 assets\railways\models\block\track\jungle\cross_ortho.json
 7350a352050cd608a86a1a5764d8a95c11f073b8 data\railways\recipes\dying_existing_cap_light_blue.json
 9f028de76b2d38db008c6a523bcaf21908e32250 data\railways\loot_tables\blocks\track_blackstone.json
