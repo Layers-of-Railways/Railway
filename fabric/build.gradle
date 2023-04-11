@@ -83,16 +83,9 @@ dependencies {
 }
 
 processResources {
-    // include common resources
+    // include packs
     from(rootProject.file("common/src/main/resources")) {
-        include("**/**")
-        duplicatesStrategy = DuplicatesStrategy.WARN
-    }
-    // and common generated resources
-    from(rootProject.file("common/src/generated/resources")) {
-        include("**/**")
-        exclude("**/.cache")
-        duplicatesStrategy = DuplicatesStrategy.WARN
+        include("resourcepacks/")
     }
 
     // set up properties for filling into metadata

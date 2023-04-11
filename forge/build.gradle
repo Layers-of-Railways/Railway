@@ -2,18 +2,21 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-architectury {
-    platformSetupLoomIde()
-    forge()
-}
-
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
 
     forge {
+        mixinConfig("railways-common.mixins.json")
+        mixinConfig("railways.mixins.json")
+
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
     }
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
 }
 
 configurations {
@@ -57,16 +60,9 @@ dependencies {
 }
 
 processResources {
-    // include common resources
+    // include packs
     from(rootProject.file("common/src/main/resources")) {
-        include("**/**")
-        duplicatesStrategy = DuplicatesStrategy.WARN
-    }
-    // and common generated resources
-    from(rootProject.file("common/src/generated/resources")) {
-        include("**/**")
-        exclude("**/.cache")
-        duplicatesStrategy = DuplicatesStrategy.WARN
+        include("resourcepacks/")
     }
 
     // set up properties for filling into metadata
@@ -80,15 +76,6 @@ processResources {
 
     filesMatching("META-INF/mods.toml") {
         expand properties
-    }
-}
-
-loom {
-    forge {
-        mixinConfig(
-                "railways-common.mixins.json",
-                "railways.mixins.json"
-        )
     }
 }
 
