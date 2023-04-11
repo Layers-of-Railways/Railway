@@ -6,7 +6,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
@@ -14,7 +14,6 @@ import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
 import com.simibubi.create.content.logistics.trains.track.TrackInstance;
-import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -79,41 +78,35 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
     @Shadow(remap = false)
     abstract void updateLight();
 
-    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
+    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private PartialModel replaceTie() {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            if (material.isCustom()) {
-                return CRBlockPartials.TRACK_PARTS.get(material).tie;
-            }
+            return material.modelHolder.tie;
         }
         return TRACK_TIE;
     }
 
-    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
+    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private PartialModel replaceSegLeft() {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            if (material.isCustom()) {
-                return CRBlockPartials.TRACK_PARTS.get(material).segment_left;
-            }
+            return material.modelHolder.segment_left;
         }
         return TRACK_SEGMENT_LEFT;
     }
 
-    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC,
+    @Redirect(method = "<init>", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
         target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private PartialModel replaceSegRight() {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            if (material.isCustom()) {
-                return CRBlockPartials.TRACK_PARTS.get(material).segment_right;
-            }
+            return material.modelHolder.segment_right;
         }
         return TRACK_SEGMENT_RIGHT;
     }

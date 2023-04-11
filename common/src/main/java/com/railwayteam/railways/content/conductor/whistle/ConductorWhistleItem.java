@@ -2,9 +2,11 @@ package com.railwayteam.railways.content.conductor.whistle;
 
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin.AccessorCarriage;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
@@ -28,11 +30,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -174,9 +180,11 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
             Train train = Create.RAILWAYS.trains.get(trainId);
             boolean foundConductor = false;
+            Carriage conductorCarriage = null;
             for (Carriage carriage : train.carriages) {
                 if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
                     foundConductor = true;
+                    conductorCarriage = carriage;
                     break;
                 }
             }
@@ -221,8 +229,44 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
             if (train.runtime.getSchedule() != null && !train.runtime.isAutoSchedule) {
                 ItemStack scheduleStack = train.runtime.returnSchedule();
-                if (!player.addItem(scheduleStack))
-                    player.drop(scheduleStack, false);
+                if (!scheduleStack.isEmpty()) {
+                    for (CompoundTag passengerTag : ((AccessorCarriage) conductorCarriage).getSerialisedPassengers().values()) {
+                        if (passengerTag.contains("PlayerPassenger")) continue;
+                        if (passengerTag.contains("id") && CREntities.CONDUCTOR.getId().equals(new ResourceLocation(passengerTag.getString("id")))) {
+                            // It is a conductor
+                            if (passengerTag.hasUUID("UUID") && passengerTag.getUUID("UUID").equals(conductorId)) {
+                                // It is the targeted conductor
+                                // Place the schedule in the conductor
+                                ListTag schedulesList;
+                                if (!passengerTag.contains("heldSchedules")) {
+                                    schedulesList = new ListTag();
+                                    passengerTag.put("heldSchedules", schedulesList);
+                                } else {
+                                    schedulesList = passengerTag.getList("heldSchedules", Tag.TAG_COMPOUND);
+                                }
+                                schedulesList.add(scheduleStack.save(new CompoundTag()));
+                                scheduleStack.setCount(0);
+                                break;
+                            }
+                        }
+                    }
+                    if (!scheduleStack.isEmpty()) {
+                        // Try if the conductor is simply loaded
+                        conductorCarriage.forEachPresentEntity(cce -> {
+                            if (!scheduleStack.isEmpty()) {
+                                for (Entity passenger : cce.getPassengers()) {
+                                    if (passenger instanceof ConductorEntity conductorEntity && passenger.getUUID().equals(conductorId)) {
+                                        conductorEntity.addSchedule(scheduleStack);
+                                        scheduleStack.setCount(0);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    if (!scheduleStack.isEmpty() && !player.addItem(scheduleStack)) // fallback, probably should never be called. Keep it *just in case*
+                        player.drop(scheduleStack, false);
+                }
             }
 
             BlockPos placePos = pos.relative(successDirection);

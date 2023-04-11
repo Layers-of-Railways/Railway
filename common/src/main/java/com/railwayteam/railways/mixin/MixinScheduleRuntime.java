@@ -53,22 +53,4 @@ public abstract class MixinScheduleRuntime {
             discardSchedule();
         }
     }
-
-    private GlobalStation storedGlobalStation;
-
-    @Redirect(method = "startCurrentInstruction", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/GlobalStation;name:Ljava/lang/String;"))
-    private String storeGlobalStation(GlobalStation instance) {
-        storedGlobalStation = instance;
-        return instance.name;
-    }
-
-    @Redirect(method = "startCurrentInstruction", at = @At(value = "INVOKE", target = "Ljava/lang/String;matches(Ljava/lang/String;)Z"))
-    private boolean skipDisabledStations(String instance, String regex) {
-        boolean stationEnabled = true;
-        if (storedGlobalStation != null) {
-//            stationEnabled = ((ILimitedGlobalStation) storedGlobalStation).isStationEnabled(); //FIXME this isn't the ideal way, add cost instead
-            storedGlobalStation = null;
-        }
-        return instance.matches(regex) && stationEnabled;
-    }
 }

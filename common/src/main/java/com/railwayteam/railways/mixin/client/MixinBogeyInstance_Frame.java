@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = BogeyInstance.Frame.class, remap = false)
+@Mixin(value = BogeyInstance.Frame.class, remap = false) //TODO bogey api
 public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyInstance.Frame> {
     @Mutable
     @Shadow @Final private ModelData frame;

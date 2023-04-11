@@ -18,7 +18,13 @@
                 "ko_KR": "ko_kr",
                 "nl_NL": "nl_nl",
                 "pl_PL": "pl_pl",
-                "zh_CN": "zh_cn"
+                "zh_CN": "zh_cn",
+                "da_DK": "da_dk",
+                "is_IS": "is_is",
+                "no_NO": "no_no",
+                "sv_SE": "sv_se",
+                "ru_RU": "ru_ru",
+                "uk_UA": "uk_ua"
             }
         }
     }

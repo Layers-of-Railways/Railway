@@ -2,6 +2,8 @@ package com.railwayteam.railways.content.coupling.coupler;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
+import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -14,6 +16,7 @@ import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
 import com.simibubi.create.content.logistics.trains.entity.Carriage;
+import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
 import com.simibubi.create.content.logistics.trains.entity.Train;
 import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
@@ -278,8 +281,10 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     protected boolean isCarriageWheelOnPoint(Carriage carriage, TrackCoupler coupler, TrackTargetingBehaviour<TrackCoupler> edgePoint, boolean leading) {
         TravellingPoint relevantPoint = leading ? carriage.leadingBogey().leading() : carriage.trailingBogey().trailing();
         TravellingPoint relevantPoint2 = leading ? carriage.leadingBogey().trailing() : carriage.trailingBogey().leading();
+        CarriageBogey relevantBogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
+        boolean upsideDown = ((AccessorCarriageBogey) relevantBogey).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown();
         double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
-        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5);
+        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5).add(0, upsideDown ? 2 : 0, 0);
         Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());
 //        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
         return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2) ||
@@ -325,7 +330,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                     setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
                 if (frontCarriage != null && primaryTrain.carriages.indexOf(frontCarriage) < primaryTrain.carriages.size() - 1) {
                     Carriage backCarriage = primaryTrain.carriages.get(primaryTrain.carriages.indexOf(frontCarriage) + 1);
-                    if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true))
+                    if (isCarriageWheelOnPoint(backCarriage, coupler1, edgePoint1,true) &&
+                        Math.abs(primaryTrain.carriages.indexOf(frontCarriage) - primaryTrain.carriages.indexOf(backCarriage)) == 1) //Make sure that the carriages are actually next to each other
                         return new OperationInfo(OperationMode.DECOUPLING, frontCarriage, backCarriage);
                     else
                         setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
@@ -339,8 +345,15 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
                     secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
                     return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
-                else
-                    setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+                else {
+                    if (primaryCarriage != null && getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, true) != null) {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
+                    } else if (secondaryCarriage != null && getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, false) != null) {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
+                    } else {
+                        setError(Components.translatable("railways.tooltip.coupler.error.carriage_alignment"));
+                    }
+                }
             } else {
                 setError(Components.translatable("railways.tooltip.coupler.error.missing_train"));
             }

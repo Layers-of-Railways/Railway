@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
@@ -27,12 +27,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 
 @Mixin(value = TrackBlock.class, remap = false)
-public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial {
+public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial { //TODO _track api
   public MixinTrackBlock(Properties pProperties) {
     super(pProperties);
   }
@@ -42,9 +40,9 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
    * @reason Need to add different types of items
    */
   @Overwrite
-  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
+  public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) { //TODO _track api
     int sameTypeTrackAmount = 1;
-    EnumMap<TrackMaterial, Integer> otherTrackAmounts = new EnumMap<>(TrackMaterial.class);
+    Map<TrackMaterial, Integer> otherTrackAmounts = new HashMap<>();
     int girderAmount = 0;
 
     if (te instanceof TrackTileEntity track) {

@@ -4,6 +4,7 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial {
+public class CustomTrackBlock extends TrackBlock implements IHasTrackMaterial { //TODO _track api
 
   protected final TrackMaterial material;
 

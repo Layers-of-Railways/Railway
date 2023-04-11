@@ -12,4 +12,6 @@ public interface IRailwayMarkerHandler {
     void registerData(UUID uuid, TrainMarkerData data);
 
     void reloadMarkers();
+
+    default void onJoinWorld() {};
 }

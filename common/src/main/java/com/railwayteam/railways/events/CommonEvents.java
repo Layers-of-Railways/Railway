@@ -14,6 +14,8 @@ import net.minecraft.world.level.Level;
 
 public class CommonEvents {
     public static void onWorldTickStart(Level level) {
+        if (level.isClientSide)
+            return;
         RedstoneLinkInstruction.tick(level);
         long ticks = level.getGameTime();
         for (Train train : Create.RAILWAYS.trains.values()) {
@@ -21,10 +23,12 @@ public class CommonEvents {
             if (offsetTicks % Config.FAR_TRAIN_SYNC_TICKS.get() == 0) {
                 CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainMarkerDataUpdatePacket(train));
             }
-            if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) {
-                Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
-                if (trainEntity != null)
-                    CRPackets.PACKETS.sendTo(PlayerSelection.tracking(trainEntity), new TrainMarkerDataUpdatePacket(train));
+            if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) { //DONE train *might* not have any carriages if it just got coupled, fix that
+                if (train.carriages.size() >= 1) {
+                    Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
+                    if (trainEntity != null)
+                        CRPackets.PACKETS.sendTo(PlayerSelection.tracking(trainEntity), new TrainMarkerDataUpdatePacket(train));
+                }
             }
         }
     }

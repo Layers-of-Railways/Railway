@@ -23,6 +23,7 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
       new ConductorEntityModel<>(ctx.bakeLayer(ModelLayers.ARMOR_STAND_OUTER_ARMOR))
     ));
     this.addLayer(new ConductorToolboxLayer<>(this));
+    this.addLayer(new ConductorFlagLayer<>(this));
   }
 
   private ResourceLocation ensurePng(ResourceLocation loc) {

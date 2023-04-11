@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.TrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTags;
@@ -34,12 +34,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = BezierConnection.class, remap = false)
-public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTrackCasing {
+public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTrackCasing { //TODO _track api
   @Shadow public Couple<BlockPos> tePositions;
 
   @Shadow public abstract Vec3 getPosition(double t);
 
-  protected TrackMaterial trackMaterial;
+  protected TrackMaterial trackMaterial; //TODO _track api
 
   protected SlabBlock trackCasing;
   protected boolean isShiftedDown;
@@ -68,7 +68,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
 
 
   @Override
-  public TrackMaterial getMaterial() {
+  public TrackMaterial getMaterial() { //TODO _track api
     if (trackMaterial == null) {
       BezierConnection this_ = (BezierConnection) (Object) this;
       Railways.LOGGER.error("trackMaterial was null!!! for BezierConnection: starts="+this_.starts+", primary="+this_.primary+", tePositions="+this_.tePositions);
@@ -80,23 +80,23 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
   @Override
   public void setMaterial(TrackMaterial trackMaterial) {
     this.trackMaterial = trackMaterial;
-  }
+  } //TODO _track api
 
-  public BezierConnection withMaterial(TrackMaterial trackMaterial) {
+  public BezierConnection withMaterial(TrackMaterial trackMaterial) { //TODO _track api (unused, not important)
     setMaterial(trackMaterial);
     return (BezierConnection) (Object) this;
   }
 
-  @Inject(method = "secondary", at = @At("RETURN"), cancellable = true, remap = false)
+  @Inject(method = "secondary", at = @At("RETURN"), cancellable = true, remap = false) //TODO _track api
   private void secondary(CallbackInfoReturnable<BezierConnection> cir) {
     ((IHasTrackMaterial) cir.getReturnValue()).setMaterial(getMaterial());
     cir.setReturnValue(cir.getReturnValue());
   }
 
-  @Inject(method = "write(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"),
+  @Inject(method = "write(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"), //TODO _track api (partially)
       cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = true)
   private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
-    compound.putString("Material", getMaterial().resName()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
+    compound.putString("Material", getMaterial().id.toString()); // this is long term storage, so it should be protected against enum reordering (that's why we don't use ordinals)
     if (getTrackCasing() != null) {
       if (Registry.BLOCK.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
         Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());
@@ -108,9 +108,9 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     cir.setReturnValue(compound);
   }
 
-  @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
+  @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true) //TODO _track api (partially)
   private void netWrite(FriendlyByteBuf buffer, CallbackInfo ci) {
-    buffer.writeEnum(getMaterial()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal
+    buffer.writeUtf(getMaterial().id.toString()); // this is for net code, which is short-lived, and should be space efficient, so we write the ordinal (No longer using enum, so disregard)
     buffer.writeBoolean(getTrackCasing() != null);
     if (getTrackCasing() != null) {
       buffer.writeResourceLocation(Registry.BLOCK.getKey(getTrackCasing()));
@@ -118,7 +118,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     }
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/BlockPos;)V", at = @At("RETURN"), remap = true)
+  @Inject(method = "<init>(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/BlockPos;)V", at = @At("RETURN"), remap = true) //TODO _track api (partially)
   private void nbtConstructor(CompoundTag compound, BlockPos localTo, CallbackInfo ci) {
     setMaterial(TrackMaterial.ANDESITE);
     if (compound.contains("Material", Tag.TAG_STRING)) {
@@ -138,9 +138,9 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
     }
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
+  @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true) //TODO _track api (partially)
   private void byteBufConstructor(FriendlyByteBuf buffer, CallbackInfo ci) {
-    setMaterial(buffer.readEnum(TrackMaterial.class));
+    setMaterial(TrackMaterial.deserialize(buffer.readUtf()));
     if (buffer.readBoolean()) {
       setTrackCasing((SlabBlock) Registry.BLOCK.get(buffer.readResourceLocation()));
       setAlternate(buffer.readBoolean());
@@ -169,7 +169,7 @@ public abstract class MixinBezierConnection implements IHasTrackMaterial, IHasTr
   }
 
   @SuppressWarnings("unchecked")
-  @Redirect(method = {"spawnItems", "spawnDestroyParticles", "addItemsToPlayer"},
+  @Redirect(method = {"spawnItems", "spawnDestroyParticles", "addItemsToPlayer"}, //TODO _track api
       at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, target = "Lcom/simibubi/create/AllBlocks;TRACK:Lcom/tterrag/registrate/util/entry/BlockEntry;"))
   private BlockEntry<TrackBlock> redirectTrackSpawn() {
     return (BlockEntry<TrackBlock>) getMaterial().getTrackBlock();

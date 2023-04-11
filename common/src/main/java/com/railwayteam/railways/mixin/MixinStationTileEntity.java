@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Mixin(value = StationTileEntity.class, remap = false)
-public abstract class MixinStationTileEntity extends SmartTileEntity {
+public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bogey api (stations should support upside down bogeys)
     @Shadow
     int[] bogeyLocations;
 

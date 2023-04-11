@@ -27,7 +27,10 @@ public class TrackCouplerDisplaySource extends DisplaySource {
         TrackCouplerTileEntity.OperationInfo info = te.getOperationInfo();
         switch (info.mode()) {
             case NONE -> {
-                return ImmutableList.of(Components.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD));
+                return ImmutableList.of(
+                    Components.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD),
+                    te.getClientInfo().error
+                );
             }
             case COUPLING -> {
                 return ImmutableList.of(

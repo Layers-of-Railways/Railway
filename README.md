@@ -11,6 +11,14 @@
 3. Make a pull request
 4. Have somebody review it, and merge
 
+## Contributing (for community members):
+1. Open an issue clearly describing the feature you want to implement
+2. Don't start writing your feature until a core dev recommends you to
+3. Fork the repository (if you haven't already), and make a branch for your feature
+4. Happy coding!
+5. Open a pull request, preferably linking to your issue - include your Discord username, and those of the people who helped you, so you can get the contributor role
+6. (For core devs) at least 2 core devs should approve before merging - probably have discussion in Discord first as well.
+
 ### Datagen (if runData fails):
 Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railways/mixin/README.md) for more info. (There should be an upstream Create fix for this, but that is not yet in any 1.18 release, and so we can't take advantage of it.)
 
@@ -19,20 +27,3 @@ Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railwa
 - Include `[ci skip]` in your commit message to skip the automatic preview build
 you can use this for example if the change you made is very minor, and not worth
 a preview, or if you are just fixing a typo in the README, etc.
-
-### FIXME:
-
-![](screenshots/hanging_bogey_bug.png)
-hanging bogeys on slopes/curves are wrong: Fix bogey's anchor pt
-
-specifically: `TravellingPoint#getPositionWithOffset`,
-
-look at `edge.getNormal(node1, node2, t).scale(1)`, maybe replace
-`scale(1)` with `scale(-1)`
-
-need to:
-- store bogey type in TravellingPoint
-- change rendering offsets for:
-  - assembly
-  - disassembly
-  - hanging bogeys

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TravellingPoint.class, remap = false)
-public class MixinTravellingPoint implements IBogeyTypeAwareTravellingPoint {
+public class MixinTravellingPoint implements IBogeyTypeAwareTravellingPoint { //TODO bogey api
 
     private IBogeyBlock type;
 
