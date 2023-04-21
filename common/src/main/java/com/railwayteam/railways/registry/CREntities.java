@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -32,12 +33,12 @@ import java.util.function.Consumer;
 public class CREntities {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-  public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
+  public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.<MinecartWorkbench>entity("benchcart", MinecartWorkbench::create, MobCategory.MISC)
       .renderer(() -> CREntities::cartRenderer)
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Workbench")
       .register();
-  public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
+  public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.<MinecartJukebox>entity("jukeboxcart", MinecartJukebox::create, MobCategory.MISC)
       .renderer(() -> CREntities::cartRenderer)
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Jukebox")

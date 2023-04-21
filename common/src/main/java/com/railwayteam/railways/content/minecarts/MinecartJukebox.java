@@ -4,6 +4,7 @@ import com.mojang.math.Vector3d;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
 import org.jetbrains.annotations.NotNull;
 
-public class MinecartJukebox extends MinecartBlock {
+public abstract class MinecartJukebox extends MinecartBlock {
   public static final Type TYPE = Type.valueOf("RAILWAY_JUKEBOX");
 
   private static final int COOLDOWN = 100; // ticks
@@ -44,8 +45,14 @@ public class MinecartJukebox extends MinecartBlock {
   }
 
   // need to detour through this or generics explode somehow
+  @ExpectPlatform
   public static MinecartJukebox create(Level level, double x, double y, double z) {
-    return new MinecartJukebox(level, x, y, z);
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static MinecartJukebox create(EntityType<?> type, Level level) {
+    throw new AssertionError();
   }
 
   @Override
@@ -144,7 +151,7 @@ public class MinecartJukebox extends MinecartBlock {
   @Environment(EnvType.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
-      super(event, SoundSource.RECORDS);
+      super(event, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
     }
 
     @Override

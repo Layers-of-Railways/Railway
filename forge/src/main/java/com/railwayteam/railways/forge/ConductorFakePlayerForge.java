@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.utility.Components;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.Connection;
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
@@ -83,7 +84,7 @@ public class ConductorFakePlayerForge extends FakePlayer {
 		}
 
 		@Override
-		public void send(@NotNull Packet<?> pPacket, @Nullable GenericFutureListener<? extends Future<? super Void>> pFutureListeners) {
+		public void send(Packet<?> packet, @Nullable PacketSendListener listener) {
 		}
 	}
 }

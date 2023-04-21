@@ -80,3 +80,15 @@ allprojects {
         withSourcesJar()
     }
 }
+
+task resolveAllDependencies {
+    description "Resolves all transitive dependencies (e.g. to build offline later)."
+
+    doLast {
+        configurations.all {
+            if (it.canBeResolved) {
+                it.resolve()
+            }
+        }
+    }
+}
