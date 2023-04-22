@@ -40,6 +40,10 @@ repositories {
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
     maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
     maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
+    maven { // forge config api port
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
 }
 
 dependencies {
@@ -75,6 +79,10 @@ dependencies {
 
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-fabric") // Test with JourneyMap in dev
     modLocalRuntime("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // API is a JiJ on fabric, add manually
+
+
+    // because create fabric is a bit broken I think
+    modApi "net.minecraftforge:forgeconfigapiport-fabric:3.2.4"
 }
 
 processResources {
