@@ -33,26 +33,35 @@ public class MinecartWorkbenchImpl extends MinecartWorkbench {
         return new MinecartWorkbenchImpl(type, level);
     }
 
-    @Unique
-    public CapabilityMinecartController controllerCap = null;
+    @Unique //FIXME this should not be needed
+    public CapabilityMinecartController create$controllerCap = null;
 
     @Override
     public CapabilityMinecartController getCap() {
-        return controllerCap;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap;
     }
 
     @Override
     public void setCap(CapabilityMinecartController cap) {
-        this.controllerCap = cap;
+        this.create$controllerCap = cap;
     }
 
     @Override
     public LazyOptional<MinecartController> lazyController() {
-        return controllerCap.cap;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap.cap;
     }
 
     @Override
     public MinecartController getController() {
-        return controllerCap.handler;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap.handler;
     }
 }

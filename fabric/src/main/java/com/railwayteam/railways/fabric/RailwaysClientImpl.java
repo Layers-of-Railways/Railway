@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.conductor.fabric.ConductorCapItemRendere
 import com.railwayteam.railways.fabric.events.ClientEventsFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -30,9 +31,10 @@ public class RailwaysClientImpl implements ClientModInitializer {
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!
 	public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
-		CommandDispatcher<FabricClientCommandSource> dispatcher = ClientCommandManager.getActiveDispatcher();
-		 CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
-		consumer.accept(casted);
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+			CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
+			consumer.accept(casted);
+		});
 	}
 
 	public static void registerModelLayer(ModelLayerLocation layer, Supplier<LayerDefinition> definition) {

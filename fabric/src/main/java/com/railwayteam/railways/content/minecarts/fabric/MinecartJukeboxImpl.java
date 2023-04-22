@@ -4,13 +4,15 @@ import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
+import com.simibubi.create.foundation.utility.fabric.AbstractMinecartExtensions;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-public class MinecartJukeboxImpl extends MinecartJukebox {
+public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMinecartExtensions {
     protected MinecartJukeboxImpl(Level level, double x, double y, double z) {
         super(level, x, y, z);
     }
@@ -32,26 +34,35 @@ public class MinecartJukeboxImpl extends MinecartJukebox {
         return new MinecartJukeboxImpl(type, level);
     }
 
-    @Unique
-    public CapabilityMinecartController controllerCap = null;
+    @Unique //FIXME this should not be needed
+    public CapabilityMinecartController create$controllerCap = null;
 
     @Override
     public CapabilityMinecartController getCap() {
-        return controllerCap;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap;
     }
 
     @Override
     public void setCap(CapabilityMinecartController cap) {
-        this.controllerCap = cap;
+        this.create$controllerCap = cap;
     }
 
     @Override
     public LazyOptional<MinecartController> lazyController() {
-        return controllerCap.cap;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap.cap;
     }
 
     @Override
     public MinecartController getController() {
-        return controllerCap.handler;
+        if (create$controllerCap == null) {
+            CapabilityMinecartController.attach(this);
+        }
+        return create$controllerCap.handler;
     }
 }

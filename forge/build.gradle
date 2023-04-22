@@ -50,7 +50,7 @@ dependencies {
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
 
     // Development QOL
-    modLocalRuntime("mezz.jei:jei-${minecraft_version}-forge:${jei_forge_version}")
+//    modLocalRuntime("mezz.jei:jei-${minecraft_version}-forge:${jei_forge_version}")
 
     // if you would like to add integration with JEI, uncomment this line.
 //    modCompileOnly("mezz.jei:jei-${minecraft_version}:${jei_forge_version}:api")

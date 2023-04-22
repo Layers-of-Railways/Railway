@@ -10,6 +10,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -120,6 +122,9 @@ public abstract class MinecartJukebox extends MinecartBlock {
   // serverside. Checks for side due to public method above being used clientside
   private void __insertRecord (ItemStack record) {
     this.disc = record.copy();
+    if (content == null) {
+      content = Blocks.JUKEBOX.defaultBlockState();
+    }
     this.content = content.setValue(JukeboxBlock.HAS_RECORD, !disc.isEmpty());
     if (!level.isClientSide) PacketSender.updateJukeboxClientside(this, this.disc);
   }
