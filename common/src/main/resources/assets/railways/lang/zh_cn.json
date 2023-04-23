@@ -116,6 +116,7 @@
 	"railways.tooltip.coupler.error.mode_not_permitted": "当前模式下无法进行操作",
 	"railways.tooltip.coupler.error.missing_train": "两个轨道连挂点都需要被占用",
 	"railways.tooltip.coupler.error.carriage_alignment": "车厢并未正确对齐。提示：转向架的中心应对准轨道连挂点",
+	"railways.tooltip.coupler.error.carriage_orientation": "车厢需要统一朝向。提示：使用扳手来调整车厢的朝向",
 	"railways.station.train_limit": "限制列车量",
 	"create.sliding_door.mode": "开启模式",
 	"create.sliding_door.mode.manual": "手动",
