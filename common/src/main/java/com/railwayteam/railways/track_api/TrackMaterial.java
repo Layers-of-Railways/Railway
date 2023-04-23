@@ -202,6 +202,12 @@ public class TrackMaterial {
     }
 
     public static TrackMaterial deserialize(String serializedName) {
+        if (!serializedName.contains(":")) {
+            String mod = serializedName.equals("andesite") ? Create.ID : Railways.MODID;
+            String oldName = serializedName;
+            serializedName = mod + ":" + serializedName;
+            Railways.LOGGER.warn("Legacy track material detected (no namespace): " + oldName + " -> " + serializedName);
+        }
         ResourceLocation id = new ResourceLocation(serializedName);
         for (TrackMaterial material : ALL) {
             if (material.id.equals(id))

@@ -79,6 +79,7 @@ dependencies {
 
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-fabric") // Test with JourneyMap in dev
     modLocalRuntime("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // API is a JiJ on fabric, add manually
+    modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
 
     // because create fabric is a bit broken I think
