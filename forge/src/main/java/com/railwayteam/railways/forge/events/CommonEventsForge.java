@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -17,21 +18,20 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.items.CapabilityItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @EventBusSubscriber
 public class CommonEventsForge {
 	@SubscribeEvent
-	public static void onWorldTick(TickEvent.WorldTickEvent event) {
+	public static void onWorldTick(TickEvent.LevelTickEvent event) {
 		if (event.phase == Phase.START)
-			CommonEvents.onWorldTickStart(event.world);
+			CommonEvents.onWorldTickStart(event.level);
 	}
 
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-		if (event.getPlayer() instanceof ServerPlayer player)
+		if (event.getEntity() instanceof ServerPlayer player)
 			CommonEvents.onPlayerJoin(player);
 	}
 
@@ -44,7 +44,7 @@ public class CommonEventsForge {
 				@NotNull
 				@Override
 				public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-					if (cap != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+					if (cap != ForgeCapabilities.ITEM_HANDLER)
 						return LazyOptional.empty();
 					MountedToolbox toolbox = conductor.getToolbox();
 					if (toolbox == null)

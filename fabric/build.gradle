@@ -46,6 +46,14 @@ repositories {
     }
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.module.name == "fabric-loader") {
+            useVersion(fabric_loader_version)
+        }
+    }
+}
+
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     common(project(path: ":common", configuration: "namedElements")) { transitive = false }
@@ -79,11 +87,12 @@ dependencies {
 
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-fabric") // Test with JourneyMap in dev
     modLocalRuntime("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // API is a JiJ on fabric, add manually
+    
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
-
     // because create fabric is a bit broken I think
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:3.2.4"
+    modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
+
 }
 
 processResources {

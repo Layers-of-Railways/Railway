@@ -6,8 +6,9 @@ import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.content.conductor.fabric.ConductorCapItemRenderer;
 import com.railwayteam.railways.fabric.events.ClientEventsFabric;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
@@ -30,9 +31,10 @@ public class RailwaysClientImpl implements ClientModInitializer {
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!
 	public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
-		CommandDispatcher<FabricClientCommandSource> dispatcher = ClientCommandManager.DISPATCHER;
-		 CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
-		consumer.accept(casted);
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+			CommandDispatcher<SharedSuggestionProvider> casted = (CommandDispatcher) dispatcher;
+			consumer.accept(casted);
+		});
 	}
 
 	public static void registerModelLayer(ModelLayerLocation layer, Supplier<LayerDefinition> definition) {

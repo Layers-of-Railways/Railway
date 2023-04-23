@@ -22,7 +22,21 @@ subprojects {
     repositories {
         mavenCentral()
         maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
-        maven { url = "https://dvs1.progwml6.com/files/maven/" } // JEI
+        maven {
+            // location of the maven that hosts JEI files before January 2023
+            name = "Progwml6's maven"
+            url = "https://dvs1.progwml6.com/files/maven/"
+        }
+        maven {
+            // location of the maven that hosts JEI files since January 2023
+            name = "Jared's maven"
+            url = "https://maven.blamejared.com/"
+        }
+        maven {
+            // location of a maven mirror for JEI files, as a fallback
+            name = "ModMaven"
+            url = "https://modmaven.dev"
+        }
         maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
         maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
         maven { url = "https://jm.gserv.me/repository/maven-public/" } // JourneyMap API
@@ -78,5 +92,17 @@ allprojects {
 
     java {
         withSourcesJar()
+    }
+}
+
+task resolveAllDependencies {
+    description "Resolves all transitive dependencies (e.g. to build offline later)."
+
+    doLast {
+        configurations.all {
+            if (it.canBeResolved) {
+                it.resolve()
+            }
+        }
     }
 }

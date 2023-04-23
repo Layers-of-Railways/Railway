@@ -1,37 +1,36 @@
 package com.railwayteam.railways.content.minecarts.fabric;
 
-import com.railwayteam.railways.content.minecarts.MinecartJukebox;
+import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.CapabilityMinecartController;
 import com.simibubi.create.content.contraptions.components.structureMovement.train.capability.MinecartController;
-import com.simibubi.create.foundation.utility.fabric.AbstractMinecartExtensions;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMinecartExtensions {
-    protected MinecartJukeboxImpl(Level level, double x, double y, double z) {
+public class MinecartWorkbenchImpl extends MinecartWorkbench {
+
+    protected MinecartWorkbenchImpl(Level level, double x, double y, double z) {
         super(level, x, y, z);
     }
 
-    public MinecartJukeboxImpl(EntityType<?> type, Level level) {
+    public MinecartWorkbenchImpl(EntityType<?> type, Level level) {
         super(type, level);
     }
 
-    public static MinecartJukebox create(Level level, double x, double y, double z) {
-        return new MinecartJukeboxImpl(level, x, y, z);
+    public static MinecartWorkbench create(Level level, double x, double y, double z) {
+        return new MinecartWorkbenchImpl(level, x, y, z);
     }
 
     @Override
     protected Item getDropItem() {
-        return CRItems.ITEM_JUKEBOXCART.get();
+        return CRItems.ITEM_BENCHCART.get();
     }
 
-    public static MinecartJukebox create(EntityType<?> type, Level level) {
-        return new MinecartJukeboxImpl(type, level);
+    public static MinecartWorkbench create(EntityType<?> type, Level level) {
+        return new MinecartWorkbenchImpl(type, level);
     }
 
     @Unique //FIXME this should not be needed
@@ -39,8 +38,9 @@ public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMine
 
     @Override
     public CapabilityMinecartController getCap() {
-        if (create$controllerCap == null)
+        if (create$controllerCap == null) {
             CapabilityMinecartController.attach(this);
+        }
         return create$controllerCap;
     }
 
@@ -51,8 +51,9 @@ public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMine
 
     @Override
     public LazyOptional<MinecartController> lazyController() {
-        if (create$controllerCap == null)
+        if (create$controllerCap == null) {
             CapabilityMinecartController.attach(this);
+        }
         return create$controllerCap.cap;
     }
 

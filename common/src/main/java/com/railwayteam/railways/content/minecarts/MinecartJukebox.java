@@ -177,7 +177,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
   @Environment(EnvType.CLIENT)
   public class JukeboxCartSoundInstance extends AbstractTickableSoundInstance {
     public JukeboxCartSoundInstance (SoundEvent event) {
-      super(event, SoundSource.RECORDS);
+      super(event, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
     }
 
     @Override

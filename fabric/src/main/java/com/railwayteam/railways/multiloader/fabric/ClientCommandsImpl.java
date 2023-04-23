@@ -1,7 +1,7 @@
 package com.railwayteam.railways.multiloader.fabric;
 
 import com.railwayteam.railways.Railways;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 
