@@ -4,11 +4,14 @@ import com.mojang.math.Vector3d;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -25,7 +28,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
 import org.jetbrains.annotations.NotNull;
 
-public class MinecartJukebox extends MinecartBlock {
+public abstract class MinecartJukebox extends MinecartBlock {
   public static final Type TYPE = Type.valueOf("RAILWAY_JUKEBOX");
 
   private static final int COOLDOWN = 100; // ticks
@@ -44,8 +47,21 @@ public class MinecartJukebox extends MinecartBlock {
   }
 
   // need to detour through this or generics explode somehow
+  @ExpectPlatform
   public static MinecartJukebox create(Level level, double x, double y, double z) {
-    return new MinecartJukebox(level, x, y, z);
+    throw new AssertionError();
+  }
+
+  @ExpectPlatform
+  public static MinecartJukebox create(EntityType<?> type, Level level) {
+    throw new AssertionError();
+  }
+
+  public int getComparatorOutput() {
+    if (disc.getItem() instanceof RecordItem record) {
+      return record.getAnalogOutput();
+    }
+    return 0;
   }
 
   @Override
@@ -61,7 +77,7 @@ public class MinecartJukebox extends MinecartBlock {
 
   @Override
   public void activateMinecart(int x, int y, int z, boolean active) {
-    if (!level.isClientSide) {
+    if (active && !level.isClientSide) {
       if (cooldownCount <= 0) {
         cooldownCount = COOLDOWN;
         PacketSender.updateJukeboxClientside(this, this.disc);
@@ -98,6 +114,20 @@ public class MinecartJukebox extends MinecartBlock {
     return InteractionResult.sidedSuccess(level.isClientSide);
   }
 
+  @Override
+  protected void readAdditionalSaveData(CompoundTag compound) {
+    super.readAdditionalSaveData(compound);
+    if (compound.contains("Disc", Tag.TAG_COMPOUND)) {
+      disc = ItemStack.of(compound.getCompound("Disc"));
+    }
+  }
+
+  @Override
+  protected void addAdditionalSaveData(CompoundTag compound) {
+    super.addAdditionalSaveData(compound);
+    compound.put("Disc", disc.save(new CompoundTag()));
+  }
+
   // clientside
   public void insertRecord (ItemStack record) {
     __insertRecord(record);
@@ -110,9 +140,17 @@ public class MinecartJukebox extends MinecartBlock {
     }
   }
 
+  @ExpectPlatform
+  public void test() {
+    throw new AssertionError();
+  }
+
   // serverside. Checks for side due to public method above being used clientside
   private void __insertRecord (ItemStack record) {
     this.disc = record.copy();
+    if (content == null) {
+      content = Blocks.JUKEBOX.defaultBlockState();
+    }
     this.content = content.setValue(JukeboxBlock.HAS_RECORD, !disc.isEmpty());
     if (!level.isClientSide) PacketSender.updateJukeboxClientside(this, this.disc);
   }

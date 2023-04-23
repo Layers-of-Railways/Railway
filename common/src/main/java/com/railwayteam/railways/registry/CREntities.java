@@ -37,7 +37,7 @@ public class CREntities {
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Workbench")
       .register();
-  public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
+  public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.<MinecartJukebox>entity("jukeboxcart", MinecartJukebox::create, MobCategory.MISC)
       .renderer(() -> CREntities::cartRenderer)
       .properties(configure(c -> c.size(0.98F, 0.7F)))
       .lang("Minecart with Jukebox")
