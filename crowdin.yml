@@ -6,8 +6,8 @@
 
 "files": [
     {
-        "source": "src/generated/resources/assets/railways/lang/en_us.json",
-        "translation": "src/main/resources/assets/railways/lang/%locale_with_underscore%.json",
+        "source": "common/src/generated/resources/assets/railways/lang/en_us.json",
+        "translation": "common/src/main/resources/assets/railways/lang/%locale_with_underscore%.json",
         "languages_mapping": {
             "locale_with_underscore": {
                 "de_AT": "de_at",
