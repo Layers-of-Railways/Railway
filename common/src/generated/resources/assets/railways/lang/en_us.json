@@ -163,6 +163,8 @@
 	"railways.whistle.failure.no_space": "No space to place flag.",
 	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
 
+	"railways.journeymap.train_marker_toggle": "Toggle Train Markers",
+
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",
 
