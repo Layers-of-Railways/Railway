@@ -57,6 +57,13 @@ public abstract class MinecartJukebox extends MinecartBlock {
     throw new AssertionError();
   }
 
+  public int getComparatorOutput() {
+    if (disc.getItem() instanceof RecordItem record) {
+      return record.getAnalogOutput();
+    }
+    return 0;
+  }
+
   @Override
   public Type getMinecartType() {
     return TYPE;
@@ -70,7 +77,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
 
   @Override
   public void activateMinecart(int x, int y, int z, boolean active) {
-    if (!level.isClientSide) {
+    if (active && !level.isClientSide) {
       if (cooldownCount <= 0) {
         cooldownCount = COOLDOWN;
         PacketSender.updateJukeboxClientside(this, this.disc);
@@ -105,6 +112,20 @@ public abstract class MinecartJukebox extends MinecartBlock {
       }
     }
     return InteractionResult.sidedSuccess(level.isClientSide);
+  }
+
+  @Override
+  protected void readAdditionalSaveData(CompoundTag compound) {
+    super.readAdditionalSaveData(compound);
+    if (compound.contains("Disc", Tag.TAG_COMPOUND)) {
+      disc = ItemStack.of(compound.getCompound("Disc"));
+    }
+  }
+
+  @Override
+  protected void addAdditionalSaveData(CompoundTag compound) {
+    super.addAdditionalSaveData(compound);
+    compound.put("Disc", disc.save(new CompoundTag()));
   }
 
   // clientside

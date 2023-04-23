@@ -39,9 +39,8 @@ public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMine
 
     @Override
     public CapabilityMinecartController getCap() {
-        if (create$controllerCap == null) {
+        if (create$controllerCap == null)
             CapabilityMinecartController.attach(this);
-        }
         return create$controllerCap;
     }
 
@@ -52,9 +51,8 @@ public class MinecartJukeboxImpl extends MinecartJukebox implements AbstractMine
 
     @Override
     public LazyOptional<MinecartController> lazyController() {
-        if (create$controllerCap == null) {
+        if (create$controllerCap == null)
             CapabilityMinecartController.attach(this);
-        }
         return create$controllerCap.cap;
     }
 

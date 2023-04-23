@@ -22,6 +22,9 @@
     ],
     "fabric-datagen": [
       "com.railwayteam.railways.fabric.RailwaysDataFabric"
+    ],
+    "journeymap": [
+      "com.railwayteam.railways.compat.journeymap.RailwayMapPlugin"
     ]
   },
   "mixins": [

@@ -49,12 +49,17 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	private static ConductorCapModel<?> defaultModel = null;
 	private static final Map<String, ConductorCapModel<?>> customModels = new HashMap<>();
 
+	public static void clearModelCache() {
+		defaultModel = null;
+		customModels.clear();
+	}
+
 	public static ConductorCapModel<?> of(ItemStack stack, HumanoidModel<?> base) {
 		if (defaultModel == null) {
 			EntityModelSet set = Minecraft.getInstance().getEntityModels();
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
-				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(stack));
+				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
 				customModels.put(name, model);
 			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
@@ -92,9 +97,10 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			poseStack.translate(0, -0.25d, 0);
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
 			poseStack.scale(0.625F, -0.625F, -0.625F);
-			// TODO: this should be an easy replacement but it requires tweaking and testing
+			// DONE: this should be an easy replacement but it requires tweaking and testing - simple replacement
 //			ForgeHooksClient.handleCameraTransforms(poseStack, override.get(), ItemTransforms.TransformType.HEAD, false);
 //			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
+			override.get().getTransforms().head.apply(false, poseStack);
 			poseStack.translate(-0.5, -0.5, -0.5);
 			CachedBufferer.partial(override, Blocks.AIR.defaultBlockState())
 				.light(packedLight)

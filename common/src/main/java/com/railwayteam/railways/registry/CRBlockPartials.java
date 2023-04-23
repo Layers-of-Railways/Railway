@@ -30,8 +30,8 @@ public class CRBlockPartials {
         NO_TILT_CAPS.add(itemName);
     }
 
-    public static boolean shouldPreventTiltingCap(ItemStack itemStack) {
-        return itemStack.getItem() instanceof ConductorCapItem && NO_TILT_CAPS.contains(itemStack.getHoverName().getString());
+    public static boolean shouldPreventTiltingCap(String name) {
+        return NO_TILT_CAPS.contains(name);
     }
 
     public static void registerCustomSkin(String itemName, String textureLoc) {

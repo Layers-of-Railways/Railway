@@ -34,8 +34,11 @@ public class RailwayMapPlugin implements IClientPlugin {
         }
     }
 
+    private static JourneymapPlatformEventListener listener; // just holding on to this
+
     public static void load() {
         Railways.LOGGER.info("Loaded JourneyMap plugin");
+        listener = JourneymapPlatformEventListener.create();
     }
 
     /*@SubscribeEvent

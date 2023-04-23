@@ -2,6 +2,7 @@ package com.railwayteam.railways.compat;
 
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.utility.Lang;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -10,12 +11,18 @@ import java.util.function.Supplier;
  * For compatibility with and without another mod present, we have to define load conditions of the specific code
  */
 public enum Mods {
-	JOURNEYMAP;
+	JOURNEYMAP("journeymap-fabric");
 
 	public final boolean isLoaded;
+	public final @Nullable String fabricId;
 
 	Mods() {
-		this.isLoaded = Utils.isModLoaded(asId());
+		this(null);
+	}
+
+	Mods(@Nullable String fabricId) {
+		this.fabricId = fabricId;
+		this.isLoaded = Utils.isModLoaded(asId(), fabricId);
 	}
 
 	/**

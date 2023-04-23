@@ -28,6 +28,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
     private ResourceKey<Level> currentDimension;
     private ResourceKey<Level> lastDimension;
     private boolean reload = false;
+    private boolean enabled = true;
 
     private RailwayMarkerHandler(IClientAPI jmAPI) {
         this.jmAPI = jmAPI;
@@ -41,8 +42,20 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         DummyRailwayMarkerHandler.instance = new RailwayMarkerHandler(jmAPI);
     }
 
+    public void enable() {
+        this.enabled = true;
+        this.reload = true;
+        this.runUpdates();
+    }
+
     public void disable() {
+        this.enabled = false;
         markers.forEach((u, overlay) -> jmAPI.remove(overlay));
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override
@@ -118,6 +131,8 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
 
     @Override
     public void runUpdates() {
+        if (!enabled)
+            return;
         currentDimension = Minecraft.getInstance().level == null ? null : Minecraft.getInstance().level.dimension();
         boolean forceUpdate = reload || currentDimension != lastDimension;
         for (UUID uuid : (forceUpdate ? trainData.keySet() : needingUpdates)) {

@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.railwayteam.railways.registry.commands.ClearCapCacheCommand;
 import com.railwayteam.railways.registry.commands.ClearCasingCacheCommand;
 import com.railwayteam.railways.registry.commands.ReloadJourneymapCommand;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -17,6 +18,7 @@ public class CRCommandsClient {
 		LiteralCommandNode<SharedSuggestionProvider> railwaysRoot = dispatcher.register(literal("railways_client")
 				.requires(cs -> cs.hasPermission(0))
 				.then(ClearCasingCacheCommand.register())
+				.then(ClearCapCacheCommand.register())
 				.then(ReloadJourneymapCommand.register())
 		);
 

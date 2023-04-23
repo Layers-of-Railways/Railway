@@ -19,12 +19,16 @@ public class MinecartJukeboxImpl extends MinecartJukebox {
         return new MinecartJukeboxImpl(level, x, y, z);
     }
 
+    public static MinecartJukebox create(EntityType<?> type, Level level) {
+        return new MinecartJukeboxImpl(type, level);
+    }
+
+    @Override
+    public int getComparatorLevel() {
+        return getComparatorOutput();
+
     @Override
     protected Item getDropItem() {
         return CRItems.ITEM_JUKEBOXCART.get();
-    }
-
-    public static MinecartJukebox create(EntityType<?> type, Level level) {
-        return new MinecartJukeboxImpl(type, level);
     }
 }
