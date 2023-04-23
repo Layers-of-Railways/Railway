@@ -140,11 +140,6 @@ public abstract class MinecartJukebox extends MinecartBlock {
     }
   }
 
-  @ExpectPlatform
-  public void test() {
-    throw new AssertionError();
-  }
-
   // serverside. Checks for side due to public method above being used clientside
   private void __insertRecord (ItemStack record) {
     this.disc = record.copy();
