@@ -116,6 +116,7 @@
 	"railways.tooltip.coupler.error.mode_not_permitted": "Action non autorisée dans le mode actuel",
 	"railways.tooltip.coupler.error.missing_train": "Nécessite que les deux points de voie soient occupés",
 	"railways.tooltip.coupler.error.carriage_alignment": "Chariot(s) pas alignés correctement. Astuce : Le centre du châssis devrais être alignés au-dessus du point du rail de couplage.",
+	"railways.tooltip.coupler.error.carriage_orientation": "Les transporteurs doivent faire face à la même direction. Indice : Utilisez une clé pour réorienter les chariots.",
 	"railways.station.train_limit": "Limite de Trains",
 	"create.sliding_door.mode": "Mode ouvert",
 	"create.sliding_door.mode.manual": "Manuel",
