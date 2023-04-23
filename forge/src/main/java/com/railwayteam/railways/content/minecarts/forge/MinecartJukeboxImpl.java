@@ -26,6 +26,7 @@ public class MinecartJukeboxImpl extends MinecartJukebox {
     @Override
     public int getComparatorLevel() {
         return getComparatorOutput();
+    }
 
     @Override
     protected Item getDropItem() {
