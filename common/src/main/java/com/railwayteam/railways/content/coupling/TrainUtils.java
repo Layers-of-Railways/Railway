@@ -103,6 +103,10 @@ public class TrainUtils {
             train.runtime.discardSchedule();
         }
 
+        if (train.carriages.size() == 0) {
+            Create.RAILWAYS.removeTrain(train.id);
+        }
+
         return newTrain;
     }
 

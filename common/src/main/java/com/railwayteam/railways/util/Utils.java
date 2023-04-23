@@ -5,12 +5,13 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 
 public class Utils {
 	@ExpectPlatform
-	public static boolean isModLoaded(String id) {
+	public static boolean isModLoaded(String id, @Nullable String fabricId) {
 		throw new AssertionError();
 	}
 
