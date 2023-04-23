@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
+import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRPackets;
@@ -14,6 +15,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.logistics.trains.GraphLocation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
 import com.simibubi.create.content.logistics.trains.entity.Carriage;
@@ -137,6 +139,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     protected void onPowered() {
         if (level == null || level.isClientSide)
             return;
+        this.getSecondaryCoupler().tileAdded(this, false); //FIXME remove this
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
             case DECOUPLING:
@@ -211,8 +214,21 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             BlockPos newPos = isOkExceptGraph() ? getDesiredSecondaryEdgePos().orElse(BlockPos.ZERO) : BlockPos.ZERO;
             if (!newPos.equals(((AccessorTrackTargetingBehavior) secondEdgePoint).getTargetTrack())) {
                 ((AccessorTrackTargetingBehavior) secondEdgePoint).setTargetTrack(newPos);
+                TrackCoupler point = secondEdgePoint.getEdgePoint();
+                if (point != null) {
+                    GraphLocation location = secondEdgePoint.determineGraphLocation();
+                    if (location != null && location.graph != null) {
+                        location.graph.removePoint(CREdgePointTypes.COUPLER, point.id);
+                        Create.RAILWAYS.trains.forEach((uuid, train) -> {
+                            ((IOccupiedCouplers) train).getOccupiedCouplers().remove(point.id);
+                            if (uuid == point.getCurrentTrain() || train.graph == location.graph) {
+                                train.updateSignalBlocks = true;
+                            }
+                        });
+                    }
+                }
                 ((AccessorTrackTargetingBehavior) secondEdgePoint).setEdgePoint(null);
-                secondEdgePoint.createEdgePoint();
+//                secondEdgePoint.edgePoint = secondEdgePoint.createEdgePoint();  // - this is taken care of by the behaviour's tick method
                 if (isOkExceptGraph())
                     ((AccessorTrackTargetingBehavior) secondEdgePoint).setTargetDirection(((AccessorTrackTargetingBehavior) edgePoint).getTargetDirection().opposite());
                 sendData();
