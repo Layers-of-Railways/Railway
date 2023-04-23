@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
@@ -56,6 +57,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     protected int edgeSpacing = 5;
     private int lastEdgeSpacing = 5;
     private MutableComponent error = null;
+    private MutableComponent error2 = null;
     private ClientInfo clientInfo;
 
     public TrackTargetingBehaviour<TrackCoupler> edgePoint;
@@ -182,8 +184,16 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         error = Components.empty().append(component);
     }
 
+    private void setError2(Component component) {
+        error2 = Components.empty().append(component);
+    }
+
     private void clearErrors() {
         error = null;
+    }
+
+    private void clearError2() {
+        error2 = null;
     }
 
     @Override
@@ -211,6 +221,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         updateOK();
         clientInfo = new ClientInfo(this);
         clearErrors();
+        clearError2();
         if (level instanceof ServerLevel serverLevel) {
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(serverLevel, getBlockPos()), new TrackCouplerClientInfoPacket(this));
         }
@@ -224,20 +235,24 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
 
     protected void updateOK() {
         if (!isOkExceptGraph()) {
+            setError2(Components.literal("Wrong blocks or track shapes"));
             edgePointsOk = false;
             return;
         }
         if (((AccessorTrackTargetingBehavior) secondEdgePoint).getTargetTrack().equals(BlockPos.ZERO) || ((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().equals(BlockPos.ZERO)) {
+            setError2(Components.literal("Missing edge point(s)"));
             edgePointsOk = false;
             return;
         }
 
         if (edgePoint.determineGraphLocation() == null || secondEdgePoint.determineGraphLocation() == null) {
+            setError2(Components.literal("Edge point(s) missing graph location"));
             edgePointsOk = false;
             return;
         }
 
         if (edgePoint.determineGraphLocation().graph != secondEdgePoint.determineGraphLocation().graph) {
+            setError2(Components.literal("Edge points not on same graph"));
             edgePointsOk = false;
             return;
         }
@@ -246,11 +261,18 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         Couple<TrackNodeLocation> edgePointLocations = edgePoint.determineGraphLocation().edge;
         Couple<TrackNodeLocation> secondEdgePointLocations = secondEdgePoint.determineGraphLocation().edge;
         if (edgePointLocations == null || secondEdgePointLocations == null) {
+            setError2(Components.literal("Edge point(s) missing edge location"));
             edgePointsOk = false;
             return;
         }
-        edgePointsOk = edgePointLocations.getFirst().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getFirst().equals(secondEdgePointLocations.getSecond()) ||
-            edgePointLocations.getSecond().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getSecond().equals(secondEdgePointLocations.getSecond());
+        if (Config.STRICT_COUPLER.get()) {
+            edgePointsOk = edgePointLocations.getFirst().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getFirst().equals(secondEdgePointLocations.getSecond()) ||
+                edgePointLocations.getSecond().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getSecond().equals(secondEdgePointLocations.getSecond());
+            if (!edgePointsOk)
+                setError2(Components.literal("Edge points not on same or adjacent edges"));
+        } else {
+            edgePointsOk = true;
+        }
     }
 
     public boolean areEdgePointsOk() {
@@ -368,7 +390,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
     }
 
     public ClientInfo getClientInfo() {
-        return clientInfo;
+        return clientInfo != null ? clientInfo : ClientInfo.FALLBACK;
     }
 
     public void setClientInfo(ClientInfo info) {
@@ -454,11 +476,23 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
 
     public static class ClientInfo {
 
+        public static final ClientInfo FALLBACK = new ClientInfo(OperationMode.NONE, "??", "??", false, Components.literal("??"), Components.literal("??"));
+
         public OperationMode mode;
         public String trainName1;
         public String trainName2;
         public boolean edgePointsOk;
         public MutableComponent error;
+        public MutableComponent error2;
+
+        private ClientInfo(OperationMode mode, String trainName1, String trainName2, boolean edgePointsOk, MutableComponent error, MutableComponent error2) {
+            this.mode = mode;
+            this.trainName1 = trainName1;
+            this.trainName2 = trainName2;
+            this.edgePointsOk = edgePointsOk;
+            this.error = error;
+            this.error2 = error2;
+        }
 
         protected ClientInfo(TrackCouplerTileEntity te) {
             mode = te.getOperationMode();
@@ -478,6 +512,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             }
             edgePointsOk = te.edgePointsOk;
             error = te.error;
+            error2 = te.error2;
         }
 
         public ClientInfo(CompoundTag tag) {
@@ -486,6 +521,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             trainName2 = tag.getString("trainName2");
             edgePointsOk = tag.getBoolean("edgePointsOk");
             error = tag.contains("error") ? Component.Serializer.fromJson(tag.getString("error")) : null;
+            error2 = tag.contains("error2") ? Component.Serializer.fromJson(tag.getString("error2")) : null;
         }
 
         public CompoundTag write() {
@@ -496,6 +532,8 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             tag.putBoolean("edgePointsOk", edgePointsOk);
             if (error != null)
                 tag.putString("error", Component.Serializer.toJson(error));
+            if (error2 != null)
+                tag.putString("error2", Component.Serializer.toJson(error2));
             return tag;
         }
     }
@@ -536,10 +574,17 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
         b().translate("tooltip.coupler.action."+operationMode.name().toLowerCase(Locale.ROOT))
             .style(ChatFormatting.GREEN)
             .forGoggles(tooltip);
-        if (clientInfo != null && clientInfo.error != null) {
-            b().add(clientInfo.error)
-                .style(ChatFormatting.DARK_RED)
-                .forGoggles(tooltip);
+        if (clientInfo != null) {
+            if (clientInfo.error != null) {
+                b().add(clientInfo.error)
+                    .style(ChatFormatting.DARK_RED)
+                    .forGoggles(tooltip);
+            }
+            if (clientInfo.error2 != null && Config.EXTENDED_COUPLER_DEBUG.get()) {
+                b().add(clientInfo.error2)
+                    .style(ChatFormatting.DARK_PURPLE)
+                    .forGoggles(tooltip);
+            }
         }
         return true;
     }

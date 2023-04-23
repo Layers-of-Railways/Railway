@@ -20,10 +20,12 @@ public class Config {
     public static ForgeConfigSpec.IntValue NEAR_TRAIN_SYNC_TICKS;
     public static ForgeConfigSpec.IntValue JOURNEYMAP_UPDATE_TICKS;
     public static ForgeConfigSpec.IntValue JOURNEYMAP_REMOVE_OBSOLETE_TICKS;
+    public static ForgeConfigSpec.BooleanValue EXTENDED_COUPLER_DEBUG;
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
     public static ForgeConfigSpec.BooleanValue CONDUCTOR_WHISTLE_REQUIRES_OWNING;
+    public static ForgeConfigSpec.BooleanValue STRICT_COUPLER;
 
 
     static {
@@ -34,6 +36,7 @@ public class Config {
         CLIENT_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         JOURNEYMAP_UPDATE_TICKS = CLIENT_BUILDER.comment("Journeymap train overlay update time (in ticks)").defineInRange("journeymapUpdateTicks", 1, 1, 600);
         JOURNEYMAP_REMOVE_OBSOLETE_TICKS = CLIENT_BUILDER.comment("Journeymap train overlay old marker removal check time (in ticks)").defineInRange("journeymapObsolescenceCheckTicks", 200, 10, 1200);
+        EXTENDED_COUPLER_DEBUG = CLIENT_BUILDER.comment("Show extended debug info in coupler goggle overlay").define("extendedCouplerDebug", false);
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         setupGeneralCategory(SERVER_BUILDER);
@@ -52,6 +55,7 @@ public class Config {
         FAR_TRAIN_SYNC_TICKS = builder.comment("Outside-of-render-distance train sync time (in ticks)").defineInRange("farTrainUpdateTicks", 200, 10, 600);
         NEAR_TRAIN_SYNC_TICKS = builder.comment("In-render-distance train sync time (in ticks)").defineInRange("nearTrainUpdateTicks", 1, 1, 600);
         CONDUCTOR_WHISTLE_REQUIRES_OWNING = builder.comment("Conductor whistle is limited to the owner of a train").define("mustOwnBoundTrain", false);
+        STRICT_COUPLER = builder.comment("Coupler will require points to be on the same or adjacent track edge, this will prevent the coupler from working if there is any form of junction in between the two points.").define("strictCoupler", false);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {
