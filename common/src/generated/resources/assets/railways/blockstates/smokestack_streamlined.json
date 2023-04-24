@@ -3,22 +3,22 @@
     "enabled=false,powered=false,waterlogged=false": {
       "model": "railways:block/smokestack/block_streamlined"
     },
-    "enabled=true,powered=false,waterlogged=false": {
+    "enabled=false,powered=false,waterlogged=true": {
       "model": "railways:block/smokestack/block_streamlined"
     },
     "enabled=false,powered=true,waterlogged=false": {
       "model": "railways:block/smokestack/block_streamlined"
     },
-    "enabled=true,powered=true,waterlogged=false": {
+    "enabled=false,powered=true,waterlogged=true": {
       "model": "railways:block/smokestack/block_streamlined"
     },
-    "enabled=false,powered=false,waterlogged=true": {
+    "enabled=true,powered=false,waterlogged=false": {
       "model": "railways:block/smokestack/block_streamlined"
     },
     "enabled=true,powered=false,waterlogged=true": {
       "model": "railways:block/smokestack/block_streamlined"
     },
-    "enabled=false,powered=true,waterlogged=true": {
+    "enabled=true,powered=true,waterlogged=false": {
       "model": "railways:block/smokestack/block_streamlined"
     },
     "enabled=true,powered=true,waterlogged=true": {

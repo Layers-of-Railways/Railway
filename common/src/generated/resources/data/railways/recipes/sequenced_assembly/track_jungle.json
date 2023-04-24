@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:jungle_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_jungle"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_jungle"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -63,10 +66,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_jungle"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_jungle"
+  }
 }

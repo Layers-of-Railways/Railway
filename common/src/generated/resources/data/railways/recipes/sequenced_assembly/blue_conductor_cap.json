@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:blue_wool"
   },
-  "transitionalItem": {
-    "item": "railways:blue_incomplete_conductor_cap"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:blue_conductor_cap"
+    }
+  ],
   "sequence": [
     {
       "type": "create:cutting",
@@ -53,10 +56,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:blue_conductor_cap"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:blue_incomplete_conductor_cap"
+  }
 }

@@ -170,6 +170,7 @@ public class CRBlocks {
     public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(TrackMaterial.SPRUCE);
     public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
     public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(TrackMaterial.BLACKSTONE);
+    public static final BlockEntry<CustomTrackBlock> MANGROVE_TRACK = makeTrack(TrackMaterial.MANGROVE);
     public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(TrackMaterial.MONORAIL, new MonorailBlockStateGenerator()::generate);
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =

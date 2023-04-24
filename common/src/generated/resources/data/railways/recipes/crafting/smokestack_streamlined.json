@@ -1,8 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#+#"
-  ],
   "key": {
     "#": {
       "item": "create:iron_sheet"
@@ -11,6 +8,9 @@
       "item": "minecraft:campfire"
     }
   },
+  "pattern": [
+    "#+#"
+  ],
   "result": {
     "item": "railways:smokestack_streamlined"
   }

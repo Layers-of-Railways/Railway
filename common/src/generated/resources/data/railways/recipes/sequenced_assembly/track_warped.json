@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:warped_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_warped"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_warped"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -53,10 +56,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_warped"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_warped"
+  }
 }
