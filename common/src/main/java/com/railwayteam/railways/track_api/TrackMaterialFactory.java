@@ -30,11 +30,11 @@ public class TrackMaterialFactory {
     @Environment(EnvType.CLIENT)
     private TrackMaterial.TrackModelHolder modelHolder = null;
     @Environment(EnvType.CLIENT)
-    private PartialModel tieModel = null; //fixme don't run on client
+    private PartialModel tieModel = null;
     @Environment(EnvType.CLIENT)
-    private PartialModel leftSegmentModel = null; //fixme don't run on client
+    private PartialModel leftSegmentModel = null;
     @Environment(EnvType.CLIENT)
-    private PartialModel rightSegmentModel = null; //fixme don't run on client
+    private PartialModel rightSegmentModel = null;
 
     public TrackMaterialFactory(ResourceLocation id) {
         this.id = id;
@@ -91,7 +91,7 @@ public class TrackMaterialFactory {
         return this;
     }
 
-    public TrackMaterialFactory defaultModels() { //fixme don't run on client
+    public TrackMaterialFactory defaultModels() {
         Env.CLIENT.runIfCurrent(() -> () -> {
             String namespace = id.getNamespace();
             String prefix = "block/track/" + id.getPath() + "/";

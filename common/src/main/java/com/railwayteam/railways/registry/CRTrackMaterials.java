@@ -92,9 +92,9 @@ public class CRTrackMaterials {
             .trackType(TrackMaterial.TrackType.MONORAIL)
             .noRecipeGen()
             .customModels(
-                () -> () -> new PartialModel(Railways.asResource("block/monorail/monorail/monorail_half")), //fixme don't run on client
-                () -> () -> new PartialModel(Railways.asResource("block/empty")), //fixme don't run on client
-                () -> () -> new PartialModel(Railways.asResource("block/empty")) //fixme don't run on client
+                () -> () -> new PartialModel(Railways.asResource("block/monorail/monorail/monorail_half")),
+                () -> () -> new PartialModel(Railways.asResource("block/empty")),
+                () -> () -> new PartialModel(Railways.asResource("block/empty"))
             )
             .build();
 
