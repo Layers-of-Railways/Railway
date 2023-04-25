@@ -3,8 +3,11 @@ package com.railwayteam.railways.track_api;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider;
 import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
+import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.content.logistics.trains.track.TrackBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -23,10 +26,15 @@ public class TrackMaterialFactory {
     ));
     private ResourceLocation particle;
     private TrackMaterial.TrackType trackType = TrackMaterial.TrackType.STANDARD;
+
+    @Environment(EnvType.CLIENT)
     private TrackMaterial.TrackModelHolder modelHolder = null;
-    private PartialModel tieModel = null;
-    private PartialModel leftSegmentModel = null;
-    private PartialModel rightSegmentModel = null;
+    @Environment(EnvType.CLIENT)
+    private PartialModel tieModel = null; //fixme don't run on client
+    @Environment(EnvType.CLIENT)
+    private PartialModel leftSegmentModel = null; //fixme don't run on client
+    @Environment(EnvType.CLIENT)
+    private PartialModel rightSegmentModel = null; //fixme don't run on client
 
     public TrackMaterialFactory(ResourceLocation id) {
         this.id = id;
@@ -43,7 +51,7 @@ public class TrackMaterialFactory {
     }
 
     public TrackMaterialFactory setBuiltin() {
-        this.modelHolder = TrackMaterial.TrackModelHolder.DEFAULT;
+        Env.CLIENT.runIfCurrent(() -> () -> this.modelHolder = TrackMaterial.TrackModelHolder.DEFAULT);
         return this;
     }
 
@@ -83,19 +91,23 @@ public class TrackMaterialFactory {
         return this;
     }
 
-    public TrackMaterialFactory defaultModels() {
-        String namespace = id.getNamespace();
-        String prefix = "block/track/" + id.getPath() + "/";
-        tieModel = new PartialModel(new ResourceLocation(namespace, prefix + "tie"));
-        leftSegmentModel = new PartialModel(new ResourceLocation(namespace, prefix + "segment_left"));
-        rightSegmentModel = new PartialModel(new ResourceLocation(namespace, prefix + "segment_right"));
+    public TrackMaterialFactory defaultModels() { //fixme don't run on client
+        Env.CLIENT.runIfCurrent(() -> () -> {
+            String namespace = id.getNamespace();
+            String prefix = "block/track/" + id.getPath() + "/";
+            tieModel = new PartialModel(new ResourceLocation(namespace, prefix + "tie"));
+            leftSegmentModel = new PartialModel(new ResourceLocation(namespace, prefix + "segment_left"));
+            rightSegmentModel = new PartialModel(new ResourceLocation(namespace, prefix + "segment_right"));
+        });
         return this;
     }
 
-    public TrackMaterialFactory customModels(PartialModel tieModel, PartialModel leftSegmentModel, PartialModel rightSegmentModel) {
-        this.tieModel = tieModel;
-        this.leftSegmentModel = leftSegmentModel;
-        this.rightSegmentModel = rightSegmentModel;
+    public TrackMaterialFactory customModels(Supplier<Supplier<PartialModel>> tieModel, Supplier<Supplier<PartialModel>> leftSegmentModel, Supplier<Supplier<PartialModel>> rightSegmentModel) {
+        Env.CLIENT.runIfCurrent(() -> () -> {
+            this.tieModel = tieModel.get().get();
+            this.leftSegmentModel = leftSegmentModel.get().get();
+            this.rightSegmentModel = rightSegmentModel.get().get();
+        });
         return this;
     }
 
@@ -107,11 +119,13 @@ public class TrackMaterialFactory {
         assert sleeperIngredient != null;
         assert railsIngredient != null;
         assert id != null;
-        assert modelHolder != null;
-        if (tieModel != null || leftSegmentModel != null || rightSegmentModel != null) {
-            assert tieModel != null && leftSegmentModel != null && rightSegmentModel != null;
-            modelHolder = new TrackMaterial.TrackModelHolder(tieModel, leftSegmentModel, rightSegmentModel);
-        }
-        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, trackType, modelHolder);
+        Env.CLIENT.runIfCurrent(() -> () -> {
+            assert modelHolder != null;
+            if (tieModel != null || leftSegmentModel != null || rightSegmentModel != null) {
+                assert tieModel != null && leftSegmentModel != null && rightSegmentModel != null;
+                modelHolder = new TrackMaterial.TrackModelHolder(tieModel, leftSegmentModel, rightSegmentModel);
+            }
+        });
+        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, trackType, () -> () -> modelHolder);
     }
 }

@@ -84,7 +84,7 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            return material.modelHolder.tie;
+            return material.getModelHolder().tie;
         }
         return TRACK_TIE;
     }
@@ -95,7 +95,7 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            return material.modelHolder.segment_left;
+            return material.getModelHolder().segment_left;
         }
         return TRACK_SEGMENT_LEFT;
     }
@@ -106,7 +106,7 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
         BezierConnection bc = ((IGetBezierConnection) this$0).getBezierConnection();
         if (bc != null) {
             TrackMaterial material = ((IHasTrackMaterial) bc).getMaterial();
-            return material.modelHolder.segment_right;
+            return material.getModelHolder().segment_right;
         }
         return TRACK_SEGMENT_RIGHT;
     }

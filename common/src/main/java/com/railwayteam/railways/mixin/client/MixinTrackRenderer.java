@@ -60,7 +60,7 @@ public class MixinTrackRenderer {
     private static PartialModel replaceTie() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.modelHolder.tie;
+            return material.getModelHolder().tie;
         }
         return TRACK_TIE;
     }
@@ -70,7 +70,7 @@ public class MixinTrackRenderer {
     private static PartialModel replaceSegLeft() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.modelHolder.segment_left;
+            return material.getModelHolder().segment_left;
         }
         return TRACK_SEGMENT_LEFT;
     }
@@ -80,7 +80,7 @@ public class MixinTrackRenderer {
     private static PartialModel replaceSegRight() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.modelHolder.segment_right;
+            return material.getModelHolder().segment_right;
         }
         return TRACK_SEGMENT_RIGHT;
     }
