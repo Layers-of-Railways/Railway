@@ -6,13 +6,13 @@
   ],
   "key": {
     "#": {
-      "item": "create:iron_sheet"
+      "tag": "railways:internal/plates/iron_plates"
     },
     "+": {
       "item": "minecraft:campfire"
     },
     ".": {
-      "item": "minecraft:iron_nugget"
+      "tag": "railways:internal/nuggets/iron_nuggets"
     }
   },
   "result": {

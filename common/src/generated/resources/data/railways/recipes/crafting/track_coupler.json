@@ -7,7 +7,7 @@
   ],
   "key": {
     "\u003d": {
-      "item": "create:iron_sheet"
+      "tag": "railways:internal/plates/iron_plates"
     },
     "#": {
       "item": "minecraft:redstone"

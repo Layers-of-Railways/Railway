@@ -10,12 +10,14 @@ import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -31,68 +33,82 @@ import java.util.function.UnaryOperator;
 public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     GeneratedRecipe TRACK_COUPLER = create(CRBlocks.TRACK_COUPLER)
-        .unlockedBy(AllBlocks.RAILWAY_CASING::get)
-        .viaShaped(b -> b.define('=', AllItems.IRON_SHEET.get())
-            .define('#', Items.REDSTONE)
-            .define('T', AllBlocks.RAILWAY_CASING.get())
+        .unlockedBy(Ingredients::railwayCasing)
+        .viaShaped(b -> b.define('=', Ingredients.ironSheet())
+            .define('#', Ingredients.redstone())
+            .define('T', Ingredients.railwayCasing())
             .pattern("=")
             .pattern("#")
             .pattern("T"));
 
     GeneratedRecipe CONDUCTOR_WHISTLE = create(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
         .unlockedByTag(() -> CRTags.AllItemTags.CONDUCTOR_CAPS.tag)
-        .viaShapeless(b -> b.requires(Items.COPPER_INGOT)
-            .requires(AllItems.BRASS_NUGGET.get()));
+        .viaShapeless(b -> b
+            .requires(Ingredients.copperIngot())
+            .requires(Ingredients.brassNugget()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
             .pattern("# #")
             .pattern("# #")
             .pattern("#+#")
         );
 
     GeneratedRecipe DIESEL_STACK = create(CRBlocks.DIESEL_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
-            .define('*', AllItems.PROPELLER.get())
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
+            .define('*', Ingredients.propeller())
             .pattern("#*#")
             .pattern(" + ")
         );
 
     GeneratedRecipe CABOOSE_STACK = create(CRBlocks.CABOOSESTYLE_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
-            .define('.', Items.IRON_NUGGET)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
+            .define('.', Ingredients.ironNugget())
             .pattern(".#.")
             .pattern(" + ")
         );
 
     GeneratedRecipe OILBURNER_STACK = create(CRBlocks.OILBURNER_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
             .pattern("# #")
             .pattern("#+#")
         );
 
     GeneratedRecipe STREAMLINED_STACK = create(CRBlocks.STREAMLINED_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
             .pattern("#+#")
         );
 
     GeneratedRecipe WOODBURNER_STACK = create(CRBlocks.WOODBURNER_STACK)
-        .unlockedBy(() -> Blocks.CAMPFIRE)
-        .viaShaped(b -> b.define('#', AllItems.IRON_SHEET.get())
-            .define('+', Blocks.CAMPFIRE)
-            .define('.', Items.IRON_NUGGET)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+            .define('+', Ingredients.campfire())
+            .define('.', Ingredients.ironNugget())
             .pattern(".#.")
             .pattern("#+#")
+        );
+
+    GeneratedRecipe SEMAPHORE = create(CRBlocks.SEMAPHORE)
+        .unlockedBy(AllItems.ELECTRON_TUBE::get)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('C', Ingredients.andesiteCasing())
+            .define('T', Ingredients.electronTube())
+            .define('F', Ingredients.fence())
+            .define('S', Ingredients.ironSheet())
+            .pattern(" S ")
+            .pattern("FCT")
+            .pattern(" S ")
         );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
