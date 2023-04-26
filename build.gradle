@@ -81,7 +81,7 @@ subprojects {
         mainFile.addRequirement("create") // create
         mainFile.addModLoader(capitalized_loader)
         mainFile.addJavaVersion("Java 17")
-        mainFile.releaseType = "beta"
+        mainFile.releaseType = "release"
 //        System.out.println("Display name: ${mainFile.displayName}")
     }
 }
