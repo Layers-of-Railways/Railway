@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": {
-      "item": "create:iron_sheet"
+      "tag": "railways:internal/plates/iron_plates"
     },
     "+": {
       "item": "minecraft:campfire"

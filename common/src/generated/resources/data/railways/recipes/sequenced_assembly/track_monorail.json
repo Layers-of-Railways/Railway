@@ -34,7 +34,7 @@
           "item": "railways:track_incomplete_monorail"
         },
         {
-          "item": "create:iron_sheet"
+          "tag": "railways:internal/plates/iron_plates"
         }
       ],
       "results": [

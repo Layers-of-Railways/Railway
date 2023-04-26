@@ -12,8 +12,11 @@ import java.util.Map;
 public class CommonTags {
 	public static final CommonTag<Item>
 			STRING = item("string"),
-			IRON_NUGGETS = item("nuggets/iron_nuggets", "iron_nuggets", "nuggets/iron"),
-			ZINC_NUGGETS = item("nuggets/zinc_nuggets", "zinc_nuggets", "nuggets/zinc");
+			IRON_NUGGETS = item("nuggets/iron_nuggets", "nuggets/iron", "nuggets/iron"),
+			ZINC_NUGGETS = item("nuggets/zinc_nuggets", "nuggets/zinc", "nuggets/zinc"),
+			BRASS_NUGGETS = item("nuggets/brass_nuggets", "nuggets/brass", "nuggets/brass"),
+			IRON_PLATES = item("plates/iron_plates", "plates/iron", "plates/iron"),
+			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper");
 
 	public static final Map<DyeColor, CommonTag<Item>> DYES = Util.make(new EnumMap<>(DyeColor.class), dyes -> {
 		for (DyeColor color : DyeColor.values()) {

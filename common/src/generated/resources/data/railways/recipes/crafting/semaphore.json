@@ -16,7 +16,7 @@
       "tag": "minecraft:fences"
     },
     "S": {
-      "tag": "forge:plates/iron"
+      "tag": "railways:internal/plates/iron_plates"
     }
   },
   "result": {

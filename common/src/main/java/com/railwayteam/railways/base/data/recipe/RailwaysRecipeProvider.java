@@ -4,12 +4,16 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -65,8 +69,44 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return AllBlocks.METAL_BRACKET.get();
     }
 
-    public static ItemLike ironSheet() {
-      return AllItems.IRON_SHEET.get();
+    public static TagKey<Item> ironSheet() {
+      return CommonTags.IRON_PLATES.tag;
+    }
+
+    public static TagKey<Item> fence() {
+      return TagKey.<Item>create(Registry.ITEM_REGISTRY, new ResourceLocation("minecraft:fences"));
+    }
+
+    public static ItemLike campfire() {
+      return Blocks.CAMPFIRE;
+    }
+
+    public static ItemLike redstone() {
+      return Items.REDSTONE;
+    }
+
+    public static ItemLike railwayCasing() {
+      return AllBlocks.RAILWAY_CASING.get();
+    }
+
+    public static ItemLike andesiteCasing() {
+      return AllBlocks.ANDESITE_CASING.get();
+    }
+
+    public static ItemLike propeller() {
+      return AllItems.PROPELLER.get();
+    }
+
+    public static ItemLike electronTube() {
+      return AllItems.ELECTRON_TUBE.get();
+    }
+
+    public static TagKey<Item> copperIngot() {
+      return CommonTags.COPPER_INGOTS.tag;
+    }
+
+    public static TagKey<Item> brassNugget() {
+      return CommonTags.BRASS_NUGGETS.tag;
     }
   }
 }

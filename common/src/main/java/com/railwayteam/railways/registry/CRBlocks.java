@@ -161,17 +161,17 @@ public class CRBlocks {
             .transform(customItemModel("_", "block_both"))
             .register();
 
-    public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(TrackMaterial.ACACIA);
-    public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(TrackMaterial.BIRCH);
-    public static final BlockEntry<CustomTrackBlock> CRIMSON_TRACK = makeTrack(TrackMaterial.CRIMSON);
-    public static final BlockEntry<CustomTrackBlock> DARK_OAK_TRACK = makeTrack(TrackMaterial.DARK_OAK);
-    public static final BlockEntry<CustomTrackBlock> JUNGLE_TRACK = makeTrack(TrackMaterial.JUNGLE);
-    public static final BlockEntry<CustomTrackBlock> OAK_TRACK = makeTrack(TrackMaterial.OAK);
-    public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(TrackMaterial.SPRUCE);
-    public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(TrackMaterial.WARPED);
-    public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(TrackMaterial.BLACKSTONE);
-    public static final BlockEntry<CustomTrackBlock> MANGROVE_TRACK = makeTrack(TrackMaterial.MANGROVE);
-    public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(TrackMaterial.MONORAIL, new MonorailBlockStateGenerator()::generate);
+    public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
+    public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
+    public static final BlockEntry<CustomTrackBlock> CRIMSON_TRACK = makeTrack(CRTrackMaterials.CRIMSON);
+    public static final BlockEntry<CustomTrackBlock> DARK_OAK_TRACK = makeTrack(CRTrackMaterials.DARK_OAK);
+    public static final BlockEntry<CustomTrackBlock> JUNGLE_TRACK = makeTrack(CRTrackMaterials.JUNGLE);
+    public static final BlockEntry<CustomTrackBlock> OAK_TRACK = makeTrack(CRTrackMaterials.OAK);
+    public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(CRTrackMaterials.SPRUCE);
+    public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(CRTrackMaterials.WARPED);
+    public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(CRTrackMaterials.BLACKSTONE);
+    public static final BlockEntry<CustomTrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
+    public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL, new MonorailBlockStateGenerator()::generate);
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
         REGISTRATE.block("mono_bogey", p -> new MonoBogeyBlock(p, false))

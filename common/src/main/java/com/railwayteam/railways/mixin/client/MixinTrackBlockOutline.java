@@ -3,6 +3,7 @@ package com.railwayteam.railways.mixin.client;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlockOutline;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.logistics.trains.BezierConnection;
@@ -43,7 +44,7 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultIsMonorail = ((IHasTrackMaterial) bc).getMaterial() == TrackMaterial.MONORAIL;
+        railway$resultIsMonorail = ((IHasTrackMaterial) bc).getMaterial() == CRTrackMaterials.MONORAIL;
         return bc;
     }
 

@@ -2,6 +2,7 @@ plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
     id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
+    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
 }
 
 architectury {
@@ -67,6 +68,35 @@ subprojects {
             return
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
+    }
+
+    tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+        if (project.name == "common")
+            return
+        // This token is used to authenticate with CurseForge. It should be handled
+        // with the same level of care and security as your actual password. You
+        // should never share your token with an untrusted source or publish it
+        // publicly to GitHub or embed it within a project. The best practice is to
+        // store this token in an environment variable or a build secret.
+        apiToken = findProperty('curseforge_token')
+
+        // A project ID is required to tell CurseForge which project the uploaded
+        // file belongs to. This is public on your project page and is not private
+        // information.
+        var projectId = findProperty('curseforge_project')
+
+        // Tells CurseForgeGradle to publish the output of the jar task. This will
+        // return a UploadArtifact object that can be used to further configure the
+        // file.
+        def mainFile = upload(projectId, rootProject.file("jars/${archivesBaseName}-${version}.jar"))
+        mainFile.changelog = 'Check the discord #changelogs for details.'
+        var capitalized_loader = project.name.substring(0, 1).toUpperCase() + project.name.substring(1)
+        mainFile.displayName = "Steam 'n Rails ${mod_version} ${capitalized_loader} ${minecraft_version}"
+        mainFile.addRequirement("create") // create
+        mainFile.addModLoader(capitalized_loader)
+        mainFile.addJavaVersion("Java 17")
+        mainFile.releaseType = "beta"
+//        System.out.println("Display name: ${mainFile.displayName}")
     }
 }
 

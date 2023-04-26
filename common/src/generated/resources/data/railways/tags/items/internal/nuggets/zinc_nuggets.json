@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#c:zinc_nuggets",
+      "id": "#c:nuggets/zinc",
       "required": false
     },
     {
