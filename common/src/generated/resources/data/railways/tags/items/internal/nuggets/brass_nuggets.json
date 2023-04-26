@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#c:nuggets/brass",
+      "id": "#c:brass_nuggets",
       "required": false
     },
     {

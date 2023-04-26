@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#c:nuggets/iron",
+      "id": "#c:iron_nuggets",
       "required": false
     },
     {
