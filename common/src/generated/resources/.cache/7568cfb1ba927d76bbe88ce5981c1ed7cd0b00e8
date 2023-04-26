@@ -1,4 +1,4 @@
-// 1.19.2	2023-04-23T17:17:35.977808556	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-04-25T19:45:11.350872934	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 b4900cb39a17b6972d04fb319ebd3c4da889153a assets/railways/models/block/track/mangrove/cross_ortho.json
 7d4a280740d24fe310103b23d7869fd8c912b64d data/railways/loot_tables/blocks/track_acacia.json
 68f42914047b8a1e0cda0248b9c97dea2c425189 assets/railways/models/block/track/dark_oak/cross_d1_zo.json
@@ -132,6 +132,7 @@ e70b552224da119c46bb11a8229fb1ce72e0c4c6 assets/railways/models/block/track/blac
 9b9b2885fe69b3645f4441c96b5e154c49355be2 assets/railways/models/block/track/mangrove/ascending.json
 5a99ba23bb8761c1267f77bd4b7add2bff115016 assets/railways/models/item/brown_incomplete_conductor_cap.json
 008f9a977ec9f0b0c85e0f00e746fd2e25a029cc data/railways/advancements/recipes/railways/dying_existing_cap_blue.json
+4a6ca666740b098929798ad132260f288cc228c0 data/railways/tags/items/internal/ingots/copper_ingots.json
 420607b3851b932227dc958ce16d542f1d875675 data/railways/recipes/dying_existing_cap_cyan.json
 07992a1ee2ceb968775aebc0ff16d976c4df3bf1 assets/railways/models/block/track/acacia/diag.json
 1c920bec770e3d76626d4ffa89ea646f6a6e3bc7 assets/railways/models/item/red_conductor_cap.json
@@ -163,6 +164,7 @@ e15756ff78823617836fab56c209bc9e856aa4b1 assets/railways/models/block/track/acac
 a9d9be49f78a3859b1a6a76ae609a493bb0453b2 assets/railways/blockstates/track_monorail.json
 6680c2f815436c3753f601a2e94d23681a379e97 data/railways/advancements/recipes/railways/dying_existing_cap_brown.json
 2281d19ce707553239d84c7478d7a906eafbce8f assets/railways/models/block/track/oak/segment_left.json
+0a3882cec5e7cfdda3f30f5fa9ec12d4be5290b5 data/railways/tags/items/internal/nuggets/brass_nuggets.json
 b704a463495123ad07b093da7a07752474bc8737 data/railways/advancements/recipes/railways/dying_existing_cap_yellow.json
 1df66317484a16f93d1b1847a5a549ef57e1d878 assets/railways/blockstates/track_acacia.json
 6feb51a2030580f058495746762d955c9b76c832 assets/railways/blockstates/track_mangrove.json
@@ -181,7 +183,7 @@ cb40aff18f96c4ca84ead24d4eda6b7ca59c9549 assets/railways/models/block/track/warp
 d788a11b756062ca26131524ece55bb84d83761a assets/railways/models/block/track/birch/cross_d1_xo.json
 c3be9254ee4aa59e8414dc7628999e9236902f39 assets/railways/models/block/track/warped/segment_left.json
 8eafe981bccebee37cbd338dfa5873f1cc095bd9 data/railways/advancements/recipes/railways/dying_existing_cap_green.json
-17b5bc6d0bfd98157c3d2ed8ee6ebc81fd6d7599 data/railways/tags/items/internal/nuggets/iron_nuggets.json
+eaf9828d5fd2d5765b5355b1d7e72c72906a4d41 data/railways/tags/items/internal/nuggets/iron_nuggets.json
 61486be7bd21a686718de123dba6ffe1160b9fbd assets/railways/blockstates/track_dark_oak.json
 8ea871c84cc989b85ac998d593c9a0b72bebf872 assets/railways/models/block/track/blackstone/cross_d1_zo.json
 ed73195d527b377983b86c2102ac8cda051206fe assets/railways/models/block/track/birch/segment_right.json
@@ -276,6 +278,7 @@ f5a7da52a2ce61a5ad48b5c1e5829481c7d721ed data/railways/recipes/dying_existing_ca
 0a188dcaa247da3d5a07b44c508dd5cf07c7a90e assets/railways/models/item/white_incomplete_conductor_cap.json
 225029f14596fa145ba85d1ba3ac085f8777b5d7 data/railways/advancements/recipes/railways/dying_existing_cap_cyan.json
 6cd90e2db79c0958bd39ad6118f9228a66070a0e assets/railways/models/block/track/dark_oak/ascending.json
+279a883ae3fd1f3caf328ff0bff25d2c5f77ffd2 data/railways/tags/items/internal/plates/iron_plates.json
 184f695d03a053c7bdfd4ffdf2a99d938566a852 assets/railways/models/item/green_conductor_cap.json
 dab13e105c214b8adccf2cb7ee9694d275a3e2ea data/railways/loot_tables/blocks/track_blackstone.json
 31b16120c316f39f5980e39cd5bf7d6fbd886dd3 data/railways/advancements/recipes/railways/jukeboxcart.json
@@ -307,7 +310,7 @@ db094345c11a24b6566628158d351aca14692966 assets/railways/models/item/orange_inco
 82bc77ac080aa62bc6cdf0a932f4e80de50412dc data/railways/tags/items/internal/dyes/pink_dyes.json
 df959297777c8cd48b79ee9476626228dcc6fc0e assets/railways/models/block/track/spruce/diag.json
 f900f041089dc60090ae3cfaf5d790d91d49cc8f assets/railways/models/block/track/birch/diag_2.json
-224bcb5095af5ab25eb16ab0d9c1993323734cf9 data/railways/tags/items/internal/nuggets/zinc_nuggets.json
+c18b0a3834ce046557a559b9fd96be1701427192 data/railways/tags/items/internal/nuggets/zinc_nuggets.json
 cbe463f6b2f946fa84fd9acf000afd7acf57a462 assets/railways/models/item/track_incomplete_oak.json
 1a1d337b0a8acb6dff74680b7a14fa18dc5abf5e assets/railways/models/item/yellow_conductor_cap.json
 e13a673359f50caf5404928180dbc0d957283daf assets/railways/models/block/track/blackstone/teleport.json

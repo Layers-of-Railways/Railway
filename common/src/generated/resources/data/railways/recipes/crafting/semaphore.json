@@ -1,26 +1,26 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " S ",
-    "FCT",
-    " S "
-  ],
   "key": {
     "C": {
       "item": "create:andesite_casing"
-    },
-    "T": {
-      "item": "create:electron_tube"
     },
     "F": {
       "tag": "minecraft:fences"
     },
     "S": {
       "tag": "railways:internal/plates/iron_plates"
+    },
+    "T": {
+      "item": "create:electron_tube"
     }
   },
+  "pattern": [
+    " S ",
+    "FCT",
+    " S "
+  ],
   "result": {
-    "item": "railways:semaphore",
-    "count": 4
+    "count": 4,
+    "item": "railways:semaphore"
   }
 }
