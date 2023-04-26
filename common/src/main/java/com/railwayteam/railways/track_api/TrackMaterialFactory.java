@@ -28,13 +28,13 @@ public class TrackMaterialFactory {
     private TrackMaterial.TrackType trackType = TrackMaterial.TrackType.STANDARD;
 
     @Environment(EnvType.CLIENT)
-    private TrackMaterial.TrackModelHolder modelHolder = null;
+    private TrackMaterial.TrackModelHolder modelHolder;
     @Environment(EnvType.CLIENT)
-    private PartialModel tieModel = null;
+    private PartialModel tieModel;
     @Environment(EnvType.CLIENT)
-    private PartialModel leftSegmentModel = null;
+    private PartialModel leftSegmentModel;
     @Environment(EnvType.CLIENT)
-    private PartialModel rightSegmentModel = null;
+    private PartialModel rightSegmentModel;
 
     public TrackMaterialFactory(ResourceLocation id) {
         this.id = id;
