@@ -1,0 +1,2 @@
+Changes:
+- Fix #110 (Couplers crashing when scrolled onto invalid location)
