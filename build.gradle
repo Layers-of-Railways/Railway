@@ -137,7 +137,7 @@ String getChangelogText(String loader) {
             str += temp
             lineCount++
         } else {
-            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/${github_project}/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
+            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/Layers-of-Railways/Railway/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
             done = true
         }
     }
