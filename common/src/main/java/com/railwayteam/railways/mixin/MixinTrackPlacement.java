@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -74,6 +75,8 @@ public class MixinTrackPlacement { //TODO _track api ALL OF IT (totally done)
 		railway$heldStack.set(stack);
 	}
 
+	private static final ItemStack DUMMY = new ItemStack(Items.AIR);
+
 	@ModifyArg(
 			method = "tryConnect",
 			at = @At(
@@ -85,10 +88,10 @@ public class MixinTrackPlacement { //TODO _track api ALL OF IT (totally done)
 	private static ItemStack railway$consumeCorrectItem(ItemStack stackInSlot) {
 		// target: AllBlocks.TRACK.isIn(stackInSlot)
 		// desired: true when held == stack in slot
-		if (AllBlocks.TRACK.isIn(stackInSlot))
-			return stackInSlot;
+		//if (AllBlocks.TRACK.isIn(stackInSlot))
+		//	return stackInSlot;
 		boolean isTrack = railway$heldStack.get().sameItem(stackInSlot);
-		return isTrack ? AllBlocks.TRACK.asStack() : stackInSlot;
+		return isTrack ? AllBlocks.TRACK.asStack() : DUMMY;
 	}
 
 	@ModifyVariable(method = "placeTracks", at = @At("HEAD"), ordinal = 0, argsOnly = true)

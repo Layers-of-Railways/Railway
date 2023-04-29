@@ -1,2 +1,4 @@
-Changes:
+v1.2.6:
+- Fix track placement issue (consuming base Create tracks instead of custom ones)
+v1.2.5:
 - Fix #110 (Couplers crashing when scrolled onto invalid location)
