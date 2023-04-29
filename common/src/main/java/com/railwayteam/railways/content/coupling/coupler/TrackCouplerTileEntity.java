@@ -215,7 +215,7 @@ public class TrackCouplerTileEntity extends SmartTileEntity implements ITransfor
             if (!newPos.equals(((AccessorTrackTargetingBehavior) secondEdgePoint).getTargetTrack())) {
                 ((AccessorTrackTargetingBehavior) secondEdgePoint).setTargetTrack(newPos);
                 TrackCoupler point = secondEdgePoint.getEdgePoint();
-                if (point != null) {
+                if (point != null && secondEdgePoint.hasValidTrack()) { // don't want to try anything if not on an actual track
                     GraphLocation location = secondEdgePoint.determineGraphLocation();
                     if (location != null && location.graph != null) {
                         location.graph.removePoint(CREdgePointTypes.COUPLER, point.id);

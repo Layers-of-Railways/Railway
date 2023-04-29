@@ -89,8 +89,9 @@ subprojects {
         // return a UploadArtifact object that can be used to further configure the
         // file.
         def mainFile = upload(projectId, rootProject.file("jars/${archivesBaseName}-${version}.jar"))
-        mainFile.changelog = 'Check the discord #changelogs for details.'
         var capitalized_loader = project.name.substring(0, 1).toUpperCase() + project.name.substring(1)
+        mainFile.changelog = getChangelogText(capitalized_loader)//rootProject.file("changelog.md")//'Check the discord #changelogs for details.'
+        mainFile.changelogType = "html"
         mainFile.displayName = "Steam 'n Rails ${mod_version} ${capitalized_loader} ${minecraft_version}"
         mainFile.addRequirement("create") // create
         mainFile.addModLoader(capitalized_loader)
@@ -136,3 +137,36 @@ task resolveAllDependencies {
         }
     }
 }
+
+// 'borrowed' from Create
+String getChangelogText(String loader) {
+    def changelogFile = file('changelog.txt')
+    String str = ''
+    int lineCount = 0
+    boolean done = false
+    changelogFile.eachLine {
+        if (done || it == null) {
+            return
+        }
+        if (it.size() > 1) {
+            def temp = it
+            if (lineCount == 0) {
+                temp = "Steam 'n Rails ${version}"
+                temp = "<span style=\"font-size: 18px; color: #333399;\">Steam 'n Rails v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft $loader ${minecraft_version}</em><br/>"
+            } else if (it.startsWith('-')) {
+                temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
+                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
+                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/Layers-of-Railways/Railway/issues/\$1\">\$0</a>");
+            } else {
+                temp = "<h4>$temp</h4>"
+            }
+            str += temp
+            lineCount++
+        } else {
+            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/${github_project}/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
+            done = true
+        }
+    }
+    return str
+}
+new File("changelog.html").write getChangelogText("Fabric")
