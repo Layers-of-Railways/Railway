@@ -41,6 +41,12 @@
   "railways.station.train_limit.tooltip.1": "Reserve station before approaching train has arrived",
   "railways.station.train_limit.tooltip.2": "to more evenly space trains in a multi-platform station",
 
+  "railways.tooltip.switch.header": "Switch Information",
+  "railways.tooltip.switch.state": "Switch State:",
+  "railways.switch.state.normal": "-> Straight",
+  "railways.switch.state.reverse_left": "-> Left",
+  "railways.switch.state.reverse_right": "-> Right",
+
   "create.sliding_door.mode": "Open Mode",
   "create.sliding_door.mode.manual": "Manual",
   "create.sliding_door.mode.normal": "Normal (Default)",

@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "railways:track_coupler",
+    "railways:track_switch_andesite",
+    "railways:track_switch_brass",
     "railways:track_acacia",
     "railways:track_birch",
     "railways:track_crimson",

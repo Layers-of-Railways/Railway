@@ -33,6 +33,8 @@ public class RailwaysClient {
     CRPonderIndex.register();
     CRBlockPartials.init();
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
+    CustomTrackOverlayRendering.register(CREdgePointTypes.SWITCH, CRBlockPartials.SWITCH_RIGHT_TURN);
+
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
     registerCustomCap("Slimeist", "slimeist");
     registerCustomCap("bosbesballon", "bosbesballon");

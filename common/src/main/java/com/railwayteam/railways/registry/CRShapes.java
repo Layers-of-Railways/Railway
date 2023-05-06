@@ -14,6 +14,12 @@ public class CRShapes {
         SEMAPHORE = shape(4, 0, 4, 12, 16, 12)
         .forDirectional(NORTH);
 
+    public static final VoxelShaper
+        ANDESITE_SWITCH = shape(0, 0, 0, 16, 28, 16)
+        .forDirectional(NORTH),
+        BRASS_SWITCH = shape(0, 0, 0, 16, 19, 16)
+        .forDirectional(NORTH);
+
     public static final VoxelShape
         MONORAIL_COLLISION = shape(0, 0, 0, 16, 15, 16).build(); //This HAS to be less than a full block, or else monorails try to go diagonal
 

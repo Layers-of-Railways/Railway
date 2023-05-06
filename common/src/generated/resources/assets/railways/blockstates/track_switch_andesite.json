@@ -1,0 +1,364 @@
+{
+  "variants": {
+    "exits=left,facing=north,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=false,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=left,facing=north,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=true,state=normal": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=left,facing=north,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=false,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=left,facing=north,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=true,state=reverse_left": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=left,facing=north,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=false,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=left,facing=north,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=right,facing=north,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=both,facing=north,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=none,facing=north,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "exits=left,facing=south,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=right,facing=south,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=both,facing=south,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=none,facing=south,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "exits=left,facing=west,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=right,facing=west,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=both,facing=west,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=none,facing=west,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "exits=left,facing=east,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=right,facing=east,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=both,facing=east,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    },
+    "exits=none,facing=east,powered=true,state=reverse_right": {
+      "model": "railways:block/track_switch_andesite/block"
+    }
+  }
+}
