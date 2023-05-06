@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.coupling;
+package com.railwayteam.railways.util;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
@@ -34,14 +34,6 @@ public class CustomTrackOverlayRendering {
 
     public static void register(EdgePointType<?> edgePointType, PartialModel model) {
         CUSTOM_OVERLAYS.put(edgePointType, model);
-    }
-
-    @Nullable
-    public static PartialModel getCouplerOverlayModel(boolean couple, boolean decouple) {
-        if (couple && decouple) return CRBlockPartials.COUPLER_BOTH;
-        if (couple) return CRBlockPartials.COUPLER_COUPLE;
-        if (decouple) return CRBlockPartials.COUPLER_DECOUPLE;
-        return null;
     }
 
     @Environment(EnvType.CLIENT)

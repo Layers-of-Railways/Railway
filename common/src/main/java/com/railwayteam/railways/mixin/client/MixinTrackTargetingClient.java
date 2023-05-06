@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.trains.track.TrackTargetingClient;

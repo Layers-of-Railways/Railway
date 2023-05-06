@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.station.GlobalStation;

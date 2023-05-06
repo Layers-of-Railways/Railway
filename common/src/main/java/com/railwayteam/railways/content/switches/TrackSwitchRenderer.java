@@ -3,7 +3,7 @@ package com.railwayteam.railways.content.switches;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
