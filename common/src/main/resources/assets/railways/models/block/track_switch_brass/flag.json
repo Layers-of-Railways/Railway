@@ -1,0 +1,74 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "brass-track-switch",
+	"textures": {
+		"0": "minecraft:block/yellow_shulker_box",
+		"particle": "minecraft:block/yellow_shulker_box"
+	},
+	"elements": [
+		{
+			"name": "crossbar",
+			"from": [5.5, 12, 7],
+			"to": [10.5, 13, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -4, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 1], "texture": "#0"},
+				"east": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"south": {"uv": [0, 0, 5, 1], "texture": "#0"},
+				"west": {"uv": [0, 0, 2, 1], "texture": "#0"},
+				"up": {"uv": [0, 0, 5, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [2.25, 17, 7],
+			"to": [13.75, 18.5, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -4, 0]},
+			"faces": {
+				"north": {"uv": [2, 0, 13.5, 1.5], "texture": "#0"},
+				"east": {"uv": [0, 1, 2, 2.5], "texture": "#0"},
+				"south": {"uv": [2, 0, 13.5, 1.5], "texture": "#0"},
+				"west": {"uv": [0, 1, 2, 2.5], "texture": "#0"},
+				"up": {"uv": [2, 0, 13.5, 2], "texture": "#0"},
+				"down": {"uv": [2, 0, 13.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [7, 5.5, 7],
+			"to": [8.5, 18.3, 9],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [2, 0, 14.8, 1.5], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [2, 0, 14.8, 2], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [2, 0, 14.8, 1.5], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [2, 0, 14.8, 2], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 1], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 1, 2, 2], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [7.5, 5.5, 7],
+			"to": [9, 18.3, 9],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [1, 0, 13.8, 1.5], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [1, 0, 13.8, 2], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [1, 0, 13.8, 1.5], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [1, 0, 13.8, 2], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 1], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 0, 2, 1], "rotation": 90, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "flag",
+			"origin": [8, 8.5, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3]
+		}
+	]
+}
