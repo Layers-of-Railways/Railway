@@ -1,16 +1,12 @@
 package com.railwayteam.railways.content.switches;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
-import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
-import com.simibubi.create.content.logistics.block.inventories.BottomlessItemHandler;
 import com.simibubi.create.foundation.block.ITE;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,8 +28,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Random;
 
 public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements ITE<TrackSwitchTileEntity> {
   boolean isAutomatic;
@@ -93,8 +87,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     if (state == null)
       return null;
 
-    Direction facing = context.getHorizontalDirection().getOpposite();
-    return state.setValue(FACING, facing);
+    return state.setValue(FACING, context.getHorizontalDirection());
   }
 
   @Override

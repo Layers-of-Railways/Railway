@@ -85,15 +85,11 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
         .rotateCentered(Direction.UP, 1.5708f)
         .translate(0.5, 8.5 / 16, 0.5);
 
-      Direction handleAxis = state
-        .getValue(TrackSwitchBlock.FACING)
-        .getClockWise(Direction.UP.getAxis());
-
       // Rotate just enough to touch the front or back edge
       if (te.isReverseLeft()) {
-        buf = buf.rotate(handleAxis, 1.0f);
+        buf = buf.rotate(Direction.NORTH, -1.1f);
       } else if (te.isReverseRight()) {
-        buf = buf.rotate(handleAxis, -1.0f);
+        buf = buf.rotate(Direction.NORTH, 1.1f);
       }
 
       buf
@@ -106,17 +102,15 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
         .light(light);
 
       if (te.isReverseLeft()) {
-        buf = buf.rotateCentered(Direction.UP, 4.7124f);  // 270°
+        buf = buf.rotateCentered(Direction.UP, 1.5708f);
       } else if (te.isReverseRight()) {
-        buf = buf.rotateCentered(Direction.UP, 1.5708f);  // 90°
-      } else if (te.isNormal()) {
-        buf = buf.rotateCentered(Direction.UP, 3.1416f);  // 180°
+        buf = buf.rotateCentered(Direction.UP, -1.5708f);  // 90°
       }
       buf.renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
       CachedBufferer.partial(CRBlockPartials.ANDESITE_SWITCH_HANDLE, state)
         .light(light)
-        .rotateCentered(Direction.UP, 1.5708f)  // 90°
+        .rotateCentered(Direction.UP, -1.5708f)  // 90°
         .renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }
 
