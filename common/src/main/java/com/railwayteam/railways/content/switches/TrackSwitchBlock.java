@@ -109,6 +109,11 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       CRBlockEntities.ANDESITE_SWITCH.get();
   }
 
+  @Override
+  public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+    ITE.onRemove(state, level, pos, newState);
+  }
+
   @SuppressWarnings("deprecation")
   @Override
   public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

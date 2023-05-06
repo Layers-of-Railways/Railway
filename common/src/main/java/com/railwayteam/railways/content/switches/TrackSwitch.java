@@ -12,6 +12,5 @@ public class TrackSwitch extends SingleTileEdgePoint {
   @Override
   public void onRemoved(TrackGraph graph) {
     removeFromAllGraphs();
-    // FIXME: removal behavior for when the block itself is destroyed
   }
 }
