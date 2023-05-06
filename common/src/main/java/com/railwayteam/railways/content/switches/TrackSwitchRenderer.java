@@ -5,8 +5,11 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.simibubi.create.content.logistics.trains.GraphLocation;
 import com.simibubi.create.content.logistics.trains.ITrackBlock;
+import com.simibubi.create.content.logistics.trains.TrackEdge;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
@@ -120,9 +123,7 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
   private void renderTrackOverlay(TrackSwitchTileEntity te, PoseStack ms, MultiBufferSource buffer,
                                   int light, int overlay, TrackTargetingBehaviour<TrackSwitch> target) {
     BlockPos pos = te.getBlockPos();
-
-    boolean offset = false;
-    // TODO: Check side offsets like in coupler renderer
+    boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
 
     BlockPos targetPos = target.getGlobalPosition();
     Level level = te.getLevel();
@@ -137,7 +138,7 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
     ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
     CustomTrackOverlayRendering.renderOverlay(
       level, targetPos, target.getTargetDirection(), target.getTargetBezier(),
-      ms, buffer, light, overlay, getOverlayModel(te), 1, offset);
+      ms, buffer, light, overlay, getOverlayModel(te), 1, offsetToSide);
     ms.popPose();
   }
 }

@@ -50,20 +50,7 @@ public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerB
     private void renderEdgePoint(TrackCouplerBlockEntity te, PoseStack ms, MultiBufferSource buffer,
                                  int light, int overlay, TrackTargetingBehaviour<TrackCoupler> target) {
         BlockPos pos = te.getBlockPos();
-        boolean offsetToSide = false;
-
-        try {
-            TrackGraphLocation graphLocation = target.determineGraphLocation();
-            TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
-            for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
-                try {
-                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint()) {
-                        offsetToSide = true;
-                        break;
-                    }
-                } catch (Exception ignored) {}
-            }
-        } catch (Exception ignored) {}
+        boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
 
         BlockPos targetPosition = target.getGlobalPosition();
         Level level = te.getLevel();

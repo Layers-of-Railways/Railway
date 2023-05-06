@@ -15,4 +15,9 @@ public class MixinSignalBoundary {
         if (otherType == CREdgePointTypes.COUPLER)
             cir.setReturnValue(true);
     }
+    @Inject(method = "canCoexistWith", at = @At("RETURN"), cancellable = true)
+    private void railways$switchCanCoexist(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
+        if (otherType == CREdgePointTypes.SWITCH)
+            cir.setReturnValue(true);
+    }
 }

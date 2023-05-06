@@ -5,6 +5,14 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.simibubi.create.content.logistics.trains.BezierConnection;
+import com.simibubi.create.content.logistics.trains.GraphLocation;
+import com.simibubi.create.content.logistics.trains.ITrackBlock;
+import com.simibubi.create.content.logistics.trains.TrackEdge;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
+import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
+import com.simibubi.create.content.logistics.trains.track.*;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.graph.EdgePointType;
@@ -172,5 +180,21 @@ public class CustomTrackOverlayRendering {
         }
 
         return model;
+    }
+
+    public static boolean overlayWillOverlap(TrackTargetingBehaviour<? extends TrackEdgePoint> target) {
+        try {
+            GraphLocation graphLocation = target.determineGraphLocation();
+            TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
+            for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
+                try {
+                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint()) {
+                        return true;
+                    }
+                } catch (Exception ignored) {}
+            }
+        } catch (Exception ignored) {}
+
+        return false;
     }
 }
