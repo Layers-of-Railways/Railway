@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,11 +43,14 @@ public class TrackMaterial {
 
     public final ResourceLocation id;
     public final String langName;
-    public final Supplier<BlockEntry<? extends TrackBlock>> trackBlock; //replace with supplier
+    public final Supplier<BlockEntry<? extends TrackBlock>> trackBlock;
     public final Ingredient sleeperIngredient;
     public final Ingredient railsIngredient;
     public final ResourceLocation particle;
     public final TrackType trackType;
+
+    @Nullable
+    private final TrackType.CustomTrackBlockFactory customFactory; // todo track api
 
     @Environment(EnvType.CLIENT)
     protected TrackModelHolder modelHolder;
@@ -77,7 +81,9 @@ public class TrackMaterial {
         this(langName, trackBlock, particle, sleeperIngredient, railsIngredient, createBuiltin, TrackType.STANDARD);
     }*/
 
-    public TrackMaterial(ResourceLocation id, String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock, ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient, TrackType trackType, Supplier<Supplier<TrackModelHolder>> modelHolder) {
+    public TrackMaterial(ResourceLocation id, String langName, Supplier<BlockEntry<? extends TrackBlock>> trackBlock,
+                         ResourceLocation particle, Ingredient sleeperIngredient, Ingredient railsIngredient,
+                         TrackType trackType, Supplier<Supplier<TrackModelHolder>> modelHolder, @Nullable TrackType.CustomTrackBlockFactory customFactory) {
         this.id = id;
         this.langName = langName;
         this.trackBlock = trackBlock;
@@ -86,6 +92,7 @@ public class TrackMaterial {
         this.railsIngredient = railsIngredient;
         this.particle = particle;
         this.trackType = trackType;
+        this.customFactory = customFactory;
         Env.CLIENT.runIfCurrent(() -> () -> {
             this.modelHolder = modelHolder.get().get();
         });
@@ -97,7 +104,7 @@ public class TrackMaterial {
     }
 
     public CustomTrackBlock create(BlockBehaviour.Properties properties) {
-        return this.trackType.create(properties, this);
+        return customFactory != null ? customFactory.create(properties, this) : this.trackType.create(properties, this);
     }
 
     public boolean isCustom(String modId) {
@@ -153,7 +160,7 @@ public class TrackMaterial {
     public static class TrackType {
 
         @FunctionalInterface
-        private interface CustomTrackBlockFactory {
+        public interface CustomTrackBlockFactory {
             CustomTrackBlock create(BlockBehaviour.Properties properties, TrackMaterial material);
         }
 

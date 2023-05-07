@@ -69,6 +69,15 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       ));
     }
 
+    TRACKS.put(CRTrackMaterials.PHANTOM, create("track_phantom", b -> b.require(Ingredients.phantomMembrane())
+        .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(CRTrackMaterials.PHANTOM).get())
+        .addOutput(new ItemStack(CRTrackMaterials.PHANTOM.getTrackBlock().get(), 32), 1)
+        .loops(1)
+        .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
+        .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
+        .addStep(PressingRecipe::new, rb -> rb)
+    ));
+
     TRACKS.put(CRTrackMaterials.MONORAIL, create("track_monorail", b -> b.require(Ingredients.girder())
         .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(CRTrackMaterials.MONORAIL).get())
         .addOutput(new ItemStack(CRTrackMaterials.MONORAIL.getTrackBlock().get(), 6), 1)

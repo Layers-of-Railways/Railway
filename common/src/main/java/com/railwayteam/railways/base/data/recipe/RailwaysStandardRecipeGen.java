@@ -59,10 +59,8 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     GeneratedRecipe DIESEL_STACK = create(CRBlocks.DIESEL_STACK)
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
             .define('*', Ingredients.propeller())
             .pattern("#*#")
-            .pattern(" + ")
         );
 
     GeneratedRecipe CABOOSE_STACK = create(CRBlocks.CABOOSESTYLE_STACK)
@@ -96,6 +94,13 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .define('.', Ingredients.ironNugget())
             .pattern(".#.")
             .pattern("#+#")
+        );
+
+    GeneratedRecipe LONG_STACK = create(CRBlocks.LONG_STACK)
+        .unlockedBy(Ingredients::campfire)
+        .viaShaped(b -> b.define('+', Ingredients.campfire())
+            .define('.', Ingredients.ironNugget())
+            .pattern(".+.")
         );
 
     GeneratedRecipe SEMAPHORE = create(CRBlocks.SEMAPHORE)

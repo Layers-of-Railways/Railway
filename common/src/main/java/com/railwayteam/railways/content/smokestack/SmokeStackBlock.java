@@ -45,12 +45,14 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
 
     public final SmokeStackType type;
     protected final ShapeWrapper shape;
+    public boolean createsStationarySmoke;
 
-    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape) {
+    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
         super(properties);
         this.registerDefaultState(this.makeDefaultState());
         this.type = type;
         this.shape = shape;
+        this.createsStationarySmoke = createsStationarySmoke;
     }
 
     @Override
@@ -163,16 +165,7 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         if (state.getValue(ENABLED)) {
-            if (random.nextInt(10) == 0) {
-                level.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F, false);
-            }
-
-/*            if (true && random.nextInt(5) == 0) {
-                for(int i = 0; i < random.nextInt(1) + 1; ++i) {
-                    level.addParticle(ParticleTypes.LAVA, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, (double)(random.nextFloat() / 2.0F), 5.0E-5D, (double)(random.nextFloat() / 2.0F));
-                }
-            }*/
-            if (random.nextFloat() < type.particleSpawnChance) {
+            if (random.nextFloat() < type.particleSpawnChance && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
                     makeParticles(level, pos, random.nextBoolean(), true, type.getParticleSpawnOffset(), type.getParticleSpawnDelta());
                 }

@@ -16,7 +16,8 @@ public class CommonTags {
 			ZINC_NUGGETS = item("nuggets/zinc_nuggets", "nuggets/zinc", "nuggets/zinc"),
 			BRASS_NUGGETS = item("nuggets/brass_nuggets", "nuggets/brass", "nuggets/brass"),
 			IRON_PLATES = item("plates/iron_plates", "plates/iron", "plates/iron"),
-			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper");
+			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper"),
+			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron");
 
 	public static final Map<DyeColor, CommonTag<Item>> DYES = Util.make(new EnumMap<>(DyeColor.class), dyes -> {
 		for (DyeColor color : DyeColor.values()) {

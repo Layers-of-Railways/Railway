@@ -57,6 +57,10 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return CommonTags.IRON_NUGGETS.tag;
     }
 
+    public static TagKey<Item> ironIngot() {
+      return CommonTags.IRON_INGOTS.tag;
+    }
+
     public static TagKey<Item> zincNugget() {
       return CommonTags.ZINC_NUGGETS.tag;
     }
@@ -107,6 +111,10 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static TagKey<Item> brassNugget() {
       return CommonTags.BRASS_NUGGETS.tag;
+    }
+
+    public static ItemLike phantomMembrane() {
+      return Items.PHANTOM_MEMBRANE;
     }
   }
 }

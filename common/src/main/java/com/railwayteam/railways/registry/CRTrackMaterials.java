@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
@@ -96,7 +97,28 @@ public class CRTrackMaterials {
                 () -> () -> new PartialModel(Railways.asResource("block/empty")),
                 () -> () -> new PartialModel(Railways.asResource("block/empty"))
             )
-            .build();
+            .build(),
+        ENDER = make(Railways.asResource("ender"))
+            .lang("Ender")
+            .block(() -> CRBlocks.ENDER_TRACK)
+            .particle(new ResourceLocation("block/end_stone"))
+            .sleeper(Blocks.END_STONE_BRICK_SLAB)
+            .build(),
+        TIELESS = make(Railways.asResource("tieless"))
+            .lang("Tieless")
+            .block(() -> CRBlocks.TIELESS_TRACK)
+            .particle(new ResourceLocation("block/glass"))
+            .sleeper(Blocks.GLASS_PANE)
+            .customBlockFactory(NoCollisionCustomTrackBlock::new)
+            .build(),
+        PHANTOM = make(Railways.asResource("phantom"))
+            .lang("Phantom")
+            .block(() -> CRBlocks.PHANTOM_TRACK)
+            .particle(new ResourceLocation("block/glass"))
+            .noRecipeGen()
+            .customBlockFactory(NoCollisionCustomTrackBlock::new)
+            .build()
+        ;
 
     public static void register() {}
 }

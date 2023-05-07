@@ -59,6 +59,8 @@ public class RailwaysClient {
     preventTiltingCap("Aypierre");
 
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
+
+    registerCustomCap("demondj2002", "demon");
   }
 
   @ExpectPlatform

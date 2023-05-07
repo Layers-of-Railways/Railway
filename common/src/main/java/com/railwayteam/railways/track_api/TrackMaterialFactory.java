@@ -11,6 +11,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -26,6 +27,9 @@ public class TrackMaterialFactory {
     ));
     private ResourceLocation particle;
     private TrackMaterial.TrackType trackType = TrackMaterial.TrackType.STANDARD;
+
+    @Nullable
+    private TrackMaterial.TrackType.CustomTrackBlockFactory customFactory = null;
 
     @Environment(EnvType.CLIENT)
     private TrackMaterial.TrackModelHolder modelHolder;
@@ -111,6 +115,11 @@ public class TrackMaterialFactory {
         return this;
     }
 
+    public TrackMaterialFactory customBlockFactory(TrackMaterial.TrackType.CustomTrackBlockFactory factory) {
+        this.customFactory = factory;
+        return this;
+    }
+
     public TrackMaterial build() {
         assert trackBlock != null;
         assert langName != null;
@@ -126,6 +135,7 @@ public class TrackMaterialFactory {
                 modelHolder = new TrackMaterial.TrackModelHolder(tieModel, leftSegmentModel, rightSegmentModel);
             }
         });
-        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, trackType, () -> () -> modelHolder);
+        return new TrackMaterial(id, langName, trackBlock, particle, sleeperIngredient, railsIngredient, trackType,
+            () -> () -> modelHolder, customFactory);
     }
 }

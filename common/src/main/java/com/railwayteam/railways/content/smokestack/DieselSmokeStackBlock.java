@@ -6,8 +6,8 @@ import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class DieselSmokeStackBlock extends SmokeStackBlock implements ITE<DieselSmokeStackTileEntity> {
-    public DieselSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape) {
-        super(properties, type, shape);
+    public DieselSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
+        super(properties, type, shape, createsStationarySmoke);
     }
 
     @Override

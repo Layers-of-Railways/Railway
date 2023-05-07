@@ -11,16 +11,24 @@ import java.util.Random;
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
     private final boolean renderAsNormalTileEntity;
+    private final boolean createsSmoke;
+    private final boolean spawnExtraSmoke;
 
     private final Map<Integer, LerpedFloat> chanceChasers = new HashMap<>();
     private final Map<Integer, LerpedFloat> speedMultiplierChasers = new HashMap<>();
 
     public SmokeStackMovementBehaviour() {
-        this(false);
+        this(true);
     }
 
-    public SmokeStackMovementBehaviour(boolean renderAsNormalTileEntity) {
+    public SmokeStackMovementBehaviour(boolean spawnExtraSmoke) {
+        this(false, true, spawnExtraSmoke);
+    }
+
+    public SmokeStackMovementBehaviour(boolean renderAsNormalTileEntity, boolean createsSmoke, boolean spawnExtraSmoke) {
         this.renderAsNormalTileEntity = renderAsNormalTileEntity;
+        this.createsSmoke = createsSmoke;
+        this.spawnExtraSmoke = spawnExtraSmoke;
     }
 
     @Override
@@ -63,9 +71,12 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
         }*/
 
+        if (!createsSmoke)
+            return;
+
         chanceChaser.chase(chanceModifierTarget, chanceModifierTarget>chanceChaser.getChaseTarget() ? 0.1 : 0.01, LerpedFloat.Chaser.LINEAR);
         chanceChaser.tickChaser();
-        float chanceModifier = chanceChaser.getValue();
+        float chanceModifier = chanceChaser.getValue() * (spawnExtraSmoke ? 1.0f : 0.5f);
 
         int maxModifier = 0;
         int minModifier = 0;
