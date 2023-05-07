@@ -10,6 +10,9 @@
     "railways:track_spruce",
     "railways:track_warped",
     "railways:track_blackstone",
+    "railways:track_ender",
+    "railways:track_tieless",
+    "railways:track_phantom",
     "railways:track_monorail"
   ]
 }
