@@ -52,9 +52,7 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
       }
     }
 
-    // A left-turn switch should never be set to reverse-right,
-    // nor a right-turn switch to reverse-left
-    throw new AssertionError();
+    return CRBlockPartials.SWITCH_NONE;
   }
 
   @Override

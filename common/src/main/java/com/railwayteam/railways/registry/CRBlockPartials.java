@@ -193,6 +193,7 @@ public class CRBlockPartials {
       ANDESITE_SWITCH_FLAG = block("track_switch_andesite/flag"),
       ANDESITE_SWITCH_HANDLE = block("track_switch_andesite/handle"),
       BRASS_SWITCH_FLAG = block("track_switch_brass/flag"),
+      SWITCH_NONE = block("track_overlay/switch_none"),
       SWITCH_RIGHT_STRAIGHT = block("track_overlay/switch_right_straight"),
       SWITCH_RIGHT_TURN = block("track_overlay/switch_right_turn"),
       SWITCH_LEFT_STRAIGHT = block("track_overlay/switch_left_straight"),

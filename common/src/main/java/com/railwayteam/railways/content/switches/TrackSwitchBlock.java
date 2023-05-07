@@ -70,8 +70,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     this.isAutomatic = isAutomatic;
     registerDefaultState(defaultBlockState()
       .setValue(STATE, SwitchState.NORMAL)
-      // TODO: Determine which exits are available when block is placed
-      .setValue(EXITS, SwitchExits.BOTH)
+      .setValue(EXITS, SwitchExits.NONE)
       .setValue(POWERED, false));
   }
 

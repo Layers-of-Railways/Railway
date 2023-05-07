@@ -85,6 +85,17 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
     return Lang.builder(Railways.MODID);
   }
 
+  void setExits(boolean left, boolean right) {
+    getLevel().setBlockAndUpdate(getBlockPos(),
+      getBlockState().setValue(
+        EXITS,
+        (left && right) ? SwitchExits.BOTH :
+          left ? SwitchExits.LEFT :
+            right ? SwitchExits.RIGHT :
+              SwitchExits.NONE
+      ));
+  }
+
   @Override
   public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
     b().translate("tooltip.switch.header").forGoggles(tooltip);
