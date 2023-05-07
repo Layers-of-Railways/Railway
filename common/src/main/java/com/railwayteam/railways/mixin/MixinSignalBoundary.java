@@ -11,13 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = SignalBoundary.class, remap = false)
 public class MixinSignalBoundary {
     @Inject(method = "canCoexistWith", at = @At("RETURN"), cancellable = true)
-    private void couplerCoExistWithEverything(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
-        if (otherType == CREdgePointTypes.COUPLER)
-            cir.setReturnValue(true);
-    }
-    @Inject(method = "canCoexistWith", at = @At("RETURN"), cancellable = true)
-    private void railways$switchCanCoexist(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
-        if (otherType == CREdgePointTypes.SWITCH)
+    private void railways$switchOrCouplerCanCoexist(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
+        if (otherType == CREdgePointTypes.COUPLER || otherType == CREdgePointTypes.SWITCH)
             cir.setReturnValue(true);
     }
 }
