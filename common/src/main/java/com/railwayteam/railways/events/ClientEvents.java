@@ -3,6 +3,7 @@ package com.railwayteam.railways.events;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
+import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import net.minecraft.client.Minecraft;
@@ -41,6 +42,7 @@ public class ClientEvents {
     }
 
     public static void onClientTickStart(Minecraft mc) {
+        PhantomSpriteManager.tick(mc);
         if (DummyRailwayMarkerHandler.getInstance() == null)
             return;
 
@@ -62,5 +64,6 @@ public class ClientEvents {
 
     public static void onClientWorldLoad(Level level) {
         DummyRailwayMarkerHandler.getInstance().onJoinWorld();
+        PhantomSpriteManager.firstRun = true;
     }
 }

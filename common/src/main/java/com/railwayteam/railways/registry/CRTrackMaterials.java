@@ -103,6 +103,7 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.ENDER_TRACK)
             .particle(new ResourceLocation("block/end_stone"))
             .sleeper(Blocks.END_STONE_BRICK_SLAB)
+            .defaultModels()
             .build(),
         TIELESS = make(Railways.asResource("tieless"))
             .lang("Tieless")
@@ -110,6 +111,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/glass"))
             .sleeper(Blocks.GLASS_PANE)
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
+            .defaultModels()
             .build(),
         PHANTOM = make(Railways.asResource("phantom"))
             .lang("Phantom")
@@ -117,6 +119,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/glass"))
             .noRecipeGen()
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
+            .defaultModels()
             .build()
         ;
 

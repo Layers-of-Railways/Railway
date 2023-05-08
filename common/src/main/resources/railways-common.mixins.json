@@ -70,6 +70,8 @@
     "client.MixinRadialToolboxMenu",
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
+    "client.MixinTextureAtlas",
+    "client.MixinTextureAtlasSprite",
     "client.MixinToolboxHandlerClient",
     "client.MixinToolboxScreen",
     "client.MixinTrackBlockClient",

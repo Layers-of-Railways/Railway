@@ -10,6 +10,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.phantom.PhantomTrackBakedModel;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -33,6 +34,7 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -55,11 +57,11 @@ public class CRBlocks {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, new CustomTrackBlockStateGenerator()::generate);
+        return makeTrack(material, new CustomTrackBlockStateGenerator()::generate, (t) -> {});
     }
 
     private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material,
-                                                          NonNullBiConsumer<DataGenContext<Block, CustomTrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
+                                                          NonNullBiConsumer<DataGenContext<Block, CustomTrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super CustomTrackBlock> onRegister) {
         return REGISTRATE.block("track_" + material.resName(), material::create)
             .initialProperties(Material.STONE)
             .properties(p -> p.color(MaterialColor.METAL)
@@ -72,6 +74,7 @@ public class CRBlocks {
             .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
             .tag(CRTags.AllBlockTags.TRACKS.tag) //TODO _track api
             .lang(material.langName + " Train Track")
+            .onRegister(onRegister)
             .item(TrackBlockItem::new)
             .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
             .build()
@@ -176,8 +179,10 @@ public class CRBlocks {
     public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(CRTrackMaterials.BLACKSTONE);
     public static final BlockEntry<CustomTrackBlock> ENDER_TRACK = makeTrack(CRTrackMaterials.ENDER);
     public static final BlockEntry<CustomTrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
-    public static final BlockEntry<CustomTrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
-    public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL, new MonorailBlockStateGenerator()::generate);
+    public static final BlockEntry<CustomTrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);/*,
+        new CustomTrackBlockStateGenerator()::generate, CreateRegistrate.blockModel(() -> PhantomTrackBakedModel::new));*/
+    public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
+        new MonorailBlockStateGenerator()::generate, (t) -> {});
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
         REGISTRATE.block("mono_bogey", p -> new MonoBogeyBlock(p, false))
