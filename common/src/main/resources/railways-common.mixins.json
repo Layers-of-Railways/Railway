@@ -72,6 +72,7 @@
     "client.MixinSuperGlueSelectionHandler",
     "client.MixinTextureAtlas",
     "client.MixinTextureAtlasSprite",
+    "client.MixinTextureAtlasSprite$MixinAnimatedTexture",
     "client.MixinToolboxHandlerClient",
     "client.MixinToolboxScreen",
     "client.MixinTrackBlockClient",

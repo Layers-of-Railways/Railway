@@ -10,7 +10,6 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
-import com.railwayteam.railways.content.custom_tracks.phantom.PhantomTrackBakedModel;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -179,8 +178,7 @@ public class CRBlocks {
     public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(CRTrackMaterials.BLACKSTONE);
     public static final BlockEntry<CustomTrackBlock> ENDER_TRACK = makeTrack(CRTrackMaterials.ENDER);
     public static final BlockEntry<CustomTrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
-    public static final BlockEntry<CustomTrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);/*,
-        new CustomTrackBlockStateGenerator()::generate, CreateRegistrate.blockModel(() -> PhantomTrackBakedModel::new));*/
+    public static final BlockEntry<CustomTrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
         new MonorailBlockStateGenerator()::generate, (t) -> {});
 
