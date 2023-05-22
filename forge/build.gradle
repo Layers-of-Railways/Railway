@@ -47,7 +47,7 @@ dependencies {
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { transitive = false }
     modImplementation("com.tterrag.registrate:Registrate:${registrate_forge_version}")
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_forge_version}")
 
     // Development QOL
     modLocalRuntime("mezz.jei:jei-${minecraft_version}:${jei_forge_version}")
