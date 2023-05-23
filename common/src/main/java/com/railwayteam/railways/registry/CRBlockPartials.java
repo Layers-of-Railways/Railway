@@ -197,7 +197,7 @@ public class CRBlockPartials {
       SWITCH_RIGHT_STRAIGHT = block("track_overlay/switch_right_straight"),
       SWITCH_RIGHT_TURN = block("track_overlay/switch_right_turn"),
       SWITCH_LEFT_STRAIGHT = block("track_overlay/switch_left_straight"),
-      SWITCH_LEFT_TURN = block("track_overlay/switch_right_turn"),
+      SWITCH_LEFT_TURN = block("track_overlay/switch_left_turn"),
       SWITCH_3WAY_STRAIGHT = block("track_overlay/switch_3way_straight"),
       SWITCH_3WAY_LEFT = block("track_overlay/switch_3way_left"),
       SWITCH_3WAY_RIGHT = block("track_overlay/switch_3way_right")

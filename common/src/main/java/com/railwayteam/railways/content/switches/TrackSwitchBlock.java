@@ -11,6 +11,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -41,6 +42,30 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     @Override
     public @NotNull String getSerializedName() {
       return Lang.asId(name());
+    }
+
+    public @NotNull SwitchState nextStateFor(TrackSwitch sw) {
+      if (this == NORMAL) {
+        if (sw.hasRightExit()) {
+          return REVERSE_RIGHT;
+        } else if (sw.hasLeftExit()) {
+          return REVERSE_LEFT;
+        }
+      } else if (this == REVERSE_RIGHT) {
+        if (sw.hasLeftExit()) {
+          return REVERSE_LEFT;
+        } else if (sw.hasStraightExit()) {
+          return NORMAL;
+        }
+      } else if (this == REVERSE_LEFT) {
+        if (sw.hasStraightExit()) {
+          return NORMAL;
+        } else if (sw.hasRightExit()) {
+          return REVERSE_RIGHT;
+        }
+      }
+
+      return this;
     }
   }
 
@@ -108,29 +133,31 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       return InteractionResult.SUCCESS;
     }
 
-    if (level.getBlockEntity(pos) instanceof TrackSwitchTileEntity te) {
-      if (!te.isPowered()) {
-        level.setBlockAndUpdate(pos, toggleSwitch(state));
-        return InteractionResult.CONSUME;
-      }
+    TrackSwitchTileEntity te = getTileEntity(level, pos);
+    if (te != null) {
+      return te.onUse();
     }
 
     return InteractionResult.SUCCESS;
   }
 
-  public static BlockState setPowered(BlockState state) {
-    return toggleSwitch(state).setValue(POWERED, true);
+  @Override
+  public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
+    super.onProjectileHit(level, state, hit, projectile);
+
+    TrackSwitchTileEntity te = getTileEntity(level, hit.getBlockPos());
+    if (te != null) {
+      te.onProjectileHit();
+    }
   }
 
-  public static BlockState setUnpowered(BlockState state) {
-    return toggleSwitch(state).setValue(POWERED, false);
-  }
+  @Override
+  public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+    super.neighborChanged(state, level, pos, block, fromPos, isMoving);
 
-  public static BlockState toggleSwitch(BlockState state) {
-    // TODO: Should switch to appropriate state for available exits
-    // Also figure out a way to "toggle" 3-way exits
-    return state.setValue(STATE,
-      state.getValue(STATE) == SwitchState.NORMAL
-        ? SwitchState.REVERSE_RIGHT : SwitchState.NORMAL);
+    TrackSwitchTileEntity te = getTileEntity(level, pos);
+    if (te != null) {
+      te.checkRedstoneInputs();
+    }
   }
 }

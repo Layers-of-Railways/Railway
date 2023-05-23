@@ -1,7 +1,9 @@
 package com.railwayteam.railways.content.switches;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
+import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
@@ -15,10 +17,12 @@ import com.simibubi.create.foundation.utility.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -58,11 +62,6 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
     return getBlockState().getValue(STATE) == SwitchState.NORMAL;
   }
 
-  public boolean isReverse() {
-    SwitchState s = getBlockState().getValue(STATE);
-    return s == SwitchState.REVERSE_LEFT || s == SwitchState.REVERSE_RIGHT;
-  }
-
   public boolean isReverseLeft() {
     return getBlockState().getValue(STATE) == SwitchState.REVERSE_LEFT;
   }
@@ -71,18 +70,31 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
     return getBlockState().getValue(STATE) == SwitchState.REVERSE_RIGHT;
   }
 
-  public boolean hasLeftExit() {
-//    return exits.containsKey(ExitEdge.LEFT);
-    return false;
-  }
+  public PartialModel getOverlayModel() {
+    TrackSwitch sw = edgePoint.getEdgePoint();
+    if (sw == null) {
+      return null;
+    }
 
-  public boolean hasRightExit() {
-//    return exits.containsKey(ExitEdge.RIGHT);
-    return false;
-  }
+    if (sw.hasStraightExit() && sw.hasLeftExit() && sw.hasRightExit()) {
+      if (isNormal()) {
+        return CRBlockPartials.SWITCH_3WAY_STRAIGHT;
+      } else if (isReverseLeft()) {
+        return CRBlockPartials.SWITCH_3WAY_LEFT;
+      } else if (isReverseRight()) {
+        return CRBlockPartials.SWITCH_3WAY_RIGHT;
+      }
+    } else if (sw.hasStraightExit() && sw.hasLeftExit()) {
+      return isNormal() ? CRBlockPartials.SWITCH_LEFT_STRAIGHT
+        : CRBlockPartials.SWITCH_LEFT_TURN;
+    } else if (sw.hasStraightExit() && sw.hasRightExit()) {
+      return isNormal() ? CRBlockPartials.SWITCH_RIGHT_STRAIGHT
+        : CRBlockPartials.SWITCH_RIGHT_TURN;
+    } else if (sw.hasLeftExit() && sw.hasRightExit()) {
+      // TODO: this needs an overlay texture still
+    }
 
-  public boolean hasBothExits() {
-    return hasLeftExit() && hasRightExit();
+    return CRBlockPartials.SWITCH_NONE;
   }
 
   void calculateExits(TrackSwitch sw) {
@@ -125,6 +137,35 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
   public void tick() {
     super.tick();
 
+    checkRedstoneInputs();
+  }
+
+  BlockState cycleState() {
+    BlockState oldState = getBlockState();
+
+    TrackSwitch sw = edgePoint.getEdgePoint();
+    if (sw == null) {
+      return oldState;
+    }
+
+    return oldState.setValue(STATE, oldState.getValue(STATE).nextStateFor(sw));
+  }
+
+  InteractionResult onUse() {
+    if (!isPowered()) {
+      level.setBlockAndUpdate(getBlockPos(), cycleState());
+      return InteractionResult.CONSUME;
+    }
+    return InteractionResult.SUCCESS;
+  }
+
+  void onProjectileHit() {
+    if (!isPowered()) {
+      level.setBlockAndUpdate(getBlockPos(), cycleState());
+    }
+  }
+
+  void checkRedstoneInputs() {
     BlockState state = getBlockState();
     Level level = getLevel();
     BlockPos pos = getBlockPos();
@@ -133,9 +174,11 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
     boolean hasSignal = level.hasNeighborSignal(pos);
 
     if (hasSignal && !alreadyPowered) {
-      level.setBlockAndUpdate(pos, setPowered(state));
+      level.setBlockAndUpdate(pos, state.setValue(POWERED, true));
     } else if (!hasSignal && alreadyPowered) {
-      level.setBlockAndUpdate(pos, setUnpowered(state));
+      level.setBlockAndUpdate(pos, state.setValue(POWERED, false));
     }
+
+    // TODO: Redstone pulses to cycle, or high = reverse?
   }
 }

@@ -29,32 +29,6 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
     super(ctx);
   }
 
-  public static @NotNull PartialModel getOverlayModel(TrackSwitchTileEntity te) {
-    if (te.hasBothExits()) {
-      if (te.isNormal()) {
-        return CRBlockPartials.SWITCH_3WAY_STRAIGHT;
-      } else if (te.isReverseLeft()) {
-        return CRBlockPartials.SWITCH_3WAY_LEFT;
-      } else if (te.isReverseRight()) {
-        return CRBlockPartials.SWITCH_3WAY_RIGHT;
-      }
-    } else if (te.hasLeftExit()) {
-      if (te.isNormal()) {
-        return CRBlockPartials.SWITCH_LEFT_STRAIGHT;
-      } else if (te.isReverseLeft()) {
-        return CRBlockPartials.SWITCH_LEFT_TURN;
-      }
-    } else if (te.hasRightExit()) {
-      if (te.isNormal()) {
-        return CRBlockPartials.SWITCH_RIGHT_STRAIGHT;
-      } else if (te.isReverseRight()) {
-        return CRBlockPartials.SWITCH_RIGHT_TURN;
-      }
-    }
-
-    return CRBlockPartials.SWITCH_NONE;
-  }
-
   @Override
   protected void renderSafe(TrackSwitchTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
     super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
@@ -136,7 +110,7 @@ public class TrackSwitchRenderer extends SmartTileEntityRenderer<TrackSwitchTile
     ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
     CustomTrackOverlayRendering.renderOverlay(
       level, targetPos, target.getTargetDirection(), target.getTargetBezier(),
-      ms, buffer, light, overlay, getOverlayModel(te), 1, offsetToSide);
+      ms, buffer, light, overlay, te.getOverlayModel(), 1, offsetToSide);
     ms.popPose();
   }
 }
