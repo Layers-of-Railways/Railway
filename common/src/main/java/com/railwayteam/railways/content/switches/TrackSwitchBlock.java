@@ -31,19 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements ITE<TrackSwitchTileEntity> {
   boolean isAutomatic;
-
-  public static final Property<SwitchExits> EXITS = EnumProperty.create("exits", SwitchExits.class);
   public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-
-  public enum SwitchExits implements StringRepresentable {
-    LEFT, RIGHT, BOTH, NONE;
-
-    @Override
-    public @NotNull String getSerializedName() {
-      return Lang.asId(name());
-    }
-  }
 
   public enum SwitchState implements StringRepresentable {
     NORMAL, REVERSE_LEFT,
@@ -70,13 +59,12 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     this.isAutomatic = isAutomatic;
     registerDefaultState(defaultBlockState()
       .setValue(STATE, SwitchState.NORMAL)
-      .setValue(EXITS, SwitchExits.NONE)
       .setValue(POWERED, false));
   }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    super.createBlockStateDefinition(builder.add(FACING).add(EXITS).add(STATE).add(POWERED));
+    super.createBlockStateDefinition(builder.add(FACING).add(STATE).add(POWERED));
   }
 
   @Nullable

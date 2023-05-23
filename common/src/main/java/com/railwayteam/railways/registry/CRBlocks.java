@@ -201,10 +201,13 @@ public class CRBlocks {
       REGISTRATE.block("track_switch_andesite", TrackSwitchBlock::manual)
         .initialProperties(SharedProperties::softMetal)
         .blockstate((c, p) -> p.getVariantBuilder(c.get())
-          .forAllStates(state -> ConfiguredModel.builder()
-            .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_andesite/block")))
-            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-            .build()))
+          .forAllStatesExcept(
+            state -> ConfiguredModel.builder()
+              .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_andesite/block")))
+              .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
+              .build(),
+            TrackSwitchBlock.POWERED, TrackSwitchBlock.STATE
+          ))
         .properties(p -> p.color(MaterialColor.PODZOL))
         .properties(p -> p.noOcclusion())
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))

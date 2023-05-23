@@ -6,6 +6,7 @@ import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
 import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.logistics.trains.*;
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
@@ -17,10 +18,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.*;
 
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.*;
+import static java.util.stream.Collectors.toSet;
 
 public class TrackSwitchTileEntity extends SmartTileEntity implements ITransformableTE, IHaveGoggleInformation {
   public TrackTargetingBehaviour<TrackSwitch> edgePoint;
@@ -68,32 +72,40 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
   }
 
   public boolean hasLeftExit() {
-    SwitchExits exits = getBlockState().getValue(EXITS);
-    return exits == SwitchExits.LEFT || exits == SwitchExits.BOTH;
+//    return exits.containsKey(ExitEdge.LEFT);
+    return false;
   }
 
   public boolean hasRightExit() {
-    SwitchExits exits = getBlockState().getValue(EXITS);
-    return exits == SwitchExits.RIGHT || exits == SwitchExits.BOTH;
+//    return exits.containsKey(ExitEdge.RIGHT);
+    return false;
   }
 
   public boolean hasBothExits() {
-    return getBlockState().getValue(TrackSwitchBlock.EXITS) == SwitchExits.BOTH;
+    return hasLeftExit() && hasRightExit();
+  }
+
+  void calculateExits(TrackSwitch sw) {
+    GraphLocation loc = edgePoint.determineGraphLocation();
+    TrackGraph graph = loc.graph;
+    TrackEdge edge = graph
+      .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))
+      .get(graph.locateNode(loc.edge.getSecond()));
+
+    Set<TrackNodeLocation> exits = graph.getConnectionsFrom(edge.node2).values()
+      .stream()
+      .filter(e -> e != edge)
+      // Edges with reversed nodes, i.e. (a, b) and (b, a)
+      .filter(e -> !e.node1.getLocation().equals(edge.node2.getLocation())
+        || !e.node2.getLocation().equals(edge.node1.getLocation()))
+      .map(e -> e.node2.getLocation())
+      .collect(toSet());
+
+    sw.updateExits(edge.node2.getLocation(), exits);
   }
 
   private static LangBuilder b() {
     return Lang.builder(Railways.MODID);
-  }
-
-  void setExits(boolean left, boolean right) {
-    getLevel().setBlockAndUpdate(getBlockPos(),
-      getBlockState().setValue(
-        EXITS,
-        (left && right) ? SwitchExits.BOTH :
-          left ? SwitchExits.LEFT :
-            right ? SwitchExits.RIGHT :
-              SwitchExits.NONE
-      ));
   }
 
   @Override
