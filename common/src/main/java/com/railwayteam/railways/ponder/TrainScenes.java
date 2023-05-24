@@ -656,7 +656,7 @@ public class TrainScenes {
         });
     }
 
-    public static void coupling(SceneBuilder scene, SceneBuildingUtil util) { // fixme text needs to stay longer to be legible
+    public static void coupling(SceneBuilder scene, SceneBuildingUtil util) {
         scene.title("train_coupler", "Using a Coupler");
         scene.configureBasePlate(0, 0, 21);
         scene.scaleSceneView(.45f);
