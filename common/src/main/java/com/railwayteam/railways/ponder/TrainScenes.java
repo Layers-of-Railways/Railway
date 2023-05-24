@@ -656,19 +656,26 @@ public class TrainScenes {
         });
     }
 
-    public static void coupling(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void coupling(SceneBuilder scene, SceneBuildingUtil util) { // fixme text needs to stay longer to be legible
         scene.title("train_coupler", "Using a Coupler");
         scene.configureBasePlate(0, 0, 21);
         scene.scaleSceneView(.45f);
         scene.showBasePlate();
 
-        //scene.debug.debugSchematic();
+        /*scene.debug.debugSchematic();
+        scene.idle(1000);*/
 
 
+        // reveal tracks
         for (int i = 21; i >= 0; i--) {
             scene.world.showSection(util.select.position(i, 1, 10), Direction.DOWN);
             scene.idle(1);
         }
+
+        // setup positions
+        BlockPos locoLeadingBogeyPos = new BlockPos(2, 2, 18);
+        BlockPos locoTrailingBogeyPos = new BlockPos(5, 2, 18);
+        BlockPos cargoBogeyPos = new BlockPos(17, 2, 18);
 
         Selection coupler = util.select.position(10,1,7);
         Selection redstoneDust = util.select.position(10,1,6);
@@ -683,8 +690,9 @@ public class TrainScenes {
 
         Vec3 couplerTop = util.vector.topOf(couplerPos);
         Vec3 redstoneDustTop = util.vector.topOf(redstoneDustPos);
-        Vec3 ButtonTop = util.vector.topOf(buttonPos);
+        Vec3 buttonTop = util.vector.topOf(buttonPos);
 
+        // reveal coupler
         scene.idle(3);
         scene.world.showSection(coupler, Direction.DOWN);
         scene.idle(10);
@@ -693,7 +701,7 @@ public class TrainScenes {
                 .pointAt(couplerTop)
                 .placeNearTarget()
                 .attachKeyFrame()
-                .text("The Coupler Block, Lets you Couple and Decouple Trains without disassembling them");
+                .text("The Train Coupler lets you couple and decouple trains without disassembling them");
         scene.idle(120);
 
         scene.overlay
@@ -707,64 +715,114 @@ public class TrainScenes {
                 .placeNearTarget()
                 .colored(PonderPalette.GREEN)
                 .attachKeyFrame()
-                .text("By scrolling with a Wrench You can change the couple/decouple gap");
+                .text("By scrolling with a wrench you can change the couple/decouple gap");
         scene.idle(80);
 
         int delta = 0;
-        boolean back = false;
-        for (int i = 0; i < 6; i++) {
-            if (i > 1) {
-                back = true;
-            }
+        boolean back;
+        // move coupler pad forward, back, and forward again
+        for (int i = 0; i < 11; i++) {
+            back = i > 1 && i < 6;
 
-            moveplate(scene, util, couplerPos, new BlockPos(-3 - delta, 0, 3));
+            movePlate(scene, util, couplerPos, new BlockPos(-3 - delta, 0, 3), i < 7 ? 6 : 2);
             delta += back ? -1 : 1;
         }
 
         scene.idle(30);
 
+        // prepare trains
         ElementLink<WorldSectionElement> trainElement1 = scene.world.showIndependentSection(train1, Direction.DOWN);
-        scene.idle(2);
+        //scene.idle(2);
         ElementLink<WorldSectionElement> trainElement2 = scene.world.showIndependentSection(train2, Direction.DOWN);
-        scene.idle(2);
+        //scene.idle(2);
 
         scene.world.moveSection(trainElement1, util.vector.of(20, 0, -8), 0);
+        scene.world.moveSection(trainElement2, util.vector.of(15, 0, -8), 0);
 
-//        scene.idle(20);
-//
-//        ElementLink<ParrotElement> birb =
-//                scene.special.createBirb(util.vector.centerOf(6, 3, 7), ParrotElement.FacePointOfInterestPose::new);
-//        scene.idle(15);
-//        scene.special.movePointOfInterest(util.grid.at(-10, 3, 7));
-//        scene.idle(15);
-//        scene.world.moveSection(trainElement1, util.vector.of(-10, 0, 0), 70);
-//        scene.world.moveSection(trainElement2, util.vector.of(-10, 0, 0), 70);
-//        scene.world.animateBogey(util.grid.at(5, 2, 7), 18f, 70);
-//        scene.world.animateBogey(util.grid.at(11, 2, 7), 18f, 70);
-//        scene.special.moveParrot(birb, util.vector.of(-10, 0, 0), 70);
-//
-//        scene.idle(10);
-//        scene.world.hideIndependentSection(trainElement1, null);
-//        scene.special.hideElement(birb, null);
-//        scene.idle(20);
-//        scene.world.hideIndependentSection(trainElement2, null);
-//        scene.idle(20);
+        // start coupler rendering
+        coupleTrain(scene, cargoBogeyPos, 8, Direction.NORTH);
 
-        //scene.world.showSection(util.select.position(redstoneDustPos), Direction.DOWN);
-        //scene.world.showSection(util.select.position(buttonPos), Direction.DOWN);
+        // move trains and animate bogeys to coupler
+        scene.world.moveSection(trainElement1, util.vector.of(-20, 0, 0), 50);
+        scene.world.moveSection(trainElement2, util.vector.of(-20, 0, 0), 50);
+        scene.world.animateBogey(locoLeadingBogeyPos, 20, 50);
+        scene.world.animateBogey(locoTrailingBogeyPos, 20, 50);
+        scene.world.animateBogey(cargoBogeyPos, 20, 50);
+
+        scene.idle(50);
+
+        // face scene head-on (to emphasize coupler alignment)
+        scene.rotateCameraY(20);
+
+        scene.idle(10);
+
+        // reveal redstone and button
+        scene.world.showSection(redstoneDust, Direction.DOWN);
+        scene.idle(1);
+        scene.world.showSection(button, Direction.DOWN);
+
+        scene.idle(20);
+
+        scene.overlay.showText(70)
+            .pointAt(buttonTop)
+            .placeNearTarget()
+            .colored(PonderPalette.RED)
+            .attachKeyFrame()
+            .text("By powering a coupler you can couple/decouple a properly-aligned train");
+        scene.idle(80);
+
+        // 'press' button
+        scene.world.modifyBlock(buttonPos, s -> s.setValue(ButtonBlock.POWERED, true), false);
+        scene.world.modifyBlock(redstoneDustPos, s -> s.setValue(RedStoneWireBlock.POWER, 15), false);
+
+        // end coupler rendering
+        decoupleTrain(scene, cargoBogeyPos);
+
+        scene.idle(20);
+
+        // 'unpress' button
+        scene.world.modifyBlock(buttonPos, s -> s.setValue(ButtonBlock.POWERED, false), false);
+        scene.world.modifyBlock(redstoneDustPos, s -> s.setValue(RedStoneWireBlock.POWER, 0), false);
+
+        scene.idle(5);
+
+        // move locomotive out of the scene
+        scene.world.moveSection(trainElement1, util.vector.of(-40, 0, 0), 100);
+        scene.world.animateBogey(locoLeadingBogeyPos, 40, 100);
+        scene.world.animateBogey(locoTrailingBogeyPos, 40, 100);
+
+        scene.idle(10);
+
+        scene.rotateCameraY(-20);
     }
 
     // Coupler Ponder only code
-    public static void moveplate(SceneBuilder scene, SceneBuildingUtil util, BlockPos couplerPos, BlockPos plate) {
+    public static void movePlate(SceneBuilder scene, SceneBuildingUtil util, BlockPos couplerPos, BlockPos plate, int idleTicks) {
         scene.world.modifyTileNBT(util.select.position(couplerPos), TrackCouplerTileEntity.class, nbt -> nbt.put("SecondaryTargetTrack", NbtUtils.writeBlockPos(plate)));
-        scene.idle(6);
+        scene.idle(idleTicks);
     }
 
-    public static void coupletrain(SceneBuilder scene, SceneBuildingUtil util) {
-        // TODO add code to summon coupler (scene, utils, train1 cords, train2 cords)
+    public static void coupleTrain(SceneBuilder scene, BlockPos pos, double distance, Direction direction) {
+        scene.addInstruction(PonderInstruction.simple(ponderScene -> {
+            PonderWorld world = ponderScene.getWorld();
+            world.getBlockEntity(pos, AllTileEntities.BOGEY.get()).ifPresent(sbte -> {
+                if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
+                    virtualCoupling.setCouplingDistance(distance);
+                    virtualCoupling.setCouplingDirection(direction);
+                }
+            });
+        }));
     }
 
-    public static void decoupletrain(SceneBuilder scene, SceneBuildingUtil util) {
-        // TODO add code to delete coupler (scene, utils, train1 cords, train2 cords)
+    public static void decoupleTrain(SceneBuilder scene, BlockPos pos) {
+        scene.addInstruction(PonderInstruction.simple(ponderScene -> {
+            PonderWorld world = ponderScene.getWorld();
+            world.getBlockEntity(pos, AllTileEntities.BOGEY.get()).ifPresent(sbte -> {
+                if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
+                    virtualCoupling.setCouplingDistance(-1);
+                    virtualCoupling.setCouplingDirection(Direction.UP);
+                }
+            });
+        }));
     }
 }
