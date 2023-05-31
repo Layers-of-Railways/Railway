@@ -121,9 +121,10 @@ public class CRBlocks {
 
     public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
 
-    static {
-        REGISTRATE.startSection(AllSections.LOGISTICS);
-    }
+//  commented out because I'm pretty sure but not 100% that it was removed.
+//    static {
+//        REGISTRATE.startSection(AllSections.LOGISTICS);
+//    }
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
         .initialProperties(SharedProperties::softMetal)
@@ -213,9 +214,9 @@ public class CRBlocks {
             .transform(customItemModel())
             .register();
 
-    static {
-        REGISTRATE.startSection(AllSections.PALETTES);
-    }
+//    static {
+//        REGISTRATE.startSection(AllSections.PALETTES);
+//    }
 
     /*
     smokestacks:

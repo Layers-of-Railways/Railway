@@ -13,6 +13,9 @@ import java.util.UUID;
 
 public record TrainMarkerData(String name, int carriageCount, UUID owner, String destination, ResourceKey<Level> dimension, BlockPos pos, boolean incomplete) {
 
+    //I don't know if this is the intended fix, but we'll just have to wait and see
+    public static Carriage carriage;
+
     public static final BlockPos ABSENT_POS = new BlockPos(1331, 0, 1331);
 
     public static TrainMarkerData make(Train train) {
@@ -29,7 +32,7 @@ public record TrainMarkerData(String name, int carriageCount, UUID owner, String
 
         if (bogey.leading().node1 != null && bogey.leading().node2 != null) {
             dimension = bogey.leading().node1.getLocation().dimension;
-            Vec3 vecPos = bogey.leading().getPosition();
+            Vec3 vecPos = bogey.leading().getPosition(carriage.train.graph);
             pos = new BlockPos(vecPos);
             if (pos.equals(ABSENT_POS))
                 pos = ABSENT_POS.above();

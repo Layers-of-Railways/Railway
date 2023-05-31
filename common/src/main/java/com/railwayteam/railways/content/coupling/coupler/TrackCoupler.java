@@ -6,6 +6,7 @@ import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.signal.SignalPropagator;
+import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.UUID;
 
-public class TrackCoupler extends SingleTileEdgePoint {
+public class TrackCoupler extends SingleBlockEntityEdgePoint {
     private int activated;
     private UUID currentTrain;
 
@@ -45,8 +46,8 @@ public class TrackCoupler extends SingleTileEdgePoint {
     }
 
     @Override
-    public void tileAdded(BlockEntity tile, boolean front) {
-        super.tileAdded(tile, front);
+    public void blockEntityAdded(BlockEntity tile, boolean front) {
+        super.blockEntityAdded(tile, front);
         notifyTrains(tile.getLevel());
     }
 

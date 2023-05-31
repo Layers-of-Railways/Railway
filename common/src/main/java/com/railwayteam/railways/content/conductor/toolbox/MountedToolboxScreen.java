@@ -11,7 +11,7 @@ public class MountedToolboxScreen extends ToolboxScreen {
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"}) // this should be safe
-  public static AbstractSimiContainerScreen<MountedToolboxScreen> create(MountedToolboxContainer container, Inventory inv, Component title) {
-    return (AbstractSimiContainerScreen) new MountedToolboxScreen(container, inv, title);
+  public static AbstractSimiContainerScreen<MountedToolboxScreen> create(MountedToolboxScreen screen, Inventory inv, Component title) {
+    return (AbstractSimiContainerScreen) new MountedToolboxScreen(screen, inv, title);
   }
 }

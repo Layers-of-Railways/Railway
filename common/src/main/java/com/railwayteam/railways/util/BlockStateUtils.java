@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import static com.simibubi.create.content.trains.track.TrackBlock.HAS_BE;
 import static com.simibubi.create.content.trains.track.TrackBlock.SHAPE;
+import static com.simibubi.create.foundation.block.ProperWaterloggedBlock.WATERLOGGED;
 
 
 public class BlockStateUtils {

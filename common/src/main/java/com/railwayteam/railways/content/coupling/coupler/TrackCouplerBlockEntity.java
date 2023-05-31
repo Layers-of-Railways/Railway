@@ -102,7 +102,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
         edgeSpacingScroll.between(3, 10);
-        edgeSpacingScroll.withUnit(i -> Components.translatable("railways.coupler.edge_spacing.meters"));
+        edgeSpacingScroll.withFormatter(i -> String.valueOf(Components.translatable("railways.coupler.edge_spacing.meters")));
         edgeSpacingScroll.withFormatter(i -> i + "m");
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
         edgeSpacingScroll.requiresWrench();
@@ -139,7 +139,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
     protected void onPowered() {
         if (level == null || level.isClientSide)
             return;
-        this.getSecondaryCoupler().tileAdded(this, false); //FIXME remove this
+        this.getSecondaryCoupler().blockEntityAdded(this, false); //FIXME remove this
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
             case DECOUPLING:
@@ -325,7 +325,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         CarriageBogey relevantBogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
         boolean upsideDown = ((AccessorCarriageBogey) relevantBogey).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown();
         double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
-        Vec3 wheelPosition = relevantPoint.getPosition().add(relevantPoint2.getPosition()).scale(0.5).add(0, upsideDown ? 2 : 0, 0);
+        Vec3 wheelPosition = relevantPoint.getPosition(carriage.train.graph).add(relevantPoint2.getPosition(carriage.train.graph)).scale(0.5).add(0, upsideDown ? 2 : 0, 0);
         Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());
 //        return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2)) && Math.abs(relevantPoint.position - (couplerPosition+0.5)) < .75;
         return (coupler.isPrimary(relevantPoint.node1) || coupler.isPrimary(relevantPoint.node2) ||
