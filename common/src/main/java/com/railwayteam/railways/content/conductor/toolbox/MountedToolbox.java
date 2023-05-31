@@ -102,7 +102,7 @@ public class MountedToolbox extends ToolboxBlockEntity {
 
   @Override
   public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
-    return MountedToolboxContainer.create(id, inv, this);
+    return MountedToolboxScreen.create(id, inv, this);
   }
 
   public ItemStack getDisplayStack() {

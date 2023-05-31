@@ -2,8 +2,8 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
 import com.railwayteam.railways.mixin_interfaces.ISidedStation;
-import com.simibubi.create.content.trains.DimensionPalette;
 import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.station.GlobalStation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -74,7 +74,7 @@ public abstract class MixinGlobalStation implements ILimitedGlobalStation, ISide
         return limitEnabled;
     }
 
-    @Inject(method = "read(Lnet/minecraft/nbt/CompoundTag;ZLcom/simibubi/create/content/trains/DimensionPalette;)V", at = @At("TAIL"), remap = true)
+    @Inject(method = "read(Lnet/minecraft/nbt/CompoundTag;ZLcom/simibubi/create/trains/DimensionPalette;)V", at = @At("TAIL"), remap = true)
     private void readLimit(CompoundTag nbt, boolean migration, DimensionPalette dimensions, CallbackInfo ci) {
         limitEnabled = nbt.getBoolean("LimitEnabled");
         openRight = !nbt.contains("OpenRight") || nbt.getBoolean("OpenRight");

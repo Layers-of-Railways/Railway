@@ -8,6 +8,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler;
+import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
@@ -163,6 +164,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     }
 
     private final class CustomRedstoneActor implements IRedstoneLinkable {
+        public Carriage carriage;
         private long ticks = 8;
         private final ScheduleRuntime runtime;
 
@@ -200,7 +202,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
         @Override
         public BlockPos getLocation() {
-            return new BlockPos(((AccessorScheduleRuntime) runtime).getTrain().carriages.get(0).getLeadingPoint().getPosition());
+            return new BlockPos(((AccessorScheduleRuntime) runtime).getTrain().carriages.get(0).getLeadingPoint().getPosition(carriage.train.graph));
         }
     }
 }
