@@ -6,14 +6,14 @@ import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-import com.simibubi.create.content.trains.DimensionPalette;
-import com.simibubi.create.content.trains.TrackGraph;
-import com.simibubi.create.content.trains.TrackNode;
+import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.*;
-import com.simibubi.create.content.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.content.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.trains.management.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.graph.DimensionPalette;
+import com.simibubi.create.content.trains.graph.TrackGraph;
+import com.simibubi.create.content.trains.graph.TrackNode;
+import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
@@ -116,7 +116,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
             at = @At("HEAD"),
             cancellable = true
     )
-    private void backCouplerListener(Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple, CallbackInfoReturnable<Boolean> cir) {
+    private void backCouplerListener(Double distance, Pair couple, CallbackInfoReturnable<Boolean> cir) {
         if (couple.getFirst() instanceof TrackCoupler coupler) {
             occupiedCouplers.remove(coupler.getId());
             cir.setReturnValue(false);
@@ -166,7 +166,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
 
     private CarriageContraptionEntity entityInUse;
 
-    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;"))
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/Contraption;"))
     private Contraption saveCarriageContraptionEntity(CarriageContraptionEntity instance) {
         entityInUse = instance;
         return instance.getContraption();

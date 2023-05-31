@@ -91,7 +91,7 @@ public abstract class MixinStationEditPacket implements ILimited, ISidedStation 
         }
     }
 
-    @Inject(method = "applySettings(Lnet/minecraft/server/level/ServerPlayer;Lcom/simibubi/create/content/trains/management/edgePoint/station/StationBlockEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = true)
+    @Inject(method = "applySettings(Lnet/minecraft/server/level/ServerPlayer;Lcom/simibubi/create/content/trains/station/StationBlockEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = true)
     private void applyLimit(ServerPlayer player, StationBlockEntity te, CallbackInfo ci) {
         if (limitEnabled != null) {
             GlobalStation station = te.getStation();
