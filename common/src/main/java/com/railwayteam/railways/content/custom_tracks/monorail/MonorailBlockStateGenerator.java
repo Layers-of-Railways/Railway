@@ -1,9 +1,8 @@
 package com.railwayteam.railways.content.custom_tracks.monorail;
 
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackShape;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.world.level.block.Block;

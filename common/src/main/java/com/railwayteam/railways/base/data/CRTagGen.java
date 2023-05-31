@@ -1,11 +1,9 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.multiloader.CommonTag;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;

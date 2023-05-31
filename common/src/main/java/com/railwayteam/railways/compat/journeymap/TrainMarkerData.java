@@ -1,8 +1,8 @@
 package com.railwayteam.railways.compat.journeymap;
 
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;

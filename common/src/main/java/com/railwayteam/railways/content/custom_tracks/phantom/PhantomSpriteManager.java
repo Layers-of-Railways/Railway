@@ -3,12 +3,10 @@ package com.railwayteam.railways.content.custom_tracks.phantom;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleTextureAtlasSprite;
 import com.railwayteam.railways.registry.CRBlocks;
-import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Items;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
-import com.simibubi.create.foundation.ponder.content.PonderIndex;
+import com.simibubi.create.infrastructure.ponder.PonderIndex;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

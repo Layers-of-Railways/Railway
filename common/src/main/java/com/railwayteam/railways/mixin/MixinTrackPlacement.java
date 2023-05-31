@@ -4,11 +4,11 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.BlockStateUtils;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement.PlacementInfo;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackPlacement;
+import com.simibubi.create.content.trains.track.TrackPlacement.PlacementInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -18,7 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrackPlacement.class, remap = false)
@@ -45,7 +48,7 @@ public class MixinTrackPlacement { //TODO _track api ALL OF IT (totally done)
 			method = "tryConnect",
 			at = @At(
 					value = "INVOKE",
-					target = "Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement;placeTracks(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)Lcom/simibubi/create/content/logistics/trains/track/TrackPlacement$PlacementInfo;",
+					target = "Lcom/simibubi/create/content/trains/track/TrackPlacement;placeTracks(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/track/TrackPlacement$PlacementInfo;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Z)Lcom/simibubi/create/content/trains/track/TrackPlacement$PlacementInfo;",
 					remap = true
 			)
 	)

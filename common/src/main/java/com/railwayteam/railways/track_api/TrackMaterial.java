@@ -6,19 +6,16 @@ import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.railwayteam.railways.multiloader.Env;
-import com.railwayteam.railways.registry.CRBlocks;
-import com.simibubi.create.AllBlockPartials;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
@@ -182,7 +179,7 @@ public class TrackMaterial {
 
     @Environment(EnvType.CLIENT)
     public static class TrackModelHolder {
-        static final TrackModelHolder DEFAULT = new TrackModelHolder(AllBlockPartials.TRACK_TIE, AllBlockPartials.TRACK_SEGMENT_LEFT, AllBlockPartials.TRACK_SEGMENT_RIGHT);
+        static final TrackModelHolder DEFAULT = new TrackModelHolder(AllPartialModels.TRACK_TIE, AllPartialModels.TRACK_SEGMENT_LEFT, AllPartialModels.TRACK_SEGMENT_RIGHT);
 
         public final PartialModel tie;
         public final PartialModel segment_left;

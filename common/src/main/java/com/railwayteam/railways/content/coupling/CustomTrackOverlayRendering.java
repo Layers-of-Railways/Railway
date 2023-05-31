@@ -3,15 +3,13 @@ package com.railwayteam.railways.content.coupling;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.track.*;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.content.schematics.SchematicWorld;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.fabricmc.api.EnvType;
@@ -101,7 +99,7 @@ public class CustomTrackOverlayRendering {
         Vec3 normal = null;
         Vec3 offset = null;
 
-        if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+        if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             BezierConnection bc = trackTE.getConnections().get(bezierPoint.curveTarget());
             if (bc != null) {
                 double length = Mth.floor(bc.getLength() * 2);
@@ -146,7 +144,7 @@ public class CustomTrackOverlayRendering {
         //Shift for casings and monorails
         if (bezierPoint == null && state.getBlock() instanceof IHasTrackMaterial material && material.getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
-        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (casingTE.getTrackCasing() != null) {

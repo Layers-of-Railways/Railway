@@ -16,11 +16,7 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
 import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackInstance;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.renderer.RenderType;
@@ -42,8 +38,8 @@ import java.util.List;
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.casingPositions;
 
 @Mixin(value = TrackInstance.class, remap = false)
-public abstract class MixinTrackInstance extends BlockEntityInstance<TrackTileEntity> implements IGetBezierConnection {
-  private MixinTrackInstance(MaterialManager materialManager, TrackTileEntity blockEntity) {
+public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockEntity> implements IGetBezierConnection {
+  private MixinTrackInstance(MaterialManager materialManager, TrackBlockEntity blockEntity) {
     super(materialManager, blockEntity);
   }
 

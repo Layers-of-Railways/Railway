@@ -3,10 +3,9 @@ package com.railwayteam.railways.mixin.client;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntityRenderer;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

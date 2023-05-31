@@ -1,12 +1,11 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.DimensionPalette;
-import com.simibubi.create.content.logistics.trains.TrackEdge;
-import com.simibubi.create.content.logistics.trains.TrackGraph;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalPropagator;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SingleTileEdgePoint;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.DimensionPalette;
+import com.simibubi.create.content.trains.graph.TrackEdge;
+import com.simibubi.create.content.trains.graph.TrackGraph;
+import com.simibubi.create.content.trains.signal.SignalPropagator;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;

@@ -3,18 +3,14 @@ package com.railwayteam.railways.mixin.client;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -35,10 +31,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.reTexture;
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.renderBezierCasings;
-import static com.simibubi.create.AllBlockPartials.*;
-import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_TOP;
-import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_BOTTOM;
-import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_MIDDLE;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.simibubi.create.AllPartialModels.*;
+import static com.simibubi.create.AllPartialModels.*;
 
 @Mixin(value = TrackRenderer.class, remap = false)
 public class MixinTrackRenderer {
@@ -56,7 +51,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"))
+        target = "Lcom/simibubi/create/AllPartialModels;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceTie() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -66,7 +61,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"))
+        target = "Lcom/simibubi/create/AllPartialModels;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceSegLeft() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -76,7 +71,7 @@ public class MixinTrackRenderer {
     }
 
     @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllBlockPartials;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"))
+        target = "Lcom/simibubi/create/AllPartialModels;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"))
     private static PartialModel replaceSegRight() {
         if (bezierConnection != null) {
             TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
@@ -85,9 +80,9 @@ public class MixinTrackRenderer {
         return TRACK_SEGMENT_RIGHT;
     }
 
-    @Inject(method = "renderSafe(Lcom/simibubi/create/content/logistics/trains/track/TrackTileEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+    @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/track/TrackBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = true)
-    private void renderCasing(TrackTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
+    private void renderCasing(TrackBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
         SlabBlock casingBlock = ((IHasTrackCasing) te).getTrackCasing();
         if (casingBlock != null) {
             TrackShape shape = te.getBlockState().getValue(TrackBlock.SHAPE);
@@ -129,7 +124,7 @@ public class MixinTrackRenderer {
     }
 
     @Inject(method = "renderBezierTurn",
-        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/logistics/trains/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
+        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
         cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {

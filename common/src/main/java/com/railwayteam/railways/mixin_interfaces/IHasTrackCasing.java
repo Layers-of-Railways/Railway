@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;

@@ -1,12 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
+import com.railwayteam.railways.track_api.TrackMaterial;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.BlockPos;

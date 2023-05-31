@@ -1,10 +1,9 @@
 package com.railwayteam.railways.content.smokestack;
 
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
-import com.simibubi.create.content.contraptions.components.structureMovement.ContraptionWorld;
-import com.simibubi.create.content.contraptions.components.structureMovement.render.ContraptionRenderDispatcher;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.contraptions.ContraptionWorld;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
@@ -13,19 +12,19 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class DieselSmokeStackTileEntity extends SmartTileEntity implements ISpeedNotifiable {
+public class DieselSmokeStackBlockEntity extends SmartBlockEntity implements ISpeedNotifiable {
 
     private LerpedFloat rpmLimiter;
     private double fanRotation;
     private double lastRotateTime;
     private double notifiedSpeed;
 
-    public DieselSmokeStackTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public DieselSmokeStackBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 
     public double getRpm(float partialTicks) {
         boolean enabled = getBlockState().getValue(SmokeStackBlock.ENABLED);

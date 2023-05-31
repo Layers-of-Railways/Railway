@@ -1,8 +1,8 @@
 package com.railwayteam.railways.content.custom_bogeys.monobogey;
 
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.IBogeyBlock;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.minecraft.world.level.block.state.BlockState;
 
 public interface IPotentiallyUpsideDownBogeyBlock extends IBogeyBlock {

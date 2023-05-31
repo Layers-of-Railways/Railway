@@ -2,11 +2,11 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.coupler.SecondaryTrackTargetingBehaviour;
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.logistics.trains.DimensionPalette;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.trains.graph.DimensionPalette;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelAccessor;
@@ -25,7 +25,7 @@ public abstract class MixinTrackEdgePoint {
 
     @Inject(method = "invalidateAt", at = @At("RETURN"))
     private void invalidateSecondaryEdgePoint(LevelAccessor level, BlockPos tilePos, CallbackInfo ci) {
-        TrackTargetingBehaviour<?> behaviour = TileEntityBehaviour.get(level, tilePos, SecondaryTrackTargetingBehaviour.TYPE);
+        TrackTargetingBehaviour<?> behaviour = BlockEntityBehaviour.get(level, tilePos, SecondaryTrackTargetingBehaviour.TYPE);
         if (behaviour == null)
             return;
         CompoundTag migrationData = new CompoundTag();

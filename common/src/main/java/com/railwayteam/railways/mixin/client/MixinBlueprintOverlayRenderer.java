@@ -2,8 +2,8 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.track_api.TrackMaterial;
-import com.simibubi.create.content.curiosities.tools.BlueprintOverlayRenderer;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement.PlacementInfo;
+import com.simibubi.create.content.equipment.blueprint.BlueprintOverlayRenderer;
+import com.simibubi.create.content.trains.track.TrackPlacement.PlacementInfo;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandlerClient;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandlerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class MixinToolboxHandlerClient {
           method = "onKeyInput",
           at = @At(
                   value = "INVOKE",
-                  target = "Lcom/simibubi/create/content/curiosities/toolbox/ToolboxHandler;getMaxRange(Lnet/minecraft/world/entity/player/Player;)D",
+                  target = "Lcom/simibubi/create/content/equipment/toolbox/ToolboxHandler;getMaxRange(Lnet/minecraft/world/entity/player/Player;)D",
                   remap = true
           )
   )

@@ -4,8 +4,8 @@ import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
-import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +21,7 @@ public class ClientEvents {
     private static final String BLOCK_PREFIX = "block." + Railways.MODID;
 
     public static void onTooltip(ItemStack stack, TooltipFlag flags, List<Component> tooltip) {
-        if (!AllConfigs.CLIENT.tooltips.get())
+        if (!AllConfigs.client().tooltips.get())
             return;
 
         Player player = Minecraft.getInstance().player;

@@ -1,10 +1,10 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IBogeyTypeAwareTravellingPoint;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
+import com.simibubi.create.content.trains.IBogeyBlock;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.TravellingPoint;
 import com.simibubi.create.foundation.utility.Couple;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

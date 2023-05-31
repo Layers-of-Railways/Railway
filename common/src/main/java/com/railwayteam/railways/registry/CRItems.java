@@ -8,7 +8,7 @@ import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;

@@ -1,12 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -37,9 +37,9 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
-    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
+    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
     private static void checkGraphLocation(Level level, BlockPos pos, boolean front, BezierTrackPointLocation targetBezier, EdgePointType<?> type,
-                                           BiConsumer<TrackTargetingBlockItem.OverlapResult, GraphLocation> callback, CallbackInfo ci) {
+                                           BiConsumer<TrackTargetingBlockItem.OverlapResult, TrackGraphLocation> callback, CallbackInfo ci) {
         if (type != CREdgePointTypes.COUPLER)
             return;
         TrackTargetingBlockItem.OverlapResult not_straight = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");

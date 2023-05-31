@@ -7,13 +7,13 @@ import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.contraptions.components.structureMovement.Contraption;
-import com.simibubi.create.content.logistics.trains.DimensionPalette;
-import com.simibubi.create.content.logistics.trains.TrackGraph;
-import com.simibubi.create.content.logistics.trains.TrackNode;
-import com.simibubi.create.content.logistics.trains.entity.*;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.DimensionPalette;
+import com.simibubi.create.content.trains.TrackGraph;
+import com.simibubi.create.content.trains.TrackNode;
+import com.simibubi.create.content.trains.entity.*;
+import com.simibubi.create.content.trains.management.edgePoint.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.management.edgePoint.station.GlobalStation;
+import com.simibubi.create.content.trains.management.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
@@ -21,7 +21,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -73,7 +72,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         occupiedCouplers = new HashSet<>();
     }
 
-    @Inject(method = "earlyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/Train;addToSignalGroups(Ljava/util/Collection;)V", ordinal = 2))
+    @Inject(method = "earlyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;addToSignalGroups(Ljava/util/Collection;)V", ordinal = 2))
     private void tickOccupiedCouplers(Level level, CallbackInfo ci) {
         for (UUID uuid : occupiedCouplers) {
             TrackCoupler coupler = graph.getPoint(CREdgePointTypes.COUPLER, uuid);
@@ -167,7 +166,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
 
     private CarriageContraptionEntity entityInUse;
 
-    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;"))
+    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/components/structureMovement/Contraption;"))
     private Contraption saveCarriageContraptionEntity(CarriageContraptionEntity instance) {
         entityInUse = instance;
         return instance.getContraption();

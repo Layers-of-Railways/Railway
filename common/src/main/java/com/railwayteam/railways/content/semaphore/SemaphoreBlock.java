@@ -1,19 +1,17 @@
 package com.railwayteam.railways.content.semaphore;
 
 import com.railwayteam.railways.Config;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.utility.placement.IPlacementHelper;
-import com.simibubi.create.foundation.utility.placement.PlacementHelpers;
-import com.simibubi.create.foundation.utility.placement.PlacementOffset;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.foundation.placement.IPlacementHelper;
+import com.simibubi.create.foundation.placement.PlacementHelpers;
+import com.simibubi.create.foundation.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -39,7 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.function.Predicate;
 
-public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<SemaphoreBlockEntity>, IWrenchable {
+public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<SemaphoreBlockEntity>, IWrenchable {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     public static final int girderPlacementHelperId = PlacementHelpers.register(new GirderPlacementHelper());
@@ -113,7 +111,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             return InteractionResult.PASS;
 
 
-        KineticTileEntity.switchToBlockState(world, context.getClickedPos(), updateAfterWrenched(rotated, context));
+        KineticBlockEntity.switchToBlockState(world, context.getClickedPos(), updateAfterWrenched(rotated, context));
 
         BlockEntity te = context.getLevel()
                 .getBlockEntity(context.getClickedPos());
@@ -124,7 +122,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
                 BlockState blockState = world.getBlockState(currentPos);
                 if (CRBlocks.SEMAPHORE.has(blockState)) {
                     BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
-                    KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                    KineticBlockEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
                 } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                     break;
                 }
@@ -136,7 +134,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
                 BlockState blockState = world.getBlockState(currentPos);
                 if (CRBlocks.SEMAPHORE.has(blockState)) {
                     BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, rotated.getValue(UPSIDE_DOWN));
-                    KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                    KineticBlockEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
                 } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                     break;
                 }
@@ -160,7 +158,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             BlockState blockState = world.getBlockState(currentPos);
             if (CRBlocks.SEMAPHORE.has(blockState)) {
                 BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
-                KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                KineticBlockEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
             } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                 break;
             }
@@ -172,7 +170,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
             BlockState blockState = world.getBlockState(currentPos);
             if (CRBlocks.SEMAPHORE.has(blockState)) {
                 BlockState rotatedState = blockState.setValue(UPSIDE_DOWN, state.getValue(UPSIDE_DOWN));
-                KineticTileEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
+                KineticBlockEntity.switchToBlockState(world, currentPos, Block.updateFromNeighbourShapes(rotatedState, world, currentPos));
             } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                 break;
             }
@@ -282,12 +280,12 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements ITE<Se
     }
 
     @Override
-    public Class<SemaphoreBlockEntity> getTileEntityClass() {
+    public Class<SemaphoreBlockEntity> getBlockEntityClass() {
         return SemaphoreBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends SemaphoreBlockEntity> getTileEntityType() {
+    public BlockEntityType<? extends SemaphoreBlockEntity> getBlockEntityType() {
         return CRBlockEntities.SEMAPHORE.get();
     }
 

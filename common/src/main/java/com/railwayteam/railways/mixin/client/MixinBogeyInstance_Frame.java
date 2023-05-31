@@ -4,10 +4,9 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.core.Materials;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.bogey.BogeyInstance;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Iterate;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -68,7 +67,7 @@ public class MixinBogeyInstance_Frame implements IBogeyFrameCanBeMonorail<BogeyI
         this.materialManager = materialManager;
     }
 
-    @Inject(method = "beginFrame", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/BogeyInstance;beginFrame(FLcom/mojang/blaze3d/vertex/PoseStack;)V", shift = At.Shift.AFTER, remap = true), cancellable = true)
+    @Inject(method = "beginFrame", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/BogeyInstance;beginFrame(FLcom/mojang/blaze3d/vertex/PoseStack;)V", shift = At.Shift.AFTER, remap = true), cancellable = true)
     private void beginMonorailFrame(float wheelAngle, PoseStack ms, CallbackInfo ci) {
         if (isMonorail()) {
             ci.cancel();

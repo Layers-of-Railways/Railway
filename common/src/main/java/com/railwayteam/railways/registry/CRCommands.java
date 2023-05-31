@@ -5,7 +5,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
-import com.simibubi.create.foundation.command.AllCommands;
+import com.simibubi.create.infrastructure.command.AllCommands;
 import net.minecraft.commands.CommandSourceStack;
 
 import java.util.Collections;

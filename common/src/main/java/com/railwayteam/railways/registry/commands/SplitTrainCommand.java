@@ -6,7 +6,7 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

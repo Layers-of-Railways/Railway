@@ -1,7 +1,6 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

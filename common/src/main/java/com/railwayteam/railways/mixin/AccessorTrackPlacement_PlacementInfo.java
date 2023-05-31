@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackPlacement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

@@ -1,15 +1,15 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.AllBlocksWrapper;
 import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
 import com.simibubi.create.content.schematics.ItemRequirement;
+import com.simibubi.create.content.trains.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,7 +27,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Mixin(value = TrackBlock.class, remap = false)
 public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial { //TODO _track api
@@ -45,7 +48,7 @@ public abstract class MixinTrackBlock extends Block implements IHasTrackMaterial
     Map<TrackMaterial, Integer> otherTrackAmounts = new HashMap<>();
     int girderAmount = 0;
 
-    if (te instanceof TrackTileEntity track) {
+    if (te instanceof TrackBlockEntity track) {
       for (BezierConnection bezierConnection : track.getConnections()
           .values()) {
         if (!bezierConnection.isPrimary())

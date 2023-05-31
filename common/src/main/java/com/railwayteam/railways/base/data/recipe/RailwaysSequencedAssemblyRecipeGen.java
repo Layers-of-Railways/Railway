@@ -1,14 +1,14 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.track_api.TrackMaterial;
-import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.content.contraptions.components.deployer.DeployerApplicationRecipe;
-import com.simibubi.create.content.contraptions.components.press.PressingRecipe;
-import com.simibubi.create.content.contraptions.components.saw.CuttingRecipe;
-import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipeBuilder;
+import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
+import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;

@@ -1,12 +1,10 @@
 package com.railwayteam.railways.content.schedule;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.schedule.condition.ScheduleWaitCondition;
+import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -29,7 +27,7 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
         GlobalStation currentStation = train.getCurrentStation();
         if (currentStation == null)
             return false;
-        ResourceKey<Level> stationDim = currentStation.getTileDimension();
+        ResourceKey<Level> stationDim = currentStation.getBlockEntityDimension();
         MinecraftServer server = level.getServer();
         if (server == null)
             return false;
@@ -37,7 +35,7 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
         if (stationLevel == null) {
             return false;
         }
-        return stationLevel.isPositionEntityTicking(currentStation.getTilePos());
+        return stationLevel.isPositionEntityTicking(currentStation.getBlockEntityPos());
     }
 
     @Override

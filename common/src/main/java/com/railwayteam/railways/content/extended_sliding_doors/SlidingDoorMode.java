@@ -1,10 +1,10 @@
 package com.railwayteam.railways.content.extended_sliding_doors;
 
 import com.railwayteam.railways.registry.CRIcons;
-import com.simibubi.create.content.curiosities.deco.SlidingDoorBlock;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
+import com.simibubi.create.foundation.blockEntity.behaviour.CenteredSideValueBoxTransform;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.tileEntity.behaviour.CenteredSideValueBoxTransform;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.INamedIconOptions;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;

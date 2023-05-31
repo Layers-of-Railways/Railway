@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.curiosities.girder.GirderBlock;
+import com.simibubi.create.content.decoration.girder.GirderBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

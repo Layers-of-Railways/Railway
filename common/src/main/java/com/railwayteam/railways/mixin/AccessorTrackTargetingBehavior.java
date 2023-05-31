@@ -1,8 +1,8 @@
 package com.railwayteam.railways.mixin;
 
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

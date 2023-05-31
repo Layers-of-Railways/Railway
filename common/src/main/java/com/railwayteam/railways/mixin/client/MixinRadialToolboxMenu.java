@@ -4,9 +4,9 @@ import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.content.curiosities.toolbox.RadialToolboxMenu;
-import com.simibubi.create.content.curiosities.toolbox.RadialToolboxMenu.State;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
+import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu;
+import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu.State;
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = RadialToolboxMenu.class, remap = false)
 public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 	@Shadow
-	private ToolboxTileEntity selectedBox;
+	private ToolboxBlockEntity selectedBox;
 	@Shadow
 	private boolean scrollMode;
 	@Shadow
@@ -29,7 +29,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 	private State state;
 
 	@Inject(method = "lambda$removed$0", at = @At("HEAD"), cancellable = true)
-	private static void railway$sendConductorToolboxDisposeAllPacketsToAll(ToolboxTileEntity te, CallbackInfo ci) {
+	private static void railway$sendConductorToolboxDisposeAllPacketsToAll(ToolboxBlockEntity te, CallbackInfo ci) {
 		if (te instanceof MountedToolbox mounted) {
 			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
 			ci.cancel(); // lambda only sends packet, skip it
