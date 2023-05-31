@@ -1,13 +1,13 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.multiloader.C2SPacket;
+import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,8 +51,8 @@ public class SlabUseOnCurvePacket implements C2SPacket {
       return;
     if (!pos.closerThan(player.blockPosition(), 64))
       return;
-    BlockEntity tileEntity = world.getBlockEntity(pos);
-    if (tileEntity instanceof TrackTileEntity track) {
+    BlockEntity BlockEntity = world.getBlockEntity(pos);
+    if (BlockEntity instanceof TrackBlockEntity track) {
       applySettings(player, track);
       track.notifyUpdate();
     }
@@ -91,7 +91,7 @@ public class SlabUseOnCurvePacket implements C2SPacket {
     return InteractionResult.PASS;
   }
 
-  protected void applySettings(ServerPlayer player, TrackTileEntity te) {
+  protected void applySettings(ServerPlayer player, TrackBlockEntity te) {
     if (!te.getBlockPos()
         .closerThan(player.blockPosition(), 128)) {
       Railways.LOGGER.warn(player.getScoreboardName() + " too far away from slabbed Curve track");

@@ -1,7 +1,8 @@
 package com.railwayteam.railways.ponder;
 
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalTileEntity;
+
+import com.simibubi.create.content.trains.signal.SignalBlock;
+import com.simibubi.create.content.trains.signal.SignalBlockEntity;
 import com.simibubi.create.foundation.ponder.*;
 import com.simibubi.create.foundation.ponder.element.InputWindowElement;
 import com.simibubi.create.foundation.ponder.element.ParrotElement;
@@ -106,9 +107,9 @@ public class TrainScenes {
         scene.special.moveParrot(birb1, util.vector.of(-9, 0, 0), 30);
         scene.idle(10);
 
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.RED);
         scene.effects.indicateRedstone(semaphore1a);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.RED);
         scene.effects.indicateRedstone(semaphore2a);
 
         scene.idle(35);
@@ -137,9 +138,9 @@ public class TrainScenes {
         scene.world.animateBogey(util.grid.at(13, 2, 7), 10f, 35);
         scene.special.moveParrot(birb1, util.vector.of(-10, 0, 0), 35);
         scene.idle(5);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.GREEN);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.GREEN);
-        scene.world.changeSignalState(signal4, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal4, SignalBlockEntity.SignalState.RED);
         scene.idle(5);
 
         scene.world.hideIndependentSection(trainElement, null);
@@ -150,16 +151,16 @@ public class TrainScenes {
         scene.world.animateBogey(util.grid.at(13, 2, 1), 11.5f, 40);
         scene.special.moveParrot(birb2, util.vector.of(-11.5, 0, 0), 40);
         scene.idle(3);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.RED);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.RED);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.RED);
         scene.idle(5);
-        scene.world.changeSignalState(signal4, SignalTileEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal4, SignalBlockEntity.SignalState.GREEN);
 
         scene.idle(20);
 
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.GREEN);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.GREEN);
-        scene.world.changeSignalState(signal4, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal4, SignalBlockEntity.SignalState.RED);
         scene.idle(20);
         scene.special.movePointOfInterest(signal1);
 
@@ -242,7 +243,7 @@ public class TrainScenes {
 
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.RED, bb2, bb2, 30);
         scene.overlay.showBigLine(PonderPalette.RED, m2.add(.45, 0, 0), m1.add(-.45, 0, 0), 30);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.YELLOW);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.YELLOW);
 
         scene.special.movePointOfInterest(semaphore1b);
         scene.idle(30);
@@ -282,12 +283,12 @@ public class TrainScenes {
                 scene.special.createBirb(util.vector.of(18, 3.5, -2), ParrotElement.FacePointOfInterestPose::new);
         scene.special.moveParrot(birb3, util.vector.of(-14, 0, 14), 40);
         scene.idle(12);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.RED);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.RED);
         scene.idle(20);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.GREEN);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.YELLOW);
-        scene.world.changeSignalState(signal3, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.GREEN);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.YELLOW);
+        scene.world.changeSignalState(signal3, SignalBlockEntity.SignalState.RED);
         scene.idle(20);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb2, bb2, 30);
 
@@ -305,7 +306,7 @@ public class TrainScenes {
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.RED, bb2, bb2, 30);
         scene.overlay.showBigLine(PonderPalette.RED, m2.add(.45, 0, 0), m1.add(-.45, 0, 0), 30);
         scene.overlay.showBigLine(PonderPalette.RED, m4.add(.45, 0, -.45), c1, 30);
-        scene.world.changeSignalState(signal1, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal1, SignalBlockEntity.SignalState.RED);
 
         scene.idle(20);
         scene.special.movePointOfInterest(semaphore2b);
@@ -332,7 +333,7 @@ public class TrainScenes {
         scene.special.moveParrot(birb1, util.vector.of(-9, 0, 9), 40);
 
         scene.idle(15);
-        scene.world.changeSignalState(signal2, SignalTileEntity.SignalState.RED);
+        scene.world.changeSignalState(signal2, SignalBlockEntity.SignalState.RED);
         scene.idle(10);
     }
 }

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.custom_tracks.monorail;
 
-import com.simibubi.create.content.logistics.trains.track.TrackVoxelShapes;
+import com.simibubi.create.content.trains.track.TrackVoxelShapes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;

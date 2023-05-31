@@ -4,20 +4,17 @@ import com.google.common.base.Supplier;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -25,7 +22,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.UnaryOperator;
 

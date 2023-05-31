@@ -2,8 +2,8 @@ package com.railwayteam.railways.mixin.client;
 
 import com.simibubi.create.AllSpecialTextures;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueSelectionHandler;
-import com.simibubi.create.content.contraptions.components.structureMovement.glue.SuperGlueSelectionHelper;
+import com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHandler;
+import com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +40,7 @@ public class MixinSuperGlueSelectionHandler {
                 CreateClient.OUTLINER.showCluster(clusterOutlineSlot, cluster)
                     .colored(CONTROL_HIGHLIGHT)
                     .withFaceTextures(AllSpecialTextures.GLUE, AllSpecialTextures.HIGHLIGHT_CHECKERED)
-                    .disableNormals()
+                    .disableLineNormals()
                     .lineWidth(1 / 24f);
 
                 clusterCooldown = 10;

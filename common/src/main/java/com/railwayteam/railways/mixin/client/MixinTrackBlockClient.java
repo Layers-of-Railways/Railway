@@ -3,16 +3,11 @@ package com.railwayteam.railways.mixin.client;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.railwayteam.railways.track_api.TrackMaterial;
+import com.simibubi.create.content.trains.track.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -34,7 +29,7 @@ public class MixinTrackBlockClient {
     private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint,
                                          Direction.AxisDirection direction,PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type,
                                          CallbackInfoReturnable<PartialModel> cir, TransformStack msr, Vec3 axis, Vec3 diff, Vec3 normal,
-                                         Vec3 offset,TrackTileEntity trackTE, BezierConnection bc) {
+                                         Vec3 offset,TrackBlockEntity trackTE, BezierConnection bc) {
         IHasTrackCasing casingBc = (IHasTrackCasing) bc;
         if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
@@ -50,14 +45,14 @@ public class MixinTrackBlockClient {
         }
     }
 
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true),
+    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true),
         locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
     private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, TransformStack msr) {
         if (bezierPoint == null && state.getBlock() instanceof IHasTrackMaterial material && material.getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
             return;
         }
-        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (casingTE.getTrackCasing() != null) {

@@ -1,12 +1,12 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.entity.TrainRelocator;
+import com.simibubi.create.content.trains.IBogeyBlock;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.TrainRelocator;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

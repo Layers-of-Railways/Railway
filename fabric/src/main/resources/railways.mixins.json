@@ -7,8 +7,8 @@
   "client": [
   ],
   "mixins": [
-    "EnderManMixin",
-    "DetectorRailBlockMixin"
+    "DetectorRailBlockMixin",
+    "EnderManMixin"
   ],
   "injectors": {
     "defaultRequire": 1

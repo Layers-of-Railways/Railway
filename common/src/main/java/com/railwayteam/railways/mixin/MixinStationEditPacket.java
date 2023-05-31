@@ -3,10 +3,10 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.mixin_interfaces.ILimited;
 import com.railwayteam.railways.mixin_interfaces.ISidedStation;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationEditPacket;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.StationEditPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -91,11 +91,11 @@ public abstract class MixinStationEditPacket implements ILimited, ISidedStation 
         }
     }
 
-    @Inject(method = "applySettings(Lnet/minecraft/server/level/ServerPlayer;Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/StationTileEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = true)
-    private void applyLimit(ServerPlayer player, StationTileEntity te, CallbackInfo ci) {
+    @Inject(method = "applySettings(Lnet/minecraft/server/level/ServerPlayer;Lcom/simibubi/create/content/trains/management/edgePoint/station/StationBlockEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = true)
+    private void applyLimit(ServerPlayer player, StationBlockEntity te, CallbackInfo ci) {
         if (limitEnabled != null) {
             GlobalStation station = te.getStation();
-            GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
+            TrackGraphLocation graphLocation = te.edgePoint.determineGraphLocation();
             if (station != null && graphLocation != null) {
                 ((ILimited) station).setLimitEnabled(limitEnabled);
                 Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);
@@ -104,7 +104,7 @@ public abstract class MixinStationEditPacket implements ILimited, ISidedStation 
         }
         if (openRight != null) {
             GlobalStation station = te.getStation();
-            GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
+            TrackGraphLocation graphLocation = te.edgePoint.determineGraphLocation();
             if (station != null && graphLocation != null) {
                 ((ISidedStation) station).setOpensRight(openRight);
                 Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);
@@ -113,7 +113,7 @@ public abstract class MixinStationEditPacket implements ILimited, ISidedStation 
         }
         if (openLeft != null) {
             GlobalStation station = te.getStation();
-            GraphLocation graphLocation = te.edgePoint.determineGraphLocation();
+            TrackGraphLocation graphLocation = te.edgePoint.determineGraphLocation();
             if (station != null && graphLocation != null) {
                 ((ISidedStation) station).setOpensLeft(openLeft);
                 Create.RAILWAYS.sync.pointAdded(graphLocation.graph, station);

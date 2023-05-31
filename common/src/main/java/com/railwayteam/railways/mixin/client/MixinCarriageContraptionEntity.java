@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.mixin_interfaces.IUpdateCount;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(CarriageContraptionEntity.class)

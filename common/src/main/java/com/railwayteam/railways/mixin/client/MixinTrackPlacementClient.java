@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
+import com.simibubi.create.content.trains.track.TrackPlacement;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

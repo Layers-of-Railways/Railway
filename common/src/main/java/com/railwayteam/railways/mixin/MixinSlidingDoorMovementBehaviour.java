@@ -2,12 +2,12 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.extended_sliding_doors.SlidingDoorMode;
 import com.railwayteam.railways.mixin_interfaces.ISidedStation;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
-import com.simibubi.create.content.curiosities.deco.SlidingDoorBlock;
-import com.simibubi.create.content.curiosities.deco.SlidingDoorMovementBehaviour;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
+import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorMovementBehaviour;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.station.GlobalStation;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = SlidingDoorMovementBehaviour.class, remap = false)
 public class MixinSlidingDoorMovementBehaviour {
     private SlidingDoorMode mode(MovementContext context) {
-        return SlidingDoorMode.fromNbt(context.tileData);
+        return SlidingDoorMode.fromNbt(context.blockEntityData);
     }
 
     @Inject(method = "shouldUpdate", at = @At("HEAD"), cancellable = true)

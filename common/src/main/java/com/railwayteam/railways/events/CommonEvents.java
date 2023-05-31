@@ -7,7 +7,7 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.railwayteam.railways.util.packet.TrainMarkerDataUpdatePacket;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;

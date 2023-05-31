@@ -3,14 +3,13 @@ package com.railwayteam.railways.content.semaphore;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalTileEntity;
+import com.simibubi.create.content.trains.signal.SignalBlock;
+import com.simibubi.create.content.trains.signal.SignalBlockEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.CenteredSideValueBoxTransform;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.CenteredSideValueBoxTransform;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.INamedIconOptions;
-import com.simibubi.create.foundation.tileEntity.behaviour.scrollvalue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
@@ -23,12 +22,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.List;
 
-public class SemaphoreBlockEntity extends SmartTileEntity {
-    private WeakReference<SignalTileEntity> cachedSignalTE;
-    public SignalTileEntity.SignalState signalState;
+public class SemaphoreBlockEntity extends SmartBlockEntity {
+    private WeakReference<SignalBlockEntity> cachedSignalTE;
+    public SignalBlockEntity.SignalState signalState;
     public final LerpedFloat armPosition;
     public boolean isValid = false;
     public boolean isDistantSignal=false;
@@ -59,7 +57,7 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
     }
     @Override
@@ -71,20 +69,20 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
 
 
 
-        SignalTileEntity signalTileEntity = cachedSignalTE.get();
+        SignalBlockEntity signalBlockEntity = cachedSignalTE.get();
 
 
 
 
         boolean isActive=false;
 
-        if (signalTileEntity != null && !signalTileEntity.isRemoved() && isValid) {
-            signalState = signalTileEntity.getState();
+        if (signalBlockEntity != null && !signalBlockEntity.isRemoved() && isValid) {
+            signalState = signalBlockEntity.getState();
 
-            if(signalState == SignalTileEntity.SignalState.INVALID)
+            if(signalState == SignalBlockEntity.SignalState.INVALID)
                 isValid=false;
             else
-                isActive = (signalState == SignalTileEntity.SignalState.YELLOW && !isDistantSignal) || signalState == SignalTileEntity.SignalState.GREEN;
+                isActive = (signalState == SignalBlockEntity.SignalState.YELLOW && !isDistantSignal) || signalState == SignalBlockEntity.SignalState.GREEN;
         }
 
         float currentTarget = armPosition.getChaseTarget();
@@ -130,7 +128,7 @@ public class SemaphoreBlockEntity extends SmartTileEntity {
         for (int i = 0; i < 16; i++) {
             BlockState blockState = level.getBlockState(currentPos);
             BlockEntity blockEntity = level.getBlockEntity(currentPos);
-            if (blockEntity instanceof SignalTileEntity signal) {
+            if (blockEntity instanceof SignalBlockEntity signal) {
                 signalState = signal.getState();
                 cachedSignalTE = new WeakReference<>(signal);
                 isValid = true;

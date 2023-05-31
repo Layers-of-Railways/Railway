@@ -6,12 +6,8 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.track_api.TrackMaterial.TrackType;
 import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.CurvedTrackInteraction;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline.BezierPointSelection;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
+import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.TrackBlockOutline.BezierPointSelection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -52,7 +48,7 @@ public abstract class MixinCurvedTrackInteraction {
   )
   private static void railway$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
     BezierPointSelection result = TrackBlockOutline.result;
-    TrackTileEntity track = result.te();
+    TrackBlockEntity track = result.te();
     BezierTrackPointLocation location = result.loc();
     BlockPos curveTarget = location.curveTarget();
     Map<BlockPos, BezierConnection> connections = track.getConnections();

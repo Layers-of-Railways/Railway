@@ -1,10 +1,10 @@
 package com.railwayteam.railways.mixin;
 
-import com.simibubi.create.content.contraptions.components.deployer.DeployerFakePlayer;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
+import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlock;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,20 +26,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinStationBlock {
     @Inject(method = "use", at = @At(value = "RETURN", ordinal = 1), cancellable = true, remap = true)
     private void deployersAssemble(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
-        if (!pLevel.isClientSide && pPlayer instanceof DeployerFakePlayer deployerFakePlayer && pLevel.getBlockEntity(pPos) instanceof StationTileEntity stationTe) {
+        if (!pLevel.isClientSide && pPlayer instanceof DeployerFakePlayer deployerFakePlayer && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe) {
             cir.setReturnValue(InteractionResult.CONSUME);
-            GlobalStation station = stationTe.getStation();
+            GlobalStation station = stationBe.getStation();
             boolean isAssemblyMode = pState.getValue(StationBlock.ASSEMBLING);
             if (station != null && station.getPresentTrain() == null) {
                 //assemble
-                if (stationTe.isAssembling() || stationTe.tryEnterAssemblyMode()) {
+                if (stationBe.isAssembling() || stationBe.tryEnterAssemblyMode()) {
                     //Need to fix blockstate
-                    stationTe.assemble(deployerFakePlayer.getUUID());
+                    stationBe.assemble(deployerFakePlayer.getUUID());
                     cir.setReturnValue(InteractionResult.SUCCESS);
 
                     if (isAssemblyMode) {
                         pLevel.setBlock(pPos, pState.setValue(StationBlock.ASSEMBLING, false), 3);
-                        stationTe.refreshBlockState();
+                        stationBe.refreshBlockState();
                     }
                 }
                 return;
@@ -48,19 +48,19 @@ public abstract class MixinStationBlock {
             if (!isAssemblyMode) {
                 newState = pState.setValue(StationBlock.ASSEMBLING, true);
             }
-            if (disassembleAndEnterMode(deployerFakePlayer, stationTe)) {
+            if (disassembleAndEnterMode(deployerFakePlayer, stationBe)) {
                 if (newState != null) {
                     pLevel.setBlock(pPos, newState, 3);
-                    stationTe.refreshBlockState();
+                    stationBe.refreshBlockState();
 
-                    stationTe.refreshAssemblyInfo();
+                    stationBe.refreshAssemblyInfo();
                 }
                 cir.setReturnValue(InteractionResult.SUCCESS);
             }
         }
     }
 
-    private boolean disassembleAndEnterMode(ServerPlayer sender, StationTileEntity te) {
+    private boolean disassembleAndEnterMode(ServerPlayer sender, StationBlockEntity te) {
         GlobalStation station = te.getStation();
         if (station != null) {
             Train train = station.getPresentTrain();
@@ -73,7 +73,7 @@ public abstract class MixinStationBlock {
         return te.tryEnterAssemblyMode();
     }
 
-    private void dropSchedule(ServerPlayer sender, StationTileEntity te, ItemStack schedule) {
+    private void dropSchedule(ServerPlayer sender, StationBlockEntity te, ItemStack schedule) {
         if (schedule.isEmpty())
             return;
         if (sender.getMainHandItem()

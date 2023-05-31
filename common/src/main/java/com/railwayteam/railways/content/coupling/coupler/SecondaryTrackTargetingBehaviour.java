@@ -1,12 +1,12 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.behaviour.BehaviourType;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +20,7 @@ public class SecondaryTrackTargetingBehaviour<T extends TrackEdgePoint> extends 
 
     public static final BehaviourType<SecondaryTrackTargetingBehaviour<?>> TYPE = new BehaviourType<>();
 
-    public SecondaryTrackTargetingBehaviour(SmartTileEntity te, EdgePointType<T> edgePointType) {
+    public SecondaryTrackTargetingBehaviour(SmartBlockEntity te, EdgePointType<T> edgePointType) {
         super(te, edgePointType);
     }
 

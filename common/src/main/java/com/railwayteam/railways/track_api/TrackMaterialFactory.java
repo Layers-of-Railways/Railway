@@ -4,7 +4,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider;
 import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.railwayteam.railways.multiloader.Env;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -1,8 +1,8 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
-import com.simibubi.create.content.logistics.trains.track.TrackPlacement;
+import com.railwayteam.railways.track_api.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackPlacement;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(value = TrackPlacement.PlacementInfo.class, remap = false)

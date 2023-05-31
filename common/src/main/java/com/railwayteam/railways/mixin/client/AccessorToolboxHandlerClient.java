@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandlerClient;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandlerClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

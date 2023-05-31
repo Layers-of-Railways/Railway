@@ -4,10 +4,10 @@ import com.railwayteam.railways.mixin_interfaces.ILimited;
 import com.railwayteam.railways.mixin_interfaces.ISidedStation;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.AbstractStationScreen;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationScreen;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
+import com.simibubi.create.content.trains.station.AbstractStationScreen;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.StationScreen;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.gui.widget.Indicator;
 import com.simibubi.create.foundation.utility.Components;
@@ -23,11 +23,11 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
     private IconButton openLeft, openRight;
     private Indicator openLeftIndicator, openRightIndicator;
 
-    private MixinStationScreen(StationTileEntity te, GlobalStation station) {
+    private MixinStationScreen(StationBlockEntity te, GlobalStation station) {
         super(te, station);
     }
 
-    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/StationScreen;tickTrainDisplay()V"), remap = true)
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/StationScreen;tickTrainDisplay()V"), remap = true)
     private void initCheckbox(CallbackInfo ci) {
         int x = guiLeft;
         int y = guiTop;

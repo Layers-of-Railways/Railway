@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.custom_bogeys.monobogey;
 
 import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -11,12 +10,11 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
-import com.simibubi.create.content.schematics.ItemRequirement;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.content.trains.bogey.BogeyInstance;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -27,7 +25,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -41,7 +38,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,7 +46,7 @@ import java.util.EnumSet;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogeyBlock, ITE<MonoBogeyTileEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogeyBlock, IBE<MonoBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
@@ -203,12 +199,12 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
     }
 
     @Override
-    public Class<MonoBogeyTileEntity> getTileEntityClass() {
-        return MonoBogeyTileEntity.class;
+    public Class<MonoBogeyBlockEntity> getBlockEntityClass() {
+        return MonoBogeyBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends MonoBogeyTileEntity> getTileEntityType() {
+    public BlockEntityType<? extends MonoBogeyBlockEntity> getBlockEntityType() {
         return CRBlockEntities.MONO_BOGEY.get();
     }
 

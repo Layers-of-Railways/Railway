@@ -1,8 +1,8 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBoundary;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.signal.SignalBoundary;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

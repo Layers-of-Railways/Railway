@@ -2,10 +2,9 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IBogeyTypeAwareTravellingPoint;
-import com.simibubi.create.content.logistics.trains.DimensionPalette;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.TrackGraph;
-import com.simibubi.create.content.logistics.trains.entity.TravellingPoint;
+import com.simibubi.create.content.trains.entity.TravellingPoint;
+import com.simibubi.create.content.trains.graph.DimensionPalette;
+import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;

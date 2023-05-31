@@ -5,7 +5,6 @@ import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.networking.AllPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.AllBlockPartials;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
@@ -38,8 +38,8 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
       SuperByteBuffer body =
           CachedBufferer.partial(CRBlockPartials.TOOLBOX_BODIES.get(holder.getColor()), blockState);
       SuperByteBuffer lid =
-          CachedBufferer.partial(AllBlockPartials.TOOLBOX_LIDS.get(holder.getColor()), blockState);
-      SuperByteBuffer drawer = CachedBufferer.partial(AllBlockPartials.TOOLBOX_DRAWER, blockState);
+          CachedBufferer.partial(AllPartialModels.TOOLBOX_LIDS.get(holder.getColor()), blockState);
+      SuperByteBuffer drawer = CachedBufferer.partial(AllPartialModels.TOOLBOX_DRAWER, blockState);
 
       float lidAngle = holder.lid.getValue(partialTick);
       float drawerOffset = holder.drawers.getValue(partialTick);

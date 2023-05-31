@@ -3,8 +3,9 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -37,8 +38,8 @@ public abstract class MixinToolboxHandler {
   }
 
   @Inject(method = { "onLoad", "onUnload" }, at = @At("HEAD"), cancellable = true)
-  private static void railway$keepMountedToolboxesOutOfMap(ToolboxTileEntity te, CallbackInfo ci) {
-    if (te instanceof MountedToolbox)
+  private static void railway$keepMountedToolboxesOutOfMap(ToolboxBlockEntity be, CallbackInfo ci) {
+    if (be instanceof MountedToolbox)
       ci.cancel();
   }
 
@@ -96,8 +97,8 @@ public abstract class MixinToolboxHandler {
 
   @Inject(method = "getNearest", at = @At("RETURN"))
   private static void railway$findNearbyConductors(LevelAccessor world, Player player, int maxAmount,
-                                                   CallbackInfoReturnable<List<ToolboxTileEntity>> cir) {
-    List<ToolboxTileEntity> toolboxes = cir.getReturnValue();
+                                                   CallbackInfoReturnable<List<ToolboxBlockEntity>> cir) {
+    List<ToolboxBlockEntity> toolboxes = cir.getReturnValue();
     Set<ConductorEntity> conductors = ConductorEntity.WITH_TOOLBOXES.get(world);
     if (conductors.isEmpty())
       return;

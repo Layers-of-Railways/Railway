@@ -2,14 +2,18 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.util.BlockStateUtils;
-import com.simibubi.create.content.contraptions.components.structureMovement.AssemblyException;
-import com.simibubi.create.content.logistics.trains.*;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraption;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
+import com.simibubi.create.content.contraptions.AssemblyException;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
+import com.simibubi.create.content.trains.entity.CarriageContraption;
+import com.simibubi.create.content.trains.graph.TrackGraph;
+import com.simibubi.create.content.trains.graph.TrackNode;
+import com.simibubi.create.content.trains.graph.TrackNodeLocation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -38,13 +42,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Mixin(value = StationTileEntity.class, remap = false)
-public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bogey api (stations should support upside down bogeys)
+@Mixin(value = StationBlockEntity.class, remap = false)
+public abstract class MixinStationBlockEntity extends SmartBlockEntity { //TODO bogey api (stations should support upside down bogeys)
     @Shadow
     int[] bogeyLocations;
 
     @Shadow
-    IBogeyBlock[] bogeyTypes;
+    AbstractBogeyBlock[] bogeyTypes;
 
     @Shadow
     Direction assemblyDirection;
@@ -52,7 +56,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bo
 
     private boolean bogeyIndexAdd = false;
 
-    private MixinStationTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -84,7 +88,7 @@ public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bo
     @Inject(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Ljava/util/Arrays;fill([II)V"))
     private void resetUpsideDownBogeyList(CallbackInfo ci) {
         if (upsideDownBogeys == null)
-            upsideDownBogeys = new boolean[AllConfigs.SERVER.trains.maxBogeyCount.get()];
+            upsideDownBogeys = new boolean[AllConfigs.server().trains.maxBogeyCount.get()];
         Arrays.fill(upsideDownBogeys, false);
     }
 
@@ -96,14 +100,14 @@ public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bo
 
     @Inject(method = "refreshAssemblyInfo", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos$MutableBlockPos;move(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;", ordinal = 1, remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void includeUpsideDownBogeys(CallbackInfo ci, int prevLength, BlockPos targetPosition, BlockState trackState, ITrackBlock track, BlockPos.MutableBlockPos currentPos, BlockPos bogeyOffset, int MAX_LENGTH, int MAX_BOGEY_COUNT, int bogeyIndex, int maxBogeyCount, int i, BlockState potentialBogeyState) {
-        if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
+        if (potentialBogeyState.getBlock() instanceof AbstractBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
             /*bogeyTypes[bogeyIndex] = bogey;
             bogeyLocations[bogeyIndex] = i;
             bogeyIndex++;*/
         } else {
             BlockPos upsideDownBogeyOffset = new BlockPos(bogeyOffset.getX(), bogeyOffset.getY() * -1, bogeyOffset.getZ());
             potentialBogeyState = level.getBlockState(upsideDownBogeyOffset.offset(currentPos));
-            if (potentialBogeyState.getBlock() instanceof IBogeyBlock bogey && bogey instanceof IPotentiallyUpsideDownBogeyBlock potentiallyUpsideDownBogey &&
+            if (potentialBogeyState.getBlock() instanceof AbstractBogeyBlock bogey && bogey instanceof IPotentiallyUpsideDownBogeyBlock potentiallyUpsideDownBogey &&
                 potentiallyUpsideDownBogey.isUpsideDown() && bogeyIndex < bogeyLocations.length) {
                 bogeyTypes[bogeyIndex] = bogey;
                 bogeyLocations[bogeyIndex] = i;
@@ -116,21 +120,21 @@ public abstract class MixinStationTileEntity extends SmartTileEntity { //TODO bo
     private BlockPos overridenBogeyPosOffset = null;
     private int storedBogeyIdx = 0;
 
-    @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void storeBogeyData(UUID playerUUID, CallbackInfo ci, BlockPos trackPosition, BlockState trackState, ITrackBlock track, BlockPos bogeyOffset, TrackNodeLocation location, Vec3 centre, Collection ends, Vec3 targetOffset, List pointOffsets, int iPrevious, List points, Vec3 directionVec, TrackGraph graph, TrackNode secondNode, List<?> contraptions, List<?> carriages, List<?> spacing, boolean atLeastOneForwardControls, int bogeyIndex) {
         if (upsideDownBogeys[bogeyIndex])
             overridenBogeyPosOffset = trackPosition.offset(new BlockPos(bogeyOffset.getX(), bogeyOffset.getY() * -1, bogeyOffset.getZ()));
         storedBogeyIdx = bogeyIndex;
     }
 
-    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true))
+    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraption;assemble(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", remap = true))
     private boolean assembleCorrectBogey(CarriageContraption instance, Level level, BlockPos bogeyPos) throws AssemblyException {
         boolean success = instance.assemble(level, overridenBogeyPosOffset != null ? overridenBogeyPosOffset.relative(assemblyDirection, bogeyLocations[storedBogeyIdx] + 1) : bogeyPos);
         overridenBogeyPosOffset = null;
         return success;
     }
 
-    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/entity/CarriageContraption;getSecondBogeyPos()Lnet/minecraft/core/BlockPos;", remap = true))
+    @Redirect(method = "assemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraption;getSecondBogeyPos()Lnet/minecraft/core/BlockPos;", remap = true))
     private BlockPos storeBogeyDataForOrderCheck(CarriageContraption instance) {
         BlockPos pos = instance.getSecondBogeyPos();
         return pos == null ? null : pos.above((storedBogeyIdx + 1 < upsideDownBogeys.length && upsideDownBogeys[storedBogeyIdx + 1]) ? 2 : 0);

@@ -1,9 +1,9 @@
 package com.railwayteam.railways.content.train_debug;
 
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;

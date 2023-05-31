@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationEditPacket;
+import com.simibubi.create.content.trains.station.StationEditPacket;
 import net.minecraft.core.BlockPos;
 
 public interface ILimited {

@@ -2,7 +2,7 @@ package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandler;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

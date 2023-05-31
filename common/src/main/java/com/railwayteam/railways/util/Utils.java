@@ -1,9 +1,6 @@
 package com.railwayteam.railways.util;
 
-import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.data.tags.TagsProvider.TagAppender;
-import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,11 +1,7 @@
 package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.track.StandardBogeyBlock;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;

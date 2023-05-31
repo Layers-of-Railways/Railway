@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.core.materials.model.ModelData;
-import com.simibubi.create.content.logistics.trains.entity.BogeyInstance;
+import com.simibubi.create.content.trains.bogey.BogeyInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

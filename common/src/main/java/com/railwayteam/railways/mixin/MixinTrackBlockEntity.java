@@ -5,12 +5,12 @@ import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
-import com.simibubi.create.content.logistics.trains.track.TrackTileEntity;
-import com.simibubi.create.foundation.tileEntity.RemoveTileEntityPacket;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.foundation.blockEntity.RemoveBlockEntityPacket;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -29,15 +29,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(value = TrackTileEntity.class, remap = false)
-public abstract class MixinTrackTileEntity extends SmartTileEntity implements IHasTrackCasing {
+@Mixin(value = TrackBlockEntity.class, remap = false)
+public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements IHasTrackCasing {
   @Shadow
   Map<BlockPos, BezierConnection> connections;
 
   protected SlabBlock trackCasing;
   protected boolean isAlternateModel;
 
-  protected MixinTrackTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+  protected MixinTrackBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
   }
 
@@ -70,9 +70,9 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
           .isPortal())
         return;
       BlockState blockState = this.level.getBlockState(worldPosition);
-      if (blockState.hasProperty(TrackBlock.HAS_TE))
-        level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_TE, false));
-      CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveTileEntityPacket(worldPosition));
+      if (blockState.hasProperty(TrackBlock.HAS_BE))
+        level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_BE, false));
+      CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveBlockEntityPacket(worldPosition));
     }
   }
 
@@ -108,7 +108,7 @@ public abstract class MixinTrackTileEntity extends SmartTileEntity implements IH
           method = "removeInboundConnections",
           at = @At(
                   value = "INVOKE",
-                  target = "Lcom/simibubi/create/foundation/tileEntity/RemoveTileEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
+                  target = "Lcom/simibubi/create/foundation/BlockEntity/RemoveBlockEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
                   remap = true
           ),
           cancellable = true
