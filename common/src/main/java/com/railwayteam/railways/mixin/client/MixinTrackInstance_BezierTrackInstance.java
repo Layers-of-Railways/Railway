@@ -34,7 +34,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 import static com.simibubi.create.AllPartialModels.*;
 
 @Environment(EnvType.CLIENT)
-@Mixin(targets = "com.simibubi.create.content.logistics.trains.track.TrackInstance$BezierTrackInstance", remap = false)
+@Mixin(targets = "com.simibubi.create.content.trains.track.TrackInstance$BezierTrackInstance", remap = false)
 public abstract class MixinTrackInstance_BezierTrackInstance {
 
     @Final
