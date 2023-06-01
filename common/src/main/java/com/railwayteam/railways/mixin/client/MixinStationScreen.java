@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = StationScreen.class, remap = false)
-public abstract class MixinStationScreen extends AbstractStationScreen {
+public abstract class MixinStationScreen extends AbstractStationScreen { // fixme rework opening system
     private Checkbox limitEnableCheckbox;
     private IconButton openLeft, openRight;
     private Indicator openLeftIndicator, openRightIndicator;
@@ -35,7 +35,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             @Override
             public void onPress() {
                 super.onPress();
-                CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(te.getBlockPos(), this.selected()));
+                CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(blockEntity.getBlockPos(), this.selected()));
             }
         };
         addRenderableWidget(limitEnableCheckbox);
@@ -44,10 +44,10 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
 
         openLeft = new IconButton(x + 8 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_LEFT);
         openLeft.withCallback(() -> {
-            if (te.getStation() != null)
-                station = te.getStation();
+            if (blockEntity.getStation() != null)
+                station = blockEntity.getStation();
             boolean shouldOpenLeft = station == null || !((ISidedStation) station).opensLeft();
-            CRPackets.PACKETS.send(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
+            CRPackets.PACKETS.send(ISidedStation.makeOpenLeftPacket(blockEntity.getBlockPos(), shouldOpenLeft));
             openLeftIndicator.state = shouldOpenLeft ? Indicator.State.ON : Indicator.State.OFF;
         });
         openLeft.setToolTip(Components.translatable("railways.station.open_left"));
@@ -58,10 +58,10 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
 
         openRight = new IconButton(x + 8 + 20 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_RIGHT);
         openRight.withCallback(() -> {
-            if (te.getStation() != null)
-                station = te.getStation();
+            if (blockEntity.getStation() != null)
+                station = blockEntity.getStation();
             boolean shouldOpenRight = station == null || !((ISidedStation) station).opensRight();
-            CRPackets.PACKETS.send(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
+            CRPackets.PACKETS.send(ISidedStation.makeOpenRightPacket(blockEntity.getBlockPos(), shouldOpenRight));
             openRightIndicator.state = shouldOpenRight ? Indicator.State.ON : Indicator.State.OFF;
         });
         openRight.setToolTip(Components.translatable("railways.station.open_right"));

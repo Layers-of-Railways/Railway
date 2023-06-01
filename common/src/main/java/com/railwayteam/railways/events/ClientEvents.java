@@ -4,24 +4,22 @@ import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
-import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientEvents {
     private static final String ITEM_PREFIX = "item." + Railways.MODID;
     private static final String BLOCK_PREFIX = "block." + Railways.MODID;
 
+
+    @Deprecated(forRemoval = true)
     public static void onTooltip(ItemStack stack, TooltipFlag flags, List<Component> tooltip) {
-        if (!AllConfigs.client().tooltips.get())
+        /*if (!AllConfigs.client().tooltips.get())
             return;
 
         Player player = Minecraft.getInstance().player;
@@ -38,7 +36,7 @@ public class ClientEvents {
                 TooltipHelper.getTooltip(stack)
                     .addInformation(toolTip);
                 tooltip.addAll(0, toolTip);
-            }
+            }*/
     }
 
     public static void onClientTickStart(Minecraft mc) {

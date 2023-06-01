@@ -3,6 +3,7 @@ package com.railwayteam.railways.mixin.client;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.registry.CRPackets;
+import com.simibubi.create.content.equipment.toolbox.ToolboxMenu;
 import com.simibubi.create.content.equipment.toolbox.ToolboxScreen;
 import com.simibubi.create.foundation.gui.menu.AbstractSimiContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -13,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ToolboxScreen.class, remap = false)
-public abstract class MixinToolboxScreen extends AbstractSimiContainerScreen<ToolboxScreen> {
-	public MixinToolboxScreen(ToolboxScreen container, Inventory inv, Component title) {
+public abstract class MixinToolboxScreen extends AbstractSimiContainerScreen<ToolboxMenu> {
+	public MixinToolboxScreen(ToolboxMenu container, Inventory inv, Component title) {
 		super(container, inv, title);
 	}
 

@@ -11,6 +11,10 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -34,6 +38,13 @@ public class Railways {
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
           .creativeModeTab(() -> CRItems.itemGroup, "Create Steam 'n Rails");
+
+  static {
+    REGISTRATE.setTooltipModifierFactory(item -> {
+      return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
+          .andThen(TooltipModifier.mapNull(KineticStats.create(item)));
+    });
+  }
 
   public static void init() {
     ModSetup.register();

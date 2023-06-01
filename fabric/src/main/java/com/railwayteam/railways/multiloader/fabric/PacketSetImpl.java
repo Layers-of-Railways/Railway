@@ -4,7 +4,7 @@ import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.fabricmc.api.EnvType;
@@ -63,17 +63,17 @@ public class PacketSetImpl extends PacketSet {
 
 	@Override
 	public void send(SimplePacketBase packet) {
-		AllPackets.channel.sendToServer(packet);
+		AllPackets.getChannel().sendToServer(packet);
 	}
 
 	@Override
 	public void sendTo(ServerPlayer player, SimplePacketBase packet) {
-		AllPackets.channel.sendToClient(packet, player);
+		AllPackets.getChannel().sendToClient(packet, player);
 	}
 
 	@Override
 	public void sendTo(PlayerSelection selection, SimplePacketBase packet) {
-		AllPackets.channel.sendToClients(packet, ((PlayerSelectionImpl) selection).players);
+		AllPackets.getChannel().sendToClients(packet, ((PlayerSelectionImpl) selection).players);
 	}
 
 	@Internal

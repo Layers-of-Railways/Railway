@@ -102,7 +102,7 @@ public class MountedToolbox extends ToolboxBlockEntity {
 
   @Override
   public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
-    return MountedToolboxScreen.create(id, inv, this);
+    return MountedToolboxContainer.create(id, inv, this);
   }
 
   public ItemStack getDisplayStack() {
@@ -127,7 +127,7 @@ public class MountedToolbox extends ToolboxBlockEntity {
   }
 
   @Override
-  public void sendToContainer(FriendlyByteBuf buffer) {
+  public void sendToMenu(FriendlyByteBuf buffer) {
     buffer.writeVarInt(parent.getId());
     buffer.writeNbt(getUpdateTag());
   }

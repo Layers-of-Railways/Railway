@@ -4,7 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRContainerTypes;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
-import com.simibubi.create.content.equipment.toolbox.ToolboxScreen;
+import com.simibubi.create.content.equipment.toolbox.ToolboxMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 
-public class MountedToolboxContainer extends ToolboxScreen {
+public class MountedToolboxContainer extends ToolboxMenu {
   private ConductorEntity conductor;
 
   public MountedToolboxContainer(MenuType<?> type, int id, Inventory inv, FriendlyByteBuf extraData) {
