@@ -40,7 +40,7 @@ public class MixinTrackTargetingBlockItem {
     @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
     private static void checkGraphLocation(Level level, BlockPos pos, boolean front, BezierTrackPointLocation targetBezier, EdgePointType<?> type,
                                            BiConsumer<TrackTargetingBlockItem.OverlapResult, TrackGraphLocation> callback, CallbackInfo ci) {
-        if (type != CREdgePointTypes.COUPLER)
+        if (type != CREdgePointTypes.COUPLER) // prevent coupler on turns
             return;
         TrackTargetingBlockItem.OverlapResult not_straight = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");
         if (targetBezier != null) {

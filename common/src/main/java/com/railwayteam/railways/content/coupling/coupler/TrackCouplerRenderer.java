@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
@@ -15,7 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 
 public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerBlockEntity> {
 
@@ -59,11 +59,12 @@ public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerB
             return;
 
         ms.pushPose();
-        ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+        TransformStack.cast(ms)
+            .translate(targetPosition.subtract(pos));
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
             buffer, light, overlay, te.areEdgePointsOk() ?
                 CustomTrackOverlayRendering.getCouplerOverlayModel(te.getAllowedOperationMode().canCouple, te.getAllowedOperationMode().canDecouple) :
-                CRBlockPartials.COUPLER_NONE, 1, offsetToSide, Vec3.ZERO);
+                CRBlockPartials.COUPLER_NONE, 1, offsetToSide);
         ms.popPose();
     }
 }

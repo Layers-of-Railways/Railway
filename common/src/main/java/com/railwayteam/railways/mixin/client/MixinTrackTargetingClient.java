@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin.client;
 
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.graph.EdgePointType;
@@ -45,8 +46,13 @@ public abstract class MixinTrackTargetingClient {
             int light = LevelRenderer.getLightColor(mc.level, pos);
             Direction.AxisDirection direction = lastDirection ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
 
+            ms.pushPose();
+            TransformStack.cast(ms)
+                .translate(Vec3.atLowerCornerOf(pos)
+                    .subtract(camera));
             CustomTrackOverlayRendering.renderOverlay(mc.level, pos, direction, lastHoveredBezierSegment, ms, buffer, light,
-                OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f, camera);
+                OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f);
+            ms.popPose();
             ci.cancel();
         }
     }

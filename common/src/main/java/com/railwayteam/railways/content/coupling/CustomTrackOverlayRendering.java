@@ -47,23 +47,23 @@ public class CustomTrackOverlayRendering {
     @Environment(EnvType.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                                      BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                                     EdgePointType<?> type, float scale, Vec3 camera) {
+                                     EdgePointType<?> type, float scale) {
         if (CUSTOM_OVERLAYS.containsKey(type))
-            renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, CUSTOM_OVERLAYS.get(type), scale, false, camera);
+            renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, CUSTOM_OVERLAYS.get(type), scale, false);
     }
 
     @Environment(EnvType.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                                      BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                                     PartialModel model, float scale, Vec3 camera) {
-        renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, model, scale, false, camera);
+                                     PartialModel model, float scale) {
+        renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, model, scale, false);
     }
 
     //Copied from TrackTargetingBehaviour
     @Environment(EnvType.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                               BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                              PartialModel model, float scale, boolean offsetToSide, Vec3 camera) {
+                              PartialModel model, float scale, boolean offsetToSide) {
         if (level instanceof SchematicWorld && !(level instanceof PonderWorld))
             return;
 
@@ -74,11 +74,11 @@ public class CustomTrackOverlayRendering {
 
         ms.pushPose();
         //ms.translate(pos.getX(), pos.getY(), pos.getZ());
-        TransformStack.cast(ms)
-            .translate(Vec3.atLowerCornerOf(pos)
-                .subtract(camera));
+//        TransformStack.cast(ms)
+//            .translate(Vec3.atLowerCornerOf(pos)
+//                .subtract(camera));
 
-        PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model, camera);
+        PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model);
         if (partial != null)
             CachedBufferer.partial(partial, trackState)
                 .translate(.5, 0, .5)
@@ -94,7 +94,7 @@ public class CustomTrackOverlayRendering {
     @Environment(EnvType.CLIENT)
     public static PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
                                                    BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction,
-                                                   PoseStack ms, PartialModel model, Vec3 camera) {
+                                                   PoseStack ms, PartialModel model) {
         TransformStack msr = TransformStack.cast(ms);
 
         Vec3 axis = null;
@@ -170,6 +170,17 @@ public class CustomTrackOverlayRendering {
             msr.translate(0, 4 / 16f, 0);
             if (direction == Direction.AxisDirection.NEGATIVE)
                 msr.rotateCentered(Direction.UP, Mth.PI);
+        }
+
+        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE
+            && trackTE.isTilted()) {
+            double yOffset = 0;
+            for (BezierConnection bc : trackTE.getConnections().values())
+                yOffset += bc.starts.getFirst().y - pos.getY();
+            msr.centre()
+                .rotateX(-direction.getStep() * trackTE.tilt.smoothingAngle.get())
+                .unCentre()
+                .translate(0, yOffset / 2, 0);
         }
 
         return model;

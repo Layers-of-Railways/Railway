@@ -93,8 +93,8 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
   private void makeCasingData(boolean connections) {
     Material<ModelData> mat = this.materialManager.cutout(RenderType.cutoutMipped()).material(Materials.TRANSFORMED);
 
-    PoseStack pose = new PoseStack();
-    TransformStack.cast(pose)
+    PoseStack ms = new PoseStack();
+    TransformStack.cast(ms)
         .translate(getInstancePosition())
         .nudge((int) this.pos.asLong());
 
@@ -109,7 +109,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
         CRBlockPartials.ModelTransform transform = spec.transform;
 
         ModelData casingInstance = CasingRenderUtils.makeCasingInstance(rawCasingModel, casingBlock, mat);
-        casingInstance.setTransform(pose)
+        casingInstance.setTransform(ms)
             .rotateX(transform.rx())
             .rotateY(transform.ry())
             .rotateZ(transform.rz())
@@ -119,7 +119,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
 
         for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
           ModelData additionalInstance = CasingRenderUtils.makeCasingInstance(rawCasingModel, casingBlock, mat);
-          additionalInstance.setTransform(pose)
+          additionalInstance.setTransform(ms)
               .rotateX(additionalTransform.rx())
               .rotateY(additionalTransform.ry())
               .rotateZ(additionalTransform.rz())
@@ -141,7 +141,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
             for (Vec3 pos : casingPositions(bc)) {
               ModelData casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
                   CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
-              casingInstance.setTransform(pose)
+              casingInstance.setTransform(ms)
                   .translate(0, shiftDown, 0)
                   .translate(pos.x, pos.y, pos.z)
                   .scale(1.001f);
@@ -160,7 +160,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
 
               ModelData casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
                   CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
-              casingInstance.setTransform(pose)
+              casingInstance.setTransform(ms)
                   .mulPose(pose_matrix)
                   .mulNormal(segment.tieTransform.normal())
                   .translate(0, shiftDown, 0)
@@ -176,7 +176,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
 
                 ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
                     CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
-                casingInstance2.setTransform(pose)
+                casingInstance2.setTransform(ms)
                     .mulPose(pose_matrix2)
                     .mulNormal(transform.normal())
                     .translate(-0.5, shiftDown, 0);

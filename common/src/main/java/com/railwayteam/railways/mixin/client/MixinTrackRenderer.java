@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
@@ -39,6 +40,15 @@ public class MixinTrackRenderer {
             TrackShape shape = te.getBlockState().getValue(TrackBlock.SHAPE);
             if (CRBlockPartials.TRACK_CASINGS.containsKey(shape)) {
                 ms.pushPose();
+                if (te.isTilted()) {
+                    double angle = te.tilt.smoothingAngle.get();
+                    switch (te.getBlockState().getValue(TrackBlock.SHAPE)) {
+                        case ZO -> TransformStack.cast(ms)
+                            .rotateX(-angle);
+                        case XO -> TransformStack.cast(ms)
+                            .rotateZ(angle);
+                    }
+                }
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 if (((IHasTrackCasing) te).isAlternate())
                     spec = spec.getAltSpec();
