@@ -12,8 +12,6 @@ import net.minecraftforge.client.model.generators.ModelFile;
 public class MonorailBlockStateGenerator extends CustomTrackBlockStateGenerator {
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
-        //return prov.models()
-        //    .getExistingFile(prov.modLoc("block/monorail/monorail"));
         TrackShape value = state.getValue(TrackBlock.SHAPE);
         if (value == TrackShape.NONE)
             return prov.models()

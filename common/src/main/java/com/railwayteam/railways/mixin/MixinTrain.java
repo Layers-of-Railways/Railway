@@ -119,7 +119,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
             at = @At("HEAD"),
             cancellable = true
     )
-    private void backCouplerListener(Double distance, Pair couple, CallbackInfoReturnable<Boolean> cir) {
+    private void backCouplerListener(Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple, CallbackInfoReturnable<Boolean> cir) {
         if (couple.getFirst() instanceof TrackCoupler coupler) {
             occupiedCouplers.remove(coupler.getId());
             cir.setReturnValue(false);
@@ -166,55 +166,4 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
             c -> ((IOccupiedCouplers) train).getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).setIndex(tag.getInt("ScheduleHolderIndex"));
     }
-/*
-    private CarriageContraptionEntity entityInUse;
-
-    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;getContraption()Lcom/simibubi/create/content/contraptions/Contraption;"))
-    private Contraption saveCarriageContraptionEntity(CarriageContraptionEntity instance) {
-        entityInUse = instance;
-        return instance.getContraption();
-    }
-
-    @Redirect(method = "disassemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;relative(Lnet/minecraft/core/Direction;I)Lnet/minecraft/core/BlockPos;", remap = true))
-    private BlockPos moveHangingCarriageDown(BlockPos instance, Direction pDirection, int pDistance) {
-        BlockPos ret = instance.relative(pDirection, pDistance);
-        if (entityInUse != null && ((AccessorCarriageBogey) entityInUse.getCarriage().leadingBogey()).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown()) {
-            ret = ret.below(2);
-        }
-        entityInUse = null;
-        return ret;
-    }
-
-    private Carriage tmpCarriage;
-    private Carriage tmpPrevCarriage;
-
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void resetTmpCarriagesHead(Level level, CallbackInfo ci) {
-        tmpCarriage = tmpPrevCarriage = null;
-    }
-
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D", remap = true), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void storeTmpCarriages(Level level, CallbackInfo ci, double distance, Carriage previousCarriage, int carriageCount, boolean stalled,
-                                   double maxStress, int i, Carriage carriage) {
-        tmpCarriage = carriage;
-        tmpPrevCarriage = previousCarriage;
-    }
-
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceTo(Lnet/minecraft/world/phys/Vec3;)D", remap = true)) //TODO set carriages right before this
-    private double adjustDistanceTo(Vec3 instance, Vec3 pVec) {
-        if (tmpCarriage != null && tmpPrevCarriage != null) {
-            if (isUpsideDown(tmpCarriage.leadingBogey()) != isUpsideDown(tmpPrevCarriage.trailingBogey())) {
-                tmpCarriage = tmpPrevCarriage = null;
-                //account for 2 block height difference
-                return Math.sqrt(instance.distanceToSqr(pVec)-4);
-            }
-        }
-        tmpCarriage = tmpPrevCarriage = null;
-        return instance.distanceTo(pVec);
-    }
-
-    @Inject(method = "tick", at = @At("RETURN"))
-    private void resetTmpCarriagesReturn(Level level, CallbackInfo ci) {
-        tmpCarriage = tmpPrevCarriage = null;
-    }*/
 }

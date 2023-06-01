@@ -72,7 +72,7 @@ public class MixinTrackTargetingBlockItem {
         }
 
         private static TrackTargetingBlockItem.OverlapResult snr$addResult(String internalName, String feedback) {
-            ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<TrackTargetingBlockItem.OverlapResult>(Arrays.asList($VALUES));
+            ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<>(Arrays.asList($VALUES));
             TrackTargetingBlockItem.OverlapResult result = snr$invokeInit(internalName, results.get(results.size() - 1).ordinal() + 1, feedback);
             results.add(result);
             $VALUES = results.toArray(new TrackTargetingBlockItem.OverlapResult[0]);

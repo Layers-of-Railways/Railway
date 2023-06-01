@@ -38,16 +38,6 @@ public class MonoBogeyRenderer {
             finalize(transform, ms, light, vb);
 
             Transform<?>[] wheels = getTransformsFromPartial(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
-            /*for (int side : Iterate.positiveAndNegative) {
-                if (!inInstancedContraption)
-                    ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 12 / 16f, side)
-                    .rotateX(wheelAngle);
-                finalize(wheel, ms, light, vb);
-                if (!inInstancedContraption)
-                    ms.popPose();
-            }*/
             for (boolean left : Iterate.trueAndFalse) {
                 for (int front : Iterate.positiveAndNegative) {
                     if (!inInstancedContraption)

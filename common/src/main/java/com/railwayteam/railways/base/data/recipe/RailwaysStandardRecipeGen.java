@@ -1,6 +1,5 @@
 package com.railwayteam.railways.base.data.recipe;
 
-import com.google.common.base.Supplier;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTags;
@@ -23,6 +22,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
 
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 @SuppressWarnings("unused")
@@ -140,7 +140,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     class GeneratedRecipeBuilder {
 
-        private String path;
+        private final String path;
         private String suffix;
         private Supplier<? extends ItemLike> result;
         private ResourceLocation compatDatagenOutput;
@@ -233,7 +233,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         class GeneratedCookingRecipeBuilder {
 
-            private Supplier<Ingredient> ingredient;
+            private final Supplier<Ingredient> ingredient;
             private float exp;
             private int cookingTime;
 

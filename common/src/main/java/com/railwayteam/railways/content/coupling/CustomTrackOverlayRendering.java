@@ -73,10 +73,6 @@ public class CustomTrackOverlayRendering {
             return;
 
         ms.pushPose();
-        //ms.translate(pos.getX(), pos.getY(), pos.getZ());
-//        TransformStack.cast(ms)
-//            .translate(Vec3.atLowerCornerOf(pos)
-//                .subtract(camera));
 
         PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model);
         if (partial != null)

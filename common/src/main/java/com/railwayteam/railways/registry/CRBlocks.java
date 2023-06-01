@@ -68,6 +68,7 @@ public class CRBlocks {
         trackTags.add(AllTags.AllBlockTags.TRACKS.tag);
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+        //noinspection unchecked
         return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
             .initialProperties(Material.STONE)
             .properties(p -> p.color(MaterialColor.METAL)

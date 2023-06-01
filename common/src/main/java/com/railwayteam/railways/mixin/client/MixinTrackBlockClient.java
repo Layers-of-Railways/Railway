@@ -61,17 +61,4 @@ public class MixinTrackBlockClient {
             }
         }
     }
-/*
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "NEW", target="java/lang/IncompatibleClassChangeError"), remap = false, cancellable = true, require = 1)
-    private void changeOverlayType(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir) {
-        PartialModel model = null;
-        if (type == getCouplerOverlayType(true, true)) {
-            model = CRBlockPartials.COUPLER_BOTH;
-        } else if (type == getCouplerOverlayType(true, false)) {
-            model = CRBlockPartials.COUPLER_COUPLE;
-        } else if (type == getCouplerOverlayType(false, true)) {
-            model = CRBlockPartials.COUPLER_DECOUPLE;
-        }
-        cir.setReturnValue(model);
-    }*/
 }

@@ -53,44 +53,62 @@ public class MonorailTrackBlock extends TrackBlock {
 
     private VoxelShape getFullShape(BlockState state) {
         switch (state.getValue(SHAPE)) {
-            case AE:
+            case AE -> {
                 return CRShapes.MONORAIL_TRACK_ASC.get(Direction.EAST);
-            case AW:
+            }
+            case AW -> {
                 return CRShapes.MONORAIL_TRACK_ASC.get(Direction.WEST);
-            case AN:
+            }
+            case AN -> {
                 return CRShapes.MONORAIL_TRACK_ASC.get(Direction.NORTH);
-            case AS:
+            }
+            case AS -> {
                 return CRShapes.MONORAIL_TRACK_ASC.get(Direction.SOUTH);
-            case CR_D:
+            }
+            case CR_D -> {
                 return CRShapes.MONORAIL_TRACK_CROSS_DIAG;
-            case CR_NDX:
+            }
+            case CR_NDX -> {
                 return CRShapes.MONORAIL_TRACK_CROSS_ORTHO_DIAG.get(Direction.SOUTH);
-            case CR_NDZ:
+            }
+            case CR_NDZ -> {
                 return CRShapes.MONORAIL_TRACK_CROSS_DIAG_ORTHO.get(Direction.SOUTH);
-            case CR_O:
+            }
+            case CR_O -> {
                 return CRShapes.MONORAIL_TRACK_CROSS;
-            case CR_PDX:
+            }
+            case CR_PDX -> {
                 return CRShapes.MONORAIL_TRACK_CROSS_DIAG_ORTHO.get(Direction.EAST);
-            case CR_PDZ:
+            }
+            case CR_PDZ -> {
                 return CRShapes.MONORAIL_TRACK_CROSS_ORTHO_DIAG.get(Direction.EAST);
-            case ND:
+            }
+            case ND -> {
                 return CRShapes.MONORAIL_TRACK_DIAG.get(Direction.SOUTH);
-            case PD:
+            }
+            case PD -> {
                 return CRShapes.MONORAIL_TRACK_DIAG.get(Direction.EAST);
-            case XO:
+            }
+            case XO -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO.get(Direction.EAST);
-            case ZO:
+            }
+            case ZO -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO.get(Direction.SOUTH);
-            case TE:
+            }
+            case TE -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO_LONG.get(Direction.EAST);
-            case TW:
+            }
+            case TW -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO_LONG.get(Direction.WEST);
-            case TS:
+            }
+            case TS -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO_LONG.get(Direction.SOUTH);
-            case TN:
+            }
+            case TN -> {
                 return CRShapes.MONORAIL_TRACK_ORTHO_LONG.get(Direction.NORTH);
-            case NONE:
-            default:
+            }
+            default -> {
+            }
         }
         return CRShapes.MONORAIL_TRACK_FALLBACK;
     }

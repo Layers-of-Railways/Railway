@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 
 public class TravellingPointVisualizer {
+    @SuppressWarnings("UnnecessaryBoxing")
     public static void debugTrain(Train train) {
         Minecraft mc = Minecraft.getInstance();
         Entity cameraEntity = mc.cameraEntity;
