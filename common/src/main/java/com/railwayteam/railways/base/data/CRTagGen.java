@@ -3,7 +3,6 @@ package com.railwayteam.railways.base.data;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
@@ -19,8 +18,8 @@ import net.minecraft.world.level.block.Block;
  */
 public class CRTagGen {
 	public static void generateBlockTags(RegistrateTagsProvider<Block> tags) {
-		tagAppender(tags, AllBlockTags.TRACKS)
-			.add(AllBlocks.TRACK.get());
+//		tagAppender(tags, AllBlockTags.TRACKS)
+//			.add(AllBlocks.TRACK.get());
 	}
 
 	public static void generateItemTags(RegistrateItemTagsProvider tags) {

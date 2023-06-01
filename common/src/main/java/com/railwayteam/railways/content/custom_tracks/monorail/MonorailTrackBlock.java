@@ -3,11 +3,11 @@ package com.railwayteam.railways.content.custom_tracks.monorail;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
-import com.railwayteam.railways.track_api.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import net.fabricmc.api.EnvType;
@@ -21,7 +21,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class MonorailTrackBlock extends CustomTrackBlock{
+public class MonorailTrackBlock extends TrackBlock {
     public MonorailTrackBlock(Properties properties, TrackMaterial material) {
         super(properties, material);
     }

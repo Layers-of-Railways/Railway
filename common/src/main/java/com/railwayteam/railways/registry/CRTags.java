@@ -39,7 +39,6 @@ public class CRTags {
 
 
   public enum AllBlockTags {
-    TRACKS, //TODO _track api (will make this a reference to create tag, and mark as deprecated)
     SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
     TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
     ;

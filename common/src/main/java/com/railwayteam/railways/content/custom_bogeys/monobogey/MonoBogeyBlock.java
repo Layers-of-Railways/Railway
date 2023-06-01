@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.custom_bogeys.monobogey;
 
+import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,8 +13,12 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeyInstance;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -36,70 +41,44 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.EnumSet;
+import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogeyBlock, IBE<MonoBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class MonoBogeyBlock extends AbstractBogeyBlock<MonoBogeyBlockEntity> implements IBE<MonoBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
-    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+    public static final BooleanProperty UPSIDE_DOWN = BooleanProperty.create("upside_down");
 
-    protected final boolean upsideDown;
-
-    public MonoBogeyBlock(Properties pProperties, boolean upsideDown) {
-        super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
-        this.upsideDown = upsideDown;
-    }
-
-    @Override
-    public boolean isUpsideDown() {
-        return upsideDown;
+    public MonoBogeyBlock(Properties pProperties) {
+        super(pProperties, BogeySizes.SMALL);
+        registerDefaultState(defaultBlockState().setValue(UPSIDE_DOWN, false));
     }
 
     @Override
     public BlockState getVersion(BlockState base, boolean upsideDown) {
-        if (!base.hasProperty(AXIS))
+        if (!base.hasProperty(UPSIDE_DOWN))
             return base;
-        if (upsideDown) {
-            return CRBlocks.MONO_BOGEY_UPSIDE_DOWN.getDefaultState().setValue(AXIS, base.getValue(AXIS))
-                .setValue(WATERLOGGED, base.getOptionalValue(WATERLOGGED).orElse(false));
-        } else {
-            return CRBlocks.MONO_BOGEY.getDefaultState().setValue(AXIS, base.getValue(AXIS))
-                .setValue(WATERLOGGED, base.getOptionalValue(WATERLOGGED).orElse(false));
-        }
+        return base.setValue(UPSIDE_DOWN, upsideDown);
+    }
+
+    @Override
+    public TrackMaterial.TrackType getTrackType(BogeyStyle style) {
+        return null; // fixme track type
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS, WATERLOGGED);
+        builder.add(UPSIDE_DOWN);
         super.createBlockStateDefinition(builder);
-    }
-
-    static final EnumSet<Direction> STICKY_X = EnumSet.of(Direction.EAST, Direction.WEST);
-    static final EnumSet<Direction> STICKY_Z = EnumSet.of(Direction.SOUTH, Direction.NORTH);
-
-    @Override
-    public EnumSet<Direction> getStickySurfaces(BlockGetter world, BlockPos pos, BlockState state) {
-        return state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? STICKY_X : STICKY_Z;
-    }
-
-    @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState,
-                                  LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
-        updateWater(pLevel, pState, pCurrentPos);
-        return pState;
-    }
-
-    @Override
-    public FluidState getFluidState(BlockState pState) {
-        return fluidState(pState);
     }
 
     @Override
@@ -113,8 +92,13 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
     }
 
     @Override
-    public Vec3 getConnectorAnchorOffset() {
+    public Vec3 getConnectorAnchorOffset(boolean upsideDown) {
         return new Vec3(0, upsideDown ? 26 / 32f : 5 / 32f, 25 / 32f);
+    }
+
+    @Override
+    public Vec3 getConnectorAnchorOffset() {
+        return getConnectorAnchorOffset(false);
     }
 
     @Override
@@ -123,18 +107,11 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
     }
 
     @Override
-    public BlockState getMatchingBogey(Direction upDirection, boolean axisAlongFirst) {
-        if (upDirection != Direction.UP)
-            return null;
-        return defaultBlockState().setValue(AXIS, axisAlongFirst ? Direction.Axis.X : Direction.Axis.Z);
+    public BogeyStyle getDefaultStyle() {
+        return null; // fixme style
     }
 
-    @Override
-    public boolean isTrackAxisAlongFirstCoordinate(BlockState state) {
-        return state.getValue(AXIS) == Direction.Axis.X;
-    }
-
-    @Override
+    /*@Override
     @Environment(EnvType.CLIENT)
     public void render(@Nullable BlockState state, float wheelAngle, PoseStack ms, float partialTicks, MultiBufferSource buffers,
                        int light, int overlay) {
@@ -191,7 +168,7 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
             case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> pState.cycle(AXIS);
             default -> pState;
         };
-    }
+    }*/
 
     @Override
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
@@ -209,12 +186,27 @@ public class MonoBogeyBlock extends Block implements IPotentiallyUpsideDownBogey
     }
 
     @Override
-    public ItemRequirement getRequiredItems(BlockState state, BlockEntity te) {
-        return new ItemRequirement(ItemRequirement.ItemUseType.CONSUME, AllBlocks.RAILWAY_CASING.asStack());
+    public BlockState getRotatedBlockState(BlockState state, Direction targetedFace) {
+        return state;
     }
 
     @Override
-    public BlockState getRotatedBlockState(BlockState state, Direction targetedFace) {
-        return state;
+    public boolean canBeUpsideDown() {
+        return true;
+    }
+
+    @Override
+    public boolean isUpsideDown(BlockState state) {
+        return state.hasProperty(UPSIDE_DOWN) && state.getValue(UPSIDE_DOWN);
+    }
+
+    private final List<Property<?>> properties_to_copy = ImmutableList.<Property<?>>builder()
+        .addAll(super.propertiesToCopy())
+        .add(UPSIDE_DOWN)
+        .build();
+
+    @Override
+    public List<Property<?>> propertiesToCopy() {
+        return properties_to_copy;
     }
 }

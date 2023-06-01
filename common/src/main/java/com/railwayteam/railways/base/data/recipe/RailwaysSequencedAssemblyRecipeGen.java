@@ -3,12 +3,12 @@ package com.railwayteam.railways.base.data.recipe;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -56,12 +56,12 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       ));
     }
 
-    for (TrackMaterial material : TrackMaterial.allCustom(Railways.MODID)) { //TODO _track api (nope, doesn't fit as much)
+    for (TrackMaterial material : TrackMaterial.allFromMod(Railways.MODID)) {
       if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) continue;
 
-      TRACKS.put(material, create("track_" + material.resName(), b -> b.require(material.sleeperIngredient)
+      TRACKS.put(material, create("track_" + material.resourceName(), b -> b.require(material.sleeperIngredient)
           .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
-          .addOutput(material.getTrackBlock().get(), 1)
+          .addOutput(material.getBlock(), 1)
           .loops(1)
           .addStep(DeployerApplicationRecipe::new, rb -> rb.require(material.railsIngredient))
           .addStep(DeployerApplicationRecipe::new, rb -> rb.require(material.railsIngredient))
@@ -71,7 +71,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
 
     TRACKS.put(CRTrackMaterials.PHANTOM, create("track_phantom", b -> b.require(Ingredients.phantomMembrane())
         .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(CRTrackMaterials.PHANTOM).get())
-        .addOutput(new ItemStack(CRTrackMaterials.PHANTOM.getTrackBlock().get(), 32), 1)
+        .addOutput(new ItemStack(CRTrackMaterials.PHANTOM.getBlock(), 32), 1)
         .loops(1)
         .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
         .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
@@ -80,7 +80,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
 
     TRACKS.put(CRTrackMaterials.MONORAIL, create("track_monorail", b -> b.require(Ingredients.girder())
         .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(CRTrackMaterials.MONORAIL).get())
-        .addOutput(new ItemStack(CRTrackMaterials.MONORAIL.getTrackBlock().get(), 6), 1)
+        .addOutput(new ItemStack(CRTrackMaterials.MONORAIL.getBlock(), 6), 1)
         .loops(1)
         .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.metalBracket()))
         .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironSheet()))

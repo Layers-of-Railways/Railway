@@ -1,7 +1,7 @@
 package com.railwayteam.railways.util;
 
-import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -17,14 +17,14 @@ public class CustomTrackChecks {
    * or a stack of the default track if it is. Be careful, the returned stack should not be modified.
    */
   public static ItemStack check(ItemStack stack) {
-    if (CRTags.AllBlockTags.TRACKS.matches(stack)) {
+    if (AllTags.AllBlockTags.TRACKS.matches(stack)) {
       return trackStack;
     }
     return stack;
   }
 
   public static BlockState check(BlockState state) {
-    if (CRTags.AllBlockTags.TRACKS.matches(state)) {
+    if (AllTags.AllBlockTags.TRACKS.matches(state)) {
       return trackState;
     }
     return state;

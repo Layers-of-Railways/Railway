@@ -3,23 +3,16 @@ package com.railwayteam.railways.registry;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
-import com.railwayteam.railways.track_api.TrackMaterial;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.Create;
+import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.track_api.TrackMaterial.make;
+import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
 
 public class CRTrackMaterials {
     public static final TrackMaterial
-        ANDESITE = make(Create.asResource("andesite"))
-        .lang("Andesite")
-        .block(() -> AllBlocks.TRACK)
-        .particle(Create.asResource("block/palettes/stone_types/polished/andesite_cut_polished"))
-        .setBuiltin()
-        .build(),
         ACACIA = make(Railways.asResource("acacia"))
             .lang("Acacia")
             .block(() -> CRBlocks.ACACIA_TRACK)
@@ -90,7 +83,7 @@ public class CRTrackMaterials {
             .lang("Monorail")
             .block(() -> CRBlocks.MONORAIL_TRACK)
             .particle(Railways.asResource("block/monorail/monorail"))
-            .trackType(TrackMaterial.TrackType.MONORAIL)
+            .trackType(CRTrackMaterials.CRTrackType.MONORAIL)
             .noRecipeGen()
             .customModels(
                 () -> () -> new PartialModel(Railways.asResource("block/monorail/monorail/monorail_half")),
@@ -122,6 +115,14 @@ public class CRTrackMaterials {
             .defaultModels()
             .build()
         ;
+
+    public static class CRTrackType extends TrackMaterial.TrackType {
+        public static final TrackMaterial.TrackType MONORAIL = new CRTrackType(Railways.asResource("monorail"), MonorailTrackBlock::new);
+
+        public CRTrackType(ResourceLocation id, TrackBlockFactory factory) {
+            super(id, factory);
+        }
+    }
 
     public static void register() {}
 }

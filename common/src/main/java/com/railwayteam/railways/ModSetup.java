@@ -5,6 +5,7 @@ import com.railwayteam.railways.registry.*;
 public class ModSetup {
   public static void register() {
     CRTrackMaterials.register();
+    CRBogeyStyles.register();
     CRItems.register();
     CRBlockEntities.register();
     CRBlocks.register();

@@ -8,9 +8,9 @@ import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRSounds;
-import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -67,8 +67,8 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         super(block, properties, EdgePointType.STATION);
     }
 
-    static boolean isTrack (Block block) { return CRTags.AllBlockTags.TRACKS.matches(block); }
-    static boolean isTrack (BlockState state) { return CRTags.AllBlockTags.TRACKS.matches(state); }
+    static boolean isTrack (Block block) { return AllTags.AllBlockTags.TRACKS.matches(block); }
+    static boolean isTrack (BlockState state) { return AllTags.AllBlockTags.TRACKS.matches(state); }
     static boolean isTrack (Level level, BlockPos pos) { return isTrack(level.getBlockState(pos)); }
 
     @Override

@@ -46,7 +46,7 @@ public abstract class MixinTrackTargetingClient {
             Direction.AxisDirection direction = lastDirection ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
 
             CustomTrackOverlayRendering.renderOverlay(mc.level, pos, direction, lastHoveredBezierSegment, ms, buffer, light,
-                OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f);
+                OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f, camera);
             ci.cancel();
         }
     }

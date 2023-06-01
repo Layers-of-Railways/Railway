@@ -37,7 +37,7 @@ public class Railways {
   public static final String VERSION = findVersion();
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
-          .creativeModeTab(() -> CRItems.itemGroup, "Create Railways");
+          .creativeModeTab(() -> CRItems.itemGroup, "Create Steam 'n Rails");
 
   public static void init() {
     ModSetup.register();

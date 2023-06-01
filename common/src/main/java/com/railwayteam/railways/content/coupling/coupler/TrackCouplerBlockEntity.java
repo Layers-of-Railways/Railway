@@ -3,8 +3,6 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
-import com.railwayteam.railways.mixin.AccessorCarriageBogey;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.multiloader.PlayerSelection;
@@ -323,7 +321,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         TravellingPoint relevantPoint = leading ? carriage.leadingBogey().leading() : carriage.trailingBogey().trailing();
         TravellingPoint relevantPoint2 = leading ? carriage.leadingBogey().trailing() : carriage.trailingBogey().leading();
         CarriageBogey relevantBogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
-        boolean upsideDown = ((AccessorCarriageBogey) relevantBogey).getType() instanceof IPotentiallyUpsideDownBogeyBlock pudb && pudb.isUpsideDown();
+        boolean upsideDown = relevantBogey.isUpsideDown();
         double couplerPosition = coupler.getLocationOn(relevantPoint.edge);
         Vec3 wheelPosition = relevantPoint.getPosition(carriage.train.graph).add(relevantPoint2.getPosition(carriage.train.graph)).scale(0.5).add(0, upsideDown ? 2 : 0, 0);
         Vec3 couplerSpatialPosition = Vec3.atBottomCenterOf(edgePoint.getGlobalPosition().above());

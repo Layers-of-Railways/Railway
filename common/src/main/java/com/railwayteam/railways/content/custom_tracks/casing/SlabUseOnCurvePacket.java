@@ -2,9 +2,8 @@ package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.multiloader.C2SPacket;
-import com.railwayteam.railways.track_api.TrackMaterial;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
@@ -102,7 +101,7 @@ public class SlabUseOnCurvePacket implements C2SPacket {
     BezierConnection bezierConnection = te.getConnections()
         .get(targetPos);
 
-    if (((IHasTrackMaterial) bezierConnection).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+    if (bezierConnection.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
       Railways.LOGGER.warn(player.getScoreboardName() + "tried to slab a monorail track");
       return;
     }
