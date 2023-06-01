@@ -31,6 +31,8 @@ public class TrainUtils {
      * @return The new train.
      */
     public static Train splitTrain(Train train, int numberOffEnd) {
+        if (numberOffEnd == 0)
+            return train;
         if (train.carriages.size() <= numberOffEnd)
             return train;
 

@@ -44,6 +44,8 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
     @Shadow public abstract void leaveStation();
 
     @Shadow public ScheduleRuntime runtime;
+    @Shadow public List<Carriage> carriages;
+    @Shadow public boolean invalid;
     public Set<UUID> occupiedCouplers;
     protected int index = 0;
 
@@ -65,6 +67,12 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void initCouplers(UUID id, UUID owner, TrackGraph graph, List<Carriage> carriages, List<Integer> carriageSpacing, boolean doubleEnded, CallbackInfo ci) {
         occupiedCouplers = new HashSet<>();
+    }
+
+    @Inject(method = "earlyTick", at = @At("HEAD"))
+    private void killEmptyTrains(Level level, CallbackInfo ci) { // hopefully help deal with empty trains
+        if (carriages.size() == 0)
+            invalid = true;
     }
 
     @Inject(method = "earlyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;addToSignalGroups(Ljava/util/Collection;)V", ordinal = 2))
