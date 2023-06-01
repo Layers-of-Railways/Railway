@@ -73,7 +73,10 @@ public class CustomTrackOverlayRendering {
             return;
 
         ms.pushPose();
-        ms.translate(pos.getX(), pos.getY(), pos.getZ());
+        //ms.translate(pos.getX(), pos.getY(), pos.getZ());
+        TransformStack.cast(ms)
+            .translate(Vec3.atLowerCornerOf(pos)
+                .subtract(camera));
 
         PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model, camera);
         if (partial != null)
@@ -114,7 +117,7 @@ public class CustomTrackOverlayRendering {
                     .subtract(bc.getPosition(tpre))
                     .normalize();
 
-                msr.translate(offset.subtract(Vec3.atBottomCenterOf(pos).subtract(camera)));
+                msr.translate(offset.subtract(Vec3.atBottomCenterOf(pos)));
                 msr.translate(0, -4 / 16f, 0);
                 // Translate more for slabs or monorails
                 IHasTrackCasing casingBc = (IHasTrackCasing) bc;
