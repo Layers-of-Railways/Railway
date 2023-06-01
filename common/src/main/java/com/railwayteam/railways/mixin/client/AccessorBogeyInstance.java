@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin.client;
+/*package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.simibubi.create.content.trains.bogey.BogeyInstance;
@@ -10,3 +10,4 @@ public interface AccessorBogeyInstance {
     @Accessor("shafts")
     ModelData[] getShafts();
 }
+*/

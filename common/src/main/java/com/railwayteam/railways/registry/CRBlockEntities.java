@@ -32,7 +32,7 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<MonoBogeyBlockEntity> MONO_BOGEY = REGISTRATE
         .blockEntity("mono_bogey", MonoBogeyBlockEntity::new)
         .renderer(() -> BogeyBlockEntityRenderer::new)
-        .validBlocks(CRBlocks.MONO_BOGEY, CRBlocks.MONO_BOGEY_UPSIDE_DOWN)
+        .validBlocks(CRBlocks.MONO_BOGEY)
         .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)

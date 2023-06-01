@@ -2,12 +2,9 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlockOutline;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,20 +15,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = TrackBlockOutline.class, remap = false)
 public abstract class MixinTrackBlockOutline {
-    @ModifyArg(
-            method = {
-                    "drawCurveSelection",
-                    "drawCustomBlockSelection"
-            },
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",
-                    remap = true
-            )
-    )
-    private static ItemStack railway$allowCustomTracks(ItemStack held) {
-        return CustomTrackChecks.check(held);
-    }
 
     @Unique
     private static boolean railway$resultIsMonorail;
@@ -45,7 +28,7 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultIsMonorail = ((IHasTrackMaterial) bc).getMaterial() == CRTrackMaterials.MONORAIL;
+        railway$resultIsMonorail = bc.getMaterial() == CRTrackMaterials.MONORAIL;
         return bc;
     }
 

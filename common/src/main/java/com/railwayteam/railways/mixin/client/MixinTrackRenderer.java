@@ -4,11 +4,10 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.railwayteam.railways.track_api.TrackMaterial;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -21,65 +20,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.reTexture;
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.renderBezierCasings;
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
-import static com.simibubi.create.AllPartialModels.*;
-import static com.simibubi.create.AllPartialModels.*;
 
 @Mixin(value = TrackRenderer.class, remap = false)
 public class MixinTrackRenderer {
-    @Nullable
-    private static BezierConnection bezierConnection = null;
-
-    @Inject(method = "renderBezierTurn", at = @At("HEAD"))
-    private static void storeBezierConnection(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
-        bezierConnection = bc;
-    }
-
-    @Inject(method = "renderBezierTurn", at = @At("RETURN"))
-    private static void clearBezierConnection(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
-        bezierConnection = null;
-    }
-
-    @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllPartialModels;TRACK_TIE:Lcom/jozufozu/flywheel/core/PartialModel;"))
-    private static PartialModel replaceTie() {
-        if (bezierConnection != null) {
-            TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.getModelHolder().tie;
-        }
-        return TRACK_TIE;
-    }
-
-    @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllPartialModels;TRACK_SEGMENT_LEFT:Lcom/jozufozu/flywheel/core/PartialModel;"))
-    private static PartialModel replaceSegLeft() {
-        if (bezierConnection != null) {
-            TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.getModelHolder().segment_left;
-        }
-        return TRACK_SEGMENT_LEFT;
-    }
-
-    @Redirect(method = "renderBezierTurn", at = @At(value = "FIELD", opcode = Opcodes.GETSTATIC, //TODO _track api
-        target = "Lcom/simibubi/create/AllPartialModels;TRACK_SEGMENT_RIGHT:Lcom/jozufozu/flywheel/core/PartialModel;"))
-    private static PartialModel replaceSegRight() {
-        if (bezierConnection != null) {
-            TrackMaterial material = ((IHasTrackMaterial) bezierConnection).getMaterial();
-            return material.getModelHolder().segment_right;
-        }
-        return TRACK_SEGMENT_RIGHT;
-    }
-
     @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/track/TrackBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = true)
     private void renderCasing(TrackBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
@@ -124,10 +75,10 @@ public class MixinTrackRenderer {
     }
 
     @Inject(method = "renderBezierTurn",
-        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
+        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/track/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
         cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
-        if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+        if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
             ms.popPose(); // clean up pose, since cancelled
             ci.cancel(); // Don't do normal rendering

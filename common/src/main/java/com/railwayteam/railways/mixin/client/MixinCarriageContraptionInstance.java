@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.backend.instancing.entity.EntityInstance;
 import com.railwayteam.railways.mixin_interfaces.IUpdateCount;
 import com.simibubi.create.content.trains.bogey.BogeyInstance;
+import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.CarriageContraptionInstance;
 import com.simibubi.create.foundation.utility.Couple;
@@ -44,8 +45,10 @@ public abstract class MixinCarriageContraptionInstance extends EntityInstance<Ca
         if (IUpdateCount.outOfSync(this, (IUpdateCount) this.entity)) {
             if (bogeys != null) {
                 bogeys.forEach(instance -> {
-                    if (instance != null)
-                        instance.remove();
+                    if (instance != null) {
+                        instance.renderer.remove();
+                        instance.commonRenderer.ifPresent(BogeyRenderer::remove);
+                    }
                 });
                 bogeys = null;
             }

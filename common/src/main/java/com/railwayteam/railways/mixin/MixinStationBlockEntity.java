@@ -1,50 +1,15 @@
-package com.railwayteam.railways.mixin;
+/*package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
-import com.railwayteam.railways.util.BlockStateUtils;
-import com.simibubi.create.content.contraptions.AssemblyException;
-import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import com.simibubi.create.content.trains.graph.TrackGraph;
-import com.simibubi.create.content.trains.graph.TrackNode;
-import com.simibubi.create.content.trains.graph.TrackNodeLocation;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
-import com.simibubi.create.content.trains.track.ITrackBlock;
-import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 @Mixin(value = StationBlockEntity.class, remap = false)
 public abstract class MixinStationBlockEntity extends SmartBlockEntity { //TODO bogey api (stations should support upside down bogeys)
-    @Shadow
+/*    @Shadow
     int[] bogeyLocations;
 
     @Shadow
@@ -54,11 +19,11 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity { //TODO 
     Direction assemblyDirection;
     boolean[] upsideDownBogeys;
 
-    private boolean bogeyIndexAdd = false;
+    private boolean bogeyIndexAdd = false;*/ /*
 
     private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-    }
+    }/*
 
     @Inject(method = "refreshAssemblyInfo", at = @At("HEAD"))
     private void resetBogeyIndexAdditionsHead(CallbackInfo ci) {
@@ -103,7 +68,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity { //TODO 
         if (potentialBogeyState.getBlock() instanceof AbstractBogeyBlock bogey && !(potentialBogeyState.getBlock() instanceof IPotentiallyUpsideDownBogeyBlock pubd && pubd.isUpsideDown()) && bogeyIndex < bogeyLocations.length) {
             /*bogeyTypes[bogeyIndex] = bogey;
             bogeyLocations[bogeyIndex] = i;
-            bogeyIndex++;*/
+            bogeyIndex++;*/ /*
         } else {
             BlockPos upsideDownBogeyOffset = new BlockPos(bogeyOffset.getX(), bogeyOffset.getY() * -1, bogeyOffset.getZ());
             potentialBogeyState = level.getBlockState(upsideDownBogeyOffset.offset(currentPos));
@@ -170,5 +135,6 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity { //TODO 
             cir.setReturnValue(true);
             return;
         }
-    }
+    }*/ /*
 }
+*/

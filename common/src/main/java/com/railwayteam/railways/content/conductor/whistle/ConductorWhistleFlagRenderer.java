@@ -49,7 +49,7 @@ public class ConductorWhistleFlagRenderer extends SmartBlockEntityRenderer<Condu
         ms.pushPose();
         ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-            buffer, light, overlay, AllPartialModels.TRACK_STATION_OVERLAY, 1, false, Vec3.ZERO); //TODO real model
+            buffer, light, overlay, AllPartialModels.TRACK_STATION_OVERLAY, 1, false, Vec3.ZERO);
         ms.popPose();
     }
 }

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin.client;
+/*package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.track_api.TrackMaterial;
@@ -46,3 +46,4 @@ public abstract class MixinBlueprintOverlayRenderer { //TODO _track api
     return material.getTrackBlock().asStack(count);
   }
 }
+*/

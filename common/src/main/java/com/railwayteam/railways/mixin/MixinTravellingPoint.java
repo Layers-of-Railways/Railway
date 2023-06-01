@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+/*package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.monobogey.IPotentiallyUpsideDownBogeyBlock;
 import com.railwayteam.railways.mixin_interfaces.IBogeyTypeAwareTravellingPoint;
@@ -56,3 +56,4 @@ public class MixinTravellingPoint implements IBogeyTypeAwareTravellingPoint { //
         return instance.scale(pFactor);
     }
 }
+*/

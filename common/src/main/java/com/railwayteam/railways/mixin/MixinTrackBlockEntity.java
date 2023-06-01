@@ -4,7 +4,6 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
-import com.railwayteam.railways.util.CustomTrackChecks;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
@@ -24,7 +23,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
@@ -39,18 +37,6 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
 
   protected MixinTrackBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
     super(type, pos, state);
-  }
-
-  @ModifyArg(
-          method = "remove",
-          at = @At(
-                  value = "INVOKE",
-                  target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z",
-                  remap = true
-          )
-  )
-  private BlockState railway$allowCustomTracks(BlockState state) {
-    return CustomTrackChecks.check(state);
   }
 
   @Override

@@ -1,55 +1,31 @@
 package com.railwayteam.railways.content.custom_bogeys.monobogey;
 
 import com.google.common.collect.ImmutableList;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
-import com.railwayteam.railways.mixin.AccessorCarriageBogey;
-import com.railwayteam.railways.mixin_interfaces.IBogeyFrameCanBeMonorail;
 import com.railwayteam.railways.registry.CRBlockEntities;
-import com.railwayteam.railways.registry.CRBlockPartials;
-import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRBogeyStyles;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
-import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
-import com.simibubi.create.content.trains.bogey.BogeyInstance;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.utility.Iterate;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.EnumSet;
 import java.util.List;
 
 @MethodsReturnNonnullByDefault
@@ -72,7 +48,7 @@ public class MonoBogeyBlock extends AbstractBogeyBlock<MonoBogeyBlockEntity> imp
 
     @Override
     public TrackMaterial.TrackType getTrackType(BogeyStyle style) {
-        return null; // fixme track type
+        return CRTrackMaterials.CRTrackType.MONORAIL;
     }
 
     @Override
@@ -108,7 +84,7 @@ public class MonoBogeyBlock extends AbstractBogeyBlock<MonoBogeyBlockEntity> imp
 
     @Override
     public BogeyStyle getDefaultStyle() {
-        return null; // fixme style
+        return CRBogeyStyles.MONOBOGEY;
     }
 
     /*@Override

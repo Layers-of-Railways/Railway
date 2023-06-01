@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+/*package com.railwayteam.railways.mixin;
 
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
@@ -20,3 +20,4 @@ public interface AccessorCarriageBogey {
     @Accessor
     LerpedFloat getPitch();
 }
+*/

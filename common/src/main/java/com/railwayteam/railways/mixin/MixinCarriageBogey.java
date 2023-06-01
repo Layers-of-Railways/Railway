@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+/*package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IBogeyTypeAwareTravellingPoint;
 import com.simibubi.create.content.trains.IBogeyBlock;
@@ -27,3 +27,4 @@ public class MixinCarriageBogey {
         points.forEach(point -> ((IBogeyTypeAwareTravellingPoint) point).setType(((AccessorCarriageBogey) carriage.leadingBogey()).getType())); //TODO bogey api
     }
 }
+*/
