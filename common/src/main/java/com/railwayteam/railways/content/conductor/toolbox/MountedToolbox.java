@@ -70,7 +70,6 @@ public class MountedToolbox extends ToolboxBlockEntity {
     compound.putInt("Color", getColor().getId());
   }
 
-  // TODO: does this conflict with the accessor?
   public List<Player> getConnectedPlayers() {
     Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers = ((AccessorToolboxBlockEntity) this).getConnectedPlayers();
     Set<Player> players = new HashSet<>();

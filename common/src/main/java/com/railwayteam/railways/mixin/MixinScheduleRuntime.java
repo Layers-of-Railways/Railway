@@ -47,7 +47,7 @@ public abstract class MixinScheduleRuntime {
         }
     }
 
-    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/management/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
+    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void discardAutoSchedule(Level level, CallbackInfo ci) {
         if (isAutoSchedule) {
             discardSchedule();

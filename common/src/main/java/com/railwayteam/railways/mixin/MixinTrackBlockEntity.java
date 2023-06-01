@@ -94,7 +94,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
           method = "removeInboundConnections",
           at = @At(
                   value = "INVOKE",
-                  target = "Lcom/simibubi/create/foundation/BlockEntity/RemoveBlockEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
+                  target = "Lcom/simibubi/create/foundation/blockEntity/RemoveBlockEntityPacket;<init>(Lnet/minecraft/core/BlockPos;)V",
                   remap = true
           ),
           cancellable = true

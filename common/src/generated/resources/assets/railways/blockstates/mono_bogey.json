@@ -1,18 +1,32 @@
 {
   "variants": {
-    "axis=x,waterlogged=false": {
+    "axis=x,upside_down=false,waterlogged=false": {
       "model": "railways:block/bogey/monorail/top",
       "y": 90
     },
-    "axis=z,waterlogged=false": {
+    "axis=z,upside_down=false,waterlogged=false": {
       "model": "railways:block/bogey/monorail/top"
     },
-    "axis=x,waterlogged=true": {
+    "axis=x,upside_down=true,waterlogged=false": {
+      "model": "railways:block/bogey/monorail/top_upside_down",
+      "y": 90
+    },
+    "axis=z,upside_down=true,waterlogged=false": {
+      "model": "railways:block/bogey/monorail/top_upside_down"
+    },
+    "axis=x,upside_down=false,waterlogged=true": {
       "model": "railways:block/bogey/monorail/top",
       "y": 90
     },
-    "axis=z,waterlogged=true": {
+    "axis=z,upside_down=false,waterlogged=true": {
       "model": "railways:block/bogey/monorail/top"
+    },
+    "axis=x,upside_down=true,waterlogged=true": {
+      "model": "railways:block/bogey/monorail/top_upside_down",
+      "y": 90
+    },
+    "axis=z,upside_down=true,waterlogged=true": {
+      "model": "railways:block/bogey/monorail/top_upside_down"
     }
   }
 }

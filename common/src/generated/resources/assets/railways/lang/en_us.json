@@ -4,7 +4,6 @@
 
 	"block.railways.conductor_whistle": "Conductor Whistle",
 	"block.railways.mono_bogey": "Monorail Bogey",
-	"block.railways.mono_bogey_upside_down": "Upside Down Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
 	"block.railways.smokestack_coalburner": "Coalburner Smokestack",
@@ -80,7 +79,7 @@
 	"item.railways.yellow_conductor_cap": "Yellow Conductor's Cap",
 	"item.railways.yellow_incomplete_conductor_cap": "Incomplete Yellow Conductor's Cap",
 
-	"itemGroup.railways": "Create Railways",
+	"itemGroup.railways": "Create Steam 'n Rails",
 
 	"railways.ponder.conductor_constructing.header": "Constructing a Conductor",
 	"railways.ponder.conductor_constructing.text_1": "Conductors are constructed with an andesite casing.",

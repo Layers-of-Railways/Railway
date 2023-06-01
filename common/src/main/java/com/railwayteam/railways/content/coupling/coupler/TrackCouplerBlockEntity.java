@@ -137,7 +137,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
     protected void onPowered() {
         if (level == null || level.isClientSide)
             return;
-        this.getSecondaryCoupler().blockEntityAdded(this, false); //FIXME remove this
+//        this.getSecondaryCoupler().blockEntityAdded(this, false); //FIX_ME remove this
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
             case DECOUPLING:

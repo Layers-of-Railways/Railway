@@ -1,7 +1,6 @@
 {
   "block.railways.conductor_whistle": "\u01DD\u05DF\u0287s\u0131\u0265M \u0279o\u0287\u0254npuo\u0186",
   "block.railways.mono_bogey": "\u028E\u01DDbo\u15FA \u05DF\u0131\u0250\u0279ouoW",
-  "block.railways.mono_bogey_upside_down": "\u028E\u01DDbo\u15FA \u05DF\u0131\u0250\u0279ouoW u\u028Do\u15E1 \u01DDp\u0131sd\u2229",
   "block.railways.semaphore": "\u01DD\u0279o\u0265d\u0250\u026F\u01DDS",
   "block.railways.smokestack_caboosestyle": "\u029E\u0254\u0250\u0287s\u01DD\u029Eo\u026FS \u01DDsooq\u0250\u0186",
   "block.railways.smokestack_coalburner": "\u029E\u0254\u0250\u0287s\u01DD\u029Eo\u026FS \u0279\u01DDu\u0279nq\u05DF\u0250o\u0186",
@@ -74,7 +73,7 @@
   "item.railways.white_incomplete_conductor_cap": "d\u0250\u0186 s,\u0279o\u0287\u0254npuo\u0186 \u01DD\u0287\u0131\u0265M \u01DD\u0287\u01DD\u05DFd\u026Fo\u0254uI",
   "item.railways.yellow_conductor_cap": "d\u0250\u0186 s,\u0279o\u0287\u0254npuo\u0186 \u028Do\u05DF\u05DF\u01DD\u028E",
   "item.railways.yellow_incomplete_conductor_cap": "d\u0250\u0186 s,\u0279o\u0287\u0254npuo\u0186 \u028Do\u05DF\u05DF\u01DD\u028E \u01DD\u0287\u01DD\u05DFd\u026Fo\u0254uI",
-  "itemGroup.railways": "s\u028E\u0250\u028D\u05DF\u0131\u0250\u1D1A \u01DD\u0287\u0250\u01DD\u0279\u0186",
+  "itemGroup.railways": "s\u05DF\u0131\u0250\u1D1A u, \u026F\u0250\u01DD\u0287S \u01DD\u0287\u0250\u01DD\u0279\u0186",
   "railways.ponder.conductor_constructing.header": "\u0279o\u0287\u0254npuo\u0186 \u0250 bu\u0131\u0287\u0254n\u0279\u0287suo\u0186",
   "railways.ponder.conductor_constructing.text_1": "\u02D9bu\u0131s\u0250\u0254 \u01DD\u0287\u0131s\u01DDpu\u0250 u\u0250 \u0265\u0287\u0131\u028D p\u01DD\u0287\u0254n\u0279\u0287suo\u0254 \u01DD\u0279\u0250 s\u0279o\u0287\u0254npuo\u0186",
   "railways.ponder.conductor_redstoning.header": "s\u0279o\u0287\u0254npuo\u0186 \u0265\u0287\u0131\u028D \u01DDuo\u0287sp\u01DD\u1D1A \u01DD\u0287o\u026F\u01DD\u1D1A",

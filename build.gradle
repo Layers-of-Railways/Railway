@@ -110,6 +110,14 @@ allprojects {
     java {
         withSourcesJar()
     }
+
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.module.name == "fabric-loader") {
+                useVersion(fabric_loader_version)
+            }
+        }
+    }
 }
 
 // 'borrowed' from Create

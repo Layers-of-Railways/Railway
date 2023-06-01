@@ -13,7 +13,6 @@
     "railways:track_ender",
     "railways:track_tieless",
     "railways:track_phantom",
-    "railways:track_monorail",
-    "create:track"
+    "railways:track_monorail"
   ]
 }

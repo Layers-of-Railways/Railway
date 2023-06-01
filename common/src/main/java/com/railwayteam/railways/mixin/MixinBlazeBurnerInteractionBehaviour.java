@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BlazeBurnerInteractionBehaviour.class, remap = false)
 public abstract class MixinBlazeBurnerInteractionBehaviour {
 
-    @Inject(method = "handlePlayerInteraction", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/management/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/management/schedule/Schedule;Z)V"))
+    @Inject(method = "handlePlayerInteraction", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/schedule/Schedule;Z)V"))
     private void storeIndex(Player player, InteractionHand activeHand, BlockPos localPos, AbstractContraptionEntity contraptionEntity, CallbackInfoReturnable<Boolean> cir) {
         if (contraptionEntity instanceof CarriageContraptionEntity cce) {
             Carriage carriage = cce.getCarriage();

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ScheduleItem.class, remap = false)
 public abstract class MixinScheduleItem {
-    @Inject(method = "handScheduleTo", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/management/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/management/schedule/Schedule;Z)V"))
+    @Inject(method = "handScheduleTo", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/schedule/Schedule;Z)V"))
     private void storeIndex(ItemStack pStack, Player pPlayer, LivingEntity pInteractionTarget, InteractionHand pUsedHand, CallbackInfoReturnable<InteractionResult> cir) {
         if (pInteractionTarget.getRootVehicle() instanceof CarriageContraptionEntity cce) {
             Carriage carriage = cce.getCarriage();

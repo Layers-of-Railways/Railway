@@ -41,7 +41,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation {
         return instance.distanceToDestination;
     }
 
-    @Redirect(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/management/edgePoint/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/TrackNode;)Z"))
+    @Redirect(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/graph/TrackNode;)Z"))
     private boolean keepScoutingAtWaypoints(GlobalStation instance, TrackNode side) {
         return instance.canApproachFrom(side) && !isWaypointMode();
     }
@@ -56,14 +56,14 @@ public abstract class MixinNavigation implements IWaypointableNavigation {
     }
 
     @Redirect(method = "currentSignalResolved", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"), slice =
-    @Slice(to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/TrackGraph;getPoint(Lcom/simibubi/create/content/trains/management/edgePoint/EdgePointType;Ljava/util/UUID;)Lcom/simibubi/create/content/trains/management/edgePoint/signal/TrackEdgePoint;")))
+    @Slice(to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;getPoint(Lcom/simibubi/create/content/trains/graph/EdgePointType;Ljava/util/UUID;)Lcom/simibubi/create/content/trains/signal/TrackEdgePoint;")))
     private double preventSignalClearWithWaypoint(Navigation instance) {
         if (((IWaypointableNavigation) instance).isWaypointMode())
             return 10;
         return instance.distanceToDestination;
     }
 
-    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/management/edgePoint/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
+    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
     private Train replacePresentTrain(GlobalStation instance) {
         return ((ILimitedGlobalStation) instance).orDisablingTrain(instance.getPresentTrain(), train);
     }
