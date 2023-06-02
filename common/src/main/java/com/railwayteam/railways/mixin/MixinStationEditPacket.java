@@ -27,7 +27,10 @@ public abstract class MixinStationEditPacket implements ILimited {
         return limitEnabled;
     }
 
-    @Inject(method = "writeSettings", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;writeBoolean(Z)Lio/netty/buffer/ByteBuf;", ordinal = 3, remap = true), cancellable = true)
+    // inject right before
+    //      buffer.writeBoolean(assemblyMode);
+    //		buffer.writeUtf(name);
+    @Inject(method = "writeSettings", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;writeBoolean(Z)Lio/netty/buffer/ByteBuf;", ordinal = 4, remap = true), cancellable = true)
     private void writeLimitEnabled(FriendlyByteBuf buffer, CallbackInfo ci) {
         buffer.writeBoolean(limitEnabled != null);
         if (limitEnabled != null) {
@@ -37,7 +40,10 @@ public abstract class MixinStationEditPacket implements ILimited {
         }
     }
 
-    @Inject(method = "readSettings", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;readBoolean()Z", ordinal = 3, remap = true), cancellable = true)
+    // inject right before
+    // 		assemblyMode = buffer.readBoolean();
+    //		name = buffer.readUtf(256);
+    @Inject(method = "readSettings", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/FriendlyByteBuf;readBoolean()Z", ordinal = 4, remap = true), cancellable = true)
     private void readLimitEnabled(FriendlyByteBuf buffer, CallbackInfo ci) {
         if (buffer.readBoolean()) {
             limitEnabled = buffer.readBoolean();

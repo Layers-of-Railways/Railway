@@ -143,7 +143,9 @@
 	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
 	"railways.tooltip.coupler.error.carriage_orientation": "Carriages must be facing the same direction. Hint: Use a wrench to reorient the carriages.",
 
-	"railways.station.train_limit": "Limit Trains",
+	"railways.station.train_limit": "Limit",
+	"railways.station.train_limit.tooltip.1": "Reserve station before approaching train has arrived",
+	"railways.station.train_limit.tooltip.2": "to more evenly space trains in a multi-platform station",
 
 	"create.sliding_door.mode": "Open Mode",
 	"create.sliding_door.mode.manual": "Manual",
