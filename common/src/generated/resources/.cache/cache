@@ -340,7 +340,7 @@ a6987681ab3b8a6fb45283d1803a273aa1f9e962 data/railways/recipes/sequenced_assembl
 58d1ba4ecc6a5c33d406020ffc4c1c5f20e93b33 data/forge/tags/items/string.json
 6933d5075c74e94f19a3285237d6e4af27a131c0 assets/railways/models/block/track/phantom/z_ortho.json
 98126759248a4c7c53c4b4e2e1e5f157a8d7cb71 data/railways/advancements/recipes/railways/crafting/smokestack_oilburner.json
-8116673cc050cad8627757106d42a032bde795aa assets/railways/lang/en_us.json
+3f50fe59689f04ba3174197ff5e9349b5f729f12 assets/railways/lang/en_us.json
 4ab64c3796cca34a3f50bfbfa4b9e412451d40ba assets/railways/models/block/track/jungle/cross_diag.json
 1564f334a5974605589bf9b024f3e3c50effa3c5 assets/railways/models/item/track_oak.json
 51827ef7720eceae795b55a868fe74e4365bc4de assets/railways/models/item/smokestack_streamlined.json

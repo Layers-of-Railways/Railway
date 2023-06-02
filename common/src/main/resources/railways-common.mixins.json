@@ -21,19 +21,23 @@
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
     "MixinCarriage",
+    "MixinDoorMovingInteraction",
     "MixinGlobalStation",
     "MixinNavigation",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSignalBoundary",
+    "MixinSlidingDoorBlock",
+    "MixinSlidingDoorBlockEntity",
+    "MixinSlidingDoorMovementBehaviour",
     "MixinStationBlock",
     "MixinStationEditPacket",
     "MixinToolboxHandler",
     "MixinTrackBlock",
+    "MixinTrackBlockEntity",
     "MixinTrackEdgePoint",
     "MixinTrackTargetingBlockItem",
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
-    "MixinTrackBlockEntity",
     "MixinTrain"
   ],
   "client": [
@@ -62,7 +66,7 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
-    "client.MixinTrainPacket",
+    "client.MixinTrainPacket"
   ],
   "injectors": {
     "defaultRequire": 1

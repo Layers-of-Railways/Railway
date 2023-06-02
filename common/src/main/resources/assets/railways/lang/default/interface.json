@@ -41,9 +41,8 @@
 
   "create.sliding_door.mode": "Open Mode",
   "create.sliding_door.mode.manual": "Manual",
-  "create.sliding_door.mode.auto": "Automatic",
-  "create.sliding_door.mode.station_right": "Station Right",
-  "create.sliding_door.mode.station_left": "Station Left",
+  "create.sliding_door.mode.normal": "Normal (Default)",
+  "create.sliding_door.mode.special": "Special",
 
   "railways.station.open_left": "Open Left Doors",
   "railways.station.open_right": "Open Right Doors",

@@ -8,7 +8,8 @@
     "ClientPacketListenerMixin"
   ],
   "mixins": [
-    "ServerGamePacketListenerImplMixin"
+    "ServerGamePacketListenerImplMixin",
+    "SlidingDoorBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
