@@ -18,14 +18,14 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.ACACIA_TRACK)
             .particle(new ResourceLocation("block/acacia_planks"))
             .sleeper(Blocks.ACACIA_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         BIRCH = make(Railways.asResource("birch"))
             .lang("Birch")
             .block(() -> CRBlocks.BIRCH_TRACK)
             .particle(new ResourceLocation("block/birch_planks"))
             .sleeper(Blocks.BIRCH_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         CRIMSON = make(Railways.asResource("crimson"))
             .lang("Crimson")
@@ -33,35 +33,35 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/crimson_planks"))
             .sleeper(Blocks.CRIMSON_SLAB)
             .rails(Items.GOLD_NUGGET)
-            .defaultModels()
+            .standardModels()
             .build(),
         DARK_OAK = make(Railways.asResource("dark_oak"))
             .lang("Dark Oak")
             .block(() -> CRBlocks.DARK_OAK_TRACK)
             .particle(new ResourceLocation("block/dark_oak_planks"))
             .sleeper(Blocks.DARK_OAK_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         JUNGLE = make(Railways.asResource("jungle"))
             .lang("Jungle")
             .block(() -> CRBlocks.JUNGLE_TRACK)
             .particle(new ResourceLocation("block/jungle_planks"))
             .sleeper(Blocks.JUNGLE_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         OAK = make(Railways.asResource("oak"))
             .lang("Oak")
             .block(() -> CRBlocks.OAK_TRACK)
             .particle(new ResourceLocation("block/oak_planks"))
             .sleeper(Blocks.OAK_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         SPRUCE = make(Railways.asResource("spruce"))
             .lang("Spruce")
             .block(() -> CRBlocks.SPRUCE_TRACK)
             .particle(new ResourceLocation("block/spruce_planks"))
             .sleeper(Blocks.SPRUCE_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         WARPED = make(Railways.asResource("warped"))
             .lang("Warped")
@@ -69,7 +69,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/warped_planks"))
             .sleeper(Blocks.WARPED_SLAB)
             .rails(Items.GOLD_NUGGET)
-            .defaultModels()
+            .standardModels()
             .build(),
         BLACKSTONE = make(Railways.asResource("blackstone"))
             .lang("Blackstone")
@@ -77,7 +77,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/blackstone"))
             .sleeper(Blocks.BLACKSTONE_SLAB)
             .rails(Items.GOLD_NUGGET)
-            .defaultModels()
+            .standardModels()
             .build(),
         MONORAIL = make(Railways.asResource("monorail"))
             .lang("Monorail")
@@ -96,7 +96,7 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.ENDER_TRACK)
             .particle(new ResourceLocation("block/end_stone"))
             .sleeper(Blocks.END_STONE_BRICK_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         TIELESS = make(Railways.asResource("tieless"))
             .lang("Tieless")
@@ -104,7 +104,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/glass"))
             .sleeper(Blocks.GLASS_PANE)
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
-            .defaultModels()
+            .standardModels()
             .build(),
         PHANTOM = make(Railways.asResource("phantom"))
             .lang("Phantom")
@@ -112,7 +112,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/glass"))
             .noRecipeGen()
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
-            .defaultModels()
+            .standardModels()
             .build()
         ;
 
