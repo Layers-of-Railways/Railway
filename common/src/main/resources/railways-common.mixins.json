@@ -15,12 +15,14 @@
     "AccessorToolboxInventory",
     "AccessorTrackTargetingBehavior",
     "AccessorTrain",
+    "ChunkSerializerMixin",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",
     "MixinCarriage",
+    "MixinCarriageBogey",
     "MixinDoorMovingInteraction",
     "MixinGlobalStation",
     "MixinNavigation",
@@ -39,7 +41,8 @@
     "MixinTrackEdgePoint",
     "MixinTrackTargetingBlockItem",
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
-    "MixinTrain"
+    "MixinTrain",
+    "NbtUtilsMixin"
   ],
   "client": [
     "client.AccessorInstance",
