@@ -92,6 +92,15 @@
 	"railways.ponder.conductor_toolboxing.header": "Toolbox Transport with Conductors",
 	"railways.ponder.conductor_toolboxing.text_1": "Toolboxes function normally when equipped on Conductors.",
 
+	"railways.ponder.door_modes.header": "Door Modes",
+	"railways.ponder.door_modes.text_1": "Doors have multiple modes of operation: Normal, Manual, and Special",
+	"railways.ponder.door_modes.text_2": "In normal mode (the default) and manual mode, manual operation of the door is possible",
+	"railways.ponder.door_modes.text_3": "and redstone operation works in normal mode and special mode",
+	"railways.ponder.door_modes.text_4": "Doors in normal and special modes open and close when a contraption moves or stops",
+	"railways.ponder.door_modes.text_5": "Doors in manual mode only change when a player interacts with them",
+	"railways.ponder.door_modes.text_6": "Doors in special mode cannot be toggled simply by using them",
+	"railways.ponder.door_modes.text_7": "Sneaking, however, allows the player to toggle the door anyway",
+
 	"railways.ponder.train_semaphore.header": "Visualizing Signal states using Semaphores",
 	"railways.ponder.train_semaphore.text_1": "Semaphores are placed on poles above Train Signals",
 	"railways.ponder.train_semaphore.text_2": "Semaphore poles can be made of different materials",
