@@ -1,5 +1,8 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
 }
 
 loom {
@@ -58,6 +61,35 @@ dependencies {
     // Test with JourneyMap in dev
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-SNAPSHOT") // for some reason this is needed explicitly
+}
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = findProperty('curseforge_token')
+    var projectId = findProperty('curseforge_project')
+
+    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
+    mainFile.changelog = getChangelogText("Forge")
+    mainFile.changelogType = "html"
+    mainFile.displayName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
+    mainFile.addRequirement("create")
+    mainFile.addModLoader("Forge")
+    mainFile.addJavaVersion("Java 17")
+    mainFile.releaseType = "release"
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = findProperty('modrinth_project')
+    changelog = getChangelogText("Forge")
+    versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
+    versionNumber = mod_version
+    versionType = "release"
+    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar")
+    gameVersions = [minecraft_version]
+    loaders = [project.name]
+    dependencies { // A special DSL for creating dependencies
+        required.project "create"
+    }
 }
 
 processResources {
