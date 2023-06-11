@@ -10,6 +10,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
+import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.AxisSmokeStackBlock;
@@ -167,6 +168,7 @@ public class CRBlocks {
         )
         .properties(p -> p.color(MaterialColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
         .item(SemaphoreItem::new).transform(customItemModel())
         .transform(axeOnly())
         .addLayer(() -> RenderType::translucent)

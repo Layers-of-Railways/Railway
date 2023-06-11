@@ -22,6 +22,7 @@ public class CRPackets {
             .s2c(AddTrainEndPacket.class, AddTrainEndPacket::new)
             .s2c(TrackCouplerClientInfoPacket.class, TrackCouplerClientInfoPacket::new)
             .s2c(TrainMarkerDataUpdatePacket.class, TrainMarkerDataUpdatePacket::new)
+            .s2c(OverridableSignalPacket.class, OverridableSignalPacket::new)
 
             .build();
 }

@@ -1,8 +1,12 @@
 package com.railwayteam.railways.content.semaphore;
 
 import com.railwayteam.railways.Config;
+import com.railwayteam.railways.content.distant_signals.IOverridableSignal;
+import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRIcons;
+import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.packet.OverridableSignalPacket;
 import com.simibubi.create.content.trains.signal.SignalBlock;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -20,17 +24,20 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Optional;
 
-public class SemaphoreBlockEntity extends SmartBlockEntity {
+public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridableSignal {
     private WeakReference<SignalBlockEntity> cachedSignalTE;
     public SignalBlockEntity.SignalState signalState;
     public final LerpedFloat armPosition;
     public boolean isValid = false;
     public boolean isDistantSignal=false;
     protected boolean cachedWasUpsideDown = false;
+    private int overrideLastingTicks = -1;
 
     public SemaphoreBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -67,6 +74,33 @@ public class SemaphoreBlockEntity extends SmartBlockEntity {
         if (!level.isClientSide)
             return;
 
+        if (overrideLastingTicks > 0) {
+            overrideLastingTicks--;
+            SignalBlockEntity signalBE = cachedSignalTE.get();
+            if (signalBE != null && !signalBE.isRemoved()) {
+                signalState = signalBE.getState();
+            }
+            isValid = signalState != SignalBlockEntity.SignalState.INVALID;
+            boolean isActive = false;
+            if (isValid)
+                isActive = (signalState == SignalBlockEntity.SignalState.YELLOW && !isDistantSignal) || signalState == SignalBlockEntity.SignalState.GREEN;
+
+            float currentTarget = armPosition.getChaseTarget();
+            int target = isActive ? 1 : 0;
+            if (target != currentTarget) {
+                armPosition.setValue(currentTarget);
+                armPosition.chase(target, 0.05f, LerpedFloat.Chaser.LINEAR);
+            }
+
+            armPosition.tickChaser();
+            return;
+        } else if (overrideLastingTicks == 0) {
+            overrideLastingTicks--;
+            cachedSignalTE.clear();
+            signalState = null;
+            updateSignalConnection();
+        }
+
 
 
         SignalBlockEntity signalBlockEntity = cachedSignalTE.get();
@@ -74,6 +108,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity {
 
 
 
+        // whether the arm is up (i.e. signalling that a train can pass)
         boolean isActive=false;
 
         if (signalBlockEntity != null && !signalBlockEntity.isRemoved() && isValid) {
@@ -102,6 +137,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity {
     @Override
     public void lazyTick() {
         super.lazyTick();
+        if (overrideLastingTicks > 0) return;
         signalState = null;
 
         updateSignalConnection();
@@ -170,6 +206,26 @@ public class SemaphoreBlockEntity extends SmartBlockEntity {
             currentPos = upsideDown?currentPos.above():currentPos.below();
         }
         return isValid;
+    }
+
+    @Override
+    public void refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal) {
+        if (level == null) return;
+        cachedSignalTE = new WeakReference<>(signalBE);
+        signalState = state;
+        overrideLastingTicks = ticks;
+        isDistantSignal = distantSignal;
+        if (!level.isClientSide) {
+            CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this),
+                new OverridableSignalPacket(getBlockPos(),signalBE == null ? null : signalBE.getBlockPos(), state, ticks, distantSignal));
+        }
+    }
+
+    @Override
+    public Optional<SignalBlockEntity.SignalState> getOverriddenState() {
+        if (overrideLastingTicks > 0 && signalState != null)
+            return Optional.of(signalState);
+        return Optional.empty();
     }
 
     private static class SemaphoreValueBoxTransform extends CenteredSideValueBoxTransform {

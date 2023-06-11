@@ -65,5 +65,14 @@
   "railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
   "railways.whistle.failure.no_space": "No space to place flag.",
   "railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
-  "railways.journeymap.train_marker_toggle": "Toggle Train Markers"
+  "railways.journeymap.train_marker_toggle": "Toggle Train Markers",
+
+  "create.display_source.track_signal_source": "Signal State",
+  "railways.display_source.signal.green": "Clear",
+  "railways.display_source.signal.yellow": "Warning",
+  "railways.display_source.signal.red": "Danger",
+  "railways.display_source.signal.invalid": "Invalid",
+
+  "railways.display_target.semaphore.normal": "Normal Signal State",
+  "railways.display_target.semaphore.distant": "Distant Signal State"
 }

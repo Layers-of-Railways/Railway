@@ -71,8 +71,8 @@ public class Railways {
   }
 
   public static ResourceLocation asResource(String name) {
-		return new ResourceLocation(MODID, name);
-	}
+    return new ResourceLocation(MODID, name);
+  }
 
   public static void gatherData(DataGenerator gen) {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);

@@ -16,6 +16,7 @@ public class ModSetup {
     CREdgePointTypes.register();
     CRSchedule.register();
     CRDataFixers.register();
+    CRExtraDisplays.register();
   }
 }
 
