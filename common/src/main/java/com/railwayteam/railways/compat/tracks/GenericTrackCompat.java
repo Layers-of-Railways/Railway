@@ -1,5 +1,7 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.railwayteam.railways.util.TextUtils;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -9,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class GenericTrackCompat {
     protected final Map<String, NonNullSupplier<? extends TrackBlock>> BLOCKS = new HashMap<>();
 
     protected static boolean isDataGen() {
-        return System.getenv("DATAGEN").equals("TRUE");
+        return Utils.isEnvVarTrue("DATAGEN");
     }
 
     protected final static boolean registerTracksAnywayGlobal() {
@@ -71,7 +72,7 @@ public class GenericTrackCompat {
     }
 
     protected String langName(String name) {
-        return name.toUpperCase(Locale.ROOT) + " - TODO";
+        return TextUtils.titleCaseConversion(name.replace('_', ' '));
     }
 
     protected ResourceLocation asResource(String path) {

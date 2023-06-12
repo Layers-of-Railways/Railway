@@ -21,6 +21,7 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraDisplays.register();
 
+    Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
     Mods.HEXCASTING.executeIfInstalled(() -> () -> HexCastingTrackCompat.register());
     BygTrackCompat.register();
   }

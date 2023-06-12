@@ -109,6 +109,11 @@ dependencies {
         modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
         modLocalRuntime("thedarkcolour:kotlinforforge:${kotlin_for_forge_version}")
     }
+
+    if (enable_byg.toBoolean()) {
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_forge}")
+        modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_forge}")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

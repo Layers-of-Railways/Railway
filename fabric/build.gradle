@@ -110,6 +110,11 @@ dependencies {
         modLocalRuntime("at.petra-k.hexcasting:hexcasting-fabric-${minecraft_version}:${hexcasting_version}")
         modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-FABRIC")
     }
+
+    if (enable_byg.toBoolean()) {
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
+        modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

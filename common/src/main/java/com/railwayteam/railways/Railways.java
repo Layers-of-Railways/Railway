@@ -5,6 +5,7 @@ import com.railwayteam.railways.base.data.CRTagGen;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;
@@ -38,7 +39,7 @@ public class Railways {
   public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
-          .creativeModeTab(() -> CRItems.itemGroup, "Create Steam 'n Rails");
+          .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n Rails");
 
   static {
     REGISTRATE.setTooltipModifierFactory(item -> {
@@ -66,7 +67,7 @@ public class Railways {
             (type, block) -> TrackMaterial.addCustomValidTracks(type)
     );*/
 
-    if (Utils.isDevEnv()) // force all mixins to load in dev
+    if (Utils.isDevEnv() && !Mods.BYG.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 

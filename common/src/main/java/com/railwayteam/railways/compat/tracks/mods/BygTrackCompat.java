@@ -18,7 +18,34 @@ public class BygTrackCompat extends GenericTrackCompat {
         Railways.LOGGER.info("Registering tracks for Oh The Biomes You'll Go");
         new BygTrackCompat().register(
             "aspen",
-            "baobab"
+            "baobab",
+            "blue_enchanted",
+            "bulbis",
+            "cherry",
+            "cika",
+            "cypress",
+            "ebony",
+            "embur",
+            "ether",
+            "fir",
+            "green_enchanted",
+            "holly",
+            "imparius",
+            "jacaranda",
+            "lament",
+            "mahogany",
+            "maple",
+            "nightshade",
+            "palm",
+            "pine",
+            "rainbow_eucalyptus",
+            "redwood",
+            "skyris",
+            "sythian",
+            "white_mangrove",
+            "willow",
+            "witch_hazel",
+            "zelkova"
         );
     }
 }
