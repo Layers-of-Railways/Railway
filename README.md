@@ -19,8 +19,11 @@
 5. Open a pull request, preferably linking to your issue - include your Discord username, and those of the people who helped you, so you can get the contributor role
 6. (For core devs) at least 2 core devs should approve before merging - probably have discussion in Discord first as well.
 
-### Datagen (if runData fails):
-Can occasionally have some bugs, see [here](src/main/java/com/railwayteam/railways/mixin/README.md) for more info. (There should be an upstream Create fix for this, but that is not yet in any 1.18 release, and so we can't take advantage of it.)
+### Datagen:
+Make sure to set the following environment variable when running datagen.
+```env
+DATAGEN=TRUE
+```
 
 ### Commit Tricks:
 

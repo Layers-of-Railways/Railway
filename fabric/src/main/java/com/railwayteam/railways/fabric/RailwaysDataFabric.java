@@ -19,6 +19,7 @@ public class RailwaysDataFabric implements DataGeneratorEntrypoint {
 
 		Path railwaysResources = Paths.get(System.getProperty(ExistingFileHelper.EXISTING_RESOURCES));
 		// fixme re-enable the existing file helper when porting lib's ResourcePackLoader.createPackForMod is fixed
+		// fixme remove legacy system for hexcasting
 		ExistingFileHelper helper = new ExistingFileHelper(
 			Set.of(railwaysResources), Set.of("create", "hexcasting"), false, null, null
 		);

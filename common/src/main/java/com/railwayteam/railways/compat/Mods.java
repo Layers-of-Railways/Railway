@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  */
 public enum Mods {
 	JOURNEYMAP("journeymap-fabric"),
-	HEXCASTING(true)
+	HEXCASTING(true),
 	;
 
 	public final boolean isLoaded;

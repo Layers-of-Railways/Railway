@@ -1,7 +1,6 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.TextUtils;
@@ -23,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
+
+import static com.railwayteam.railways.compat.tracks.TrackCompatUtils.TRACK_COMPAT_MODS;
 
 public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
   protected RailwaysSequencedAssemblyRecipeGen(DataGenerator pGenerator) {
@@ -61,9 +62,8 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
     List<TrackMaterial> trackMaterials = new ArrayList<>(TrackMaterial.allFromMod(Railways.MODID));
 
     // Add all mod compat tracks
-    for (Mods mod : Mods.values())
-      if (mod.requiredForDataGen)
-        trackMaterials.addAll(TrackMaterial.allFromMod(mod.asFabricId()));
+    for (String mod : TRACK_COMPAT_MODS)
+      trackMaterials.addAll(TrackMaterial.allFromMod(mod));
 
     for (TrackMaterial material : trackMaterials) {
       if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) continue;

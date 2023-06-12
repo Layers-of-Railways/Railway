@@ -1,7 +1,8 @@
-package com.railwayteam.railways.compat.tracks;
+package com.railwayteam.railways.compat.tracks.mods;
 
 import at.petrak.hexcasting.common.lib.HexBlocks;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.tracks.LazyIngredient;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;

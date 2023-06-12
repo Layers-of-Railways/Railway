@@ -1,5 +1,6 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.google.common.collect.ImmutableSet;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
@@ -27,11 +28,18 @@ import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public abstract class TrackCompatUtils {
+
+    public static final Set<String> TRACK_COMPAT_MODS = ImmutableSet.of(
+        "hexcasting",
+        "byg" // Oh The Biomes You'll Go
+    );
+
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
