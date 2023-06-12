@@ -47,6 +47,20 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    maven {
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("at.petra-k")
+            includeGroup("vazkii.patchouli")
+        }
+    } // JEI, Hex Casting
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup("dev.onyxstudios.cardinal-components-api")
+        }
+    } // Cardinal Components (Hex Casting dependency)
 }
 
 dependencies {
@@ -87,6 +101,13 @@ dependencies {
 
     // because create fabric is a bit broken I think
     modApi "net.minecraftforge:forgeconfigapiport-fabric:3.2.4"
+
+    // mod compat for tracks
+    if (enable_hexcasting.toBoolean()) {
+        modLocalRuntime("at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucal_version}")
+        modLocalRuntime("at.petra-k.hexcasting:hexcasting-fabric-${minecraft_version}:${hexcasting_version}")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-FABRIC")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

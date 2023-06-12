@@ -40,6 +40,41 @@ repositories {
             includeGroup("com.simibubi.create")
         }
     }
+    maven {
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("at.petra-k")
+            includeGroup("vazkii.patchouli")
+        }
+    } // JEI, Hex Casting
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup("dev.onyxstudios.cardinal-components-api")
+        }
+    } // Cardinal Components (Hex Casting dependency)
+    maven {
+        url = "https://jitpack.io"
+        content {
+            includeGroupByRegex("com.github.*")
+        }
+    } // Pehkui (Hex Casting dependency)
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes (Hex Casting dependency)
+    // Add KFF Maven repository (Hex Casting dependency)
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        content {
+            includeGroup("thedarkcolour")
+        }
+    }
+
+    // according to https://github.com/Talia-12/Hexal/blob/main/addon_guide.md, this is needed for hex casting (you should download the mod into here)
+    // VERSION USED: hexcasting-forge-1.18.2-0.9.6-pre-6.jar (https://maven.blamejared.com/at/petra-k/hexcasting/hexcasting-forge-1.18.2/0.9.6-pre-6/)
+    flatDir {
+        dir 'libs'
+    }
 }
 
 dependencies {
@@ -61,6 +96,19 @@ dependencies {
     // Test with JourneyMap in dev
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-SNAPSHOT") // for some reason this is needed explicitly
+
+    // mod compat for tracks
+    if (enable_hexcasting.toBoolean()) {
+        modLocalRuntime("at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucal_version}")
+        modLocalRuntime("railways:hexcasting-forge-${minecraft_version}:${hexcasting_version}") {
+            exclude group: "com.github.Virtuoel", module: "Pehkui"
+            exclude group: "net.minecraftforge", module: "forge"
+            exclude group: "top.theillusivec4.curios", module: "curios-forge"
+        }
+        //modApi("com.github.Virtuoel:Pehkui:${pehkui_version}-${minecraft_version}-forge") // probably not needed
+        modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+        modLocalRuntime("thedarkcolour:kotlinforforge:${kotlin_for_forge_version}")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
