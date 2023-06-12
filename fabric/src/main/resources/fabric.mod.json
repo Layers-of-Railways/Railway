@@ -39,5 +39,8 @@
   },
   "recommends": {
     "create": "${create_version}"
+  },
+  "suggests": {
+    "hexcasting": "*"
   }
 }

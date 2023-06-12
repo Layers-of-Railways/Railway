@@ -11,7 +11,9 @@ import java.util.function.Supplier;
  * For compatibility with and without another mod present, we have to define load conditions of the specific code
  */
 public enum Mods {
-	JOURNEYMAP("journeymap-fabric");
+	JOURNEYMAP("journeymap-fabric"),
+	HEXCASTING
+	;
 
 	public final boolean isLoaded;
 	public final @Nullable String fabricId;

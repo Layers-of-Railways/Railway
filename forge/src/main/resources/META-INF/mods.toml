@@ -35,3 +35,10 @@ mandatory=true
 versionRange="${create_version}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies.railways]]
+modId="hexcasting"
+mandatory=false
+versionRange="," # Any version
+ordering="AFTER" # Steam 'n Rails should load after hexcasting
+side="BOTH"
