@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = StationScreen.class, remap = false)
-public abstract class MixinStationScreen extends AbstractStationScreen { // fixme rework opening system
+public abstract class MixinStationScreen extends AbstractStationScreen {
     private Checkbox limitEnableCheckbox;
 
     private MixinStationScreen(StationBlockEntity te, GlobalStation station) {

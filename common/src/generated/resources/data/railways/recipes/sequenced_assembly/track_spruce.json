@@ -15,10 +15,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "railways:internal/nuggets/iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "railways:internal/nuggets/zinc_nuggets"
           }
         ]
       ],
@@ -36,10 +36,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "railways:internal/nuggets/iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "railways:internal/nuggets/zinc_nuggets"
           }
         ]
       ],
