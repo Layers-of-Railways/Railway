@@ -12,19 +12,29 @@ import java.util.function.Supplier;
  */
 public enum Mods {
 	JOURNEYMAP("journeymap-fabric"),
-	HEXCASTING
+	HEXCASTING(true)
 	;
 
 	public final boolean isLoaded;
+	public final boolean requiredForDataGen;
 	public final @Nullable String fabricId;
 
 	Mods() {
-		this(null);
+		this(null, false);
 	}
 
 	Mods(@Nullable String fabricId) {
+		this(fabricId, false);
+	}
+
+	Mods(boolean requiredForDataGen) {
+		this(null, requiredForDataGen);
+	}
+
+	Mods(@Nullable String fabricId, boolean requiredForDataGen) {
 		this.fabricId = fabricId;
 		this.isLoaded = Utils.isModLoaded(asId(), fabricId);
+		this.requiredForDataGen = requiredForDataGen;
 	}
 
 	/**
@@ -32,6 +42,10 @@ public enum Mods {
 	 */
 	public String asId() {
 		return Lang.asId(name());
+	}
+
+	public String asFabricId() {
+		return fabricId != null ? fabricId : asId();
 	}
 
 	/**
@@ -53,5 +67,9 @@ public enum Mods {
 		if (isLoaded) {
 			toExecute.get().run();
 		}
+	}
+
+	public void assertForDataGen() {
+		assert (!requiredForDataGen || isLoaded);
 	}
 }

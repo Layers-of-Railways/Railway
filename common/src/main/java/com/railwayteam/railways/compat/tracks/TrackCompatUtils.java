@@ -1,12 +1,15 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackMaterialFactory;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -69,8 +72,19 @@ public abstract class TrackCompatUtils {
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
             .item(TrackBlockItem::new)
-            .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/" + c.getName())))
+            .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_"+material.resourceName())))
             .build()
             .register();
+    }
+
+    public static TrackMaterial buildCompatModels(TrackMaterialFactory factory) {
+        String namespace = ((AccessorTrackMaterialFactory)factory).getId().getNamespace();
+        String path = ((AccessorTrackMaterialFactory)factory).getId().getPath();
+        String prefix = "block/track/compat/" + namespace + "/" + path + "/";
+        return factory.customModels(
+            () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
+            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
+            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
+        ).build();
     }
 }

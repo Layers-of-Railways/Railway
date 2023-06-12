@@ -28,6 +28,7 @@ public class CRTagGen {
 		CommonTags.ZINC_NUGGETS.generateCommon(tags);
 		CommonTags.BRASS_NUGGETS.generateCommon(tags);
 		CommonTags.COPPER_INGOTS.generateCommon(tags);
+		CommonTags.IRON_INGOTS.generateCommon(tags);
 		CommonTags.STRING.generateCommon(tags)
 			.generateBoth(tags, tag -> tag.add(Items.STRING));
 		CommonTags.IRON_PLATES.generateCommon(tags);

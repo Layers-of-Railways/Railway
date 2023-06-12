@@ -38,6 +38,7 @@ public class CompatTrackBlockStateGenerator extends SpecialBlockStateGen {
           .getExistingFile(prov.mcLoc("block/air"));
     }
     String prefix = "block/track/" + material.resourceName() + "/";
+    String outputPrefix = "block/track/compat/"+material.id.getNamespace()+"/" + material.resourceName() + "/";
     Map<String, String> textureMap = new HashMap<>();//prefix + get() + material.resName()
     switch (value) {
       case TE, TN, TS, TW -> {
@@ -67,7 +68,7 @@ public class CompatTrackBlockStateGenerator extends SpecialBlockStateGen {
     }
 
     BlockModelBuilder builder = prov.models()
-          .withExistingParent(prefix + value.getModel(),
+          .withExistingParent(outputPrefix + value.getModel(),
               Railways.asResource("block/track_base/" + value.getModel()))
         .texture("particle", material.particle);
     for (String k : textureMap.keySet()) {
@@ -75,7 +76,7 @@ public class CompatTrackBlockStateGenerator extends SpecialBlockStateGen {
     }
     for (String k : new String[]{"segment_left", "segment_right", "tie"}) {
       prov.models()
-          .withExistingParent(prefix + k,
+          .withExistingParent(outputPrefix + k,
               Railways.asResource("block/track_base/" + k))
           .texture("1", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_" + material.resourceName()))
           .texture("2", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_mip_" + material.resourceName()))

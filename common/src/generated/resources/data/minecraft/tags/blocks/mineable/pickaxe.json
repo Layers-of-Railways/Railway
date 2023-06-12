@@ -22,6 +22,7 @@
     "railways:smokestack_oilburner",
     "railways:smokestack_streamlined",
     "railways:smokestack_woodburner",
-    "railways:smokestack_diesel"
+    "railways:smokestack_diesel",
+    "railways:track_hexcasting_edified"
   ]
 }
