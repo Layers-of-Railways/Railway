@@ -14,6 +14,8 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_monorail",
-    "railways:track_hexcasting_edified"
+    "railways:track_hexcasting_edified",
+    "railways:track_byg_aspen",
+    "railways:track_byg_baobab"
   ]
 }

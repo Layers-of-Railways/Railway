@@ -28,4 +28,9 @@ public class SoftIngredient extends Ingredient {
         jsonobject.addProperty("item", item.toString());
         return jsonobject;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }
