@@ -1,5 +1,6 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.TextUtils;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -50,8 +51,10 @@ public class GenericTrackCompat {
     public void register(String... names) {
         for (String name : names) {
             Optional<Block> baseBlock = Registry.BLOCK.getOptional(getSlabLocation(name));
-            if (baseBlock.isEmpty() && !shouldRegisterMissing()) {
-                continue; // skip if we shouldn't register tracks for missing base blocks
+            if (baseBlock.isEmpty()) {
+                if (!shouldRegisterMissing()) continue; // skip if we shouldn't register tracks for missing base blocks
+                if (isDataGen())
+                    Railways.LOGGER.error("Failed to locate base block at "+getSlabLocation(name)+" for "+asResource(name));
             }
             TrackMaterial material = buildCompatModels(make(asResource(name))
                 .lang(langName(name))
@@ -61,7 +64,7 @@ public class GenericTrackCompat {
             );
             MATERIALS.put(name, material);
 
-            NonNullSupplier<TrackBlock> block = makeTrack(material);
+            NonNullSupplier<TrackBlock> block = makeTrack(material, baseBlock.isEmpty() && !Utils.isDevEnv());
             BLOCKS.put(name, block);
 
             ITEM_INCOMPLETE_TRACK.put(material, registrate().item("track_incomplete_" + modid + "_" + material.resourceName(), SequencedAssemblyItem::new)

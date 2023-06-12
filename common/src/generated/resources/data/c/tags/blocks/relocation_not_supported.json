@@ -14,8 +14,125 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_monorail",
-    "railways:track_hexcasting_edified",
-    "railways:track_byg_aspen",
-    "railways:track_byg_baobab"
+    {
+      "id": "railways:track_hexcasting_edified",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_aspen",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_baobab",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_blue_enchanted",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_bulbis",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cika",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cypress",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ebony",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_embur",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ether",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_fir",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_green_enchanted",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_holly",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_imparius",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_jacaranda",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_lament",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_mahogany",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_nightshade",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_pine",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_rainbow_eucalyptus",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_redwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_skyris",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_sythian",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_white_mangrove",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_willow",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_witch_hazel",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_zelkova",
+      "required": false
+    }
   ]
 }

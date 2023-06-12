@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "byg:rainbow_eucalyptus_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_rainbow_eucalyptus"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_byg_rainbow_eucalyptus"
+    }
+  ],
+  "loops": 1
+}

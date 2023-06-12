@@ -19,18 +19,16 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import static com.railwayteam.railways.base.data.CRTagGen.addOptionalTag;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public abstract class TrackCompatUtils {
@@ -46,6 +44,10 @@ public abstract class TrackCompatUtils {
         return makeTrack(material, new CompatTrackBlockStateGenerator()::generate);
     }
 
+    public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, boolean hideInCreativeTabs) {
+        return makeTrack(material, new CompatTrackBlockStateGenerator()::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
+    }
+
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
         return makeTrack(material, blockstateGen, (t) -> {});
     }
@@ -59,13 +61,19 @@ public abstract class TrackCompatUtils {
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
-        List<TagKey<Block>> trackTags = new ArrayList<>();
-        trackTags.add(AllTags.AllBlockTags.TRACKS.tag);
-        if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
-            trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+        return makeTrack(material, blockstateGen, onRegister, collectProperties, false);
+    }
+
+    public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties, boolean hideInCreativeTabs) {
         String owningMod = material.id.getNamespace();
-        //noinspection unchecked
-        return REGISTRATE.block("track_" + owningMod + "_" + material.resourceName(), material::createBlock)
+        String name = "track_" + owningMod + "_" + material.resourceName();
+
+        addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.TRACKS.tag,
+            CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric);
+        if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
+            addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+
+        return REGISTRATE.block(name, material::createBlock)
             .initialProperties(Material.STONE)
             .properties(p -> collectProperties.apply(p)
                 .color(MaterialColor.METAL)
@@ -75,11 +83,14 @@ public abstract class TrackCompatUtils {
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
             .blockstate(blockstateGen)
-            .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
-            .tag((TagKey<Block>[]) trackTags.toArray(new TagKey[0])) // keep the cast, or stuff breaks
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
             .item(TrackBlockItem::new)
+            .properties(p -> {
+                if (hideInCreativeTabs) //noinspection DataFlowIssue
+                    p.tab(null);
+                return p;
+            })
             .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_"+material.resourceName())))
             .build()
             .register();
