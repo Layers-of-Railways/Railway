@@ -5,6 +5,7 @@ import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlockEntity
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +20,13 @@ public class MixinSlidingDoorBlockEntity implements SlidingDoorMode.IHasDoorMode
     @Inject(method = "addBehaviours", at = @At("RETURN"))
     private void addScrollBehaviour(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         SlidingDoorBlockEntity this_ = (SlidingDoorBlockEntity) (Object) this;
-        doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform());
+        doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
+            @Override
+            public void read(CompoundTag nbt, boolean clientPacket) {
+                super.read(nbt, clientPacket);
+                setValue(value); // ensure that it is properly bounded
+            }
+        };
         doorModeScroll.requiresWrench();
 //        doorModeScroll.value = doorModeScroll.scrollableValue = 1;
         behaviours.add(doorModeScroll);
