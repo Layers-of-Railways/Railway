@@ -32,7 +32,7 @@ public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
   }
 
   protected MinecartWorkbench(Level level, double x, double y, double z) {
-    super(CREntities.CART_BLOCK.get(), level, x, y, z);
+    super(CREntities.CART_BLOCK.get(), level, x, y, z, Blocks.CRAFTING_TABLE);
   }
 
   // need to detour through this or generics explode somehow

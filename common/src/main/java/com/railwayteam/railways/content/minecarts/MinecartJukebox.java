@@ -16,11 +16,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
@@ -41,7 +43,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
   }
 
   protected MinecartJukebox(Level level, double x, double y, double z) {
-    super(CREntities.CART_JUKEBOX.get(), level, x, y, z);
+    super(CREntities.CART_JUKEBOX.get(), level, x, y, z, Blocks.JUKEBOX);
   }
 
   // need to detour through this or generics explode somehow
@@ -189,6 +191,15 @@ public abstract class MinecartJukebox extends MinecartBlock {
 
     public void requestStop () {
       stop();
+    }
+  }
+
+  @Override
+  public void destroy(DamageSource source) {
+    super.destroy(source);
+    if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS) && this.disc != null && !this.disc.isEmpty()) {
+      this.spawnAtLocation(this.disc.copy());
+      this.disc = ItemStack.EMPTY;
     }
   }
 }

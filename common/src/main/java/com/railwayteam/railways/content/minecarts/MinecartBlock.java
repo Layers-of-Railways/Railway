@@ -16,8 +16,9 @@ public abstract class MinecartBlock extends AbstractMinecart {
     this.content = content.defaultBlockState();
   }
 
-  public MinecartBlock(EntityType<?> type, Level level, double x, double y, double z) {
+  public MinecartBlock(EntityType<?> type, Level level, double x, double y, double z, Block content) {
     super(type, level, x, y, z);
+    this.content = content.defaultBlockState();
   }
 
   @Override
