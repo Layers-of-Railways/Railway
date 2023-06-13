@@ -143,11 +143,11 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 }
 
 modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
+    token = findProperty('MODRINTH_TOKEN')
     projectId = findProperty('modrinth_project')
     changelog = getChangelogText("Forge")
     versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    versionNumber = mod_version
+    versionNumber = "${mod_version}-forge-${minecraft_version}"
     versionType = "release"
     uploadFile = file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar")
     gameVersions = [minecraft_version]
