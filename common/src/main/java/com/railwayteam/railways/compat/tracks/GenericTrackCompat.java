@@ -9,6 +9,7 @@ import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
@@ -60,7 +61,7 @@ public class GenericTrackCompat {
                 .lang(langName(name))
                 .block(() -> BLOCKS.get(name))
                 .particle(asResource("block/track/"+name+"/standard_track_crossing_"+name))
-                .sleeper(SoftIngredient.of(getSlabLocation(name)))
+                .sleeper(baseBlock.map(Ingredient::of).orElseGet(() -> SoftIngredient.of(getSlabLocation(name))))
             );
             MATERIALS.put(name, material);
 
