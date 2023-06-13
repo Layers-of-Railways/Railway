@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -140,7 +141,7 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier) {
-        Random random = level.getRandom();
+        Random random = (Random) level.getRandom();
         SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
         level.addAlwaysVisibleParticle(particleType, true,
             (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
@@ -161,7 +162,7 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
      * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
      */
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(ENABLED)) {
             if (random.nextFloat() < type.particleSpawnChance && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {

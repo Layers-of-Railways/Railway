@@ -3,9 +3,13 @@
   "ingredient": {
     "item": "minecraft:phantom_membrane"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_phantom"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "count": 32,
+      "item": "railways:track_phantom"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -53,11 +57,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_phantom",
-      "count": 32
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_phantom"
+  }
 }

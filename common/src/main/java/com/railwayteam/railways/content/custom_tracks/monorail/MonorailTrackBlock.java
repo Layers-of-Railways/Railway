@@ -22,6 +22,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -142,8 +143,7 @@ public class MonorailTrackBlock extends TrackBlock {
 
     @Override
     @SuppressWarnings("deprecation") // deprecated to call, fine to implement
-    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level,
-                           @NotNull BlockPos pos, @NotNull Random random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource p_60465_) {
         if (!state.hasProperty(SHAPE)) return;
         TrackGraphLocation location = TrackGraphHelper.getGraphLocationAt(level, pos,
             Direction.AxisDirection.POSITIVE, state.getValue(SHAPE).getAxes().get(0));

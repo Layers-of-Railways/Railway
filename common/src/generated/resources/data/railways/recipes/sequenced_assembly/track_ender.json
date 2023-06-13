@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "minecraft:end_stone_brick_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_ender"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_ender"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -15,10 +18,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -36,10 +39,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -63,10 +66,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_ender"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_ender"
+  }
 }

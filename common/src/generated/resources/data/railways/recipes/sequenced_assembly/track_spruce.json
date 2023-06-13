@@ -18,10 +18,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -39,10 +39,10 @@
         },
         [
           {
-            "tag": "c:nuggets/iron"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "c:nuggets/zinc"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],

@@ -47,12 +47,13 @@ public abstract class MixinTextureAtlasSprite implements IPotentiallyInvisibleTe
     @Mixin(TextureAtlasSprite.AnimatedTexture.class)
     public abstract static class MixinAnimatedTexture {
 
-        @Shadow @Final TextureAtlasSprite f_uqrdoixj;
+        @Shadow(aliases = {"a", "field_28469", "f_uqrdoixj"})
+        TextureAtlasSprite this$0;
 
         @ModifyVariable(method = "uploadFrame", argsOnly = true, ordinal = 0, at = @At("LOAD"))
         private int railways$modifyFrameIndex(int frameIndex) {
-            if (!((IPotentiallyInvisibleTextureAtlasSprite) f_uqrdoixj).shouldDoInvisibility()) return frameIndex;
-            return ((IPotentiallyInvisibleTextureAtlasSprite) f_uqrdoixj).isVisible() ? 0 : 1;
+            if (!((IPotentiallyInvisibleTextureAtlasSprite) this$0).shouldDoInvisibility()) return frameIndex;
+            return ((IPotentiallyInvisibleTextureAtlasSprite) this$0).isVisible() ? 0 : 1;
         }
     }
 }

@@ -4,54 +4,54 @@
       "model": "railways:block/smokestack/block_long",
       "y": 90
     },
-    "axis=z,enabled=false,powered=false,waterlogged=false": {
-      "model": "railways:block/smokestack/block_long"
-    },
-    "axis=x,enabled=true,powered=false,waterlogged=false": {
+    "axis=x,enabled=false,powered=false,waterlogged=true": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
-    },
-    "axis=z,enabled=true,powered=false,waterlogged=false": {
-      "model": "railways:block/smokestack/block_long"
     },
     "axis=x,enabled=false,powered=true,waterlogged=false": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
     },
-    "axis=z,enabled=false,powered=true,waterlogged=false": {
-      "model": "railways:block/smokestack/block_long"
-    },
-    "axis=x,enabled=true,powered=true,waterlogged=false": {
+    "axis=x,enabled=false,powered=true,waterlogged=true": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
     },
-    "axis=z,enabled=true,powered=true,waterlogged=false": {
-      "model": "railways:block/smokestack/block_long"
-    },
-    "axis=x,enabled=false,powered=false,waterlogged=true": {
+    "axis=x,enabled=true,powered=false,waterlogged=false": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
-    },
-    "axis=z,enabled=false,powered=false,waterlogged=true": {
-      "model": "railways:block/smokestack/block_long"
     },
     "axis=x,enabled=true,powered=false,waterlogged=true": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
     },
-    "axis=z,enabled=true,powered=false,waterlogged=true": {
-      "model": "railways:block/smokestack/block_long"
-    },
-    "axis=x,enabled=false,powered=true,waterlogged=true": {
+    "axis=x,enabled=true,powered=true,waterlogged=false": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
-    },
-    "axis=z,enabled=false,powered=true,waterlogged=true": {
-      "model": "railways:block/smokestack/block_long"
     },
     "axis=x,enabled=true,powered=true,waterlogged=true": {
       "model": "railways:block/smokestack/block_long",
       "y": 90
+    },
+    "axis=z,enabled=false,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=false,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=false,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=false,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=true,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=true,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_long"
+    },
+    "axis=z,enabled=true,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_long"
     },
     "axis=z,enabled=true,powered=true,waterlogged=true": {
       "model": "railways:block/smokestack/block_long"

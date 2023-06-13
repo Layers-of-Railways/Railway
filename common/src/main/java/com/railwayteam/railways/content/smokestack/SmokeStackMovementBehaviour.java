@@ -93,7 +93,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
 
         // Mostly copied from CampfireBlock and CampfireBlockEntity
-        Random random = context.world.random;
+        Random random = (Random) context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
         double speedModifierTarget = 5 * (0.5+maxModifier);
         speedMultiplierChaser.chase(speedModifierTarget, 0.4, LerpedFloat.Chaser.LINEAR);

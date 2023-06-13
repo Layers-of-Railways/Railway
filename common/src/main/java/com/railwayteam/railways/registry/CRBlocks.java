@@ -204,6 +204,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> ENDER_TRACK = makeTrack(CRTrackMaterials.ENDER);
     public static final BlockEntry<TrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
+    public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
         new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 
@@ -221,7 +222,7 @@ public class CRBlocks {
             .properties(p -> p.noOcclusion())
             .properties(p -> p.sound(SoundType.WOOD))
             .properties(p -> p.instabreak())
-            .properties(p -> p.noDrops())
+            .properties(p -> p.noLootTable())
             .properties(p -> p.noCollission())
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
                 .forAllStates(state -> ConfiguredModel.builder()

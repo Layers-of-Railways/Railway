@@ -1,8 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#*#"
-  ],
   "key": {
     "#": {
       "tag": "railways:internal/plates/iron_plates"
@@ -11,6 +8,9 @@
       "item": "create:propeller"
     }
   },
+  "pattern": [
+    "#*#"
+  ],
   "result": {
     "item": "railways:smokestack_diesel"
   }
