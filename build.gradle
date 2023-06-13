@@ -23,7 +23,7 @@ subprojects {
     repositories {
         mavenCentral()
         maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
-        maven { url = "https://maven.blamejared.com/" } // JEI
+        maven { url = "https://maven.blamejared.com/" } // JEI, Hex Casting
         maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
         maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
         maven { url = "https://jm.gserv.me/repository/maven-public/" } // JourneyMap API

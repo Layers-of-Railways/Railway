@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_d2_xo",
+  "textures": {
+    "particle": "byg:block/track/nightshade/standard_track_crossing_nightshade",
+    "0": "byg:block/track/nightshade/standard_track_nightshade",
+    "1": "byg:block/track/nightshade/standard_track_mip_nightshade",
+    "2": "byg:block/track/nightshade/standard_track_crossing_nightshade"
+  }
+}

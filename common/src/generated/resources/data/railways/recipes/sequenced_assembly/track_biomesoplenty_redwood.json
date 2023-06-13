@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "biomesoplenty:redwood_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_biomesoplenty_redwood"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_redwood"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_biomesoplenty_redwood"
+    }
+  ],
+  "loops": 1
+}

@@ -23,6 +23,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 @Mod(Railways.MODID)
+@Mod.EventBusSubscriber
 public class RailwaysImpl {
 	static IEventBus bus;
 

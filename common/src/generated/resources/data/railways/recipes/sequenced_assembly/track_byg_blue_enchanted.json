@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "byg:blue_enchanted_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_byg_blue_enchanted"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_blue_enchanted"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_byg_blue_enchanted"
+    }
+  ],
+  "loops": 1
+}

@@ -26,6 +26,7 @@ public class MixinDoorMovingInteraction {
     )
     private void snr$lockSpecial(Player player, Contraption contraption, BlockPos pos,
                                  BlockState currentState, CallbackInfoReturnable<BlockState> cir) {
+        if (player == null) return;
         if (!(currentState.getBlock() instanceof SlidingDoorBlock)) return;
         boolean lower = currentState.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;
         StructureTemplate.StructureBlockInfo info = contraption.getBlocks().get(lower ? pos : pos.below());

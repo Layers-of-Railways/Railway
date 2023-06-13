@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 public enum SlidingDoorMode implements INamedIconOptions {
     NORMAL(CRIcons.I_DOOR_NORMAL), //shouldOpen -> noChange; shouldUpdate -> noChange; - default behaviour
     MANUAL(CRIcons.I_DOOR_MANUAL), //shouldOpen -> noChange; shouldUpdate -> never; // done block redstone operation
-    SPECIAL(CRIcons.I_DOOR_SPECIAL), //shouldOpen -> &= at right station; shouldUpdate -> noChange; // done block hand operation todo (shift-use works on trains/contraptions though)
+    SPECIAL(CRIcons.I_DOOR_SPECIAL), //shouldOpen -> &= at right station; shouldUpdate -> noChange; // done block hand operation (shift-use works on trains/contraptions though)
     ;
 
     private final String translationKey;
@@ -44,7 +44,7 @@ public enum SlidingDoorMode implements INamedIconOptions {
     public static SlidingDoorMode fromNbt(CompoundTag nbt) {
         if (nbt == null)
             return SlidingDoorMode.NORMAL;
-        return SlidingDoorMode.values()[Math.min(3, Math.max(0, nbt.getInt("ScrollValue")))];
+        return SlidingDoorMode.values()[Math.min(2, Math.max(0, nbt.getInt("ScrollValue")))];
     }
 
     public static class SlidingDoorValueBoxTransform extends CenteredSideValueBoxTransform {

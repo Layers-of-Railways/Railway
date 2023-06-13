@@ -29,10 +29,16 @@ import java.util.Map;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
-  public static final CreativeModeTab itemGroup = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
+  public static final CreativeModeTab mainCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
+  };
+
+  public static final CreativeModeTab compatTracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
+    @Override
+    @Nonnull
+    public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack(); }
   };
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");

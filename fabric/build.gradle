@@ -23,6 +23,8 @@ loom {
             vmArg "-Dfabric-api.datagen.output-dir=${common.file("src/generated/resources")}"
             vmArg "-Dfabric-api.datagen.modid=railways"
             vmArg "-Dporting_lib.datagen.existing_resources=${common.file("src/main/resources")}"
+
+            environmentVariable("DATAGEN", "TRUE")
         }
     }
 }
@@ -47,6 +49,20 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    maven {
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("at.petra-k")
+            includeGroup("vazkii.patchouli")
+        }
+    } // JEI, Hex Casting
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup("dev.onyxstudios.cardinal-components-api")
+        }
+    } // Cardinal Components (Hex Casting dependency)
 }
 
 configurations.configureEach {
@@ -90,12 +106,23 @@ dependencies {
 
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-fabric") // Test with JourneyMap in dev
     modLocalRuntime("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // API is a JiJ on fabric, add manually
-    
+
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
     // because create fabric is a bit broken I think
     modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
 
+    // mod compat for tracks
+    if (enable_hexcasting.toBoolean()) {
+        modLocalRuntime("at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucal_version}")
+        modLocalRuntime("at.petra-k.hexcasting:hexcasting-fabric-${minecraft_version}:${hexcasting_version}")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-FABRIC")
+    }
+
+    if (enable_byg.toBoolean()) {
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
+        modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

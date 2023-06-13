@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "biomesoplenty:umbran_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_biomesoplenty_umbran"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_umbran"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_biomesoplenty_umbran"
+    }
+  ],
+  "loops": 1
+}

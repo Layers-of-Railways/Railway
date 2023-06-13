@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/track_base/ascending",
+  "textures": {
+    "particle": "byg:block/track/aspen/standard_track_crossing_aspen",
+    "0": "byg:block/track/aspen/standard_track_aspen",
+    "1": "byg:block/track/aspen/standard_track_mip_aspen"
+  }
+}
