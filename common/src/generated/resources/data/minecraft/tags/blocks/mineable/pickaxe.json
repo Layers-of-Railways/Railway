@@ -59,6 +59,14 @@
     "railways:track_blue_skies_frostbright",
     "railways:track_blue_skies_lunar",
     "railways:track_blue_skies_maple",
-    "railways:track_blue_skies_starlit"
+    "railways:track_blue_skies_starlit",
+    "railways:track_twilightforest_canopy",
+    "railways:track_twilightforest_darkwood",
+    "railways:track_twilightforest_mangrove",
+    "railways:track_twilightforest_minewood",
+    "railways:track_twilightforest_sortingwood",
+    "railways:track_twilightforest_timewood",
+    "railways:track_twilightforest_transwood",
+    "railways:track_twilightforest_twilight_oak"
   ]
 }

@@ -160,6 +160,38 @@
     {
       "id": "railways:track_blue_skies_starlit",
       "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_canopy",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_darkwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_mangrove",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_minewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_sortingwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_timewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_transwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_twilight_oak",
+      "required": false
     }
   ]
 }

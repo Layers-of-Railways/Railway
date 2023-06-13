@@ -4,6 +4,7 @@ import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.mods.BlueSkiesTrackCompat;
 import com.railwayteam.railways.compat.tracks.mods.BygTrackCompat;
 import com.railwayteam.railways.compat.tracks.mods.HexCastingTrackCompat;
+import com.railwayteam.railways.compat.tracks.mods.TwilightForestTrackCompat;
 import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
@@ -26,6 +27,6 @@ public class ModSetup {
     Mods.HEXCASTING.executeIfInstalled(() -> () -> HexCastingTrackCompat.register());
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();
+    TwilightForestTrackCompat.register();
   }
 }
-
