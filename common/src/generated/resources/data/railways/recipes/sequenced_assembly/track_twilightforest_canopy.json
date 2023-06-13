@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "twilightforest:canopy_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_canopy"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_canopy"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_twilightforest_canopy"
+    }
+  ],
+  "loops": 1
+}
