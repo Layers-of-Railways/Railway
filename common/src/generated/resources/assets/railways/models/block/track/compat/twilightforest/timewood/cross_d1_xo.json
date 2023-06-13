@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d1_xo",
   "textures": {
-    "particle": "twilightforest:block/track/timewood/standard_track_crossing_timewood",
     "0": "twilightforest:block/track/timewood/standard_track_timewood",
     "1": "twilightforest:block/track/timewood/standard_track_mip_timewood",
-    "2": "twilightforest:block/track/timewood/standard_track_crossing_timewood"
+    "2": "twilightforest:block/track/timewood/standard_track_crossing_timewood",
+    "particle": "twilightforest:block/track/timewood/standard_track_crossing_timewood"
   }
 }

@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/teleport",
   "textures": {
-    "particle": "biomesoplenty:block/track/fir/standard_track_crossing_fir",
     "1": "biomesoplenty:block/track/fir/portal_track_fir",
     "2": "biomesoplenty:block/track/fir/portal_track_mip_fir",
-    "3": "biomesoplenty:block/track/fir/standard_track_fir"
+    "3": "biomesoplenty:block/track/fir/standard_track_fir",
+    "particle": "biomesoplenty:block/track/fir/standard_track_crossing_fir"
   }
 }

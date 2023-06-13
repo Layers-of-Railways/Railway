@@ -1,8 +1,8 @@
 {
   "parent": "railways:block/track_base/ascending",
   "textures": {
-    "particle": "blue_skies:block/track/cherry/standard_track_crossing_cherry",
     "0": "blue_skies:block/track/cherry/standard_track_cherry",
-    "1": "blue_skies:block/track/cherry/standard_track_mip_cherry"
+    "1": "blue_skies:block/track/cherry/standard_track_mip_cherry",
+    "particle": "blue_skies:block/track/cherry/standard_track_crossing_cherry"
   }
 }

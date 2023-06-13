@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d2_xo",
   "textures": {
-    "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow",
     "0": "biomesoplenty:block/track/willow/standard_track_willow",
     "1": "biomesoplenty:block/track/willow/standard_track_mip_willow",
-    "2": "biomesoplenty:block/track/willow/standard_track_crossing_willow"
+    "2": "biomesoplenty:block/track/willow/standard_track_crossing_willow",
+    "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow"
   }
 }

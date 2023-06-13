@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/diag",
   "textures": {
-    "particle": "byg:block/track/ether/standard_track_crossing_ether",
     "0": "byg:block/track/ether/standard_track_ether",
     "1": "byg:block/track/ether/standard_track_mip_ether",
-    "2": "byg:block/track/ether/standard_track_crossing_ether"
+    "2": "byg:block/track/ether/standard_track_crossing_ether",
+    "particle": "byg:block/track/ether/standard_track_crossing_ether"
   }
 }

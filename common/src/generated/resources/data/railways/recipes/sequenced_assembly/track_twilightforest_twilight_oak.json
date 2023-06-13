@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "twilightforest:twilight_oak_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_twilightforest_twilight_oak"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_twilightforest_twilight_oak"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -15,10 +18,10 @@
         },
         [
           {
-            "tag": "railways:internal/nuggets/iron_nuggets"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "railways:internal/nuggets/zinc_nuggets"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -36,10 +39,10 @@
         },
         [
           {
-            "tag": "railways:internal/nuggets/iron_nuggets"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "railways:internal/nuggets/zinc_nuggets"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -63,10 +66,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_twilightforest_twilight_oak"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_twilight_oak"
+  }
 }

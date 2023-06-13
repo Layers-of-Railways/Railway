@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/x_ortho",
   "textures": {
-    "particle": "byg:block/track/baobab/standard_track_crossing_baobab",
     "1": "byg:block/track/baobab/standard_track_baobab",
     "2": "byg:block/track/baobab/standard_track_mip_baobab",
-    "3": "byg:block/track/baobab/standard_track_crossing_baobab"
+    "3": "byg:block/track/baobab/standard_track_crossing_baobab",
+    "particle": "byg:block/track/baobab/standard_track_crossing_baobab"
   }
 }

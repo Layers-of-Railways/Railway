@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d1_zo",
   "textures": {
-    "particle": "byg:block/track/cypress/standard_track_crossing_cypress",
     "0": "byg:block/track/cypress/standard_track_cypress",
     "1": "byg:block/track/cypress/standard_track_mip_cypress",
-    "2": "byg:block/track/cypress/standard_track_crossing_cypress"
+    "2": "byg:block/track/cypress/standard_track_crossing_cypress",
+    "particle": "byg:block/track/cypress/standard_track_crossing_cypress"
   }
 }

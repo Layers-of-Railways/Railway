@@ -1,7 +1,6 @@
 package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.railwayteam.railways.compat.tracks.LazyIngredient;
 import com.railwayteam.railways.compat.tracks.SoftIngredient;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.utility.Components;
@@ -40,14 +39,6 @@ public class TrackDemoCommand {
                             if (material.sleeperIngredient.values.length >= 1
                                 && material.sleeperIngredient.values[0] instanceof Ingredient.ItemValue itemValue
                                 && itemValue.getItems().stream().findFirst().orElseGet(() -> new ItemStack(Blocks.AIR)).getItem() instanceof BlockItem blockItem) {
-
-                                BlockState baseState = blockItem.getBlock().defaultBlockState();
-                                if (baseState.hasProperty(SlabBlock.TYPE))
-                                    baseState = baseState.setValue(SlabBlock.TYPE, SlabType.DOUBLE);
-                                level.setBlockAndUpdate(pos.east(3), baseState);
-                                level.setBlockAndUpdate(pos.east(3).above(), baseState);
-                            } else if (material.sleeperIngredient instanceof LazyIngredient lazy && lazy.getItems().length >= 1
-                                && lazy.getItems()[0].getItem() instanceof BlockItem blockItem) {
 
                                 BlockState baseState = blockItem.getBlock().defaultBlockState();
                                 if (baseState.hasProperty(SlabBlock.TYPE))

@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/diag",
   "textures": {
-    "particle": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood",
     "0": "twilightforest:block/track/darkwood/standard_track_darkwood",
     "1": "twilightforest:block/track/darkwood/standard_track_mip_darkwood",
-    "2": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood"
+    "2": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood",
+    "particle": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood"
   }
 }

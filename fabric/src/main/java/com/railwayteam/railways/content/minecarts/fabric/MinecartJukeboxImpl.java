@@ -5,20 +5,12 @@ import com.simibubi.create.content.contraptions.minecart.capability.CapabilityMi
 import com.simibubi.create.content.contraptions.minecart.capability.MinecartController;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Unique;
 
 public class MinecartJukeboxImpl extends MinecartJukebox {
     public MinecartJukeboxImpl(EntityType<?> type, Level level) {
         super(type, level);
-    }
-
-    @Override
-    protected Item getDropItem() {
-        //fixme SLIMEIST
-        //same as the forge one
-        return null;
     }
 
     protected MinecartJukeboxImpl(Level level, double x, double y, double z) {

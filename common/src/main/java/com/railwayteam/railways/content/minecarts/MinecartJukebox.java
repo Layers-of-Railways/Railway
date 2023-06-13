@@ -196,7 +196,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
   }
 
   @Override
-  public void destroy(DamageSource source) {
+  public void destroy(@NotNull DamageSource source) {
     super.destroy(source);
     if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS) && this.disc != null && !this.disc.isEmpty()) {
       this.spawnAtLocation(this.disc.copy());

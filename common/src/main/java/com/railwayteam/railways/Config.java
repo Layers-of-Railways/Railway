@@ -26,7 +26,6 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
     public static ForgeConfigSpec.BooleanValue CONDUCTOR_WHISTLE_REQUIRES_OWNING;
     public static ForgeConfigSpec.BooleanValue STRICT_COUPLER;
-    public static ForgeConfigSpec.BooleanValue REGISTER_MISSING_TRACKS;
 
 
     static {
@@ -57,7 +56,6 @@ public class Config {
         NEAR_TRAIN_SYNC_TICKS = builder.comment("In-render-distance train sync time (in ticks)").defineInRange("nearTrainUpdateTicks", 1, 1, 600);
         CONDUCTOR_WHISTLE_REQUIRES_OWNING = builder.comment("Conductor whistle is limited to the owner of a train").define("mustOwnBoundTrain", false);
         STRICT_COUPLER = builder.comment("Coupler will require points to be on the same or adjacent track edge, this will prevent the coupler from working if there is any form of junction in between the two points.").define("strictCoupler", false);
-        REGISTER_MISSING_TRACKS = builder.comment("Register integration tracks for mods that are not present").define("registerMissingTracks", false);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

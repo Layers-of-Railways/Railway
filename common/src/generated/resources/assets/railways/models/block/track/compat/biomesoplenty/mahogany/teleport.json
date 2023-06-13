@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/teleport",
   "textures": {
-    "particle": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany",
     "1": "biomesoplenty:block/track/mahogany/portal_track_mahogany",
     "2": "biomesoplenty:block/track/mahogany/portal_track_mip_mahogany",
-    "3": "biomesoplenty:block/track/mahogany/standard_track_mahogany"
+    "3": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
+    "particle": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany"
   }
 }

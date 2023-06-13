@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/teleport",
   "textures": {
-    "particle": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry",
     "1": "biomesoplenty:block/track/cherry/portal_track_cherry",
     "2": "biomesoplenty:block/track/cherry/portal_track_mip_cherry",
-    "3": "biomesoplenty:block/track/cherry/standard_track_cherry"
+    "3": "biomesoplenty:block/track/cherry/standard_track_cherry",
+    "particle": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry"
   }
 }

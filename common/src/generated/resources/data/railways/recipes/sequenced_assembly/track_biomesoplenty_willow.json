@@ -3,9 +3,12 @@
   "ingredient": {
     "item": "biomesoplenty:willow_slab"
   },
-  "transitionalItem": {
-    "item": "railways:track_incomplete_biomesoplenty_willow"
-  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_biomesoplenty_willow"
+    }
+  ],
   "sequence": [
     {
       "type": "create:deploying",
@@ -15,10 +18,10 @@
         },
         [
           {
-            "tag": "railways:internal/nuggets/iron_nuggets"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "railways:internal/nuggets/zinc_nuggets"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -36,10 +39,10 @@
         },
         [
           {
-            "tag": "railways:internal/nuggets/iron_nuggets"
+            "tag": "c:iron_nuggets"
           },
           {
-            "tag": "railways:internal/nuggets/zinc_nuggets"
+            "tag": "c:zinc_nuggets"
           }
         ]
       ],
@@ -63,10 +66,7 @@
       ]
     }
   ],
-  "results": [
-    {
-      "item": "railways:track_biomesoplenty_willow"
-    }
-  ],
-  "loops": 1
+  "transitionalItem": {
+    "item": "railways:track_incomplete_biomesoplenty_willow"
+  }
 }

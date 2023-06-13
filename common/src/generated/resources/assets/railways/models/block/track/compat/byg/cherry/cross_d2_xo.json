@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d2_xo",
   "textures": {
-    "particle": "byg:block/track/cherry/standard_track_crossing_cherry",
     "0": "byg:block/track/cherry/standard_track_cherry",
     "1": "byg:block/track/cherry/standard_track_mip_cherry",
-    "2": "byg:block/track/cherry/standard_track_crossing_cherry"
+    "2": "byg:block/track/cherry/standard_track_crossing_cherry",
+    "particle": "byg:block/track/cherry/standard_track_crossing_cherry"
   }
 }

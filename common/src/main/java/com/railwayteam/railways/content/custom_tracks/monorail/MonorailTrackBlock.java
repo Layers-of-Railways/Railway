@@ -37,7 +37,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class MonorailTrackBlock extends TrackBlock {
     public MonorailTrackBlock(Properties properties, TrackMaterial material) {
@@ -143,7 +142,7 @@ public class MonorailTrackBlock extends TrackBlock {
 
     @Override
     @SuppressWarnings("deprecation") // deprecated to call, fine to implement
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource p_60465_) {
+    public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (!state.hasProperty(SHAPE)) return;
         TrackGraphLocation location = TrackGraphHelper.getGraphLocationAt(level, pos,
             Direction.AxisDirection.POSITIVE, state.getValue(SHAPE).getAxes().get(0));

@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/cross_d2_zo",
   "textures": {
-    "particle": "byg:block/track/bulbis/standard_track_crossing_bulbis",
     "0": "byg:block/track/bulbis/standard_track_bulbis",
     "1": "byg:block/track/bulbis/standard_track_mip_bulbis",
-    "2": "byg:block/track/bulbis/standard_track_crossing_bulbis"
+    "2": "byg:block/track/bulbis/standard_track_crossing_bulbis",
+    "particle": "byg:block/track/bulbis/standard_track_crossing_bulbis"
   }
 }

@@ -1,9 +1,9 @@
 {
   "parent": "railways:block/track_base/z_ortho",
   "textures": {
-    "particle": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright",
     "1": "blue_skies:block/track/bluebright/standard_track_bluebright",
     "2": "blue_skies:block/track/bluebright/standard_track_mip_bluebright",
-    "3": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright"
+    "3": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright",
+    "particle": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright"
   }
 }

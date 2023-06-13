@@ -22,7 +22,6 @@ public class CRDataFixers {
 
         DataFixerBuilder builder = new DataFixerBuilder(Railways.DATA_FIXER_VERSION);
         addFixers(builder);
-        //fixme SLIMEIST!
         api.registerFixer(Railways.DATA_FIXER_VERSION, builder.buildOptimized(Util.bootstrapExecutor()));
     }
 

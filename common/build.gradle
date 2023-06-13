@@ -34,9 +34,9 @@ dependencies {
     // mod compat for tracks
 
     // Hex Casting
-    modCompileOnly("at.petra-k.paucal:paucal-common-${minecraft_version}:${paucal_version}")
+/*    modCompileOnly("at.petra-k.paucal:paucal-common-${minecraft_version}:${paucal_version}")
     modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
-    modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")
+    modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")*/
 }
 
 architectury {
