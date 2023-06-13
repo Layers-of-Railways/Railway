@@ -52,6 +52,13 @@
     "railways:track_byg_white_mangrove",
     "railways:track_byg_willow",
     "railways:track_byg_witch_hazel",
-    "railways:track_byg_zelkova"
+    "railways:track_byg_zelkova",
+    "railways:track_blue_skies_bluebright",
+    "railways:track_blue_skies_cherry",
+    "railways:track_blue_skies_dusk",
+    "railways:track_blue_skies_frostbright",
+    "railways:track_blue_skies_lunar",
+    "railways:track_blue_skies_maple",
+    "railways:track_blue_skies_starlit"
   ]
 }

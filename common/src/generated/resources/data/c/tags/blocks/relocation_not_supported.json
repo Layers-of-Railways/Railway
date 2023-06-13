@@ -133,6 +133,34 @@
     {
       "id": "railways:track_byg_zelkova",
       "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_bluebright",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_dusk",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_frostbright",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_lunar",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_starlit",
+      "required": false
     }
   ]
 }

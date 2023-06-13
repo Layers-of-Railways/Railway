@@ -35,7 +35,8 @@ public abstract class TrackCompatUtils {
 
     public static final Set<String> TRACK_COMPAT_MODS = ImmutableSet.of(
         "hexcasting",
-        "byg" // Oh The Biomes You'll Go
+        "byg", // Oh The Biomes You'll Go,
+        "blue_skies"
     );
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();

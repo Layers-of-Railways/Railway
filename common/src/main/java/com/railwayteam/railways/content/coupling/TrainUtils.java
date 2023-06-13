@@ -36,6 +36,8 @@ public class TrainUtils {
         if (train.carriages.size() <= numberOffEnd)
             return train;
 
+        // fixme backup original train
+        Integer frontSpacingBackup  = null;
         Carriage[] lastCarriages = new Carriage[numberOffEnd];
         Integer[] lastCarriageSpacings = new Integer[numberOffEnd - 1];
 
@@ -44,7 +46,7 @@ public class TrainUtils {
             if (i > 0) {
                 lastCarriageSpacings[i-1] = train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
             } else { //discard front spacing - there is no spacing between the front carriage and nothing (or the back carriage and nothing)
-                train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
+                frontSpacingBackup = train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
             }
         }
 
@@ -55,7 +57,17 @@ public class TrainUtils {
         ((AccessorTrain) train).snr_setStress(newStress);
 //        train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
 
-        Train newTrain = new Train(UUID.randomUUID(), train.owner, train.graph, new ArrayList<>(List.of(lastCarriages)), new ArrayList<>(List.of(lastCarriageSpacings)), Arrays.stream(lastCarriages).anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls()));
+        Train newTrain;
+        try {
+            newTrain = new Train(UUID.randomUUID(), train.owner, train.graph, new ArrayList<>(List.of(lastCarriages)), new ArrayList<>(List.of(lastCarriageSpacings)), Arrays.stream(lastCarriages).anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls()));
+        } catch (NullPointerException e) {
+            train.carriages.addAll(List.of(lastCarriages));
+            if (frontSpacingBackup != null)
+                train.carriageSpacing.add(frontSpacingBackup);
+            train.carriageSpacing.addAll(List.of(lastCarriageSpacings));
+            ((AccessorTrain) train).snr_setStress(originalStress);
+            return train;
+        }
         train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
         newTrain.name = Components.literal("Split off from: "+train.name.getString());
 //        lastCarriage.setTrain(newTrain);

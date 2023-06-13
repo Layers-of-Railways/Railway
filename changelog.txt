@@ -4,7 +4,8 @@ v1.3.0:
 - Rework train door system
 - Add new tracks: tieless, phantom, and ender
 - Update smokestack appearance to better stack on top of other blocks
-- Add compatibility tracks for the following mods: Hex Casting, todo add more
+- Add compatibility tracks for the following mods: Hex Casting, Oh The Biomes You'll Go, Blue Skies, todo add more
+- Add some exception catching to coupler
 v1.2.6:
 - Fix track placement issue (consuming base Create tracks instead of custom ones)
 v1.2.5:
