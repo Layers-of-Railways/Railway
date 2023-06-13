@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Train;
 
 public interface ILimitedGlobalStation extends ILimited {
     boolean isStationEnabled();

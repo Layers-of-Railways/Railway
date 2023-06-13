@@ -3,6 +3,7 @@ package com.railwayteam.railways.forge;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
+import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.simibubi.create.foundation.ModFilePackResources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -18,6 +19,7 @@ import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.forgespi.locating.IModFile;
 
 import java.util.*;
@@ -30,6 +32,11 @@ public class RailwaysClientImpl {
 		RailwaysClient.init();
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onModelLayerRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onBuiltinPackRegistration);
+		RailwaysImpl.bus.addListener(RailwaysClientImpl::onClientSetup);
+	}
+
+	public static void onClientSetup(FMLClientSetupEvent event) {
+		CRExtraDisplayTags.register();
 	}
 
 	// region -- Client Commands ---

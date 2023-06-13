@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_d1_zo",
+  "textures": {
+    "particle": "byg:block/track/embur/standard_track_crossing_embur",
+    "0": "byg:block/track/embur/standard_track_embur",
+    "1": "byg:block/track/embur/standard_track_mip_embur",
+    "2": "byg:block/track/embur/standard_track_crossing_embur"
+  }
+}

@@ -10,7 +10,7 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
+import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;

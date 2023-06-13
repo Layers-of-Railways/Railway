@@ -1,24 +1,24 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.schedule.Schedule;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleEntry;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
-import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
+import com.simibubi.create.content.trains.schedule.Schedule;
+import com.simibubi.create.content.trains.schedule.ScheduleEntry;
+import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
+import com.simibubi.create.content.trains.station.GlobalStation;
 import net.minecraft.world.level.Level;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ScheduleRuntime.class, remap = false)
 public abstract class MixinScheduleRuntime {
-    @Shadow Schedule schedule;
+    @Shadow
+    Schedule schedule;
 
     @Shadow public int currentEntry;
 
@@ -47,7 +47,7 @@ public abstract class MixinScheduleRuntime {
         }
     }
 
-    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/logistics/trains/management/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
+    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void discardAutoSchedule(Level level, CallbackInfo ci) {
         if (isAutoSchedule) {
             discardSchedule();

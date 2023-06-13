@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/teleport",
+  "textures": {
+    "particle": "byg:block/track/holly/standard_track_crossing_holly",
+    "1": "byg:block/track/holly/portal_track_holly",
+    "2": "byg:block/track/holly/portal_track_mip_holly",
+    "3": "byg:block/track/holly/standard_track_holly"
+  }
+}

@@ -4,13 +4,14 @@ loom {
 
 repositories {
     // mavens for Create Fabric and dependencies
-    maven { url = "https://api.modrinth.com/maven" } // LazyDFU
+    maven { url = "https://api.modrinth.com/maven" } // LazyDFU, Journyemap
     maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
     maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://cursemaven.com" } // Forge Config API Port
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
     maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
     maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
+    maven { url = "https://maven.blamejared.com/" } // JEI, Hex Casting
 }
 
 dependencies {
@@ -23,11 +24,19 @@ dependencies {
     // All dependencies except Flywheel and Registrate are NOT safe to use!
     // Flywheel and Registrate must also be used carefully due to differences.
     modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}")
+
     // required for proper remapping and compiling
     modCompileOnly("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 
     // JourneyMap compat
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT")
+
+    // mod compat for tracks
+
+    // Hex Casting
+    modCompileOnly("at.petra-k.paucal:paucal-common-${minecraft_version}:${paucal_version}")
+    modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
+    modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")
 }
 
 architectury {

@@ -5,10 +5,10 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.multiloader.CommonTags;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyItem;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -29,10 +29,16 @@ import java.util.Map;
 
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
-  public static final CreativeModeTab itemGroup = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
+  public static final CreativeModeTab mainCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
+  };
+
+  public static final CreativeModeTab compatTracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
+    @Override
+    @Nonnull
+    public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack(); }
   };
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
@@ -110,8 +116,8 @@ public class CRItems {
         .register());
     }
 
-    for (TrackMaterial material : TrackMaterial.allCustom(Railways.MODID)) { //TODO _track api - up to mods how they want to craft their track items
-      ITEM_INCOMPLETE_TRACK.put(material, REGISTRATE.item("track_incomplete_" + material.resName(), SequencedAssemblyItem::new)
+    for (TrackMaterial material : TrackMaterial.allFromMod(Railways.MODID)) {
+      ITEM_INCOMPLETE_TRACK.put(material, REGISTRATE.item("track_incomplete_" + material.resourceName(), SequencedAssemblyItem::new)
           .model((c, p) -> p.generated(c, Railways.asResource("item/track_incomplete/" + c.getName())))
           .lang("Incomplete " + material.langName + " Track")
           .register());

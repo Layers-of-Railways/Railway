@@ -1,11 +1,12 @@
 package com.railwayteam.railways.base.data.lang;
 
-import com.google.common.base.Supplier;
 import com.google.gson.JsonElement;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.data.LangPartial;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.foundation.utility.Lang;
+
+import java.util.function.Supplier;
 
 public enum CRLangPartials implements LangPartial {
 	INTERFACE("UI & Messages"),
@@ -13,8 +14,8 @@ public enum CRLangPartials implements LangPartial {
 
 	;
 
-	private String display;
-	private Supplier<JsonElement> provider;
+	private final String display;
+	private final Supplier<JsonElement> provider;
 
 	private CRLangPartials(String display) {
 		this.display = display;

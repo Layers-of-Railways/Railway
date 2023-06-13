@@ -5,14 +5,13 @@ import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManag
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TextureAtlasSprite.class)
@@ -48,13 +47,12 @@ public abstract class MixinTextureAtlasSprite implements IPotentiallyInvisibleTe
     @Mixin(TextureAtlasSprite.AnimatedTexture.class)
     public abstract static class MixinAnimatedTexture {
 
-        @Shadow(aliases = {"a", "field_28469", "f_uqrdoixj"})
-        TextureAtlasSprite this$0;
+        @Shadow @Final TextureAtlasSprite f_uqrdoixj;
 
         @ModifyVariable(method = "uploadFrame", argsOnly = true, ordinal = 0, at = @At("LOAD"))
         private int railways$modifyFrameIndex(int frameIndex) {
-            if (!((IPotentiallyInvisibleTextureAtlasSprite) this$0).shouldDoInvisibility()) return frameIndex;
-            return ((IPotentiallyInvisibleTextureAtlasSprite) this$0).isVisible() ? 0 : 1;
+            if (!((IPotentiallyInvisibleTextureAtlasSprite) f_uqrdoixj).shouldDoInvisibility()) return frameIndex;
+            return ((IPotentiallyInvisibleTextureAtlasSprite) f_uqrdoixj).isVisible() ? 0 : 1;
         }
     }
 }

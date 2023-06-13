@@ -77,9 +77,6 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
     }
 
     private void addOrUpdateTrain(UUID uuid) {
-        /*TRAIN_IMAGE.setDisplayWidth(27)
-            .setDisplayHeight(27)
-            .centerAnchors();*/
 
         TrainMarkerData data = trainData.get(uuid);
 

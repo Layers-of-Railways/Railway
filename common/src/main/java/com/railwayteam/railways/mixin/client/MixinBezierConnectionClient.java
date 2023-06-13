@@ -3,8 +3,8 @@ package com.railwayteam.railways.mixin.client;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.TrackRenderer;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackRenderer;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
@@ -98,7 +98,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
                     .rotateXRadians(capAngles.x)
                     .rotateZRadians(capAngles.z)
                     .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
-                    .rotateZ(top ? 0 : 0)
+                    .rotateZ(0)
                     .scale(1, 1, (float) diff.length() * scale);
                 angles.beamCaps.set(top, poseStack.last());
             }

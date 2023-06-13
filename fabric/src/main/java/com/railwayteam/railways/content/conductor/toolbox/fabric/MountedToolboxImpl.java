@@ -15,7 +15,7 @@ public class MountedToolboxImpl {
 		player.openMenu(new ExtendedScreenHandlerFactory() {
 			@Override
 			public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
-				toolbox.sendToContainer(buf);
+				toolbox.sendToMenu(buf);
 			}
 
 			@Override

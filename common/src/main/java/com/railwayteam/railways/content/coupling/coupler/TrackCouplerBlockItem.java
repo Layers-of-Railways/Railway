@@ -1,8 +1,9 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
+
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;

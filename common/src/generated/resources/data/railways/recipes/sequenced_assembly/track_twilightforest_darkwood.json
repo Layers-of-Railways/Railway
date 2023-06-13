@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "twilightforest:dark_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_darkwood"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_darkwood"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_twilightforest_darkwood"
+    }
+  ],
+  "loops": 1
+}

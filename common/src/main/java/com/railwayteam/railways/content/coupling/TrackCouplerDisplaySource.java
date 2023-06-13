@@ -1,20 +1,21 @@
 package com.railwayteam.railways.content.coupling;
 
 import com.google.common.collect.ImmutableList;
-import com.railwayteam.railways.content.coupling.coupler.TrackCouplerTileEntity;
-import com.simibubi.create.content.logistics.block.display.DisplayLinkContext;
-import com.simibubi.create.content.logistics.block.display.source.DisplaySource;
-import com.simibubi.create.content.logistics.block.display.target.DisplayTargetStats;
-import com.simibubi.create.content.logistics.trains.management.display.FlapDisplayLayout;
-import com.simibubi.create.content.logistics.trains.management.display.FlapDisplaySection;
-import com.simibubi.create.content.logistics.trains.management.display.FlapDisplayTileEntity;
+import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
+import com.simibubi.create.content.redstone.displayLink.source.DisplaySource;
+import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
+import com.simibubi.create.content.trains.display.FlapDisplayBlockEntity;
+import com.simibubi.create.content.trains.display.FlapDisplayLayout;
+import com.simibubi.create.content.trains.display.FlapDisplaySection;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 
 import java.util.List;
 
-import static com.simibubi.create.content.logistics.block.display.source.BoilerDisplaySource.notEnoughSpaceSingle;
+import static com.simibubi.create.content.redstone.displayLink.source.BoilerDisplaySource.notEnoughSpaceSingle;
+
 
 public class TrackCouplerDisplaySource extends DisplaySource {
 
@@ -22,9 +23,9 @@ public class TrackCouplerDisplaySource extends DisplaySource {
     public List<MutableComponent> provideText(DisplayLinkContext context, DisplayTargetStats stats) {
         if (stats.maxRows() < 2)
             return notEnoughSpaceSingle;
-        if (!(context.getSourceTE() instanceof TrackCouplerTileEntity te))
+        if (!(context.getSourceBlockEntity() instanceof TrackCouplerBlockEntity te))
             return EMPTY;
-        TrackCouplerTileEntity.OperationInfo info = te.getOperationInfo();
+        TrackCouplerBlockEntity.OperationInfo info = te.getOperationInfo();
         switch (info.mode()) {
             case NONE -> {
                 return ImmutableList.of(
@@ -53,7 +54,7 @@ public class TrackCouplerDisplaySource extends DisplaySource {
     }
 
     @Override
-    public void loadFlapDisplayLayout(DisplayLinkContext context, FlapDisplayTileEntity flapDisplay, FlapDisplayLayout layout) {
+    public void loadFlapDisplayLayout(DisplayLinkContext context, FlapDisplayBlockEntity flapDisplay, FlapDisplayLayout layout) {
         if (!layout.isLayout("Default"))
             layout.configure("Default",
                 ImmutableList.of(createSectionForValue(context, flapDisplay.getMaxCharCount())));

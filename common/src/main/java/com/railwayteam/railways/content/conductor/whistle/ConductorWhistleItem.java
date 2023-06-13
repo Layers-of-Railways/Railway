@@ -8,22 +8,22 @@ import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRSounds;
-import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.GlobalRailwayManager;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.content.logistics.trains.management.schedule.Schedule;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleEntry;
-import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduledDelay;
-import com.simibubi.create.content.logistics.trains.management.schedule.destination.DestinationInstruction;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.GlobalRailwayManager;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.schedule.Schedule;
+import com.simibubi.create.content.trains.schedule.ScheduleEntry;
+import com.simibubi.create.content.trains.schedule.condition.ScheduledDelay;
+import com.simibubi.create.content.trains.schedule.destination.DestinationInstruction;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.ChatFormatting;
@@ -67,8 +67,8 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         super(block, properties, EdgePointType.STATION);
     }
 
-    static boolean isTrack (Block block) { return CRTags.AllBlockTags.TRACKS.matches(block); }
-    static boolean isTrack (BlockState state) { return CRTags.AllBlockTags.TRACKS.matches(state); }
+    static boolean isTrack (Block block) { return AllTags.AllBlockTags.TRACKS.matches(block); }
+    static boolean isTrack (BlockState state) { return AllTags.AllBlockTags.TRACKS.matches(state); }
     static boolean isTrack (Level level, BlockPos pos) { return isTrack(level.getBlockState(pos)); }
 
     @Override

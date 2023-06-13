@@ -1,20 +1,12 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
-import com.simibubi.create.content.logistics.trains.track.TrackVoxelShapes;
+import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import com.simibubi.create.AllShapes.Builder;
-
-import static net.minecraft.core.Direction.UP;
-import static net.minecraft.core.Direction.DOWN;
-import static net.minecraft.core.Direction.NORTH;
-import static net.minecraft.core.Direction.SOUTH;
-import static net.minecraft.core.Direction.EAST;
-import static net.minecraft.core.Direction.WEST;
+import static net.minecraft.core.Direction.*;
 
 public class CRShapes {
 

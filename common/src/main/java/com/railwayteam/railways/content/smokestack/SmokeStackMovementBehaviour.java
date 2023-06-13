@@ -1,7 +1,8 @@
 package com.railwayteam.railways.content.smokestack;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
+
+import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Random;
 
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
-    private final boolean renderAsNormalTileEntity;
+    private final boolean renderAsNormalBlockEntity;
     private final boolean createsSmoke;
     private final boolean spawnExtraSmoke;
 
@@ -25,15 +26,15 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         this(false, true, spawnExtraSmoke);
     }
 
-    public SmokeStackMovementBehaviour(boolean renderAsNormalTileEntity, boolean createsSmoke, boolean spawnExtraSmoke) {
-        this.renderAsNormalTileEntity = renderAsNormalTileEntity;
+    public SmokeStackMovementBehaviour(boolean renderAsNormalBlockEntity, boolean createsSmoke, boolean spawnExtraSmoke) {
+        this.renderAsNormalBlockEntity = renderAsNormalBlockEntity;
         this.createsSmoke = createsSmoke;
         this.spawnExtraSmoke = spawnExtraSmoke;
     }
 
     @Override
-    public boolean renderAsNormalTileEntity() {
-        return renderAsNormalTileEntity;
+    public boolean renderAsNormalBlockEntity() {
+        return renderAsNormalBlockEntity;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         float chanceModifierTarget = (Math.abs(context.getAnimationSpeed()) + 100) / 800;
         chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
 
-        if (context.contraption.presentTileEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
+        if (context.contraption.presentBlockEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
             notifiable.notifySpeed(chanceModifierTarget);
         }
 
@@ -91,7 +92,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             maxModifier++;
         }
 
-        // Mostly copied from CampfireBlock and CampfireTileEntity
+        // Mostly copied from CampfireBlock and CampfireBlockEntity
         Random random = context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
         double speedModifierTarget = 5 * (0.5+maxModifier);

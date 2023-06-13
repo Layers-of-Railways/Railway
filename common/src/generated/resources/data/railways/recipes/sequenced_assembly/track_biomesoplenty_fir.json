@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "biomesoplenty:fir_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_biomesoplenty_fir"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_fir"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_biomesoplenty_fir"
+    }
+  ],
+  "loops": 1
+}

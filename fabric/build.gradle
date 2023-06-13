@@ -1,5 +1,8 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
 }
 
 architectury {
@@ -20,6 +23,8 @@ loom {
             vmArg "-Dfabric-api.datagen.output-dir=${common.file("src/generated/resources")}"
             vmArg "-Dfabric-api.datagen.modid=railways"
             vmArg "-Dporting_lib.datagen.existing_resources=${common.file("src/main/resources")}"
+
+            environmentVariable("DATAGEN", "TRUE")
         }
     }
 }
@@ -44,6 +49,20 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    maven {
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("at.petra-k")
+            includeGroup("vazkii.patchouli")
+        }
+    } // JEI, Hex Casting
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup("dev.onyxstudios.cardinal-components-api")
+        }
+    } // Cardinal Components (Hex Casting dependency)
 }
 
 dependencies {
@@ -84,6 +103,47 @@ dependencies {
 
     // because create fabric is a bit broken I think
     modApi "net.minecraftforge:forgeconfigapiport-fabric:3.2.4"
+
+    // mod compat for tracks
+    if (enable_hexcasting.toBoolean()) {
+        modLocalRuntime("at.petra-k.paucal:paucal-fabric-${minecraft_version}:${paucal_version}")
+        modLocalRuntime("at.petra-k.hexcasting:hexcasting-fabric-${minecraft_version}:${hexcasting_version}")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-FABRIC")
+    }
+
+    if (enable_byg.toBoolean()) {
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
+        modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
+    }
+}
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = findProperty('curseforge_token')
+    var projectId = findProperty('curseforge_project')
+
+    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"))
+    mainFile.changelog = getChangelogText("Fabric")
+    mainFile.changelogType = "html"
+    mainFile.displayName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    mainFile.addRequirement("create-fabric")
+    mainFile.addModLoader("Fabric")
+    mainFile.addJavaVersion("Java 17")
+    mainFile.releaseType = "release"
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = findProperty('modrinth_project')
+    changelog = getChangelogText("Fabric")
+    versionName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    versionNumber = mod_version
+    versionType = "release"
+    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar")
+    gameVersions = [minecraft_version]
+    loaders = [project.name]
+    dependencies { // A special DSL for creating dependencies
+        required.project "create-fabric"
+    }
 }
 
 processResources {

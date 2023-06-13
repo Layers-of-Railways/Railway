@@ -2,7 +2,9 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.ponder.ConductorScenes;
+import com.railwayteam.railways.ponder.DoorScenes;
 import com.railwayteam.railways.ponder.TrainScenes;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 
 
@@ -15,5 +17,13 @@ public class CRPonderIndex {
             .addStoryBoard("conductor", ConductorScenes::constructing)
             .addStoryBoard("conductor_redstone", ConductorScenes::redstoning)
             .addStoryBoard("conductor", ConductorScenes::toolboxing);
+        HELPER.forComponents(
+            AllBlocks.ANDESITE_DOOR,
+            AllBlocks.BRASS_DOOR,
+            AllBlocks.COPPER_DOOR,
+            AllBlocks.TRAIN_DOOR,
+            AllBlocks.FRAMED_GLASS_DOOR
+        )
+            .addStoryBoard("door_modes", DoorScenes::modes);
     }
 }

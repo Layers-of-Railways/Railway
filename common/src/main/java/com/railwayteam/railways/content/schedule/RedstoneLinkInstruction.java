@@ -6,13 +6,13 @@ import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.IRedstoneLinkable;
-import com.simibubi.create.content.logistics.RedstoneLinkNetworkHandler.Frequency;
-import com.simibubi.create.content.logistics.item.LinkedControllerServerHandler;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
-import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
+import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
+import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.gui.ModularGuiLineBuilder;
 import com.simibubi.create.foundation.utility.*;
 import net.fabricmc.api.EnvType;
@@ -27,7 +27,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class RedstoneLinkInstruction extends ScheduleInstruction implements ICustomExecutableInstruction {
 
@@ -46,10 +48,10 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
         }
     }
 
-    public Couple<Frequency> freq;
+    public Couple<RedstoneLinkNetworkHandler.Frequency> freq;
 
     public RedstoneLinkInstruction() {
-        freq = Couple.create(() -> Frequency.EMPTY);
+        freq = Couple.create(() -> RedstoneLinkNetworkHandler.Frequency.EMPTY);
         data.putInt("Power", 15);
     }
 
@@ -112,7 +114,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        freq.set(slot == 0, Frequency.of(stack));
+        freq.set(slot == 0, RedstoneLinkNetworkHandler.Frequency.of(stack));
         super.setItem(slot, stack);
     }
 
@@ -130,9 +132,9 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     protected void readAdditional(CompoundTag tag) {
         if (tag.contains("Frequency", Tag.TAG_LIST))
-            freq = Couple.deserializeEach(tag.getList("Frequency", Tag.TAG_COMPOUND), c -> Frequency.of(ItemStack.of(c)));
+            freq = Couple.deserializeEach(tag.getList("Frequency", Tag.TAG_COMPOUND), c -> RedstoneLinkNetworkHandler.Frequency.of(ItemStack.of(c)));
         else
-            freq = Couple.create(() -> Frequency.EMPTY);
+            freq = Couple.create(() -> RedstoneLinkNetworkHandler.Frequency.EMPTY);
     }
 
     @Override
@@ -162,6 +164,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     }
 
     private final class CustomRedstoneActor implements IRedstoneLinkable {
+        public Carriage carriage;
         private long ticks = 8;
         private final ScheduleRuntime runtime;
 
@@ -193,13 +196,13 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
         }
 
         @Override
-        public Couple<Frequency> getNetworkKey() {
+        public Couple<RedstoneLinkNetworkHandler.Frequency> getNetworkKey() {
             return freq;
         }
 
         @Override
         public BlockPos getLocation() {
-            return new BlockPos(((AccessorScheduleRuntime) runtime).getTrain().carriages.get(0).getLeadingPoint().getPosition());
+            return new BlockPos(((AccessorScheduleRuntime) runtime).getTrain().carriages.get(0).getLeadingPoint().getPosition(carriage.train.graph));
         }
     }
 }

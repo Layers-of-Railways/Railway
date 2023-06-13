@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.conductor.toolbox.fabric;
 
-import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
+import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;

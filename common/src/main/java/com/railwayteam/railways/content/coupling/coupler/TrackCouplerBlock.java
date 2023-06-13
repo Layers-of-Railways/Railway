@@ -1,8 +1,8 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.IBE;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -23,14 +23,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public abstract class TrackCouplerBlock extends Block implements ITE<TrackCouplerTileEntity>, IWrenchable {
+public abstract class TrackCouplerBlock extends Block implements IBE<TrackCouplerBlockEntity>, IWrenchable {
 
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-	public static final EnumProperty<TrackCouplerTileEntity.AllowedOperationMode> MODE = EnumProperty.create("mode", TrackCouplerTileEntity.AllowedOperationMode.class);
+	public static final EnumProperty<TrackCouplerBlockEntity.AllowedOperationMode> MODE = EnumProperty.create("mode", TrackCouplerBlockEntity.AllowedOperationMode.class);
 
 	protected TrackCouplerBlock(Properties pProperties) {
 		super(pProperties);
-		registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(MODE, TrackCouplerTileEntity.AllowedOperationMode.BOTH));
+		registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(MODE, TrackCouplerBlockEntity.AllowedOperationMode.BOTH));
 	}
 
 	@ExpectPlatform
@@ -66,24 +66,24 @@ public abstract class TrackCouplerBlock extends Block implements ITE<TrackCouple
 	 */
 	@Override
 	public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
-		if (level.getBlockEntity(pos) instanceof TrackCouplerTileEntity te)
+		if (level.getBlockEntity(pos) instanceof TrackCouplerBlockEntity te)
 			return te.getTargetAnalogOutput();
 		return 0;
 	}
 
 	@Override
-	public Class<TrackCouplerTileEntity> getTileEntityClass() {
-		return TrackCouplerTileEntity.class;
+	public Class<TrackCouplerBlockEntity> getBlockEntityClass() {
+		return TrackCouplerBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends TrackCouplerTileEntity> getTileEntityType() {
+	public BlockEntityType<? extends TrackCouplerBlockEntity> getBlockEntityType() {
 		return CRBlockEntities.TRACK_COUPLER.get();
 	}
 
 	@Override
 	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		ITE.onRemove(state, worldIn, pos, newState);
+		IBE.onRemove(state, worldIn, pos, newState);
 	}
 
 	@Override

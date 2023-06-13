@@ -5,6 +5,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.content.conductor.fabric.ConductorCapItemRenderer;
 import com.railwayteam.railways.fabric.events.ClientEventsFabric;
+import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
@@ -26,6 +27,7 @@ public class RailwaysClientImpl implements ClientModInitializer {
 		RailwaysClient.init();
 		ClientEventsFabric.init();
 		ConductorCapItemRenderer.register();
+		CRExtraDisplayTags.register();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!

@@ -2,10 +2,10 @@ package com.railwayteam.railways.content.conductor.toolbox.forge;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
-import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
+import com.railwayteam.railways.mixin.AccessorToolboxBlockEntity;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandler;
+import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +18,7 @@ public class MountedToolboxDisposeAllPacketImpl {
 	public static boolean doDisposal(MountedToolbox toolbox, ServerPlayer player, ConductorEntity conductor) {
 		CompoundTag compound = EntityUtils.getPersistentData(player).getCompound("CreateToolboxData");
 		MutableBoolean sendData = new MutableBoolean(false);
-		ToolboxInventory inv = ((AccessorToolboxTileEntity) toolbox).getInventory();
+		ToolboxInventory inv = ((AccessorToolboxBlockEntity) toolbox).getInventory();
 		inv.inLimitedMode(inventory -> {
 			for (int i = 0; i < 36; i++) {
 				String key = String.valueOf(i);

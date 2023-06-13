@@ -2,11 +2,11 @@ package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorBlockEntity;
-import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
+import com.railwayteam.railways.mixin.AccessorToolboxBlockEntity;
 import com.railwayteam.railways.util.packet.PacketSender;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllTileEntities;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,11 +21,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class MountedToolbox extends ToolboxTileEntity {
+public class MountedToolbox extends ToolboxBlockEntity {
   protected final ConductorEntity parent;
 
   public MountedToolbox(ConductorEntity parent, DyeColor dyeColor) {
-    super(AllTileEntities.TOOLBOX.get(), parent.blockPosition(), AllBlocks.TOOLBOXES.get(dyeColor).getDefaultState());
+    super(AllBlockEntityTypes.TOOLBOX.get(), parent.blockPosition(), AllBlocks.TOOLBOXES.get(dyeColor).getDefaultState());
     this.parent = parent;
     setLevel(parent.level);
     setLazyTickRate(10);
@@ -70,9 +70,8 @@ public class MountedToolbox extends ToolboxTileEntity {
     compound.putInt("Color", getColor().getId());
   }
 
-  // TODO: does this conflict with the accessor?
   public List<Player> getConnectedPlayers() {
-    Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers = ((AccessorToolboxTileEntity) this).getConnectedPlayers();
+    Map<Integer, WeakHashMap<Player, Integer>> connectedPlayers = ((AccessorToolboxBlockEntity) this).getConnectedPlayers();
     Set<Player> players = new HashSet<>();
     for (Map.Entry<Integer, WeakHashMap<Player, Integer>> entry : connectedPlayers.entrySet()) {
        players.addAll(entry.getValue().keySet());
@@ -127,7 +126,7 @@ public class MountedToolbox extends ToolboxTileEntity {
   }
 
   @Override
-  public void sendToContainer(FriendlyByteBuf buffer) {
+  public void sendToMenu(FriendlyByteBuf buffer) {
     buffer.writeVarInt(parent.getId());
     buffer.writeNbt(getUpdateTag());
   }

@@ -2,14 +2,11 @@ package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.conductor.ConductorCapItem;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.*;

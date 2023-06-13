@@ -3,8 +3,8 @@ package com.railwayteam.railways.content.conductor.toolbox;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRContainerTypes;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxContainer;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxTileEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
+import com.simibubi.create.content.equipment.toolbox.ToolboxMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 
-public class MountedToolboxContainer extends ToolboxContainer {
+public class MountedToolboxContainer extends ToolboxMenu {
   private ConductorEntity conductor;
 
   public MountedToolboxContainer(MenuType<?> type, int id, Inventory inv, FriendlyByteBuf extraData) {
@@ -30,13 +30,13 @@ public class MountedToolboxContainer extends ToolboxContainer {
   }
 
   @Override
-  protected void init(Inventory inv, ToolboxTileEntity contentHolderIn) {
+  protected void init(Inventory inv, ToolboxBlockEntity contentHolderIn) {
     super.init(inv, contentHolderIn);
     this.conductor = ((MountedToolbox) contentHolderIn).parent;
   }
 
   @Override
-  protected ToolboxTileEntity createOnClient(FriendlyByteBuf extraData) {
+  protected ToolboxBlockEntity createOnClient(FriendlyByteBuf extraData) {
     int conductorId = extraData.readVarInt();
     ClientLevel world = Minecraft.getInstance().level;
     Entity entity = world.getEntity(conductorId);

@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -33,7 +32,7 @@ public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
   }
 
   protected MinecartWorkbench(Level level, double x, double y, double z) {
-    super(CREntities.CART_BLOCK.get(), level, x, y, z);
+    super(CREntities.CART_BLOCK.get(), level, x, y, z, Blocks.CRAFTING_TABLE);
   }
 
   // need to detour through this or generics explode somehow

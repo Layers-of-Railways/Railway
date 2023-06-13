@@ -8,10 +8,9 @@ import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
+import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.AxisSmokeStackBlock;
@@ -23,9 +22,10 @@ import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.AllSections;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockItem;
+import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockItem;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -37,8 +37,10 @@ import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -46,7 +48,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-import static com.simibubi.create.content.logistics.block.display.AllDisplayBehaviours.assignDataBehaviour;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
+import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -55,15 +61,32 @@ public class CRBlocks {
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, new CustomTrackBlockStateGenerator()::generate, (t) -> {});
+    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
+        return makeTrack(material, new CustomTrackBlockStateGenerator()::generate);
     }
 
-    private static BlockEntry<CustomTrackBlock> makeTrack(TrackMaterial material,
-                                                          NonNullBiConsumer<DataGenContext<Block, CustomTrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super CustomTrackBlock> onRegister) {
-        return REGISTRATE.block("track_" + material.resName(), material::create)
+    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
+        return makeTrack(material, blockstateGen, (t) -> {});
+    }
+
+    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister) {
+        return makeTrack(material, blockstateGen, onRegister, (p) -> p);
+    }
+
+    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
+        return makeTrack(material, blockstateGen, (t) -> {}, collectProperties);
+    }
+
+    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
+        List<TagKey<Block>> trackTags = new ArrayList<>();
+        trackTags.add(AllTags.AllBlockTags.TRACKS.tag);
+        if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
+            trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+        //noinspection unchecked
+        return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
             .initialProperties(Material.STONE)
-            .properties(p -> p.color(MaterialColor.METAL)
+            .properties(p -> collectProperties.apply(p)
+                .color(MaterialColor.METAL)
                 .strength(0.8F)
                 .sound(SoundType.METAL)
                 .noOcclusion())
@@ -71,7 +94,7 @@ public class CRBlocks {
             .transform(pickaxeOnly())
             .blockstate(blockstateGen)
             .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
-            .tag(CRTags.AllBlockTags.TRACKS.tag) //TODO _track api
+            .tag((TagKey<Block>[]) trackTags.toArray(new TagKey[0])) // keep the cast, or stuff breaks
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
             .item(TrackBlockItem::new)
@@ -123,9 +146,10 @@ public class CRBlocks {
 
     public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
 
-    static {
-        REGISTRATE.startSection(AllSections.LOGISTICS);
-    }
+//  commented out because I'm pretty sure but not 100% that it was removed.
+//    static {
+//        REGISTRATE.startSection(AllSections.LOGISTICS);
+//    }
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
         .initialProperties(SharedProperties::softMetal)
@@ -144,6 +168,7 @@ public class CRBlocks {
         )
         .properties(p -> p.color(MaterialColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
         .item(SemaphoreItem::new).transform(customItemModel())
         .transform(axeOnly())
         .addLayer(() -> RenderType::translucent)
@@ -167,34 +192,26 @@ public class CRBlocks {
             .transform(customItemModel("_", "block_both"))
             .register();
 
-    public static final BlockEntry<CustomTrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
-    public static final BlockEntry<CustomTrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
-    public static final BlockEntry<CustomTrackBlock> CRIMSON_TRACK = makeTrack(CRTrackMaterials.CRIMSON);
-    public static final BlockEntry<CustomTrackBlock> DARK_OAK_TRACK = makeTrack(CRTrackMaterials.DARK_OAK);
-    public static final BlockEntry<CustomTrackBlock> JUNGLE_TRACK = makeTrack(CRTrackMaterials.JUNGLE);
-    public static final BlockEntry<CustomTrackBlock> OAK_TRACK = makeTrack(CRTrackMaterials.OAK);
-    public static final BlockEntry<CustomTrackBlock> SPRUCE_TRACK = makeTrack(CRTrackMaterials.SPRUCE);
-    public static final BlockEntry<CustomTrackBlock> WARPED_TRACK = makeTrack(CRTrackMaterials.WARPED);
-    public static final BlockEntry<CustomTrackBlock> BLACKSTONE_TRACK = makeTrack(CRTrackMaterials.BLACKSTONE);
-    public static final BlockEntry<CustomTrackBlock> ENDER_TRACK = makeTrack(CRTrackMaterials.ENDER);
-    public static final BlockEntry<CustomTrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
-    public static final BlockEntry<CustomTrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
-    public static final BlockEntry<CustomTrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
-        new MonorailBlockStateGenerator()::generate, (t) -> {});
+    public static final BlockEntry<TrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
+    public static final BlockEntry<TrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
+    public static final BlockEntry<TrackBlock> CRIMSON_TRACK = makeTrack(CRTrackMaterials.CRIMSON);
+    public static final BlockEntry<TrackBlock> DARK_OAK_TRACK = makeTrack(CRTrackMaterials.DARK_OAK);
+    public static final BlockEntry<TrackBlock> JUNGLE_TRACK = makeTrack(CRTrackMaterials.JUNGLE);
+    public static final BlockEntry<TrackBlock> OAK_TRACK = makeTrack(CRTrackMaterials.OAK);
+    public static final BlockEntry<TrackBlock> SPRUCE_TRACK = makeTrack(CRTrackMaterials.SPRUCE);
+    public static final BlockEntry<TrackBlock> WARPED_TRACK = makeTrack(CRTrackMaterials.WARPED);
+    public static final BlockEntry<TrackBlock> BLACKSTONE_TRACK = makeTrack(CRTrackMaterials.BLACKSTONE);
+    public static final BlockEntry<TrackBlock> ENDER_TRACK = makeTrack(CRTrackMaterials.ENDER);
+    public static final BlockEntry<TrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
+    public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
+    public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
+        new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
-        REGISTRATE.block("mono_bogey", p -> new MonoBogeyBlock(p, false))
+        REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
             .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.monobogey(false))
+            .transform(BuilderTransformers.monobogey())
             .lang("Monorail Bogey")
-            .register();
-
-
-    public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY_UPSIDE_DOWN =
-        REGISTRATE.block("mono_bogey_upside_down", p -> new MonoBogeyBlock(p, true))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.monobogey(true))
-            .lang("Upside Down Monorail Bogey")
             .register();
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
@@ -215,9 +232,9 @@ public class CRBlocks {
             .transform(customItemModel())
             .register();
 
-    static {
-        REGISTRATE.startSection(AllSections.PALETTES);
-    }
+//    static {
+//        REGISTRATE.startSection(AllSections.PALETTES);
+//    }
 
     /*
     smokestacks:
@@ -229,7 +246,7 @@ public class CRBlocks {
     woodburner
      */
     public static final BlockEntry<SmokeStackBlock>
-        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5),"Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
+        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5),"Caboose Smokestack", true, com.railwayteam.railways.util.ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
         LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Long Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
         OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", CRShapes.OIL_STACK, true),

@@ -1,9 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(TrackBlockOutline.class)
 public interface AccessorTrackBlockOutline {

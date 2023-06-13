@@ -2,35 +2,19 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlockOutline;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.railwayteam.railways.track_api.TrackMaterial;
-import com.railwayteam.railways.util.CustomTrackChecks;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.track.*;
-import net.minecraft.world.item.ItemStack;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(value = TrackBlockOutline.class, remap = false)
 public abstract class MixinTrackBlockOutline {
-    @ModifyArg(
-            method = {
-                    "drawCurveSelection",
-                    "drawCustomBlockSelection"
-            },
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z",
-                    remap = true
-            )
-    )
-    private static ItemStack railway$allowCustomTracks(ItemStack held) {
-        return CustomTrackChecks.check(held);
-    }
 
     @Unique
     private static boolean railway$resultIsMonorail;
@@ -39,12 +23,12 @@ public abstract class MixinTrackBlockOutline {
             method = "pickCurves",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/trains/track/BezierTrackPointLocation;<init>(Lnet/minecraft/core/BlockPos;I)V",
+                    target = "Lcom/simibubi/create/content/trains/track/BezierTrackPointLocation;<init>(Lnet/minecraft/core/BlockPos;I)V",
                     remap = true
             )
     )
     private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultIsMonorail = ((IHasTrackMaterial) bc).getMaterial() == CRTrackMaterials.MONORAIL;
+        railway$resultIsMonorail = bc.getMaterial() == CRTrackMaterials.MONORAIL;
         return bc;
     }
 
@@ -52,7 +36,7 @@ public abstract class MixinTrackBlockOutline {
             method = "drawCurveSelection",
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/simibubi/create/content/logistics/trains/track/TrackBlockOutline;renderShape(Lnet/minecraft/world/phys/shapes/VoxelShape;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Ljava/lang/Boolean;)V",
+                    target = "Lcom/simibubi/create/content/trains/track/TrackBlockOutline;renderShape(Lnet/minecraft/world/phys/shapes/VoxelShape;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Ljava/lang/Boolean;)V",
                     remap = true
             )
     )
