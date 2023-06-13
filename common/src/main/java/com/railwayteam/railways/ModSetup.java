@@ -1,10 +1,6 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.compat.tracks.mods.BlueSkiesTrackCompat;
-import com.railwayteam.railways.compat.tracks.mods.BygTrackCompat;
-import com.railwayteam.railways.compat.tracks.mods.HexCastingTrackCompat;
-import com.railwayteam.railways.compat.tracks.mods.TwilightForestTrackCompat;
+import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
@@ -24,9 +20,10 @@ public class ModSetup {
     CRExtraDisplays.register();
 
     Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
-    Mods.HEXCASTING.executeIfInstalled(() -> () -> HexCastingTrackCompat.register());
+    HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();
     TwilightForestTrackCompat.register();
+    BiomesOPlentyTrackCompat.register();
   }
 }

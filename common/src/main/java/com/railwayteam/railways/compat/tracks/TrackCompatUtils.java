@@ -37,7 +37,8 @@ public abstract class TrackCompatUtils {
         "hexcasting",
         "byg", // Oh The Biomes You'll Go,
         "blue_skies",
-        "twilightforest"
+        "twilightforest",
+        "biomesoplenty"
     );
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();

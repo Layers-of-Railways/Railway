@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_ortho",
+  "textures": {
+    "particle": "biomesoplenty:block/track/dead/standard_track_crossing_dead",
+    "1": "biomesoplenty:block/track/dead/standard_track_dead",
+    "2": "biomesoplenty:block/track/dead/standard_track_mip_dead",
+    "3": "biomesoplenty:block/track/dead/standard_track_crossing_dead"
+  }
+}

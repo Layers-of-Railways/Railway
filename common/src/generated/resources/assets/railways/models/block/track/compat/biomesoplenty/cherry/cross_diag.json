@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_diag",
+  "textures": {
+    "particle": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry",
+    "0": "biomesoplenty:block/track/cherry/standard_track_cherry",
+    "1": "biomesoplenty:block/track/cherry/standard_track_mip_cherry",
+    "2": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry"
+  }
+}

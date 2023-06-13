@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/z_ortho",
+  "textures": {
+    "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow",
+    "1": "biomesoplenty:block/track/willow/standard_track_willow",
+    "2": "biomesoplenty:block/track/willow/standard_track_mip_willow",
+    "3": "biomesoplenty:block/track/willow/standard_track_crossing_willow"
+  }
+}

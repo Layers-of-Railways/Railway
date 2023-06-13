@@ -30,6 +30,7 @@
     "MixinNixieTubeDisplaySource",
     "MixinNixieTubeDisplayTarget",
     "MixinRailwaySavedData",
+    "MixinRecipeManager",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSignalBoundary",

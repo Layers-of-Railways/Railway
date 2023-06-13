@@ -3,6 +3,6 @@
   "textures": {
     "1": "hexcasting:block/track/edified/standard_track_edified",
     "2": "hexcasting:block/track/edified/standard_track_mip_edified",
-    "particle": "hexcasting:block/akashic/planks1.png"
+    "particle": "hexcasting:block/track/edified/standard_track_crossing_edified"
   }
 }

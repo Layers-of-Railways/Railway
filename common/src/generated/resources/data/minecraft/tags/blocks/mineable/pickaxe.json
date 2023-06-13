@@ -67,6 +67,17 @@
     "railways:track_twilightforest_sortingwood",
     "railways:track_twilightforest_timewood",
     "railways:track_twilightforest_transwood",
-    "railways:track_twilightforest_twilight_oak"
+    "railways:track_twilightforest_twilight_oak",
+    "railways:track_biomesoplenty_cherry",
+    "railways:track_biomesoplenty_dead",
+    "railways:track_biomesoplenty_fir",
+    "railways:track_biomesoplenty_hellbark",
+    "railways:track_biomesoplenty_jacaranda",
+    "railways:track_biomesoplenty_magic",
+    "railways:track_biomesoplenty_mahogany",
+    "railways:track_biomesoplenty_palm",
+    "railways:track_biomesoplenty_redwood",
+    "railways:track_biomesoplenty_umbran",
+    "railways:track_biomesoplenty_willow"
   ]
 }

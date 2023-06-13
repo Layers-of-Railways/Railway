@@ -1,5 +1,6 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.TextUtils;
 import com.railwayteam.railways.util.Utils;
@@ -37,7 +38,7 @@ public class GenericTrackCompat {
     }
 
     protected final static boolean registerTracksAnywayGlobal() {
-        return true;
+        return Config.REGISTER_MISSING_TRACKS.get() || Utils.isDevEnv();
     }
 
     protected boolean registerTracksAnyway() {
@@ -54,7 +55,7 @@ public class GenericTrackCompat {
             Optional<Block> baseBlock = Registry.BLOCK.getOptional(getSlabLocation(name));
             if (baseBlock.isEmpty()) {
                 if (!shouldRegisterMissing()) continue; // skip if we shouldn't register tracks for missing base blocks
-                if (isDataGen())
+                if (isDataGen() || Utils.isDevEnv())
                     Railways.LOGGER.error("Failed to locate base block at "+getSlabLocation(name)+" for "+asResource(name));
             }
             TrackMaterial material = buildCompatModels(make(asResource(name))

@@ -193,6 +193,50 @@
     {
       "id": "railways:track_twilightforest_twilight_oak",
       "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_dead",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_fir",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_hellbark",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_jacaranda",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_magic",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_mahogany",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_redwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_umbran",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_willow",
+      "required": false
     }
   ]
 }
