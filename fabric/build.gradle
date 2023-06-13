@@ -146,6 +146,7 @@ modrinth {
     }
 }
 
+
 processResources {
     // include packs
     from(rootProject.file("common/src/main/resources")) {
