@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
@@ -27,8 +27,8 @@ public interface IHasTrackCasing {
 
   static void setTrackCasing(Level world, BlockPos pos, @Nullable SlabBlock trackCasing) {
     BlockState state = world.getBlockState(pos);
-    if (state.hasProperty(TrackBlock.HAS_TE))
-      world.setBlockAndUpdate(pos, state.setValue(TrackBlock.HAS_TE, true));
+    if (state.hasProperty(TrackBlock.HAS_BE))
+      world.setBlockAndUpdate(pos, state.setValue(TrackBlock.HAS_BE, true));
     if (world.getBlockEntity(pos) instanceof IHasTrackCasing te) {
       te.setTrackCasing(trackCasing);
     }

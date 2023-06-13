@@ -2,16 +2,13 @@ package com.railwayteam.railways.content.smokestack;
 
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.wrench.IWrenchable;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -46,12 +43,14 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
 
     public final SmokeStackType type;
     protected final ShapeWrapper shape;
+    public boolean createsStationarySmoke;
 
-    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape) {
+    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
         super(properties);
         this.registerDefaultState(this.makeDefaultState());
         this.type = type;
         this.shape = shape;
+        this.createsStationarySmoke = createsStationarySmoke;
     }
 
     @Override
@@ -141,7 +140,7 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier) {
-        RandomSource random = level.getRandom();
+        Random random = level.getRandom();
         SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
         level.addAlwaysVisibleParticle(particleType, true,
             (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
@@ -162,18 +161,9 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
      * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
      */
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         if (state.getValue(ENABLED)) {
-            if (random.nextInt(10) == 0) {
-                level.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.CAMPFIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + random.nextFloat(), random.nextFloat() * 0.7F + 0.6F, false);
-            }
-
-/*            if (true && random.nextInt(5) == 0) {
-                for(int i = 0; i < random.nextInt(1) + 1; ++i) {
-                    level.addParticle(ParticleTypes.LAVA, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, (double)(random.nextFloat() / 2.0F), 5.0E-5D, (double)(random.nextFloat() / 2.0F));
-                }
-            }*/
-            if (random.nextFloat() < type.particleSpawnChance) {
+            if (random.nextFloat() < type.particleSpawnChance && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
                     makeParticles(level, pos, random.nextBoolean(), true, type.getParticleSpawnOffset(), type.getParticleSpawnDelta());
                 }

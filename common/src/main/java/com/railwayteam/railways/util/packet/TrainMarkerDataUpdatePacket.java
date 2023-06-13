@@ -3,7 +3,7 @@ package com.railwayteam.railways.util.packet;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.compat.journeymap.TrainMarkerData;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Train;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;

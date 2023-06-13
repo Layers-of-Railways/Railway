@@ -40,21 +40,4 @@ public class RailwayMapPlugin implements IClientPlugin {
         Railways.LOGGER.info("Loaded JourneyMap plugin");
     }
 
-    /*@SubscribeEvent
-    public static void testEvent(ClientChatEvent event) {
-        if (event.getMessage().contains("rwmap:")) {
-            String path = event.getMessage().replace("rwmap:", "");
-            RailwayMap.LOGGER.info("adding overlay from chat: "+path);
-
-            MarkerOverlay overlay = new MarkerOverlay(RailwayMap.MODID, "test2", BlockPos.ZERO.offset(20, 80, 0), TRAIN_IMAGE);
-            overlay.setDimension(Minecraft.getInstance().level.dimension());
-            overlay.setLabel("test label");
-            overlay.setTitle("test title");
-            try {
-                RailwayMap.api.show(overlay);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 }

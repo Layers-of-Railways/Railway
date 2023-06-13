@@ -9,8 +9,8 @@ import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
 import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.entity.*;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.entity.*;
+import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -31,6 +31,8 @@ public class TrainUtils {
      * @return The new train.
      */
     public static Train splitTrain(Train train, int numberOffEnd) {
+        if (numberOffEnd == 0)
+            return train;
         if (train.carriages.size() <= numberOffEnd)
             return train;
 

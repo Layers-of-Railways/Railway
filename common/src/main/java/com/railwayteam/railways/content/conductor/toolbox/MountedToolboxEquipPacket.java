@@ -1,12 +1,12 @@
 package com.railwayteam.railways.content.conductor.toolbox;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin.AccessorToolboxBlockEntity;
 import com.railwayteam.railways.mixin.AccessorToolboxInventory;
-import com.railwayteam.railways.mixin.AccessorToolboxTileEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxHandler;
-import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
+import com.simibubi.create.content.equipment.toolbox.ToolboxHandler;
+import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -77,7 +77,7 @@ public class MountedToolboxEquipPacket implements C2SPacket {
 
 		ItemStack held = player.getInventory().getItem(hotbarSlot);
 		if (!held.isEmpty()) {
-			ToolboxInventory inv = ((AccessorToolboxTileEntity) toolbox).getInventory();
+			ToolboxInventory inv = ((AccessorToolboxBlockEntity) toolbox).getInventory();
 			AccessorToolboxInventory invAccess = (AccessorToolboxInventory) inv;
 
 			ItemStack filterStack = invAccess.getFilters().get(slot);

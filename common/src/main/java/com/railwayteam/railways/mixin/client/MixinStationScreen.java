@@ -1,73 +1,66 @@
 package com.railwayteam.railways.mixin.client;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.ILimited;
-import com.railwayteam.railways.mixin_interfaces.ISidedStation;
-import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.AbstractStationScreen;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationScreen;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.StationTileEntity;
-import com.simibubi.create.foundation.gui.widget.IconButton;
-import com.simibubi.create.foundation.gui.widget.Indicator;
+import com.simibubi.create.content.trains.station.AbstractStationScreen;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.StationScreen;
 import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = StationScreen.class, remap = false)
-public abstract class MixinStationScreen extends AbstractStationScreen {
+public abstract class MixinStationScreen extends AbstractStationScreen { // fixme rework opening system
     private Checkbox limitEnableCheckbox;
-    private IconButton openLeft, openRight;
-    private Indicator openLeftIndicator, openRightIndicator;
 
-    private MixinStationScreen(StationTileEntity te, GlobalStation station) {
+    private MixinStationScreen(StationBlockEntity te, GlobalStation station) {
         super(te, station);
     }
 
-    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/management/edgePoint/station/StationScreen;tickTrainDisplay()V"), remap = true)
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/StationScreen;tickTrainDisplay()V"), remap = true)
     private void initCheckbox(CallbackInfo ci) {
         int x = guiLeft;
         int y = guiTop;
-        limitEnableCheckbox = new Checkbox(x + 8, y + background.height - 26, 50, 20, Components.translatable("railways.station.train_limit"), station != null && ((ILimited) station).isLimitEnabled()) {
+        limitEnableCheckbox = new Checkbox(x + background.width - 98, y + background.height - 26, 50, 20, Components.translatable("railways.station.train_limit"), station != null && ((ILimited) station).isLimitEnabled()) {
+            private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");
+            private static final int TEXT_COLOR = 0xEFEFEF;
+
             @Override
             public void onPress() {
                 super.onPress();
-                CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(te.getBlockPos(), this.selected()));
+                CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(blockEntity.getBlockPos(), this.selected()));
+            }
+
+            @Override
+            public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+                Minecraft minecraft = Minecraft.getInstance();
+                RenderSystem.setShaderTexture(0, TEXTURE);
+                RenderSystem.enableDepthTest();
+                Font font = minecraft.font;
+                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
+                RenderSystem.enableBlend();
+                RenderSystem.defaultBlendFunc();
+                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+                Checkbox.blit(poseStack, this.x, this.y, this.isFocused() ? 20.0f : 0.0f, this.selected() ? 20.0f : 0.0f, 20, this.height, 64, 64);
+                this.renderBg(poseStack, minecraft, mouseX, mouseY);
+                Checkbox.drawString(poseStack, font, this.getMessage(), this.x + 24, this.y + (this.height - 8) / 2, TEXT_COLOR | Mth.ceil(this.alpha * 255.0f) << 24);
+                if (this.isHoveredOrFocused()) {
+                    renderComponentTooltip(poseStack, ImmutableList.of(Components.translatable("railways.station.train_limit.tooltip.1"), Components.translatable("railways.station.train_limit.tooltip.2")), mouseX, mouseY);
+                }
             }
         };
         addRenderableWidget(limitEnableCheckbox);
-
-        int buttonXOffset = 100;
-
-        openLeft = new IconButton(x + 8 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_LEFT);
-        openLeft.withCallback(() -> {
-            if (te.getStation() != null)
-                station = te.getStation();
-            boolean shouldOpenLeft = station == null || !((ISidedStation) station).opensLeft();
-            CRPackets.PACKETS.send(ISidedStation.makeOpenLeftPacket(te.getBlockPos(), shouldOpenLeft));
-            openLeftIndicator.state = shouldOpenLeft ? Indicator.State.ON : Indicator.State.OFF;
-        });
-        openLeft.setToolTip(Components.translatable("railways.station.open_left"));
-        addRenderableWidget(openLeft);
-        openLeftIndicator = new Indicator(x + 8 + buttonXOffset, y + background.height - 27, Components.translatable("railways.station.open_left"));
-        openLeftIndicator.state = (station != null && ((ISidedStation) station).opensLeft()) ? Indicator.State.ON : Indicator.State.OFF;
-        addRenderableWidget(openLeftIndicator);
-
-        openRight = new IconButton(x + 8 + 20 + buttonXOffset, y + background.height - 21, CRIcons.I_STATION_OPEN_RIGHT);
-        openRight.withCallback(() -> {
-            if (te.getStation() != null)
-                station = te.getStation();
-            boolean shouldOpenRight = station == null || !((ISidedStation) station).opensRight();
-            CRPackets.PACKETS.send(ISidedStation.makeOpenRightPacket(te.getBlockPos(), shouldOpenRight));
-            openRightIndicator.state = shouldOpenRight ? Indicator.State.ON : Indicator.State.OFF;
-        });
-        openRight.setToolTip(Components.translatable("railways.station.open_right"));
-        addRenderableWidget(openRight);
-        openRightIndicator = new Indicator(x + 8 + 20 + buttonXOffset, y + background.height - 27, Components.translatable("railways.station.open_right"));
-        openRightIndicator.state = (station != null && ((ISidedStation) station).opensRight()) ? Indicator.State.ON : Indicator.State.OFF;
-        addRenderableWidget(openRightIndicator);
     }
 }

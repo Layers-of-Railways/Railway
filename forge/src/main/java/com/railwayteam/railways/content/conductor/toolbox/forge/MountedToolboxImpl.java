@@ -6,6 +6,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class MountedToolboxImpl {
 	public static void openMenu(ServerPlayer player, MountedToolbox toolbox) {
-		NetworkHooks.openScreen(player, toolbox, toolbox::sendToContainer);
+		NetworkHooks.openGui(player, toolbox, toolbox::sendToMenu);
 	}
 }

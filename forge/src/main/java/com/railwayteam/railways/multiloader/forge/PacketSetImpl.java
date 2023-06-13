@@ -5,8 +5,7 @@ import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.foundation.networking.AllPackets;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.client.Minecraft;
@@ -50,17 +49,17 @@ public class PacketSetImpl extends PacketSet {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void send(SimplePacketBase packet) {
-		AllPackets.channel.sendToServer(packet);
+		AllPackets.getChannel().sendToServer(packet);
 	}
 
 	@Override
 	public void sendTo(ServerPlayer player, SimplePacketBase packet) {
-		AllPackets.channel.send(PacketDistributor.PLAYER.with(() -> player), packet);
+		AllPackets.getChannel().send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}
 
 	@Override
 	public void sendTo(PlayerSelection selection, SimplePacketBase packet) {
-		AllPackets.channel.send(((PlayerSelectionImpl) selection).target, packet);
+		AllPackets.getChannel().send(((PlayerSelectionImpl) selection).target, packet);
 	}
 
 	@Override

@@ -1,14 +1,15 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.TrackEdge;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.TrackEdgePoint;
-import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
+import com.simibubi.create.content.trains.graph.TrackEdge;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.core.BlockPos;
@@ -16,14 +17,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTileEntity> {
+public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerBlockEntity> {
 
     public TrackCouplerRenderer(Context context) {
         super(context);
     }
 
     @Override
-    protected void renderSafe(TrackCouplerTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+    protected void renderSafe(TrackCouplerBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
 
@@ -31,13 +32,13 @@ public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTi
         renderEdgePoint(te, ms, buffer, light, overlay, te.secondEdgePoint);
     }
 
-    private void renderEdgePoint(TrackCouplerTileEntity te, PoseStack ms, MultiBufferSource buffer,
+    private void renderEdgePoint(TrackCouplerBlockEntity te, PoseStack ms, MultiBufferSource buffer,
                                  int light, int overlay, TrackTargetingBehaviour<TrackCoupler> target) {
         BlockPos pos = te.getBlockPos();
         boolean offsetToSide = false;
 
         try {
-            GraphLocation graphLocation = target.determineGraphLocation();
+            TrackGraphLocation graphLocation = target.determineGraphLocation();
             TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
             for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
                 try {
@@ -58,7 +59,8 @@ public class TrackCouplerRenderer extends SmartTileEntityRenderer<TrackCouplerTi
             return;
 
         ms.pushPose();
-        ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
+        TransformStack.cast(ms)
+            .translate(targetPosition.subtract(pos));
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
             buffer, light, overlay, te.areEdgePointsOk() ?
                 CustomTrackOverlayRendering.getCouplerOverlayModel(te.getAllowedOperationMode().canCouple, te.getAllowedOperationMode().canDecouple) :

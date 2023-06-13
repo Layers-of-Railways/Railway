@@ -1,8 +1,8 @@
 package com.railwayteam.railways.compat.journeymap;
 
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageBogey;
-import com.simibubi.create.content.logistics.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
@@ -29,7 +29,7 @@ public record TrainMarkerData(String name, int carriageCount, UUID owner, String
 
         if (bogey.leading().node1 != null && bogey.leading().node2 != null) {
             dimension = bogey.leading().node1.getLocation().dimension;
-            Vec3 vecPos = bogey.leading().getPosition();
+            Vec3 vecPos = bogey.leading().getPosition(train.graph);
             pos = new BlockPos(vecPos);
             if (pos.equals(ABSENT_POS))
                 pos = ABSENT_POS.above();

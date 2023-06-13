@@ -1,3 +1,10 @@
+v1.3.0:
+- TODO
+- port to Create 0.5.1
+- Add Display Link functionality to allow remote signalling
+- Rework train door system
+- Add new tracks: tieless, phantom, and ender
+- Update smokestack appearance to better stack on top of other blocks
 v1.2.6:
 - Fix track placement issue (consuming base Create tracks instead of custom ones)
 v1.2.5:

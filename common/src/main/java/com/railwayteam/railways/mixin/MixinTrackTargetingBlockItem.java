@@ -1,12 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.content.logistics.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.logistics.trains.track.TrackBlock;
-import com.simibubi.create.content.logistics.trains.track.TrackShape;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -37,10 +37,10 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
-    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/logistics/trains/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
+    @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
     private static void checkGraphLocation(Level level, BlockPos pos, boolean front, BezierTrackPointLocation targetBezier, EdgePointType<?> type,
-                                           BiConsumer<TrackTargetingBlockItem.OverlapResult, GraphLocation> callback, CallbackInfo ci) {
-        if (type != CREdgePointTypes.COUPLER)
+                                           BiConsumer<TrackTargetingBlockItem.OverlapResult, TrackGraphLocation> callback, CallbackInfo ci) {
+        if (type != CREdgePointTypes.COUPLER) // prevent coupler on turns
             return;
         TrackTargetingBlockItem.OverlapResult not_straight = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");
         if (targetBezier != null) {
@@ -72,7 +72,7 @@ public class MixinTrackTargetingBlockItem {
         }
 
         private static TrackTargetingBlockItem.OverlapResult snr$addResult(String internalName, String feedback) {
-            ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<TrackTargetingBlockItem.OverlapResult>(Arrays.asList($VALUES));
+            ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<>(Arrays.asList($VALUES));
             TrackTargetingBlockItem.OverlapResult result = snr$invokeInit(internalName, results.get(results.size() - 1).ordinal() + 1, feedback);
             results.add(result);
             $VALUES = results.toArray(new TrackTargetingBlockItem.OverlapResult[0]);

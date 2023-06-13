@@ -3,15 +3,12 @@ package com.railwayteam.railways.content.coupling;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.track_api.TrackMaterial;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.railwayteam.railways.mixin_interfaces.IHasTrackMaterial;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.track.*;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.schematics.SchematicWorld;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.fabricmc.api.EnvType;
@@ -76,7 +73,6 @@ public class CustomTrackOverlayRendering {
             return;
 
         ms.pushPose();
-        ms.translate(pos.getX(), pos.getY(), pos.getZ());
 
         PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model);
         if (partial != null)
@@ -93,7 +89,8 @@ public class CustomTrackOverlayRendering {
     //Copied from TrackBlock
     @Environment(EnvType.CLIENT)
     public static PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
-                                            BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, PartialModel model) {
+                                                   BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction,
+                                                   PoseStack ms, PartialModel model) {
         TransformStack msr = TransformStack.cast(ms);
 
         Vec3 axis = null;
@@ -101,7 +98,7 @@ public class CustomTrackOverlayRendering {
         Vec3 normal = null;
         Vec3 offset = null;
 
-        if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+        if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             BezierConnection bc = trackTE.getConnections().get(bezierPoint.curveTarget());
             if (bc != null) {
                 double length = Mth.floor(bc.getLength() * 2);
@@ -120,7 +117,7 @@ public class CustomTrackOverlayRendering {
                 msr.translate(0, -4 / 16f, 0);
                 // Translate more for slabs or monorails
                 IHasTrackCasing casingBc = (IHasTrackCasing) bc;
-                if (((IHasTrackMaterial) bc).getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+                if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
                     msr.translate(0, 14/16f, 0);
                 } else if (casingBc.getTrackCasing() != null) {
                     // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
@@ -144,9 +141,9 @@ public class CustomTrackOverlayRendering {
         }
 
         //Shift for casings and monorails
-        if (bezierPoint == null && state.getBlock() instanceof IHasTrackMaterial material && material.getMaterial().trackType == TrackMaterial.TrackType.MONORAIL) {
+        if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
-        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackTileEntity trackTE) {
+        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (casingTE.getTrackCasing() != null) {
@@ -169,6 +166,17 @@ public class CustomTrackOverlayRendering {
             msr.translate(0, 4 / 16f, 0);
             if (direction == Direction.AxisDirection.NEGATIVE)
                 msr.rotateCentered(Direction.UP, Mth.PI);
+        }
+
+        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE
+            && trackTE.isTilted()) {
+            double yOffset = 0;
+            for (BezierConnection bc : trackTE.getConnections().values())
+                yOffset += bc.starts.getFirst().y - pos.getY();
+            msr.centre()
+                .rotateX(-direction.getStep() * trackTE.tilt.smoothingAngle.get())
+                .unCentre()
+                .translate(0, yOffset / 2, 0);
         }
 
         return model;

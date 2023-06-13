@@ -4,11 +4,11 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.logistics.block.redstone.NixieTubeBlock;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlock;
+import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.RenderTypes;
-import com.simibubi.create.foundation.tileEntity.renderer.SafeTileEntityRenderer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEntity> {
+public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEntity> {
     public SemaphoreRenderer(BlockEntityRendererProvider.Context context) {}
     @Override
     protected void renderSafe(SemaphoreBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
@@ -101,7 +101,7 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
 
 
 
-            CachedBufferer.partial(AllBlockPartials.SIGNAL_WHITE_CUBE, blockState)
+            CachedBufferer.partial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1, 1, 1)
@@ -111,7 +111,7 @@ public class SemaphoreRenderer  extends SafeTileEntityRenderer<SemaphoreBlockEnt
 
             CachedBufferer
                     .partial(
-                            bottom ? AllBlockPartials.SIGNAL_WHITE_GLOW:yellow?AllBlockPartials.SIGNAL_YELLOW_GLOW:AllBlockPartials.SIGNAL_RED_GLOW,
+                            bottom ? AllPartialModels.SIGNAL_WHITE_GLOW:yellow?AllPartialModels.SIGNAL_YELLOW_GLOW:AllPartialModels.SIGNAL_RED_GLOW,
                             blockState)
                     .light(0xF000F0)
                     .disableDiffuse()

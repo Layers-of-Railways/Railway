@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.simibubi.create.content.curiosities.toolbox.ToolboxInventory;
+import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

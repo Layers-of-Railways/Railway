@@ -1,7 +1,6 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +39,6 @@ public class CRTags {
 
 
   public enum AllBlockTags {
-    TRACKS, //TODO _track api (will make this a reference to create tag, and mark as deprecated)
     SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
     TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
     ;

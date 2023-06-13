@@ -1,20 +1,12 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
-import com.simibubi.create.content.logistics.trains.track.TrackVoxelShapes;
+import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import com.simibubi.create.AllShapes.Builder;
-
-import static net.minecraft.core.Direction.UP;
-import static net.minecraft.core.Direction.DOWN;
-import static net.minecraft.core.Direction.NORTH;
-import static net.minecraft.core.Direction.SOUTH;
-import static net.minecraft.core.Direction.EAST;
-import static net.minecraft.core.Direction.WEST;
+import static net.minecraft.core.Direction.*;
 
 public class CRShapes {
 
@@ -48,24 +40,10 @@ public class CRShapes {
         .build();
 
     public static final VoxelShape
-        COAL_STACK = shape(10, 0, 6, 11, 12, 11)
-            .add(6, 0, 5, 11, 12, 6)
-            .add(5, 0, 10, 10, 12, 11)
-            .add(5, 0, 5, 6, 12, 10)
-            .add(4, 12, 4, 10, 16, 6)
-            .add(6, 12, 10, 12, 16, 12)
-            .add(10, 12, 4, 12, 16, 10)
-            .add(4, 12, 6, 6, 16, 12)
-            .build(),
+        COAL_STACK = shape(4, 0, 4, 12, 16, 12).build(),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16).build(),
-        OIL_STACK = shape(2, 0, 1, 15, 8, 2)
-            .add(1, 0, 14, 14, 8, 15)
-            .add(1, 0, 1, 2, 8, 14)
-            .add(14, 0, 2, 15, 8, 15)
-            .add(0, 8, 2, 2, 10, 16)
-            .add(14, 8, 0, 16, 10, 14)
-            .add(0, 8, 0, 14, 10, 2)
-            .add(2, 8, 14, 16, 10, 16)
+        OIL_STACK = shape(1, 8, 1, 15, 16, 15)
+            .add(2, 0, 2, 14, 8, 14)
             .build(),
         STREAMLINED_STACK = shape(0, 0, 2, 2, 4, 16)
             .add(14, 0, 0, 16, 4, 14)
@@ -78,7 +56,9 @@ public class CRShapes {
     public static final VoxelShaper
         CABOOSE_STACK = shape(7, 0, 7, 9, 12, 9)
             .add(5, 8, 6, 11, 12, 10)
-            .forHorizontalAxis();
+            .forHorizontalAxis(),
+        LONG_STACK = shape(1, 0, 3, 15, 4, 13)
+        .forHorizontalAxis();
 
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);

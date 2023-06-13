@@ -1,5 +1,8 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
 }
 
 architectury {
@@ -93,6 +96,35 @@ dependencies {
     // because create fabric is a bit broken I think
     modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
 
+}
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = findProperty('curseforge_token')
+    var projectId = findProperty('curseforge_project')
+
+    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"))
+    mainFile.changelog = getChangelogText("Fabric")
+    mainFile.changelogType = "html"
+    mainFile.displayName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    mainFile.addRequirement("create-fabric")
+    mainFile.addModLoader("Fabric")
+    mainFile.addJavaVersion("Java 17")
+    mainFile.releaseType = "release"
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = findProperty('modrinth_project')
+    changelog = getChangelogText("Fabric")
+    versionName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    versionNumber = mod_version
+    versionType = "release"
+    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar")
+    gameVersions = [minecraft_version]
+    loaders = [project.name]
+    dependencies { // A special DSL for creating dependencies
+        required.project "create-fabric"
+    }
 }
 
 processResources {

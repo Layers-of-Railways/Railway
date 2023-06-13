@@ -4,14 +4,14 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.content.schedule.StationLoadedCondition;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
-import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
-import com.simibubi.create.content.logistics.trains.management.schedule.destination.ScheduleInstruction;
+import com.simibubi.create.content.trains.schedule.condition.ScheduleWaitCondition;
+import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.utility.Pair;
 
 import java.util.function.Supplier;
 
-import static com.simibubi.create.content.logistics.trains.management.schedule.Schedule.CONDITION_TYPES;
-import static com.simibubi.create.content.logistics.trains.management.schedule.Schedule.INSTRUCTION_TYPES;
+import static com.simibubi.create.content.trains.schedule.Schedule.CONDITION_TYPES;
+import static com.simibubi.create.content.trains.schedule.Schedule.INSTRUCTION_TYPES;
 
 public class CRSchedule {
 

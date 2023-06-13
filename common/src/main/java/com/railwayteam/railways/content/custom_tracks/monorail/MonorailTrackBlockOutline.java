@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.custom_tracks.monorail;
 
-import com.railwayteam.railways.mixin.client.AccessorTrackBlockOutline;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllShapes;
 import net.minecraft.core.Direction;

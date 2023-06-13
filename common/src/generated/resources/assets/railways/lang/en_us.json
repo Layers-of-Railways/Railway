@@ -4,11 +4,11 @@
 
 	"block.railways.conductor_whistle": "Conductor Whistle",
 	"block.railways.mono_bogey": "Monorail Bogey",
-	"block.railways.mono_bogey_upside_down": "Upside Down Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
 	"block.railways.smokestack_coalburner": "Coalburner Smokestack",
-	"block.railways.smokestack_diesel": "Diesel Smokestack",
+	"block.railways.smokestack_diesel": "Radiator Fan",
+	"block.railways.smokestack_long": "Long Smokestack",
 	"block.railways.smokestack_oilburner": "Oilburner Smokestack",
 	"block.railways.smokestack_streamlined": "Streamlined Smokestack",
 	"block.railways.smokestack_woodburner": "Woodburner Smokestack",
@@ -18,11 +18,14 @@
 	"block.railways.track_coupler": "Train Coupler",
 	"block.railways.track_crimson": "Crimson Train Track",
 	"block.railways.track_dark_oak": "Dark Oak Train Track",
+	"block.railways.track_ender": "Ender Train Track",
 	"block.railways.track_jungle": "Jungle Train Track",
 	"block.railways.track_mangrove": "Mangrove Train Track",
 	"block.railways.track_monorail": "Monorail Train Track",
 	"block.railways.track_oak": "Oak Train Track",
+	"block.railways.track_phantom": "Phantom Train Track",
 	"block.railways.track_spruce": "Spruce Train Track",
+	"block.railways.track_tieless": "Tieless Train Track",
 	"block.railways.track_warped": "Warped Train Track",
 
 	"entity.railways.benchcart": "Minecart with Workbench",
@@ -64,18 +67,21 @@
 	"item.railways.track_incomplete_blackstone": "Incomplete Blackstone Track",
 	"item.railways.track_incomplete_crimson": "Incomplete Crimson Track",
 	"item.railways.track_incomplete_dark_oak": "Incomplete Dark Oak Track",
+	"item.railways.track_incomplete_ender": "Incomplete Ender Track",
 	"item.railways.track_incomplete_jungle": "Incomplete Jungle Track",
 	"item.railways.track_incomplete_mangrove": "Incomplete Mangrove Track",
 	"item.railways.track_incomplete_monorail": "Incomplete Monorail Track",
 	"item.railways.track_incomplete_oak": "Incomplete Oak Track",
+	"item.railways.track_incomplete_phantom": "Incomplete Phantom Track",
 	"item.railways.track_incomplete_spruce": "Incomplete Spruce Track",
+	"item.railways.track_incomplete_tieless": "Incomplete Tieless Track",
 	"item.railways.track_incomplete_warped": "Incomplete Warped Track",
 	"item.railways.white_conductor_cap": "White Conductor's Cap",
 	"item.railways.white_incomplete_conductor_cap": "Incomplete White Conductor's Cap",
 	"item.railways.yellow_conductor_cap": "Yellow Conductor's Cap",
 	"item.railways.yellow_incomplete_conductor_cap": "Incomplete Yellow Conductor's Cap",
 
-	"itemGroup.railways": "Create Railways",
+	"itemGroup.railways": "Create Steam 'n Rails",
 
 	"railways.ponder.conductor_constructing.header": "Constructing a Conductor",
 	"railways.ponder.conductor_constructing.text_1": "Conductors are constructed with an andesite casing.",
@@ -87,6 +93,15 @@
 
 	"railways.ponder.conductor_toolboxing.header": "Toolbox Transport with Conductors",
 	"railways.ponder.conductor_toolboxing.text_1": "Toolboxes function normally when equipped on Conductors.",
+
+	"railways.ponder.door_modes.header": "Door Modes",
+	"railways.ponder.door_modes.text_1": "Doors have multiple modes of operation: Normal, Manual, and Special",
+	"railways.ponder.door_modes.text_2": "In normal mode (the default) and manual mode, manual operation of the door is possible",
+	"railways.ponder.door_modes.text_3": "and redstone operation works in normal mode and special mode",
+	"railways.ponder.door_modes.text_4": "Doors in normal and special modes open and close when a contraption moves or stops",
+	"railways.ponder.door_modes.text_5": "Doors in manual mode only change when a player interacts with them",
+	"railways.ponder.door_modes.text_6": "Doors in special mode cannot be toggled simply by using them",
+	"railways.ponder.door_modes.text_7": "Sneaking, however, allows the player to toggle the door anyway",
 
 	"railways.ponder.train_semaphore.header": "Visualizing Signal states using Semaphores",
 	"railways.ponder.train_semaphore.text_1": "Semaphores are placed on poles above Train Signals",
@@ -215,13 +230,14 @@
 	"railways.tooltip.coupler.error.carriage_alignment": "Carriage(s) not aligned properly. Hint: The center of the bogey should be aligned over the coupler track point.",
 	"railways.tooltip.coupler.error.carriage_orientation": "Carriages must be facing the same direction. Hint: Use a wrench to reorient the carriages.",
 
-	"railways.station.train_limit": "Limit Trains",
+	"railways.station.train_limit": "Limit",
+	"railways.station.train_limit.tooltip.1": "Reserve station before approaching train has arrived",
+	"railways.station.train_limit.tooltip.2": "to more evenly space trains in a multi-platform station",
 
 	"create.sliding_door.mode": "Open Mode",
 	"create.sliding_door.mode.manual": "Manual",
-	"create.sliding_door.mode.auto": "Automatic",
-	"create.sliding_door.mode.station_right": "Station Right",
-	"create.sliding_door.mode.station_left": "Station Left",
+	"create.sliding_door.mode.normal": "Normal (Default)",
+	"create.sliding_door.mode.special": "Special",
 
 	"railways.station.open_left": "Open Left Doors",
 	"railways.station.open_right": "Open Right Doors",
@@ -242,6 +258,16 @@
 	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
 
 	"railways.journeymap.train_marker_toggle": "Toggle Train Markers",
+
+	"create.display_source.track_signal_source": "Signal State",
+
+	"railways.display_source.signal.green": "Clear",
+	"railways.display_source.signal.yellow": "Warning",
+	"railways.display_source.signal.red": "Danger",
+	"railways.display_source.signal.invalid": "Invalid",
+
+	"railways.display_target.semaphore.normal": "Normal Signal State",
+	"railways.display_target.semaphore.distant": "Distant Signal State",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

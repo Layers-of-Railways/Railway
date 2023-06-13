@@ -1,9 +1,9 @@
 package com.railwayteam.railways.content.smokestack;
 
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementBehaviour;
-import com.simibubi.create.content.contraptions.components.structureMovement.MovementContext;
+
+import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-import net.minecraft.util.RandomSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,22 +11,30 @@ import java.util.Random;
 
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
-    private final boolean renderAsNormalTileEntity;
+    private final boolean renderAsNormalBlockEntity;
+    private final boolean createsSmoke;
+    private final boolean spawnExtraSmoke;
 
     private final Map<Integer, LerpedFloat> chanceChasers = new HashMap<>();
     private final Map<Integer, LerpedFloat> speedMultiplierChasers = new HashMap<>();
 
     public SmokeStackMovementBehaviour() {
-        this(false);
+        this(true);
     }
 
-    public SmokeStackMovementBehaviour(boolean renderAsNormalTileEntity) {
-        this.renderAsNormalTileEntity = renderAsNormalTileEntity;
+    public SmokeStackMovementBehaviour(boolean spawnExtraSmoke) {
+        this(false, true, spawnExtraSmoke);
+    }
+
+    public SmokeStackMovementBehaviour(boolean renderAsNormalBlockEntity, boolean createsSmoke, boolean spawnExtraSmoke) {
+        this.renderAsNormalBlockEntity = renderAsNormalBlockEntity;
+        this.createsSmoke = createsSmoke;
+        this.spawnExtraSmoke = spawnExtraSmoke;
     }
 
     @Override
-    public boolean renderAsNormalTileEntity() {
-        return renderAsNormalTileEntity;
+    public boolean renderAsNormalBlockEntity() {
+        return renderAsNormalBlockEntity;
     }
 
     @Override
@@ -52,7 +60,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         float chanceModifierTarget = (Math.abs(context.getAnimationSpeed()) + 100) / 800;
         chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
 
-        if (context.contraption.presentTileEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
+        if (context.contraption.presentBlockEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
             notifiable.notifySpeed(chanceModifierTarget);
         }
 
@@ -64,9 +72,12 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
         }*/
 
+        if (!createsSmoke)
+            return;
+
         chanceChaser.chase(chanceModifierTarget, chanceModifierTarget>chanceChaser.getChaseTarget() ? 0.1 : 0.01, LerpedFloat.Chaser.LINEAR);
         chanceChaser.tickChaser();
-        float chanceModifier = chanceChaser.getValue();
+        float chanceModifier = chanceChaser.getValue() * (spawnExtraSmoke ? 1.0f : 0.5f);
 
         int maxModifier = 0;
         int minModifier = 0;
@@ -81,8 +92,8 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             maxModifier++;
         }
 
-        // Mostly copied from CampfireBlock and CampfireTileEntity
-        RandomSource random = context.world.random;
+        // Mostly copied from CampfireBlock and CampfireBlockEntity
+        Random random = context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
         double speedModifierTarget = 5 * (0.5+maxModifier);
         speedMultiplierChaser.chase(speedModifierTarget, 0.4, LerpedFloat.Chaser.LINEAR);

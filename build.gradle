@@ -23,21 +23,7 @@ subprojects {
     repositories {
         mavenCentral()
         maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
-        maven {
-            // location of the maven that hosts JEI files before January 2023
-            name = "Progwml6's maven"
-            url = "https://dvs1.progwml6.com/files/maven/"
-        }
-        maven {
-            // location of the maven that hosts JEI files since January 2023
-            name = "Jared's maven"
-            url = "https://maven.blamejared.com/"
-        }
-        maven {
-            // location of a maven mirror for JEI files, as a fallback
-            name = "ModMaven"
-            url = "https://modmaven.dev"
-        }
+        maven { url = "https://maven.blamejared.com/" } // JEI
         maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
         maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
         maven { url = "https://jm.gserv.me/repository/maven-public/" } // JourneyMap API
@@ -66,38 +52,18 @@ subprojects {
     tasks.register("moveBuiltJars", Copy) {
         if (project.name == "common")
             return
+
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
     }
 
-    tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    tasks.register("publishMod") {
         if (project.name == "common")
             return
-        // This token is used to authenticate with CurseForge. It should be handled
-        // with the same level of care and security as your actual password. You
-        // should never share your token with an untrusted source or publish it
-        // publicly to GitHub or embed it within a project. The best practice is to
-        // store this token in an environment variable or a build secret.
-        apiToken = findProperty('curseforge_token')
 
-        // A project ID is required to tell CurseForge which project the uploaded
-        // file belongs to. This is public on your project page and is not private
-        // information.
-        var projectId = findProperty('curseforge_project')
-
-        // Tells CurseForgeGradle to publish the output of the jar task. This will
-        // return a UploadArtifact object that can be used to further configure the
-        // file.
-        def mainFile = upload(projectId, rootProject.file("jars/${archivesBaseName}-${version}.jar"))
-        var capitalized_loader = project.name.substring(0, 1).toUpperCase() + project.name.substring(1)
-        mainFile.changelog = getChangelogText(capitalized_loader)//rootProject.file("changelog.md")//'Check the discord #changelogs for details.'
-        mainFile.changelogType = "html"
-        mainFile.displayName = "Steam 'n Rails ${mod_version} ${capitalized_loader} ${minecraft_version}"
-        mainFile.addRequirement("create") // create
-        mainFile.addModLoader(capitalized_loader)
-        mainFile.addJavaVersion("Java 17")
-        mainFile.releaseType = "release"
-//        System.out.println("Display name: ${mainFile.displayName}")
+        dependsOn 'build'
+        dependsOn 'publishCurseForge'
+        dependsOn 'modrinth'
     }
 }
 
@@ -124,15 +90,11 @@ allprojects {
     java {
         withSourcesJar()
     }
-}
 
-task resolveAllDependencies {
-    description "Resolves all transitive dependencies (e.g. to build offline later)."
-
-    doLast {
-        configurations.all {
-            if (it.canBeResolved) {
-                it.resolve()
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.module.name == "fabric-loader") {
+                useVersion(fabric_loader_version)
             }
         }
     }

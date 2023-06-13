@@ -34,12 +34,8 @@ public class CRIcons extends AllIcons {
         I_COUPLING_DECOUPLE = next();
     public static final CRIcons
         I_DOOR_MANUAL = newRow(),
-        I_DOOR_AUTO = next(),
-        I_DOOR_STATION_RIGHT = next(),
-        I_DOOR_STATION_LEFT = next();
-    public static final CRIcons
-        I_STATION_OPEN_LEFT = newRow(),
-        I_STATION_OPEN_RIGHT = next();
+        I_DOOR_NORMAL = next(),
+        I_DOOR_SPECIAL = next();
 
     public CRIcons(int x, int y) {
         super(x, y);

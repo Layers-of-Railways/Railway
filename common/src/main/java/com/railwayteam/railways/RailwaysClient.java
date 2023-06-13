@@ -15,9 +15,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomCap;
-import static com.railwayteam.railways.registry.CRBlockPartials.preventTiltingCap;
-import static com.railwayteam.railways.registry.CRBlockPartials.registerCustomSkin;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class RailwaysClient {
 
@@ -59,6 +57,8 @@ public class RailwaysClient {
     preventTiltingCap("Aypierre");
 
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
+
+    registerCustomCap("demondj2002", "demon");
   }
 
   @ExpectPlatform
