@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/tie",
-  "textures": {
-    "1": "byg:block/track/imparius/standard_track_imparius",
-    "2": "byg:block/track/imparius/standard_track_mip_imparius",
-    "particle": "byg:block/track/imparius/standard_track_crossing_imparius"
-  }
-}

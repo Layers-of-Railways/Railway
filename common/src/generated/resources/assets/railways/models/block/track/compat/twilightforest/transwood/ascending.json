@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/ascending",
-  "textures": {
-    "particle": "twilightforest:block/track/transwood/standard_track_crossing_transwood",
-    "0": "twilightforest:block/track/transwood/standard_track_transwood",
-    "1": "twilightforest:block/track/transwood/standard_track_mip_transwood"
-  }
-}

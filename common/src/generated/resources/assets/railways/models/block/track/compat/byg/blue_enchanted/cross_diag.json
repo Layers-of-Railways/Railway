@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_diag",
-  "textures": {
-    "particle": "byg:block/track/blue_enchanted/standard_track_crossing_blue_enchanted",
-    "0": "byg:block/track/blue_enchanted/standard_track_blue_enchanted",
-    "1": "byg:block/track/blue_enchanted/standard_track_mip_blue_enchanted",
-    "2": "byg:block/track/blue_enchanted/standard_track_crossing_blue_enchanted"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/teleport",
-  "textures": {
-    "particle": "byg:block/track/jacaranda/standard_track_crossing_jacaranda",
-    "1": "byg:block/track/jacaranda/portal_track_jacaranda",
-    "2": "byg:block/track/jacaranda/portal_track_mip_jacaranda",
-    "3": "byg:block/track/jacaranda/standard_track_jacaranda"
-  }
-}

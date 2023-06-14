@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_d1_xo",
-  "textures": {
-    "particle": "minecraft:block/birch_planks",
-    "0": "railways:block/track/birch/standard_track_birch",
-    "1": "railways:block/track/birch/standard_track_mip_birch",
-    "2": "railways:block/track/birch/standard_track_crossing_birch"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_ortho",
-  "textures": {
-    "particle": "byg:block/track/skyris/standard_track_crossing_skyris",
-    "1": "byg:block/track/skyris/standard_track_skyris",
-    "2": "byg:block/track/skyris/standard_track_mip_skyris",
-    "3": "byg:block/track/skyris/standard_track_crossing_skyris"
-  }
-}

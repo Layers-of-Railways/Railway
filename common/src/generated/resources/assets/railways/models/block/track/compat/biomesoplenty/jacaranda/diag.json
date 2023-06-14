@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/diag",
-  "textures": {
-    "particle": "biomesoplenty:block/track/jacaranda/standard_track_crossing_jacaranda",
-    "0": "biomesoplenty:block/track/jacaranda/standard_track_jacaranda",
-    "1": "biomesoplenty:block/track/jacaranda/standard_track_mip_jacaranda",
-    "2": "biomesoplenty:block/track/jacaranda/standard_track_crossing_jacaranda"
-  }
-}

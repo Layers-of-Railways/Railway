@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_d2_xo",
-  "textures": {
-    "particle": "byg:block/track/baobab/standard_track_crossing_baobab",
-    "0": "byg:block/track/baobab/standard_track_baobab",
-    "1": "byg:block/track/baobab/standard_track_mip_baobab",
-    "2": "byg:block/track/baobab/standard_track_crossing_baobab"
-  }
-}

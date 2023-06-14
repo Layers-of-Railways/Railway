@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_d1_zo",
-  "textures": {
-    "particle": "byg:block/track/willow/standard_track_crossing_willow",
-    "0": "byg:block/track/willow/standard_track_willow",
-    "1": "byg:block/track/willow/standard_track_mip_willow",
-    "2": "byg:block/track/willow/standard_track_crossing_willow"
-  }
-}

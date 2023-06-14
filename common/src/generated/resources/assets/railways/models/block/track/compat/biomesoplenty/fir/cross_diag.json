@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_diag",
-  "textures": {
-    "particle": "biomesoplenty:block/track/fir/standard_track_crossing_fir",
-    "0": "biomesoplenty:block/track/fir/standard_track_fir",
-    "1": "biomesoplenty:block/track/fir/standard_track_mip_fir",
-    "2": "biomesoplenty:block/track/fir/standard_track_crossing_fir"
-  }
-}

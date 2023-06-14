@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_d2_zo",
-  "textures": {
-    "particle": "byg:block/track/pine/standard_track_crossing_pine",
-    "0": "byg:block/track/pine/standard_track_pine",
-    "1": "byg:block/track/pine/standard_track_mip_pine",
-    "2": "byg:block/track/pine/standard_track_crossing_pine"
-  }
-}
