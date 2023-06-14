@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "enabled=false,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    }
+  }
+}

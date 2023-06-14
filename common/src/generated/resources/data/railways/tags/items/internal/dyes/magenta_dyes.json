@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:magenta_dyes",
+      "required": false
+    },
+    {
+      "id": "#forge:dyes/magenta",
+      "required": false
+    }
+  ]
+}

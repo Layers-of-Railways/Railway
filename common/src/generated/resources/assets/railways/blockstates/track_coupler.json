@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "mode=both": {
+      "model": "railways:block/track_coupler/block_both"
+    },
+    "mode=coupling": {
+      "model": "railways:block/track_coupler/block_coupling"
+    },
+    "mode=decoupling": {
+      "model": "railways:block/track_coupler/block_decoupling"
+    }
+  }
+}

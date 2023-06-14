@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/diag_2",
+  "textures": {
+    "particle": "twilightforest:block/track/minewood/standard_track_crossing_minewood",
+    "0": "twilightforest:block/track/minewood/standard_track_minewood",
+    "1": "twilightforest:block/track/minewood/standard_track_mip_minewood",
+    "2": "twilightforest:block/track/minewood/standard_track_crossing_minewood"
+  }
+}

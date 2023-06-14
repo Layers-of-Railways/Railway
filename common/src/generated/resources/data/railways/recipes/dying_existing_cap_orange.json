@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:conductor_caps"
+    },
+    {
+      "tag": "railways:internal/dyes/orange_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:orange_conductor_cap"
+  }
+}

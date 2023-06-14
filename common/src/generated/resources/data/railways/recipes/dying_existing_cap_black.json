@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:conductor_caps"
+    },
+    {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:black_conductor_cap"
+  }
+}

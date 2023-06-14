@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "hexcasting:akashic_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_hexcasting_edified"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_hexcasting_edified"
+    }
+  ],
+  "loops": 1
+}

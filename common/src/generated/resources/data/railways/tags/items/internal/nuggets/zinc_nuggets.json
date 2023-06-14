@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:nuggets/zinc",
+      "required": false
+    },
+    {
+      "id": "#forge:nuggets/zinc",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:conductor_caps"
+    },
+    {
+      "tag": "railways:internal/dyes/lime_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:lime_conductor_cap"
+  }
+}

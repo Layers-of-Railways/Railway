@@ -1,0 +1,60 @@
+{
+  "variants": {
+    "axis=x,enabled=false,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=false,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=true,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=true,powered=false,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=false,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=false,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=true,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=true,powered=true,waterlogged=false": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=false,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=false,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=true,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=true,powered=false,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=false,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=false,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    },
+    "axis=x,enabled=true,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle",
+      "y": 90
+    },
+    "axis=z,enabled=true,powered=true,waterlogged=true": {
+      "model": "railways:block/smokestack/block_caboosestyle"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/x_ortho",
+  "textures": {
+    "particle": "blue_skies:block/track/cherry/standard_track_crossing_cherry",
+    "1": "blue_skies:block/track/cherry/standard_track_cherry",
+    "2": "blue_skies:block/track/cherry/standard_track_mip_cherry",
+    "3": "blue_skies:block/track/cherry/standard_track_crossing_cherry"
+  }
+}
