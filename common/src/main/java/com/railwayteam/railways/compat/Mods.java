@@ -12,8 +12,11 @@ import java.util.function.Supplier;
  */
 public enum Mods {
 	JOURNEYMAP("journeymap-fabric"),
-	HEXCASTING(true),
-	BYG // Oh The Biomes You'll Go (just for disabling mixin audit)
+	BIOMESOPLENTY("biomesoplenty"),
+	BLUE_SKIES("blue_skies"),
+	BYG("byg"),
+	HEXCASTING("hexcasting",true),
+	TWILIGHTFOREST("twilightforest")
 	;
 
 	public final boolean isLoaded;
