@@ -27,7 +27,7 @@ public class MixinRecipeManager {
                              Iterator<?> var6, Map.Entry<?, ?> entry, ResourceLocation resourceLocation) {
         if (resourceLocation.getNamespace().equals(Railways.MODID)) {
             for (String compatMod : TrackCompatUtils.TRACK_COMPAT_MODS) {
-                if (resourceLocation.getPath().contains(compatMod) && Utils.isModLoaded(compatMod, compatMod)) {
+                if (resourceLocation.getPath().contains(compatMod) && Utils.isModLoaded(compatMod,compatMod)) {
                     ci.cancel();
                     return;
                 }
@@ -41,7 +41,7 @@ public class MixinRecipeManager {
     private void cancelError2(Object object, ResourceManager resourceManager, ProfilerFiller profiler, CallbackInfo ci, Map<?, ?> map, ImmutableMap.Builder<?, ?> builder, Iterator<?> var6, Map.Entry<?, ?> entry, ResourceLocation resourceLocation) {
         if (resourceLocation.getNamespace().equals(Railways.MODID)) {
             for (String compatMod : TrackCompatUtils.TRACK_COMPAT_MODS) {
-                if (resourceLocation.getPath().contains(compatMod) && Utils.isModLoaded(compatMod, compatMod)) {
+                if (resourceLocation.getPath().contains(compatMod) && Utils.isModLoaded(compatMod,compatMod)) {
                     ci.cancel();
                     return;
                 }
