@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/diag",
+  "textures": {
+    "0": "railways:block/track/tieless/standard_track_tieless",
+    "1": "railways:block/track/tieless/standard_track_mip_tieless",
+    "2": "railways:block/track/tieless/standard_track_crossing_tieless",
+    "particle": "minecraft:block/glass"
+  }
+}

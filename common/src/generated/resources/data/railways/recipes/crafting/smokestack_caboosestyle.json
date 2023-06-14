@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "railways:internal/plates/iron_plates"
+    },
+    "+": {
+      "item": "minecraft:campfire"
+    },
+    ".": {
+      "tag": "railways:internal/nuggets/iron_nuggets"
+    }
+  },
+  "pattern": [
+    ".#.",
+    " + "
+  ],
+  "result": {
+    "item": "railways:smokestack_caboosestyle"
+  }
+}

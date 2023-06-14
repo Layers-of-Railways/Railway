@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/track_base/segment_left",
+  "textures": {
+    "1": "blue_skies:block/track/dusk/standard_track_dusk",
+    "2": "blue_skies:block/track/dusk/standard_track_mip_dusk",
+    "particle": "blue_skies:block/track/dusk/standard_track_crossing_dusk"
+  }
+}

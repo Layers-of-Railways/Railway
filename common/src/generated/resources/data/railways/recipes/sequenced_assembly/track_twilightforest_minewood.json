@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "twilightforest:mining_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_twilightforest_minewood"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_minewood"
+  }
+}

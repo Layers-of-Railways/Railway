@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "byg:palm_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_byg_palm"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_palm"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_byg_palm"
+  }
+}

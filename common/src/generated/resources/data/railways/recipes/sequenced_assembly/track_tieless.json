@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:glass_pane"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_tieless"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tieless"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tieless"
+  }
+}

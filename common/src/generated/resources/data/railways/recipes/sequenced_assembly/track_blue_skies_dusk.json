@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "blue_skies:dusk_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_blue_skies_dusk"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_dusk"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_blue_skies_dusk"
+  }
+}

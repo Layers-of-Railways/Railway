@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "twilightforest:time_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_twilightforest_timewood"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        },
+        [
+          {
+            "tag": "c:iron_nuggets"
+          },
+          {
+            "tag": "c:zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_timewood"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_timewood"
+  }
+}

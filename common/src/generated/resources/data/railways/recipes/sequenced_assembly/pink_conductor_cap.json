@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:pink_wool"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:pink_conductor_cap"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        },
+        {
+          "tag": "railways:internal/string"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:pink_incomplete_conductor_cap"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:pink_incomplete_conductor_cap"
+  }
+}

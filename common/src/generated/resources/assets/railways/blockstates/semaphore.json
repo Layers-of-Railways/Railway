@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=east,flipped=false,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block",
+      "y": 90
+    },
+    "facing=east,flipped=false,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_down",
+      "y": 90
+    },
+    "facing=east,flipped=false,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full",
+      "y": 90
+    },
+    "facing=east,flipped=false,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_down",
+      "y": 90
+    },
+    "facing=east,flipped=true,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block_flipped",
+      "y": 90
+    },
+    "facing=east,flipped=true,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_flipped_down",
+      "y": 90
+    },
+    "facing=east,flipped=true,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full_flipped",
+      "y": 90
+    },
+    "facing=east,flipped=true,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_flipped_down",
+      "y": 90
+    },
+    "facing=north,flipped=false,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block"
+    },
+    "facing=north,flipped=false,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_down"
+    },
+    "facing=north,flipped=false,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full"
+    },
+    "facing=north,flipped=false,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_down"
+    },
+    "facing=north,flipped=true,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block_flipped"
+    },
+    "facing=north,flipped=true,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_flipped_down"
+    },
+    "facing=north,flipped=true,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full_flipped"
+    },
+    "facing=north,flipped=true,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_flipped_down"
+    },
+    "facing=south,flipped=false,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block",
+      "y": 180
+    },
+    "facing=south,flipped=false,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_down",
+      "y": 180
+    },
+    "facing=south,flipped=false,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full",
+      "y": 180
+    },
+    "facing=south,flipped=false,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_down",
+      "y": 180
+    },
+    "facing=south,flipped=true,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block_flipped",
+      "y": 180
+    },
+    "facing=south,flipped=true,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_flipped_down",
+      "y": 180
+    },
+    "facing=south,flipped=true,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full_flipped",
+      "y": 180
+    },
+    "facing=south,flipped=true,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_flipped_down",
+      "y": 180
+    },
+    "facing=west,flipped=false,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block",
+      "y": 270
+    },
+    "facing=west,flipped=false,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_down",
+      "y": 270
+    },
+    "facing=west,flipped=false,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full",
+      "y": 270
+    },
+    "facing=west,flipped=false,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_down",
+      "y": 270
+    },
+    "facing=west,flipped=true,full=false,upside_down=false": {
+      "model": "railways:block/semaphore/block_flipped",
+      "y": 270
+    },
+    "facing=west,flipped=true,full=false,upside_down=true": {
+      "model": "railways:block/semaphore/block_flipped_down",
+      "y": 270
+    },
+    "facing=west,flipped=true,full=true,upside_down=false": {
+      "model": "railways:block/semaphore/block_full_flipped",
+      "y": 270
+    },
+    "facing=west,flipped=true,full=true,upside_down=true": {
+      "model": "railways:block/semaphore/block_full_flipped_down",
+      "y": 270
+    }
+  }
+}

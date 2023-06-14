@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:orange_wool"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:orange_conductor_cap"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        },
+        {
+          "tag": "railways:internal/string"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:orange_incomplete_conductor_cap"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:orange_incomplete_conductor_cap"
+  }
+}

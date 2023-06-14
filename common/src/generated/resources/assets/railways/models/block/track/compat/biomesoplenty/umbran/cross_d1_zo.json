@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_d1_zo",
+  "textures": {
+    "0": "biomesoplenty:block/track/umbran/standard_track_umbran",
+    "1": "biomesoplenty:block/track/umbran/standard_track_mip_umbran",
+    "2": "biomesoplenty:block/track/umbran/standard_track_crossing_umbran",
+    "particle": "biomesoplenty:block/track/umbran/standard_track_crossing_umbran"
+  }
+}

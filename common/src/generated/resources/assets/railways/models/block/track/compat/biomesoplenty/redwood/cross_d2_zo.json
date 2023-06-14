@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_d2_zo",
+  "textures": {
+    "0": "biomesoplenty:block/track/redwood/standard_track_redwood",
+    "1": "biomesoplenty:block/track/redwood/standard_track_mip_redwood",
+    "2": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood",
+    "particle": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood"
+  }
+}

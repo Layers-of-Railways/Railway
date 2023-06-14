@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/track_base/segment_left",
+  "textures": {
+    "1": "biomesoplenty:block/track/magic/standard_track_magic",
+    "2": "biomesoplenty:block/track/magic/standard_track_mip_magic",
+    "particle": "biomesoplenty:block/track/magic/standard_track_crossing_magic"
+  }
+}

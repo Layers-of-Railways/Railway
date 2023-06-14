@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:conductor_caps"
+    },
+    {
+      "tag": "railways:internal/dyes/cyan_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:cyan_conductor_cap"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:magenta_wool"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:magenta_conductor_cap"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        },
+        {
+          "tag": "railways:internal/string"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:magenta_incomplete_conductor_cap"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:magenta_incomplete_conductor_cap"
+  }
+}

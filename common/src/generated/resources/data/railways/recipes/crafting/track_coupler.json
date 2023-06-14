@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "=": {
+      "tag": "railways:internal/plates/iron_plates"
+    },
+    "T": {
+      "item": "create:railway_casing"
+    }
+  },
+  "pattern": [
+    "=",
+    "#",
+    "T"
+  ],
+  "result": {
+    "item": "railways:track_coupler"
+  }
+}

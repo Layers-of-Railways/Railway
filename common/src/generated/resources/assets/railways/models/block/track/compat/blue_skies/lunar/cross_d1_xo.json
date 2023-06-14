@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_d1_xo",
+  "textures": {
+    "0": "blue_skies:block/track/lunar/standard_track_lunar",
+    "1": "blue_skies:block/track/lunar/standard_track_mip_lunar",
+    "2": "blue_skies:block/track/lunar/standard_track_crossing_lunar",
+    "particle": "blue_skies:block/track/lunar/standard_track_crossing_lunar"
+  }
+}

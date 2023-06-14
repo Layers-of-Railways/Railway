@@ -1,0 +1,242 @@
+{
+  "replace": false,
+  "values": [
+    "railways:track_acacia",
+    "railways:track_birch",
+    "railways:track_crimson",
+    "railways:track_dark_oak",
+    "railways:track_jungle",
+    "railways:track_oak",
+    "railways:track_spruce",
+    "railways:track_warped",
+    "railways:track_blackstone",
+    "railways:track_ender",
+    "railways:track_tieless",
+    "railways:track_phantom",
+    "railways:track_mangrove",
+    {
+      "id": "railways:track_hexcasting_edified",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_aspen",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_baobab",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_blue_enchanted",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_bulbis",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cika",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cypress",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ebony",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_embur",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ether",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_fir",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_green_enchanted",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_holly",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_imparius",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_jacaranda",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_lament",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_mahogany",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_nightshade",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_pine",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_rainbow_eucalyptus",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_redwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_skyris",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_sythian",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_white_mangrove",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_willow",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_witch_hazel",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_zelkova",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_bluebright",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_dusk",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_frostbright",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_lunar",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_starlit",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_canopy",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_darkwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_mangrove",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_minewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_sortingwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_timewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_transwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_twilight_oak",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_cherry",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_dead",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_fir",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_hellbark",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_jacaranda",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_magic",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_mahogany",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_redwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_umbran",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_willow",
+      "required": false
+    }
+  ]
+}

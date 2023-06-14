@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/track_base/cross_diag",
+  "textures": {
+    "0": "twilightforest:block/track/sortingwood/standard_track_sortingwood",
+    "1": "twilightforest:block/track/sortingwood/standard_track_mip_sortingwood",
+    "2": "twilightforest:block/track/sortingwood/standard_track_crossing_sortingwood",
+    "particle": "twilightforest:block/track/sortingwood/standard_track_crossing_sortingwood"
+  }
+}

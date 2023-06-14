@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "railways:dying_existing_cap_orange"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "hasitem": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "railways:conductor_caps"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "hasitem",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "railways:dying_existing_cap_orange"
+    ]
+  }
+}

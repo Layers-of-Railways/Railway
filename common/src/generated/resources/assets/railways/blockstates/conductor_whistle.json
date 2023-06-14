@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "railways:block/conductor_whistle/block_pole"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:light_blue_wool"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:light_blue_conductor_cap"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        },
+        {
+          "tag": "railways:internal/string"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:light_blue_incomplete_conductor_cap"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:light_blue_incomplete_conductor_cap"
+  }
+}

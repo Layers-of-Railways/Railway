@@ -1,0 +1,6 @@
+{
+  "parent": "railways:item/incomplete_conductor_cap",
+  "textures": {
+    "cap": "railways:entity/caps/pink_conductor_cap"
+  }
+}
