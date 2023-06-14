@@ -61,6 +61,12 @@ subprojects {
         if (project.name == "common")
             return
 
+        if (project.name == "fabric" && !release_fabric)
+            return
+
+        if (project.name == "forge" && !release_forge)
+            return
+
         dependsOn 'build'
         dependsOn 'publishCurseForge'
         dependsOn 'modrinth'
