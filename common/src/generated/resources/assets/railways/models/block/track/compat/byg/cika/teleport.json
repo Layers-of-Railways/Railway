@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/teleport",
-  "textures": {
-    "1": "byg:block/track/cika/portal_track_cika",
-    "2": "byg:block/track/cika/portal_track_mip_cika",
-    "3": "byg:block/track/cika/standard_track_cika",
-    "particle": "byg:block/track/cika/standard_track_crossing_cika"
-  }
-}

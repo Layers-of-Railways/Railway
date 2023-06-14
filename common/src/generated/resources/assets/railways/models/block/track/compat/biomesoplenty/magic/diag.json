@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/diag",
-  "textures": {
-    "0": "biomesoplenty:block/track/magic/standard_track_magic",
-    "1": "biomesoplenty:block/track/magic/standard_track_mip_magic",
-    "2": "biomesoplenty:block/track/magic/standard_track_crossing_magic",
-    "particle": "biomesoplenty:block/track/magic/standard_track_crossing_magic"
-  }
-}

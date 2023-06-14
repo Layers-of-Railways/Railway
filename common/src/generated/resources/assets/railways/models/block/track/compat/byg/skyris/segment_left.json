@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_left",
-  "textures": {
-    "1": "byg:block/track/skyris/standard_track_skyris",
-    "2": "byg:block/track/skyris/standard_track_mip_skyris",
-    "particle": "byg:block/track/skyris/standard_track_crossing_skyris"
-  }
-}

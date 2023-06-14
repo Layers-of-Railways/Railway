@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_left",
-  "textures": {
-    "1": "railways:block/track/birch/standard_track_birch",
-    "2": "railways:block/track/birch/standard_track_mip_birch",
-    "particle": "minecraft:block/birch_planks"
-  }
-}

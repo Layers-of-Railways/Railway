@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_right",
-  "textures": {
-    "1": "byg:block/track/fir/standard_track_fir",
-    "2": "byg:block/track/fir/standard_track_mip_fir",
-    "particle": "byg:block/track/fir/standard_track_crossing_fir"
-  }
-}

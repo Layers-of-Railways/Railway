@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_diag",
-  "textures": {
-    "0": "byg:block/track/zelkova/standard_track_zelkova",
-    "1": "byg:block/track/zelkova/standard_track_mip_zelkova",
-    "2": "byg:block/track/zelkova/standard_track_crossing_zelkova",
-    "particle": "byg:block/track/zelkova/standard_track_crossing_zelkova"
-  }
-}

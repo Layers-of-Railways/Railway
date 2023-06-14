@@ -1,6 +1,0 @@
-{
-  "parent": "railways:item/incomplete_conductor_cap",
-  "textures": {
-    "cap": "railways:entity/caps/lime_conductor_cap"
-  }
-}

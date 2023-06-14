@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_d2_zo",
-  "textures": {
-    "0": "blue_skies:block/track/maple/standard_track_maple",
-    "1": "blue_skies:block/track/maple/standard_track_mip_maple",
-    "2": "blue_skies:block/track/maple/standard_track_crossing_maple",
-    "particle": "blue_skies:block/track/maple/standard_track_crossing_maple"
-  }
-}

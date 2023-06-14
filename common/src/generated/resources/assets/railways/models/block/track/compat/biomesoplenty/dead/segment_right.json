@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_right",
-  "textures": {
-    "1": "biomesoplenty:block/track/dead/standard_track_dead",
-    "2": "biomesoplenty:block/track/dead/standard_track_mip_dead",
-    "particle": "biomesoplenty:block/track/dead/standard_track_crossing_dead"
-  }
-}

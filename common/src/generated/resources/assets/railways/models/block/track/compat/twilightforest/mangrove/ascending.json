@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/ascending",
-  "textures": {
-    "0": "twilightforest:block/track/mangrove/standard_track_mangrove",
-    "1": "twilightforest:block/track/mangrove/standard_track_mip_mangrove",
-    "particle": "twilightforest:block/track/mangrove/standard_track_crossing_mangrove"
-  }
-}

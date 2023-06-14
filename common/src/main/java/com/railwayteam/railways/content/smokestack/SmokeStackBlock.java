@@ -141,7 +141,7 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier) {
-        Random random = (Random) level.getRandom();
+        RandomSource random = level.getRandom();
         SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
         level.addAlwaysVisibleParticle(particleType, true,
             (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),

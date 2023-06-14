@@ -20,19 +20,12 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraDisplays.register();
 
-
-    if (Mods.HEXCASTING.isLoaded || Mods.BYG.isLoaded || Mods.BLUE_SKIES.isLoaded || Mods.TWILIGHTFOREST.isLoaded || Mods.BIOMESOPLENTY.isLoaded)
-      Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
-
-    if (Mods.HEXCASTING.isLoaded)
-      HexCastingTrackCompat.register();
-    if (Mods.BYG.isLoaded)
-      BygTrackCompat.register();
-    if (Mods.BLUE_SKIES.isLoaded)
-      BlueSkiesTrackCompat.register();
-    if (Mods.TWILIGHTFOREST.isLoaded)
-      TwilightForestTrackCompat.register();
-    if (Mods.BIOMESOPLENTY.isLoaded)
-      BiomesOPlentyTrackCompat.register();
+    // Compat
+    Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+    HexCastingTrackCompat.register();
+    BygTrackCompat.register();
+    BlueSkiesTrackCompat.register();
+    TwilightForestTrackCompat.register();
+    BiomesOPlentyTrackCompat.register();
   }
 }

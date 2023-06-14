@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/ascending",
-  "textures": {
-    "0": "byg:block/track/rainbow_eucalyptus/standard_track_rainbow_eucalyptus",
-    "1": "byg:block/track/rainbow_eucalyptus/standard_track_mip_rainbow_eucalyptus",
-    "particle": "byg:block/track/rainbow_eucalyptus/standard_track_crossing_rainbow_eucalyptus"
-  }
-}

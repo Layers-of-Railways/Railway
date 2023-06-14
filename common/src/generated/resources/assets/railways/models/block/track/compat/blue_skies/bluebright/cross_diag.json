@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/cross_diag",
-  "textures": {
-    "0": "blue_skies:block/track/bluebright/standard_track_bluebright",
-    "1": "blue_skies:block/track/bluebright/standard_track_mip_bluebright",
-    "2": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright",
-    "particle": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright"
-  }
-}

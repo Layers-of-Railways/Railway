@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/ascending",
-  "textures": {
-    "0": "byg:block/track/baobab/standard_track_baobab",
-    "1": "byg:block/track/baobab/standard_track_mip_baobab",
-    "particle": "byg:block/track/baobab/standard_track_crossing_baobab"
-  }
-}

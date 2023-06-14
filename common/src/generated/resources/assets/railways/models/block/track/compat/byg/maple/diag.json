@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/diag",
-  "textures": {
-    "0": "byg:block/track/maple/standard_track_maple",
-    "1": "byg:block/track/maple/standard_track_mip_maple",
-    "2": "byg:block/track/maple/standard_track_crossing_maple",
-    "particle": "byg:block/track/maple/standard_track_crossing_maple"
-  }
-}

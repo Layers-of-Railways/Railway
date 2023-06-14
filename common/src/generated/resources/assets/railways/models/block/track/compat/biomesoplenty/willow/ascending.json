@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/ascending",
-  "textures": {
-    "0": "biomesoplenty:block/track/willow/standard_track_willow",
-    "1": "biomesoplenty:block/track/willow/standard_track_mip_willow",
-    "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow"
-  }
-}

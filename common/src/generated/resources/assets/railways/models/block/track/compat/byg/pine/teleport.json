@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/track_base/teleport",
-  "textures": {
-    "1": "byg:block/track/pine/portal_track_pine",
-    "2": "byg:block/track/pine/portal_track_mip_pine",
-    "3": "byg:block/track/pine/standard_track_pine",
-    "particle": "byg:block/track/pine/standard_track_crossing_pine"
-  }
-}

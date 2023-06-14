@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_left",
-  "textures": {
-    "1": "byg:block/track/redwood/standard_track_redwood",
-    "2": "byg:block/track/redwood/standard_track_mip_redwood",
-    "particle": "byg:block/track/redwood/standard_track_crossing_redwood"
-  }
-}

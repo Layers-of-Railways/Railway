@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/track_base/segment_left",
-  "textures": {
-    "1": "byg:block/track/willow/standard_track_willow",
-    "2": "byg:block/track/willow/standard_track_mip_willow",
-    "particle": "byg:block/track/willow/standard_track_crossing_willow"
-  }
-}
