@@ -1,7 +1,9 @@
 package com.railwayteam.railways;
 
+import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.registry.*;
+import com.railwayteam.railways.util.Utils;
 
 public class ModSetup {
   public static void register() {
@@ -19,7 +21,12 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraDisplays.register();
 
-    Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+    for(String compatMod : TrackCompatUtils.TRACK_COMPAT_MODS) {
+      if(Utils.isModLoaded(compatMod, compatMod)) {
+        Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+        break;
+      }
+    }
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();
