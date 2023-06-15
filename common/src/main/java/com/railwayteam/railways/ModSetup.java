@@ -21,11 +21,12 @@ public class ModSetup {
     CRExtraDisplays.register();
 
     // Compat
-    Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
-    HexCastingTrackCompat.register();
-    BygTrackCompat.register();
-    BlueSkiesTrackCompat.register();
-    TwilightForestTrackCompat.register();
-    BiomesOPlentyTrackCompat.register();
+    // TODO RENABLE
+//    Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+//    HexCastingTrackCompat.register();
+//    BygTrackCompat.register();
+//    BlueSkiesTrackCompat.register();
+//    TwilightForestTrackCompat.register();
+//    BiomesOPlentyTrackCompat.register();
   }
 }
