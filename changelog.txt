@@ -1,16 +1,4 @@
-v1.3.2:
-- Fix smoke stacks
-- Fix config
-v1.3.0:
-- port to Create 0.5.1
-- Add Display Link functionality to allow remote signalling
-- Rework train door system
-- Add new tracks: tieless, phantom, and ender
-- Update smokestack appearance to better stack on top of other blocks
-- Add compatibility tracks for the following mods: Hex Casting, Oh The Biomes You'll Go, Blue Skies, Twilight Forest, and Biomes O' Plenty
-- Add some exception handling to coupler
-- Fix Minecart Drops
-v1.2.6:
-- Fix track placement issue (consuming base Create tracks instead of custom ones)
-v1.2.5:
-- Fix #110 (Couplers crashing when scrolled onto invalid location)
+v1.3.4:
+- Removed Compat
+- Fixed Recipes
+- Fixed Mining
