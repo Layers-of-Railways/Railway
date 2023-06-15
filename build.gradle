@@ -61,6 +61,7 @@ subprojects {
         if (project.name == "common")
             return
 
+        // TODO UNDISABLE FABRIC AFTER FIXED
         if (project.name == "fabric")
             return
 

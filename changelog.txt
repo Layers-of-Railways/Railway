@@ -1,3 +1,6 @@
+v1.3.2:
+- Fix smoke stacks
+- Fix config
 v1.3.0:
 - port to Create 0.5.1
 - Add Display Link functionality to allow remote signalling
