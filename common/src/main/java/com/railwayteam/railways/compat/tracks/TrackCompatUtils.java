@@ -19,6 +19,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -72,7 +73,8 @@ public abstract class TrackCompatUtils {
         String name = "track_" + owningMod + "_" + material.resourceName();
 
         addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.TRACKS.tag,
-            CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric);
+                CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric,
+                BlockTags.MINEABLE_WITH_PICKAXE); // pickaxe-mineable tag is moved here as Registrate cannot add optional tag in BlockBuilder
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
 
@@ -84,7 +86,6 @@ public abstract class TrackCompatUtils {
                 .sound(SoundType.METAL)
                 .noOcclusion())
             .addLayer(() -> RenderType::cutoutMipped)
-            .transform(pickaxeOnly())
             .blockstate(blockstateGen)
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
