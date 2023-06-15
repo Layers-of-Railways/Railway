@@ -72,7 +72,9 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
         return value instanceof Ingredient.TagValue tagValue
             && (tagValue.tag.equals(AllTags.forgeItemTag("nuggets/iron"))
-                || tagValue.tag.equals(AllTags.forgeItemTag("nuggets/zinc")));
+                || tagValue.tag.equals(AllTags.forgeItemTag("nuggets/zinc"))
+                || tagValue.tag.equals(AllTags.forgeItemTag("iron_nuggets"))
+                || tagValue.tag.equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
       })) {
         railsIngredient = Ingredient.fromValues(Stream.of(
             TagValueAccessor.createTagValue(Ingredients.ironNugget()),
