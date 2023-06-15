@@ -4,6 +4,7 @@ package com.railwayteam.railways.content.smokestack;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.minecraft.util.RandomSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,7 +94,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
 
         // Mostly copied from CampfireBlock and CampfireBlockEntity
-        Random random = (Random) context.world.random;
+        RandomSource random = context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
         double speedModifierTarget = 5 * (0.5+maxModifier);
         speedMultiplierChaser.chase(speedModifierTarget, 0.4, LerpedFloat.Chaser.LINEAR);

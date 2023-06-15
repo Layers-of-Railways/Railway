@@ -1,5 +1,6 @@
 package com.railwayteam.railways.compat.tracks;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.TextUtils;
 import com.railwayteam.railways.util.Utils;
@@ -36,8 +37,8 @@ public class GenericTrackCompat {
         return Utils.isEnvVarTrue("DATAGEN");
     }
 
-    protected final static boolean registerTracksAnywayGlobal() {
-        return Utils.isDevEnv();
+    protected static boolean registerTracksAnywayGlobal() {
+        return Config.REGISTER_MISSING_TRACKS.get() || Utils.isDevEnv();
     }
 
     protected boolean registerTracksAnyway() {
