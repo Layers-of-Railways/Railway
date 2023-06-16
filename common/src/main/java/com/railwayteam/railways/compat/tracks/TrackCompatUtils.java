@@ -3,6 +3,7 @@ package com.railwayteam.railways.compat.tracks;
 import com.google.common.collect.ImmutableSet;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -38,6 +40,14 @@ public abstract class TrackCompatUtils {
         "twilightforest",
         "biomesoplenty"
     );
+
+    public static boolean anyLoaded() {
+        for (String mod : TRACK_COMPAT_MODS) {
+            if (Mods.valueOf(mod.toUpperCase(Locale.ROOT)).isLoaded)
+                return true;
+        }
+        return false;
+    }
 
     @ApiStatus.Internal
     public static boolean mixinIgnoreErrorForMissingItem(ResourceLocation resourceLocation) {
