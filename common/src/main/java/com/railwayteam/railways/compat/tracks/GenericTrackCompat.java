@@ -33,7 +33,7 @@ public class GenericTrackCompat {
     protected final Map<String, TrackMaterial> MATERIALS = new HashMap<>();
     protected final Map<String, NonNullSupplier<? extends TrackBlock>> BLOCKS = new HashMap<>();
 
-    protected static boolean isDataGen() {
+    public static boolean isDataGen() {
         return Utils.isEnvVarTrue("DATAGEN");
     }
 
