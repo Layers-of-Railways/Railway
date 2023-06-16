@@ -1,0 +1,4 @@
+v1.3.5:
+- Added back compat (but working now)
+- fixed sloped tracks
+- (1.19 only) fixed mangrove tracks

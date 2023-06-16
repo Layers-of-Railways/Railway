@@ -105,8 +105,8 @@ allprojects {
 }
 
 // 'borrowed' from Create
-String getChangelogText(String loader) {
-    def changelogFile = file('changelog.txt')
+String getChangelogText(String loader, boolean recent) {
+    def changelogFile = file(recent ? 'recent_changelog.txt' : 'changelog.txt')
     String str = ''
     int lineCount = 0
     boolean done = false
@@ -135,4 +135,5 @@ String getChangelogText(String loader) {
     }
     return str
 }
-new File("changelog.html").write getChangelogText("Fabric")
+new File("changelog.html").write getChangelogText("Fabric", false)
+new File("recent_changelog.html").write getChangelogText("Fabric", true)
