@@ -1,12 +1,18 @@
 package com.railwayteam.railways.compat.tracks.mods;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 import net.minecraft.resources.ResourceLocation;
 
 public class BygTrackCompat extends GenericTrackCompat {
     BygTrackCompat() {
         super("byg");
+    }
+
+    @Override
+    protected boolean registerTracksAnyway() {
+        return super.registerTracksAnyway() || Mods.BYG.isLoaded;
     }
 
     @Override

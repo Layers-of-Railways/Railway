@@ -130,7 +130,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     var projectId = findProperty('curseforge_project')
 
     def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"))
-    mainFile.changelog = getChangelogText("Fabric")
+    mainFile.changelog = getChangelogText("Fabric", true)
     mainFile.changelogType = "html"
     mainFile.displayName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
     mainFile.addRequirement("create-fabric")
@@ -142,7 +142,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 modrinth {
     token = findProperty('MODRINTH_TOKEN')
     projectId = findProperty('modrinth_project')
-    changelog = getChangelogText("Fabric")
+    changelog = getChangelogText("Fabric", true)
     versionName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
     versionNumber = "${mod_version}-fabric-${minecraft_version}"
     versionType = "release"

@@ -2,6 +2,7 @@ package com.railwayteam.railways.compat.tracks.mods;
 
 import com.google.common.collect.ImmutableMap;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 import net.minecraft.resources.ResourceLocation;
 
@@ -10,6 +11,11 @@ import java.util.Map;
 public class TwilightForestTrackCompat extends GenericTrackCompat {
     TwilightForestTrackCompat() {
         super("twilightforest");
+    }
+
+    @Override
+    protected boolean registerTracksAnyway() {
+        return super.registerTracksAnyway() || Mods.TWILIGHTFOREST.isLoaded;
     }
 
     private static final Map<String, String> slab_map = ImmutableMap.of(

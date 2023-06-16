@@ -33,6 +33,10 @@ jars
 /fabric/changelog.html
 /forge/changelog.html
 /common/changelog.html
+/recent_changelog.html
+/fabric/recent_changelog.html
+/forge/recent_changelog.html
+/common/recent_changelog.html
 /forge/libs/
 
 ##################
