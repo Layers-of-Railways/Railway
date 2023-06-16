@@ -34,3 +34,10 @@ jars
 /forge/changelog.html
 /common/changelog.html
 /forge/libs/
+
+##################
+# Dev's Personal #
+##################
+
+# Slimeist (techno-sam)
+/build_archive/
