@@ -2,11 +2,11 @@
 	"credit": "By Slimeist",
 	"ambientocclusion": false,
 	"textures": {
-		"3": "track_diag2_outlines/track_diag2_outline.xcf_left_bottom",
-		"4": "track_diag2_outlines/track_diag2_outline.xcf_left_center",
-		"5": "track_diag2_outlines/track_diag2_outline.xcf_center_top",
-		"6": "track_diag2_outlines/track_diag2_outline.xcf_right_top",
-		"particle": "track_diag2_outlines/track_diag2_outline.xcf_left_bottom",
+		"3": "block/stone",
+		"4": "block/stone",
+		"5": "block/stone",
+		"6": "block/stone",
+		"particle": "block/stone",
 		"side": "block/amethyst_block",
 		"top": "block/acacia_planks",
 		"bottom": "block/barrel_top"

@@ -7,10 +7,7 @@ import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.trains.track.TrackBlock;
-import com.simibubi.create.content.trains.track.TrackBlockItem;
-import com.simibubi.create.content.trains.track.TrackMaterial;
-import com.simibubi.create.content.trains.track.TrackMaterialFactory;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -25,12 +22,12 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Set;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.CRTagGen.addOptionalTag;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public abstract class TrackCompatUtils {
 
@@ -41,6 +38,18 @@ public abstract class TrackCompatUtils {
         "twilightforest",
         "biomesoplenty"
     );
+
+    @ApiStatus.Internal
+    public static boolean mixinIgnoreErrorForMissingItem(ResourceLocation resourceLocation) {
+        if (resourceLocation.getNamespace().equals(Railways.MODID)) {
+            for (String compatMod : TRACK_COMPAT_MODS) {
+                if (resourceLocation.getPath().contains(compatMod)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
@@ -73,7 +82,7 @@ public abstract class TrackCompatUtils {
         String name = "track_" + owningMod + "_" + material.resourceName();
 
         addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.TRACKS.tag,
-            CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric,
+                CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric,
                 BlockTags.MINEABLE_WITH_PICKAXE); // pickaxe-mineable tag is moved here as Registrate cannot add optional tag in BlockBuilder
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
@@ -89,6 +98,7 @@ public abstract class TrackCompatUtils {
             .blockstate(blockstateGen)
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
+            .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .item(TrackBlockItem::new)
             .properties(p -> {
                 if (hideInCreativeTabs) //noinspection DataFlowIssue

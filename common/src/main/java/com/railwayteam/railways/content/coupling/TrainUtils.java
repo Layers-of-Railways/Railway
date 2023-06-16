@@ -36,7 +36,6 @@ public class TrainUtils {
         if (train.carriages.size() <= numberOffEnd)
             return train;
 
-        // fixme backup original train
         Integer frontSpacingBackup  = null;
         Carriage[] lastCarriages = new Carriage[numberOffEnd];
         Integer[] lastCarriageSpacings = new Integer[numberOffEnd - 1];

@@ -26,6 +26,7 @@
     "MixinCarriageBogey",
     "MixinDoorMovingInteraction",
     "MixinGlobalStation",
+    "MixinLootTables",
     "MixinNavigation",
     "MixinNixieTubeDisplaySource",
     "MixinNixieTubeDisplayTarget",
