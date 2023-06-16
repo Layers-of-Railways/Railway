@@ -2,11 +2,10 @@ package com.railwayteam.railways.content.switches;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -30,7 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements ITE<TrackSwitchTileEntity> {
+public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchTileEntity> {
   boolean isAutomatic;
   public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -103,12 +102,12 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   }
 
   @Override
-  public Class<TrackSwitchTileEntity> getTileEntityClass() {
+  public Class<TrackSwitchTileEntity> getBlockEntityClass() {
     return TrackSwitchTileEntity.class;
   }
 
   @Override
-  public BlockEntityType<? extends TrackSwitchTileEntity> getTileEntityType() {
+  public BlockEntityType<? extends TrackSwitchTileEntity> getBlockEntityType() {
     return isAutomatic ?
       CRBlockEntities.BRASS_SWITCH.get() :
       CRBlockEntities.ANDESITE_SWITCH.get();
@@ -116,7 +115,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
   @Override
   public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-    ITE.onRemove(state, level, pos, newState);
+    IBE.onRemove(state, level, pos, newState);
   }
 
   @SuppressWarnings("deprecation")
@@ -133,7 +132,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       return InteractionResult.SUCCESS;
     }
 
-    TrackSwitchTileEntity te = getTileEntity(level, pos);
+    TrackSwitchTileEntity te = getBlockEntity(level, pos);
     if (te != null) {
       return te.onUse();
     }
@@ -145,7 +144,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
     super.onProjectileHit(level, state, hit, projectile);
 
-    TrackSwitchTileEntity te = getTileEntity(level, hit.getBlockPos());
+    TrackSwitchTileEntity te = getBlockEntity(level, hit.getBlockPos());
     if (te != null) {
       te.onProjectileHit();
     }
@@ -155,7 +154,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
     super.neighborChanged(state, level, pos, block, fromPos, isMoving);
 
-    TrackSwitchTileEntity te = getTileEntity(level, pos);
+    TrackSwitchTileEntity te = getBlockEntity(level, pos);
     if (te != null) {
       te.checkRedstoneInputs();
     }

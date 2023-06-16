@@ -2,21 +2,19 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchDebugVisualizer;
-import com.railwayteam.railways.content.train_debug.TravellingPointVisualizer;
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.contraptions.KineticDebugger;
-import com.simibubi.create.content.logistics.trains.GlobalRailwayManager;
-import com.simibubi.create.content.logistics.trains.TrackGraph;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
+import com.simibubi.create.content.kinetics.KineticDebugger;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.TrackGraph;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Mixin(value = GlobalRailwayManager.class, remap = false)
 public abstract class MixinGlobalRailwayManager {

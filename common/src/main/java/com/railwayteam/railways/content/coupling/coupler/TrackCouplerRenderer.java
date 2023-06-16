@@ -3,11 +3,8 @@ package com.railwayteam.railways.content.coupling.coupler;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.trains.graph.TrackEdge;
-import com.simibubi.create.content.trains.graph.TrackGraphLocation;
-import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
@@ -26,9 +23,9 @@ public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerB
     }
 
     @Nullable
-    public static PartialModel getCouplerOverlayModel(TrackCouplerTileEntity te) {
+    public static PartialModel getCouplerOverlayModel(TrackCouplerBlockEntity te) {
         if (te.areEdgePointsOk()) {
-            TrackCouplerTileEntity.AllowedOperationMode mode = te.getAllowedOperationMode();
+            TrackCouplerBlockEntity.AllowedOperationMode mode = te.getAllowedOperationMode();
             if (mode.canCouple && mode.canDecouple) return CRBlockPartials.COUPLER_BOTH;
             if (mode.canCouple) return CRBlockPartials.COUPLER_COUPLE;
             if (mode.canDecouple) return CRBlockPartials.COUPLER_DECOUPLE;

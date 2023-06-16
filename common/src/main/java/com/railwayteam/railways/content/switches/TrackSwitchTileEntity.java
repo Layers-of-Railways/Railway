@@ -5,13 +5,16 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
-import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
-import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.logistics.trains.*;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
+import com.simibubi.create.content.contraptions.StructureTransform;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.trains.graph.TrackEdge;
+import com.simibubi.create.content.trains.graph.TrackGraph;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.graph.TrackNodeLocation;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import net.minecraft.ChatFormatting;
@@ -21,16 +24,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
-import static com.railwayteam.railways.content.switches.TrackSwitchBlock.*;
+import static com.railwayteam.railways.content.switches.TrackSwitchBlock.POWERED;
+import static com.railwayteam.railways.content.switches.TrackSwitchBlock.STATE;
 import static java.util.stream.Collectors.toSet;
 
-public class TrackSwitchTileEntity extends SmartTileEntity implements ITransformableTE, IHaveGoggleInformation {
+public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
   public TrackTargetingBehaviour<TrackSwitch> edgePoint;
 
   public TrackSwitchTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -38,7 +40,7 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
   }
 
   @Override
-  public void addBehaviours(List<TileEntityBehaviour> behaviours) {
+  public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
   }
 
@@ -98,7 +100,7 @@ public class TrackSwitchTileEntity extends SmartTileEntity implements ITransform
   }
 
   void calculateExits(TrackSwitch sw) {
-    GraphLocation loc = edgePoint.determineGraphLocation();
+    TrackGraphLocation loc = edgePoint.determineGraphLocation();
     TrackGraph graph = loc.graph;
     TrackEdge edge = graph
       .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))

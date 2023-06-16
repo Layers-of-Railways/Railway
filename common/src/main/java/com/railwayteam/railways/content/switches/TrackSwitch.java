@@ -1,33 +1,25 @@
 package com.railwayteam.railways.content.switches;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.trains.*;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalPropagator;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SingleTileEdgePoint;
-import com.simibubi.create.foundation.block.ITE;
-import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.content.trains.graph.*;
+import com.simibubi.create.content.trains.signal.SignalPropagator;
+import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import com.simibubi.create.foundation.utility.Pair;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
-import static java.util.stream.Collectors.toSet;
-
-public class TrackSwitch extends SingleTileEdgePoint {
+public class TrackSwitch extends SingleBlockEntityEdgePoint {
   private TrackNodeLocation switchPoint;
   private final List<TrackNodeLocation> exits = new ArrayList<>();
 
@@ -49,8 +41,8 @@ public class TrackSwitch extends SingleTileEdgePoint {
   }
 
   @Override
-  public void tileAdded(BlockEntity tile, boolean front) {
-    super.tileAdded(tile, front);
+  public void blockEntityAdded(BlockEntity tile, boolean front) {
+    super.blockEntityAdded(tile, front);
 
     if (tile instanceof TrackSwitchTileEntity te) {
       te.calculateExits(this);

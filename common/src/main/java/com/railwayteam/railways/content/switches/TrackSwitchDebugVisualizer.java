@@ -1,16 +1,9 @@
 package com.railwayteam.railways.content.switches;
 
-import com.railwayteam.railways.Railways;
-import com.simibubi.create.Create;
 import com.simibubi.create.CreateClient;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.TrackEdge;
-import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
+import com.simibubi.create.content.trains.graph.TrackNodeLocation;
 import com.simibubi.create.foundation.utility.Color;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 

@@ -1,10 +1,9 @@
 package com.railwayteam.railways.content.switches;
 
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.content.logistics.trains.track.TrackBlockOutline.BezierPointSelection;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
@@ -19,7 +18,7 @@ public class TrackSwitchBlockItem extends TrackTargetingBlockItem {
   }
 
   @Override
-  public boolean useOnCurve(BezierPointSelection selection, ItemStack stack) {
+  public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) {
     return false;
   }
 }
