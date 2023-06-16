@@ -1,6 +1,6 @@
 {
 	"parent": "railways:block/monorail/monorail/static_blocks/obj_track",
 	"loader": "forge:obj",
-	"flip-v": true,
+	"flip_v": true,
 	"model": "railways:models/block/monorail/monorail/static_blocks/diag_2.obj"
 }
