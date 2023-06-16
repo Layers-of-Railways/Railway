@@ -49,14 +49,14 @@ public class Railways {
   }
 
   public static void init() {
-    ModSetup.register();
-    finalizeRegistrate();
-
     registerConfig(Type.CLIENT, Config.CLIENT_CONFIG);
     registerConfig(Type.SERVER, Config.SERVER_CONFIG);
     Path configDir = Utils.configDir();
     Config.loadConfig(Config.CLIENT_CONFIG, configDir.resolve(MODID + "-client.toml"));
     Config.loadConfig(Config.SERVER_CONFIG, configDir.resolve(MODID + "-common.toml"));
+
+    ModSetup.register();
+    finalizeRegistrate();
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();

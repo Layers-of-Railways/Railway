@@ -37,8 +37,8 @@ public class GenericTrackCompat {
         return Utils.isEnvVarTrue("DATAGEN");
     }
 
-    protected final static boolean registerTracksAnywayGlobal() {
-        return Config.REGISTER_MISSING_TRACKS.get() || Utils.isDevEnv();
+    protected static boolean registerTracksAnywayGlobal() {
+        return Config.REGISTER_MISSING_TRACKS.get();// || Utils.isDevEnv();
     }
 
     protected boolean registerTracksAnyway() {
@@ -66,7 +66,7 @@ public class GenericTrackCompat {
             );
             MATERIALS.put(name, material);
 
-            NonNullSupplier<TrackBlock> block = makeTrack(material, baseBlock.isEmpty() && !Utils.isDevEnv());
+            NonNullSupplier<TrackBlock> block = makeTrack(material);
             BLOCKS.put(name, block);
 
             ITEM_INCOMPLETE_TRACK.put(material, registrate().item("track_incomplete_" + modid + "_" + material.resourceName(), SequencedAssemblyItem::new)

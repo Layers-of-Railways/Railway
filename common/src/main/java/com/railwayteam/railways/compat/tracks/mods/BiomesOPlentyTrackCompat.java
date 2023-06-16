@@ -1,11 +1,17 @@
 package com.railwayteam.railways.compat.tracks.mods;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class BiomesOPlentyTrackCompat extends GenericTrackCompat {
     BiomesOPlentyTrackCompat() {
         super("biomesoplenty");
+    }
+
+    @Override
+    protected boolean registerTracksAnyway() {
+        return super.registerTracksAnyway() || Mods.BIOMESOPLENTY.isLoaded;
     }
 
     private static boolean registered = false;
