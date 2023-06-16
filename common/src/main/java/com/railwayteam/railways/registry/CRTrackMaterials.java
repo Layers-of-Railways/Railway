@@ -84,7 +84,7 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.MANGROVE_TRACK)
             .particle(new ResourceLocation("block/mangrove_planks"))
             .sleeper(Blocks.MANGROVE_SLAB)
-            .defaultModels()
+            .standardModels()
             .build(),
         MONORAIL = make(Railways.asResource("monorail"))
             .lang("Monorail")
