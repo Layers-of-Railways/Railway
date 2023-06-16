@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
@@ -35,11 +36,11 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  public static final CreativeModeTab compatTracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
+  public static final CreativeModeTab compatTracksCreativeTab = TrackCompatUtils.anyLoaded() ? new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack(); }
-  };
+  } : mainCreativeTab;
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
 
