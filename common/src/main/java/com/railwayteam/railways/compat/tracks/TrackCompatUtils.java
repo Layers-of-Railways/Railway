@@ -7,10 +7,7 @@ import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.trains.track.TrackBlock;
-import com.simibubi.create.content.trains.track.TrackBlockItem;
-import com.simibubi.create.content.trains.track.TrackMaterial;
-import com.simibubi.create.content.trains.track.TrackMaterialFactory;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -30,7 +27,6 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.CRTagGen.addOptionalTag;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public abstract class TrackCompatUtils {
 
@@ -89,6 +85,7 @@ public abstract class TrackCompatUtils {
             .blockstate(blockstateGen)
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
+            .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .item(TrackBlockItem::new)
             .properties(p -> {
                 if (hideInCreativeTabs) //noinspection DataFlowIssue

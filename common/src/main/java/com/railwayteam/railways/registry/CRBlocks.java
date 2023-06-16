@@ -26,6 +26,7 @@ import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackModel;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -97,6 +98,7 @@ public class CRBlocks {
             .tag((TagKey<Block>[]) trackTags.toArray(new TagKey[0])) // keep the cast, or stuff breaks
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
+            .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .item(TrackBlockItem::new)
             .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
             .build()
