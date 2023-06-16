@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -37,6 +38,18 @@ public abstract class TrackCompatUtils {
         "twilightforest",
         "biomesoplenty"
     );
+
+    @ApiStatus.Internal
+    public static boolean mixinIgnoreErrorForMissingItem(ResourceLocation resourceLocation) {
+        if (resourceLocation.getNamespace().equals(Railways.MODID)) {
+            for (String compatMod : TRACK_COMPAT_MODS) {
+                if (resourceLocation.getPath().contains(compatMod)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 

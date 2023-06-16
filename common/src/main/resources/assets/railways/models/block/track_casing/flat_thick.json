@@ -5,7 +5,7 @@
 		"side": "block/amethyst_block",
 		"top": "block/acacia_planks",
 		"bottom": "block/barrel_top",
-		"particle": "track_diag2_outlines/track_diag2_outline.xcf_left_bottom"
+		"particle": "block/stone"
 	},
 	"elements": [
 		{
