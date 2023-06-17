@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.switches.TrackSwitchDebugVisualizer;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
@@ -55,5 +56,10 @@ public abstract class MixinTrackTargetingClient {
             ms.popPose();
             ci.cancel();
         }
+    }
+
+    @Inject(method = "render", at = @At("HEAD"))
+    private static void renderSwitchHints(PoseStack ms, SuperRenderTypeBuffer buffer, Vec3 camera, CallbackInfo ci) {
+        TrackSwitchDebugVisualizer.visualizePotentialLocations();
     }
 }
