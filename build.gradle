@@ -57,17 +57,16 @@ subprojects {
         into rootProject.file("jars")
     }
 
-    tasks.register("publishMod") {
-        if (project.name == "common")
-            return
+    tasks.register("forgePublishMod") {
+        dependsOn ':forge:build'
+        dependsOn ':forge:publishCurseForge'
+        dependsOn ':forge:modrinth'
+    }
 
-        // TODO UNDISABLE FABRIC AFTER FIXED
-        if (project.name == "fabric")
-            return
-
-        dependsOn 'build'
-        dependsOn 'publishCurseForge'
-        dependsOn 'modrinth'
+    tasks.register("fabricPublishMod") {
+        dependsOn ':fabric:build'
+        dependsOn ':fabric:publishCurseForge'
+        dependsOn ':fabric:modrinth'
     }
 }
 
