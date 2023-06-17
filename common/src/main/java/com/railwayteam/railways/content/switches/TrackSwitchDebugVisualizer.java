@@ -19,7 +19,7 @@ public class TrackSwitchDebugVisualizer {
     float width = 1 / 16f;
 
     TrackNodeLocation from = sw.getSwitchPoint();
-    TrackNodeLocation activeExit = sw.getActiveExit();
+    TrackNodeLocation activeExit = sw.getSwitchTarget();
     for (TrackNodeLocation to : sw.getExits()) {
       boolean active = to == activeExit;
       CreateClient.OUTLINER.showLine(to,

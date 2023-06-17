@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -48,7 +49,12 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private @Nullable TrackNodeLocation leftExit;
     private @Nullable TrackNodeLocation rightExit;
 
-    private @Nullable TrackSwitchBlock.SwitchState activeExit;
+    private @NotNull TrackSwitchBlock.SwitchState switchState = TrackSwitchBlock.SwitchState.NORMAL;
+    private boolean automatic;
+
+    public boolean isAutomatic() {
+        return automatic;
+    }
 
     @Override
     public EdgePointType<?> getType() {
@@ -66,6 +72,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
 
         if (tile instanceof TrackSwitchTileEntity te) {
             te.calculateExits(this);
+            automatic = te.isAutomatic();
         }
 
         notifyTrains(tile.getLevel());
@@ -102,6 +109,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
                 .filter(e -> forward.dot(switchPoint.getLocation().vectorTo(e.getLocation())) > 0)
                 .toList());
         sortExits();
+        ensureValidState();
     }
 
     private void sortExits() {
@@ -166,13 +174,42 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         return exits.stream().toList();
     }
 
-    void setActiveExit(@Nullable TrackSwitchBlock.SwitchState state) {
-        activeExit = state;
+    private boolean isStateValid(TrackSwitchBlock.SwitchState state) {
+        return switch (state) {
+            case NORMAL -> hasStraightExit();
+            case REVERSE_RIGHT -> hasRightExit();
+            case REVERSE_LEFT -> hasLeftExit();
+        };
     }
 
-    public @Nullable TrackNodeLocation getActiveExit() {
-        if (activeExit == null) return null;
-        return switch (activeExit) {
+    private TrackSwitchBlock.SwitchState getValidSwitchState() {
+        for (TrackSwitchBlock.SwitchState state : TrackSwitchBlock.SwitchState.values()) {
+            if (isStateValid(state))
+                return state;
+        }
+        return TrackSwitchBlock.SwitchState.NORMAL;
+    }
+
+    void ensureValidState() {
+        if (!isStateValid(switchState)) {
+            switchState = getValidSwitchState();
+        }
+    }
+
+    public void setSwitchState(@NotNull TrackSwitchBlock.SwitchState state) {
+        if (isStateValid(state) && switchState != state) {
+            switchState = state;
+            ticks = 10000; // force a tick
+        }
+    }
+
+    public @NotNull TrackSwitchBlock.SwitchState getSwitchState() {
+        return switchState;
+    }
+
+    public @Nullable TrackNodeLocation getSwitchTarget() {
+        //ensureValidState();
+        return switch (switchState) {
             case NORMAL -> straightExit;
             case REVERSE_RIGHT -> rightExit;
             case REVERSE_LEFT -> leftExit;
@@ -196,22 +233,29 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         super.write(nbt, dimensions);
         nbt.put("SwitchPoint", switchPoint.write(dimensions));
         nbt.put("Exits", NBTHelper.writeCompoundList(exits, e -> e.write(dimensions)));
-        nbt.putString("ActiveExit", activeExit == null ? "NONE" : activeExit.getSerializedName());
+        nbt.putString("SwitchState", switchState.getSerializedName());
+        nbt.putBoolean("Automatic", automatic);
     }
 
     @Override
     public void write(FriendlyByteBuf buffer, DimensionPalette dimensions) {
         super.write(buffer, dimensions);
+        buffer.writeInt(switchState.ordinal());
+        buffer.writeBoolean(automatic);
         switchPoint.send(buffer, dimensions);
         buffer.writeCollection(exits, (buf, e) -> e.send(buf, dimensions));
-        buffer.writeBoolean(activeExit != null);
-        if (activeExit != null)
-            buffer.writeInt(activeExit.ordinal());
     }
 
     @Override
     public void read(CompoundTag nbt, boolean migration, DimensionPalette dimensions) {
         super.read(nbt, migration, dimensions);
+        String exit = nbt.getString("SwitchState");
+        try {
+            switchState = TrackSwitchBlock.SwitchState.valueOf(exit.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            switchState = getValidSwitchState();
+        }
+        automatic = nbt.getBoolean("Automatic");
         updateExits(
                 TrackNodeLocation.read(nbt.getCompound("SwitchPoint"), dimensions),
                 nbt.getList("Exits", Tag.TAG_COMPOUND)
@@ -219,26 +263,17 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
                         .map(t -> TrackNodeLocation.read((CompoundTag) t, dimensions))
                         .toList()
         );
-        String exit = nbt.getString("ActiveExit");
-        try {
-            activeExit = TrackSwitchBlock.SwitchState.valueOf(exit.toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException e) {
-            activeExit = null;
-        }
     }
 
     @Override
     public void read(FriendlyByteBuf buffer, DimensionPalette dimensions) {
         super.read(buffer, dimensions);
+        switchState = TrackSwitchBlock.SwitchState.values()[buffer.readInt()];
+        automatic = buffer.readBoolean();
         updateExits(
                 TrackNodeLocation.receive(buffer, dimensions),
                 buffer.readList(buf -> TrackNodeLocation.receive(buf, dimensions))
         );
-        if (buffer.readBoolean()) {
-            activeExit = TrackSwitchBlock.SwitchState.values()[buffer.readInt()];
-        } else {
-            activeExit = null;
-        }
     }
 
     private int ticks = 0;
@@ -284,12 +319,12 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
                     }
                 }
                 if (closestEdge != null) {
-                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setEnabled(forceActive || getActiveExit() == to);
+                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
                 }
                 if (closestFromNode != null) {
                     TrackEdge reverseEdge = graph.getConnection(Couple.create(closestFromNode, toNode));
                     if (reverseEdge != null)
-                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setEnabled(forceActive || getActiveExit() == to);
+                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
                 }
                 // not sure if this enabled state will be synchronized to client... hmm...
             }

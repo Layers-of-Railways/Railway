@@ -1,93 +1,18 @@
 {
   "variants": {
-    "facing=north,powered=false,state=normal": {
+    "facing=north": {
       "model": "railways:block/track_switch_brass/block",
       "y": 270
     },
-    "facing=south,powered=false,state=normal": {
+    "facing=south": {
       "model": "railways:block/track_switch_brass/block",
       "y": 90
     },
-    "facing=west,powered=false,state=normal": {
+    "facing=west": {
       "model": "railways:block/track_switch_brass/block",
       "y": 180
     },
-    "facing=east,powered=false,state=normal": {
-      "model": "railways:block/track_switch_brass/block"
-    },
-    "facing=north,powered=true,state=normal": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 270
-    },
-    "facing=south,powered=true,state=normal": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 90
-    },
-    "facing=west,powered=true,state=normal": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 180
-    },
-    "facing=east,powered=true,state=normal": {
-      "model": "railways:block/track_switch_brass/block"
-    },
-    "facing=north,powered=false,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 270
-    },
-    "facing=south,powered=false,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 90
-    },
-    "facing=west,powered=false,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 180
-    },
-    "facing=east,powered=false,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block"
-    },
-    "facing=north,powered=true,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 270
-    },
-    "facing=south,powered=true,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 90
-    },
-    "facing=west,powered=true,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 180
-    },
-    "facing=east,powered=true,state=reverse_left": {
-      "model": "railways:block/track_switch_brass/block"
-    },
-    "facing=north,powered=false,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 270
-    },
-    "facing=south,powered=false,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 90
-    },
-    "facing=west,powered=false,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 180
-    },
-    "facing=east,powered=false,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block"
-    },
-    "facing=north,powered=true,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 270
-    },
-    "facing=south,powered=true,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 90
-    },
-    "facing=west,powered=true,state=reverse_right": {
-      "model": "railways:block/track_switch_brass/block",
-      "y": 180
-    },
-    "facing=east,powered=true,state=reverse_right": {
+    "facing=east": {
       "model": "railways:block/track_switch_brass/block"
     }
   }

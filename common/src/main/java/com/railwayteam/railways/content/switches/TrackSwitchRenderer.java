@@ -33,8 +33,6 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
 
   private void renderFlagState(TrackSwitchTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                                int light) {
-    // TODO: Animate flag state changes?
-
     BlockState state = te.getBlockState();
     ms.pushPose();
 
@@ -57,10 +55,15 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
 
       // Rotate just enough to touch the front or back edge
       if (te.isReverseLeft()) {
-        buf = buf.rotate(Direction.NORTH, -1.1f);
+//        buf = buf.rotate(Direction.NORTH, -1.1f);
+        te.lerpedAngle.updateChaseTarget(-1.1f);
       } else if (te.isReverseRight()) {
-        buf = buf.rotate(Direction.NORTH, 1.1f);
+//        buf = buf.rotate(Direction.NORTH, 1.1f);
+        te.lerpedAngle.updateChaseTarget(1.1f);
+      } else {
+        te.lerpedAngle.updateChaseTarget(0.0f);
       }
+      buf = buf.rotate(Direction.NORTH, te.lerpedAngle.getValue(partialTicks));
 
       buf
         .translate(-0.5, -7.5 / 16, -0.5)
@@ -72,10 +75,15 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
         .light(light);
 
       if (te.isReverseLeft()) {
-        buf = buf.rotateCentered(Direction.UP, 1.5708f);
+//        buf = buf.rotateCentered(Direction.UP, 1.5708f);
+        te.lerpedAngle.updateChaseTarget(1.5708f);
       } else if (te.isReverseRight()) {
-        buf = buf.rotateCentered(Direction.UP, -1.5708f);  // 90°
+//        buf = buf.rotateCentered(Direction.UP, -1.5708f);  // 90°
+        te.lerpedAngle.updateChaseTarget(-1.5708f);
+      } else {
+        te.lerpedAngle.updateChaseTarget(0.0f);
       }
+      buf = buf.rotateCentered(Direction.UP, te.lerpedAngle.getValue(partialTicks));
       buf.renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
       CachedBufferer.partial(CRBlockPartials.ANDESITE_SWITCH_HANDLE, state)

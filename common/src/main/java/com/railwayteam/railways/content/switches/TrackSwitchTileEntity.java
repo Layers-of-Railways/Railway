@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.switches;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -18,8 +19,10 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
@@ -30,12 +33,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static com.railwayteam.railways.content.switches.TrackSwitchBlock.POWERED;
-import static com.railwayteam.railways.content.switches.TrackSwitchBlock.STATE;
+import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
+
+/*
+todo automatic switches should be auto-settable by moving trains (and therefore also not block navigation)
+ */
 
 public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
+
+    final LerpedFloat lerpedAngle = LerpedFloat.angular().chase(0.0, 0.3, LerpedFloat.Chaser.EXP);
 
     public TrackSwitchTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -58,20 +66,32 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         return false;
     }
 
-    public boolean isPowered() {
-        return getBlockState().getValue(TrackSwitchBlock.POWERED);
+    public boolean isLocked() {
+        return getBlockState().getValue(TrackSwitchBlock.LOCKED);
+    }
+
+    public SwitchState getState() {
+        return edgePoint.getEdgePoint() != null ? edgePoint.getEdgePoint().getSwitchState() : SwitchState.NORMAL;
+//        return getBlockState().getValue(STATE);
+    }
+
+    public void setState(SwitchState state) {
+        updateSwitchState(trackSwitch -> {
+            trackSwitch.setSwitchState(state);
+            onStateChange();
+        });
     }
 
     public boolean isNormal() {
-        return getBlockState().getValue(STATE) == SwitchState.NORMAL;
+        return getState() == SwitchState.NORMAL;
     }
 
     public boolean isReverseLeft() {
-        return getBlockState().getValue(STATE) == SwitchState.REVERSE_LEFT;
+        return getState() == SwitchState.REVERSE_LEFT;
     }
 
     public boolean isReverseRight() {
-        return getBlockState().getValue(STATE) == SwitchState.REVERSE_RIGHT;
+        return getState() == SwitchState.REVERSE_RIGHT;
     }
 
     public PartialModel getOverlayModel() {
@@ -131,7 +151,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         b().translate("tooltip.switch.state")
                 .style(ChatFormatting.YELLOW)
                 .forGoggles(tooltip);
-        b().translate("switch.state." + getBlockState().getValue(STATE).getSerializedName())
+        b().translate("switch.state." + getState().getSerializedName())
                 .style(ChatFormatting.YELLOW)
                 .forGoggles(tooltip);
 
@@ -146,6 +166,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         super.tick();
 
         if (level != null && level.isClientSide) {
+            lerpedAngle.tickChaser();
             clientLazyTickCounter++;
             if (clientLazyTickCounter >= clientLazyTickRate) {
                 clientLazyTick();
@@ -153,7 +174,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
             }
         }
 
-        checkRedstoneInputs();
+        //checkRedstoneInputs();
     }
 
     // Borrowed from Create's StationBlockEntity
@@ -169,40 +190,54 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         return true;
     }
 
-    protected void onStateChange(SwitchState state) {
-        updateSwitchState(trackSwitch -> trackSwitch.setActiveExit(state));
-        if (level != null && level.isClientSide) {
-            clientLazyTick();
+    protected void onStateChange() {
+        if (level != null) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 0);
+            if (level.isClientSide)
+                clientLazyTick();
         }
     }
 
-    BlockState cycleState() {
-        BlockState oldState = getBlockState();
+    boolean cycleState() {
+        return cycleState(SwitchConstraint.NONE);
+    }
+
+    boolean cycleState(SwitchConstraint constraint) {
+        SwitchState oldState = getState();
 
         TrackSwitch sw = edgePoint.getEdgePoint();
         if (sw == null) {
-            return oldState;
+            return false;
         }
 
-        return oldState.setValue(STATE, oldState.getValue(STATE).nextStateFor(sw));
+        SwitchState newState = oldState.nextStateFor(sw, constraint);
+        if (oldState != newState)
+            setState(newState);
+        return oldState != newState;
     }
 
-    InteractionResult onUse() {
-        if (!isPowered()) {
-            BlockState newState = cycleState();
-            onStateChange(newState.getValue(STATE));
-            level.setBlockAndUpdate(getBlockPos(), newState);
+    InteractionResult onUse(boolean reverseDirection) {
+        if (!isLocked()) {
+            cycleState(reverseDirection ? SwitchConstraint.TO_LEFT : SwitchConstraint.TO_RIGHT);
+//            level.setBlockAndUpdate(getBlockPos(), getBlockState());
             return InteractionResult.CONSUME;
         }
         return InteractionResult.SUCCESS;
     }
 
     void onProjectileHit() {
-        if (!isPowered()) {
-            BlockState newState = cycleState();
-            onStateChange(newState.getValue(STATE));
-            level.setBlockAndUpdate(getBlockPos(), newState);
+        if (!isLocked()) {
+            cycleState();
+//            level.setBlockAndUpdate(getBlockPos(), getBlockState());
         }
+    }
+
+    private boolean hasSignal(Direction direction) {
+        if (direction != Direction.UP && direction != Direction.DOWN) {
+            direction = Direction.from2DDataValue(direction.get2DDataValue()
+                    + getBlockState().getValue(TrackSwitchBlock.FACING).get2DDataValue());
+        }
+        return getLevel() != null && getLevel().hasSignal(getBlockPos().relative(direction), direction);
     }
 
     void checkRedstoneInputs() {
@@ -210,16 +245,27 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         Level level = getLevel();
         BlockPos pos = getBlockPos();
 
-        boolean alreadyPowered = isPowered();
-        boolean hasSignal = level.hasNeighborSignal(pos);
+        boolean alreadyLocked = isLocked();
+        boolean hasSignal = hasSignal(Direction.DOWN);
 
-        if (hasSignal && !alreadyPowered) {
-            level.setBlockAndUpdate(pos, state.setValue(POWERED, true));
-        } else if (!hasSignal && alreadyPowered) {
-            level.setBlockAndUpdate(pos, state.setValue(POWERED, false));
+        if (hasSignal && !alreadyLocked) {
+            level.setBlockAndUpdate(pos, state.setValue(LOCKED, true));
+        } else if (!hasSignal && alreadyLocked) {
+            level.setBlockAndUpdate(pos, state.setValue(LOCKED, false));
         }
 
-        // TODO: Redstone pulses to cycle, or high = reverse?
+        /*
+        NORTH - right
+        SOUTH - left
+        EAST / WEST - straight
+         */
+        if (hasSignal(Direction.EAST) || hasSignal(Direction.WEST)) {
+            setState(SwitchState.NORMAL);
+        } else if (hasSignal(Direction.NORTH)) {
+            setState(SwitchState.REVERSE_RIGHT);
+        } else if (hasSignal(Direction.SOUTH)) {
+            setState(SwitchState.REVERSE_LEFT);
+        }
     }
 
     public void clientLazyTick() {
@@ -247,7 +293,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if (edgePoint.getEdgePoint() != null)
-            calculateExits(edgePoint.getEdgePoint());
+//        if (edgePoint.getEdgePoint() != null)
+//            calculateExits(edgePoint.getEdgePoint());
     }
 }

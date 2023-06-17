@@ -24,45 +24,82 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchTileEntity>, IWrenchable {
   boolean isAutomatic;
-  public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
-  public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+//  public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
+  public static final BooleanProperty LOCKED = BlockStateProperties.LOCKED;
+
+  public enum SwitchConstraint {
+    NONE,
+    TO_RIGHT,
+    TO_LEFT
+    ;
+
+    public boolean canGoRight() {
+      return this != TO_LEFT;
+    }
+
+    public boolean canGoLeft() {
+      return this != TO_RIGHT;
+    }
+  }
 
   public enum SwitchState implements StringRepresentable {
-    NORMAL, REVERSE_LEFT,
-    REVERSE_RIGHT;
+    NORMAL(0), REVERSE_LEFT(-1),
+    REVERSE_RIGHT(1);
+
+    private final int direction;
+
+    SwitchState(int direction) {
+      this.direction = direction;
+    }
 
     @Override
     public @NotNull String getSerializedName() {
       return Lang.asId(name());
     }
 
-    public @NotNull SwitchState nextStateFor(TrackSwitch sw) {
+    public boolean canSwitchTo(SwitchState next, SwitchConstraint constraint) {
+      return switch (constraint) {
+        case NONE -> true;
+        case TO_LEFT -> next.direction <= this.direction;
+        case TO_RIGHT -> next.direction >= this.direction;
+      };
+    }
+
+    public @NotNull SwitchState nextStateFor(TrackSwitch sw, SwitchConstraint constraint) {
       if (this == NORMAL) {
-        if (sw.hasRightExit()) {
+        if (sw.hasRightExit() && constraint.canGoRight()) {
           return REVERSE_RIGHT;
-        } else if (sw.hasLeftExit()) {
+        } else if (sw.hasLeftExit() && constraint.canGoLeft()) {
           return REVERSE_LEFT;
         }
       } else if (this == REVERSE_RIGHT) {
-        if (sw.hasLeftExit()) {
-          return REVERSE_LEFT;
-        } else if (sw.hasStraightExit()) {
-          return NORMAL;
+        if (constraint == SwitchConstraint.NONE) { // priority for switching differs
+          if (sw.hasLeftExit() && constraint.canGoLeft()) {
+            return REVERSE_LEFT;
+          } else if (sw.hasStraightExit() && constraint.canGoLeft()) {
+            return NORMAL;
+          }
+        } else {
+          if (sw.hasStraightExit() && constraint.canGoLeft()) {
+            return NORMAL;
+          } else if (sw.hasLeftExit() && constraint.canGoLeft()) {
+            return REVERSE_LEFT;
+          }
         }
       } else if (this == REVERSE_LEFT) {
-        if (sw.hasStraightExit()) {
+        if (sw.hasStraightExit() && constraint.canGoRight()) {
           return NORMAL;
-        } else if (sw.hasRightExit()) {
+        } else if (sw.hasRightExit() && constraint.canGoRight()) {
           return REVERSE_RIGHT;
         }
       }
@@ -85,13 +122,15 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     super(properties);
     this.isAutomatic = isAutomatic;
     registerDefaultState(defaultBlockState()
-      .setValue(STATE, SwitchState.NORMAL)
-      .setValue(POWERED, false));
+      //.setValue(STATE, SwitchState.NORMAL)
+      .setValue(LOCKED, false));
   }
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-    super.createBlockStateDefinition(builder.add(FACING).add(STATE).add(POWERED));
+    super.createBlockStateDefinition(builder.add(FACING)
+            //.add(STATE)
+            .add(LOCKED));
   }
 
   @Nullable
@@ -123,7 +162,15 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
   @SuppressWarnings("deprecation")
   @Override
-  public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+  public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
+                                      @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    if (context instanceof EntityCollisionContext entityContext) {
+      if (entityContext.getEntity() instanceof Projectile) {
+        return isAutomatic ?
+                CRShapes.BRASS_SWITCH_PROJECTILE.get(state.getValue(FACING)) :
+                CRShapes.ANDESITE_SWITCH_PROJECTILE.get(state.getValue(FACING));
+      }
+    }
     return isAutomatic ?
       CRShapes.BRASS_SWITCH.get(state.getValue(FACING)) :
       CRShapes.ANDESITE_SWITCH.get(state.getValue(FACING));
@@ -131,10 +178,15 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
   @SuppressWarnings("deprecation")
   @Override
+  public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level,
+                                               @NotNull BlockPos pos, @NotNull CollisionContext context) {
+    return hasCollision ? getShape(state, level, pos, context) : Shapes.empty();
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
   public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                                         @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
-    if (player.isSteppingCarefully())
-      return InteractionResult.PASS;
     ItemStack itemInHand = player.getItemInHand(hand);
     if (AllItems.WRENCH.isIn(itemInHand))
       return InteractionResult.PASS;
@@ -145,7 +197,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
     TrackSwitchTileEntity te = getBlockEntity(level, pos);
     if (te != null) {
-      return te.onUse();
+      return te.onUse(player.isSteppingCarefully());
     }
 
     return InteractionResult.SUCCESS;
@@ -170,6 +222,4 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       te.checkRedstoneInputs();
     }
   }
-
-
 }
