@@ -2,11 +2,14 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
+import com.railwayteam.railways.mixin_interfaces.ISwitchDisabledEdge;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.simibubi.create.content.trains.entity.Navigation;
 import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.utility.Pair;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Mixin(value = Navigation.class, remap = false)
@@ -66,5 +71,26 @@ public abstract class MixinNavigation implements IWaypointableNavigation {
     @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
     private Train replacePresentTrain(GlobalStation instance) {
         return ((ILimitedGlobalStation) instance).orDisablingTrain(instance.getPresentTrain(), train);
+    }
+
+    private TrackEdge edge;
+    @SuppressWarnings({"MixinAnnotationTarget", "UnresolvedMixinReference", "InvalidInjectorMethodSignature"})
+    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
+            at = @At(value = "INVOKE", target = "Ljava/util/Map$Entry;getValue()Ljava/lang/Object;", ordinal = 1))
+    private Object snr$captureEdge(Map.Entry<TrackNode, TrackEdge> instance) {
+        edge = instance.getValue();
+        return instance.getValue();
+    }
+
+    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
+            at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+    private boolean snr$blockSwitches(Set<TrackMaterial.TrackType> instance, Object o) {
+        if (edge != null && !((ISwitchDisabledEdge) edge.getEdgeData()).isEnabled()) {
+            edge = null;
+            return false;
+        }
+        edge = null;
+        TrackMaterial.TrackType type = (TrackMaterial.TrackType) o;
+        return instance.contains(type);
     }
 }

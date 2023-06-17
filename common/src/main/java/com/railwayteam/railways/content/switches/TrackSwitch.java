@@ -1,10 +1,12 @@
 package com.railwayteam.railways.content.switches;
 
+import com.railwayteam.railways.mixin_interfaces.ISwitchDisabledEdge;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.graph.*;
 import com.simibubi.create.content.trains.signal.SignalPropagator;
 import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
+import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -14,176 +16,283 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
+/*
+done: actually disable edges that aren't the active target
+in Navigation.java we need to hook into this:
+```java
+if (!validTypes.contains(target.getValue().getTrackMaterial().trackType))
+    continue;
+```
+
+and in Train.java we need to hook into this:
+```java
+blocked |= carriage.blocked || carriage.isOnIncompatibleTrack();
+```
+actually hooked into Carriage#isOnIncompatibleTrack
+
+
+done: don't actually block, just remove it from the list of things we can go toward
+to do this:
+hook into {@link TrackEdge#canTravelTo }
+ */
 public class TrackSwitch extends SingleBlockEntityEdgePoint {
-  private TrackNodeLocation switchPoint;
-  private final List<TrackNodeLocation> exits = new ArrayList<>();
+    private TrackNodeLocation switchPoint;
+    private final List<TrackNodeLocation> exits = new ArrayList<>();
 
-  public TrackSwitch() {
-  }
-
-  private @Nullable TrackNodeLocation straightExit;
-  private @Nullable TrackNodeLocation leftExit;
-  private @Nullable TrackNodeLocation rightExit;
-
-  @Override
-  public EdgePointType<?> getType() {
-    return CREdgePointTypes.SWITCH;
-  }
-
-  @Override
-  public boolean canCoexistWith(EdgePointType<?> otherType, boolean front) {
-    return otherType == EdgePointType.SIGNAL;
-  }
-
-  @Override
-  public void blockEntityAdded(BlockEntity tile, boolean front) {
-    super.blockEntityAdded(tile, front);
-
-    if (tile instanceof TrackSwitchTileEntity te) {
-      te.calculateExits(this);
+    public TrackSwitch() {
     }
 
-    notifyTrains(tile.getLevel());
-  }
+    private @Nullable TrackNodeLocation straightExit;
+    private @Nullable TrackNodeLocation leftExit;
+    private @Nullable TrackNodeLocation rightExit;
 
-  @Override
-  public void onRemoved(TrackGraph graph) {
-    exits.clear();
-    sortExits();
-    removeFromAllGraphs();
-  }
+    private @Nullable TrackSwitchBlock.SwitchState activeExit;
 
-  private void notifyTrains(Level level) {
-    TrackGraph graph = Create.RAILWAYS.sided(level).getGraph(level, edgeLocation.getFirst());
-    if (graph == null)
-      return;
-    TrackEdge edge = graph.getConnection(edgeLocation.map(graph::locateNode));
-    if (edge == null)
-      return;
-    SignalPropagator.notifyTrains(graph, edge);
-  }
-
-  void updateExits(TrackNodeLocation switchPoint, Collection<TrackNodeLocation> newExits) {
-    this.switchPoint = switchPoint;
-
-    Vec3 forward = edgeLocation.getFirst().getLocation().vectorTo(edgeLocation.getSecond().getLocation());
-    exits.clear();
-    exits.addAll(newExits.stream()
-      // Exit should be in the same direction switch is facing
-      .filter(e -> forward.dot(switchPoint.getLocation().vectorTo(e.getLocation())) > 0)
-      .toList());
-    sortExits();
-  }
-
-  private void sortExits() {
-    Vec3 forward = edgeLocation.getFirst().getLocation().vectorTo(edgeLocation.getSecond().getLocation()).normalize();
-    exits.sort(Comparator.comparing(e -> {
-      // Relative exit directions -- 0 is straight on, negative for left, positive for right
-      Vec3 exitDir = switchPoint.getLocation().vectorTo(e.getLocation());
-      return forward.x * exitDir.z - forward.z * exitDir.x;
-    }));
-
-    if (exits.size() == 1) {
-      leftExit = null;
-      straightExit = exits.get(0);
-      rightExit = null;
-    } else if (exits.size() == 2) {
-      Vec3 firstExitDir = switchPoint.getLocation().vectorTo(exits.get(0).getLocation()).normalize();
-      Vec3 secondExitDir = switchPoint.getLocation().vectorTo(exits.get(1).getLocation()).normalize();
-
-      double firstExitRelativeDir = forward.x * firstExitDir.z - forward.z * firstExitDir.x;
-      double secondExitRelativeDir = forward.x * secondExitDir.z - forward.z * secondExitDir.x;
-
-      // Determine which exit is left/right/straight based on relative exit directions
-      // 0.2 *should* be straight enough, maybe
-      if (firstExitRelativeDir < 0 && secondExitRelativeDir <= 0.2) {
-        //    / /         /
-        // --+-'   or  --+---  = left, straight
-        leftExit = exits.get(0);
-        straightExit = exits.get(1);
-        rightExit = null;
-      } else if (firstExitRelativeDir >= 0.2 && secondExitRelativeDir > 0) {
-        // --+-.       --+---
-        //    \ \  or     \    = right, straight
-        leftExit = null;
-        straightExit = exits.get(0);
-        rightExit = exits.get(1);
-      } else {
-        //    /
-        // --<   = left, right
-        //    \
-        leftExit = exits.get(0);
-        straightExit = null;
-        rightExit = exits.get(1);
-      }
-    } else if (exits.size() == 3) {
-      leftExit = exits.get(0);
-      straightExit = exits.get(1);
-      rightExit = exits.get(2);
-    } else {
-      leftExit = null;
-      straightExit = null;
-      rightExit = null;
+    @Override
+    public EdgePointType<?> getType() {
+        return CREdgePointTypes.SWITCH;
     }
-  }
 
-  @Nullable TrackNodeLocation getSwitchPoint() {
-    return switchPoint;
-  }
+    @Override
+    public boolean canCoexistWith(EdgePointType<?> otherType, boolean front) {
+        return otherType == EdgePointType.SIGNAL;
+    }
 
-  Collection<TrackNodeLocation> getExits() {
-    return exits.stream().toList();
-  }
+    @Override
+    public void blockEntityAdded(BlockEntity tile, boolean front) {
+        super.blockEntityAdded(tile, front);
 
-  public boolean hasStraightExit() {
-    return straightExit != null;
-  }
+        if (tile instanceof TrackSwitchTileEntity te) {
+            te.calculateExits(this);
+        }
 
-  public boolean hasLeftExit() {
-    return leftExit != null;
-  }
+        notifyTrains(tile.getLevel());
+    }
 
-  public boolean hasRightExit() {
-    return rightExit != null;
-  }
+    @Override
+    public void onRemoved(TrackGraph graph) {
+        exits.clear();
+        sortExits();
+        removeFromAllGraphs();
+    }
 
-  @Override
-  public void write(CompoundTag nbt, DimensionPalette dimensions) {
-    super.write(nbt, dimensions);
-    nbt.put("SwitchPoint", switchPoint.write(dimensions));
-    nbt.put("Exits", NBTHelper.writeCompoundList(exits, e -> e.write(dimensions)));
-  }
+    private void notifyTrains(Level level) {
+        TrackGraph graph = Create.RAILWAYS.sided(level).getGraph(level, edgeLocation.getFirst());
+        if (graph == null)
+            return;
+        TrackEdge edge = graph.getConnection(edgeLocation.map(graph::locateNode));
+        if (edge == null)
+            return;
+        SignalPropagator.notifyTrains(graph, edge);
+    }
 
-  @Override
-  public void write(FriendlyByteBuf buffer, DimensionPalette dimensions) {
-    super.write(buffer, dimensions);
-    switchPoint.send(buffer, dimensions);
-    buffer.writeCollection(exits, (buf, e) -> e.send(buf, dimensions));
-  }
+    void updateExits(TrackNodeLocation switchPoint, Collection<TrackNodeLocation> newExits) {
+        this.switchPoint = switchPoint;
 
-  @Override
-  public void read(CompoundTag nbt, boolean migration, DimensionPalette dimensions) {
-    super.read(nbt, migration, dimensions);
-    updateExits(
-      TrackNodeLocation.read(nbt.getCompound("SwitchPoint"), dimensions),
-      nbt.getList("Exits", Tag.TAG_COMPOUND)
-        .stream()
-        .map(t -> TrackNodeLocation.read((CompoundTag) t, dimensions))
-        .toList()
-    );
-  }
+        if (edgeLocation == null) {
+            exits.clear();
+            return;
+        }
+        Vec3 forward = edgeLocation.getFirst().getLocation().vectorTo(edgeLocation.getSecond().getLocation());
+        exits.clear();
+        exits.addAll(newExits.stream()
+                // Exit should be in the same direction switch is facing
+                .filter(e -> forward.dot(switchPoint.getLocation().vectorTo(e.getLocation())) > 0)
+                .toList());
+        sortExits();
+    }
 
-  @Override
-  public void read(FriendlyByteBuf buffer, DimensionPalette dimensions) {
-    super.read(buffer, dimensions);
-    updateExits(
-      TrackNodeLocation.receive(buffer, dimensions),
-      buffer.readList(buf -> TrackNodeLocation.receive(buf, dimensions))
-    );
-  }
+    private void sortExits() {
+        Vec3 forward = edgeLocation.getFirst().getLocation().vectorTo(edgeLocation.getSecond().getLocation()).normalize();
+        exits.sort(Comparator.comparing(e -> {
+            // Relative exit directions -- 0 is straight on, negative for left, positive for right
+            Vec3 exitDir = switchPoint.getLocation().vectorTo(e.getLocation());
+            return forward.x * exitDir.z - forward.z * exitDir.x;
+        }));
+
+        if (exits.size() == 1) {
+            leftExit = null;
+            straightExit = exits.get(0);
+            rightExit = null;
+        } else if (exits.size() == 2) {
+            Vec3 firstExitDir = switchPoint.getLocation().vectorTo(exits.get(0).getLocation()).normalize();
+            Vec3 secondExitDir = switchPoint.getLocation().vectorTo(exits.get(1).getLocation()).normalize();
+
+            double firstExitRelativeDir = forward.x * firstExitDir.z - forward.z * firstExitDir.x;
+            double secondExitRelativeDir = forward.x * secondExitDir.z - forward.z * secondExitDir.x;
+
+            double cutoff = 0.2;
+
+            // Determine which exit is left/right/straight based on relative exit directions
+            // 0.2 *should* be straight enough, maybe
+            if (firstExitRelativeDir < 0 && secondExitRelativeDir <= cutoff) {
+                //    / /         /
+                // --+-'   or  --+---  = left, straight
+                leftExit = exits.get(0);
+                straightExit = exits.get(1);
+                rightExit = null;
+            } else if (firstExitRelativeDir >= -cutoff && secondExitRelativeDir > 0) {
+                // --+-.       --+---
+                //    \ \  or     \    = right, straight
+                leftExit = null;
+                straightExit = exits.get(0);
+                rightExit = exits.get(1);
+            } else {
+                //    /
+                // --<   = left, right
+                //    \
+                leftExit = exits.get(0);
+                straightExit = null;
+                rightExit = exits.get(1);
+            }
+        } else if (exits.size() == 3) {
+            leftExit = exits.get(0);
+            straightExit = exits.get(1);
+            rightExit = exits.get(2);
+        } else {
+            leftExit = null;
+            straightExit = null;
+            rightExit = null;
+        }
+    }
+
+    @Nullable TrackNodeLocation getSwitchPoint() {
+        return switchPoint;
+    }
+
+    Collection<TrackNodeLocation> getExits() {
+        return exits.stream().toList();
+    }
+
+    void setActiveExit(@Nullable TrackSwitchBlock.SwitchState state) {
+        activeExit = state;
+    }
+
+    public @Nullable TrackNodeLocation getActiveExit() {
+        if (activeExit == null) return null;
+        return switch (activeExit) {
+            case NORMAL -> straightExit;
+            case REVERSE_RIGHT -> rightExit;
+            case REVERSE_LEFT -> leftExit;
+        };
+    }
+
+    public boolean hasStraightExit() {
+        return straightExit != null;
+    }
+
+    public boolean hasLeftExit() {
+        return leftExit != null;
+    }
+
+    public boolean hasRightExit() {
+        return rightExit != null;
+    }
+
+    @Override
+    public void write(CompoundTag nbt, DimensionPalette dimensions) {
+        super.write(nbt, dimensions);
+        nbt.put("SwitchPoint", switchPoint.write(dimensions));
+        nbt.put("Exits", NBTHelper.writeCompoundList(exits, e -> e.write(dimensions)));
+        nbt.putString("ActiveExit", activeExit == null ? "NONE" : activeExit.getSerializedName());
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buffer, DimensionPalette dimensions) {
+        super.write(buffer, dimensions);
+        switchPoint.send(buffer, dimensions);
+        buffer.writeCollection(exits, (buf, e) -> e.send(buf, dimensions));
+        buffer.writeBoolean(activeExit != null);
+        if (activeExit != null)
+            buffer.writeInt(activeExit.ordinal());
+    }
+
+    @Override
+    public void read(CompoundTag nbt, boolean migration, DimensionPalette dimensions) {
+        super.read(nbt, migration, dimensions);
+        updateExits(
+                TrackNodeLocation.read(nbt.getCompound("SwitchPoint"), dimensions),
+                nbt.getList("Exits", Tag.TAG_COMPOUND)
+                        .stream()
+                        .map(t -> TrackNodeLocation.read((CompoundTag) t, dimensions))
+                        .toList()
+        );
+        String exit = nbt.getString("ActiveExit");
+        try {
+            activeExit = TrackSwitchBlock.SwitchState.valueOf(exit.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            activeExit = null;
+        }
+    }
+
+    @Override
+    public void read(FriendlyByteBuf buffer, DimensionPalette dimensions) {
+        super.read(buffer, dimensions);
+        updateExits(
+                TrackNodeLocation.receive(buffer, dimensions),
+                buffer.readList(buf -> TrackNodeLocation.receive(buf, dimensions))
+        );
+        if (buffer.readBoolean()) {
+            activeExit = TrackSwitchBlock.SwitchState.values()[buffer.readInt()];
+        } else {
+            activeExit = null;
+        }
+    }
+
+    private int ticks = 0;
+
+    @Override
+    public void tick(TrackGraph graph, boolean preTrains) {
+        super.tick(graph, preTrains);
+        if (preTrains) {
+            ticks++;
+            if (ticks < 10) {
+                return;
+            }
+            ticks = 0;
+            updateEdges(graph);
+        }
+    }
+
+    public void updateEdges(TrackGraph graph) {
+        updateEdges(graph, false);
+    }
+
+    public void setEdgesActive(TrackGraph graph) {
+        updateEdges(graph, true);
+    }
+
+    private void updateEdges(TrackGraph graph, boolean forceActive) {
+        TrackNodeLocation from = switchPoint;
+        for (TrackNodeLocation to : exits) {
+            if (to != null) {
+                TrackNode toNode = graph.locateNode(to);
+                Map<TrackNode, TrackEdge> connections = graph.getConnectionsFrom(toNode);
+                if (connections == null)
+                    continue;
+                TrackNode closestFromNode = null;
+                TrackEdge closestEdge = null;
+                double closestDistance = Double.MAX_VALUE;
+                for (Map.Entry<TrackNode, TrackEdge> otherEnd : connections.entrySet()) {
+                    double distance = otherEnd.getKey().getLocation().distSqr(from);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestEdge = otherEnd.getValue();
+                        closestFromNode = otherEnd.getKey();
+                    }
+                }
+                if (closestEdge != null) {
+                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setEnabled(forceActive || getActiveExit() == to);
+                }
+                if (closestFromNode != null) {
+                    TrackEdge reverseEdge = graph.getConnection(Couple.create(closestFromNode, toNode));
+                    if (reverseEdge != null)
+                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setEnabled(forceActive || getActiveExit() == to);
+                }
+                // not sure if this enabled state will be synchronized to client... hmm...
+            }
+        }
+    }
 }

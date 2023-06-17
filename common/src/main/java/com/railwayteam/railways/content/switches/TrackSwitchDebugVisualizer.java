@@ -19,11 +19,13 @@ public class TrackSwitchDebugVisualizer {
     float width = 1 / 16f;
 
     TrackNodeLocation from = sw.getSwitchPoint();
+    TrackNodeLocation activeExit = sw.getActiveExit();
     for (TrackNodeLocation to : sw.getExits()) {
+      boolean active = to == activeExit;
       CreateClient.OUTLINER.showLine(to,
           from.getLocation().add(offset),
           to.getLocation().add(offset))
-        .colored(new Color(255, 192, 203))
+        .colored(active ? new Color(0, 203, 150) : new Color(255, 50, 150))
         .lineWidth(width);
     }
   }

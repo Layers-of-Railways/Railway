@@ -92,20 +92,19 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
     BlockPos pos = te.getBlockPos();
     boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
 
-    BlockPos targetPos = target.getGlobalPosition();
+    BlockPos targetPosition = target.getGlobalPosition();
     Level level = te.getLevel();
-    BlockState trackState = level.getBlockState(targetPos);
+    BlockState trackState = level.getBlockState(targetPosition);
     Block block = trackState.getBlock();
 
-    if (!(block instanceof ITrackBlock)) {
+    if (!(block instanceof ITrackBlock))
       return;
-    }
 
     ms.pushPose();
-    ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
-    CustomTrackOverlayRendering.renderOverlay(
-      level, targetPos, target.getTargetDirection(), target.getTargetBezier(),
-      ms, buffer, light, overlay, te.getOverlayModel(), 1, offsetToSide);
+    TransformStack.cast(ms)
+            .translate(targetPosition.subtract(pos));
+    CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
+            buffer, light, overlay, te.getOverlayModel(), 1, offsetToSide);
     ms.popPose();
   }
 }

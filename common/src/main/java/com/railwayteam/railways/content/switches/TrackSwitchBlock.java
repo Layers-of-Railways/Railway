@@ -2,6 +2,8 @@ package com.railwayteam.railways.content.switches;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -11,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,7 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchTileEntity> {
+public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchTileEntity>, IWrenchable {
   boolean isAutomatic;
   public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
   public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -120,14 +123,22 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
   @SuppressWarnings("deprecation")
   @Override
-  public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+  public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
     return isAutomatic ?
       CRShapes.BRASS_SWITCH.get(state.getValue(FACING)) :
       CRShapes.ANDESITE_SWITCH.get(state.getValue(FACING));
   }
 
+  @SuppressWarnings("deprecation")
   @Override
-  public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+  public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                                        @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+    if (player.isSteppingCarefully())
+      return InteractionResult.PASS;
+    ItemStack itemInHand = player.getItemInHand(hand);
+    if (AllItems.WRENCH.isIn(itemInHand))
+      return InteractionResult.PASS;
+
     if (level.isClientSide) {
       return InteractionResult.SUCCESS;
     }
@@ -159,4 +170,6 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       te.checkRedstoneInputs();
     }
   }
+
+
 }

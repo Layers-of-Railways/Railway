@@ -15,7 +15,7 @@ public class CRShapes {
         .forDirectional(NORTH);
 
     public static final VoxelShaper
-        ANDESITE_SWITCH = shape(0, 0, 0, 16, 28, 16)
+        ANDESITE_SWITCH = shape(0, 0, 0, 16, 16, 16)
         .forDirectional(NORTH),
         BRASS_SWITCH = shape(0, 0, 0, 16, 19, 16)
         .forDirectional(NORTH);

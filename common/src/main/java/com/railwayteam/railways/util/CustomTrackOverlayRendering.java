@@ -182,7 +182,7 @@ public class CustomTrackOverlayRendering {
             TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
             for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
                 try {
-                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint()) {
+                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint() && !edgePoint.getId().equals(target.getEdgePoint().getId())) {
                         return true;
                     }
                 } catch (Exception ignored) {}

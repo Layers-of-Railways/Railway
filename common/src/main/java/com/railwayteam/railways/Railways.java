@@ -27,6 +27,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.config.ModConfig.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.ApiStatus;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.nio.file.Path;
@@ -107,4 +108,7 @@ public class Railways {
   public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
     throw new AssertionError();
   }
+
+  @ApiStatus.Internal
+  public static boolean trackEdgeTemporarilyFlipped = false;
 }
