@@ -41,7 +41,7 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
-    @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true))
+    @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true), remap = true)
     private boolean changeCloserThan(BlockPos instance, Vec3i vec3i, double v) {
         if (type == CREdgePointTypes.SWITCH) {
             return instance.closerThan(vec3i, Config.SWITCH_PLACEMENT_RANGE.get());
