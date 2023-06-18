@@ -7,6 +7,7 @@
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
     "AccessorCarriage",
+    "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
     "AccessorIngredient_TagValue",
     "AccessorNavigation",
@@ -16,6 +17,7 @@
     "AccessorTrackMaterialFactory",
     "AccessorTrackTargetingBehavior",
     "AccessorTrain",
+    "AccessorTrain$AccessorPenalties",
     "ChunkSerializerMixin",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
@@ -24,6 +26,7 @@
     "MixinBlockBehaviour",
     "MixinCarriage",
     "MixinCarriageBogey",
+    "MixinCarriageContraptionEntity",
     "MixinDoorMovingInteraction",
     "MixinEdgeData",
     "MixinGlobalStation",
@@ -51,7 +54,8 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin"
+    "NbtUtilsMixin",
+    "client.MixinTrainHUD"
   ],
   "client": [
     "client.AccessorInstance",

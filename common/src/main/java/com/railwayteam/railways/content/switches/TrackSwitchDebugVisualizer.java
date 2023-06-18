@@ -8,10 +8,14 @@ import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.graph.TrackNodeLocation;
 import com.simibubi.create.foundation.utility.Color;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
@@ -49,9 +53,24 @@ public class TrackSwitchDebugVisualizer {
     if (mc.player == null)
       return;
 
+    boolean skipHints = false;
     if (!(mc.player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof TrackSwitchBlockItem)
             && !(mc.player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof TrackSwitchBlockItem)) {
-      return;
+      skipHints = true;
+    }
+
+    if (skipHints) {
+      HitResult hitResult = mc.hitResult;
+      if (!(hitResult instanceof BlockHitResult blockHitResult))
+        return;
+
+      if (blockHitResult.getType() == HitResult.Type.MISS)
+        return;
+
+      BlockPos pos = blockHitResult.getBlockPos();
+      BlockState state = mc.player.level.getBlockState(pos);
+      if (!(state.getBlock() instanceof TrackSwitchBlock))
+        return;
     }
 
     int range = 64;
@@ -67,6 +86,9 @@ public class TrackSwitchDebugVisualizer {
         for (TrackSwitch sw : graph.getPoints(CREdgePointTypes.SWITCH)) {
           TrackSwitchDebugVisualizer.visualizeSwitchExits(sw);
         }
+
+        if (skipHints)
+          continue;
 
         TrackNode node = graph.locateNode(tnl);
         Map<TrackNode, TrackEdge> connections = graph.getConnectionsFrom(node);

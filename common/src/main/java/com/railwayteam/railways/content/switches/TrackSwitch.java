@@ -38,6 +38,7 @@ done: don't actually block, just remove it from the list of things we can go tow
 to do this:
 hook into {@link TrackEdge#canTravelTo }
  */
+// todo custom sync packet
 public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private TrackNodeLocation switchPoint;
     private final List<TrackNodeLocation> exits = new ArrayList<>();
