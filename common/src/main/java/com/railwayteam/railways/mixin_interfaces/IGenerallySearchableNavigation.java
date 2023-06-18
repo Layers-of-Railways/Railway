@@ -16,7 +16,7 @@ public interface IGenerallySearchableNavigation {
 
     void searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest);
 
-    TrackSwitch findNearestApproachableSwitch(boolean forward);
+    Pair<TrackSwitch, Boolean> findNearestApproachableSwitch(boolean forward);
 
     @ApiStatus.Internal
     class FrontierEntry implements Comparable<FrontierEntry> {

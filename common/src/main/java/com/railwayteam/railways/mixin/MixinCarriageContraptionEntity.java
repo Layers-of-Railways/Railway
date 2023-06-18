@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
@@ -10,6 +11,7 @@ import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlo
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Navigation;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,22 +54,22 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         if (heldControls.contains(1))
             targetSpeed--;
 
-        int targetSteer = 0;
-        if (heldControls.contains(2))
-            targetSteer++;
-        if (heldControls.contains(3))
-            targetSteer--;
-
         if (inverted) {
             targetSpeed *= -1;
-            targetSteer *= -1;
         }
 
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
-        TrackSwitch lookAhead = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(
+        Pair<TrackSwitch, Boolean> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(
                 !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted));
+        TrackSwitch lookAhead = lookAheadData.getFirst();
+        boolean headOn = lookAheadData.getSecond();
 
         if (lookAhead != null) {
+            // try to reserve switch
+            if (headOn && Config.FLIP_DISTANT_SWITCHES.get() && lookAhead.isAutomatic()
+                    && !lookAhead.isLocked() && !carriage.train.navigation.isActive()) {
+                lookAhead.setSwitchState(TrackSwitchBlock.SwitchState.fromSteerDirection(carriage.train.manualSteer));
+            }
             displayApproachSwitchMessage(player, lookAhead);
         } else
             cleanUpApproachSwitchMessage(player);

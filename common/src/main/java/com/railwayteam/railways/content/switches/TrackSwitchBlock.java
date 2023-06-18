@@ -4,6 +4,7 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.trains.entity.TravellingPoint;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -60,6 +61,14 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
     SwitchState(int direction) {
       this.direction = direction;
+    }
+
+    public static SwitchState fromSteerDirection(TravellingPoint.SteerDirection direction) {
+      return switch (direction) {
+        case NONE -> NORMAL;
+        case LEFT -> REVERSE_LEFT;
+        case RIGHT -> REVERSE_RIGHT;
+      };
     }
 
     @Override

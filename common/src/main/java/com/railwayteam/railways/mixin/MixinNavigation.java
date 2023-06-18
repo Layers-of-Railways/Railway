@@ -269,12 +269,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         }
     }
 
-    public TrackSwitch findNearestApproachableSwitch(boolean forward) {
+    public Pair<TrackSwitch, Boolean> findNearestApproachableSwitch(boolean forward) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return null;
 
         MutableObject<TrackSwitch> result = new MutableObject<>(null);
+        MutableObject<Boolean> headOn = new MutableObject<>(false);
         double acceleration = train.acceleration();
         double minDistance = 0;//.75f * (train.speed * train.speed) / (2 * acceleration);
         double maxDistance = Math.max(32, 1.5f * (train.speed * train.speed) / (2 * acceleration));
@@ -288,6 +289,8 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             if (distance - position < minDistance)
                 return false;
             if (trackPoint instanceof TrackSwitch sw) {
+                TrackNode node = currentEntry.getFirst().getSecond();
+                headOn.setValue(sw.isPrimary(node));
                 result.setValue(sw);
                 return true;
             } else {
@@ -295,6 +298,6 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             }
         });
 
-        return result.getValue();
+        return Pair.of(result.getValue(), headOn.getValue());
     }
 }
