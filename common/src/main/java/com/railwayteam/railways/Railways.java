@@ -111,4 +111,7 @@ public class Railways {
 
   @ApiStatus.Internal
   public static boolean trackEdgeTemporarilyFlipped = false;
+
+  @ApiStatus.Internal
+  public static boolean trackEdgeCarriageTravelling = false;
 }

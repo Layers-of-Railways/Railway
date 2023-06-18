@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,7 +22,7 @@ import java.util.*;
 
 /*
 done: actually disable edges that aren't the active target
-in Navigation.java we need to hook into this:
+in Navigation.java we need to hook into this: - actually don't anymore
 ```java
 if (!validTypes.contains(target.getValue().getTrackMaterial().trackType))
     continue;
@@ -39,9 +40,18 @@ to do this:
 hook into {@link TrackEdge#canTravelTo }
  */
 // todo custom sync packet
+@SuppressWarnings("DuplicatedCode")
 public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private TrackNodeLocation switchPoint;
     private final List<TrackNodeLocation> exits = new ArrayList<>();
+
+    private static int selectionPriorityTicker = 0;
+
+    @ApiStatus.Internal
+    public static int getSelectionPriority() {
+        selectionPriorityTicker++;
+        return selectionPriorityTicker;
+    }
 
     public TrackSwitch() {
     }
@@ -52,9 +62,27 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
 
     private @NotNull TrackSwitchBlock.SwitchState switchState = TrackSwitchBlock.SwitchState.NORMAL;
     private boolean automatic;
+    private boolean locked;
 
     public boolean isAutomatic() {
         return automatic;
+    }
+
+    @SuppressWarnings("unused")
+    public boolean isLocked() {
+        return locked;
+    }
+
+    void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    private @Nullable TrackNodeLocation getExit(TrackSwitchBlock.SwitchState state) {
+        return switch (state) {
+            case NORMAL -> straightExit;
+            case REVERSE_RIGHT -> rightExit;
+            case REVERSE_LEFT -> leftExit;
+        };
     }
 
     @Override
@@ -74,6 +102,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         if (tile instanceof TrackSwitchTileEntity te) {
             te.calculateExits(this);
             automatic = te.isAutomatic();
+            locked = te.isLocked();
         }
 
         notifyTrains(tile.getLevel());
@@ -197,11 +226,14 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         }
     }
 
-    public void setSwitchState(@NotNull TrackSwitchBlock.SwitchState state) {
+    public boolean setSwitchState(@NotNull TrackSwitchBlock.SwitchState state) {
         if (isStateValid(state) && switchState != state) {
             switchState = state;
             ticks = 10000; // force a tick
+            forceTickClient = true;
+            return true;
         }
+        return false;
     }
 
     public @NotNull TrackSwitchBlock.SwitchState getSwitchState() {
@@ -236,6 +268,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         nbt.put("Exits", NBTHelper.writeCompoundList(exits, e -> e.write(dimensions)));
         nbt.putString("SwitchState", switchState.getSerializedName());
         nbt.putBoolean("Automatic", automatic);
+        nbt.putBoolean("Locked", locked);
     }
 
     @Override
@@ -243,6 +276,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         super.write(buffer, dimensions);
         buffer.writeInt(switchState.ordinal());
         buffer.writeBoolean(automatic);
+        buffer.writeBoolean(locked);
         switchPoint.send(buffer, dimensions);
         buffer.writeCollection(exits, (buf, e) -> e.send(buf, dimensions));
     }
@@ -257,6 +291,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
             switchState = getValidSwitchState();
         }
         automatic = nbt.getBoolean("Automatic");
+        locked = nbt.getBoolean("Locked");
         updateExits(
                 TrackNodeLocation.read(nbt.getCompound("SwitchPoint"), dimensions),
                 nbt.getList("Exits", Tag.TAG_COMPOUND)
@@ -271,6 +306,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         super.read(buffer, dimensions);
         switchState = TrackSwitchBlock.SwitchState.values()[buffer.readInt()];
         automatic = buffer.readBoolean();
+        locked = buffer.readBoolean();
         updateExits(
                 TrackNodeLocation.receive(buffer, dimensions),
                 buffer.readList(buf -> TrackNodeLocation.receive(buf, dimensions))
@@ -278,6 +314,15 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     }
 
     private int ticks = 0;
+    boolean forceTickClient = false;
+
+    boolean doForceTickClient() {
+        if (forceTickClient) {
+            forceTickClient = false;
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void tick(TrackGraph graph, boolean preTrains) {
@@ -289,6 +334,8 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
             }
             ticks = 0;
             updateEdges(graph);
+            if (automatic)
+                switchForEdges(graph);
         }
     }
 
@@ -321,13 +368,73 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
                 }
                 if (closestEdge != null) {
                     ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
+                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked);
                 }
                 if (closestFromNode != null) {
                     TrackEdge reverseEdge = graph.getConnection(Couple.create(closestFromNode, toNode));
-                    if (reverseEdge != null)
+                    if (reverseEdge != null) {
                         ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
+                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked);
+                    }
                 }
                 // not sure if this enabled state will be synchronized to client... hmm...
+            }
+        }
+    }
+
+    private void switchForEdges(TrackGraph graph) {
+        TrackNodeLocation from = switchPoint;
+        TrackNodeLocation highestPriorityExit = null;
+        int highestPriority = -100;
+        for (TrackNodeLocation to : exits) {
+            if (to != null) {
+                TrackNode toNode = graph.locateNode(to);
+                Map<TrackNode, TrackEdge> connections = graph.getConnectionsFrom(toNode);
+                if (connections == null)
+                    continue;
+                TrackNode closestFromNode = null;
+                TrackEdge closestEdge = null;
+                double closestDistance = Double.MAX_VALUE;
+                for (Map.Entry<TrackNode, TrackEdge> otherEnd : connections.entrySet()) {
+                    double distance = otherEnd.getKey().getLocation().distSqr(from);
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestEdge = otherEnd.getValue();
+                        closestFromNode = otherEnd.getKey();
+                    }
+                }
+                if (closestEdge != null) {
+                    ISwitchDisabledEdge switchEdge = (ISwitchDisabledEdge) closestEdge.getEdgeData();
+                    if (switchEdge.isAutomaticallySelected()) {
+                        if (switchEdge.getAutomaticallySelectedPriority() > highestPriority) {
+                            highestPriorityExit = to;
+                            highestPriority = switchEdge.getAutomaticallySelectedPriority();
+                        }
+                        switchEdge.ackAutomaticSelection();
+                    }
+                }
+                if (closestFromNode != null) {
+                    TrackEdge reverseEdge = graph.getConnection(Couple.create(closestFromNode, toNode));
+                    if (reverseEdge != null) {
+                        ISwitchDisabledEdge reverseSwitchEdge = (ISwitchDisabledEdge) reverseEdge.getEdgeData();
+                        if (reverseSwitchEdge.isAutomaticallySelected()) {
+                            if (reverseSwitchEdge.getAutomaticallySelectedPriority() > highestPriority) {
+                                highestPriorityExit = to;
+                                highestPriority = reverseSwitchEdge.getAutomaticallySelectedPriority();
+                            }
+                            reverseSwitchEdge.ackAutomaticSelection();
+                        }
+                    }
+                }
+                // not sure if this enabled state will be synchronized to client... hmm...
+            }
+        }
+        if (highestPriorityExit != null) {
+            for (TrackSwitchBlock.SwitchState state : TrackSwitchBlock.SwitchState.values()) {
+                if (highestPriorityExit == getExit(state)) {
+                    setSwitchState(state);
+                    break;
+                }
             }
         }
     }

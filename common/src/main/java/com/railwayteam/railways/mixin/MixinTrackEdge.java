@@ -28,8 +28,19 @@ public class MixinTrackEdge {
         String className = Thread.currentThread().getStackTrace()[3].getClassName();
         if (className.equals("com.simibubi.create.content.trains.signal.SignalPropagator"))
             return;
-        if (ISwitchDisabledEdge.isDisabled(Railways.trackEdgeTemporarilyFlipped ? ((TrackEdge) (Object) this) : other))// || ISwitchDisabledEdge.isDisabled((TrackEdge) (Object) this))
-            cir.setReturnValue(false);
+        TrackEdge relevantEdge = Railways.trackEdgeTemporarilyFlipped ? ((TrackEdge) (Object) this) : other;
         Railways.trackEdgeTemporarilyFlipped = false;
+        // trains should be able to navigate through automatic switches
+        if (className.equals("com.simibubi.create.content.trains.entity.Navigation")
+                && ISwitchDisabledEdge.isAutomatic(relevantEdge))
+            return;
+        if (Railways.trackEdgeCarriageTravelling) { // don't switch, just allow through. Actual switching is handled by MixinTravellingPoint
+            if (ISwitchDisabledEdge.isAutomatic(relevantEdge) && ISwitchDisabledEdge.isDisabled(relevantEdge)) {
+//                ISwitchDisabledEdge.automaticallySelect(relevantEdge);
+                return;
+            }
+        }
+        if (ISwitchDisabledEdge.isDisabled(relevantEdge))// || ISwitchDisabledEdge.isDisabled((TrackEdge) (Object) this))
+            cir.setReturnValue(false);
     }
 }

@@ -57,12 +57,12 @@ public class TrainHUDSwitchExtension {
                     CRGuiTextures.TRAIN_HUD_SWITCH_ANDESITE;
             //bg.render(poseStack, 141, (int) (-bg.height * switchProgress.getValue(partialTicks)));
             bg.bind();
-            GuiComponent.blit(poseStack, 141, (int) (-16 * switchProgress.getValue(partialTicks)), 0,
-                    bg.startX, bg.startY, bg.width, (int) (bg.height * switchProgress.getValue(partialTicks)),
+            GuiComponent.blit(poseStack, 141, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
+                    bg.startX, bg.startY, bg.width, (int) (bg.height * switchProgress.getValue(partialTicks) + 0.5),
                     256, 256);
         }
 
-        if (switchProgress.getValue(partialTicks) > 0.9 && switchState != null) {
+        if (switchProgress.getValue(partialTicks) > 0.99 && switchState != null) {
             switch (switchState) {
                 case NORMAL -> CRGuiTextures.TRAIN_HUD_SWITCH_STRAIGHT.render(poseStack, 152, -13);
                 case REVERSE_LEFT -> CRGuiTextures.TRAIN_HUD_SWITCH_LEFT.render(poseStack, 142, -13);
