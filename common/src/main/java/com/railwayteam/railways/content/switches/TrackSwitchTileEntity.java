@@ -28,6 +28,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -85,8 +86,9 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         notifyUpdate();
     }
 
+    @NotNull
     public SwitchState getState() {
-        return state;
+        return state == null ? SwitchState.NORMAL : state;
 //        return getBlockState().getValue(STATE);
     }
 

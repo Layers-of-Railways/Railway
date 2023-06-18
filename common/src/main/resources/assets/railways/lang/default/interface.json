@@ -80,5 +80,11 @@
   "railways.display_source.signal.invalid": "Invalid",
 
   "railways.display_target.semaphore.normal": "Normal Signal State",
-  "railways.display_target.semaphore.distant": "Distant Signal State"
+  "railways.display_target.semaphore.distant": "Distant Signal State",
+
+  "railways.display_source.track_switch_brass_source": "Switch State",
+  "railways.display_source.track_switch_andesite_source": "Switch State",
+  "railways.display_source.switch.normal": "Straight",
+  "railways.display_source.switch.reverse_left": "Left",
+  "railways.display_source.switch.reverse_right": "Right"
 }

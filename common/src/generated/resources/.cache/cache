@@ -1481,7 +1481,7 @@ b1bd27c62abb03f97bd4723eb4611caaf6e8fb95 data/railways/recipes/sequenced_assembl
 a67e1575b216e8cbd614d091f1573011d30e1cc5 assets/railways/models/block/track/compat/twilightforest/transwood/ascending.json
 9016be640207d38b05f6710208ae9b2138a87bd4 assets/railways/models/block/track/birch/cross_d2_xo.json
 6933d5075c74e94f19a3285237d6e4af27a131c0 assets/railways/models/block/track/phantom/z_ortho.json
-cb7730a15935cb622abb804d401fe927d3ea176c assets/railways/lang/en_us.json
+bf61a607f9b31bd675968d2117d0ef667285f4e4 assets/railways/lang/en_us.json
 04bac7ece7fd4b9813481311cf7719d48331473f assets/railways/blockstates/track_byg_cypress.json
 3193a90740f27f842755a9d732a9d54e9fc0d613 data/railways/recipes/dying_existing_cap_blue.json
 b0eab5b205bd106d1dd8df0e4a3cd686528f0ec1 assets/railways/models/block/track/compat/hexcasting/edified/x_ortho.json
