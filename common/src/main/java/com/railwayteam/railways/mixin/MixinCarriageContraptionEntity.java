@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Config;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
@@ -59,8 +60,10 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         }
 
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
+        Railways.temporarilySkipSwitches = true;
         Pair<TrackSwitch, Boolean> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(
                 !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted));
+        Railways.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData.getFirst();
         boolean headOn = lookAheadData.getSecond();
 

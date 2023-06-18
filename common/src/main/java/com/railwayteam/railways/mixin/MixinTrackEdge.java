@@ -28,6 +28,8 @@ public class MixinTrackEdge {
         String className = Thread.currentThread().getStackTrace()[3].getClassName();
         if (className.equals("com.simibubi.create.content.trains.signal.SignalPropagator"))
             return;
+        if (Railways.temporarilySkipSwitches)
+            return;
         TrackEdge relevantEdge = Railways.trackEdgeTemporarilyFlipped ? ((TrackEdge) (Object) this) : other;
         Railways.trackEdgeTemporarilyFlipped = false;
         // trains should be able to navigate through automatic switches
