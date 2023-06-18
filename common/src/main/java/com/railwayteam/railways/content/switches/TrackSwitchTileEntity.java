@@ -44,6 +44,7 @@ todo automatic switches should be auto-settable by moving trains (and therefore 
 public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
     private SwitchState state;
+    private int lastAnalogOutput = 0;
 
     @Nullable
     public TrackSwitch getSwitch() {
@@ -200,6 +201,10 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
                     return;
                 }
                 enterState(sw.getSwitchState());
+                if (getTargetAnalogOutput() != lastAnalogOutput) {
+                    lastAnalogOutput = getTargetAnalogOutput();
+                    level.updateNeighbourForOutputSignal(getBlockPos(), getBlockState().getBlock());
+                }
             }
         }
 
@@ -346,6 +351,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         super.write(tag, clientPacket);
         if (clientPacket)
             tag.putString("SwitchState", (state == null ? SwitchState.NORMAL : state).getSerializedName());
+        tag.putInt("AnalogOutput", lastAnalogOutput);
     }
 
     @Override
@@ -359,5 +365,16 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
                 Railways.LOGGER.error("Failed to read SwitchState", e);
             }
         }
+        lastAnalogOutput = tag.getInt("AnalogOutput");
+    }
+
+    public int getTargetAnalogOutput() {
+        if (state == null)
+            return 0;
+        return switch (state) {
+            case NORMAL -> 0;
+            case REVERSE_LEFT -> 1;
+            case REVERSE_RIGHT -> 2;
+        };
     }
 }

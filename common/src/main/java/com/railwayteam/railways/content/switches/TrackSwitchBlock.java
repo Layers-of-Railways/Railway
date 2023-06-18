@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -149,7 +150,8 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     if (state == null)
       return null;
 
-    return state.setValue(FACING, context.getHorizontalDirection());
+    return state.setValue(FACING, context.getHorizontalDirection())
+            .setValue(LOCKED, context.getLevel().hasSignal(context.getClickedPos().below(), Direction.DOWN));
   }
 
   @Override
@@ -230,5 +232,27 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     if (te != null) {
       te.checkRedstoneInputs();
     }
+  }
+
+  /**
+   * @deprecated call via {@link
+   * BlockStateBase#hasAnalogOutputSignal} whenever possible.
+   * Implementing/overriding is fine.
+   */
+  @Override
+  public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
+    return true;
+  }
+
+  /**
+   * @deprecated call via {@link
+   * BlockStateBase#getAnalogOutputSignal} whenever possible.
+   * Implementing/overriding is fine.
+   */
+  @Override
+  public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
+    if (level.getBlockEntity(pos) instanceof TrackSwitchTileEntity te)
+      return te.getTargetAnalogOutput();
+    return 0;
   }
 }
