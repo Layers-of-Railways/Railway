@@ -119,7 +119,7 @@ public class TrackSwitchDebugVisualizer {
 
           Direction offsetDirection = Direction.getNearest(farthestOffset.x, farthestOffset.y, farthestOffset.z);
           CreateClient.OUTLINER.showAABB(node, AABB.ofSize(tnl.getLocation()
-                          .add(offsetDirection.getStepX()/2., offsetDirection.getStepY()/2., offsetDirection.getStepZ()/2.)
+                          .add(farthestOffset.x/2., farthestOffset.y/2., farthestOffset.z/2.)
                           .add(0, 8 / 16f, 0),
                           1, 1, 1))
             .colored(graph.color)

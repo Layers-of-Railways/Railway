@@ -49,7 +49,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
 
     @Nullable
     public TrackSwitch getSwitch() {
-        return edgePoint.getEdgePoint();
+        return edgePoint == null ? null : edgePoint.getEdgePoint();
     }
 
     final LerpedFloat lerpedAngle = LerpedFloat.angular().chase(0.0, 0.3, LerpedFloat.Chaser.EXP);
@@ -140,7 +140,12 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     }
 
     void calculateExits(TrackSwitch sw) {
-        TrackGraphLocation loc = edgePoint.determineGraphLocation();
+        TrackGraphLocation loc;
+        try {
+            loc = edgePoint.determineGraphLocation();
+        } catch (ClassCastException ignored) { // if we are targeting air, catch the crash
+            return;
+        }
         TrackGraph graph = loc.graph;
         TrackEdge edge = graph
                 .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))
@@ -154,6 +159,10 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
                         || !e.node2.getLocation().equals(edge.node1.getLocation()))
                 .map(e -> e.node2.getLocation())
                 .collect(toSet());
+
+        if (Math.abs(loc.position - (edge.getLength()-0.5)) > 0.5) {
+            exits = Set.of();
+        }
 
         sw.updateExits(edge.node2.getLocation(), exits);
     }
@@ -313,8 +322,10 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     }
 
     public void clientLazyTick() {
-        if (getSwitch() != null && edgePoint.determineGraphLocation() != null)
-            getSwitch().updateEdges(edgePoint.determineGraphLocation().graph);
+        try {
+            if (getSwitch() != null && edgePoint.determineGraphLocation() != null)
+                getSwitch().updateEdges(edgePoint.determineGraphLocation().graph);
+        } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
     }
 
     /*protected void followAutomaticSwitching() {
@@ -324,8 +335,10 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     }*/
 
     protected void restoreEdges() {
-        if (edgePoint.getEdgePoint() != null && edgePoint.determineGraphLocation() != null)
-            edgePoint.getEdgePoint().setEdgesActive(edgePoint.determineGraphLocation().graph);
+        try {
+            if (edgePoint.getEdgePoint() != null && edgePoint.determineGraphLocation() != null)
+                edgePoint.getEdgePoint().setEdgesActive(edgePoint.determineGraphLocation().graph);
+        } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
     }
 
     @Override

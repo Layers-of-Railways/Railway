@@ -61,7 +61,7 @@ public class MixinTrackTargetingBlockItem {
         }
 
         TrackShape shape = level.getBlockState(pos).getValue(TrackBlock.SHAPE);
-        if (!acceptableShapes.contains(shape)) {
+        if (!acceptableShapes.contains(shape) || (type == CREdgePointTypes.SWITCH && shape.getAxes().stream().anyMatch(v -> v.y > 0))) { // prevent switch placement on slopes
             callback.accept(not_straight, null);
             ci.cancel();
         }
