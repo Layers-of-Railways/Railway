@@ -3,7 +3,7 @@
     <ExternalSystemSettings>
       <option name="env">
         <map>
-          <entry key="GRADLE_RUN_NUMBER" value="1000" />
+          <entry key="GITHUB_RUN_NUMBER" value="1000" />
         </map>
       </option>
       <option name="executionName" />
