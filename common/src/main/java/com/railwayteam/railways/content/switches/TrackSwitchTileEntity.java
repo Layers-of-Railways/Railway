@@ -47,6 +47,8 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     private SwitchState state;
     private int lastAnalogOutput = 0;
 
+    int exitCount = 0; // client only
+
     @Nullable
     public TrackSwitch getSwitch() {
         return edgePoint == null ? null : edgePoint.getEdgePoint();
@@ -109,6 +111,17 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
 
     public boolean isReverseRight() {
         return getState() == SwitchState.REVERSE_RIGHT;
+    }
+
+    public boolean hasExit(SwitchState state) {
+        TrackSwitch sw = getSwitch();
+        if (sw == null)
+            return false;
+        return switch (state) {
+            case NORMAL -> sw.hasStraightExit();
+            case REVERSE_RIGHT -> sw.hasRightExit();
+            case REVERSE_LEFT -> sw.hasLeftExit();
+        };
     }
 
     public PartialModel getOverlayModel() {
@@ -199,6 +212,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
             if (level.isClientSide) {
                 if (sw != null) {
                     sw.setSwitchState(state);
+                    exitCount = sw.getExits().size();
                 }
                 lerpedAngle.tickChaser();
                 clientLazyTickCounter++;

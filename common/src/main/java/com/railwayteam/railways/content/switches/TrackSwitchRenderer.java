@@ -54,10 +54,10 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
         .translate(0.5, 8.5 / 16, 0.5);
 
       // Rotate just enough to touch the front or back edge
-      if (te.isReverseLeft()) {
+      if (te.isReverseLeft() || (te.isNormal() && te.exitCount == 2 && te.hasExit(TrackSwitchBlock.SwitchState.REVERSE_LEFT))) {
 //        buf = buf.rotate(Direction.NORTH, -1.1f);
         te.lerpedAngle.updateChaseTarget(-1.1f);
-      } else if (te.isReverseRight()) {
+      } else if (te.isReverseRight() || (te.isNormal() && te.exitCount == 2 && te.hasExit(TrackSwitchBlock.SwitchState.REVERSE_RIGHT))) {
 //        buf = buf.rotate(Direction.NORTH, 1.1f);
         te.lerpedAngle.updateChaseTarget(1.1f);
       } else {
