@@ -38,9 +38,6 @@ import java.util.Set;
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
 
-/*
-todo automatic switches should be auto-settable by moving trains (and therefore also not block navigation)
- */
 
 public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;

@@ -40,7 +40,6 @@ done: don't actually block, just remove it from the list of things we can go tow
 to do this:
 hook into {@link TrackEdge#canTravelTo }
  */
-// todo custom sync packet
 @SuppressWarnings("DuplicatedCode")
 public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private TrackNodeLocation switchPoint;
