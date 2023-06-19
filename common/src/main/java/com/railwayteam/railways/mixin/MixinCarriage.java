@@ -3,10 +3,7 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
-import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.trains.entity.TravellingPoint;
+import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.foundation.utility.Couple;
@@ -17,6 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -29,6 +27,7 @@ import java.util.UUID;
 @Mixin(value = Carriage.class, remap = false)
 public class MixinCarriage implements ICarriageConductors {
 
+    @Shadow public Train train;
     private final List<UUID> controllingConductors = new ArrayList<>();
 
     @Override
@@ -86,7 +85,8 @@ public class MixinCarriage implements ICarriageConductors {
     @Inject(method = "travel", at = @At("HEAD"))
     private void markTravelStart(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                  TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
-        Railways.trackEdgeCarriageTravelling = true;
+        if (train.navigation.isActive()) // only do automatic stuff when automatically operated
+            Railways.trackEdgeCarriageTravelling = true;
     }
 
     @Inject(method = "travel", at = @At("RETURN"))

@@ -64,11 +64,11 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       this.direction = direction;
     }
 
-    public static SwitchState fromSteerDirection(TravellingPoint.SteerDirection direction) {
+    public static SwitchState fromSteerDirection(TravellingPoint.SteerDirection direction, boolean forward) {
       return switch (direction) {
         case NONE -> NORMAL;
-        case LEFT -> REVERSE_LEFT;
-        case RIGHT -> REVERSE_RIGHT;
+        case LEFT -> forward ? REVERSE_LEFT : REVERSE_RIGHT;
+        case RIGHT -> forward ? REVERSE_RIGHT : REVERSE_LEFT;
       };
     }
 

@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.switches;
 
+import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.ISwitchDisabledEdge;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
@@ -60,7 +61,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private @Nullable TrackNodeLocation leftExit;
     private @Nullable TrackNodeLocation rightExit;
 
-    private @NotNull TrackSwitchBlock.SwitchState switchState = TrackSwitchBlock.SwitchState.NORMAL;
+    private @NotNull SwitchState switchState = SwitchState.NORMAL;
     private boolean automatic;
     private boolean locked;
 
@@ -77,12 +78,34 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         this.locked = locked;
     }
 
-    private @Nullable TrackNodeLocation getExit(TrackSwitchBlock.SwitchState state) {
+    private @Nullable TrackNodeLocation getExit(SwitchState state) {
         return switch (state) {
             case NORMAL -> straightExit;
             case REVERSE_RIGHT -> rightExit;
             case REVERSE_LEFT -> leftExit;
         };
+    }
+
+    private Map<SwitchState, Optional<TrackNodeLocation>> getExistingExits() {
+        return Map.of(
+                SwitchState.NORMAL, Optional.ofNullable(straightExit),
+                SwitchState.REVERSE_LEFT, Optional.ofNullable(leftExit),
+                SwitchState.REVERSE_RIGHT, Optional.ofNullable(rightExit)
+        );
+    }
+
+    /**
+     * @param loc location to approach from
+     * @return (if found) state where `loc` can be traversed
+     */
+    @ApiStatus.Internal
+    public @Nullable SwitchState getTargetState(TrackNodeLocation loc) {
+        for (Map.Entry<SwitchState, Optional<TrackNodeLocation>> entry : getExistingExits().entrySet()) {
+            if (entry.getValue().isPresent() && entry.getValue().get().equals(loc)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     @Override
@@ -204,7 +227,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         return exits.stream().toList();
     }
 
-    private boolean isStateValid(TrackSwitchBlock.SwitchState state) {
+    private boolean isStateValid(SwitchState state) {
         return switch (state) {
             case NORMAL -> hasStraightExit();
             case REVERSE_RIGHT -> hasRightExit();
@@ -212,12 +235,12 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         };
     }
 
-    private TrackSwitchBlock.SwitchState getValidSwitchState() {
-        for (TrackSwitchBlock.SwitchState state : TrackSwitchBlock.SwitchState.values()) {
+    private SwitchState getValidSwitchState() {
+        for (SwitchState state : SwitchState.values()) {
             if (isStateValid(state))
                 return state;
         }
-        return TrackSwitchBlock.SwitchState.NORMAL;
+        return SwitchState.NORMAL;
     }
 
     void ensureValidState() {
@@ -226,7 +249,18 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         }
     }
 
-    public boolean setSwitchState(@NotNull TrackSwitchBlock.SwitchState state) {
+    /**
+     * Tries to set state, but fails if locked
+     * @param state Which state to attempt to switch to
+     * @return success or failure
+     */
+    public boolean trySetSwitchState(@NotNull SwitchState state) {
+        if (isLocked())
+            return false;
+        return setSwitchState(state);
+    }
+
+    public boolean setSwitchState(@NotNull SwitchState state) {
         if (isStateValid(state) && switchState != state) {
             switchState = state;
             ticks = 10000; // force a tick
@@ -236,7 +270,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         return false;
     }
 
-    public @NotNull TrackSwitchBlock.SwitchState getSwitchState() {
+    public @NotNull SwitchState getSwitchState() {
         return switchState;
     }
 
@@ -286,7 +320,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         super.read(nbt, migration, dimensions);
         String exit = nbt.getString("SwitchState");
         try {
-            switchState = TrackSwitchBlock.SwitchState.valueOf(exit.toUpperCase(Locale.ROOT));
+            switchState = SwitchState.valueOf(exit.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             switchState = getValidSwitchState();
         }
@@ -304,7 +338,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     @Override
     public void read(FriendlyByteBuf buffer, DimensionPalette dimensions) {
         super.read(buffer, dimensions);
-        switchState = TrackSwitchBlock.SwitchState.values()[buffer.readInt()];
+        switchState = SwitchState.values()[buffer.readInt()];
         automatic = buffer.readBoolean();
         locked = buffer.readBoolean();
         updateExits(
@@ -430,7 +464,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
             }
         }
         if (highestPriorityExit != null) {
-            for (TrackSwitchBlock.SwitchState state : TrackSwitchBlock.SwitchState.values()) {
+            for (SwitchState state : SwitchState.values()) {
                 if (highestPriorityExit == getExit(state)) {
                     setSwitchState(state);
                     break;

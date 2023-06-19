@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
@@ -269,13 +270,14 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         }
     }
 
-    public Pair<TrackSwitch, Boolean> findNearestApproachableSwitch(boolean forward) {
+    public Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> findNearestApproachableSwitch(boolean forward) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return null;
 
         MutableObject<TrackSwitch> result = new MutableObject<>(null);
         MutableObject<Boolean> headOn = new MutableObject<>(false);
+        MutableObject<SwitchState> targetState = new MutableObject<>(null);
         double acceleration = train.acceleration();
         double minDistance = 0;//.75f * (train.speed * train.speed) / (2 * acceleration);
         double maxDistance = Math.max(32, 1.5f * (train.speed * train.speed) / (2 * acceleration));
@@ -292,12 +294,21 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
                 TrackNode node = currentEntry.getFirst().getSecond();
                 headOn.setValue(sw.isPrimary(node));
                 result.setValue(sw);
+                if (!headOn.getValue()) {
+                    // find the targeted switch direction
+                    for (TrackEdge reachedEdge : reachedVia.keySet()) {
+                        SwitchState state = sw.getTargetState(reachedEdge.node1.getLocation());
+                        if (state == null)
+                            state = sw.getTargetState(reachedEdge.node2.getLocation());
+                        targetState.setValue(state);
+                    }
+                }
                 return true;
             } else {
                 return false;
             }
         });
 
-        return Pair.of(result.getValue(), headOn.getValue());
+        return Pair.of(result.getValue(), Pair.of(headOn.getValue(), Optional.ofNullable(targetState.getValue())));
     }
 }

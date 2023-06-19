@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin_interfaces;
 
 import com.railwayteam.railways.content.switches.TrackSwitch;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
@@ -9,6 +10,7 @@ import com.simibubi.create.foundation.utility.Pair;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Map;
+import java.util.Optional;
 
 public interface IGenerallySearchableNavigation {
 
@@ -16,7 +18,7 @@ public interface IGenerallySearchableNavigation {
 
     void searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest);
 
-    Pair<TrackSwitch, Boolean> findNearestApproachableSwitch(boolean forward);
+    Pair<TrackSwitch, Pair<Boolean, Optional<TrackSwitchBlock.SwitchState>>> findNearestApproachableSwitch(boolean forward);
 
     @ApiStatus.Internal
     class FrontierEntry implements Comparable<FrontierEntry> {

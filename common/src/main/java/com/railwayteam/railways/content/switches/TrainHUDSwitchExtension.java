@@ -17,6 +17,7 @@ public class TrainHUDSwitchExtension {
 
     public static @Nullable TrackSwitchBlock.SwitchState switchState;
     public static boolean isAutomaticSwitch = false;
+    public static boolean isWrong = false;
     static LerpedFloat switchProgress = LerpedFloat.linear();
 
     public static void tick() {
@@ -64,9 +65,9 @@ public class TrainHUDSwitchExtension {
 
         if (switchProgress.getValue(partialTicks) > 0.99 && switchState != null) {
             switch (switchState) {
-                case NORMAL -> CRGuiTextures.TRAIN_HUD_SWITCH_STRAIGHT.render(poseStack, 152, -13);
-                case REVERSE_LEFT -> CRGuiTextures.TRAIN_HUD_SWITCH_LEFT.render(poseStack, 142, -13);
-                case REVERSE_RIGHT -> CRGuiTextures.TRAIN_HUD_SWITCH_RIGHT.render(poseStack, 162, -13);
+                case NORMAL -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 152, -13);
+                case REVERSE_LEFT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 142, -13);
+                case REVERSE_RIGHT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 162, -13);
             }
         }
 

@@ -3,7 +3,7 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitch;
-import com.railwayteam.railways.content.switches.TrackSwitchBlock;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
 public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity {
@@ -59,29 +60,37 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             targetSpeed *= -1;
         }
 
+        boolean spaceDown = heldControls.contains(4);
+
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
         Railways.temporarilySkipSwitches = true;
-        Pair<TrackSwitch, Boolean> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(
-                !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted));
+        boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
+        Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(forward);
         Railways.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData.getFirst();
-        boolean headOn = lookAheadData.getSecond();
+        boolean headOn = lookAheadData.getSecond().getFirst();
+        Optional<SwitchState> targetState = lookAheadData.getSecond().getSecond();
 
         if (lookAhead != null) {
             // try to reserve switch
-            if (headOn && Config.FLIP_DISTANT_SWITCHES.get() && lookAhead.isAutomatic()
+            if (Config.FLIP_DISTANT_SWITCHES.get() && spaceDown
                     && !lookAhead.isLocked() && !carriage.train.navigation.isActive()) {
-                lookAhead.setSwitchState(TrackSwitchBlock.SwitchState.fromSteerDirection(carriage.train.manualSteer));
+                if (headOn) {
+                    lookAhead.trySetSwitchState(SwitchState.fromSteerDirection(carriage.train.manualSteer, forward));
+                } else targetState.ifPresent(lookAhead::trySetSwitchState);
             }
-            displayApproachSwitchMessage(player, lookAhead);
+            boolean wrong = headOn ?
+                    SwitchState.fromSteerDirection(carriage.train.manualSteer, forward) != lookAhead.getSwitchState() :
+                    targetState.isPresent() && lookAhead.getSwitchState() != targetState.get();
+            displayApproachSwitchMessage(player, lookAhead, wrong);
         } else
             cleanUpApproachSwitchMessage(player);
     }
 
     boolean switchMessage = false;
 
-    private void displayApproachSwitchMessage(Player player, TrackSwitch sw) {
-        sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic());
+    private void displayApproachSwitchMessage(Player player, TrackSwitch sw, boolean isWrong) {
+        sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong);
         switchMessage = true;
     }
 
@@ -93,8 +102,8 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         switchMessage = false;
     }
 
-    private void sendSwitchInfo(Player player, TrackSwitchBlock.SwitchState state, boolean automatic) {
+    private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong) {
         if (player instanceof ServerPlayer sp)
-            CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic));
+            CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong));
     }
 }

@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.simibubi.create.foundation.gui.element.ScreenElement;
 import com.simibubi.create.foundation.utility.Color;
@@ -20,6 +21,9 @@ public enum CRGuiTextures implements ScreenElement {
     TRAIN_HUD_SWITCH_LEFT("widgets", 1, 33, 10, 10),
     TRAIN_HUD_SWITCH_STRAIGHT("widgets", 13, 33, 10, 10),
     TRAIN_HUD_SWITCH_RIGHT("widgets", 25, 33, 10, 10),
+    TRAIN_HUD_SWITCH_LEFT_WRONG("widgets", 1, 45, 10, 10),
+    TRAIN_HUD_SWITCH_STRAIGHT_WRONG("widgets", 13, 45, 10, 10),
+    TRAIN_HUD_SWITCH_RIGHT_WRONG("widgets", 25, 45, 10, 10),
     ;
 
     public static final int FONT_COLOR = 0x575F7A;
@@ -46,6 +50,22 @@ public enum CRGuiTextures implements ScreenElement {
         this.height = height;
         this.startX = startX;
         this.startY = startY;
+    }
+
+    public static CRGuiTextures getForSwitch(TrackSwitchBlock.SwitchState switchState, boolean isWrong) {
+        if (isWrong) {
+            return switch (switchState) {
+                case NORMAL -> TRAIN_HUD_SWITCH_STRAIGHT_WRONG;
+                case REVERSE_RIGHT -> TRAIN_HUD_SWITCH_RIGHT_WRONG;
+                case REVERSE_LEFT -> TRAIN_HUD_SWITCH_LEFT_WRONG;
+            };
+        } else {
+            return switch (switchState) {
+                case NORMAL -> TRAIN_HUD_SWITCH_STRAIGHT;
+                case REVERSE_RIGHT -> TRAIN_HUD_SWITCH_RIGHT;
+                case REVERSE_LEFT -> TRAIN_HUD_SWITCH_LEFT;
+            };
+        }
     }
 
     @Environment(EnvType.CLIENT)
