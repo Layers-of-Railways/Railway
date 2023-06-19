@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "railways:block/track_switch_andesite/block",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "railways:block/track_switch_andesite/block"
+    }
+  }
+}

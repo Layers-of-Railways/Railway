@@ -112,6 +112,29 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern(" S ")
         );
 
+    // FIXME: Recipe unlocking doesn't seem to work properly
+    GeneratedRecipe ANDESITE_SWITCH = create(CRBlocks.ANDESITE_SWITCH)
+      .unlockedBy(Ingredients::andesiteCasing)
+      .viaShaped(b -> b
+        .define('L', Ingredients.lever())
+        .define('C', Ingredients.andesiteCasing())
+        .define('W', Ingredients.cogwheel())
+        .pattern("L")
+        .pattern("C")
+        .pattern("W")
+      );
+
+    GeneratedRecipe BRASS_SWITCH = create(CRBlocks.BRASS_SWITCH)
+      .unlockedBy(Ingredients::precisionMechanism)
+      .viaShaped(b -> b
+        .define('L', Ingredients.lever())
+        .define('C', Ingredients.brassCasing())
+        .define('P', Ingredients.precisionMechanism())
+        .pattern("L")
+        .pattern("C")
+        .pattern("P")
+      );
+
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);
     }

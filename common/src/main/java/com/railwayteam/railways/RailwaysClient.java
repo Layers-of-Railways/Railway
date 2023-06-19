@@ -5,7 +5,7 @@ import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
-import com.railwayteam.railways.content.coupling.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.*;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -33,6 +33,8 @@ public class RailwaysClient {
     CRPonderIndex.register();
     CRBlockPartials.init();
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
+    CustomTrackOverlayRendering.register(CREdgePointTypes.SWITCH, CRBlockPartials.SWITCH_RIGHT_TURN);
+
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
     registerCustomCap("Slimeist", "slimeist");
     registerCustomCap("bosbesballon", "bosbesballon");

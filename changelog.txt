@@ -1,3 +1,5 @@
+v1.4.0:
+- Added switches
 v1.3.5:
 - Added back compat (but working now)
 - fixed sloped tracks

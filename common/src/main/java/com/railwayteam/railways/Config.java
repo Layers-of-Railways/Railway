@@ -27,6 +27,8 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue CONDUCTOR_WHISTLE_REQUIRES_OWNING;
     public static ForgeConfigSpec.BooleanValue STRICT_COUPLER;
     public static ForgeConfigSpec.BooleanValue REGISTER_MISSING_TRACKS;
+    public static ForgeConfigSpec.BooleanValue FLIP_DISTANT_SWITCHES;
+    public static ForgeConfigSpec.IntValue SWITCH_PLACEMENT_RANGE;
 
 
     static {
@@ -58,6 +60,8 @@ public class Config {
         CONDUCTOR_WHISTLE_REQUIRES_OWNING = builder.comment("Conductor whistle is limited to the owner of a train").define("mustOwnBoundTrain", false);
         STRICT_COUPLER = builder.comment("Coupler will require points to be on the same or adjacent track edge, this will prevent the coupler from working if there is any form of junction in between the two points.").define("strictCoupler", false);
         REGISTER_MISSING_TRACKS = builder.comment("Register integration tracks for mods that are not present").define("registerMissingTracks", false);
+        FLIP_DISTANT_SWITCHES = builder.comment("Allow controlling Brass Switches remotely when approaching them on a train").define("flipDistantSwitches", true);
+        SWITCH_PLACEMENT_RANGE = builder.comment("Placement range for switches").defineInRange("switchPlacementRange", 64, 16, 128);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.coupling;
+package com.railwayteam.railways.util;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
@@ -8,6 +8,9 @@ import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.graph.TrackEdge;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -24,7 +27,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,14 +36,6 @@ public class CustomTrackOverlayRendering {
 
     public static void register(EdgePointType<?> edgePointType, PartialModel model) {
         CUSTOM_OVERLAYS.put(edgePointType, model);
-    }
-
-    @Nullable
-    public static PartialModel getCouplerOverlayModel(boolean couple, boolean decouple) {
-        if (couple && decouple) return CRBlockPartials.COUPLER_BOTH;
-        if (couple) return CRBlockPartials.COUPLER_COUPLE;
-        if (decouple) return CRBlockPartials.COUPLER_DECOUPLE;
-        return null;
     }
 
     @Environment(EnvType.CLIENT)
@@ -180,5 +174,21 @@ public class CustomTrackOverlayRendering {
         }
 
         return model;
+    }
+
+    public static boolean overlayWillOverlap(TrackTargetingBehaviour<? extends TrackEdgePoint> target) {
+        try {
+            TrackGraphLocation graphLocation = target.determineGraphLocation();
+            TrackEdge edge = graphLocation.graph.getConnectionsFrom(graphLocation.graph.locateNode(graphLocation.edge.getFirst())).get(graphLocation.graph.locateNode(graphLocation.edge.getSecond()));
+            for (TrackEdgePoint edgePoint : edge.getEdgeData().getPoints()) {
+                try {
+                    if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint() && !edgePoint.getId().equals(target.getEdgePoint().getId())) {
+                        return true;
+                    }
+                } catch (Exception ignored) {}
+            }
+        } catch (Exception ignored) {}
+
+        return false;
     }
 }

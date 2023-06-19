@@ -11,4 +11,27 @@ public interface AccessorTrain {
 
     @Accessor(value = "stress", remap = false)
     void snr_setStress(double[] stress);
+
+    @Mixin(value = Train.Penalties.class, remap = false)
+    public interface AccessorPenalties {
+        @Accessor
+        static int getRED_SIGNAL() {
+            throw new RuntimeException("Should be mixed in");
+        }
+
+        @Accessor
+        static int getREDSTONE_RED_SIGNAL() {
+            throw new RuntimeException("Should be mixed in");
+        }
+
+        @Accessor
+        static int getSTATION_WITH_TRAIN() {
+            throw new RuntimeException("Should be mixed in");
+        }
+
+        @Accessor
+        static int getSTATION() {
+            throw new RuntimeException("Should be mixed in");
+        }
+    }
 }
