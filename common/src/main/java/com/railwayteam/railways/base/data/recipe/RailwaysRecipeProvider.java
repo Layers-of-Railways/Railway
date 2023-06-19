@@ -89,8 +89,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return Items.REDSTONE;
     }
 
+    public static ItemLike lever() { return Items.LEVER; }
+
+    public static ItemLike cogwheel() {
+      return AllBlocks.COGWHEEL.get();
+    }
+
     public static ItemLike railwayCasing() {
       return AllBlocks.RAILWAY_CASING.get();
+    }
+
+    public static ItemLike brassCasing() {
+      return AllBlocks.BRASS_CASING.get();
     }
 
     public static ItemLike andesiteCasing() {

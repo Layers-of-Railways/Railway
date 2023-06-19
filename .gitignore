@@ -38,6 +38,7 @@ jars
 /forge/recent_changelog.html
 /common/recent_changelog.html
 /forge/libs/
+.DS_Store
 
 ##################
 # Dev's Personal #

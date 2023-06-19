@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
@@ -8,6 +9,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import java.util.function.BiConsumer;
 @Mixin(value = TrackTargetingBlockItem.class, remap = false)
 public class MixinTrackTargetingBlockItem {
 
+    @Shadow private EdgePointType<?> type;
     private static final List<TrackShape> acceptableShapes = List.of(
         TrackShape.XO,
         TrackShape.ZO,
@@ -37,10 +41,18 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
+    @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true), remap = true)
+    private boolean changeCloserThan(BlockPos instance, Vec3i vec3i, double v) {
+        if (type == CREdgePointTypes.SWITCH) {
+            return instance.closerThan(vec3i, Config.SWITCH_PLACEMENT_RANGE.get());
+        }
+        return instance.closerThan(vec3i, v);
+    }
+
     @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
     private static void checkGraphLocation(Level level, BlockPos pos, boolean front, BezierTrackPointLocation targetBezier, EdgePointType<?> type,
                                            BiConsumer<TrackTargetingBlockItem.OverlapResult, TrackGraphLocation> callback, CallbackInfo ci) {
-        if (type != CREdgePointTypes.COUPLER) // prevent coupler on turns
+        if (type != CREdgePointTypes.COUPLER && type != CREdgePointTypes.SWITCH) // prevent coupler on turns
             return;
         TrackTargetingBlockItem.OverlapResult not_straight = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");
         if (targetBezier != null) {
@@ -49,7 +61,7 @@ public class MixinTrackTargetingBlockItem {
         }
 
         TrackShape shape = level.getBlockState(pos).getValue(TrackBlock.SHAPE);
-        if (!acceptableShapes.contains(shape)) {
+        if (!acceptableShapes.contains(shape) || (type == CREdgePointTypes.SWITCH && shape.getAxes().stream().anyMatch(v -> v.y > 0))) { // prevent switch placement on slopes
             callback.accept(not_straight, null);
             ci.cancel();
         }

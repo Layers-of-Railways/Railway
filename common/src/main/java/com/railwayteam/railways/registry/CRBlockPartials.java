@@ -190,6 +190,22 @@ public class CRBlockPartials {
         COUPLER_NONE = block("track_overlay/coupler_none");
 
     public static final PartialModel
+        ANDESITE_SWITCH_FLAG = block("track_switch_andesite/flag"),
+        ANDESITE_SWITCH_HANDLE = block("track_switch_andesite/handle"),
+        BRASS_SWITCH_FLAG = block("track_switch_brass/flag"),
+        SWITCH_NONE = block("track_overlay/switch_none"),
+        SWITCH_RIGHT_STRAIGHT = block("track_overlay/switch_right_straight"),
+        SWITCH_RIGHT_TURN = block("track_overlay/switch_right_turn"),
+        SWITCH_LEFT_STRAIGHT = block("track_overlay/switch_left_straight"),
+        SWITCH_LEFT_TURN = block("track_overlay/switch_left_turn"),
+        SWITCH_3WAY_STRAIGHT = block("track_overlay/switch_3way_straight"),
+        SWITCH_3WAY_LEFT = block("track_overlay/switch_3way_left"),
+        SWITCH_3WAY_RIGHT = block("track_overlay/switch_3way_right"),
+        SWITCH_2WAY_LEFT = block("track_overlay/switch_2way_left"),
+        SWITCH_2WAY_RIGHT = block("track_overlay/switch_2way_right")
+    ;
+
+    public static final PartialModel
         MONORAIL_SEGMENT_TOP = block("monorail/monorail/segment_top"),
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
         MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),

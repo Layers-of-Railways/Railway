@@ -41,6 +41,12 @@
   "railways.station.train_limit.tooltip.1": "Reserve station before approaching train has arrived",
   "railways.station.train_limit.tooltip.2": "to more evenly space trains in a multi-platform station",
 
+  "railways.tooltip.switch.header": "Switch Information",
+  "railways.tooltip.switch.state": "Switch State:",
+  "railways.switch.state.normal": "-> Straight",
+  "railways.switch.state.reverse_left": "-> Left",
+  "railways.switch.state.reverse_right": "-> Right",
+
   "create.sliding_door.mode": "Open Mode",
   "create.sliding_door.mode.manual": "Manual",
   "create.sliding_door.mode.normal": "Normal (Default)",
@@ -74,5 +80,11 @@
   "railways.display_source.signal.invalid": "Invalid",
 
   "railways.display_target.semaphore.normal": "Normal Signal State",
-  "railways.display_target.semaphore.distant": "Distant Signal State"
+  "railways.display_target.semaphore.distant": "Distant Signal State",
+
+  "railways.display_source.track_switch_brass_source": "Switch State",
+  "railways.display_source.track_switch_andesite_source": "Switch State",
+  "railways.display_source.switch.normal": "Straight",
+  "railways.display_source.switch.reverse_left": "Left",
+  "railways.display_source.switch.reverse_right": "Right"
 }

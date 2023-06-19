@@ -18,7 +18,7 @@ public class SlidingDoorBlockMixin {
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$RightClickBlock;setCanceled(Z)V"
-        ), cancellable = true)
+        ), cancellable = true, require = 0)
     private static void stopItStopItQuark(PlayerInteractEvent.RightClickBlock event, CallbackInfo ci) {
         ValueSettingsInputHandler.onBlockActivated(event);
 
