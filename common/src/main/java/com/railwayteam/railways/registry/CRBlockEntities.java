@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.singleaxle.SingleaxleBogeyBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
@@ -52,6 +53,12 @@ public class CRBlockEntities {
             .blockEntity("invisible_bogey", InvisibleBogeyBlockEntity::new)
             .renderer(() -> BogeyBlockEntityRenderer::new)
             .validBlocks(CRBlocks.INVISIBLE_BOGEY)
+            .register();
+
+    public static final BlockEntityEntry<SingleaxleBogeyBlockEntity> SINGLEAXLE_BOGEY = REGISTRATE
+            .blockEntity("singleaxle_bogey", SingleaxleBogeyBlockEntity::new)
+            .renderer(() -> BogeyBlockEntityRenderer::new)
+            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)
