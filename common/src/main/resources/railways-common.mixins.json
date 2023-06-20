@@ -56,7 +56,8 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin"
+    "NbtUtilsMixin",
+    "MixinNixieTubeBlockEntity"
   ],
   "client": [
     "client.AccessorControlsHandler",
@@ -71,7 +72,6 @@
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
-    "client.MixinNixieTubeBlockEntity",
     "client.MixinRadialToolboxMenu",
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
