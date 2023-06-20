@@ -63,6 +63,15 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     private @NotNull SwitchState switchState = SwitchState.NORMAL;
     private boolean automatic;
     private boolean locked;
+    private boolean autoTrainsSwitch;
+
+    public boolean shouldAutoTrainsSwitch() {
+        return autoTrainsSwitch;
+    }
+
+    void setAutoTrainsSwitch(boolean autoTrainsSwitch) {
+        this.autoTrainsSwitch = autoTrainsSwitch;
+    }
 
     public boolean isAutomatic() {
         return automatic;
@@ -302,6 +311,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         nbt.putString("SwitchState", switchState.getSerializedName());
         nbt.putBoolean("Automatic", automatic);
         nbt.putBoolean("Locked", locked);
+        nbt.putBoolean("AutoTrainsSwitch", autoTrainsSwitch);
     }
 
     @Override
@@ -325,6 +335,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         }
         automatic = nbt.getBoolean("Automatic");
         locked = nbt.getBoolean("Locked");
+        autoTrainsSwitch = nbt.getBoolean("AutoTrainsSwitch");
         updateExits(
                 TrackNodeLocation.read(nbt.getCompound("SwitchPoint"), dimensions),
                 nbt.getList("Exits", Tag.TAG_COMPOUND)
@@ -401,13 +412,13 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
                 }
                 if (closestEdge != null) {
                     ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
-                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked);
+                    ((ISwitchDisabledEdge) closestEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked && autoTrainsSwitch);
                 }
                 if (closestFromNode != null) {
                     TrackEdge reverseEdge = graph.getConnection(Couple.create(closestFromNode, toNode));
                     if (reverseEdge != null) {
                         ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setEnabled(forceActive || getSwitchTarget() == to);
-                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked);
+                        ((ISwitchDisabledEdge) reverseEdge.getEdgeData()).setAutomatic(!forceActive && automatic && !locked && autoTrainsSwitch);
                     }
                 }
                 // not sure if this enabled state will be synchronized to client... hmm...
