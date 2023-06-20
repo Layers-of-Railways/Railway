@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBl
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
+import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
@@ -42,10 +43,16 @@ public class CRBlockEntities {
       .register();
 
     public static final BlockEntityEntry<MonoBogeyBlockEntity> MONO_BOGEY = REGISTRATE
-        .blockEntity("mono_bogey", MonoBogeyBlockEntity::new)
-        .renderer(() -> BogeyBlockEntityRenderer::new)
-        .validBlocks(CRBlocks.MONO_BOGEY)
-        .register();
+            .blockEntity("mono_bogey", MonoBogeyBlockEntity::new)
+            .renderer(() -> BogeyBlockEntityRenderer::new)
+            .validBlocks(CRBlocks.MONO_BOGEY)
+            .register();
+
+    public static final BlockEntityEntry<InvisibleBogeyBlockEntity> INVISIBLE_BOGEY = REGISTRATE
+            .blockEntity("invisible_bogey", InvisibleBogeyBlockEntity::new)
+            .renderer(() -> BogeyBlockEntityRenderer::new)
+            .validBlocks(CRBlocks.INVISIBLE_BOGEY)
+            .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)
         .validBlocks(CRBlocks.CONDUCTOR_WHISTLE_FLAG)

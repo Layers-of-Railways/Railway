@@ -18,6 +18,7 @@
     "railways:track_phantom",
     "railways:track_monorail",
     "railways:mono_bogey",
+    "railways:invisible_bogey",
     "railways:smokestack_caboosestyle",
     "railways:smokestack_long",
     "railways:smokestack_coalburner",

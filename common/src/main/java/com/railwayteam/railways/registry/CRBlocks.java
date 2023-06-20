@@ -7,11 +7,9 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
+import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
-import com.railwayteam.railways.content.switches.SwitchDisplaySource;
-import com.railwayteam.railways.content.switches.TrackSwitchBlock;
-import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -20,6 +18,9 @@ import com.railwayteam.railways.content.smokestack.AxisSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
+import com.railwayteam.railways.content.switches.SwitchDisplaySource;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
@@ -258,6 +259,13 @@ public class CRBlocks {
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.monobogey())
                     .lang("Monorail Bogey")
+                    .register();
+
+    public static final BlockEntry<InvisibleBogeyBlock> INVISIBLE_BOGEY =
+            REGISTRATE.block("invisible_bogey", InvisibleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.invisibleBogey())
+                    .lang("Invisible Bogey")
                     .register();
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =

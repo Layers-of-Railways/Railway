@@ -86,5 +86,7 @@
   "railways.display_source.track_switch_andesite_source": "Switch State",
   "railways.display_source.switch.normal": "Straight",
   "railways.display_source.switch.reverse_left": "Left",
-  "railways.display_source.switch.reverse_right": "Right"
+  "railways.display_source.switch.reverse_right": "Right",
+
+  "railways.bogeys.styles.invisible": "Invisible"
 }

@@ -19,6 +19,7 @@
     "AccessorTrain",
     "AccessorTrain$AccessorPenalties",
     "ChunkSerializerMixin",
+    "MixinAbstractBogeyBlock",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
     "MixinBezierConnection",
@@ -54,8 +55,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin",
-    "client.MixinTrainHUD"
+    "NbtUtilsMixin"
   ],
   "client": [
     "client.AccessorInstance",
@@ -85,7 +85,9 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
-    "client.MixinTrainPacket"
+    "client.MixinTrainPacket",
+    "client.MixinCarriageSounds",
+    "client.MixinTrainHUD"
   ],
   "injectors": {
     "defaultRequire": 1

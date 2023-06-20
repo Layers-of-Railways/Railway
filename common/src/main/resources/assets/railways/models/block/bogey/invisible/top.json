@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"4": "railways:block/bogeys/top_invisible",
+		"particle": "create:block/bogey/particle"
+	},
+	"elements": [
+		{
+			"name": "anchor",
+			"from": [0, 7, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, -2, 8]},
+			"faces": {
+				"north": {"uv": [8, 8, 16, 12.5], "texture": "#4"},
+				"east": {"uv": [0, 8, 8, 12.5], "texture": "#4"},
+				"south": {"uv": [8, 8, 16, 12.5], "texture": "#4"},
+				"west": {"uv": [0, 8, 8, 12.5], "texture": "#4"},
+				"up": {"uv": [0, 0, 8, 8], "rotation": 90, "texture": "#4"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#4"}
+			}
+		}
+	]
+}

@@ -3,6 +3,7 @@
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
 	"block.railways.conductor_whistle": "Conductor Whistle",
+	"block.railways.invisible_bogey": "Invisible Bogey",
 	"block.railways.mono_bogey": "Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
@@ -319,6 +320,8 @@
 	"railways.display_source.switch.normal": "Straight",
 	"railways.display_source.switch.reverse_left": "Left",
 	"railways.display_source.switch.reverse_right": "Right",
+
+	"railways.bogeys.styles.invisible": "Invisible",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

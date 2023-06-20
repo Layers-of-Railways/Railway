@@ -655,7 +655,7 @@ c156a1c108283110269dadc58e79f7eb18eff643 assets/railways/models/block/track/comp
 adc5befab2c0d831b8f386b3d0daf88332fb3cd2 assets/railways/models/block/track/compat/biomesoplenty/magic/teleport.json
 4b2a2ed175422b5ee1a430491884ed13cdf0136b assets/railways/models/block/track/compat/biomesoplenty/fir/segment_right.json
 6eaa33bb5bb87bd04a41e53ba7322d3486909413 assets/railways/models/block/track/tieless/x_ortho.json
-4739ac03bf8e3e769cd707ba96fdcbe5514d4516 data/minecraft/tags/blocks/mineable/pickaxe.json
+d2dce2359f06b7f916d2d82c67e7de3c65319cb0 data/minecraft/tags/blocks/mineable/pickaxe.json
 4ebca76c7a6eeffa93480324298e6be1c56038a4 assets/railways/models/block/track/jungle/cross_d1_xo.json
 99fe32680b91811f5c042b83a3fbe4f76c96e878 assets/railways/models/block/track/blackstone/diag_2.json
 6115ebf13482a8c7312256d135d11eec55cd0083 assets/railways/models/block/track/compat/blue_skies/maple/segment_left.json
@@ -910,7 +910,7 @@ c65d1f7110394886993967c8c6c8362ddae95965 assets/railways/models/block/track/comp
 68a51462baa17caa0c5cd41c621e01b296bb4da3 data/railways/advancements/recipes/railways/dying_existing_cap_light_blue.json
 e460c9a80d0c480fad25185bd27c83c489b871b7 assets/railways/models/block/track/compat/byg/ebony/cross_d2_xo.json
 21bdbe67e8bbccc898b3de29cbb8c93d9aee38f4 data/railways/advancements/recipes/railways/crafting/smokestack_caboosestyle.json
-dc9031954af6655017e840a786c648c51779a062 assets/railways/lang/en_ud.json
+d5f69ffc592ecf74fcba6ddf61672c3508b380bb assets/railways/lang/en_ud.json
 3e3b9ab0ecd74f16aca374eea2761fb7bd086363 assets/railways/models/block/track/compat/byg/white_mangrove/segment_left.json
 2920510cd6ab7e5c910747950ac74ef0f7c2e3f9 assets/railways/models/block/track/phantom/segment_left.json
 513e34a9507d9a169a80c069eae5a8c76a5b5659 assets/railways/models/block/track/compat/byg/green_enchanted/cross_diag.json
@@ -1420,6 +1420,7 @@ d918516a4dd3c4b7382739c592c76a38c634d25a data/railways/recipes/sequenced_assembl
 1e0ec222bd7d76ce98325c507ab2eb956dd31f0c assets/railways/models/item/track_biomesoplenty_dead.json
 4128dbb1139e80cc64054eb9a4ed3953254b6189 assets/railways/models/item/track_twilightforest_canopy.json
 4a1674856fb22eef3dc82020067e965d992c0731 assets/railways/models/block/track/spruce/tie.json
+f0c9ebb47fd33be8e2e245931775e2a42676ef03 assets/railways/blockstates/invisible_bogey.json
 e5f2509e6a9077219f9c7c360db8af7cb51c85cf assets/railways/models/block/track/compat/byg/witch_hazel/segment_right.json
 e56c4fe83a2644d78c15b13085682d9c7158d097 assets/railways/models/item/track_incomplete_byg_fir.json
 edb0a5756becf3f2b4f758b3d91fe4c36a8b3c63 assets/railways/blockstates/track_blue_skies_cherry.json
@@ -1463,6 +1464,7 @@ e60107dbde4521c7242f8918d5c3d11136a7d8d9 assets/railways/models/block/track/comp
 8a26b1d7128731d3624fa95976e7857ac84b38ae assets/railways/models/block/track/compat/byg/cherry/teleport.json
 12faf907dcc19bba01a07f5efcf8871afb0ecb51 assets/railways/models/item/track_byg_ether.json
 97df66144bf1750cc1ad4c2331b49203aa158ba9 assets/railways/models/block/track/compat/hexcasting/edified/cross_d1_xo.json
+7ed68e33a8c488242a2d9039797498068797c5a6 data/railways/loot_tables/blocks/invisible_bogey.json
 f47e75b7dce62cb41cb735e6c6085f10cadcb167 assets/railways/models/block/track/compat/byg/jacaranda/cross_diag.json
 167f086fce30bb09a24f78eeaedf66c0b28e499d assets/railways/models/block/track/spruce/ascending.json
 09edadd88aff71ca527266a9f0d8692a041afcdd assets/railways/models/block/track/warped/diag_2.json
@@ -1481,7 +1483,7 @@ b1bd27c62abb03f97bd4723eb4611caaf6e8fb95 data/railways/recipes/sequenced_assembl
 a67e1575b216e8cbd614d091f1573011d30e1cc5 assets/railways/models/block/track/compat/twilightforest/transwood/ascending.json
 9016be640207d38b05f6710208ae9b2138a87bd4 assets/railways/models/block/track/birch/cross_d2_xo.json
 6933d5075c74e94f19a3285237d6e4af27a131c0 assets/railways/models/block/track/phantom/z_ortho.json
-bf61a607f9b31bd675968d2117d0ef667285f4e4 assets/railways/lang/en_us.json
+814501663a75179b327210f1b1dda136945addd2 assets/railways/lang/en_us.json
 04bac7ece7fd4b9813481311cf7719d48331473f assets/railways/blockstates/track_byg_cypress.json
 3193a90740f27f842755a9d732a9d54e9fc0d613 data/railways/recipes/dying_existing_cap_blue.json
 b0eab5b205bd106d1dd8df0e4a3cd686528f0ec1 assets/railways/models/block/track/compat/hexcasting/edified/x_ortho.json
