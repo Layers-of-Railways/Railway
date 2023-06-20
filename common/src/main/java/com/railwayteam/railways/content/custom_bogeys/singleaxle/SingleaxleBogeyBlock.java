@@ -47,7 +47,7 @@ public class SingleaxleBogeyBlock extends AbstractBogeyBlock<SingleaxleBogeyBloc
 
 	@Override
 	public BogeyStyle getDefaultStyle() {
-		return CRBogeyStyles.INVISIBLE;
+		return CRBogeyStyles.SINGLEAXLE;
 	}
 
 	@Override

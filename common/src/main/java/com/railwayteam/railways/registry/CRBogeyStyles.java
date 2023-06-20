@@ -30,7 +30,6 @@ public class CRBogeyStyles {
     public static final BogeyStyle SINGLEAXLE = create("singleaxle", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
             .size(BogeySizes.SMALL, () -> () -> new SingleaxleBogeyRenderer(), CRBlocks.SINGLEAXLE_BOGEY)
-            .contactParticle(new CubeParticleData())
             .build();
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {

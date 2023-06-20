@@ -4,6 +4,6 @@
 	"flip-v": true,
 	"model": "railways:models/block/bogey/monorail/frame.obj",
 	"textures": {
-		"0": "railways:block/monorail/monorail_bogey"
+		"0": "railways:block/bogeys/singleaxle/singleaxle"
 	}
 }
