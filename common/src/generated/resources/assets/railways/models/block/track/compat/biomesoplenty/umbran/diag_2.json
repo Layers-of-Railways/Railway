@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "biomesoplenty:block/track/umbran/standard_track_crossing_umbran",
     "0": "biomesoplenty:block/track/umbran/standard_track_umbran",

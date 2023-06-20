@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "byg:block/track/white_mangrove/standard_track_crossing_white_mangrove",
     "0": "byg:block/track/white_mangrove/standard_track_white_mangrove",

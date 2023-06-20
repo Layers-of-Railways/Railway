@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow",
     "1": "biomesoplenty:block/track/willow/standard_track_willow",

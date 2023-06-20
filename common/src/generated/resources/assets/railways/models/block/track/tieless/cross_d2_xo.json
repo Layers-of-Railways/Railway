@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_xo",
+  "parent": "create:block/track/cross_d2_xo",
   "textures": {
     "particle": "minecraft:block/glass",
     "0": "railways:block/track/tieless/standard_track_tieless",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/z_ortho",
+  "parent": "create:block/track/z_ortho",
   "textures": {
     "particle": "minecraft:block/spruce_planks",
     "1": "railways:block/track/spruce/standard_track_spruce",

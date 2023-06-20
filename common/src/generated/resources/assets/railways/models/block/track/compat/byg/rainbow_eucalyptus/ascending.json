@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "byg:block/track/rainbow_eucalyptus/standard_track_crossing_rainbow_eucalyptus",
     "0": "byg:block/track/rainbow_eucalyptus/standard_track_rainbow_eucalyptus",

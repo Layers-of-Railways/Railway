@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "biomesoplenty:block/track/willow/standard_track_crossing_willow",
     "1": "biomesoplenty:block/track/willow/portal_track_willow",

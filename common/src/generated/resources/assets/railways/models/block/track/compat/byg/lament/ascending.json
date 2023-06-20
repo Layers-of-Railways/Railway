@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "byg:block/track/lament/standard_track_crossing_lament",
     "0": "byg:block/track/lament/standard_track_lament",

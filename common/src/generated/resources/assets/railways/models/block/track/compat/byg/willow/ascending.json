@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "byg:block/track/willow/standard_track_crossing_willow",
     "0": "byg:block/track/willow/standard_track_willow",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_ortho",
+  "parent": "create:block/track/cross_ortho",
   "textures": {
     "particle": "blue_skies:block/track/starlit/standard_track_crossing_starlit",
     "1": "blue_skies:block/track/starlit/standard_track_starlit",

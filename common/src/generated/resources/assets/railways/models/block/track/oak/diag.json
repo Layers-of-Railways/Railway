@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag",
+  "parent": "create:block/track/diag",
   "textures": {
     "particle": "minecraft:block/oak_planks",
     "0": "railways:block/track/oak/standard_track_oak",

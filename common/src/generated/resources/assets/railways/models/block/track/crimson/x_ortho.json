@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "particle": "minecraft:block/crimson_planks",
     "1": "railways:block/track/crimson/standard_track_crimson",

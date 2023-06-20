@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "minecraft:block/crimson_planks",
     "0": "railways:block/track/crimson/standard_track_crimson",

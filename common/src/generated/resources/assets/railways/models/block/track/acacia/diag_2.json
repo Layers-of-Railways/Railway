@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "minecraft:block/acacia_planks",
     "0": "railways:block/track/acacia/standard_track_acacia",

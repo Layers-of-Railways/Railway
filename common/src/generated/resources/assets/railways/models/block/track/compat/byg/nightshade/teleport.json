@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "byg:block/track/nightshade/standard_track_crossing_nightshade",
     "1": "byg:block/track/nightshade/portal_track_nightshade",

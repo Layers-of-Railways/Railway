@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "byg:block/track/jacaranda/standard_track_crossing_jacaranda",
     "0": "byg:block/track/jacaranda/standard_track_jacaranda",

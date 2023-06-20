@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d1_zo",
+  "parent": "create:block/track/cross_d1_zo",
   "textures": {
     "particle": "minecraft:block/dark_oak_planks",
     "0": "railways:block/track/dark_oak/standard_track_dark_oak",

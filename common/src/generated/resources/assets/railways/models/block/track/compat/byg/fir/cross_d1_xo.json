@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d1_xo",
+  "parent": "create:block/track/cross_d1_xo",
   "textures": {
     "particle": "byg:block/track/fir/standard_track_crossing_fir",
     "0": "byg:block/track/fir/standard_track_fir",

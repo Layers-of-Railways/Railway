@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "byg:block/track/baobab/standard_track_crossing_baobab",
     "0": "byg:block/track/baobab/standard_track_baobab",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "twilightforest:block/track/sortingwood/standard_track_crossing_sortingwood",
     "0": "twilightforest:block/track/sortingwood/standard_track_sortingwood",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright",
     "0": "blue_skies:block/track/bluebright/standard_track_bluebright",

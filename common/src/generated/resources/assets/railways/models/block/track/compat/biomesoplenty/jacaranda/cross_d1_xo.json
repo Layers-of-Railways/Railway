@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d1_xo",
+  "parent": "create:block/track/cross_d1_xo",
   "textures": {
     "particle": "biomesoplenty:block/track/jacaranda/standard_track_crossing_jacaranda",
     "0": "biomesoplenty:block/track/jacaranda/standard_track_jacaranda",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag",
+  "parent": "create:block/track/diag",
   "textures": {
     "particle": "twilightforest:block/track/mangrove/standard_track_crossing_mangrove",
     "0": "twilightforest:block/track/mangrove/standard_track_mangrove",

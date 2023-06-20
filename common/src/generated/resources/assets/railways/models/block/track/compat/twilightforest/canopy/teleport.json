@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "twilightforest:block/track/canopy/standard_track_crossing_canopy",
     "1": "twilightforest:block/track/canopy/portal_track_canopy",

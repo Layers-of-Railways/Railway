@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "blue_skies:block/track/lunar/standard_track_crossing_lunar",
     "1": "blue_skies:block/track/lunar/portal_track_lunar",

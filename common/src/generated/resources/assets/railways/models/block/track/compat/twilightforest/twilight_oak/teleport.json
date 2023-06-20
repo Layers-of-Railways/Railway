@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "twilightforest:block/track/twilight_oak/standard_track_crossing_twilight_oak",
     "1": "twilightforest:block/track/twilight_oak/portal_track_twilight_oak",

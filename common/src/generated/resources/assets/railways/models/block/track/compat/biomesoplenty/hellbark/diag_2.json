@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "particle": "biomesoplenty:block/track/hellbark/standard_track_crossing_hellbark",
     "0": "biomesoplenty:block/track/hellbark/standard_track_hellbark",

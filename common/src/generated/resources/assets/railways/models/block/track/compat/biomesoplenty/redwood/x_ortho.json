@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "particle": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood",
     "1": "biomesoplenty:block/track/redwood/standard_track_redwood",

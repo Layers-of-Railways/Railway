@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "particle": "blue_skies:block/track/maple/standard_track_crossing_maple",
     "1": "blue_skies:block/track/maple/standard_track_maple",

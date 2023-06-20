@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d1_xo",
+  "parent": "create:block/track/cross_d1_xo",
   "textures": {
     "particle": "minecraft:block/warped_planks",
     "0": "railways:block/track/warped/standard_track_warped",

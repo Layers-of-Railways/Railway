@@ -1,8 +1,8 @@
 {
-  "parent": "railways:block/track_base/tie",
+  "parent": "create:block/track/tie",
   "textures": {
-    "1": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
-    "2": "biomesoplenty:block/track/mahogany/standard_track_mip_mahogany",
+    "0": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
+    "1": "biomesoplenty:block/track/mahogany/standard_track_mip_mahogany",
     "particle": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany"
   }
 }

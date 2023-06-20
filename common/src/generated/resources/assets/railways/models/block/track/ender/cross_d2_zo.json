@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_zo",
+  "parent": "create:block/track/cross_d2_zo",
   "textures": {
     "particle": "minecraft:block/end_stone",
     "0": "railways:block/track/ender/standard_track_ender",

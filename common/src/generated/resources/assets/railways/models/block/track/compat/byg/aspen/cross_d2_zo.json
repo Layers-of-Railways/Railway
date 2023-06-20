@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_zo",
+  "parent": "create:block/track/cross_d2_zo",
   "textures": {
     "particle": "byg:block/track/aspen/standard_track_crossing_aspen",
     "0": "byg:block/track/aspen/standard_track_aspen",

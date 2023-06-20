@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "byg:block/track/embur/standard_track_crossing_embur",
     "1": "byg:block/track/embur/portal_track_embur",

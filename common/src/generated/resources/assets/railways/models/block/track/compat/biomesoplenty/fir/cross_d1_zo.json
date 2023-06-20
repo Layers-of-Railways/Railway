@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d1_zo",
+  "parent": "create:block/track/cross_d1_zo",
   "textures": {
     "particle": "biomesoplenty:block/track/fir/standard_track_crossing_fir",
     "0": "biomesoplenty:block/track/fir/standard_track_fir",

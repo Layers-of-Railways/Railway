@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "byg:block/track/mahogany/standard_track_crossing_mahogany",
     "1": "byg:block/track/mahogany/portal_track_mahogany",

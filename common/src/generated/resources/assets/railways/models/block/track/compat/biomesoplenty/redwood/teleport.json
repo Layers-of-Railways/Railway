@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "particle": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood",
     "1": "biomesoplenty:block/track/redwood/portal_track_redwood",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "particle": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood",
     "1": "twilightforest:block/track/darkwood/standard_track_darkwood",

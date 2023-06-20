@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag",
+  "parent": "create:block/track/diag",
   "textures": {
     "particle": "byg:block/track/imparius/standard_track_crossing_imparius",
     "0": "byg:block/track/imparius/standard_track_imparius",

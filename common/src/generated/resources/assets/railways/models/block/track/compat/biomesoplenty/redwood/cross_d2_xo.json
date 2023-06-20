@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_xo",
+  "parent": "create:block/track/cross_d2_xo",
   "textures": {
     "particle": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood",
     "0": "biomesoplenty:block/track/redwood/standard_track_redwood",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "minecraft:block/acacia_planks",
     "0": "railways:block/track/acacia/standard_track_acacia",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag",
+  "parent": "create:block/track/diag",
   "textures": {
     "particle": "twilightforest:block/track/canopy/standard_track_crossing_canopy",
     "0": "twilightforest:block/track/canopy/standard_track_canopy",

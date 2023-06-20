@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "particle": "minecraft:block/jungle_planks",
     "0": "railways:block/track/jungle/standard_track_jungle",

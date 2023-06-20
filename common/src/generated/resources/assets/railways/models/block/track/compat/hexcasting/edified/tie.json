@@ -1,8 +1,8 @@
 {
-  "parent": "railways:block/track_base/tie",
+  "parent": "create:block/track/tie",
   "textures": {
-    "1": "hexcasting:block/track/edified/standard_track_edified",
-    "2": "hexcasting:block/track/edified/standard_track_mip_edified",
+    "0": "hexcasting:block/track/edified/standard_track_edified",
+    "1": "hexcasting:block/track/edified/standard_track_mip_edified",
     "particle": "hexcasting:block/track/edified/standard_track_crossing_edified"
   }
 }
