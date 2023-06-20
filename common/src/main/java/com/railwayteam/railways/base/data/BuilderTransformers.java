@@ -39,7 +39,7 @@ public class BuilderTransformers {
                 .properties(p -> p.noOcclusion())
                 .transform(pickaxeOnly())
                 .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
-                        .getExistingFile(p.modLoc("block/bogey/invisible/top"))))
+                        .getExistingFile(p.modLoc("block/bogey/singleaxle/top"))))
                 .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 }

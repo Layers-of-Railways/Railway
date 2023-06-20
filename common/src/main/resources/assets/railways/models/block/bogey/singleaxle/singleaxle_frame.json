@@ -1,0 +1,6 @@
+{
+	"parent": "block/block",
+	"loader": "forge:obj",
+	"flip-v": true,
+	"model": "railways:models/block/bogey/singleaxle/singleaxle_frame.obj"
+}
