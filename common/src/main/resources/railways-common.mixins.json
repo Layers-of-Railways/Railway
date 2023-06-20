@@ -37,6 +37,7 @@
     "MixinNixieTubeDisplayTarget",
     "MixinRailwaySavedData",
     "MixinRecipeManager",
+    "MixinRollerMovementBehaviour",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSignalBoundary",
@@ -65,6 +66,7 @@
     "client.MixinBezierConnectionClient",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
+    "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
@@ -85,9 +87,9 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
+    "client.MixinTrainHUD",
     "client.MixinTrainPacket",
-    "client.MixinCarriageSounds",
-    "client.MixinTrainHUD"
+    "client.AccessorControlsHandler"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.switches;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.mixin.client.AccessorControlsHandler;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsHandler;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -21,6 +22,8 @@ public class TrainHUDSwitchExtension {
     static LerpedFloat switchProgress = LerpedFloat.linear();
 
     public static void tick() {
+        if (AccessorControlsHandler.getEntityRef().get() == null)
+            switchState = null;
         switchProgress.chase(switchState != null ? 1.0 : 0.0, .5, LerpedFloat.Chaser.EXP);
         switchProgress.tickChaser();
     }
