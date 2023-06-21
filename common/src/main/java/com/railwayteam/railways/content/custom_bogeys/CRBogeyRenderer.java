@@ -79,7 +79,7 @@ public class CRBogeyRenderer {
 
         @Override
         public BogeySizes.BogeySize getSize() {
-            return CRBogeySizes.COILSPRING;
+            return CRBogeySizes.EXTRA;
         }
 
         @Override
@@ -173,7 +173,7 @@ public class CRBogeyRenderer {
 
         @Override
         public BogeySizes.BogeySize getSize() {
-            return CRBogeySizes.PASSENGER;
+            return CRBogeySizes.EXTRA;
         }
 
         @Override

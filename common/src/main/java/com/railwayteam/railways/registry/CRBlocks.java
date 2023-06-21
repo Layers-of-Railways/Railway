@@ -9,8 +9,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.coilspring.CoilspringBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.passenger.PassengerBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.ExtraBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
@@ -270,19 +269,13 @@ public class CRBlocks {
                     .lang("Invisible Bogey")
                     .register();
 
-    public static final BlockEntry<CoilspringBogeyBlock> COILSPRING_BOGEY =
-            REGISTRATE.block("coilspring_bogey", CoilspringBogeyBlock::new)
+    public static final BlockEntry<ExtraBogeyBlock> EXTRA_BOGEY =
+            REGISTRATE.block("extra_bogey", ExtraBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.coilspringBogey())
-                    .lang("Coilspring Bogey")
+                    .transform(BuilderTransformers.extraBogey())
+                    .lang("Extra Bogey")
                     .register();
 
-    public static final BlockEntry<PassengerBogeyBlock> PASSENGER_BOGEY =
-            REGISTRATE.block("passenger_bogey", PassengerBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.passengerBogey())
-                    .lang("Passenger Bogey")
-                    .register();
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
             REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)

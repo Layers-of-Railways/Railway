@@ -5,10 +5,9 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBl
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
+import com.railwayteam.railways.content.custom_bogeys.ExtraBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.coilspring.CoilspringBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.passenger.PassengerBogeyBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
@@ -56,16 +55,10 @@ public class CRBlockEntities {
             .validBlocks(CRBlocks.INVISIBLE_BOGEY)
             .register();
 
-    public static final BlockEntityEntry<CoilspringBogeyBlockEntity> COILSPRING_BOGEY = REGISTRATE
-            .blockEntity("coilspring_bogey", CoilspringBogeyBlockEntity::new)
+    public static final BlockEntityEntry<ExtraBogeyBlockEntity> EXTRA_BOGEY = REGISTRATE
+            .blockEntity("extra_bogey", ExtraBogeyBlockEntity::new)
             .renderer(() -> BogeyBlockEntityRenderer::new)
-            .validBlocks(CRBlocks.COILSPRING_BOGEY)
-            .register();
-
-    public static final BlockEntityEntry<PassengerBogeyBlockEntity> PASSENGER_BOGEY = REGISTRATE
-            .blockEntity("passenger_bogey", PassengerBogeyBlockEntity::new)
-            .renderer(() -> BogeyBlockEntityRenderer::new)
-            .validBlocks(CRBlocks.PASSENGER_BOGEY)
+            .validBlocks(CRBlocks.EXTRA_BOGEY)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)

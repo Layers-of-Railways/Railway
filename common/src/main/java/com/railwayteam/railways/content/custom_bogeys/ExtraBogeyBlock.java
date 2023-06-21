@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.coilspring;
+package com.railwayteam.railways.content.custom_bogeys;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBogeySizes;
@@ -17,11 +17,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class CoilspringBogeyBlock extends AbstractBogeyBlock<CoilspringBogeyBlockEntity>
-	implements IBE<CoilspringBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class ExtraBogeyBlock extends AbstractBogeyBlock<ExtraBogeyBlockEntity>
+	implements IBE<ExtraBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
-	public CoilspringBogeyBlock(Properties props) {
-		super(props, CRBogeySizes.COILSPRING);
+	public ExtraBogeyBlock(Properties props) {
+		super(props, CRBogeySizes.EXTRA);
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
 	}
 
@@ -56,13 +56,13 @@ public class CoilspringBogeyBlock extends AbstractBogeyBlock<CoilspringBogeyBloc
 	}
 
 	@Override
-	public Class<CoilspringBogeyBlockEntity> getBlockEntityClass() {
-		return CoilspringBogeyBlockEntity.class;
+	public Class<ExtraBogeyBlockEntity> getBlockEntityClass() {
+		return ExtraBogeyBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends CoilspringBogeyBlockEntity> getBlockEntityType() {
-		return CRBlockEntities.COILSPRING_BOGEY.get();
+	public BlockEntityType<? extends ExtraBogeyBlockEntity> getBlockEntityType() {
+		return CRBlockEntities.EXTRA_BOGEY.get();
 	}
 
 }
