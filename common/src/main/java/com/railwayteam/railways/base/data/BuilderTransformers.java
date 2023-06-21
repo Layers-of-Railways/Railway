@@ -2,7 +2,7 @@ package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.singleaxle.SingleaxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -33,7 +33,7 @@ public class BuilderTransformers {
                 .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
-    public static <B extends SingleaxleBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> singleaxleBogey() {
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> singleaxleBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                 .properties(p -> p.noOcclusion())

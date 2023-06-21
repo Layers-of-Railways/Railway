@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.singleaxle;
+package com.railwayteam.railways.content.custom_bogeys;
 
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
@@ -7,8 +7,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SingleaxleBogeyBlockEntity extends AbstractBogeyBlockEntity {
-    public SingleaxleBogeyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+public class CRBogeyBlockEntity extends AbstractBogeyBlockEntity {
+    public CRBogeyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 

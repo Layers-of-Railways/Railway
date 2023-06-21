@@ -88,5 +88,6 @@
   "railways.display_source.switch.reverse_left": "Left",
   "railways.display_source.switch.reverse_right": "Right",
 
-  "railways.bogeys.styles.invisible": "Invisible"
+  "railways.bogeys.styles.invisible": "Invisible",
+  "railways.bogeys.styles.singleaxle": "Singleaxle"
 }

@@ -3,7 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.singleaxle.SingleaxleBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.CubeParticleData;
@@ -29,7 +29,7 @@ public class CRBogeyStyles {
 
     public static final BogeyStyle SINGLEAXLE = create("singleaxle", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
-            .size(BogeySizes.SMALL, () -> () -> new SingleaxleBogeyRenderer(), CRBlocks.SINGLEAXLE_BOGEY)
+            .size(CRBogeySizes.SINGLEAXLE, () -> () -> new CRBogeyRenderer.SingleaxleBogeyRenderer(), CRBlocks.STANDARD_BOGEY)
             .build();
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {

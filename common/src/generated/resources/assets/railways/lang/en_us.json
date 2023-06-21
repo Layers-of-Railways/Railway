@@ -6,7 +6,6 @@
 	"block.railways.invisible_bogey": "Invisible Bogey",
 	"block.railways.mono_bogey": "Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
-	"block.railways.singleaxle_bogey": "Singleaxle Bogey",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
 	"block.railways.smokestack_coalburner": "Coalburner Smokestack",
 	"block.railways.smokestack_diesel": "Radiator Fan",
@@ -14,6 +13,7 @@
 	"block.railways.smokestack_oilburner": "Oilburner Smokestack",
 	"block.railways.smokestack_streamlined": "Streamlined Smokestack",
 	"block.railways.smokestack_woodburner": "Woodburner Smokestack",
+	"block.railways.standard_bogey": "Standard Bogey",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_biomesoplenty_cherry": "Cherry Train Track",
 	"block.railways.track_biomesoplenty_dead": "Dead Train Track",
@@ -323,6 +323,7 @@
 	"railways.display_source.switch.reverse_right": "Right",
 
 	"railways.bogeys.styles.invisible": "Invisible",
+	"railways.bogeys.styles.singleaxle": "Singleaxle",
 
 
 	"_": "->------------------------]  Item Descriptions  [------------------------<-",

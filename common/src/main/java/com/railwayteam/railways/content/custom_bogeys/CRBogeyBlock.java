@@ -1,6 +1,7 @@
-package com.railwayteam.railways.content.custom_bogeys.singleaxle;
+package com.railwayteam.railways.content.custom_bogeys;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.CRBogeySizes;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
@@ -17,11 +18,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class SingleaxleBogeyBlock extends AbstractBogeyBlock<SingleaxleBogeyBlockEntity>
-	implements IBE<SingleaxleBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class CRBogeyBlock extends AbstractBogeyBlock<CRBogeyBlockEntity>
+	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
-	public SingleaxleBogeyBlock(Properties props) {
-		super(props, BogeySizes.SMALL);
+	public CRBogeyBlock(Properties props) {
+		super(props, CRBogeySizes.SINGLEAXLE);
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
 	}
 
@@ -56,13 +57,13 @@ public class SingleaxleBogeyBlock extends AbstractBogeyBlock<SingleaxleBogeyBloc
 	}
 
 	@Override
-	public Class<SingleaxleBogeyBlockEntity> getBlockEntityClass() {
-		return SingleaxleBogeyBlockEntity.class;
+	public Class<CRBogeyBlockEntity> getBlockEntityClass() {
+		return CRBogeyBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends SingleaxleBogeyBlockEntity> getBlockEntityType() {
-		return CRBlockEntities.SINGLEAXLE_BOGEY.get();
+	public BlockEntityType<? extends CRBogeyBlockEntity> getBlockEntityType() {
+		return CRBlockEntities.STANDARD_BOGEY.get();
 	}
 
 }

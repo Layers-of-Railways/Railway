@@ -9,7 +9,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.singleaxle.SingleaxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
@@ -269,11 +269,11 @@ public class CRBlocks {
                     .lang("Invisible Bogey")
                     .register();
 
-    public static final BlockEntry<SingleaxleBogeyBlock> SINGLEAXLE_BOGEY =
-            REGISTRATE.block("singleaxle_bogey", SingleaxleBogeyBlock::new)
+    public static final BlockEntry<CRBogeyBlock> STANDARD_BOGEY =
+            REGISTRATE.block("standard_bogey", CRBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.singleaxleBogey())
-                    .lang("Singleaxle Bogey")
+                    .lang("Standard Bogey")
                     .register();
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
