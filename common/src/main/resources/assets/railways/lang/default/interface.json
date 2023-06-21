@@ -88,11 +88,18 @@
   "railways.display_source.switch.reverse_left": "Left",
   "railways.display_source.switch.reverse_right": "Right",
 
-  "railways.bogeys.styles.invisible": "Invisible",
   "railways.switch.auto_mode": "Switching Mode",
   "create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
-  "railways.bogeys.styles.singleaxle": "Singleaxle",
+
+  "railways.style_select.manage_favorites": "Manage Favorites",
+  "railways.style_select.title.favorites.pick_slot": "Pick Slot",
+  "railways.style_select.title.favorites.pick_style": "Pick Favorite Style",
+  "railways.style_select.category": "Category: ",
+
+  "railways.style_select.category.railways.favorites_category": "Favorites",
+  "railways.style_select.category.create.standard": "Create's Styles",
+  "railways.style_select.category.railways.standard": "Steam 'n Rails's Styles"
 }

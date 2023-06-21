@@ -33,6 +33,7 @@
     "MixinGlobalStation",
     "MixinLootTables",
     "MixinNavigation",
+    "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",
     "MixinNixieTubeDisplayTarget",
     "MixinRailwaySavedData",
@@ -45,6 +46,7 @@
     "MixinSlidingDoorBlockEntity",
     "MixinSlidingDoorMovementBehaviour",
     "MixinStationBlock",
+    "MixinStationBlockEntity",
     "MixinStationEditPacket",
     "MixinToolboxHandler",
     "MixinTrackBlock",
@@ -56,8 +58,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin",
-    "MixinNixieTubeBlockEntity"
+    "NbtUtilsMixin"
   ],
   "client": [
     "client.AccessorControlsHandler",

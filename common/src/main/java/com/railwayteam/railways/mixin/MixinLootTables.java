@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 These different mappings may all be needed to ensure that this mixin works in all environments
 
  */
-@Mixin(LootTables.class)
+@Mixin(value = LootTables.class, priority = 10000)
 public class MixinLootTables {
     private static boolean ignoreNextError = false;
     @Inject(method = "m_upgvhpqp", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"),

@@ -8,11 +8,12 @@ import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.util.packet.*;
 
 public class CRPackets {
-    public static final PacketSet PACKETS = PacketSet.builder(Railways.MODID, 4) // increment version on changes
+    public static final PacketSet PACKETS = PacketSet.builder(Railways.MODID, 5) // increment version on changes
 
             .c2s(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new)
             .c2s(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new)
             .c2s(SlabUseOnCurvePacket.class, SlabUseOnCurvePacket::new)
+            .c2s(BogeyStyleSelectionPacket.class, BogeyStyleSelectionPacket::new)
 
             .s2c(JukeboxCartPacket.class, JukeboxCartPacket::new)
             .s2c(MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::new)
