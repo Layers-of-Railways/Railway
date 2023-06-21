@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.Iterator;
 import java.util.Map;
 
-@Mixin(value = RecipeManager.class, priority = 100)
+@Mixin(value = RecipeManager.class, priority = 10000)
 public class MixinRecipeManager {
     private static boolean ignoreNextError = false;
 
