@@ -10,6 +10,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.coilspring.CoilspringBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.passenger.PassengerBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
@@ -272,8 +273,15 @@ public class CRBlocks {
     public static final BlockEntry<CoilspringBogeyBlock> COILSPRING_BOGEY =
             REGISTRATE.block("coilspring_bogey", CoilspringBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.singleaxleBogey())
+                    .transform(BuilderTransformers.coilspringBogey())
                     .lang("Coilspring Bogey")
+                    .register();
+
+    public static final BlockEntry<PassengerBogeyBlock> PASSENGER_BOGEY =
+            REGISTRATE.block("passenger_bogey", PassengerBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.passengerBogey())
+                    .lang("Passenger Bogey")
                     .register();
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =

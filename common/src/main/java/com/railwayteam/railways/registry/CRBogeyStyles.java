@@ -28,13 +28,23 @@ public class CRBogeyStyles {
             .contactParticle(new CubeParticleData())
             .build();
 
-    public static final BogeyStyle SINGLEAXLES = create("singleaxle", Create.asResource(STANDARD_CYCLE_GROUP))
+    public static final BogeyStyle SINGLEAXLES = create("singleaxles", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.SingleaxleBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.LeafspringBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.COILSPRING, () -> CRBogeyRenderer.CoilspringBogeyRenderer::new, CRBlocks.COILSPRING_BOGEY)
             .build();
 
+    public static final BogeyStyle TWOAXLESONE = create("twoaxlesone", Create.asResource(STANDARD_CYCLE_GROUP))
+            .displayName(Components.translatable("railways.bogeys.styles.twoaxlesone"))
+            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.FreightBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.ArchbarBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
+            .size(CRBogeySizes.PASSENGER, () -> CRBogeyRenderer.PassengerBogeyRenderer::new, CRBlocks.PASSENGER_BOGEY)
+            .build();
+
+//    public static final BogeyStyle TWOAXLESTWO = create("twoaxlestwo", Create.asResource(STANDARD_CYCLE_GROUP))
+//            .displayName(Components.translatable("railways.bogeys.styles.twoaxlestwo"))
+//            .build();
 
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {

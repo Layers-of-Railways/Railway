@@ -217,6 +217,9 @@ public class CRBlockPartials {
         SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
         LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
         COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
+        FREIGHT_FRAME = block("bogey/freight/freight_frame"),
+        ARCHBAR_FRAME = block("bogey/archbar/archbar_frame"),
+        PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
         CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");

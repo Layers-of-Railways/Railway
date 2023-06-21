@@ -3,6 +3,7 @@ package com.railwayteam.railways.base.data;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.coilspring.CoilspringBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.passenger.PassengerBogeyBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -33,7 +34,17 @@ public class BuilderTransformers {
                 .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
-    public static <B extends CoilspringBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> singleaxleBogey() {
+    public static <B extends CoilspringBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> coilspringBogey() {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+                .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                .properties(p -> p.noOcclusion())
+                .transform(pickaxeOnly())
+                .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                        .getExistingFile(p.modLoc("block/bogey/top"))))
+                .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
+    }
+
+    public static <B extends PassengerBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> passengerBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                 .properties(p -> p.noOcclusion())
