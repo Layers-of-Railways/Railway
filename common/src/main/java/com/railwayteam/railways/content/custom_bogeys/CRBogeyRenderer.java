@@ -196,4 +196,106 @@ public class CRBogeyRenderer {
             }
         }
     }
+
+    //TWOAXLESTWO
+
+    public static class ModernBogeyRenderer extends BogeyRenderer {
+        @Override
+        public void initialiseContraptionModelData(MaterialManager materialManager) {
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstances(materialManager, MODERN_FRAME);
+        }
+
+        @Override
+        public BogeySizes.BogeySize getSize() {
+            return CRBogeySizes.EXTRA;
+        }
+
+        @Override
+        public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+            boolean inInstancedContraption = vb == null;
+            Transform<?> transform = getTransformFromPartial(MODERN_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0);
+            finalize(transform, ms, light, vb);
+
+            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            for (int side : Iterate.positiveAndNegative) {
+                if (!inInstancedContraption)
+                    ms.pushPose();
+                Transform<?> wheel = wheels[(side + 1) / 2];
+                wheel.translate(0, 5 / 16f, side)
+                        .rotateX(wheelAngle);
+                finalize(wheel, ms, light, vb);
+                if (!inInstancedContraption)
+                    ms.popPose();
+            }
+        }
+    }
+
+    public static class BloombergBogeyRenderer extends BogeyRenderer {
+        @Override
+        public void initialiseContraptionModelData(MaterialManager materialManager) {
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstances(materialManager, BLOMBERG_FRAME);
+        }
+
+        @Override
+        public BogeySizes.BogeySize getSize() {
+            return CRBogeySizes.EXTRA;
+        }
+
+        @Override
+        public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+            boolean inInstancedContraption = vb == null;
+            Transform<?> transform = getTransformFromPartial(BLOMBERG_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0);
+            finalize(transform, ms, light, vb);
+
+            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            for (int side : Iterate.positiveAndNegative) {
+                if (!inInstancedContraption)
+                    ms.pushPose();
+                Transform<?> wheel = wheels[(side + 1) / 2];
+                wheel.translate(0, 5 / 16f, side)
+                        .rotateX(wheelAngle);
+                finalize(wheel, ms, light, vb);
+                if (!inInstancedContraption)
+                    ms.popPose();
+            }
+        }
+    }
+
+    public static class Y25BogeyRenderer extends BogeyRenderer {
+        @Override
+        public void initialiseContraptionModelData(MaterialManager materialManager) {
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstances(materialManager, Y25_FRAME);
+        }
+
+        @Override
+        public BogeySizes.BogeySize getSize() {
+            return CRBogeySizes.EXTRA;
+        }
+
+        @Override
+        public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+            boolean inInstancedContraption = vb == null;
+            Transform<?> transform = getTransformFromPartial(Y25_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0);
+            finalize(transform, ms, light, vb);
+
+            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            for (int side : Iterate.positiveAndNegative) {
+                if (!inInstancedContraption)
+                    ms.pushPose();
+                Transform<?> wheel = wheels[(side + 1) / 2];
+                wheel.translate(0, 5 / 16f, side)
+                        .rotateX(wheelAngle);
+                finalize(wheel, ms, light, vb);
+                if (!inInstancedContraption)
+                    ms.popPose();
+            }
+        }
+    }
+
 }

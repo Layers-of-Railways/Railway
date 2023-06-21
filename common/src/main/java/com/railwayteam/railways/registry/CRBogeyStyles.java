@@ -30,23 +30,26 @@ public class CRBogeyStyles {
             .contactParticle(new CubeParticleData())
             .build();
 
-    public static final BogeyStyle SINGLEAXLES = create("singleaxles", Create.asResource(STANDARD_CYCLE_GROUP))
+    public static final BogeyStyle SINGLEAXLES = create("singleaxles", STANDARD_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.SingleaxleBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.LeafspringBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.CoilspringBogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
             .build();
 
-    public static final BogeyStyle TWOAXLESONE = create("twoaxlesone", Create.asResource(STANDARD_CYCLE_GROUP))
+    public static final BogeyStyle TWOAXLESONE = create("twoaxlesone", STANDARD_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.twoaxlesone"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.FreightBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.ArchbarBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.PassengerBogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
             .build();
 
-//    public static final BogeyStyle TWOAXLESTWO = create("twoaxlestwo", Create.asResource(STANDARD_CYCLE_GROUP))
-//            .displayName(Components.translatable("railways.bogeys.styles.twoaxlestwo"))
-//            .build();
+    public static final BogeyStyle TWOAXLESTWO = create("twoaxlestwo", STANDARD_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.twoaxlestwo"))
+            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.ModernBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.BloombergBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
+            .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.Y25BogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
+            .build();
 
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {

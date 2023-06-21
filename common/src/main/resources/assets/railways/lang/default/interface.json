@@ -93,6 +93,8 @@
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
+  "railways.bogeys.styles.singleaxle": "Singleaxles",
+  "railways.bogeys.styles.twoaxleone": "Two axles one",
 
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",
