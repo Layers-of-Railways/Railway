@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.switches;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
@@ -10,7 +11,6 @@ import com.simibubi.create.foundation.utility.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -53,11 +53,7 @@ public class TrackSwitchDebugVisualizer {
     if (mc.player == null)
       return;
 
-    boolean skipHints = false;
-    if (!(mc.player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof TrackSwitchBlockItem)
-            && !(mc.player.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof TrackSwitchBlockItem)) {
-      skipHints = true;
-    }
+    boolean skipHints = !EntityUtils.isHoldingItem(mc.player, (item) -> item instanceof TrackSwitchBlockItem);
 
     if (skipHints) {
       HitResult hitResult = mc.hitResult;

@@ -37,9 +37,12 @@ public class CRIcons extends AllIcons {
         I_DOOR_NORMAL = next(),
         I_DOOR_SPECIAL = next();
 
-    public static final CRIcons // fixme draw icons
+    public static final CRIcons
         I_SWITCH_MANUAL = newRow(),
         I_SWITCH_AUTO = next();
+
+    public static final CRIcons
+        I_FAVORITE = newRow();
 
     public CRIcons(int x, int y) {
         super(x, y);
