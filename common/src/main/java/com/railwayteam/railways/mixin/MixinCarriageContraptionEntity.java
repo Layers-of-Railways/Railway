@@ -73,7 +73,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
         if (lookAhead != null) {
             // try to reserve switch
-            if (Config.FLIP_DISTANT_SWITCHES.get() && spaceDown
+            if (Config.FLIP_DISTANT_SWITCHES.get() && spaceDown && lookAhead.isAutomatic()
                     && !lookAhead.isLocked() && !carriage.train.navigation.isActive()) {
                 if (headOn) {
                     lookAhead.trySetSwitchState(SwitchState.fromSteerDirection(carriage.train.manualSteer, forward));

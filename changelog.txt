@@ -1,5 +1,8 @@
 v1.4.0:
 - Added switches
+- Added invisible bogeys
+- Fixed rollers breaking custom tracks
+- Fixed display links targeting nixie tube signals
 v1.3.5:
 - Added back compat (but working now)
 - fixed sloped tracks

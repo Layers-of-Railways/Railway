@@ -1,11 +1,14 @@
 package com.railwayteam.railways.content.switches;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.railwayteam.railways.registry.CRIcons;
 import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
 import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
@@ -16,8 +19,11 @@ import com.simibubi.create.content.trains.graph.TrackNodeLocation;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
+import com.simibubi.create.foundation.gui.AllIcons;
+import com.simibubi.create.foundation.utility.*;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -28,6 +34,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +44,7 @@ import java.util.Set;
 
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
+import static net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING;
 
 
 public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
@@ -44,7 +52,33 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     private SwitchState state;
     private int lastAnalogOutput = 0;
 
+    protected ScrollOptionBehaviour<AutoMode> autoMode;
+
     int exitCount = 0; // client only
+
+    enum AutoMode implements INamedIconOptions {
+        MANUAL_ONLY(CRIcons.I_SWITCH_MANUAL),
+        AUTO(CRIcons.I_SWITCH_AUTO)
+        ;
+
+        private final String translationKey;
+        private final AllIcons icon;
+
+        AutoMode(AllIcons icon) {
+            this.icon = icon;
+            this.translationKey = "railways.switch.auto_mode." + Lang.asId(name());
+        }
+
+        @Override
+        public AllIcons getIcon() {
+            return icon;
+        }
+
+        @Override
+        public String getTranslationKey() {
+            return translationKey;
+        }
+    }
 
     @Nullable
     public TrackSwitch getSwitch() {
@@ -60,6 +94,29 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
+        autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
+                this, new ValueBoxTransform() {
+            @Override
+            public Vec3 getLocalOffset(BlockState state) {
+                Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
+                base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
+                return base;
+            }
+
+            @Override
+            public void rotate(BlockState state, PoseStack ms) {
+                TransformStack.cast(ms)
+                        .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING))-90)
+                        .rotateX(90);
+            }
+        });
+        autoMode.withCallback(ordinal -> {
+            AutoMode mode = AutoMode.values()[ordinal];
+            TrackSwitch sw = getSwitch();
+            if (sw != null)
+                sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
+        });
+        behaviours.add(autoMode);
     }
 
     @Override
@@ -291,7 +348,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     private boolean hasSignal(Direction direction) {
         if (direction != Direction.UP && direction != Direction.DOWN) {
             direction = Direction.from2DDataValue(direction.get2DDataValue()
-                    + getBlockState().getValue(TrackSwitchBlock.FACING).get2DDataValue());
+                    + getBlockState().getValue(FACING).get2DDataValue());
         }
         return getLevel() != null && getLevel().hasSignal(getBlockPos().relative(direction), direction);
     }

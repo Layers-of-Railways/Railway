@@ -37,6 +37,7 @@
     "MixinNixieTubeDisplayTarget",
     "MixinRailwaySavedData",
     "MixinRecipeManager",
+    "MixinRollerMovementBehaviour",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSignalBoundary",
@@ -55,9 +56,11 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin"
+    "NbtUtilsMixin",
+    "MixinNixieTubeBlockEntity"
   ],
   "client": [
+    "client.AccessorControlsHandler",
     "client.AccessorInstance",
     "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
@@ -65,10 +68,10 @@
     "client.MixinBezierConnectionClient",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
+    "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
-    "client.MixinNixieTubeBlockEntity",
     "client.MixinRadialToolboxMenu",
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
@@ -85,9 +88,8 @@
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
-    "client.MixinTrainPacket",
-    "client.MixinCarriageSounds",
-    "client.MixinTrainHUD"
+    "client.MixinTrainHUD",
+    "client.MixinTrainPacket"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -322,6 +322,11 @@
 	"railways.display_source.switch.reverse_left": "Left",
 	"railways.display_source.switch.reverse_right": "Right",
 
+	"railways.switch.auto_mode": "Switching Mode",
+
+	"create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
+	"create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
+
 	"railways.bogeys.styles.invisible": "Invisible",
 	"railways.bogeys.styles.singleaxle": "Singleaxle",
 

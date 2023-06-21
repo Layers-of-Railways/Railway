@@ -28,7 +28,7 @@ public abstract class MixinAbstractBogeyBlock {
     // fixme this is a Create bug, file a report (styles not placing the correct block)
     @Inject(method = "use",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V", remap = true, ordinal = 0),
-            locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
+            locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, remap = true)
     private void placeCorrectedBlock(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
                                      BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir, ItemStack stack,
                                      BlockEntity be, AbstractBogeyBlockEntity sbte, BogeyStyle currentStyle,

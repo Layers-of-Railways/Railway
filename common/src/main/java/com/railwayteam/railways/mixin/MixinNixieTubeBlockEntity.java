@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin.client;
+package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.distant_signals.IOverridableSignal;
 import com.railwayteam.railways.multiloader.PlayerSelection;
