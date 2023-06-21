@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.CubeParticleData;
@@ -27,10 +28,14 @@ public class CRBogeyStyles {
             .contactParticle(new CubeParticleData())
             .build();
 
-    public static final BogeyStyle SINGLEAXLE = create("singleaxle", Create.asResource(STANDARD_CYCLE_GROUP))
+    public static final BogeyStyle SINGLEAXLES = create("singleaxle", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
-            .size(CRBogeySizes.SINGLEAXLE, () -> () -> new CRBogeyRenderer.SingleaxleBogeyRenderer(), CRBlocks.STANDARD_BOGEY)
+            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.SingleaxleBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.LeafspringBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
+            .size(CRBogeySizes.COILSPRING, () -> CRBogeyRenderer.CoilspringBogeyRenderer::new, CRBlocks.COILSPRING_BOGEY)
             .build();
+
+
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {
         return create(Railways.asResource(name), Railways.asResource(cycleGroup));

@@ -2,6 +2,7 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.coilspring_bogey": "Coilspring Bogey",
 	"block.railways.conductor_whistle": "Conductor Whistle",
 	"block.railways.invisible_bogey": "Invisible Bogey",
 	"block.railways.mono_bogey": "Monorail Bogey",
@@ -13,7 +14,6 @@
 	"block.railways.smokestack_oilburner": "Oilburner Smokestack",
 	"block.railways.smokestack_streamlined": "Streamlined Smokestack",
 	"block.railways.smokestack_woodburner": "Woodburner Smokestack",
-	"block.railways.standard_bogey": "Standard Bogey",
 	"block.railways.track_acacia": "Acacia Train Track",
 	"block.railways.track_biomesoplenty_cherry": "Cherry Train Track",
 	"block.railways.track_biomesoplenty_dead": "Dead Train Track",
