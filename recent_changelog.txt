@@ -3,3 +3,4 @@ v1.4.0:
 - Added invisible bogeys
 - Fixed rollers breaking custom tracks
 - Fixed display links targeting nixie tube signals
+- Added various single, double, and triple axle bogeys
