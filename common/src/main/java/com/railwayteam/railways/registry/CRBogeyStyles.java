@@ -30,25 +30,31 @@ public class CRBogeyStyles {
             .contactParticle(new CubeParticleData())
             .build();
 
-    public static final BogeyStyle SINGLEAXLES = create("singleaxles", STANDARD_CYCLE_GROUP)
+    public static final BogeyStyle SINGLEAXLES = create("singleaxles", Railways.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.singleaxle"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.SingleaxleBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.LeafspringBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.CoilspringBogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
             .build();
 
-    public static final BogeyStyle TWOAXLESONE = create("twoaxlesone", STANDARD_CYCLE_GROUP)
+    public static final BogeyStyle TWOAXLESONE = create("twoaxlesone", Railways.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.twoaxlesone"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.FreightBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.ArchbarBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.PassengerBogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
             .build();
 
-    public static final BogeyStyle TWOAXLESTWO = create("twoaxlestwo", STANDARD_CYCLE_GROUP)
+    public static final BogeyStyle TWOAXLESTWO = create("twoaxlestwo", Railways.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.twoaxlestwo"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.ModernBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
-            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.BloombergBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.BlombergBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .size(CRBogeySizes.EXTRA, () -> CRBogeyRenderer.Y25BogeyRenderer::new, CRBlocks.EXTRA_BOGEY)
+            .build();
+
+    public static final BogeyStyle TRIPLEAXLES = create("tripleaxles", Railways.asResource(STANDARD_CYCLE_GROUP))
+            .displayName(Components.translatable("railways.bogeys.styles.tripleaxles"))
+            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.HeavyweightBogeyRenderer::new, AllBlocks.SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.RadialBogeyRenderer::new, AllBlocks.LARGE_BOGEY)
             .build();
 
 

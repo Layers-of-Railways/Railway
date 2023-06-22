@@ -5,7 +5,6 @@ import com.jozufozu.flywheel.util.transform.Transform;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.registry.CRBogeySizes;
-import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -21,7 +20,7 @@ public class CRBogeyRenderer {
     public static class SingleaxleBogeyRenderer extends BogeyRenderer {
         @Override
         public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, SMALL_BOGEY_WHEELS, 1);
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 1);
             createModelInstances(materialManager, SINGLEAXLE_FRAME);
         }
 
@@ -37,8 +36,8 @@ public class CRBogeyRenderer {
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransformFromPartial(SMALL_BOGEY_WHEELS, ms, inInstancedContraption)
-                    .translate(0, 12 / 16f, 0)
+            Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
                     .rotateX(wheelAngle);
             finalize(bogeyWheels, ms, light, vb);
         }
@@ -232,7 +231,7 @@ public class CRBogeyRenderer {
         }
     }
 
-    public static class BloombergBogeyRenderer extends BogeyRenderer {
+    public static class BlombergBogeyRenderer extends BogeyRenderer {
         @Override
         public void initialiseContraptionModelData(MaterialManager materialManager) {
             createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
@@ -298,4 +297,71 @@ public class CRBogeyRenderer {
         }
     }
 
+    //TRIPLEAXLES
+
+    public static class HeavyweightBogeyRenderer extends BogeyRenderer {
+        @Override
+        public void initialiseContraptionModelData(MaterialManager materialManager) {
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 3);
+            createModelInstances(materialManager, HEAVYWEIGHT_FRAME);
+        }
+
+        @Override
+        public BogeySizes.BogeySize getSize() {
+            return CRBogeySizes.EXTRA;
+        }
+
+        @Override
+        public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+            boolean inInstancedContraption = vb == null;
+            Transform<?> transform = getTransformFromPartial(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0);
+            finalize(transform, ms, light, vb);
+
+            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            for (int side = -1; side < 2; side++) {
+                if (!inInstancedContraption)
+                    ms.pushPose();
+                Transform<?> wheel = wheels[side + 1];
+                wheel.translate(0, 5 / 16f, side*1.5)
+                        .rotateX(wheelAngle);
+                finalize(wheel, ms, light, vb);
+                if (!inInstancedContraption)
+                    ms.popPose();
+            }
+        }
+    }
+
+    public static class RadialBogeyRenderer extends BogeyRenderer {
+        @Override
+        public void initialiseContraptionModelData(MaterialManager materialManager) {
+            createModelInstances(materialManager, CR_BOGEY_WHEELS, 3);
+            createModelInstances(materialManager, RADIAL_FRAME);
+        }
+
+        @Override
+        public BogeySizes.BogeySize getSize() {
+            return CRBogeySizes.EXTRA;
+        }
+
+        @Override
+        public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+            boolean inInstancedContraption = vb == null;
+            Transform<?> transform = getTransformFromPartial(RADIAL_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0);
+            finalize(transform, ms, light, vb);
+
+            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            for (int side = -1; side < 2; side++) {
+                if (!inInstancedContraption)
+                    ms.pushPose();
+                Transform<?> wheel = wheels[side + 1];
+                wheel.translate(0, 5 / 16f, side*1.5)
+                        .rotateX(wheelAngle);
+                finalize(wheel, ms, light, vb);
+                if (!inInstancedContraption)
+                    ms.popPose();
+            }
+        }
+    }
 }
