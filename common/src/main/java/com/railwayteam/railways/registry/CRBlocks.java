@@ -7,9 +7,12 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
+import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.ExtraBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
@@ -269,11 +272,32 @@ public class CRBlocks {
                     .lang("Invisible Bogey")
                     .register();
 
-    public static final BlockEntry<ExtraBogeyBlock> EXTRA_BOGEY =
-            REGISTRATE.block("extra_bogey", ExtraBogeyBlock::new)
+    public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
+            REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.extraBogey())
-                    .lang("Extra Bogey")
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Single Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<DoubleAxleBogeyBlock> DOUBLEAXLE_BOGEY =
+            REGISTRATE.block("doubleaxle_bogey", DoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Double Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
+            REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Platform Double Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<TripleAxleBogeyBlock> TRIPLEAXLE_BOGEY =
+            REGISTRATE.block("tripleaxle_bogey", TripleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Triple Axle Bogey")
                     .register();
 
 

@@ -2,6 +2,7 @@ package com.railwayteam.railways.util;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.foundation.networking.SimplePacketBase;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,6 +43,11 @@ public class Utils {
 	@ExpectPlatform
 	@Environment(EnvType.CLIENT)
 	public static boolean isActiveAndMatches(KeyMapping mapping, InputConstants.Key keyCode) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
+	public static void sendCreatePacketToServer(SimplePacketBase packet) {
 		throw new AssertionError();
 	}
 }

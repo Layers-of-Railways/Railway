@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
-import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class CRBogeyRenderer {
 
@@ -37,8 +36,9 @@ public class CRBogeyRenderer {
             finalize(transform, ms, light, vb);
 
             Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0)
-                    .rotateX(wheelAngle);
+                    .translate(0, 12 / 16f, 0)
+                    .rotateX(wheelAngle)
+                    .translate(0, -7 / 16f, 0);
             finalize(bogeyWheels, ms, light, vb);
         }
     }
@@ -63,8 +63,9 @@ public class CRBogeyRenderer {
             finalize(transform, ms, light, vb);
 
             Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0)
-                    .rotateX(wheelAngle);
+                    .translate(0, 12 / 16f, 0)
+                    .rotateX(wheelAngle)
+                    .translate(0, -7 / 16f, 0);
             finalize(bogeyWheels, ms, light, vb);
         }
     }
@@ -89,8 +90,9 @@ public class CRBogeyRenderer {
             finalize(transform, ms, light, vb);
 
             Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0)
-                    .rotateX(wheelAngle);
+                    .translate(0, 12 / 16f, 0)
+                    .rotateX(wheelAngle)
+                    .translate(0, -7 / 16f, 0);
             finalize(bogeyWheels, ms, light, vb);
         }
     }
@@ -121,8 +123,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -154,8 +157,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -187,8 +191,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -222,8 +227,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -255,8 +261,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -288,8 +295,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[(side + 1) / 2];
-                wheel.translate(0, 5 / 16f, side)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -323,8 +331,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[side + 1];
-                wheel.translate(0, 5 / 16f, side*1.5)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side*1.5)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
@@ -356,8 +365,9 @@ public class CRBogeyRenderer {
                 if (!inInstancedContraption)
                     ms.pushPose();
                 Transform<?> wheel = wheels[side + 1];
-                wheel.translate(0, 5 / 16f, side*1.5)
-                        .rotateX(wheelAngle);
+                wheel.translate(0, 12 / 16f, side*1.5)
+                        .rotateX(wheelAngle)
+                        .translate(0, -7 / 16f, 0);
                 finalize(wheel, ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();

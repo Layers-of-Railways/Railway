@@ -1,6 +1,8 @@
 package com.railwayteam.railways.util.fabric;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.simibubi.create.AllPackets;
+import com.simibubi.create.foundation.networking.SimplePacketBase;
 import io.github.fabricators_of_create.porting_lib.util.KeyBindingHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,5 +28,9 @@ public class UtilsImpl {
     @Environment(EnvType.CLIENT)
     public static boolean isActiveAndMatches(KeyMapping mapping, InputConstants.Key keyCode) {
 		return KeyBindingHelper.isActiveAndMatches(mapping, keyCode);
+    }
+
+    public static void sendCreatePacketToServer(SimplePacketBase packet) {
+		AllPackets.getChannel().sendToServer(packet);
     }
 }

@@ -1,11 +1,10 @@
 package com.railwayteam.railways.content.custom_bogeys;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
-import com.railwayteam.railways.registry.CRBogeySizes;
-import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
+import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.block.IBE;
@@ -17,11 +16,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-public class ExtraBogeyBlock extends AbstractBogeyBlock<ExtraBogeyBlockEntity>
-	implements IBE<ExtraBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public class CRBogeyBlock extends AbstractBogeyBlock<CRBogeyBlockEntity>
+	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
-	public ExtraBogeyBlock(Properties props) {
-		super(props, CRBogeySizes.EXTRA);
+	private final BogeyStyle defaultStyle;
+
+	protected CRBogeyBlock(Properties props, BogeyStyle defaultStyle, BogeySize size) {
+		super(props, size);
+		this.defaultStyle = defaultStyle;
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
 	}
 
@@ -47,7 +49,7 @@ public class ExtraBogeyBlock extends AbstractBogeyBlock<ExtraBogeyBlockEntity>
 
 	@Override
 	public BogeyStyle getDefaultStyle() {
-		return CRBogeyStyles.SINGLEAXLES;
+		return defaultStyle;
 	}
 
 	@Override
@@ -56,13 +58,13 @@ public class ExtraBogeyBlock extends AbstractBogeyBlock<ExtraBogeyBlockEntity>
 	}
 
 	@Override
-	public Class<ExtraBogeyBlockEntity> getBlockEntityClass() {
-		return ExtraBogeyBlockEntity.class;
+	public Class<CRBogeyBlockEntity> getBlockEntityClass() {
+		return CRBogeyBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends ExtraBogeyBlockEntity> getBlockEntityType() {
-		return CRBlockEntities.EXTRA_BOGEY.get();
+	public BlockEntityType<? extends CRBogeyBlockEntity> getBlockEntityType() {
+		return CRBlockEntities.BOGEY.get();
 	}
 
 }

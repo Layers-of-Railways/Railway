@@ -94,29 +94,31 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
-        autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
-                this, new ValueBoxTransform() {
-            @Override
-            public Vec3 getLocalOffset(BlockState state) {
-                Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
-                base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
-                return base;
-            }
+        if (isAutomatic()) {
+            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
+                    this, new ValueBoxTransform() {
+                @Override
+                public Vec3 getLocalOffset(BlockState state) {
+                    Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
+                    base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
+                    return base;
+                }
 
-            @Override
-            public void rotate(BlockState state, PoseStack ms) {
-                TransformStack.cast(ms)
-                        .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING))-90)
-                        .rotateX(90);
-            }
-        });
-        autoMode.withCallback(ordinal -> {
-            AutoMode mode = AutoMode.values()[ordinal];
-            TrackSwitch sw = getSwitch();
-            if (sw != null)
-                sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
-        });
-        behaviours.add(autoMode);
+                @Override
+                public void rotate(BlockState state, PoseStack ms) {
+                    TransformStack.cast(ms)
+                            .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
+                            .rotateX(90);
+                }
+            });
+            autoMode.withCallback(ordinal -> {
+                AutoMode mode = AutoMode.values()[ordinal];
+                TrackSwitch sw = getSwitch();
+                if (sw != null)
+                    sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
+            });
+            behaviours.add(autoMode);
+        }
     }
 
     @Override

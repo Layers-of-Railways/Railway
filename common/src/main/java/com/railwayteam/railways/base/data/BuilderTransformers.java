@@ -1,6 +1,6 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.custom_bogeys.ExtraBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.simibubi.create.AllBlocks;
@@ -33,7 +33,7 @@ public class BuilderTransformers {
                 .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
-    public static <B extends ExtraBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> extraBogey() {
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                 .properties(p -> p.noOcclusion())

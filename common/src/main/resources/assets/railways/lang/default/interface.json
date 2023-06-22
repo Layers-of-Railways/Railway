@@ -93,8 +93,18 @@
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
-  "railways.bogeys.styles.singleaxle": "Singleaxles",
-  "railways.bogeys.styles.twoaxleone": "Two axles one",
+
+  "railways.bogeys.styles.singleaxle": "Singleaxle",
+  "railways.bogeys.styles.leafspring": "Leafspring",
+  "railways.bogeys.styles.coilspring": "Coilspring",
+  "railways.bogeys.styles.freight": "Freight",
+  "railways.bogeys.styles.archbar": "Archbar",
+  "railways.bogeys.styles.passenger": "Passenger",
+  "railways.bogeys.styles.modern": "Modern",
+  "railways.bogeys.styles.blomberg": "Blomberg",
+  "railways.bogeys.styles.y25": "Y25",
+  "railways.bogeys.styles.heavyweight": "Heavyweight",
+  "railways.bogeys.styles.radial": "Radial",
 
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",
@@ -102,6 +112,8 @@
   "railways.style_select.category": "Category: ",
 
   "railways.style_select.category.railways.favorites_category": "Favorites",
-  "railways.style_select.category.create.standard": "Create's Styles",
-  "railways.style_select.category.railways.standard": "Steam 'n Rails's Styles"
+  "railways.style_select.category.create.standard": "Standard Styles",
+  "railways.style_select.category.railways.singleaxles": "Single Axle Styles",
+  "railways.style_select.category.railways.doubleaxles": "Double Axle Styles",
+  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles"
 }
