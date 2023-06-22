@@ -1,10 +1,10 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.CubeParticleData;
@@ -12,7 +12,6 @@ import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeColor;
 
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.registerStyleCategory;
 import static com.simibubi.create.AllBogeyStyles.STANDARD_CYCLE_GROUP;
@@ -95,9 +94,9 @@ public class CRBogeyStyles {
 
     public static void register() {
         Railways.LOGGER.info("Registered bogey styles from " + Railways.MODID);
-        registerStyleCategory(Create.asResource(STANDARD_CYCLE_GROUP), AllBlocks.COGWHEEL);
-        registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED));
-        registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.ORANGE));
-        registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.YELLOW));
+        registerStyleCategory(Create.asResource(STANDARD_CYCLE_GROUP), CategoryIcon.standardSupplier("default_icon"));
+        registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("single_axle_icon"));
+        registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
+        registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
     }
 }

@@ -20,10 +20,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
@@ -67,9 +69,9 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
         Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(forward);
         Railways.temporarilySkipSwitches = false;
-        TrackSwitch lookAhead = lookAheadData.getFirst();
-        boolean headOn = lookAheadData.getSecond().getFirst();
-        Optional<SwitchState> targetState = lookAheadData.getSecond().getSecond();
+        TrackSwitch lookAhead = lookAheadData == null ? null : lookAheadData.getFirst();
+        boolean headOn = lookAheadData != null && lookAheadData.getSecond().getFirst();
+        Optional<SwitchState> targetState = lookAheadData == null ? Optional.empty() : lookAheadData.getSecond().getSecond();
 
         if (lookAhead != null) {
             // try to reserve switch
@@ -105,5 +107,11 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong) {
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong));
+    }
+
+    @Inject(method = "updateTrackGraph", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;graph:Lcom/simibubi/create/content/trains/graph/TrackGraph;", opcode = Opcodes.H_PUTFIELD, ordinal = 0), cancellable = true)
+    private void cancelDerailing(CallbackInfo ci) {
+        if (Config.SKIP_CLIENT_DERAILING.get())
+            ci.cancel();
     }
 }
