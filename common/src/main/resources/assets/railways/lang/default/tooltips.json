@@ -7,5 +7,8 @@
   "block.railways.track_coupler.tooltip.behaviour2": "The coupler icon will _move_ to the side, and they will _coexist_.",
 
   "block.create.track_station.tooltip": "TRAIN STATION",
-  "block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer."
+  "block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
+
+  "block.create.railway_casing.tooltip": "TRAIN CASING",
+  "block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place."
 }
