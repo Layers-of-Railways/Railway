@@ -340,11 +340,13 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         return InteractionResult.SUCCESS;
     }
 
-    void onProjectileHit() {
+    boolean onProjectileHit() {
         if (!isLocked()) {
             cycleState();
 //            level.setBlockAndUpdate(getBlockPos(), getBlockState());
+            return true;
         }
+        return false;
     }
 
     private boolean hasSignal(Direction direction) {

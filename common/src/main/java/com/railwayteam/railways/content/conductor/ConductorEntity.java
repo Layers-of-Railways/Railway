@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
@@ -279,6 +280,7 @@ public class ConductorEntity extends AbstractGolem {
         }
       }
       this.entityData.set(HOLDING_SCHEDULES, false);
+      getHeldSchedules().clear();
     }
     return super.mobInteract(player, hand);
   }
@@ -345,7 +347,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public boolean canUseBlock (BlockState state) {
-    return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER);
+    return state.is(BlockTags.BUTTONS) || state.is(Blocks.LEVER) || state.getBlock() instanceof TrackSwitchBlock;
   }
 
   @Override

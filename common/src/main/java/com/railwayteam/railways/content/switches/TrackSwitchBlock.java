@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.switches;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllItems;
@@ -208,7 +209,11 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
     TrackSwitchTileEntity te = getBlockEntity(level, pos);
     if (te != null) {
-      return te.onUse(player.isSteppingCarefully());
+      if (player.getGameProfile() == ConductorEntity.FAKE_PLAYER_PROFILE) {
+        return te.onProjectileHit() ? InteractionResult.CONSUME : InteractionResult.SUCCESS;
+      } else {
+        return te.onUse(player.isSteppingCarefully());
+      }
     }
 
     return InteractionResult.SUCCESS;
