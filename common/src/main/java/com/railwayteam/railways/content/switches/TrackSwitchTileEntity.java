@@ -215,6 +215,8 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         } catch (ClassCastException ignored) { // if we are targeting air, catch the crash
             return;
         }
+        if (loc == null)
+            return;
         TrackGraph graph = loc.graph;
         TrackEdge edge = graph
                 .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))
