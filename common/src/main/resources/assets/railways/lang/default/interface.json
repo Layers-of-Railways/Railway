@@ -115,5 +115,7 @@
   "railways.style_select.category.create.standard": "Standard Styles",
   "railways.style_select.category.railways.singleaxles": "Single Axle Styles",
   "railways.style_select.category.railways.doubleaxles": "Double Axle Styles",
-  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles"
+  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles",
+
+  "create.contraptions.roller_mode.track_replace": "Replace Tracks"
 }
