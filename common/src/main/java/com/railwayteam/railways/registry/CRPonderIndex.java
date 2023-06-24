@@ -25,5 +25,7 @@ public class CRPonderIndex {
             AllBlocks.FRAMED_GLASS_DOOR
         )
             .addStoryBoard("door_modes", DoorScenes::modes);
+        HELPER.forComponents(CRBlocks.ANDESITE_SWITCH, CRBlocks.BRASS_SWITCH)
+                .addStoryBoard("switch", TrainScenes::trackSwitch);
     }
 }

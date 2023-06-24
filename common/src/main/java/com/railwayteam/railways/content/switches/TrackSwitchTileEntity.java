@@ -35,12 +35,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
@@ -55,6 +54,29 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     protected ScrollOptionBehaviour<AutoMode> autoMode;
 
     int exitCount = 0; // client only
+
+    /**
+     * Only for use in ponders
+     */
+    @ApiStatus.Internal
+    public void setStatePonder(SwitchState state) {
+        this.state = state;
+    }
+
+    public record PonderData(Vec3 basePos, @Nullable Vec3 leftBranch, @Nullable Vec3 straightBranch, @Nullable Vec3 rightBranch) {
+        Map<SwitchState, Vec3> getBranches() {
+            Map<SwitchState, Vec3> branches = new HashMap<>();
+            if (leftBranch != null)
+                branches.put(SwitchState.REVERSE_LEFT, leftBranch);
+            if (straightBranch != null)
+                branches.put(SwitchState.NORMAL, straightBranch);
+            if (rightBranch != null)
+                branches.put(SwitchState.REVERSE_RIGHT, rightBranch);
+            return branches;
+        }
+    }
+    @ApiStatus.Internal
+    public @Nullable PonderData ponderData;
 
     enum AutoMode implements INamedIconOptions {
         MANUAL_ONLY(CRIcons.I_SWITCH_MANUAL),
