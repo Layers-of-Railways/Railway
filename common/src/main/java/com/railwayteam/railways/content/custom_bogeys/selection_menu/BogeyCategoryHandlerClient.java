@@ -214,4 +214,18 @@ public class BogeyCategoryHandlerClient {
 
         ScreenOpener.open(new RadialBogeyCategoryMenu(State.PICK_CATEGORY));
     }
+
+    public static final Map<BogeyStyle, ResourceLocation> ICONS = new HashMap<>();
+
+    public static void addIcon(BogeyStyle style, String name) {
+        ICONS.put(style, Railways.asResource("textures/gui/bogey_icons/"+name+"_icon.png"));
+    }
+
+    static {
+        for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+            if (style.name.getNamespace().equals(Railways.MODID))
+                addIcon(style, style.name.getPath());
+            addIcon(AllBogeyStyles.STANDARD, "default");
+        }
+    }
 }

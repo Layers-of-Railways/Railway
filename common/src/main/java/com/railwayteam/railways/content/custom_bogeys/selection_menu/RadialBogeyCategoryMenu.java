@@ -233,7 +233,15 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     .withStyle(ChatFormatting.GOLD);
                         }
 
-                        renderInInventory(guiLeft + bogeyX, guiTop + bogeyY, selected ? 10 : 8, render);
+                        if (BogeyCategoryHandlerClient.ICONS.containsKey(style)) {
+                            AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
+                            renderIcon(BogeyCategoryHandlerClient.ICONS.get(style), ms);
+                            if (selected) {
+                                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
+                            }
+                        } else {
+                            renderInInventory(guiLeft + bogeyX, guiTop + bogeyY, selected ? 10 : 8, render);
+                        }
 
                     }
 
@@ -305,8 +313,12 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     }
 
     private void renderIcon(CategoryIcon categoryIcon, PoseStack ms) {
+        renderIcon(categoryIcon.location, ms);
+    }
+
+    private void renderIcon(ResourceLocation location, PoseStack ms) {
         ms.pushPose();
-        RenderSystem.setShaderTexture(0, categoryIcon.location);
+        RenderSystem.setShaderTexture(0, location);
         GuiComponent.blit(ms, 3, 3, 0, 0, 0, 16, 16, 16, 16);
         ms.popPose();
     }
