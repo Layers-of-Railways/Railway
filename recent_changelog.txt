@@ -4,4 +4,5 @@ v1.4.0:
 - Fixed rollers breaking custom tracks
 - Fixed display links targeting nixie tube signals
 - Added various single, double, and triple axle bogeys
-- Add Track Replace mode to rollers
+- Added Track Replace mode to rollers
+- Added remote control to conductors (experimental)

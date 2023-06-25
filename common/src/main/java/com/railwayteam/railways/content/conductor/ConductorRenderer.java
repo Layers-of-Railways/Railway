@@ -24,6 +24,7 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
     ));
     this.addLayer(new ConductorToolboxLayer<>(this));
     this.addLayer(new ConductorFlagLayer<>(this));
+    this.addLayer(new ConductorRemoteLayer<>(this));
   }
 
   private ResourceLocation ensurePng(ResourceLocation loc) {

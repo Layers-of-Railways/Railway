@@ -35,6 +35,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackModel;
+import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -220,6 +221,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
                     .lang("Andesite Track Switch")
                     .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
                     .transform(customItemModel())
@@ -238,6 +240,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
                     .lang("Brass Track Switch")
                     .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
                     .transform(customItemModel())

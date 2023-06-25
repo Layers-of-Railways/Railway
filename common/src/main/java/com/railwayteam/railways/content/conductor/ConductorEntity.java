@@ -8,7 +8,13 @@ import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlock;
+import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
+import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;
+import com.simibubi.create.content.redstone.link.controller.LinkedControllerItem;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -44,12 +50,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
@@ -57,6 +65,159 @@ public class ConductorEntity extends AbstractGolem {
           UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
           "[Conductor]"
   );
+
+  public class FrequencyListener implements IRedstoneLinkable {
+    public final String key;
+    public final @Nullable Couple<Frequency> frequency;
+    public int receivedStrength = 0;
+
+    public FrequencyListener(String key) {
+      this.key = key;
+      this.frequency = ConductorEntity.this.getFrequencies().entries().get(this.key).orElse(null);
+      if (frequency != null)
+        Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(ConductorEntity.this.level, this);
+    }
+
+    @Override
+    public int getTransmittedStrength() {
+      return 0;
+    }
+
+    @Override
+    public void setReceivedStrength(int power) {
+      receivedStrength = power;
+    }
+
+    @Override
+    public boolean isListening() {
+      return true;
+    }
+
+    @Override
+    public boolean isAlive() {
+      return ConductorEntity.this.isAlive() && frequency != null;
+    }
+
+    @Override
+    public Couple<Frequency> getNetworkKey() {
+      return frequency;
+    }
+
+    @Override
+    public BlockPos getLocation() {
+      return ConductorEntity.this.blockPosition();
+    }
+
+    public boolean isPowered() {
+      return receivedStrength > 0;
+    }
+  }
+
+  public static class FrequencyHolder implements Iterable<Optional<Couple<@NotNull Frequency>>> {
+    public @Nullable Couple<@NotNull Frequency> forward;
+    public @Nullable Couple<@NotNull Frequency> backward;
+    public @Nullable Couple<@NotNull Frequency> left;
+    public @Nullable Couple<@NotNull Frequency> right;
+    public @Nullable Couple<@NotNull Frequency> jump;
+    public @Nullable Couple<@NotNull Frequency> sneak;
+
+    public FrequencyHolder() {
+    }
+
+    public FrequencyHolder(@Nullable Couple<@NotNull Frequency> forward, @Nullable Couple<@NotNull Frequency> backward,
+                           @Nullable Couple<@NotNull Frequency> left, @Nullable Couple<@NotNull Frequency> right,
+                           @Nullable Couple<@NotNull Frequency> jump, @Nullable Couple<@NotNull Frequency> sneak) {
+      this.forward = forward;
+      this.backward = backward;
+      this.left = left;
+      this.right = right;
+      this.jump = jump;
+      this.sneak = sneak;
+    }
+
+    public FrequencyHolder copy() {
+      return new FrequencyHolder(
+              forward == null ? null : forward.copy(),
+              backward == null ? null : backward.copy(),
+              left == null ? null : left.copy(),
+              right == null ? null : right.copy(),
+              jump == null ? null : jump.copy(),
+              sneak == null ? null : sneak.copy()
+      );
+    }
+
+    @NotNull
+    @Override
+    public Iterator<Optional<Couple<@NotNull Frequency>>> iterator() {
+      return List.of(
+              Optional.ofNullable(forward),
+              Optional.ofNullable(backward),
+              Optional.ofNullable(left),
+              Optional.ofNullable(right),
+              Optional.ofNullable(jump),
+              Optional.ofNullable(sneak)
+      ).iterator();
+    }
+
+    public Map<String, Optional<Couple<@NotNull Frequency>>> entries() {
+      return Map.of(
+              "forward", Optional.ofNullable(forward),
+              "backward", Optional.ofNullable(backward),
+              "left", Optional.ofNullable(left),
+              "right", Optional.ofNullable(right),
+              "jump", Optional.ofNullable(jump),
+              "sneak", Optional.ofNullable(sneak)
+      );
+    }
+
+    public Map<String, Consumer<Optional<Couple<@NotNull Frequency>>>> setters() {
+      return Map.of(
+              "forward", (freq) -> forward = freq.orElse(null),
+              "backward", (freq) -> backward = freq.orElse(null),
+              "left", (freq) -> left = freq.orElse(null),
+              "right", (freq) -> right = freq.orElse(null),
+              "jump", (freq) -> jump = freq.orElse(null),
+              "sneak", (freq) -> sneak = freq.orElse(null)
+      );
+    }
+
+    public List<Consumer<Optional<Couple<@NotNull Frequency>>>> settersInOrder() {
+      return List.of(
+              (freq) -> forward = freq.orElse(null),
+              (freq) -> backward = freq.orElse(null),
+              (freq) -> left = freq.orElse(null),
+              (freq) -> right = freq.orElse(null),
+              (freq) -> jump = freq.orElse(null),
+              (freq) -> sneak = freq.orElse(null)
+      );
+    }
+
+    public CompoundTag write() {
+      CompoundTag tag = new CompoundTag();
+      for (var freq : this.entries().entrySet()) {
+        if (freq.getValue().isPresent()) {
+          CompoundTag subTag = new CompoundTag();
+          subTag.put("first", freq.getValue().get().getFirst().getStack().save(new CompoundTag()));
+          subTag.put("second", freq.getValue().get().getSecond().getStack().save(new CompoundTag()));
+          tag.put(freq.getKey(), subTag);
+        }
+      }
+      return tag;
+    }
+
+    public FrequencyHolder read(CompoundTag tag) {
+      for (var freq : this.setters().entrySet()) {
+        if (tag.contains(freq.getKey(), Tag.TAG_COMPOUND)) {
+          ItemStack first = ItemStack.of(tag.getCompound(freq.getKey()).getCompound("first"));
+          ItemStack second = ItemStack.of(tag.getCompound(freq.getKey()).getCompound("second"));
+          freq.getValue().accept(Optional.of(Couple.create(Frequency.of(first), Frequency.of(second))));
+        } else {
+          freq.getValue().accept(Optional.empty());
+        }
+      }
+      return this;
+    }
+  }
 
   public static final WorldAttached<Set<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new HashSet<>());
 
@@ -75,14 +236,46 @@ public class ConductorEntity extends AbstractGolem {
     }
   };
 
+  private static final EntityDataSerializer<FrequencyHolder> FREQUENCY_SERIALIZER = new EntityDataSerializer<>() {
+    @Override
+    public void write(@NotNull FriendlyByteBuf buffer, @NotNull FrequencyHolder value) {
+      for (Optional<Couple<Frequency>> freq : value) {
+        buffer.writeBoolean(freq.isPresent());
+        freq.ifPresent((f) -> {
+          buffer.writeItem(f.getFirst().getStack());
+          buffer.writeItem(f.getSecond().getStack());
+        });
+      }
+    }
+
+    @Override
+    public @NotNull FrequencyHolder read(@NotNull FriendlyByteBuf buffer) {
+      return new FrequencyHolder(
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
+              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null
+      );
+    }
+
+    @Override
+    public @NotNull FrequencyHolder copy(@NotNull FrequencyHolder value) {
+      return value.copy();
+    }
+  };
+
   static {
     EntityDataSerializers.registerSerializer(JOB_SERIALIZER);
+    EntityDataSerializers.registerSerializer(FREQUENCY_SERIALIZER);
   }
 
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
   public static final EntityDataAccessor<Job> JOB = SynchedEntityData.defineId(ConductorEntity.class, JOB_SERIALIZER);
   public static final EntityDataAccessor<Boolean> HOLDING_SCHEDULES = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BOOLEAN);
+  public static final EntityDataAccessor<FrequencyHolder> FREQUENCIES = SynchedEntityData.defineId(ConductorEntity.class, FREQUENCY_SERIALIZER);
 
   // keep this small for performance (plus conductors are smol)
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
@@ -90,6 +283,22 @@ public class ConductorEntity extends AbstractGolem {
   private ServerPlayer fakePlayer = null;
   MountedToolbox toolbox = null;
   private List<ItemStack> heldSchedules;
+
+  protected FrequencyListener forwardListener;
+  protected FrequencyListener backwardListener;
+  protected FrequencyListener leftListener;
+  protected FrequencyListener rightListener;
+  protected FrequencyListener jumpListener;
+  protected FrequencyListener sneakListener;
+
+  protected void updateFrequencyListeners() {
+    forwardListener = new FrequencyListener("forward");
+    backwardListener = new FrequencyListener("backward");
+    leftListener = new FrequencyListener("left");
+    rightListener = new FrequencyListener("right");
+    jumpListener = new FrequencyListener("jump");
+    sneakListener = new FrequencyListener("sneak");
+  }
 
   private List<ItemStack> getHeldSchedules() {
     if (heldSchedules == null) {
@@ -124,6 +333,21 @@ public class ConductorEntity extends AbstractGolem {
     this.entityData.define(BLOCK, this.blockPosition());
     this.entityData.define(JOB, Job.DEFAULT);
     this.entityData.define(HOLDING_SCHEDULES, this.isHoldingSchedules());
+    this.entityData.define(FREQUENCIES, new FrequencyHolder());
+  }
+
+  public FrequencyHolder getFrequencies() {
+    return this.entityData.get(FREQUENCIES);
+  }
+
+  public void setFrequencies(FrequencyHolder holder) {
+      this.entityData.set(FREQUENCIES, holder);
+  }
+
+  public void updateFrequencies(Consumer<FrequencyHolder> consumer) {
+    FrequencyHolder holder = getFrequencies();
+    consumer.accept(holder);
+    setFrequencies(holder);
   }
 
   @Override
@@ -133,6 +357,7 @@ public class ConductorEntity extends AbstractGolem {
     goalSelector.addGoal(2, new ConductorLookedAtGoal(this));
     goalSelector.addGoal(1, new ConductorPonderBlockGoal(this));
     goalSelector.addGoal(1, new FollowToolboxPlayerGoal(this, 1.25d));
+    goalSelector.addGoal(1, new RemoteControlGoal(this, 1.25d));
     goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 8f));
   }
 
@@ -219,8 +444,16 @@ public class ConductorEntity extends AbstractGolem {
       setToolbox(new MountedToolbox(this, toolbox.getColor()));
       this.toolbox.readFromItem(stack);
       this.toolbox.sendData();
-      getEntityData().set(JOB, Job.TOOLBOX_CARRIER);
+      setJob(Job.TOOLBOX_CARRIER);
     }
+  }
+
+  public void setJob(Job job) {
+    getEntityData().set(JOB, job);
+  }
+
+  public Job getJob() {
+    return getEntityData().get(JOB);
   }
 
   @Override
@@ -231,7 +464,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public ItemStack unequipToolbox() {
-    getEntityData().set(JOB, Job.DEFAULT);
+    setJob(Job.DEFAULT);
     if (level.isClientSide || toolbox == null) {
       if (toolbox != null)
         toolbox.setRemoved();
@@ -262,7 +495,7 @@ public class ConductorEntity extends AbstractGolem {
         this.setHealth(this.getHealth()+1);
         if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
         return InteractionResult.SUCCESS;}
-    } else if (!this.isCarryingToolbox() && isToolbox(player.getItemInHand(hand))) {
+    } else if (!this.isCarryingToolbox() && isToolbox(player.getItemInHand(hand)) && getJob() == Job.DEFAULT) {
       this.equipToolbox(player.getItemInHand(hand));
       player.getItemInHand(hand).shrink(1);
       return InteractionResult.SUCCESS;
@@ -281,6 +514,23 @@ public class ConductorEntity extends AbstractGolem {
       }
       this.entityData.set(HOLDING_SCHEDULES, false);
       getHeldSchedules().clear();
+    } else if (getJob() == Job.DEFAULT && AllBlocks.REDSTONE_LINK.isIn(player.getItemInHand(hand))) {
+      setJob(Job.REMOTE_CONTROL);
+      player.getItemInHand(hand).shrink(1);
+      return InteractionResult.SUCCESS;
+    } else if (getJob() == Job.REMOTE_CONTROL) {
+      if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
+        player.setItemInHand(hand, AllBlocks.REDSTONE_LINK.asStack());
+        setJob(Job.DEFAULT);
+      } else if (player.getItemInHand(hand).getItem() instanceof LinkedControllerItem) {
+        // copy frequencies from linked controller to conductor
+        int i = 0;
+        for (var freq : getFrequencies().settersInOrder()) {
+          freq.accept(Optional.of(LinkedControllerItem.toFrequency(player.getItemInHand(hand), i)));
+          i++;
+        }
+        updateFrequencyListeners();
+      }
     }
     return super.mobInteract(player, hand);
   }
@@ -371,7 +621,7 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canUse() {
-      return conductor.getEntityData().get(JOB) == job;
+      return conductor.getJob() == job;
     }
 
     @Override
@@ -425,6 +675,96 @@ public class ConductorEntity extends AbstractGolem {
     public void stop() {
       super.stop();
       target = null;
+    }
+  }
+
+  static class RemoteControlGoal extends JobBasedGoal {
+
+    protected final double speedModifier;
+    protected Vec3 targetDirection = Vec3.ZERO;
+    protected double targetStrength = 15.0;
+    public RemoteControlGoal(ConductorEntity conductor, double speedModifier) {
+      super(conductor, Job.REMOTE_CONTROL);
+      this.speedModifier = speedModifier;
+    }
+
+    protected double getGroundY(Vec3 vec) {
+      BlockPos blockPos = new BlockPos(vec);
+      return this.conductor.level.getBlockState(blockPos.below()).isAir() ?
+              vec.y :
+              WalkNodeEvaluator.getFloorLevel(this.conductor.level, blockPos);
+    }
+
+    @Override
+    public void tick() {
+      super.tick();
+      Pair<Vec3, Double> pair = calculateTarget();
+      targetDirection = pair.getFirst();
+      targetStrength = pair.getSecond();
+      Vec3 target = this.conductor.position().add(targetDirection.scale(2));
+      if (targetDirection.lengthSqr() > 0.01)
+        this.conductor.getMoveControl().setWantedPosition(target.x, getGroundY(target), target.z,
+                this.speedModifier * targetStrength / 15);
+      /*else
+        this.conductor.getMoveControl().setWantedPosition(this.conductor.position().x, this.conductor.position().y, this.conductor.position().z, 0.0);*/
+    }
+
+    private Pair<Vec3, Double> calculateTarget() {
+      double x = 0;
+      double y = 0;
+      double z = 0;
+
+      if (conductor.forwardListener != null && conductor.forwardListener.isPowered())
+        z -= conductor.forwardListener.receivedStrength; // north
+      if (conductor.backwardListener != null && conductor.backwardListener.isPowered())
+        z += conductor.backwardListener.receivedStrength; // south
+
+      if (conductor.leftListener != null && conductor.leftListener.isPowered())
+        x -= conductor.leftListener.receivedStrength; // west
+      if (conductor.rightListener != null && conductor.rightListener.isPowered())
+        x += conductor.rightListener.receivedStrength; // east
+
+      if (conductor.jumpListener != null && conductor.jumpListener.isPowered())
+        y += conductor.jumpListener.receivedStrength; // up
+      if (conductor.sneakListener != null && conductor.sneakListener.isPowered())
+        y -= conductor.sneakListener.receivedStrength; // down
+
+      double avgStrength = 0;
+      int count = 0;
+      if (x != 0) {
+        avgStrength += Math.abs(x);
+        count++;
+      }
+      if (y != 0) {
+        avgStrength += Math.abs(y);
+        count++;
+      }
+      if (z != 0) {
+        avgStrength += Math.abs(z);
+        count++;
+      }
+
+      return Pair.of(new Vec3(x, y, z).scale(1 / 15.0), count == 0 ? 0 : avgStrength / count);
+    }
+
+    @Override
+    public void start() {
+      super.start();
+      Pair<Vec3, Double> pair = calculateTarget();
+      targetDirection = pair.getFirst();
+      targetStrength = pair.getSecond();
+    }
+
+    @Override
+    public void stop() {
+      super.stop();
+      targetDirection = Vec3.ZERO;
+      targetStrength = 15.0;
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+      return true;
     }
   }
 
@@ -546,7 +886,8 @@ public class ConductorEntity extends AbstractGolem {
       if (hasItem)
         nbt.put("heldSchedules", schedulesTag);
     }
-    nbt.putString("job", getEntityData().get(JOB).name());
+    nbt.putString("job", getJob().name());
+    nbt.put("frequencies", getFrequencies().write());
   }
 
   @Override
@@ -564,9 +905,9 @@ public class ConductorEntity extends AbstractGolem {
       setToolbox(null);
     }
     if (nbt.contains("job", Tag.TAG_STRING)) {
-      getEntityData().set(JOB, Job.valueOf(nbt.getString("job")));
+      setJob(Job.valueOf(nbt.getString("job")));
     } else {
-      getEntityData().set(JOB, Job.DEFAULT);
+      setJob(Job.DEFAULT);
     }
     getHeldSchedules().clear();
     if (nbt.contains("heldSchedules", Tag.TAG_LIST)) {
@@ -577,13 +918,17 @@ public class ConductorEntity extends AbstractGolem {
           getHeldSchedules().add(stack);
       }
     }
-    if (!level.isClientSide)
+    if (!level.isClientSide) {
       getEntityData().set(HOLDING_SCHEDULES, isHoldingSchedules());
+      updateFrequencies((freqHolder) -> freqHolder.read(nbt.getCompound("frequencies")));
+      updateFrequencyListeners();
+    }
   }
 
   public enum Job {
     REDSTONE_OPERATOR,
-    TOOLBOX_CARRIER
+    TOOLBOX_CARRIER,
+    REMOTE_CONTROL
     ;
     public static final Job DEFAULT = REDSTONE_OPERATOR;
   }

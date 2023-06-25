@@ -30,6 +30,7 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue REGISTER_MISSING_TRACKS;
     public static ForgeConfigSpec.BooleanValue FLIP_DISTANT_SWITCHES;
     public static ForgeConfigSpec.IntValue SWITCH_PLACEMENT_RANGE;
+    public static ForgeConfigSpec.BooleanValue DISABLE_DATAFIXER;
 
 
     static {
@@ -64,6 +65,7 @@ public class Config {
         REGISTER_MISSING_TRACKS = builder.comment("Register integration tracks for mods that are not present").define("registerMissingTracks", false);
         FLIP_DISTANT_SWITCHES = builder.comment("Allow controlling Brass Switches remotely when approaching them on a train").define("flipDistantSwitches", true);
         SWITCH_PLACEMENT_RANGE = builder.comment("Placement range for switches").defineInRange("switchPlacementRange", 64, 16, 128);
+        DISABLE_DATAFIXER = builder.comment("Disable Steam 'n Rails datafixers. Do not enable this config if you world contains pre-Create 0.5.1 monobogeys, because then they will be destroyed").define("disableDatafixer", false);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

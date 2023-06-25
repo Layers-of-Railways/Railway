@@ -367,9 +367,9 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         if (!isLocked()) {
             cycleState(reverseDirection ? SwitchConstraint.TO_LEFT : SwitchConstraint.TO_RIGHT);
 //            level.setBlockAndUpdate(getBlockPos(), getBlockState());
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.CONSUME;
     }
 
     boolean onProjectileHit() {
