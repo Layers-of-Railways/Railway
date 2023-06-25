@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
@@ -15,16 +16,19 @@ import com.simibubi.create.content.trains.entity.Navigation;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.Vec3;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -37,6 +41,23 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
+    }
+
+    private boolean snr$fakePlayer = false;
+
+    @Inject(method = "control", at = @At("HEAD"))
+    private void recordFakePlayer(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (player.getGameProfile() == ConductorEntity.FAKE_PLAYER_PROFILE)
+            snr$fakePlayer = true;
+    }
+
+    @Redirect(method = "control", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z", remap = true))
+    private boolean snr$closerThan(Vec3 instance, Position pos, double distance) {
+        if (snr$fakePlayer) {
+            snr$fakePlayer = false;
+            return true;
+        }
+        return instance.closerThan(pos, distance);
     }
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;maxSpeed()F"))

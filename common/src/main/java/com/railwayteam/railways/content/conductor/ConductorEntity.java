@@ -13,6 +13,8 @@ import com.simibubi.create.content.equipment.toolbox.ToolboxBlock;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.content.redstone.link.controller.LinkedControllerItem;
+import com.simibubi.create.content.trains.entity.CarriageContraption;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
@@ -702,11 +704,47 @@ public class ConductorEntity extends AbstractGolem {
       targetDirection = pair.getFirst();
       targetStrength = pair.getSecond();
       Vec3 target = this.conductor.position().add(targetDirection.scale(2));
-      if (targetDirection.lengthSqr() > 0.01)
+      if (conductor.getRootVehicle() instanceof CarriageContraptionEntity cce && cce.getControllingPlayer().isEmpty()
+              && cce.getContraption() instanceof CarriageContraption cc && conductor.fakePlayer != null) {
+        BlockPos seat = cc.getSeatOf(conductor.uuid);
+        if (seat == null)
+          return;
+        Couple<Boolean> controlsPresent = cc.conductorSeats.get(seat);
+        if (controlsPresent == null)
+          return;
+        BlockPos controlsPos;
+        if (controlsPresent.getFirst()) {
+          controlsPos = seat.relative(cc.getAssemblyDirection());
+        } else if (controlsPresent.getSecond()) {
+          controlsPos = seat.relative(cc.getAssemblyDirection().getOpposite());
+        } else {
+          return;
+        }
+        Set<Integer> controls = getControls();
+        cce.control(controlsPos, controls, conductor.fakePlayer);
+      } else if (targetDirection.lengthSqr() > 0.01) {
         this.conductor.getMoveControl().setWantedPosition(target.x, getGroundY(target), target.z,
                 this.speedModifier * targetStrength / 15);
+      }
       /*else
         this.conductor.getMoveControl().setWantedPosition(this.conductor.position().x, this.conductor.position().y, this.conductor.position().z, 0.0);*/
+    }
+
+    private Set<Integer> getControls() {
+      Set<Integer> controls = new HashSet<>();
+      if (conductor.forwardListener != null && conductor.forwardListener.isPowered())
+        controls.add(0);
+      if (conductor.backwardListener != null && conductor.backwardListener.isPowered())
+        controls.add(1);
+      if (conductor.leftListener != null && conductor.leftListener.isPowered())
+        controls.add(2);
+      if (conductor.rightListener != null && conductor.rightListener.isPowered())
+        controls.add(3);
+      if (conductor.jumpListener != null && conductor.jumpListener.isPowered())
+        controls.add(4);
+      if (conductor.sneakListener != null && conductor.sneakListener.isPowered())
+        controls.add(5);
+      return controls;
     }
 
     private Pair<Vec3, Double> calculateTarget() {
