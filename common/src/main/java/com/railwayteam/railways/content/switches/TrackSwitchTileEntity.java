@@ -132,6 +132,14 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
                             .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
                             .rotateX(90);
                 }
+
+                @Override
+                public boolean testHit(BlockState state, Vec3 localHit) {
+                    Vec3 offset = getLocalOffset(state);
+                    if (offset == null)
+                        return false;
+                    return localHit.distanceTo(offset) < scale / 3;
+                }
             });
             autoMode.withCallback(ordinal -> {
                 AutoMode mode = AutoMode.values()[ordinal];
