@@ -1,15 +1,30 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.trains.signal.SignalBlock;
 import net.minecraft.core.Registry;
+import net.minecraft.world.level.block.Block;
 
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 
 public class CRExtraDisplays {
+    public static boolean registered = false;
+
+    // register the source, working independently of mod loading order
     public static void register() {
-        Create.REGISTRATE.addRegisterCallback("track_signal", Registry.BLOCK_REGISTRY, (block) -> {
-            assignDataBehaviour(new SignalDisplaySource()).accept(block);
-        });
+        SignalBlock maybeRegistered = AllBlocks.TRACK_SIGNAL.getUnchecked();
+        if (maybeRegistered == null) {
+            Create.REGISTRATE.addRegisterCallback("track_signal", Registry.BLOCK_REGISTRY, CRExtraDisplays::addSignalSource);
+        } else {
+            addSignalSource(maybeRegistered);
+        }
+    }
+
+    public static void addSignalSource(Block block) {
+        if (registered) return;
+        assignDataBehaviour(new SignalDisplaySource()).accept(block);
+        registered = true;
     }
 }
