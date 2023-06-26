@@ -717,7 +717,7 @@ public class ConductorEntity extends AbstractGolem {
         Couple<Boolean> controlsPresent = cc.conductorSeats.get(seat);
         if (controlsPresent == null)
           return;
-        BlockPos controlsPos = null; // fixme this seems to go backwards sometimes
+        BlockPos controlsPos = null;
         BlockPos reverseControlsPos = null;
         if (controlsPresent.getFirst()) {
           controlsPos = seat.relative(cc.getAssemblyDirection().getOpposite());
