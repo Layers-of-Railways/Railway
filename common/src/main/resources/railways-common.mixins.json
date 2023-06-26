@@ -43,6 +43,7 @@
     "MixinRollerMovementBehaviour",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
+    "MixinSeatMovementBehaviour",
     "MixinSignalBoundary",
     "MixinSlidingDoorBlock",
     "MixinSlidingDoorBlockEntity",

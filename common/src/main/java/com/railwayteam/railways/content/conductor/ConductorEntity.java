@@ -387,6 +387,8 @@ public class ConductorEntity extends AbstractGolem {
 
   @Override
   public boolean hurt(@NotNull DamageSource pSource, float pAmount) {
+    if (getRootVehicle() instanceof CarriageContraptionEntity) // no damage when riding
+      return false;
     if (pSource.getEntity() instanceof LivingEntity living && living.getMainHandItem().is(AllItems.WRENCH.get()))
       pAmount = 10;
     return super.hurt(pSource, pAmount);
@@ -495,8 +497,8 @@ public class ConductorEntity extends AbstractGolem {
       if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
       return InteractionResult.SUCCESS;
     } else if (player.getItemInHand(hand).getItem().equals(AllBlocks.ANDESITE_CASING.asStack().getItem())) {
-      if(this.getHealth()!=this.getMaxHealth()){
-        this.setHealth(this.getHealth()+1);
+      if(this.getHealth()<this.getMaxHealth()){
+        this.setHealth(this.getMaxHealth());
         if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
         return InteractionResult.SUCCESS;}
     } else if (!this.isCarryingToolbox() && isToolbox(player.getItemInHand(hand)) && getJob() == Job.DEFAULT) {
