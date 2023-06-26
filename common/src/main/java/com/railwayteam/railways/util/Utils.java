@@ -2,6 +2,7 @@ package com.railwayteam.railways.util;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
@@ -48,6 +49,11 @@ public class Utils {
 
 	@ExpectPlatform
 	public static void sendCreatePacketToServer(SimplePacketBase packet) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
+	public static void sendHonkPacket(Train train, boolean isHonk) {
 		throw new AssertionError();
 	}
 }

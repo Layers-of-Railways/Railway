@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
@@ -15,6 +16,7 @@ import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Freq
 import com.simibubi.create.content.redstone.link.controller.LinkedControllerItem;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
@@ -697,6 +699,9 @@ public class ConductorEntity extends AbstractGolem {
               WalkNodeEvaluator.getFloorLevel(this.conductor.level, blockPos);
     }
 
+    private int honkPacketCooldown = 0;
+    private boolean usedToHonk;
+
     @Override
     public void tick() {
       super.tick();
@@ -712,16 +717,48 @@ public class ConductorEntity extends AbstractGolem {
         Couple<Boolean> controlsPresent = cc.conductorSeats.get(seat);
         if (controlsPresent == null)
           return;
-        BlockPos controlsPos;
+        BlockPos controlsPos = null; // fixme this seems to go backwards sometimes
+        BlockPos reverseControlsPos = null;
         if (controlsPresent.getFirst()) {
-          controlsPos = seat.relative(cc.getAssemblyDirection());
-        } else if (controlsPresent.getSecond()) {
           controlsPos = seat.relative(cc.getAssemblyDirection().getOpposite());
-        } else {
+        }
+        if (controlsPresent.getSecond()) {
+          if (controlsPos == null)
+            controlsPos = seat.relative(cc.getAssemblyDirection());
+          else
+            reverseControlsPos = seat.relative(cc.getAssemblyDirection());
+        }
+        if (controlsPos == null){
           return;
         }
         Set<Integer> controls = getControls();
+        if (reverseControlsPos != null && controls.contains(1) && !controls.contains(0)) { // go backwards quickly
+          controls.remove(1);
+          controls.add(0);
+          /*boolean left = controls.remove(2);
+          boolean right = controls.remove(3);
+          if (left) controls.add(3);
+          if (right) controls.add(2);*/
+          controlsPos = reverseControlsPos;
+        }
+        boolean isSprintKeyPressed = controls.remove(5);
         cce.control(controlsPos, controls, conductor.fakePlayer);
+
+        Train train = cce.getCarriage().train;
+        if (isSprintKeyPressed && honkPacketCooldown-- <= 0) {
+          train.determineHonk(conductor.level);
+          if (train.lowHonk != null) {
+            Utils.sendHonkPacket(train, true);
+            honkPacketCooldown = 5;
+            usedToHonk = true;
+          }
+        }
+
+        if (!isSprintKeyPressed && usedToHonk) {
+          Utils.sendHonkPacket(train, false);
+          honkPacketCooldown = 0;
+          usedToHonk = false;
+        }
       } else if (targetDirection.lengthSqr() > 0.01) {
         this.conductor.getMoveControl().setWantedPosition(target.x, getGroundY(target), target.z,
                 this.speedModifier * targetStrength / 15);
@@ -782,7 +819,7 @@ public class ConductorEntity extends AbstractGolem {
         count++;
       }
 
-      return Pair.of(new Vec3(x, y, z).scale(1 / 15.0), count == 0 ? 0 : avgStrength / count);
+      return Pair.of(new Vec3(x, Math.max(0, y), z).scale(1 / 15.0), count == 0 ? 0 : avgStrength / count);
     }
 
     @Override

@@ -113,7 +113,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     boolean switchMessage = false;
 
     private void displayApproachSwitchMessage(Player player, TrackSwitch sw, boolean isWrong) {
-        sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong);
+        sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong, sw.isLocked());
         switchMessage = true;
     }
 
@@ -125,9 +125,9 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         switchMessage = false;
     }
 
-    private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong) {
+    private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong, boolean isLocked) {
         if (player instanceof ServerPlayer sp)
-            CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong));
+            CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong, isLocked));
     }
 
     @Inject(method = "updateTrackGraph", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;graph:Lcom/simibubi/create/content/trains/graph/TrackGraph;", opcode = Opcodes.H_PUTFIELD, ordinal = 0), cancellable = true)

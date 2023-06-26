@@ -147,6 +147,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
                 if (sw != null)
                     sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
             });
+            autoMode.requiresWrench();
             behaviours.add(autoMode);
         }
     }

@@ -2,6 +2,8 @@ package com.railwayteam.railways.util.forge;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.content.trains.HonkPacket;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
@@ -9,6 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
@@ -33,5 +36,9 @@ public class UtilsImpl {
 
     public static void sendCreatePacketToServer(SimplePacketBase packet) {
 		AllPackets.getChannel().sendToServer(packet);
+    }
+
+    public static void sendHonkPacket(Train train, boolean isHonk) {
+		AllPackets.getChannel().send(PacketDistributor.ALL.noArg(), new HonkPacket(train, isHonk));
     }
 }

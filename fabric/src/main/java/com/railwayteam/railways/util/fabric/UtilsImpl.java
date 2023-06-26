@@ -2,6 +2,8 @@ package com.railwayteam.railways.util.fabric;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.AllPackets;
+import com.simibubi.create.content.trains.HonkPacket;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import io.github.fabricators_of_create.porting_lib.util.KeyBindingHelper;
 import net.fabricmc.api.EnvType;
@@ -32,5 +34,9 @@ public class UtilsImpl {
 
     public static void sendCreatePacketToServer(SimplePacketBase packet) {
 		AllPackets.getChannel().sendToServer(packet);
+    }
+
+    public static void sendHonkPacket(Train train, boolean isHonk) {
+		AllPackets.getChannel().sendToClientsInCurrentServer(new HonkPacket(train, isHonk));
     }
 }

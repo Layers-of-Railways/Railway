@@ -301,6 +301,8 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
                         if (state == null)
                             state = sw.getTargetState(reachedEdge.node2.getLocation());
                         targetState.setValue(state);
+                        if (state != null)
+                            break;
                     }
                 }
                 return true;
