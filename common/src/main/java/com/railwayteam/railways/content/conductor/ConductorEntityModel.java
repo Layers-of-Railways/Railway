@@ -6,6 +6,7 @@ import com.railwayteam.railways.Railways;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -13,10 +14,9 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
-public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<T> implements ArmedModel, HeadedModel {
+public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidModel<T> implements ArmedModel, HeadedModel {
   // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
   public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Railways.MODID, "conductor"), "main");
 
@@ -48,6 +48,9 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
 
   @Override
   public void setupAnim (@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    if (entity.visualBaseModel != null && false) {
+      setupAnimBasedOn(entity.visualBaseModel, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    }
     // mostly based on HumanoidModel::setupAnim
     // TODO can't call super directly due to rotation anchor offsets, find a way to fix them?
     this.head.xRot = headPitch * ((float)Math.PI / 180F);
@@ -70,6 +73,38 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
     this.rightLeg.zRot = 0.0F;
     this.leftLeg.zRot = 0.0F;
     if (this.riding) {
+      this.rightArm.xRot += (-(float)Math.PI / 2f);
+      this.leftArm.xRot += (-(float)Math.PI / 2f);
+      this.rightLeg.xRot = -1.4137167F;
+      this.rightLeg.yRot = (-(float)Math.PI / 20f);
+      this.rightLeg.zRot = 0.07853982F;
+      this.leftLeg.xRot = -1.4137167F;
+      this.leftLeg.yRot = ((float)Math.PI / 20f);
+      this.leftLeg.zRot = -0.07853982F;
+    }
+  }
+
+  private void setupAnimBasedOn(PlayerModel<?> visualBaseModel, T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    this.head.xRot = visualBaseModel.head.xRot;
+    this.head.yRot = visualBaseModel.head.yRot;
+
+    this.hat.xRot = (float) (this.head.xRot + (-10 * (Math.PI / 180)));
+    this.hat.yRot = this.head.yRot;
+    float amt = -0.1f*16;
+    this.hat.x = (float) (Math.cos(this.head.xRot) * amt * Math.sin(this.head.yRot));
+    this.hat.z = (float) (Math.cos(this.head.xRot) * amt * Math.cos(this.head.yRot));
+    this.hat.y = 10.0f - (float) (Math.sin(this.head.xRot) * amt);
+
+    this.rightArm.xRot = visualBaseModel.rightArm.xRot;
+    this.leftArm.xRot = visualBaseModel.leftArm.xRot;
+
+    this.rightLeg.xRot = visualBaseModel.rightLeg.xRot;
+    this.leftLeg.xRot = visualBaseModel.leftLeg.xRot;
+    this.rightLeg.yRot = 0.0F;
+    this.leftLeg.yRot = 0.0F;
+    this.rightLeg.zRot = 0.0F;
+    this.leftLeg.zRot = 0.0F;
+    if (visualBaseModel.riding) {
       this.rightArm.xRot += (-(float)Math.PI / 2f);
       this.leftArm.xRot += (-(float)Math.PI / 2f);
       this.rightLeg.xRot = -1.4137167F;

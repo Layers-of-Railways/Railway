@@ -26,6 +26,7 @@ import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
@@ -444,6 +445,9 @@ public class ConductorEntity extends AbstractGolem {
       return this.getXRot();
     return super.getViewXRot(partialTicks);
   }
+
+  @Environment(EnvType.CLIENT)
+  public PlayerModel<?> visualBaseModel;
 
   public boolean isPossessed() {
     return level.isClientSide ? ClientHandler.isPossessed(this) : currentlyViewing.get() != null;

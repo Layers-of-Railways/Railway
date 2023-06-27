@@ -4,13 +4,17 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
+import com.railwayteam.railways.mixin.client.AccessorEntity;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.registry.*;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.world.entity.EquipmentSlot;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -76,5 +80,32 @@ public class RailwaysClient {
   @ExpectPlatform
   public static void registerBuiltinPack(String id, String name) {
     throw new AssertionError();
+  }
+
+  public static void transformVisualConductor(AbstractClientPlayer player, ConductorEntity conductor) {
+    conductor.xo = player.xo;
+    conductor.yo = player.yo;
+    conductor.zo = player.zo;
+    conductor.xOld = player.xOld;
+    conductor.yOld = player.yOld;
+    conductor.zOld = player.zOld;
+    conductor.xRotO = player.xRotO;
+    conductor.yRotO = player.yRotO;
+    ((AccessorEntity) conductor).setXRot(player.getXRot());
+    ((AccessorEntity) conductor).setYRot(player.getYRot());
+
+    conductor.yHeadRot = player.yHeadRot;
+    conductor.yBodyRot = player.yBodyRot;
+    conductor.yBodyRotO = player.yBodyRotO;
+    conductor.yHeadRotO = player.yHeadRotO;
+
+    conductor.animationPosition = player.animationPosition;
+    conductor.animationSpeed = player.animationSpeed;
+    conductor.animationSpeedOld = player.animationSpeedOld;
+
+    for (EquipmentSlot slot : EquipmentSlot.values())
+      conductor.setItemSlot(slot, player.getItemBySlot(slot));
+
+    conductor.setSharedFlag(7, player.isFallFlying());
   }
 }
