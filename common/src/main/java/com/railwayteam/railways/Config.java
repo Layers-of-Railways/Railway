@@ -22,6 +22,7 @@ public class Config {
     public static ForgeConfigSpec.IntValue JOURNEYMAP_REMOVE_OBSOLETE_TICKS;
     public static ForgeConfigSpec.BooleanValue EXTENDED_COUPLER_DEBUG;
     public static ForgeConfigSpec.BooleanValue SKIP_CLIENT_DERAILING;
+    public static ForgeConfigSpec.BooleanValue CONDUCTOR_SPY_SHADER;
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
@@ -43,6 +44,7 @@ public class Config {
         JOURNEYMAP_REMOVE_OBSOLETE_TICKS = CLIENT_BUILDER.comment("Journeymap train overlay old marker removal check time (in ticks)").defineInRange("journeymapObsolescenceCheckTicks", 200, 10, 1200);
         EXTENDED_COUPLER_DEBUG = CLIENT_BUILDER.comment("Show extended debug info in coupler goggle overlay").define("extendedCouplerDebug", false);
         SKIP_CLIENT_DERAILING = CLIENT_BUILDER.comment("Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash").define("skipClientsideDerailing", false);
+        CONDUCTOR_SPY_SHADER = CLIENT_BUILDER.comment("Use a scanline shader when spying through a conductor").define("conductorSpyShader", true);
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         setupGeneralCategory(SERVER_BUILDER);

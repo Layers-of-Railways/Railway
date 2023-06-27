@@ -537,7 +537,7 @@ public class TrainScenes {
                 protected void onHitBlock(@NotNull BlockHitResult result) {
                     super.onHitBlock(result);
                     if (level.getBlockEntity(result.getBlockPos()) instanceof TrackSwitchTileEntity switchBE) {
-                        switchBE.setStatePonder(switchBE.getState().nextStateFor(switchBE.getSwitch(), SwitchConstraint.NONE));
+                        switchBE.setStatePonder(switchBE.getState().nextStateForPonder(SwitchConstraint.NONE));
 
                         int output = switchBE.getTargetAnalogOutput();
                         level.setBlockAndUpdate(comparatorPos, level.getBlockState(comparatorPos)

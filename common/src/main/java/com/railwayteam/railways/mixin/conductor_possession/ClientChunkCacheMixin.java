@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -128,7 +129,9 @@ public abstract class ClientChunkCacheMixin {
 	/**
 	 * If chunks in range of a camera storage need to be acquired, ask the camera storage about these chunks
 	 */
-	@Inject(method = "getChunk(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/LevelChunk;", at = @At("TAIL"), cancellable = true)
+	@Inject(method = "getChunk(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/LevelChunk;",
+			slice = @Slice(from = @At(value = "RETURN", ordinal = 1)),
+			at = @At("RETURN"), cancellable = true)
 	private void securitycraft$onGetChunk(int x, int z, ChunkStatus requiredStatus, boolean load, CallbackInfoReturnable<LevelChunk> callback) {
 		if (ClientHandler.isPlayerMountedOnCamera() && ConductorPossessionController.getCameraStorage().inRange(x, z)) {
 			LevelChunk chunk = ConductorPossessionController.getCameraStorage().getChunk(ConductorPossessionController.getCameraStorage().getIndex(x, z));

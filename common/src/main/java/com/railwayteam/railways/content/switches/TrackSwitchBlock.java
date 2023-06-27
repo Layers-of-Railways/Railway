@@ -117,6 +117,32 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
       return this;
     }
+
+      public SwitchState nextStateForPonder(SwitchConstraint constraint) {
+        if (this == NORMAL) {
+          if (constraint.canGoRight()) {
+            return REVERSE_RIGHT;
+          } else if (constraint.canGoLeft()) {
+            return REVERSE_LEFT;
+          }
+        } else if (this == REVERSE_RIGHT) {
+          if (constraint == SwitchConstraint.NONE) {
+            if (constraint.canGoLeft()) {
+              return REVERSE_LEFT;
+            }
+          } else {
+            if (constraint.canGoLeft()) {
+              return NORMAL;
+            }
+          }
+        } else if (this == REVERSE_LEFT) {
+          if (constraint.canGoRight()) {
+            return NORMAL;
+          }
+        }
+
+        return this;
+      }
   }
 
   @ExpectPlatform

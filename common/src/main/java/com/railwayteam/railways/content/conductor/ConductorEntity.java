@@ -375,6 +375,7 @@ public class ConductorEntity extends AbstractGolem {
       return false;
     }
     currentlyViewing = new WeakReference<>(player);
+    oldSectionPos = null;
     SectionPos chunkPos = SectionPos.of(blockPosition());
     int viewDistance = player.server.getPlayerList().getViewDistance();
 
