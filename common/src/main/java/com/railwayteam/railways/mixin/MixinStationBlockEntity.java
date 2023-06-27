@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -53,6 +54,8 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     private void snr$setBogeyData(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos,
                               CallbackInfoReturnable<Boolean> cir, BoundingBox bb, BlockPos up, BlockPos down,
                               int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
+        if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
+            return;
         BogeyStyle style = BogeyCategoryHandlerServer.getStyle(player.getUUID());
         if (style == AllBogeyStyles.STANDARD)
             return;
