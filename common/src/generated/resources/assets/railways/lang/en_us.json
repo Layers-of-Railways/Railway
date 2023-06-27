@@ -383,6 +383,12 @@
 	"block.create.track_station.tooltip": "TRAIN STATION",
 	"block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
 
+	"block.railways.track_phantom.tooltip": "PHANTOM TRACK",
+	"block.railways.track_phantom.tooltip.condition1": "When you hold a Phantom Track in your hand",
+	"block.railways.track_phantom.tooltip.behaviour1": "_Phantom Tracks_ in the world will be _visible_",
+	"block.railways.track_phantom.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
+	"block.railways.track_phantom.tooltip.behaviour2": "_Phantom Tracks_ in the world will be _invisible_",
+
 	"_": "Thank you for translating Steam 'n Rails!"
 
 }

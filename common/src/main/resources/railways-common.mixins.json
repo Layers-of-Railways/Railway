@@ -102,12 +102,14 @@
     "client.MixinTrainHatOffsets",
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
+    "conductor_possession.AccessorKeyMapping",
     "conductor_possession.ClientChunkCacheMixin",
     "conductor_possession.LevelRendererMixin",
     "conductor_possession.MixinGameRenderer",
     "conductor_possession.MixinGui",
     "conductor_possession.MixinItemInHandRenderer",
     "conductor_possession.MixinLocalPlayer",
+    "conductor_possession.MixinMinecraft",
     "conductor_possession.MixinMouseHandler"
   ],
   "injectors": {

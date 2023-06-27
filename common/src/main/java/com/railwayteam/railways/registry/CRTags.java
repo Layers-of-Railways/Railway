@@ -41,6 +41,7 @@ public class CRTags {
   public enum AllBlockTags {
     SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
     TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
+    CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false) // so other mods / datapacks can make more blocks usable for conductor spies
     ;
 
     public final TagKey<Block> tag;

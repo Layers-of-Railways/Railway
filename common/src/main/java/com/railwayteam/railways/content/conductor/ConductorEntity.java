@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.Utils;
@@ -65,6 +66,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
@@ -85,6 +87,12 @@ public class ConductorEntity extends AbstractGolem {
           UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
           "[Conductor]"
   );
+
+  public static boolean canSpyInteract(BlockState blockState) {
+    Block block = blockState.getBlock();
+    return blockState.is(BlockTags.BUTTONS) || blockState.is(BlockTags.TRAPDOORS) || block instanceof LeverBlock
+            || CRTags.AllBlockTags.CONDUCTOR_SPY_USABLE.matches(blockState);
+  }
 
   public ItemStack getSecondaryHeadStack() {
     return ItemStack.EMPTY;
@@ -400,7 +408,6 @@ public class ConductorEntity extends AbstractGolem {
 
   public void stopViewing(ServerPlayer player) {
     if (!level.isClientSide) {
-      discardCamera();
       currentlyViewing.clear();
       player.camera = player;
       CRPackets.PACKETS.sendTo(player, new SetCameraViewPacket(player));
@@ -408,19 +415,20 @@ public class ConductorEntity extends AbstractGolem {
     }
   }
 
-  private void discardCamera() {
-    if (!level.isClientSide) {
-      /*if (level.getBlockEntity(blockPosition()) instanceof SecurityCameraBlockEntity camBe)
-        camBe.stopViewing();*/
-
-      SectionPos chunkPos = SectionPos.of(blockPosition());
-      int chunkLoadingDistance = initialChunkLoadingDistance <= 0 ? level.getServer().getPlayerList().getViewDistance() : initialChunkLoadingDistance;
-
-      /*for (int x = chunkPos.getX() - chunkLoadingDistance; x <= chunkPos.getX() + chunkLoadingDistance; x++) {
-        for (int z = chunkPos.getZ() - chunkLoadingDistance; z <= chunkPos.getZ() + chunkLoadingDistance; z++) {
-//          ForgeChunkManager.forceChunk((ServerLevel) level, SecurityCraft.MODID, this, x, z, false, false);
-        }
-      }*/
+  @SuppressWarnings("DuplicatedCode")
+  public void onSpyInteract(BlockPos pos) {
+    BlockState state;
+    if (this.canReach(pos) && canSpyInteract((state = this.level.getBlockState(pos))) && fakePlayer != null) {
+      ClipContext context = new ClipContext(this.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
+              ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fakePlayer);
+      BlockHitResult hitResult = level.clip(context);
+      //Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());
+      if (!pos.equals(hitResult.getBlockPos()))
+        return;
+      boolean canUse = state.getShape(level, pos).isEmpty() || EntityUtils.handleUseEvent(fakePlayer, InteractionHand.MAIN_HAND, hitResult);
+      if (canUse) {
+        state.use(level, fakePlayer, InteractionHand.MAIN_HAND, hitResult);
+      }
     }
   }
 

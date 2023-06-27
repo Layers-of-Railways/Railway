@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.conductor;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.CameraMovePacket;
 import com.railwayteam.railways.util.packet.DismountCameraPacket;
+import com.railwayteam.railways.util.packet.SpyConductorInteractPacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,11 @@ import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
 
 @Environment(EnvType.CLIENT)
 public class ConductorPossessionController {
@@ -27,6 +32,10 @@ public class ConductorPossessionController {
     private static boolean wasJumpPressed;
     private static boolean wasSprintPressed;
     private static boolean wasMounted;
+
+    private static final boolean[] wasMouseClicked = new boolean[3];
+    private static final boolean[] wasMousePressed = new boolean[3];
+    private static boolean wasUsingBefore;
 
     private static int ticksSincePacket = 0;
     
@@ -51,8 +60,20 @@ public class ConductorPossessionController {
 
                 if (wasRightPressed = options.keyRight.isDown())
                     options.keyRight.setDown(false);
+
                 if (wasJumpPressed = options.keyJump.isDown())
                     options.keyJump.setDown(false);
+
+                /*Arrays.fill(wasMouseClicked, false);
+                while (options.keyAttack.consumeClick())
+                    wasMouseClicked[0] = true;
+
+                while (options.keyUse.consumeClick())
+                    wasMouseClicked[1] = true;
+
+                while (options.keyPickItem.consumeClick())
+                    wasMouseClicked[2] = true;*/
+
                 wasSprintPressed = options.keySprint.isDown();
 
                 if (options.keyShift.isDown()) {
@@ -84,6 +105,18 @@ public class ConductorPossessionController {
                 if (wasJumpPressed) {
                     options.keyJump.setDown(true);
                 }
+
+                /*if (wasMouseClicked[0]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyAttack).getKey());
+                }
+
+                if (wasMouseClicked[1]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyUse).getKey());
+                }
+
+                if (wasMouseClicked[2]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyPickItem).getKey());
+                }*/
 
                 /*if (KeyBindings.cameraZoomIn.isDown())
                     zoomIn(cam);
@@ -127,6 +160,76 @@ public class ConductorPossessionController {
             OverlayRegistry.enableOverlay(ClientHandler.hotbarBindOverlay, true);
             CameraController.restoreOverlayStates();
         }*/
+    }
+
+    // Injected into Minecraft#handleKeybinds
+    @SuppressWarnings("AssignmentUsedAsCondition")
+    public static void onHandleKeybinds(Minecraft mc, boolean start) {
+        Entity cameraEntity = mc.cameraEntity;
+
+        if (cameraEntity instanceof ConductorEntity cam) {
+            wasMounted = true;
+            Options options = mc.options;
+
+            //up/down/left/right handling is split to prevent players who are viewing a camera from moving around in a boat or on a horse
+            if (start) {
+                Arrays.fill(wasMouseClicked, false);
+                Arrays.fill(wasMousePressed, false);
+
+                while (options.keyAttack.consumeClick())
+                    wasMouseClicked[0] = true;
+
+                while (options.keyUse.consumeClick())
+                    wasMouseClicked[1] = true;
+
+                while (options.keyPickItem.consumeClick())
+                    wasMouseClicked[2] = true;
+
+                if (wasMousePressed[0] = options.keyAttack.isDown())
+                    options.keyAttack.setDown(false);
+
+                if (wasMousePressed[1] = options.keyUse.isDown())
+                    options.keyUse.setDown(false);
+
+                if (wasMousePressed[2] = options.keyPickItem.isDown())
+                    options.keyPickItem.setDown(false);
+
+            }
+            else {
+                /*if (wasMouseClicked[0]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyAttack).getKey());
+                }
+
+                if (wasMouseClicked[1]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyUse).getKey());
+                }
+
+                if (wasMouseClicked[2]) {
+                    KeyMapping.click(((AccessorKeyMapping) options.keyPickItem).getKey());
+                }*/
+
+                if (wasMousePressed[0])
+                    options.keyAttack.setDown(true);
+
+                if (wasMousePressed[1]) {
+                    options.keyUse.setDown(true);
+                    if (!wasUsingBefore) {
+                        wasUsingBefore = true;
+                        HitResult hitresult = mc.hitResult;
+                        if (hitresult != null && hitresult.getType() == HitResult.Type.BLOCK && mc.level != null
+                                && hitresult instanceof BlockHitResult blockHitResult
+                                && ConductorEntity.canSpyInteract(mc.level.getBlockState(blockHitResult.getBlockPos()))) {
+                            CRPackets.PACKETS.send(new SpyConductorInteractPacket(blockHitResult.getBlockPos()));
+                        }
+                    }
+                } else {
+                    wasUsingBefore = false;
+                }
+
+                if (wasMousePressed[2])
+                    options.keyPickItem.setDown(true);
+            }
+        }
     }
 
     private static void dismount() {
