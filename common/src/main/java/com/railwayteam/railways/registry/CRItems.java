@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
+import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.multiloader.CommonTags;
@@ -87,6 +88,10 @@ public class CRItems {
       .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Jukebox")
+      .register();
+
+  public static final ItemEntry<? extends RemoteLensItem> REMOTE_LENS = REGISTRATE.item("remote_lens", RemoteLensItem::new)
+      .lang("Remote Lens")
       .register();
 
   public static final EnumMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);

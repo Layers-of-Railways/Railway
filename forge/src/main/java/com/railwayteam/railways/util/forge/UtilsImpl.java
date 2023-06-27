@@ -6,8 +6,11 @@ import com.simibubi.create.content.trains.HonkPacket;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -40,5 +43,13 @@ public class UtilsImpl {
 
     public static void sendHonkPacket(Train train, boolean isHonk) {
 		AllPackets.getChannel().send(PacketDistributor.ALL.noArg(), new HonkPacket(train, isHonk));
+    }
+
+    public static void postChunkEventClient(LevelChunk chunk, boolean load) {
+		if (load) {
+			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Unload(chunk));
+		} else {
+			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Unload(chunk));
+		}
     }
 }

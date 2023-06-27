@@ -8,6 +8,7 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.world.level.chunk.LevelChunk;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,6 +55,11 @@ public class Utils {
 
 	@ExpectPlatform
 	public static void sendHonkPacket(Train train, boolean isHonk) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
+	public static void postChunkEventClient(LevelChunk chunk, boolean load) {
 		throw new AssertionError();
 	}
 }

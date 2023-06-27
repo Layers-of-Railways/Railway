@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -42,6 +43,12 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .viaShapeless(b -> b
             .requires(Ingredients.copperIngot())
             .requires(Ingredients.brassNugget()));
+
+    GeneratedRecipe REMOTE_LENS = create(CRItems.REMOTE_LENS)
+            .unlockedBy(Ingredients::precisionMechanism)
+            .viaShapeless(b -> b
+                    .requires(Ingredients.precisionMechanism())
+                    .requires(Ingredients.eyeOfEnder()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
         .unlockedBy(Ingredients::campfire)

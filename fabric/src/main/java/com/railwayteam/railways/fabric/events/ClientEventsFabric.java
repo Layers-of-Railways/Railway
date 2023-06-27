@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 public class ClientEventsFabric {
 	public static void init() {
 		ClientTickEvents.START_CLIENT_TICK.register(ClientEvents::onClientTickStart);
+		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onClientTickEnd);
 		KeyInputCallback.EVENT.register((key, scancode, action, mods) -> {
 			ClientEvents.onKeyInput(key, action != 0);
 		});

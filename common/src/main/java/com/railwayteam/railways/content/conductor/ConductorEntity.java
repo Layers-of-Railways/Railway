@@ -4,11 +4,14 @@ import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CREntities;
+import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.Utils;
+import com.railwayteam.railways.util.packet.SetCameraViewPacket;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlock;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
@@ -20,7 +23,11 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -33,7 +40,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.TicketType;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,19 +60,24 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.function.Consumer;
+
+import static com.railwayteam.railways.content.conductor.ConductorPossessionController.*;
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
@@ -69,6 +85,10 @@ public class ConductorEntity extends AbstractGolem {
           UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
           "[Conductor]"
   );
+
+  public ItemStack getSecondaryHeadStack() {
+    return ItemStack.EMPTY;
+  }
 
   public class FrequencyListener implements IRedstoneLinkable {
     public final String key;
@@ -288,6 +308,300 @@ public class ConductorEntity extends AbstractGolem {
   MountedToolbox toolbox = null;
   private List<ItemStack> heldSchedules;
 
+  // possession is based on SecurityCraft (MIT license)
+  /* Possession variables */
+  // keep track of position for packets
+  public double firstGoodX;
+  public double firstGoodY;
+  public double firstGoodZ;
+  public double lastGoodX;
+  public double lastGoodY;
+  public double lastGoodZ;
+  public int receivedMovePacketCount;
+  public int knownMovePacketCount;
+
+  private void resetPosition() {
+    firstGoodX = lastGoodX = getX();
+    firstGoodY = lastGoodY = getY();
+    firstGoodZ = lastGoodZ = getZ();
+    knownMovePacketCount = receivedMovePacketCount;
+  }
+
+  public void doCheckFallDamage(double y, boolean onGround) {
+    if (this.touchingUnloadedChunk()) {
+      return;
+    }
+    BlockPos blockPos = this.getOnPos();
+    super.checkFallDamage(y, onGround, this.level.getBlockState(blockPos), blockPos);
+  }
+
+  // make public
+  @Override
+  public void jumpFromGround() {
+    super.jumpFromGround();
+  }
+
+  public static final List<Player> RECENTLY_DISMOUNTED_PLAYERS = new ArrayList<>();
+  @NotNull
+  private WeakReference<ServerPlayer> currentlyViewing = new WeakReference<>(null);
+  private int initialChunkLoadingDistance = 0;
+  private boolean hasSentChunks = false;
+
+  public void setChunkLoadingDistance(int chunkLoadingDistance) {
+    initialChunkLoadingDistance = chunkLoadingDistance;
+  }
+
+  public boolean hasSentChunks() {
+    return hasSentChunks;
+  }
+
+  public void setHasSentChunks(boolean hasSentChunks) {
+    this.hasSentChunks = hasSentChunks;
+  }
+
+  public SectionPos oldSectionPos = null;
+
+  public static boolean hasRecentlyDismounted(Player player) {
+    return RECENTLY_DISMOUNTED_PLAYERS.remove(player);
+  }
+
+  public boolean startViewing(ServerPlayer player) {
+    ServerPlayer current = currentlyViewing.get();
+    if (current != null && current.getCamera() == this && current.isAlive() && current != player) {
+      return false;
+    }
+    ServerLevel serverLevel = player.getLevel();
+    if (serverLevel != level) {
+      return false;
+    }
+    currentlyViewing = new WeakReference<>(player);
+    SectionPos chunkPos = SectionPos.of(blockPosition());
+    int viewDistance = player.server.getPlayerList().getViewDistance();
+
+    if (player.getCamera() instanceof ConductorEntity conductor)
+      conductor.stopViewing(player);
+
+    setChunkLoadingDistance(viewDistance);
+
+    /*for (int x = chunkPos.getX() - viewDistance; x <= chunkPos.getX() + viewDistance; x++) {
+      for (int z = chunkPos.getZ() - viewDistance; z <= chunkPos.getZ() + viewDistance; z++) {
+        ForgeChunkManager.forceChunk(serverLevel, SecurityCraft.MODID, dummyEntity, x, z, true, false);
+      }
+    }*/ // put chunkloading tickets in #tick
+
+    //can't use ServerPlayer#setCamera here because it also teleports the player
+    player.camera = this;
+    CRPackets.PACKETS.sendTo(player, new SetCameraViewPacket(this));
+    resetPosition();
+    // update ConductorPossessionController.setRenderPosition in #tick
+    return true;
+  }
+
+  public void stopViewing(ServerPlayer player) {
+    if (!level.isClientSide) {
+      discardCamera();
+      currentlyViewing.clear();
+      player.camera = player;
+      CRPackets.PACKETS.sendTo(player, new SetCameraViewPacket(player));
+      RECENTLY_DISMOUNTED_PLAYERS.add(player);
+    }
+  }
+
+  private void discardCamera() {
+    if (!level.isClientSide) {
+      /*if (level.getBlockEntity(blockPosition()) instanceof SecurityCameraBlockEntity camBe)
+        camBe.stopViewing();*/
+
+      SectionPos chunkPos = SectionPos.of(blockPosition());
+      int chunkLoadingDistance = initialChunkLoadingDistance <= 0 ? level.getServer().getPlayerList().getViewDistance() : initialChunkLoadingDistance;
+
+      /*for (int x = chunkPos.getX() - chunkLoadingDistance; x <= chunkPos.getX() + chunkLoadingDistance; x++) {
+        for (int z = chunkPos.getZ() - chunkLoadingDistance; z <= chunkPos.getZ() + chunkLoadingDistance; z++) {
+//          ForgeChunkManager.forceChunk((ServerLevel) level, SecurityCraft.MODID, this, x, z, false, false);
+        }
+      }*/
+    }
+  }
+
+  // specific movement-related stuff
+
+  public float oBob;
+  public float bob;
+
+  @Override
+  @Environment(EnvType.CLIENT)
+  public float getViewXRot(float partialTicks) {
+    if (ClientHandler.isPossessed(this))
+      return this.getXRot();
+    return super.getViewXRot(partialTicks);
+  }
+
+  public boolean isPossessed() {
+    return level.isClientSide ? ClientHandler.isPossessed(this) : currentlyViewing.get() != null;
+  }
+
+  public boolean isPossessedAndClient() {
+    return level.isClientSide && isPossessed();
+  }
+
+  // only used by MouseHandler
+  public void turnView(double yRot, double xRot) {
+    float f = (float)xRot * 0.15f;
+    float g = (float)yRot * 0.15f;
+    rotateAnyway = true;
+    this.setXRot(this.getXRot() + f);
+    this.setYRot(this.getYRot() + g);
+    rotateAnyway = true;
+    this.setXRot(Mth.clamp(this.getXRot(), -90.0f, 90.0f));
+    this.xRotO += f;
+    this.yRotO += g;
+    this.xRotO = Mth.clamp(this.xRotO, -90.0f, 90.0f);
+    if (this.getVehicle() != null) {
+      this.getVehicle().onPassengerTurned(this);
+    }
+  }
+
+  @Override
+  @Environment(EnvType.CLIENT)
+  public float getViewYRot(float partialTick) {
+    return this.isPassenger() || !isPossessed() ? super.getViewYRot(partialTick) : this.getYRot();
+  }
+
+  private boolean rotateAnyway = false;
+  private boolean consumeRotateAnyway() {
+    if (rotateAnyway) {
+      rotateAnyway = false;
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public void setXRot(float xRot) {
+    if (isPossessedAndClient() && !consumeRotateAnyway())
+      return;
+    super.setXRot(xRot);
+  }
+
+  @Override
+  protected boolean isHorizontalCollisionMinor(@NotNull Vec3 deltaMovement) {
+    if (!isPossessedAndClient())
+      return super.isHorizontalCollisionMinor(deltaMovement);
+    float f = this.getYRot() * ((float)Math.PI / 180);
+    double d0 = Mth.sin(f);
+    double d1 = Mth.cos(f);
+    double d2 = (double)this.xxa * d1 - (double)this.zza * d0;
+    double d3 = (double)this.zza * d1 + (double)this.xxa * d0;
+    double d4 = Mth.square(d2) + Mth.square(d3);
+    double d5 = Mth.square(deltaMovement.x) + Mth.square(deltaMovement.z);
+    if (!(d4 < (double)1.0E-5f) && !(d5 < (double)1.0E-5f)) {
+      double d6 = d2 * deltaMovement.x + d3 * deltaMovement.z;
+      double d7 = Math.acos(d6 / Math.sqrt(d4 * d5));
+      return d7 < 0.13962633907794952;
+    }
+    return false;
+  }
+
+  public void updatePossessionInputs() {
+    if (isPossessedAndClient()) {
+      _updatePossessionInputs();
+    }
+  }
+
+  private static float calculateImpulse(boolean input, boolean otherInput) {
+    if (input == otherInput) {
+      return 0.0f;
+    }
+    return input ? 1.0f : -1.0f;
+  }
+
+  @Environment(EnvType.CLIENT)
+  private void _updatePossessionInputs() {
+    this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+    this.zza = calculateImpulse(wasUpPressed(), wasDownPressed());
+    this.xxa = calculateImpulse(wasLeftPressed(), wasRightPressed());
+    if (!wasSprintPressed()) {
+      zza *= 0.3;
+      xxa *= 0.3;
+    }
+    this.jumping = wasJumpPressed();
+    this.flyingSpeed = 0.2f;
+    if (wasSprintPressed()) {
+      this.flyingSpeed += 0.006f;
+    }
+  }
+
+  @Override
+  public void push(@NotNull Entity entity) {
+    if (ConductorPossessionController.getPossessingConductor(entity) == this)
+      return;
+    super.push(entity);
+  }
+
+  @Override
+  public boolean isPushable() {
+    return super.isPushable() && !isPossessed();
+  }
+
+  @Override
+  public boolean isControlledByLocalInstance() {
+    return super.isControlledByLocalInstance() || isPossessedAndClient();
+  }
+
+  private boolean suffocatesAt(BlockPos pos) {
+    AABB aabb = this.getBoundingBox();
+    AABB aabb1 = new AABB(pos.getX(), aabb.minY, pos.getZ(), (double)pos.getX() + 1.0, aabb.maxY, (double)pos.getZ() + 1.0).deflate(1.0E-7);
+    return this.level.collidesWithSuffocatingBlock(this, aabb1);
+  }
+
+  private void moveTowardsClosestSpace(double x, double z) {
+    BlockPos blockpos = new BlockPos(x, this.getY(), z);
+    if (this.suffocatesAt(blockpos)) {
+      Direction[] adirection;
+      double d0 = x - (double)blockpos.getX();
+      double d1 = z - (double)blockpos.getZ();
+      Direction direction = null;
+      double d2 = Double.MAX_VALUE;
+      for (Direction direction1 : adirection = new Direction[]{Direction.WEST, Direction.EAST, Direction.NORTH, Direction.SOUTH}) {
+        double d4;
+        double d3 = direction1.getAxis().choose(d0, 0.0, d1);
+        double d = d4 = direction1.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 1.0 - d3 : d3;
+        if (!(d4 < d2) || this.suffocatesAt(blockpos.relative(direction1))) continue;
+        d2 = d4;
+        direction = direction1;
+      }
+      if (direction != null) {
+        Vec3 vec3 = this.getDeltaMovement();
+        if (direction.getAxis() == Direction.Axis.X) {
+          this.setDeltaMovement(0.1 * (double)direction.getStepX(), vec3.y, vec3.z);
+        } else {
+          this.setDeltaMovement(vec3.x, vec3.y, 0.1 * (double)direction.getStepZ());
+        }
+      }
+    }
+  }
+
+  @Override
+  public void aiStep() {
+    if (isPossessedAndClient()) {
+      this.oBob = this.bob;
+      this.yHeadRot = this.getYRot();
+      if (!this.noPhysics) {
+        this.moveTowardsClosestSpace(this.getX() - (double)this.getBbWidth() * 0.35, this.getZ() + (double)this.getBbWidth() * 0.35);
+        this.moveTowardsClosestSpace(this.getX() - (double)this.getBbWidth() * 0.35, this.getZ() - (double)this.getBbWidth() * 0.35);
+        this.moveTowardsClosestSpace(this.getX() + (double)this.getBbWidth() * 0.35, this.getZ() - (double)this.getBbWidth() * 0.35);
+        this.moveTowardsClosestSpace(this.getX() + (double)this.getBbWidth() * 0.35, this.getZ() + (double)this.getBbWidth() * 0.35);
+      }
+    }
+    super.aiStep();
+    if (isPossessedAndClient()) {
+      float f = !this.onGround || this.isDeadOrDying() || this.isSwimming() ? 0.0f : Math.min(0.1f, (float)this.getDeltaMovement().horizontalDistance());
+      this.bob += (f - this.bob) * 0.4f;
+    }
+  }
+
+  /* End possession variables */
+
   protected FrequencyListener forwardListener;
   protected FrequencyListener backwardListener;
   protected FrequencyListener leftListener;
@@ -362,7 +676,17 @@ public class ConductorEntity extends AbstractGolem {
     goalSelector.addGoal(1, new ConductorPonderBlockGoal(this));
     goalSelector.addGoal(1, new FollowToolboxPlayerGoal(this, 1.25d));
     goalSelector.addGoal(1, new RemoteControlGoal(this, 1.25d));
-    goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 8f));
+    goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 8f) {
+        @Override
+        public boolean canUse () {
+            return super.canUse() && !isPossessed();
+        }
+
+      @Override
+      public boolean canContinueToUse() {
+        return super.canContinueToUse() && !isPossessed();
+      }
+    });
   }
 
   public static AttributeSupplier.Builder createAttributes () {
@@ -537,15 +861,65 @@ public class ConductorEntity extends AbstractGolem {
         }
         updateFrequencyListeners();
       }
+    } else if (getJob() == Job.DEFAULT && AllItems.GOGGLES.isIn(player.getItemInHand(hand))) {
+      setJob(Job.SPY);
+      player.getItemInHand(hand).shrink(1);
+      return InteractionResult.SUCCESS;
+    } else if (getJob() == Job.SPY) {
+      if (player.isShiftKeyDown() && player.getItemInHand(hand).isEmpty()) {
+        player.setItemInHand(hand, AllItems.GOGGLES.asStack());
+        setJob(Job.DEFAULT);
+      }
     }
+    /*else if (player.getItemInHand(hand).getItem() == Items.PHANTOM_MEMBRANE) {
+      if (level instanceof ServerLevel serverLevel) {
+        List<ServerPlayer> serverPlayers = serverLevel.getServer().getPlayerList().getPlayers(); // tmp for testing
+        if (serverPlayers.size() > 0)
+          startViewing(serverPlayers.get(0));
+      }
+    }*/
     return super.mobInteract(player, hand);
+  }
+
+  @Nullable
+  @Override
+  protected SoundEvent getHurtSound(DamageSource damageSource) {
+    return SoundEvents.NETHERITE_BLOCK_BREAK;
+  }
+
+  @Nullable
+  @Override
+  protected SoundEvent getDeathSound() {
+    return AllSoundEvents.CRUSHING_1.getMainEvent();
   }
 
   @Override
   public void tick() {
+    this.resetPosition();
+    SectionPos sectionPos = SectionPos.of(this);
+    if (!sectionPos.equals(oldSectionPos)) {
+        setHasSentChunks(false);
+    }
+    if (level.isClientSide) {
+      ConductorPossessionController.tryUpdatePossession(this);
+      updatePossessionInputs();
+    }
     super.tick();
-    if (fakePlayer == null && level instanceof ServerLevel serverLevel)
-      fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel);
+    if (level instanceof ServerLevel serverLevel) {
+      if (fakePlayer == null) {
+        fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel);
+      }
+      if ((Object) currentlyViewing.get() instanceof ServerPlayer player) {
+        SectionPos chunkPos = SectionPos.of(blockPosition());
+        int viewDistance = player.server.getPlayerList().getViewDistance();
+        for (int x = chunkPos.getX() - viewDistance; x <= chunkPos.getX() + viewDistance; x++) {
+          for (int z = chunkPos.getZ() - viewDistance; z <= chunkPos.getZ() + viewDistance; z++) {
+            serverLevel.getChunkSource().addRegionTicket(TicketType.FORCED, new ChunkPos(x, z), 3, new ChunkPos(x, z));
+          }
+        }
+      }
+    }
+
     if (toolbox != null) toolbox.tick();
   }
 
@@ -609,10 +983,19 @@ public class ConductorEntity extends AbstractGolem {
   @Override
   protected void dropCustomDeathLoot(@NotNull DamageSource pSource, int pLooting, boolean pRecentlyHit) {
     super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+    Job job = getJob();
     ItemStack holdingStack = this.unequipToolbox();
     if (!holdingStack.isEmpty()) {
       this.spawnAtLocation(holdingStack);
     }
+    if (isHoldingSchedules()) {
+      for (ItemStack scheduleStack : getHeldSchedules())
+        this.spawnAtLocation(scheduleStack);
+    }
+    if (job == Job.REMOTE_CONTROL)
+      this.spawnAtLocation(AllBlocks.REDSTONE_LINK.asStack());
+    else if (job == Job.SPY)
+      this.spawnAtLocation(AllItems.GOGGLES.asStack());
   }
 
   static class JobBasedGoal extends Goal {
@@ -627,7 +1010,7 @@ public class ConductorEntity extends AbstractGolem {
 
     @Override
     public boolean canUse() {
-      return conductor.getJob() == job;
+      return conductor.getJob() == job && !conductor.isPossessed();
     }
 
     @Override
@@ -1005,7 +1388,8 @@ public class ConductorEntity extends AbstractGolem {
   public enum Job {
     REDSTONE_OPERATOR,
     TOOLBOX_CARRIER,
-    REMOTE_CONTROL
+    REMOTE_CONTROL,
+    SPY
     ;
     public static final Job DEFAULT = REDSTONE_OPERATOR;
   }

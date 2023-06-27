@@ -124,6 +124,7 @@
 	"item.railways.purple_incomplete_conductor_cap": "Incomplete Purple Conductor's Cap",
 	"item.railways.red_conductor_cap": "Red Conductor's Cap",
 	"item.railways.red_incomplete_conductor_cap": "Incomplete Red Conductor's Cap",
+	"item.railways.remote_lens": "Remote Lens",
 	"item.railways.track_incomplete_acacia": "Incomplete Acacia Track",
 	"item.railways.track_incomplete_biomesoplenty_cherry": "Incomplete Cherry Track",
 	"item.railways.track_incomplete_biomesoplenty_dead": "Incomplete Dead Track",
@@ -232,6 +233,15 @@
 	"railways.ponder.train_semaphore.text_7": "The top semaphore will close if all paths are blocked",
 	"railways.ponder.train_semaphore.text_8": "When 2 semaphores are placed on a non-brass signal, they both close simultaneously",
 
+	"railways.ponder.train_switch.header": "Using Track Switches",
+	"railways.ponder.train_switch.text_1": "Select a Train Track then place the Switch nearby",
+	"railways.ponder.train_switch.text_2": "The Switch will direct any Trains passing over the marker",
+	"railways.ponder.train_switch.text_3": "Cycle the switch to the right by using it",
+	"railways.ponder.train_switch.text_4": "Cycle the switch to the left by using it while sneaking",
+	"railways.ponder.train_switch.text_5": "Switches provide a comparator signal based on the direction: 1 for left, 0 for straight, and 2 for right",
+	"railways.ponder.train_switch.text_6": "Switch direction can also be set by a redstone signal, and can be locked by powering the bottom",
+	"railways.ponder.train_switch.text_7": "Projectiles also cycle switches on impact",
+
 
 	"_": "->------------------------]  UI & Messages  [------------------------<-",
 
@@ -306,6 +316,11 @@
 	"railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
 	"railways.whistle.failure.no_space": "No space to place flag.",
 	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
+
+	"railways.remote_lens.tool.bound_usage": "Use to spy through the eyes of the bound conductor!",
+	"railways.remote_lens.tool.not_bound": "Not bound, use on a conductor to bind.",
+	"railways.remote_lens.set": "Bound remote lens.",
+	"railways.remote_lens.clear": "Cleared remote lens.",
 
 	"railways.journeymap.train_marker_toggle": "Toggle Train Markers",
 

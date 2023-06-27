@@ -71,6 +71,12 @@
   "railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
   "railways.whistle.failure.no_space": "No space to place flag.",
   "railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
+
+  "railways.remote_lens.tool.bound_usage": "Use to spy through the eyes of the bound conductor!",
+  "railways.remote_lens.tool.not_bound": "Not bound, use on a conductor to bind.",
+  "railways.remote_lens.set": "Bound remote lens.",
+  "railways.remote_lens.clear": "Cleared remote lens.",
+
   "railways.journeymap.train_marker_toggle": "Toggle Train Markers",
 
   "create.display_source.track_signal_source": "Signal State",

@@ -3,7 +3,6 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.trains.signal.SignalBlock;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Block;
 
@@ -14,10 +13,14 @@ public class CRExtraDisplays {
 
     // register the source, working independently of mod loading order
     public static void register() {
-        SignalBlock maybeRegistered = AllBlocks.TRACK_SIGNAL.getUnchecked();
-        if (maybeRegistered == null) {
-            Create.REGISTRATE.addRegisterCallback("track_signal", Registry.BLOCK_REGISTRY, CRExtraDisplays::addSignalSource);
-        } else {
+        Block maybeRegistered;
+        try {
+            maybeRegistered = AllBlocks.TRACK_SIGNAL.get();
+        } catch (NullPointerException ignored) {
+            maybeRegistered = null;
+        }
+        Create.REGISTRATE.addRegisterCallback("track_signal", Registry.BLOCK_REGISTRY, CRExtraDisplays::addSignalSource);
+        if (maybeRegistered != null) {
             addSignalSource(maybeRegistered);
         }
     }

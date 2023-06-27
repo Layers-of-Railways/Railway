@@ -17,6 +17,8 @@ public class ClientEventsForge {
 	public static void onClientTick(TickEvent.ClientTickEvent event) {
 		if (event.phase == Phase.START)
 			ClientEvents.onClientTickStart(Minecraft.getInstance());
+		else if (event.phase == Phase.END)
+			ClientEvents.onClientTickEnd(Minecraft.getInstance());
 	}
 
 	@SubscribeEvent
