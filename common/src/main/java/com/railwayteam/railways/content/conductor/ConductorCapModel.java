@@ -58,17 +58,18 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
 				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-				customModels.put(Pair.of(name, false), model);
+				customModels.put(Pair.of(name, false), model); // normal caps should apply whether they are on a conductor
+				customModels.put(Pair.of(name, true), model);
 			});
 			CRBlockPartials.CUSTOM_CONDUCTOR_ONLY_CAPS.forEach((name, partial) -> {
 				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-				Pair<String, Boolean> key = Pair.of(name, false);
+				Pair<String, Boolean> key = Pair.of(name, true); // for conductors, override conductor model
 				customModels.put(key, model);
 			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
 		}
 		String name = stack.getHoverName().getString();
-		ConductorCapModel<?> model = customModels.getOrDefault(Pair.of(name, false), defaultModel);
+		ConductorCapModel<?> model = customModels.getOrDefault(Pair.of(name, entity instanceof ConductorEntity), defaultModel);
 		model.setProperties(base);
 		return model;
 	}
