@@ -23,7 +23,8 @@ public class CRBlockPartials {
         CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
-    public static void preventTiltingCap(String itemName) {
+    public static void registerCustomCap(String itemName, String modelLoc, Boolean preventTilting) {
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
         NO_TILT_CAPS.add(itemName);
     }
 

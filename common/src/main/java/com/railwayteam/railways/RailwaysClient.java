@@ -40,27 +40,25 @@ public class RailwaysClient {
     registerCustomCap("bosbesballon", "bosbesballon");
     registerCustomCap("SpottyTheTurtle", "turtle");
 
-    registerCustomCap("RileyHighline", "rileyhighline");
+    registerCustomCap("RileyHighline", "rileyhighline", true);
     registerCustomSkin("RileyHighline", "rileyhighline");
-    preventTiltingCap("RileyHighline");
 
-    registerCustomCap("TiesToetToet", "tiestoettoet");
-    preventTiltingCap("TiesToetToet");
+    registerCustomCap("TiesToetToet", "tiestoettoet", true);
 
-    registerCustomCap("LemmaEOF", "headphones");
-    preventTiltingCap("LemmaEOF");
+    registerCustomCap("LemmaEOF", "headphones", true);
 
-    registerCustomCap("To0pa", "stonks_hat");
-    registerCustomCap("Furti_Two", "stonks_hat_blue");
-    registerCustomCap("Aypierre", "stonks_hat_red");
-
-    preventTiltingCap("To0pa");
-    preventTiltingCap("Furti_Two");
-    preventTiltingCap("Aypierre");
+    registerCustomCap("To0pa", "stonks_hat", true);
+    registerCustomCap("Furti_Two", "stonks_hat_blue", true);
+    registerCustomCap("Aypierre", "stonks_hat_red", true);
 
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
 
     registerCustomCap("demondj2002", "demon");
+
+    registerCustomCap("IThundxr", "ithundxr", true);
+    registerCustomSkin("IThundxr", "ithundxr");
+
+    registerCustomCap("Crown", "crown", true);
   }
 
   @ExpectPlatform
