@@ -226,7 +226,22 @@ public class CRBlockPartials {
         MONOBOGEY_FRAME = block("bogey/monorail/frame"),
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
+    public static final PartialModel
+        SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
+        LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
+        COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
+        FREIGHT_FRAME = block("bogey/freight/freight_frame"),
+        ARCHBAR_FRAME = block("bogey/archbar/archbar_frame"),
+        PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
+        MODERN_FRAME = block("bogey/modern/modern_frame"),
+        BLOMBERG_FRAME = block("bogey/blomberg/blomberg_frame"),
+        Y25_FRAME = block("bogey/y25/y25_frame"),
+        HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
+        RADIAL_FRAME = block("bogey/radial/radial_frame"),
+        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
+    public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));

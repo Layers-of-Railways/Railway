@@ -16,14 +16,15 @@ import net.minecraft.resources.ResourceLocation;
 Copied from Create
  */
 public enum CRGuiTextures implements ScreenElement {
-    TRAIN_HUD_SWITCH_BRASS("widgets", 0, 0, 32, 16),
-    TRAIN_HUD_SWITCH_ANDESITE("widgets", 0, 16, 32, 16),
+    TRAIN_HUD_SWITCH_BRASS("widgets", 0, 0, 42, 16),
+    TRAIN_HUD_SWITCH_ANDESITE("widgets", 0, 16, 42, 16),
     TRAIN_HUD_SWITCH_LEFT("widgets", 1, 33, 10, 10),
     TRAIN_HUD_SWITCH_STRAIGHT("widgets", 13, 33, 10, 10),
     TRAIN_HUD_SWITCH_RIGHT("widgets", 25, 33, 10, 10),
     TRAIN_HUD_SWITCH_LEFT_WRONG("widgets", 1, 45, 10, 10),
     TRAIN_HUD_SWITCH_STRAIGHT_WRONG("widgets", 13, 45, 10, 10),
     TRAIN_HUD_SWITCH_RIGHT_WRONG("widgets", 25, 45, 10, 10),
+    TRAIN_HUD_SWITCH_LOCKED("widgets", 37, 45, 10, 10),
     ;
 
     public static final int FONT_COLOR = 0x575F7A;

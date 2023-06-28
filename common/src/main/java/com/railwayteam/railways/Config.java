@@ -21,6 +21,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue JOURNEYMAP_UPDATE_TICKS;
     public static ForgeConfigSpec.IntValue JOURNEYMAP_REMOVE_OBSOLETE_TICKS;
     public static ForgeConfigSpec.BooleanValue EXTENDED_COUPLER_DEBUG;
+    public static ForgeConfigSpec.BooleanValue SKIP_CLIENT_DERAILING;
+    public static ForgeConfigSpec.BooleanValue CONDUCTOR_SPY_SHADER;
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
@@ -29,6 +31,8 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue REGISTER_MISSING_TRACKS;
     public static ForgeConfigSpec.BooleanValue FLIP_DISTANT_SWITCHES;
     public static ForgeConfigSpec.IntValue SWITCH_PLACEMENT_RANGE;
+    public static ForgeConfigSpec.BooleanValue DISABLE_DATAFIXER;
+    public static ForgeConfigSpec.IntValue MAX_CONDUCTOR_VENT_LENGTH;
 
 
     static {
@@ -40,6 +44,8 @@ public class Config {
         JOURNEYMAP_UPDATE_TICKS = CLIENT_BUILDER.comment("Journeymap train overlay update time (in ticks)").defineInRange("journeymapUpdateTicks", 1, 1, 600);
         JOURNEYMAP_REMOVE_OBSOLETE_TICKS = CLIENT_BUILDER.comment("Journeymap train overlay old marker removal check time (in ticks)").defineInRange("journeymapObsolescenceCheckTicks", 200, 10, 1200);
         EXTENDED_COUPLER_DEBUG = CLIENT_BUILDER.comment("Show extended debug info in coupler goggle overlay").define("extendedCouplerDebug", false);
+        SKIP_CLIENT_DERAILING = CLIENT_BUILDER.comment("Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash").define("skipClientsideDerailing", false);
+        CONDUCTOR_SPY_SHADER = CLIENT_BUILDER.comment("Use a scanline shader when spying through a conductor").define("conductorSpyShader", true);
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         setupGeneralCategory(SERVER_BUILDER);
@@ -62,6 +68,8 @@ public class Config {
         REGISTER_MISSING_TRACKS = builder.comment("Register integration tracks for mods that are not present").define("registerMissingTracks", false);
         FLIP_DISTANT_SWITCHES = builder.comment("Allow controlling Brass Switches remotely when approaching them on a train").define("flipDistantSwitches", true);
         SWITCH_PLACEMENT_RANGE = builder.comment("Placement range for switches").defineInRange("switchPlacementRange", 64, 16, 128);
+        DISABLE_DATAFIXER = builder.comment("Disable Steam 'n Rails datafixers. Do not enable this config if you world contains pre-Create 0.5.1 monobogeys, because then they will be destroyed").define("disableDatafixer", false);
+        MAX_CONDUCTOR_VENT_LENGTH = builder.comment("Maximum length of conductor vents").defineInRange("maxConductorVentLength", 64, 1, Integer.MAX_VALUE);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

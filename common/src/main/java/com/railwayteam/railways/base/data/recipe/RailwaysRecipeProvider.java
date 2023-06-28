@@ -126,5 +126,13 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     public static ItemLike phantomMembrane() {
       return Items.PHANTOM_MEMBRANE;
     }
+
+    public static ItemLike eyeOfEnder() {
+      return Items.ENDER_EYE;
+    }
+
+    public static ItemLike industrialIron() {
+      return AllBlocks.INDUSTRIAL_IRON_BLOCK.get();
+    }
   }
 }

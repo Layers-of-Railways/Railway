@@ -2,14 +2,18 @@ package com.railwayteam.railways.content.switches;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
+import com.railwayteam.railways.content.switches.TrackSwitchTileEntity.PonderData;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
+import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
+import com.simibubi.create.foundation.utility.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -18,6 +22,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.Map;
 
 public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTileEntity> {
   public TrackSwitchRenderer(Context ctx) {
@@ -29,6 +36,28 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
     super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
     renderFlagState(te, partialTicks, ms, buffer, light);
     renderTrackOverlay(te, ms, buffer, light, overlay, te.edgePoint);
+
+    if (te.ponderData != null && te.getLevel() instanceof PonderWorld ponderWorld) {
+      renderPonderData(ponderWorld, te.getState(), te.ponderData, partialTicks, ms, buffer, light, overlay);
+    }
+  }
+
+  private void renderPonderData(PonderWorld ponderWorld, SwitchState state, PonderData ponderData, float partialTicks, PoseStack ms,
+                                MultiBufferSource buffer, int light, int overlay) {
+    ms.pushPose();
+    Vec3 offset = new Vec3(0, 0.4, 0);
+    float width = 1 / 16f;
+
+    Vec3 from = ponderData.basePos();
+    for (Map.Entry<SwitchState, Vec3> to : ponderData.getBranches().entrySet()) {
+      boolean active = to.getKey() == state;
+      ponderWorld.scene.getOutliner().showLine(to,
+                      from.add(offset),
+                      to.getValue().add(offset))
+              .colored(active ? new Color(0, 203, 150) : new Color(255, 50, 150))
+              .lineWidth(width);
+    }
+    ms.popPose();
   }
 
   private void renderFlagState(TrackSwitchTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
@@ -54,10 +83,10 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
         .translate(0.5, 8.5 / 16, 0.5);
 
       // Rotate just enough to touch the front or back edge
-      if (te.isReverseLeft() || (te.isNormal() && te.exitCount == 2 && te.hasExit(TrackSwitchBlock.SwitchState.REVERSE_RIGHT))) {
+      if (te.isReverseLeft() || (te.isNormal() && te.exitCount == 2 && te.hasExit(SwitchState.REVERSE_RIGHT))) {
 //        buf = buf.rotate(Direction.NORTH, -1.1f);
         te.lerpedAngle.updateChaseTarget(-1.1f);
-      } else if (te.isReverseRight() || (te.isNormal() && te.exitCount == 2 && te.hasExit(TrackSwitchBlock.SwitchState.REVERSE_LEFT))) {
+      } else if (te.isReverseRight() || (te.isNormal() && te.exitCount == 2 && te.hasExit(SwitchState.REVERSE_LEFT))) {
 //        buf = buf.rotate(Direction.NORTH, 1.1f);
         te.lerpedAngle.updateChaseTarget(1.1f);
       } else {

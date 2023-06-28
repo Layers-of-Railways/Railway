@@ -3,6 +3,9 @@ package com.railwayteam.railways.forge;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.Env;
+import cpw.mods.modlauncher.LaunchPluginHandler;
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -17,9 +20,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forgespi.language.IModInfo;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Field;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 @Mod(Railways.MODID)
@@ -32,6 +34,29 @@ public class RailwaysImpl {
 		Railways.init();
 		//noinspection Convert2MethodRef
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
+
+		// inject into Launcher.INSTANCE.launchPlugins
+		try {
+			Launcher launcher = Launcher.INSTANCE;
+			Field launchPlugins = Launcher.class.getDeclaredField("launchPlugins");
+			launchPlugins.setAccessible(true);
+
+			LaunchPluginHandler handler = (LaunchPluginHandler) launchPlugins.get(launcher);
+			Field plugins = LaunchPluginHandler.class.getDeclaredField("plugins");
+			plugins.setAccessible(true);
+
+			//noinspection unchecked
+			Map<String, ILaunchPluginService> map = (Map<String, ILaunchPluginService>) plugins.get(handler);
+			ILaunchPluginService plugin = new CRLaunchPluginService();
+			try {
+				map.put(plugin.name(), plugin);
+			} catch (UnsupportedOperationException ignored) {
+				Railways.LOGGER.error("Failed to inject launch plugin, trying to create a new map");
+				Map<String, ILaunchPluginService> newMap = new HashMap<>(map);
+				newMap.put(plugin.name(), plugin);
+				plugins.set(handler, newMap);
+			}
+		} catch (NoSuchFieldException | IllegalAccessException ignored) {}
 	}
 
 	public static String findVersion() {

@@ -31,6 +31,7 @@
     "MixinDoorMovingInteraction",
     "MixinEdgeData",
     "MixinGlobalStation",
+    "MixinIOWorker",
     "MixinLootTables",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
@@ -38,9 +39,11 @@
     "MixinNixieTubeDisplayTarget",
     "MixinRailwaySavedData",
     "MixinRecipeManager",
+    "MixinRollerBlockEntity",
     "MixinRollerMovementBehaviour",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
+    "MixinSeatMovementBehaviour",
     "MixinSignalBoundary",
     "MixinSlidingDoorBlock",
     "MixinSlidingDoorBlockEntity",
@@ -58,7 +61,14 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
-    "NbtUtilsMixin"
+    "NbtUtilsMixin",
+    "PlayerEntityMixin",
+    "StructureMixin",
+    "conductor_possession.ChunkMapMixin",
+    "conductor_possession.MixinEntity",
+    "conductor_possession.PlayerListMixin",
+    "conductor_possession.ServerPlayerMixin",
+    "conductor_possession.TrackedEntityMixin"
   ],
   "client": [
     "client.AccessorControlsHandler",
@@ -66,6 +76,7 @@
     "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
     "client.AccessorTrackBlockOutline",
+    "client.HotbarStorageMixin",
     "client.MixinBezierConnectionClient",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
@@ -90,7 +101,16 @@
     "client.MixinTrackTargetingClient",
     "client.MixinTrainHatOffsets",
     "client.MixinTrainHUD",
-    "client.MixinTrainPacket"
+    "client.MixinTrainPacket",
+    "conductor_possession.AccessorKeyMapping",
+    "conductor_possession.ClientChunkCacheMixin",
+    "conductor_possession.LevelRendererMixin",
+    "conductor_possession.MixinGameRenderer",
+    "conductor_possession.MixinGui",
+    "conductor_possession.MixinItemInHandRenderer",
+    "conductor_possession.MixinLocalPlayer",
+    "conductor_possession.MixinMinecraft",
+    "conductor_possession.MixinMouseHandler"
   ],
   "injectors": {
     "defaultRequire": 1

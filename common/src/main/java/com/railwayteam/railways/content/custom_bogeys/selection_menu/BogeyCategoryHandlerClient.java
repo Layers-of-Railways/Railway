@@ -34,11 +34,12 @@ public class BogeyCategoryHandlerClient {
     static final ResourceLocation MANAGE_FAVORITES_CATEGORY = Railways.asResource("manage_favorites_category");
 
     private static final Map<ResourceLocation, NonNullSupplier<? extends ItemLike>> STYLE_CATEGORIES = new HashMap<>();
+    private static final List<ResourceLocation> STYLE_CATEGORY_ORDER = new ArrayList<>();
 
     public static ResourceLocation getCategoryId(int i) {
         if (i == 0)
             return FAVORITES_CATEGORY;
-        return STYLE_CATEGORIES.keySet().toArray(ResourceLocation[]::new)[i - 1];
+        return STYLE_CATEGORY_ORDER.get(i - 1);
     }
 
     public static int categoryCount() {
@@ -101,6 +102,7 @@ public class BogeyCategoryHandlerClient {
 
     public static void registerStyleCategory(ResourceLocation id, NonNullSupplier<? extends ItemLike> icon) {
         STYLE_CATEGORIES.put(id, icon);
+        STYLE_CATEGORY_ORDER.add(id);
     }
 
     static int COOLDOWN = 0;
@@ -211,5 +213,19 @@ public class BogeyCategoryHandlerClient {
             return;
 
         ScreenOpener.open(new RadialBogeyCategoryMenu(State.PICK_CATEGORY));
+    }
+
+    public static final Map<BogeyStyle, ResourceLocation> ICONS = new HashMap<>();
+
+    public static void addIcon(BogeyStyle style, String name) {
+        ICONS.put(style, Railways.asResource("textures/gui/bogey_icons/"+name+"_icon.png"));
+    }
+
+    static {
+        for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+            if (style.name.getNamespace().equals(Railways.MODID))
+                addIcon(style, style.name.getPath());
+            addIcon(AllBogeyStyles.STANDARD, "default");
+        }
     }
 }

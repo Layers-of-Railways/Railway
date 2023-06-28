@@ -19,6 +19,10 @@
     "railways:track_monorail",
     "railways:mono_bogey",
     "railways:invisible_bogey",
+    "railways:singleaxle_bogey",
+    "railways:doubleaxle_bogey",
+    "railways:large_platform_doubleaxle_bogey",
+    "railways:tripleaxle_bogey",
     "railways:smokestack_caboosestyle",
     "railways:smokestack_long",
     "railways:smokestack_coalburner",
@@ -26,6 +30,7 @@
     "railways:smokestack_streamlined",
     "railways:smokestack_woodburner",
     "railways:smokestack_diesel",
+    "railways:conductor_vent",
     {
       "id": "railways:track_hexcasting_edified",
       "required": false

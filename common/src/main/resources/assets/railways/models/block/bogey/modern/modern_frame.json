@@ -1,0 +1,9 @@
+{
+	"parent": "block/block",
+	"loader": "forge:obj",
+	"flip-v": true,
+    	"model": "railways:models/block/bogey/modern/modern_frame.obj",
+    	"textures": {
+    		"0": "railways:block/bogeys/modern_frame"
+    }
+}

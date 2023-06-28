@@ -25,6 +25,9 @@
     ],
     "journeymap": [
       "com.railwayteam.railways.compat.journeymap.RailwayMapPlugin"
+    ],
+    "mm:early_risers": [
+      "com.railwayteam.railways.fabric.EarlyRiser"
     ]
   },
   "mixins": [
@@ -38,7 +41,8 @@
     "create": "*"
   },
   "recommends": {
-    "create": "${create_version}"
+    "create": "${create_version}",
+    "mm": ">=2.3"
   },
   "suggests": {
     "hexcasting": "*"

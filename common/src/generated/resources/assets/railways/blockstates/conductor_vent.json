@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "conductor_visible=false": {
+      "model": "minecraft:block/air"
+    },
+    "conductor_visible=true": {
+      "model": "railways:block/copycat_vent_visible"
+    }
+  }
+}
