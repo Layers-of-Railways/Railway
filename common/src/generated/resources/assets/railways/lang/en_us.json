@@ -318,7 +318,7 @@
 	"railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
 
 	"railways.remote_lens.tool.bound_usage": "Use to spy through the eyes of the bound conductor!",
-	"railways.remote_lens.tool.not_bound": "Not bound, use on a conductor to bind.",
+	"railways.remote_lens.tool.not_bound": "Not bound, use on a conductor wearing goggles to bind.",
 	"railways.remote_lens.set": "Bound remote lens.",
 	"railways.remote_lens.clear": "Cleared remote lens.",
 

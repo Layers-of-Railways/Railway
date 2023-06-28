@@ -47,7 +47,7 @@ public class UtilsImpl {
 
     public static void postChunkEventClient(LevelChunk chunk, boolean load) {
 		if (load) {
-			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Unload(chunk));
+			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Load(chunk));
 		} else {
 			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Unload(chunk));
 		}

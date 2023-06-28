@@ -25,17 +25,18 @@ public class LevelRendererMixin {
 
 	@Shadow @Final private Minecraft minecraft;
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getX()D"))
+	// optional redirects (Rubidium/Sodium replaces this pipeline)
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getX()D"), require = 0)
 	private double snr$getX(LocalPlayer instance) {
 		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getX() : instance.getX();
 	}
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getY()D"))
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getY()D"), require = 0)
 	private double snr$getY(LocalPlayer instance) {
 		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getY() : instance.getY();
 	}
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getZ()D"))
+	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getZ()D"), require = 0)
 	private double snr$getZ(LocalPlayer instance) {
 		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getZ() : instance.getZ();
 	}
