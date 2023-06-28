@@ -137,6 +137,8 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         Optional<BlockPos> target = getTeleportTarget(level, start, conductor, prevDirection);
         if (target.isPresent()) {
             BlockPos end = target.get();
+            if (!level.getBlockState(end.above()).isAir())
+                end = end.below();
             conductor.teleportToForce(end.getX() + 0.5, end.getY() + 0.0, end.getZ() + 0.5);
             return true;
         }

@@ -360,7 +360,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public void teleportToForce(double x, double y, double z) {
-    this.moveTo(x, y, z, this.getYRot(), this.getXRot());
+    this.absMoveTo(x, y, z, this.getYRot(), this.getXRot());
     this.getSelfAndPassengers().forEach(entity -> {
       for (Entity entity2 : entity.getPassengers()) {
         entity.positionRider(entity2);//, Entity::moveTo);
@@ -455,7 +455,7 @@ public class ConductorEntity extends AbstractGolem {
   public void onSpyInteract(BlockPos pos) {
     BlockState state;
     if (this.canReach(pos) && canSpyInteract((state = this.level.getBlockState(pos))) && fakePlayer != null) {
-      ClipContext context = new ClipContext(this.getEyePosition(), new Vec3(pos.getX(), pos.getY(), pos.getZ()),
+      ClipContext context = new ClipContext(this.getEyePosition(), new Vec3(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5),
               ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fakePlayer);
       BlockHitResult hitResult = level.clip(context);
       //Railways.LOGGER.info("pos: "+pos+", Hpos: "+hitResult.getBlockPos());

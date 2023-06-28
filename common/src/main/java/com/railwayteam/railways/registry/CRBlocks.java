@@ -30,6 +30,7 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
@@ -43,6 +44,7 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
@@ -377,6 +379,7 @@ public class CRBlocks {
                     .properties(p -> p.isSuffocating((state, level, pos) -> false))
                     .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
                     .lang("Vent Block")
+                    .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
                     .item()
                     .transform(customItemModel("copycat_vent"))
                     .register();

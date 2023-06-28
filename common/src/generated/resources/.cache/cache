@@ -493,6 +493,7 @@ fa9a744b3a5ca1411ca8fe56f29113d6acb5217b data/railways/tags/items/internal/dyes/
 b7527407965fd6db3015618418b0d50068cf53cb assets/railways/models/block/track/acacia/tie.json
 cd3a5561b3a9f4f7110a98d28e2b373ca0037f5d assets/railways/models/block/track/compat/blue_skies/maple/tie.json
 65849faebfb8667353de6df1ee1056d2a1df8c80 assets/railways/models/block/track/compat/byg/holly/ascending.json
+31838c9d153f3f5d2103a4489c275391816aea39 data/railways/advancements/recipes/railways/conductor_vent_from_industrial_iron_block_stonecutting.json
 64e04483da2e735b4793b9e88513e36e89b2bb70 assets/railways/models/block/track/compat/byg/maple/cross_d1_xo.json
 0cc657380f422443f32ff45c982e07e87ae3639f assets/railways/models/block/track/compat/byg/palm/ascending.json
 50045b8e68fbb82cafcde41585dd4fc766243e59 assets/railways/models/block/track/compat/byg/maple/ascending.json
@@ -726,6 +727,7 @@ f9fd3cedcdfde6bd7fa66539e6eca9226107e0a2 data/railways/advancements/recipes/rail
 4e2be7ccdd7d032e520fea773e8c0f5b19669836 assets/railways/models/block/track/compat/blue_skies/frostbright/cross_ortho.json
 9d48bd01a7f5380925916a91da5eca6f7daf07d7 assets/railways/models/block/track/compat/blue_skies/lunar/cross_d1_zo.json
 d129c302a48470fe8e35217146b8673e1fafa304 assets/railways/models/block/track/compat/byg/mahogany/x_ortho.json
+814cae865164aabb512f9371cb36d04d34b80c88 data/railways/recipes/conductor_vent_from_industrial_iron_block_stonecutting.json
 b767d1da9d7148b21de2b071bb55704f0e99a37a assets/railways/models/block/track/compat/byg/rainbow_eucalyptus/teleport.json
 fa36a6a32f11dc5fa664ba7e1edbe45ae99b344f assets/railways/models/block/track/compat/blue_skies/maple/segment_right.json
 9f523c4c0caa213f32c14bce4f795bafc2bdaa0a assets/railways/models/block/track/compat/byg/ebony/z_ortho.json
