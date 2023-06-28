@@ -390,6 +390,9 @@
 	"block.railways.track_phantom.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
 	"block.railways.track_phantom.tooltip.behaviour2": "_Phantom Tracks_ in the world will be _invisible_",
 
+	"block.create.railway_casing.tooltip": "TRAIN CASING",
+	"block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place.",
+
 	"_": "Thank you for translating Steam 'n Rails!"
 
 }
