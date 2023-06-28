@@ -54,17 +54,31 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 		customModels.clear();
 	}
 
-	public static ConductorCapModel<?> of(ItemStack stack, HumanoidModel<?> base) {
+	public static ConductorCapModel<?> of(ItemStack stack, HumanoidModel<?> base, LivingEntity entity) {
 		if (defaultModel == null) {
 			EntityModelSet set = Minecraft.getInstance().getEntityModels();
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
-				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-				customModels.put(name, model);
+//					if (name.equals("IThundxr") && entity instanceof ConductorEntity) {
+//						ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, CRBlockPartials.shouldPreventTiltingCap(name));
+//						customModels.put(name, model);
+//						return;
+//					}
+					ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
+					customModels.put(name, model);
 			});
+//			CRBlockPartials.CUSTOM_CONDUCTOR_ONLY_CAPS.forEach((name, partial) -> {
+//				if (entity instanceof ConductorEntity) {
+//					ConductorCapModel<?> co_model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
+//					customModels.put(name, co_model);
+//				}
+////					if (co_name.equals("IThundxr") && entity instanceof ConductorEntity) {
+////						ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, CRBlockPartials.shouldPreventTiltingCap(co_name));
+////						customModels.put(co_name, model);
+////					}
+//			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
 		}
-
 		String name = stack.getHoverName().getString();
 		ConductorCapModel<?> model = customModels.getOrDefault(name, defaultModel);
 		model.setProperties(base);

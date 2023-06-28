@@ -15,8 +15,6 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
-
 public class RailwaysClient {
 
   public static void init() {
@@ -31,37 +29,15 @@ public class RailwaysClient {
     CRPackets.PACKETS.registerS2CListener();
 
     CRPonderIndex.register();
+
     CRBlockPartials.init();
+
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
     CustomTrackOverlayRendering.register(CREdgePointTypes.SWITCH, CRBlockPartials.SWITCH_RIGHT_TURN);
 
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
-    registerCustomCap("Slimeist", "slimeist");
-    registerCustomCap("bosbesballon", "bosbesballon");
-    registerCustomCap("SpottyTheTurtle", "turtle");
 
-    registerCustomCap("RileyHighline", "rileyhighline", true);
-    registerCustomSkin("RileyHighline", "rileyhighline");
-
-    registerCustomCap("TiesToetToet", "tiestoettoet", true);
-
-    registerCustomCap("LemmaEOF", "headphones", true);
-
-    registerCustomCap("To0pa", "stonks_hat", true);
-    registerCustomCap("Furti_Two", "stonks_hat_blue", true);
-    registerCustomCap("Aypierre", "stonks_hat_red", true);
-
-    registerCustomCap("NeonCityDrifter", "neoncitydrifter");
-
-    registerCustomCap("demondj2002", "demon");
-    
-    registerCustomCap("littlechasiu", "littlechasiu", true);
-    registerCustomSkin("littlechasiu", "littlechasiu");
-
-    registerCustomCap("IThundxr", "ithundxr", true);
-    registerCustomSkin("IThundxr", "ithundxr");
-
-    registerCustomCap("Crown", "crown", true);
+    CRDevCaps.register();
   }
 
   @ExpectPlatform

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEntityModel<ConductorEntity>> {
   public static final ResourceLocation TEXTURE = new ResourceLocation(Railways.MODID, "textures/entity/conductor.png");
 
-  public ConductorRenderer (EntityRendererProvider.Context ctx) {
+  public ConductorRenderer(EntityRendererProvider.Context ctx) {
     super (ctx, new ConductorEntityModel<>(ctx.bakeLayer(ConductorEntityModel.LAYER_LOCATION)), 0.2f);
     this.addLayer(new HumanoidArmorLayer<>(this,
       new ConductorEntityModel<>(ctx.bakeLayer(ModelLayers.ARMOR_STAND_INNER_ARMOR)),
@@ -32,7 +32,7 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
   }
 
   @Override
-  public @NotNull ResourceLocation getTextureLocation (@NotNull ConductorEntity conductor) {
+  public @NotNull ResourceLocation getTextureLocation(@NotNull ConductorEntity conductor) {
     ItemStack headItem = conductor.getItemBySlot(EquipmentSlot.HEAD);
     String name = headItem.getHoverName().getString();
     if (!headItem.isEmpty() && headItem.getItem() instanceof ConductorCapItem && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.containsKey(name)) {

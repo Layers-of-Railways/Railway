@@ -26,7 +26,7 @@ public class ConductorCapItemRenderer implements ArmorRenderer {
 					   EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
 		if (!(stack.getItem() instanceof ConductorCapItem cap))
 			return;
-		ConductorCapModel<?> model = ConductorCapModel.of(stack, contextModel);
+		ConductorCapModel<?> model = ConductorCapModel.of(stack, contextModel, entity);
 		ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, model, cap.textureId);
 	}
 }
