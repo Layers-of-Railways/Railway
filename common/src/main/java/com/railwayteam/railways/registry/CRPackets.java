@@ -8,7 +8,7 @@ import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.util.packet.*;
 
 public class CRPackets {
-    public static final PacketSet PACKETS = PacketSet.builder(Railways.MODID, 7) // increment version on changes
+    public static final PacketSet PACKETS = PacketSet.builder(Railways.MODID, 8) // increment version on changes
 
             .c2s(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new)
             .c2s(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new)
@@ -29,6 +29,7 @@ public class CRPackets {
             .s2c(OverridableSignalPacket.class, OverridableSignalPacket::new)
             .s2c(SwitchDataUpdatePacket.class, SwitchDataUpdatePacket::new)
             .s2c(SetCameraViewPacket.class, SetCameraViewPacket::new)
+            .s2c(CameraMovePacket.class, CameraMovePacket::new)
 
             .build();
 }

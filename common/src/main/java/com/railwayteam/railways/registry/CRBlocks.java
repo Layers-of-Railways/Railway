@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
+import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
@@ -360,6 +361,15 @@ public class CRBlocks {
             .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))
             .build()
             .register();
+
+    public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
+            REGISTRATE.block("conductor_vent", VentBlock::new)
+                    .properties(p -> p.color(MaterialColor.METAL))
+                    .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                    .lang("Vent Block")
+                    .item()
+                    .build()
+                    .register();
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)

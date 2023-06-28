@@ -51,7 +51,8 @@ public abstract class TrackedEntityMixin {
 	 * Enables entities that should be sent as well as security camera entities to be sent to the client
 	 */
 	@SuppressWarnings("InvalidInjectorMethodSignature")
-	@ModifyVariable(method = "updatePlayer", name = {"flag", "bl"}, at = @At(value = "JUMP", opcode = Opcodes.IFEQ, shift = At.Shift.BEFORE, ordinal = 1))
+	// variable name: flag or bl
+	@ModifyVariable(method = "updatePlayer", ordinal = 0, at = @At(value = "JUMP", opcode = Opcodes.IFEQ, shift = At.Shift.BEFORE, ordinal = 1))
 	public boolean securitycraft$modifyFlag(boolean original) {
 		boolean shouldBeSent = this.shouldBeSent;
 

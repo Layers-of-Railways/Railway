@@ -14,6 +14,7 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
@@ -38,6 +39,7 @@ public class ConductorPossessionController {
     private static boolean wasUsingBefore;
 
     private static int ticksSincePacket = 0;
+    private static int positionReminder = 0;
     
     @SuppressWarnings("AssignmentUsedAsCondition") // we are doing this intentionally
     public static void onClientTick(Minecraft mc, boolean start) {
@@ -145,9 +147,19 @@ public class ConductorPossessionController {
                 // update the server with the camera's position
 
                 //CRPackets.PACKETS.send(new CameraMovePacket(camera, camera.getYRot(), camera.getXRot()));
-                CRPackets.PACKETS.send(new CameraMovePacket(cam,
-                        new ServerboundMovePlayerPacket.PosRot(cam.getX(), cam.getY(), cam.getZ(),
-                                cam.getYRot(), cam.getXRot(), cam.isOnGround())));
+
+                double d = cam.getX() - cam.xLast;
+                double e = cam.getY() - cam.yLast;
+                double f = cam.getZ() - cam.zLast;
+                double g = cam.getYRot() - cam.yRotLast;
+                double h = cam.getXRot() - cam.xRotLast;
+                ++positionReminder;
+                boolean bl3 = Mth.lengthSquared(d, e, f) > Mth.square(2.0E-4) || positionReminder >= 20;
+                boolean bl5 = g != 0.0 || h != 0.0;
+                if (bl3 || bl5)
+                    CRPackets.PACKETS.send(new CameraMovePacket(cam,
+                            new ServerboundMovePlayerPacket.PosRot(cam.getX(), cam.getY(), cam.getZ(),
+                                    cam.getYRot(), cam.getXRot(), cam.isOnGround())));
             }
         } else if (wasMounted) { // catch in case we didn't want to dismount
             wasMounted = false;

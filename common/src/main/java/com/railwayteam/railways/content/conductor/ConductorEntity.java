@@ -9,6 +9,7 @@ import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.Utils;
+import com.railwayteam.railways.util.packet.CameraMovePacket;
 import com.railwayteam.railways.util.packet.SetCameraViewPacket;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -35,6 +36,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -328,6 +330,13 @@ public class ConductorEntity extends AbstractGolem {
   public int receivedMovePacketCount;
   public int knownMovePacketCount;
 
+  // client variables for packets
+  public double xLast;
+  public double yLast;
+  public double zLast;
+  public double xRotLast;
+  public double yRotLast;
+
   private void resetPosition() {
     firstGoodX = lastGoodX = getX();
     firstGoodY = lastGoodY = getY();
@@ -348,6 +357,32 @@ public class ConductorEntity extends AbstractGolem {
   public void jumpFromGround() {
     super.jumpFromGround();
   }
+
+  public void teleportToForce(double x, double y, double z) {
+    this.moveTo(x, y, z, this.getYRot(), this.getXRot());
+    this.getSelfAndPassengers().forEach(entity -> {
+      for (Entity entity2 : entity.getPassengers()) {
+        entity.positionRider(entity2);//, Entity::moveTo);
+      }
+    });
+
+    if (level instanceof ServerLevel serverLevel) {
+      serverLevel.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, new ChunkPos(this.blockPosition()), 5, this.getId());
+    }
+
+    firstGoodX = x;
+    firstGoodY = y;
+    firstGoodZ = z;
+    lastGoodX = x;
+    lastGoodY = y;
+    lastGoodZ = z;
+    ServerPlayer player;
+    if (isPossessed() && (player = currentlyViewing.get()) != null) {
+      CRPackets.PACKETS.sendTo(player, new CameraMovePacket(this, new ServerboundMovePlayerPacket.PosRot(x, y, z, this.getYRot(), this.getXRot(), this.isOnGround())));
+    }
+  }
+
+  public int ventCooldown = 0;
 
   public static final List<Player> RECENTLY_DISMOUNTED_PLAYERS = new ArrayList<>();
   @NotNull
@@ -914,6 +949,8 @@ public class ConductorEntity extends AbstractGolem {
       updatePossessionInputs();
     }
     super.tick();
+    if (ventCooldown > 0)
+      ventCooldown--;
     if (level instanceof ServerLevel serverLevel) {
       if (fakePlayer == null) {
         fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel);
