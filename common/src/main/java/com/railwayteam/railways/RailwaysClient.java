@@ -54,6 +54,9 @@ public class RailwaysClient {
     registerCustomCap("NeonCityDrifter", "neoncitydrifter");
 
     registerCustomCap("demondj2002", "demon");
+    
+    registerCustomCap("littlechasiu", "littlechasiu", true);
+    registerCustomSkin("littlechasiu", "littlechasiu");
 
     registerCustomCap("IThundxr", "ithundxr", true);
     registerCustomSkin("IThundxr", "ithundxr");
