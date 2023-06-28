@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.jozufozu.flywheel.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -44,7 +45,7 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	}
 
 	private static ConductorCapModel<?> defaultModel = null;
-	private static final Map<String, ConductorCapModel<?>> customModels = new HashMap<>();
+	private static final Map<Pair<String, Boolean>, ConductorCapModel<?>> customModels = new HashMap<>();
 
 	public static void clearModelCache() {
 		defaultModel = null;
@@ -57,19 +58,17 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
 				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-				customModels.put(name, model);
+				customModels.put(Pair.of(name, false), model);
+			});
+			CRBlockPartials.CUSTOM_CONDUCTOR_ONLY_CAPS.forEach((name, partial) -> {
+				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
+				Pair<String, Boolean> key = Pair.of(name, false);
+				customModels.put(key, model);
 			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
 		}
 		String name = stack.getHoverName().getString();
-		if (name.equals("IThundxr") && entity instanceof ConductorEntity) {
-			EntityModelSet set = Minecraft.getInstance().getEntityModels();
-			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
-			ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, true);
-			model.setProperties(base);
-			return model;
-		}
-		ConductorCapModel<?> model = customModels.getOrDefault(name, defaultModel);
+		ConductorCapModel<?> model = customModels.getOrDefault(Pair.of(name, false), defaultModel);
 		model.setProperties(base);
 		return model;
 	}
