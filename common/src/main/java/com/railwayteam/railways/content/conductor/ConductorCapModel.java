@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.registry.CRDevCaps;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
@@ -35,10 +36,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	private final PartialModel override;
 	private final boolean doNotTilt;
 
-	public ConductorCapModel(ModelPart root) {
-		this(root, null, false);
-	}
-
 	public ConductorCapModel(ModelPart root, @Nullable PartialModel override, boolean doNotTilt) {
 		super(override == null ? RenderType::armorCutoutNoCull : rl -> RenderType.cutout());
 		this.cap = root.getChild("cap");
@@ -59,27 +56,19 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			EntityModelSet set = Minecraft.getInstance().getEntityModels();
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
-//					if (name.equals("IThundxr") && entity instanceof ConductorEntity) {
-//						ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, CRBlockPartials.shouldPreventTiltingCap(name));
-//						customModels.put(name, model);
-//						return;
-//					}
-					ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-					customModels.put(name, model);
+				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
+				customModels.put(name, model);
 			});
-//			CRBlockPartials.CUSTOM_CONDUCTOR_ONLY_CAPS.forEach((name, partial) -> {
-//				if (entity instanceof ConductorEntity) {
-//					ConductorCapModel<?> co_model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-//					customModels.put(name, co_model);
-//				}
-////					if (co_name.equals("IThundxr") && entity instanceof ConductorEntity) {
-////						ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, CRBlockPartials.shouldPreventTiltingCap(co_name));
-////						customModels.put(co_name, model);
-////					}
-//			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
 		}
 		String name = stack.getHoverName().getString();
+		if (name.equals("IThundxr") && entity instanceof ConductorEntity) {
+			EntityModelSet set = Minecraft.getInstance().getEntityModels();
+			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
+			ConductorCapModel<?> model = new ConductorCapModel<>(root, CRDevCaps.ITHUNDXR_MODEL, true);
+			model.setProperties(base);
+			return model;
+		}
 		ConductorCapModel<?> model = customModels.getOrDefault(name, defaultModel);
 		model.setProperties(base);
 		return model;

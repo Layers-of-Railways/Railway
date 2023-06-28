@@ -33,7 +33,5 @@ public class CRDevCaps {
 
         registerCustomCap("IThundxr", "crown", true);
         registerCustomSkin("IThundxr", "ithundxr");
-
-        registerCustomConductorOnlyCap("IThundxr", "ithundxr", true);
     }
 }

@@ -16,7 +16,6 @@ public class CRBlockPartials {
     public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
     public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
     public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
-    public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_ONLY_CAPS = new HashMap<>();
     public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS = new HashMap<>();
     public static final Set<String> NO_TILT_CAPS = new HashSet<>();
 
@@ -26,16 +25,6 @@ public class CRBlockPartials {
 
     public static void registerCustomCap(String itemName, String modelLoc, Boolean preventTilting) {
         CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
-        if (preventTilting)
-            NO_TILT_CAPS.add(itemName);
-    }
-
-    public static void registerCustomConductorOnlyCap(String itemName, String modelLoc) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
-    }
-
-    public static void registerCustomConductorOnlyCap(String itemName, String modelLoc, Boolean preventTilting) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
         if (preventTilting)
             NO_TILT_CAPS.add(itemName);
     }
