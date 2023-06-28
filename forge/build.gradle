@@ -126,6 +126,10 @@ dependencies {
     if (enable_bop.toBoolean()) {
         modLocalRuntime("curse.maven:biomesoplenty-220318:${bop_version}")
     }
+
+    if (enable_sodium_rubidium.toBoolean()) {
+        modLocalRuntime("curse.maven:rubidium-574856:${rubidium_version}")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

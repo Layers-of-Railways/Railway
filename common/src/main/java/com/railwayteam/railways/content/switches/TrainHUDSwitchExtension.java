@@ -19,6 +19,7 @@ public class TrainHUDSwitchExtension {
     public static @Nullable TrackSwitchBlock.SwitchState switchState;
     public static boolean isAutomaticSwitch = false;
     public static boolean isWrong = false;
+    public static boolean isLocked = false;
     static LerpedFloat switchProgress = LerpedFloat.linear();
 
     public static void tick() {
@@ -59,9 +60,9 @@ public class TrainHUDSwitchExtension {
             CRGuiTextures bg = isAutomaticSwitch ?
                     CRGuiTextures.TRAIN_HUD_SWITCH_BRASS :
                     CRGuiTextures.TRAIN_HUD_SWITCH_ANDESITE;
-            //bg.render(poseStack, 141, (int) (-bg.height * switchProgress.getValue(partialTicks)));
+            //bg.render(poseStack, 131, (int) (-bg.height * switchProgress.getValue(partialTicks)));
             bg.bind();
-            GuiComponent.blit(poseStack, 141, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
+            GuiComponent.blit(poseStack, 131, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
                     bg.startX, bg.startY, bg.width, (int) (bg.height * switchProgress.getValue(partialTicks) + 0.5),
                     256, 256);
         }
@@ -72,6 +73,8 @@ public class TrainHUDSwitchExtension {
                 case REVERSE_LEFT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 142, -13);
                 case REVERSE_RIGHT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 162, -13);
             }
+            if (isLocked)
+                CRGuiTextures.TRAIN_HUD_SWITCH_LOCKED.render(poseStack, 134, -13);
         }
 
         poseStack.popPose();

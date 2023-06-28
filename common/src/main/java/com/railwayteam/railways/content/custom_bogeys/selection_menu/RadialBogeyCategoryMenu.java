@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.util.Utils;
@@ -24,6 +25,7 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
@@ -84,7 +86,12 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         Lighting.setupForEntityInInventory();
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> render.accept(new RenderInfo(ms, bufferSource, 0xF000F0)));
+        try {
+            RenderSystem.runAsFancy(() -> render.accept(new RenderInfo(ms, bufferSource, 0xF000F0)));
+        } catch (Exception e) {
+            if (Utils.isDevEnv())
+                throw e;
+        }
         bufferSource.endBatch();
 
         modelViewStack.popPose();
@@ -174,9 +181,14 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                     if (minecraft != null) {
 
                         AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
-                        GuiGameElement.of(icon)
-                                .at(3, 3)
-                                .render(ms);
+                        if (icon instanceof CategoryIcon categoryIcon) {
+                            renderIcon(categoryIcon, ms);
+                        } else {
+                            GuiGameElement.of(icon)
+                                    .at(3, 3)
+                                    .render(ms);
+                        }
+
 
                         if (selected) {
                             AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
@@ -221,7 +233,15 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     .withStyle(ChatFormatting.GOLD);
                         }
 
-                        renderInInventory(guiLeft + bogeyX, guiTop + bogeyY, selected ? 10 : 8, render);
+                        if (BogeyCategoryHandlerClient.ICONS.containsKey(style)) {
+                            AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
+                            renderIcon(BogeyCategoryHandlerClient.ICONS.get(style), ms);
+                            if (selected) {
+                                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
+                            }
+                        } else {
+                            renderInInventory(guiLeft + bogeyX, guiTop + bogeyY, selected ? 10 : 8, render);
+                        }
 
                     }
 
@@ -290,6 +310,17 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 ms.popPose();
             }
         }
+    }
+
+    private void renderIcon(CategoryIcon categoryIcon, PoseStack ms) {
+        renderIcon(categoryIcon.location, ms);
+    }
+
+    private void renderIcon(ResourceLocation location, PoseStack ms) {
+        ms.pushPose();
+        RenderSystem.setShaderTexture(0, location);
+        GuiComponent.blit(ms, 3, 3, 0, 0, 0, 16, 16, 16, 16);
+        ms.popPose();
     }
 
     @Override

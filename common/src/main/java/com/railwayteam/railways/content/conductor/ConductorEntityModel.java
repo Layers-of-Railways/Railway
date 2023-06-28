@@ -60,10 +60,11 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
     this.hat.z = (float) (Math.cos(this.head.xRot) * amt * Math.cos(this.head.yRot));
     this.hat.y = 10.0f - (float) (Math.sin(this.head.xRot) * amt);
 
-    this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
-    this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
-    this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-    this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+    this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F * 2 + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+    this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F * 2) * 2.0F * limbSwingAmount * 0.5F;
+
+    this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F * 3) * 1.4F * limbSwingAmount;
+    this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F * 3 + (float)Math.PI) * 1.4F * limbSwingAmount;
     this.rightLeg.yRot = 0.0F;
     this.leftLeg.yRot = 0.0F;
     this.rightLeg.zRot = 0.0F;

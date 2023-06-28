@@ -14,11 +14,13 @@ public class SwitchDataUpdatePacket implements S2CPacket {
     final TrackSwitchBlock.SwitchState state;
     final boolean automatic;
     final boolean isWrong;
+    final boolean isLocked;
 
-    public SwitchDataUpdatePacket(TrackSwitchBlock.SwitchState state, boolean automatic, boolean isWrong) {
+    public SwitchDataUpdatePacket(TrackSwitchBlock.SwitchState state, boolean automatic, boolean isWrong, boolean isLocked) {
         this.state = state;
         this.automatic = automatic;
         this.isWrong = isWrong;
+        this.isLocked = isLocked;
         this.clear = false;
     }
 
@@ -26,6 +28,7 @@ public class SwitchDataUpdatePacket implements S2CPacket {
         this.state = null;
         this.automatic = false;
         this.isWrong = false;
+        this.isLocked = false;
         this.clear = true;
     }
 
@@ -39,10 +42,12 @@ public class SwitchDataUpdatePacket implements S2CPacket {
             state = null;
             automatic = false;
             isWrong = false;
+            isLocked = false;
         } else {
             state = TrackSwitchBlock.SwitchState.values()[buf.readInt()];
             automatic = buf.readBoolean();
             isWrong = buf.readBoolean();
+            isLocked = buf.readBoolean();
         }
     }
 
@@ -53,6 +58,7 @@ public class SwitchDataUpdatePacket implements S2CPacket {
             buffer.writeInt(state.ordinal());
             buffer.writeBoolean(automatic);
             buffer.writeBoolean(isWrong);
+            buffer.writeBoolean(isLocked);
         }
     }
 
@@ -65,6 +71,7 @@ public class SwitchDataUpdatePacket implements S2CPacket {
             TrainHUDSwitchExtension.switchState = state;
             TrainHUDSwitchExtension.isAutomaticSwitch = automatic;
             TrainHUDSwitchExtension.isWrong = isWrong;
+            TrainHUDSwitchExtension.isLocked = isLocked;
         }
     }
 }
