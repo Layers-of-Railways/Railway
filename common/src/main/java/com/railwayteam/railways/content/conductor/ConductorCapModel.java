@@ -64,7 +64,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 //						customModels.put(name, model);
 //						return;
 //					}
-
 					ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
 					customModels.put(name, model);
 			});
