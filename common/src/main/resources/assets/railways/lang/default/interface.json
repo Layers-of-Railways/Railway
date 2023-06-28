@@ -71,6 +71,12 @@
   "railways.whistle.failure.conductor_missing": "Conductor not found or it was not riding the bound train.",
   "railways.whistle.failure.no_space": "No space to place flag.",
   "railways.whistle.failure.not_owner": "You must be the owner of the train to cancel its schedule.",
+
+  "railways.remote_lens.tool.bound_usage": "Use to spy through the eyes of the bound conductor!",
+  "railways.remote_lens.tool.not_bound": "Not bound, use on a conductor wearing goggles to bind.",
+  "railways.remote_lens.set": "Bound remote lens.",
+  "railways.remote_lens.clear": "Cleared remote lens.",
+
   "railways.journeymap.train_marker_toggle": "Toggle Train Markers",
 
   "create.display_source.track_signal_source": "Signal State",
@@ -94,12 +100,28 @@
 
   "railways.bogeys.styles.invisible": "Invisible",
 
+  "railways.bogeys.styles.singleaxle": "Singleaxle",
+  "railways.bogeys.styles.leafspring": "Leafspring",
+  "railways.bogeys.styles.coilspring": "Coilspring",
+  "railways.bogeys.styles.freight": "Freight",
+  "railways.bogeys.styles.archbar": "Archbar",
+  "railways.bogeys.styles.passenger": "Passenger",
+  "railways.bogeys.styles.modern": "Modern",
+  "railways.bogeys.styles.blomberg": "Blomberg",
+  "railways.bogeys.styles.y25": "Y25",
+  "railways.bogeys.styles.heavyweight": "Heavyweight",
+  "railways.bogeys.styles.radial": "Radial",
+
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",
   "railways.style_select.title.favorites.pick_style": "Pick Favorite Style",
   "railways.style_select.category": "Category: ",
 
   "railways.style_select.category.railways.favorites_category": "Favorites",
-  "railways.style_select.category.create.standard": "Create's Styles",
-  "railways.style_select.category.railways.standard": "Steam 'n Rails's Styles"
+  "railways.style_select.category.create.standard": "Standard Styles",
+  "railways.style_select.category.railways.singleaxles": "Single Axle Styles",
+  "railways.style_select.category.railways.doubleaxles": "Double Axle Styles",
+  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles",
+
+  "create.contraptions.roller_mode.track_replace": "Replace Tracks"
 }

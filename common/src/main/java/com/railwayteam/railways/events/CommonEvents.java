@@ -3,6 +3,7 @@ package com.railwayteam.railways.events;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.multiloader.PlayerSelection;
+import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.PacketSender;
 import com.railwayteam.railways.util.packet.TrainMarkerDataUpdatePacket;
@@ -35,5 +36,11 @@ public class CommonEvents {
 
     public static void onPlayerJoin(ServerPlayer player) {
         PacketSender.notifyServerVersion(player);
+    }
+
+    // if, for some reason, CRExtraDisplays has not yet successfully registered
+    // the signal source by the time we join a world, we have a last chance here
+    public static void backupDisplayRegister() {
+        CRExtraRegistration.register();
     }
 }

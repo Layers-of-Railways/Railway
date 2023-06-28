@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.switches;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllItems;
@@ -116,6 +117,32 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
       return this;
     }
+
+      public SwitchState nextStateForPonder(SwitchConstraint constraint) {
+        if (this == NORMAL) {
+          if (constraint.canGoRight()) {
+            return REVERSE_RIGHT;
+          } else if (constraint.canGoLeft()) {
+            return REVERSE_LEFT;
+          }
+        } else if (this == REVERSE_RIGHT) {
+          if (constraint == SwitchConstraint.NONE) {
+            if (constraint.canGoLeft()) {
+              return REVERSE_LEFT;
+            }
+          } else {
+            if (constraint.canGoLeft()) {
+              return NORMAL;
+            }
+          }
+        } else if (this == REVERSE_LEFT) {
+          if (constraint.canGoRight()) {
+            return NORMAL;
+          }
+        }
+
+        return this;
+      }
   }
 
   @ExpectPlatform
@@ -208,7 +235,11 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
 
     TrackSwitchTileEntity te = getBlockEntity(level, pos);
     if (te != null) {
-      return te.onUse(player.isSteppingCarefully());
+      if (player.getGameProfile() == ConductorEntity.FAKE_PLAYER_PROFILE) {
+        return te.onProjectileHit() ? InteractionResult.CONSUME : InteractionResult.SUCCESS;
+      } else {
+        return te.onUse(player.isSteppingCarefully());
+      }
     }
 
     return InteractionResult.SUCCESS;

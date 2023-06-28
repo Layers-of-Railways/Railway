@@ -236,6 +236,8 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     }
 
     private boolean isStateValid(SwitchState state) {
+        if (state == null)
+            return false;
         return switch (state) {
             case NORMAL -> hasStraightExit();
             case REVERSE_RIGHT -> hasRightExit();

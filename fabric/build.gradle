@@ -76,6 +76,12 @@ dependencies {
     // Create - dependencies are added transitively
     modImplementation("com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}")
 
+    // Fabric ASM (enum extension etc)
+    modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
+        exclude (group: "net.fabricmc.fabric-api")
+    }
+    include "com.github.Chocohead:Fabric-ASM:v2.3"
+
     // Development QOL
     modLocalRuntime("maven.modrinth:lazydfu:${lazydfu_version}")
     modLocalRuntime("com.terraformersmc:modmenu:${modmenu_version}")

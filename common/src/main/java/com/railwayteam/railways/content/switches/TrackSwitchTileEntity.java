@@ -35,12 +35,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
@@ -55,6 +54,29 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     protected ScrollOptionBehaviour<AutoMode> autoMode;
 
     int exitCount = 0; // client only
+
+    /**
+     * Only for use in ponders
+     */
+    @ApiStatus.Internal
+    public void setStatePonder(SwitchState state) {
+        this.state = state;
+    }
+
+    public record PonderData(Vec3 basePos, @Nullable Vec3 leftBranch, @Nullable Vec3 straightBranch, @Nullable Vec3 rightBranch) {
+        Map<SwitchState, Vec3> getBranches() {
+            Map<SwitchState, Vec3> branches = new HashMap<>();
+            if (leftBranch != null)
+                branches.put(SwitchState.REVERSE_LEFT, leftBranch);
+            if (straightBranch != null)
+                branches.put(SwitchState.NORMAL, straightBranch);
+            if (rightBranch != null)
+                branches.put(SwitchState.REVERSE_RIGHT, rightBranch);
+            return branches;
+        }
+    }
+    @ApiStatus.Internal
+    public @Nullable PonderData ponderData;
 
     enum AutoMode implements INamedIconOptions {
         MANUAL_ONLY(CRIcons.I_SWITCH_MANUAL),
@@ -94,29 +116,40 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
-        autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
-                this, new ValueBoxTransform() {
-            @Override
-            public Vec3 getLocalOffset(BlockState state) {
-                Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
-                base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
-                return base;
-            }
+        if (isAutomatic()) {
+            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
+                    this, new ValueBoxTransform() {
+                @Override
+                public Vec3 getLocalOffset(BlockState state) {
+                    Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
+                    base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
+                    return base;
+                }
 
-            @Override
-            public void rotate(BlockState state, PoseStack ms) {
-                TransformStack.cast(ms)
-                        .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING))-90)
-                        .rotateX(90);
-            }
-        });
-        autoMode.withCallback(ordinal -> {
-            AutoMode mode = AutoMode.values()[ordinal];
-            TrackSwitch sw = getSwitch();
-            if (sw != null)
-                sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
-        });
-        behaviours.add(autoMode);
+                @Override
+                public void rotate(BlockState state, PoseStack ms) {
+                    TransformStack.cast(ms)
+                            .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
+                            .rotateX(90);
+                }
+
+                @Override
+                public boolean testHit(BlockState state, Vec3 localHit) {
+                    Vec3 offset = getLocalOffset(state);
+                    if (offset == null)
+                        return false;
+                    return localHit.distanceTo(offset) < scale / 3;
+                }
+            });
+            autoMode.withCallback(ordinal -> {
+                AutoMode mode = AutoMode.values()[ordinal];
+                TrackSwitch sw = getSwitch();
+                if (sw != null)
+                    sw.setAutoTrainsSwitch(mode == AutoMode.AUTO);
+            });
+            autoMode.requiresWrench();
+            behaviours.add(autoMode);
+        }
     }
 
     @Override
@@ -213,6 +246,8 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         } catch (ClassCastException ignored) { // if we are targeting air, catch the crash
             return;
         }
+        if (loc == null)
+            return;
         TrackGraph graph = loc.graph;
         TrackEdge edge = graph
                 .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))
@@ -333,16 +368,18 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         if (!isLocked()) {
             cycleState(reverseDirection ? SwitchConstraint.TO_LEFT : SwitchConstraint.TO_RIGHT);
 //            level.setBlockAndUpdate(getBlockPos(), getBlockState());
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.CONSUME;
     }
 
-    void onProjectileHit() {
+    boolean onProjectileHit() {
         if (!isLocked()) {
             cycleState();
 //            level.setBlockAndUpdate(getBlockPos(), getBlockState());
+            return true;
         }
+        return false;
     }
 
     private boolean hasSignal(Direction direction) {

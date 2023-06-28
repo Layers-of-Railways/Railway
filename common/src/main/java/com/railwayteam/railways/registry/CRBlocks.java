@@ -2,11 +2,17 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
+import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
+import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
+import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
@@ -24,6 +30,7 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
 import com.railwayteam.railways.content.tender.TenderBlock;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
@@ -31,11 +38,13 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackModel;
+import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
@@ -57,7 +66,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
+import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -216,6 +227,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
                     .lang("Andesite Track Switch")
                     .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
                     .transform(customItemModel())
@@ -234,6 +246,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
                     .lang("Brass Track Switch")
                     .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
                     .transform(customItemModel())
@@ -267,6 +280,35 @@ public class CRBlocks {
                     .transform(BuilderTransformers.invisibleBogey())
                     .lang("Invisible Bogey")
                     .register();
+
+    public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
+            REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Single Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<DoubleAxleBogeyBlock> DOUBLEAXLE_BOGEY =
+            REGISTRATE.block("doubleaxle_bogey", DoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Double Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
+            REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Platform Double Axle Bogey")
+                    .register();
+
+    public static final BlockEntry<TripleAxleBogeyBlock> TRIPLEAXLE_BOGEY =
+            REGISTRATE.block("tripleaxle_bogey", TripleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Triple Axle Bogey")
+                    .register();
+
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
             REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
@@ -324,6 +366,23 @@ public class CRBlocks {
             .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))
             .build()
             .register();
+
+    public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
+            REGISTRATE.block("conductor_vent", VentBlock::create)
+                    .transform(copycat())
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStates(state -> ConfiguredModel.builder()
+                                    .modelFile(p.models().getExistingFile(state.getValue(CONDUCTOR_VISIBLE) ?
+                                            Railways.asResource("block/copycat_vent_visible") :
+                                            new ResourceLocation("block/air")))
+                                    .build()))
+                    .properties(p -> p.isSuffocating((state, level, pos) -> false))
+                    .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
+                    .lang("Vent Block")
+                    .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
+                    .item()
+                    .transform(customItemModel("copycat_vent"))
+                    .register();
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)

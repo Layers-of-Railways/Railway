@@ -1,1 +1,15 @@
 accessWidener   v2  named
+accessible class net/minecraft/client/multiplayer/ClientChunkCache$Storage
+accessible field net/minecraft/client/multiplayer/ClientChunkCache$Storage viewCenterX I
+accessible field net/minecraft/client/multiplayer/ClientChunkCache$Storage viewCenterZ I
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage inRange (II)Z
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage getIndex (II)I
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage getChunk (I)Lnet/minecraft/world/level/chunk/LevelChunk;
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage replace (ILnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/chunk/LevelChunk;)Lnet/minecraft/world/level/chunk/LevelChunk;
+accessible field net/minecraft/client/multiplayer/ClientChunkCache$Storage chunks Ljava/util/concurrent/atomic/AtomicReferenceArray;
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage replace (ILnet/minecraft/world/level/chunk/LevelChunk;)V
+accessible method net/minecraft/client/multiplayer/ClientChunkCache$Storage <init> (Lnet/minecraft/client/multiplayer/ClientChunkCache;I)V
+accessible class net/minecraft/server/level/ChunkMap$TrackedEntity
+accessible field net/minecraft/server/level/ServerPlayer camera Lnet/minecraft/world/entity/Entity;
+accessible field net/minecraft/client/player/LocalPlayer xRotLast F
+accessible field net/minecraft/client/player/LocalPlayer yRotLast F
