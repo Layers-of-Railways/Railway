@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
+import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRPackets;
@@ -93,7 +94,7 @@ public class ConductorEntity extends AbstractGolem {
   public static boolean canSpyInteract(BlockState blockState) {
     Block block = blockState.getBlock();
     return blockState.is(BlockTags.BUTTONS) || blockState.is(BlockTags.TRAPDOORS) || block instanceof LeverBlock
-            || CRTags.AllBlockTags.CONDUCTOR_SPY_USABLE.matches(blockState);
+            || block instanceof VentBlock || CRTags.AllBlockTags.CONDUCTOR_SPY_USABLE.matches(blockState);
   }
 
   public ItemStack getSecondaryHeadStack() {
@@ -462,7 +463,11 @@ public class ConductorEntity extends AbstractGolem {
         return;
       boolean canUse = state.getShape(level, pos).isEmpty() || EntityUtils.handleUseEvent(fakePlayer, InteractionHand.MAIN_HAND, hitResult);
       if (canUse) {
-        state.use(level, fakePlayer, InteractionHand.MAIN_HAND, hitResult);
+        if (state.getBlock() instanceof VentBlock ventBlock) {
+          ventBlock.teleportConductor(level, pos, this, hitResult.getDirection().getOpposite());
+        } else {
+          state.use(level, fakePlayer, InteractionHand.MAIN_HAND, hitResult);
+        }
       }
     }
   }

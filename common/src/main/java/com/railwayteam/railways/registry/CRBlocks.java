@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
+import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
@@ -63,7 +64,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
+import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -363,12 +366,19 @@ public class CRBlocks {
             .register();
 
     public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
-            REGISTRATE.block("conductor_vent", VentBlock::new)
-                    .properties(p -> p.color(MaterialColor.METAL))
-                    .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            REGISTRATE.block("conductor_vent", VentBlock::create)
+                    .transform(copycat())
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStates(state -> ConfiguredModel.builder()
+                                    .modelFile(p.models().getExistingFile(state.getValue(CONDUCTOR_VISIBLE) ?
+                                            Railways.asResource("block/copycat_vent_visible") :
+                                            new ResourceLocation("block/air")))
+                                    .build()))
+                    .properties(p -> p.isSuffocating((state, level, pos) -> false))
+                    .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
                     .lang("Vent Block")
                     .item()
-                    .build()
+                    .transform(customItemModel("copycat_vent"))
                     .register();
 
   /*

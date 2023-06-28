@@ -69,7 +69,7 @@ public class Config {
         FLIP_DISTANT_SWITCHES = builder.comment("Allow controlling Brass Switches remotely when approaching them on a train").define("flipDistantSwitches", true);
         SWITCH_PLACEMENT_RANGE = builder.comment("Placement range for switches").defineInRange("switchPlacementRange", 64, 16, 128);
         DISABLE_DATAFIXER = builder.comment("Disable Steam 'n Rails datafixers. Do not enable this config if you world contains pre-Create 0.5.1 monobogeys, because then they will be destroyed").define("disableDatafixer", false);
-        MAX_CONDUCTOR_VENT_LENGTH = builder.comment("Maximum length of conductor vents").defineInRange("maxConductorVentLength", 32, 1, Integer.MAX_VALUE);
+        MAX_CONDUCTOR_VENT_LENGTH = builder.comment("Maximum length of conductor vents").defineInRange("maxConductorVentLength", 64, 1, Integer.MAX_VALUE);
     }
 
     private static void setupSemaphoreCategory(ForgeConfigSpec.Builder builder) {

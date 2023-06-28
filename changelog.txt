@@ -8,7 +8,8 @@ v1.4.0:
 - Added remote control to conductors (experimental)
 - Prevent conductors taking damage while riding trains
 - Prevent conductors being knocked out of their seats
-- Add spy conductors
+- Added spy conductors
+- Added vents
 v1.3.5:
 - Added back compat (but working now)
 - fixed sloped tracks

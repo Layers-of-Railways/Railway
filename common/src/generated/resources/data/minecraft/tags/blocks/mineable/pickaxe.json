@@ -30,6 +30,7 @@
     "railways:smokestack_streamlined",
     "railways:smokestack_woodburner",
     "railways:smokestack_diesel",
+    "railways:conductor_vent",
     {
       "id": "railways:track_hexcasting_edified",
       "required": false
