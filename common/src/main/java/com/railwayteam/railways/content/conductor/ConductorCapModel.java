@@ -1,11 +1,13 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.jozufozu.flywheel.core.PartialModel;
+import com.jozufozu.flywheel.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.registry.CRDevCaps;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
@@ -35,10 +37,6 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	private final PartialModel override;
 	private final boolean doNotTilt;
 
-	public ConductorCapModel(ModelPart root) {
-		this(root, null, false);
-	}
-
 	public ConductorCapModel(ModelPart root, @Nullable PartialModel override, boolean doNotTilt) {
 		super(override == null ? RenderType::armorCutoutNoCull : rl -> RenderType.cutout());
 		this.cap = root.getChild("cap");
@@ -47,26 +45,31 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 	}
 
 	private static ConductorCapModel<?> defaultModel = null;
-	private static final Map<String, ConductorCapModel<?>> customModels = new HashMap<>();
+	private static final Map<Pair<String, Boolean>, ConductorCapModel<?>> customModels = new HashMap<>();
 
 	public static void clearModelCache() {
 		defaultModel = null;
 		customModels.clear();
 	}
 
-	public static ConductorCapModel<?> of(ItemStack stack, HumanoidModel<?> base) {
+	public static ConductorCapModel<?> of(ItemStack stack, HumanoidModel<?> base, LivingEntity entity) {
 		if (defaultModel == null) {
 			EntityModelSet set = Minecraft.getInstance().getEntityModels();
 			ModelPart root = set.bakeLayer(ConductorCapModel.LAYER_LOCATION);
 			CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.forEach((name, partial) -> {
 				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
-				customModels.put(name, model);
+				customModels.put(Pair.of(name, false), model); // normal caps should apply whether they are on a conductor
+				customModels.put(Pair.of(name, true), model);
+			});
+			CRBlockPartials.CUSTOM_CONDUCTOR_ONLY_CAPS.forEach((name, partial) -> {
+				ConductorCapModel<?> model = new ConductorCapModel<>(root, partial, CRBlockPartials.shouldPreventTiltingCap(name));
+				Pair<String, Boolean> key = Pair.of(name, true); // for conductors, override conductor model
+				customModels.put(key, model);
 			});
 			defaultModel = new ConductorCapModel<>(root, null, false);
 		}
-
 		String name = stack.getHoverName().getString();
-		ConductorCapModel<?> model = customModels.getOrDefault(name, defaultModel);
+		ConductorCapModel<?> model = customModels.getOrDefault(Pair.of(name, entity instanceof ConductorEntity), defaultModel);
 		model.setProperties(base);
 		return model;
 	}

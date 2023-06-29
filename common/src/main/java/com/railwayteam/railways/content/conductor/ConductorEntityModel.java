@@ -47,7 +47,7 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
   }
 
   @Override
-  public void setupAnim (@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+  public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     // mostly based on HumanoidModel::setupAnim
     // TODO can't call super directly due to rotation anchor offsets, find a way to fix them?
     this.head.xRot = headPitch * ((float)Math.PI / 180F);
@@ -82,17 +82,17 @@ public class ConductorEntityModel<T extends LivingEntity> extends HumanoidModel<
   }
 
   @Override
-  public void translateToHand (@NotNull HumanoidArm arm, @NotNull PoseStack stack) {
+  public void translateToHand(@NotNull HumanoidArm arm, @NotNull PoseStack stack) {
     (arm == HumanoidArm.LEFT ? this.leftArm : this.rightArm).translateAndRotate(stack);
   }
 
   @Override
-  public @NotNull ModelPart getHead () {
+  public @NotNull ModelPart getHead() {
     return this.head;
   }
 
   @Override
-  public void renderToBuffer (@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+  public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
     head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

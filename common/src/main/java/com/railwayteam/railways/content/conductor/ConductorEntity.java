@@ -694,7 +694,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   @Override
-  protected void defineSynchedData () {
+  protected void defineSynchedData() {
     super.defineSynchedData();
     this.entityData.define(COLOR, idFrom(defaultColor()));
     this.entityData.define(BLOCK, this.blockPosition());
@@ -718,7 +718,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   @Override
-  protected void registerGoals () {
+  protected void registerGoals() {
     super.registerGoals();
     //NOTE: priority 0 is the highest priority, priority infinity lowest
     goalSelector.addGoal(2, new ConductorLookedAtGoal(this));
@@ -738,7 +738,7 @@ public class ConductorEntity extends AbstractGolem {
     });
   }
 
-  public static AttributeSupplier.Builder createAttributes () {
+  public static AttributeSupplier.Builder createAttributes() {
     return Mob.createMobAttributes()
       .add(Attributes.MAX_HEALTH, 20.0D)
       .add(Attributes.MOVEMENT_SPEED, 0.25D)
@@ -864,7 +864,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   @Override
-  protected @NotNull InteractionResult mobInteract (Player player, @NotNull InteractionHand hand) {
+  protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
     if (player.getItemInHand(hand).getItem() instanceof DyeItem di) {
       setColor (di.getDyeColor());
       if (!player.isCreative()) player.getItemInHand(hand).shrink(1);
@@ -974,7 +974,7 @@ public class ConductorEntity extends AbstractGolem {
     if (toolbox != null) toolbox.tick();
   }
 
-  public static ConductorEntity spawn (Level level, BlockPos pos, ItemStack stack) {
+  public static ConductorEntity spawn(Level level, BlockPos pos, ItemStack stack) {
     if (!(stack.getItem() instanceof ConductorCapItem cap)) return null;
     ConductorEntity result = new ConductorEntity(CREntities.CONDUCTOR.get(), level);
     result.setPos(pos.getX()+0.5, pos.getY(), pos.getZ()+0.5);
@@ -984,25 +984,29 @@ public class ConductorEntity extends AbstractGolem {
     return result;
   }
 
-  public boolean isInMinecart () {
+  public boolean isInMinecart() {
     return this.getVehicle() instanceof AbstractMinecart;
   }
 
   @SuppressWarnings("SameReturnValue")
-  public static DyeColor defaultColor () { return DyeColor.BLUE; }
+  public static DyeColor defaultColor() {
+    return DyeColor.BLUE;
+  }
 
-  public void setColor (DyeColor color) { getEntityData().set(COLOR, idFrom(color)); }
+  public void setColor(DyeColor color) {
+    getEntityData().set(COLOR, idFrom(color));
+  }
 
   public DyeColor getColor() {
     return colorFrom(this.entityData.get(COLOR));
   }
 
-  public boolean isCorrectEngineerCap (ItemStack hat) {
+  public boolean isCorrectEngineerCap(ItemStack hat) {
     if (hat.isEmpty()) return true;
     return (hat.getItem() instanceof ConductorCapItem cap) && (cap.color == getColor());
   }
 
-  boolean isLookingAtMe (Player player) {
+  boolean isLookingAtMe(Player player) {
     if (player.isSpectator())
       return false;
     boolean looking = false;
@@ -1016,12 +1020,12 @@ public class ConductorEntity extends AbstractGolem {
     return looking;
   }
 
-  public static DyeColor colorFrom (byte b) {
+  public static DyeColor colorFrom(byte b) {
     if (b >= 16) return null;
     return DyeColor.byId(b);
   }
 
-  public static byte idFrom (DyeColor color) {
+  public static byte idFrom(DyeColor color) {
     int c = color.getId();
     if (c >= 16) return 16;
     return (byte)c;
@@ -1289,7 +1293,7 @@ public class ConductorEntity extends AbstractGolem {
     }
 
     @Override
-    public boolean canUse () {
+    public boolean canUse() {
       if (!super.canUse())
         return false;
       for (Player player : this.conductor.level.players()) {
@@ -1300,7 +1304,7 @@ public class ConductorEntity extends AbstractGolem {
       return false;
     }
 
-    public void start () {
+    public void start() {
     //  Railways.LOGGER.info("Player looked at me!");
       Level level      = this.conductor.level;
       BlockPos pos     = this.conductor.getEntityData().get(BLOCK);
@@ -1325,7 +1329,7 @@ public class ConductorEntity extends AbstractGolem {
       }
     }
 
-    public void tick () {
+    public void tick() {
       if (this.target != null) this.conductor.lookControl.setLookAt(this.target);
     }
   }
@@ -1339,7 +1343,7 @@ public class ConductorEntity extends AbstractGolem {
     }
 
     @Override
-    public boolean canUse () {
+    public boolean canUse() {
       if (!super.canUse())
         return false;
       this.target = conductor.entityData.get(BLOCK);
@@ -1366,11 +1370,7 @@ public class ConductorEntity extends AbstractGolem {
       return false;
     }
 
-    public void start () {
-      //Railways.LOGGER.info("thinking about a block...");
-    }
-
-    public void tick () {
+    public void tick() {
       this.conductor.lookControl.setLookAt(target.getX(), target.getY(), target.getZ());
     }
   }
