@@ -19,6 +19,7 @@ public class CRBlockPartials {
     public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_ONLY_CAPS = new HashMap<>();
     public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS = new HashMap<>();
     public static final Set<String> NO_TILT_CAPS = new HashSet<>();
+    public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS_FOR_NAME = new HashMap<>(); // for if a conductor is renamed, rather than the cap
 
     public static void registerCustomCap(String itemName, String modelLoc) {
         CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
@@ -46,6 +47,10 @@ public class CRBlockPartials {
 
     public static void registerCustomSkin(String itemName, String textureLoc) {
         CUSTOM_CONDUCTOR_SKINS.put(itemName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
+    }
+
+    public static void registerCustomConductorNameBasedSkin(String conductorName, String textureLoc) {
+        CUSTOM_CONDUCTOR_SKINS_FOR_NAME.put(conductorName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
     }
 
     public static final PartialModel

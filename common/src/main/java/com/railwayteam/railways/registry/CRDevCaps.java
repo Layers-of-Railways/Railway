@@ -31,6 +31,8 @@ public class CRDevCaps {
         registerCustomCap("littlechasiu", "littlechasiu", true);
         registerCustomSkin("littlechasiu", "littlechasiu");
 
+        registerCustomConductorNameBasedSkin("mattentosh", "mattentosh");
+
         registerCustomCap("IThundxr", "crown", true);
         registerCustomSkin("IThundxr", "ithundxr");
 

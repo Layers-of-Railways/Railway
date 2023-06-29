@@ -40,6 +40,9 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
     if (!headItem.isEmpty() && headItem.getItem() instanceof ConductorCapItem && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.containsKey(name)) {
       return ensurePng(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.get(name));
     }
+    if (conductor.getCustomName() != null && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS_FOR_NAME.containsKey(conductor.getCustomName().getString())) {
+      return ensurePng(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS_FOR_NAME.get(conductor.getCustomName().getString()));
+    }
     return TEXTURE;
   }
 
