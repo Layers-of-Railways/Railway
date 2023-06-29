@@ -31,6 +31,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At("HEAD"), cancellable = true)
     private void renderConductorInstead(AbstractClientPlayer entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if (entity.getX() > 0)
+            return;
         ci.cancel();
 
         if (visualEntity == null) {
@@ -45,6 +47,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
 
     @Inject(method = "getRenderOffset(Lnet/minecraft/client/player/AbstractClientPlayer;F)Lnet/minecraft/world/phys/Vec3;", at = @At("HEAD"), cancellable = true)
     private void cancelCrouchOffset(AbstractClientPlayer entity, float partialTicks, CallbackInfoReturnable<Vec3> cir) {
+        if (entity.getX() > 0)
+            return;
         cir.setReturnValue(super.getRenderOffset(entity, partialTicks));
     }
 }

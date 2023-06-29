@@ -449,6 +449,12 @@ public class ConductorEntity extends AbstractGolem {
   @Environment(EnvType.CLIENT)
   public PlayerModel<?> visualBaseModel;
 
+  // make public
+  @Override
+  public void setSharedFlag(int flag, boolean set) {
+    super.setSharedFlag(flag, set);
+  }
+
   public boolean isPossessed() {
     return level.isClientSide ? ClientHandler.isPossessed(this) : currentlyViewing.get() != null;
   }

@@ -103,6 +103,10 @@ public class RailwaysClient {
     conductor.animationSpeed = player.animationSpeed;
     conductor.animationSpeedOld = player.animationSpeedOld;
 
+    conductor.tickCount = player.tickCount;
+
+    conductor.setOnGround(player.isOnGround());
+
     for (EquipmentSlot slot : EquipmentSlot.values())
       conductor.setItemSlot(slot, player.getItemBySlot(slot));
 
