@@ -65,6 +65,8 @@ public class RailwaysClient {
     registerCustomCap("littlechasiu", "littlechasiu");
     registerCustomSkin("littlechasiu", "littlechasiu");
     preventTiltingCap("littlechasiu");
+
+    registerCustomConductorNameBasedSkin("mattentosh", "mattentosh");
   }
 
   @ExpectPlatform
