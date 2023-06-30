@@ -2,10 +2,14 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.client.AccessorLivingEntityRenderer;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +30,7 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
     this.addLayer(new ConductorToolboxLayer<>(this));
     this.addLayer(new ConductorFlagLayer<>(this));
     this.addLayer(new ConductorRemoteLayer<>(this));
+    this.addLayer(new ConductorElytraLayer<>(this, ctx.getModelSet()));
   }
 
   private ResourceLocation ensurePng(ResourceLocation loc) {
@@ -49,5 +54,18 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
   @Override
   public void render(ConductorEntity entity, float f1, float f2, PoseStack stack, MultiBufferSource source, int i1) {
     super.render(entity, f1, f2, stack, source, i1);
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  @Override
+  protected void setupRotations(ConductorEntity entityLiving, PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    if (entityLiving.visualBaseEntity != null) {
+      EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entityLiving.visualBaseEntity);
+      if (renderer instanceof LivingEntityRenderer<?,?> livingRenderer) {
+        ((AccessorLivingEntityRenderer) livingRenderer).callSetupRotations(entityLiving.visualBaseEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
+        return;
+      }
+    }
+    super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
   }
 }

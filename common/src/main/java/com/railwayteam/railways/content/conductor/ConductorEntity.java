@@ -28,6 +28,7 @@ import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
@@ -86,6 +87,17 @@ import static com.railwayteam.railways.content.conductor.ConductorPossessionCont
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
+  @SuppressWarnings("ConstantValue")
+  public static boolean isPlayerDisguised(Player player) {
+    if (player.getInventory() == null) return false;
+    ItemStack headStack = player.getItemBySlot(EquipmentSlot.HEAD);
+    if (headStack.isEmpty())
+      return false;
+    if (!CRTags.AllItemTags.CONDUCTOR_CAPS.matches(headStack))
+      return false;
+    return headStack.getHoverName().getString().startsWith("[sus]");
+  }
+
   public static final GameProfile FAKE_PLAYER_PROFILE = new GameProfile(
           UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
           "[Conductor]"
@@ -483,6 +495,17 @@ public class ConductorEntity extends AbstractGolem {
     if (ClientHandler.isPossessed(this))
       return this.getXRot();
     return super.getViewXRot(partialTicks);
+  }
+
+  @Environment(EnvType.CLIENT)
+  public PlayerModel<?> visualBaseModel;
+  @Environment(EnvType.CLIENT)
+  public Player visualBaseEntity;
+
+  // make public
+  @Override
+  public void setSharedFlag(int flag, boolean set) {
+    super.setSharedFlag(flag, set);
   }
 
   public boolean isPossessed() {
