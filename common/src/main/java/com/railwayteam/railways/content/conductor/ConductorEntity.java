@@ -84,6 +84,17 @@ import static com.railwayteam.railways.content.conductor.ConductorPossessionCont
 
 // note: item handler capability is implemented on forge in CommonEventsForge, and fabric does not have entity APIs
 public class ConductorEntity extends AbstractGolem {
+  @SuppressWarnings("ConstantValue")
+  public static boolean isPlayerDisguised(Player player) {
+    if (player.getInventory() == null) return false;
+    ItemStack headStack = player.getItemBySlot(EquipmentSlot.HEAD);
+    if (headStack.isEmpty())
+      return false;
+    if (!CRTags.AllItemTags.CONDUCTOR_CAPS.matches(headStack))
+      return false;
+    return headStack.getHoverName().getString().startsWith("[sus]");
+  }
+
   public static final GameProfile FAKE_PLAYER_PROFILE = new GameProfile(
           UUID.fromString("B0FADEE5-4411-3475-ADD0-C4EA7E30D050"),
           "[Conductor]"
@@ -448,6 +459,8 @@ public class ConductorEntity extends AbstractGolem {
 
   @Environment(EnvType.CLIENT)
   public PlayerModel<?> visualBaseModel;
+  @Environment(EnvType.CLIENT)
+  public Player visualBaseEntity;
 
   // make public
   @Override

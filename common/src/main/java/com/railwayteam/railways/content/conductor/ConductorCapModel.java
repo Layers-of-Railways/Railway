@@ -66,6 +66,8 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 		}
 
 		String name = stack.getHoverName().getString();
+		if (name.startsWith("[sus]"))
+			name = name.substring(5);
 		ConductorCapModel<?> model = customModels.getOrDefault(name, defaultModel);
 		model.setProperties(base);
 		return model;
