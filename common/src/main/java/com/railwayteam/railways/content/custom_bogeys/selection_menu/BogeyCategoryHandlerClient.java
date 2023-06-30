@@ -11,6 +11,8 @@ import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.*;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 public class BogeyCategoryHandlerClient {
 
     static final ResourceLocation FAVORITES_CATEGORY = Railways.asResource("favorites_category");

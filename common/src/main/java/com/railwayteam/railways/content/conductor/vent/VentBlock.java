@@ -7,7 +7,12 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -15,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -58,7 +64,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         return true;
     }
 
-    protected Optional<BlockPos> getTeleportTarget(Level level, BlockPos start, ConductorEntity conductor, Direction prevDirection) {
+    protected Optional<BlockPos> getTeleportTarget(Level level, BlockPos start, Direction prevDirection) {
         Set<BlockPos> visited = new HashSet<>();
         BlockPos.MutableBlockPos end = start.mutable();
 
@@ -134,7 +140,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
             else
                 prevDirection = prevDirection.getOpposite();
         }
-        Optional<BlockPos> target = getTeleportTarget(level, start, conductor, prevDirection);
+        Optional<BlockPos> target = getTeleportTarget(level, start, prevDirection);
         if (target.isPresent()) {
             BlockPos end = target.get();
             if (!level.getBlockState(end.above()).isAir())
@@ -143,6 +149,25 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player instanceof ServerPlayer serverPlayer && level instanceof ServerLevel serverLevel && ConductorEntity.isPlayerDisguised(player)) {
+            Direction direction = hit.getDirection().getOpposite();
+
+            Optional<BlockPos> target = getTeleportTarget(level, pos, direction);
+            if (target.isPresent()) {
+                BlockPos end = target.get();
+                if (!level.getBlockState(end.above()).isAir())
+                    end = end.below();
+                //serverPlayer.connection.teleport(end.getX(), end.getY(), end.getZ(), serverPlayer.getYRot(), serverPlayer.getXRot());
+                serverPlayer.teleportTo(serverLevel, end.getX() + 0.5, end.getY() + 0.0, end.getZ() + 0.5, serverPlayer.getYRot(), serverPlayer.getXRot());
+                //conductor.teleportToForce(end.getX() + 0.5, end.getY() + 0.0, end.getZ() + 0.5);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return super.use(state, level, pos, player, hand, hit);
     }
 
     @Override
@@ -169,7 +194,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level,
                                                  @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        if (context instanceof EntityCollisionContext entityCollisionContext && entityCollisionContext.getEntity() instanceof ConductorEntity)
+        if (context instanceof EntityCollisionContext ec && ec.getEntity() instanceof ConductorEntity)
             return COLLISION_SHAPE;
         return OUTLINE_SHAPE;
     }

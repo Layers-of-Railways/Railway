@@ -23,25 +23,38 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-@Environment(EnvType.CLIENT)
 public class ConductorPossessionController {
+    @Environment(EnvType.CLIENT)
     private static ClientChunkCache.Storage cameraStorage;
+    @Environment(EnvType.CLIENT)
     private static boolean wasUpPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasDownPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasLeftPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasRightPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasJumpPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasSprintPressed;
+    @Environment(EnvType.CLIENT)
     private static boolean wasMounted;
 
+    @Environment(EnvType.CLIENT)
     private static final boolean[] wasMouseClicked = new boolean[3];
+    @Environment(EnvType.CLIENT)
     private static final boolean[] wasMousePressed = new boolean[3];
+    @Environment(EnvType.CLIENT)
     private static boolean wasUsingBefore;
 
+    @Environment(EnvType.CLIENT)
     private static int ticksSincePacket = 0;
+    @Environment(EnvType.CLIENT)
     private static int positionReminder = 0;
     
     @SuppressWarnings("AssignmentUsedAsCondition") // we are doing this intentionally
+    @Environment(EnvType.CLIENT)
     public static void onClientTick(Minecraft mc, boolean start) {
         Entity cameraEntity = mc.cameraEntity;
 
@@ -176,6 +189,7 @@ public class ConductorPossessionController {
 
     // Injected into Minecraft#handleKeybinds
     @SuppressWarnings("AssignmentUsedAsCondition")
+    @Environment(EnvType.CLIENT)
     public static void onHandleKeybinds(Minecraft mc, boolean start) {
         Entity cameraEntity = mc.cameraEntity;
 
@@ -244,19 +258,23 @@ public class ConductorPossessionController {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     private static void dismount() {
         CRPackets.PACKETS.send(new DismountCameraPacket());
         wasMounted = false;
     }
 
+    @Environment(EnvType.CLIENT)
     public static ClientChunkCache.Storage getCameraStorage() {
         return cameraStorage;
     }
 
+    @Environment(EnvType.CLIENT)
     public static void setCameraStorage(ClientChunkCache.Storage newStorage) {
         cameraStorage = newStorage;
     }
 
+    @Environment(EnvType.CLIENT)
     public static void setRenderPosition(Entity entity) {
         if (entity instanceof ConductorEntity) {
             SectionPos cameraPos = SectionPos.of(entity);
@@ -266,6 +284,7 @@ public class ConductorPossessionController {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     public static void tryUpdatePossession(ConductorEntity conductorEntity) {
         if (ClientHandler.getPlayerMountedOnCamera() == conductorEntity)
             setRenderPosition(conductorEntity);
@@ -292,26 +311,32 @@ public class ConductorPossessionController {
             return ((ServerPlayer) player).getCamera() instanceof ConductorEntity ce ? ce : null;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasUpPressed() {
         return wasUpPressed;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasDownPressed() {
         return wasDownPressed;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasLeftPressed() {
         return wasLeftPressed;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasRightPressed() {
         return wasRightPressed;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasSprintPressed() {
         return wasSprintPressed;
     }
 
+    @Environment(EnvType.CLIENT)
     public static boolean wasJumpPressed() {
         return wasJumpPressed;
     }

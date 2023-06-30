@@ -42,6 +42,8 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
   public @NotNull ResourceLocation getTextureLocation(@NotNull ConductorEntity conductor) {
     ItemStack headItem = conductor.getItemBySlot(EquipmentSlot.HEAD);
     String name = headItem.getHoverName().getString();
+    if (name.startsWith("[sus]"))
+      name = name.substring(5);
     if (!headItem.isEmpty() && headItem.getItem() instanceof ConductorCapItem && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.containsKey(name)) {
       return ensurePng(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.get(name));
     }

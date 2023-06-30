@@ -15,6 +15,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -252,6 +253,9 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
     TrackSwitchTileEntity te = getBlockEntity(level, hit.getBlockPos());
     if (te != null) {
       te.onProjectileHit();
+    }
+    if (projectile instanceof Arrow) {
+      projectile.discard();
     }
   }
 
