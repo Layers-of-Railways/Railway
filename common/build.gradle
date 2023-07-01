@@ -57,7 +57,7 @@ sourceSets.main {
 publishing {
     repositories {
         maven {
-            name = "IThundxrRepository"
+            name = "IThundxrMaven"
             url = "https://maven.ithundxr.dev/releases"
             credentials(PasswordCredentials)
             authentication {
