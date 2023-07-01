@@ -68,5 +68,11 @@
   ],
   "transitionalItem": {
     "item": "railways:track_incomplete_twilightforest_twilight_oak"
-  }
+  }  ,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "twilightforest"
+    }
+  ]
 }
