@@ -204,15 +204,20 @@ components.java {
 }
 
 publishing {
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
-            from components.java
+    repositories {
+        maven {
+            name = "IThundxrRepository"
+            url = "https://maven.ithundxr.dev/releases"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
         }
     }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
+    publications {
+        mavenFabric(MavenPublication) {
+            artifactId = archivesBaseName + "-" + project.name
+            from components.java
+        }
     }
 }
