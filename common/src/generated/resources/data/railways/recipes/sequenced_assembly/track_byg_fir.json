@@ -68,5 +68,11 @@
   ],
   "transitionalItem": {
     "item": "railways:track_incomplete_byg_fir"
-  }
+  }  ,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ]
 }
