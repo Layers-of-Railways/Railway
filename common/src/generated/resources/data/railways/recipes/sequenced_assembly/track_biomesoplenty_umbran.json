@@ -68,5 +68,12 @@
   ],
   "transitionalItem": {
     "item": "railways:track_incomplete_biomesoplenty_umbran"
-  }
+  } 
+  ,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "biomesoplenty"
+    }
+  ]
 }
