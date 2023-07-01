@@ -68,5 +68,11 @@
   ],
   "transitionalItem": {
     "item": "railways:track_incomplete_blue_skies_frostbright"
-  }
+  }  ,
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "blue_skies"
+    }
+  ]
 }
