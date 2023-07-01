@@ -91,34 +91,32 @@ public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidMod
     this.rightArm.yRot = 0.0f;
     this.leftArm.yRot = 0.0f;
 
-    if (entity.visualBaseModel != null) {
-      if (entity.visualBaseModel.crouching) {
-        this.body.xRot = 0.5f;
-        this.rightArm.xRot += 0.4f;
-        this.leftArm.xRot += 0.4f;
+    if (entity.visualBaseModel != null && entity.visualBaseModel.crouching) {
+      this.body.xRot = 0.5f;
+      this.rightArm.xRot += 0.4f;
+      this.leftArm.xRot += 0.4f;
 
-        this.rightLeg.z = 3.9f; //
-        this.leftLeg.z = 3.9f; //
-        this.rightLeg.y = 19.2f; //
-        this.leftLeg.y = 19.2f; //
-        this.head.y = 14.2f; //
-        this.body.z = 4.0f; //
-        this.body.y = 20.2f; //
-        this.leftArm.y = 15.2f; //
-        this.rightArm.y = 15.2f; //
-      } else {
-        this.body.xRot = 0.0f;
+      this.rightLeg.z = 3.9f; //
+      this.leftLeg.z = 3.9f; //
+      this.rightLeg.y = 19.2f; //
+      this.leftLeg.y = 19.2f; //
+      this.head.y = 14.2f; //
+      this.body.z = 4.0f; //
+      this.body.y = 20.2f; //
+      this.leftArm.y = 15.2f; //
+      this.rightArm.y = 15.2f; //
+    } else {
+      this.body.xRot = 0.0f;
 
-        this.rightLeg.z = 0.0f; //
-        this.leftLeg.z = 0.0f; //
-        this.rightLeg.y = 19.0f; //
-        this.leftLeg.y = 19.0f; //
-        this.head.y = 10.0f; //
-        this.body.z = 0.0f; //
-        this.body.y = 19.0f; //
-        this.leftArm.y = 12.0f; //
-        this.rightArm.y = 12.0f; //
-      }
+      this.rightLeg.z = 0.0f; //
+      this.leftLeg.z = 0.0f; //
+      this.rightLeg.y = 19.0f; //
+      this.leftLeg.y = 19.0f; //
+      this.head.y = 10.0f; //
+      this.body.z = 0.0f; //
+      this.body.y = 19.0f; //
+      this.leftArm.y = 12.0f; //
+      this.rightArm.y = 12.0f; //
     }
 
     if (swimAmount > 0.0f) {
