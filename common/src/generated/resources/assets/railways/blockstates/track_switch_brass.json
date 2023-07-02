@@ -1,5 +1,8 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "railways:block/track_switch_brass/block"
+    },
     "facing=north": {
       "model": "railways:block/track_switch_brass/block",
       "y": 270
@@ -11,9 +14,6 @@
     "facing=west": {
       "model": "railways:block/track_switch_brass/block",
       "y": 180
-    },
-    "facing=east": {
-      "model": "railways:block/track_switch_brass/block"
     }
   }
 }

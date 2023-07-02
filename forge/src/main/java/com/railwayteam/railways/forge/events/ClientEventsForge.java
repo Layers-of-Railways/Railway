@@ -27,7 +27,7 @@ public class ClientEventsForge {
 	}
 
 	@SubscribeEvent
-	public static void onKeyInput(InputEvent.KeyInputEvent event) {
+	public static void onKeyInput(InputEvent.Key event) {
 		int key = event.getKey();
 		boolean pressed = event.getAction() != 0;
 		ClientEvents.onKeyInput(key, pressed);

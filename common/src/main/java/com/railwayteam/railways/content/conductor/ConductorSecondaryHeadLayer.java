@@ -2,11 +2,11 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.SkullModelBase;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -32,16 +32,18 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
     private final float scaleY;
     private final float scaleZ;
     private final Map<SkullBlock.Type, SkullModelBase> skullModels;
-    public ConductorSecondaryHeadLayer(RenderLayerParent<T, M> renderer, EntityModelSet skullModels) {
-        this(renderer, skullModels, 1.0f, 1.0f, 1.0f);
+    private final ItemInHandRenderer itemInHandRenderer;
+    public ConductorSecondaryHeadLayer(RenderLayerParent<T, M> renderer, EntityModelSet skullModels, ItemInHandRenderer itemInHandRenderer) {
+        this(renderer, skullModels, 1.0f, 1.0f, 1.0f, itemInHandRenderer);
     }
 
-    public ConductorSecondaryHeadLayer(RenderLayerParent<T, M> renderer, EntityModelSet skullModels, float scaleX, float scaleY, float scaleZ) {
+    public ConductorSecondaryHeadLayer(RenderLayerParent<T, M> renderer, EntityModelSet skullModels, float scaleX, float scaleY, float scaleZ, ItemInHandRenderer itemInHandRenderer) {
         super(renderer);
         this.scaleX = scaleX;
         this.scaleY = scaleY;
         this.scaleZ = scaleZ;
         this.skullModels = SkullBlockRenderer.createSkullRenderers(skullModels);
+        this.itemInHandRenderer = itemInHandRenderer;
     }
 
     @Override
@@ -75,7 +77,7 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
             SkullBlockRenderer.renderSkull(null, 180.0f, limbSwing, matrixStack, buffer, packedLight, skullModelBase, renderType);
         } else if (!(item instanceof ArmorItem) || ((ArmorItem)item).getSlot() != EquipmentSlot.HEAD) {
             CustomHeadLayer.translateToHead(matrixStack, false);
-            Minecraft.getInstance().getItemInHandRenderer().renderItem(conductor, itemStack, ItemTransforms.TransformType.HEAD, false, matrixStack, buffer, packedLight);
+            this.itemInHandRenderer.renderItem(conductor, itemStack, ItemTransforms.TransformType.HEAD, false, matrixStack, buffer, packedLight);
         }
         matrixStack.popPose();
     }

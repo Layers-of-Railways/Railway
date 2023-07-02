@@ -48,19 +48,24 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         throw new AssertionError();
     }
 
-    @Nullable
+/*    @Nullable
     @Override
     public BlockState getConnectiveMaterial(BlockAndTintGetter reader, BlockState otherState, Direction face, BlockPos fromPos, BlockPos toPos) {
         return getMaterial(reader, toPos);
-    }
+    }*/
 
     @Override
     public boolean canFaceBeOccluded(BlockState state, Direction face) {
         return true;
     }
 
-    @Override
+/*    @Override
     public boolean isUnblockableConnectivitySide(BlockAndTintGetter reader, BlockState state, Direction face, BlockPos fromPos, BlockPos toPos) {
+        return true;
+    }*/
+
+    @Override
+    public boolean canConnectTexturesToward(BlockAndTintGetter reader, BlockPos fromPos, BlockPos toPos, BlockState state) {
         return true;
     }
 

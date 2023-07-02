@@ -2,6 +2,10 @@ package com.railwayteam.railways.mixin.conductor_possession;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,20 +17,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import net.minecraft.server.level.ChunkMap;
-import net.minecraft.server.level.ServerEntity;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
-
 /**
  * Lets entities get sent to the client even though they're not in range of the player
  */
 @Mixin(value = ChunkMap.TrackedEntity.class, priority = 1100)
 public abstract class TrackedEntityMixin {
-	@Shadow
-	@Final
-	ServerEntity serverEntity;
 	@Shadow
 	@Final
 	Entity entity;
@@ -40,7 +35,7 @@ public abstract class TrackedEntityMixin {
 	@Inject(method = "updatePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/world/phys/Vec3;x:D", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private void securitycraft$onUpdatePlayer(ServerPlayer player, CallbackInfo callback, Vec3 unused, double viewDistance) {
 		if (ConductorPossessionController.isPossessingConductor(player)) {
-			Vec3 relativePosToCamera = player.getCamera().position().subtract(serverEntity.sentPos());
+			Vec3 relativePosToCamera = player.getCamera().position().subtract(entity.position());
 
 			if (relativePosToCamera.x >= -viewDistance && relativePosToCamera.x <= viewDistance && relativePosToCamera.z >= -viewDistance && relativePosToCamera.z <= viewDistance)
 				shouldBeSent = true;

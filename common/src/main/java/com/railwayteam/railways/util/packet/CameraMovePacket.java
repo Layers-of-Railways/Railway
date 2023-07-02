@@ -6,9 +6,9 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.railwayteam.railways.registry.CRPackets;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +53,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
             double d0 = packet.getX(conductor.getX());
             double d1 = packet.getY(conductor.getY());
             double d2 = packet.getZ(conductor.getZ());
-            conductor.setPacketCoordinates(d0, d1, d2);
+            conductor.syncPacketPositionCodec(d0, d1, d2);
             if (true) {
                 conductor.setPos(d0, d1, d2);
                 float f = (float)(packet.getYRot(conductor.getYRot()) * 360) / 256.0F;
@@ -105,7 +105,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
     public void handle(ServerPlayer sender1) {
         if (sender1.level.getEntity(id) instanceof ConductorEntity conductor && sender1.getCamera() == conductor) {
             if (containsInvalidValues(packet.getX(0.0), packet.getY(0.0), packet.getZ(0.0), packet.getYRot(0.0f), packet.getXRot(0.0f))) {
-                sender1.connection.disconnect(new TranslatableComponent("multiplayer.disconnect.invalid_player_movement"));
+                sender1.connection.disconnect(Components.translatable("multiplayer.disconnect.invalid_player_movement"));
                 return;
             }
             if (!(conductor.getLevel() instanceof ServerLevel serverLevel))
