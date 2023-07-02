@@ -19,8 +19,8 @@ repositories {
             basic(BasicAuthentication)
         }
         credentials(PasswordCredentials) {
-            username = System.getenv("ITHUNDXRMAVENUSERNAME")
-            password = System.getenv("ITHUNDXRMAVENPASSWORD")
+            username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
+            password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
         }
     }
 }
@@ -49,7 +49,8 @@ dependencies {
     modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
     modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")*/
 
-    modImplementation("com.rabbitminers:extendedbogeys-common:${EB_verison}+common-patch-")
+    if (enable_eb.toBoolean())
+        modImplementation("com.rabbitminers:extendedbogeys-common:${EB_verison}+common-patch-")
 }
 
 architectury {
@@ -73,8 +74,8 @@ publishing {
             name = "IThundxrMaven"
             url = "https://maven.ithundxr.dev/releases"
             credentials(PasswordCredentials) {
-                username = System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = System.getenv("ITHUNDXRMAVENPASSWORD")
+                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
+                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
             }
             authentication {
                 basic(BasicAuthentication)
