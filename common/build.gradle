@@ -19,8 +19,8 @@ repositories {
             basic(BasicAuthentication)
         }
         credentials(PasswordCredentials) {
-            username = findProperty("IThundxrMavenUsername")
-            password = findProperty("IThundxrMavenPassword")
+            username = System.getenv("ITHUNDXRMAVENUSERNAME")
+            password = System.getenv("ITHUNDXRMAVENPASSWORD")
         }
     }
 }
@@ -72,7 +72,10 @@ publishing {
         maven {
             name = "IThundxrMaven"
             url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials)
+            credentials(PasswordCredentials) {
+                username = System.getenv("ITHUNDXRMAVENUSERNAME")
+                password = System.getenv("ITHUNDXRMAVENPASSWORD")
+            }
             authentication {
                 basic(BasicAuthentication)
             }
