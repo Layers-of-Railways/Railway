@@ -12,6 +12,9 @@ jobs:
       matrix:
         java: [ 17 ]
     runs-on: ubuntu-latest
+    env:
+      ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
+      ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
     steps:
 
       - name: checkout repository
