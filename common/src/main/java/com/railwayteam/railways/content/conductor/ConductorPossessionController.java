@@ -26,31 +26,19 @@ import java.util.Arrays;
 public class ConductorPossessionController {
     @Environment(EnvType.CLIENT)
     private static ClientChunkCache.Storage cameraStorage;
-    @Environment(EnvType.CLIENT)
     private static boolean wasUpPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasDownPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasLeftPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasRightPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasJumpPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasSprintPressed;
-    @Environment(EnvType.CLIENT)
     private static boolean wasMounted;
 
-    @Environment(EnvType.CLIENT)
     private static final boolean[] wasMouseClicked = new boolean[3];
-    @Environment(EnvType.CLIENT)
     private static final boolean[] wasMousePressed = new boolean[3];
-    @Environment(EnvType.CLIENT)
     private static boolean wasUsingBefore;
 
-    @Environment(EnvType.CLIENT)
     private static int ticksSincePacket = 0;
-    @Environment(EnvType.CLIENT)
     private static int positionReminder = 0;
     
     @SuppressWarnings("AssignmentUsedAsCondition") // we are doing this intentionally

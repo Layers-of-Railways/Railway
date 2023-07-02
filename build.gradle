@@ -55,6 +55,9 @@ subprojects {
         if (project.name == "common")
             return
 
+        String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
+        String version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
+
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
     }
