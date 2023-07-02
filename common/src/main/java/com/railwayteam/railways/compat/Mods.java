@@ -16,7 +16,8 @@ public enum Mods {
 	BLUE_SKIES("blue_skies"),
 	BYG("byg"),
 	HEXCASTING("hexcasting",true),
-	TWILIGHTFOREST("twilightforest")
+	TWILIGHTFOREST("twilightforest"),
+	SODIUM("sodium")
 	;
 
 	public final boolean isLoaded;

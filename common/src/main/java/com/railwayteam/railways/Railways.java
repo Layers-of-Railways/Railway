@@ -67,7 +67,7 @@ public class Railways {
             (type, block) -> TrackMaterial.addCustomValidTracks(type)
     );*/
 
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded) // force all mixins to load in dev
+    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 
