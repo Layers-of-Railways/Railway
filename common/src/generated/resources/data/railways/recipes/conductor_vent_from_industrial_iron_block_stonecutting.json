@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "create:industrial_iron_block"
+  },
+  "result": "railways:conductor_vent",
+  "count": 2
+}

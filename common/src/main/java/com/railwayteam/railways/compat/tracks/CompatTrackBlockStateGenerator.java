@@ -1,6 +1,6 @@
 package com.railwayteam.railways.compat.tracks;
 
-import com.railwayteam.railways.Railways;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
@@ -69,17 +69,17 @@ public class CompatTrackBlockStateGenerator extends SpecialBlockStateGen {
 
     BlockModelBuilder builder = prov.models()
           .withExistingParent(outputPrefix + value.getModel(),
-              Railways.asResource("block/track_base/" + value.getModel()))
+              Create.asResource("block/track/" + value.getModel()))
         .texture("particle", material.particle);
     for (String k : textureMap.keySet()) {
       builder = builder.texture(k, new ResourceLocation(material.id.getNamespace(), prefix + textureMap.get(k) + material.resourceName()));
     }
-    for (String k : new String[]{"segment_left", "segment_right", "tie"}) {
+    for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
       prov.models()
           .withExistingParent(outputPrefix + k,
-              Railways.asResource("block/track_base/" + k))
-          .texture("1", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_" + material.resourceName()))
-          .texture("2", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_mip_" + material.resourceName()))
+              Create.asResource("block/track/" + k))
+          .texture("0", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_" + material.resourceName()))
+          .texture("1", new ResourceLocation(material.id.getNamespace(), prefix + "standard_track_mip_" + material.resourceName()))
           .texture("particle", material.particle);
     }
     return builder;

@@ -4,6 +4,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,7 +33,7 @@ public class ConductorCapItemImpl extends ConductorCapItem {
 			@Nonnull
 			@Override
 			public Model getGenericArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
-				return ConductorCapModel.of(itemStack, _default);
+				return ConductorCapModel.of(itemStack, _default, entityLiving);
 			}
 		});
 		super.initializeClient(consumer);

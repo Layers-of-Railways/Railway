@@ -2,10 +2,14 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.client.AccessorLivingEntityRenderer;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
@@ -16,14 +20,17 @@ import org.jetbrains.annotations.NotNull;
 public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEntityModel<ConductorEntity>> {
   public static final ResourceLocation TEXTURE = new ResourceLocation(Railways.MODID, "textures/entity/conductor.png");
 
-  public ConductorRenderer (EntityRendererProvider.Context ctx) {
+  public ConductorRenderer(EntityRendererProvider.Context ctx) {
     super (ctx, new ConductorEntityModel<>(ctx.bakeLayer(ConductorEntityModel.LAYER_LOCATION)), 0.2f);
     this.addLayer(new HumanoidArmorLayer<>(this,
       new ConductorEntityModel<>(ctx.bakeLayer(ModelLayers.ARMOR_STAND_INNER_ARMOR)),
       new ConductorEntityModel<>(ctx.bakeLayer(ModelLayers.ARMOR_STAND_OUTER_ARMOR))
     ));
+    this.addLayer(new ConductorSecondaryHeadLayer<>(this, ctx.getModelSet()));
     this.addLayer(new ConductorToolboxLayer<>(this));
     this.addLayer(new ConductorFlagLayer<>(this));
+    this.addLayer(new ConductorRemoteLayer<>(this));
+    this.addLayer(new ConductorElytraLayer<>(this, ctx.getModelSet()));
   }
 
   private ResourceLocation ensurePng(ResourceLocation loc) {
@@ -32,11 +39,16 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
   }
 
   @Override
-  public @NotNull ResourceLocation getTextureLocation (@NotNull ConductorEntity conductor) {
+  public @NotNull ResourceLocation getTextureLocation(@NotNull ConductorEntity conductor) {
     ItemStack headItem = conductor.getItemBySlot(EquipmentSlot.HEAD);
     String name = headItem.getHoverName().getString();
+    if (name.startsWith("[sus]"))
+      name = name.substring(5);
     if (!headItem.isEmpty() && headItem.getItem() instanceof ConductorCapItem && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.containsKey(name)) {
       return ensurePng(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.get(name));
+    }
+    if (conductor.getCustomName() != null && CRBlockPartials.CUSTOM_CONDUCTOR_SKINS_FOR_NAME.containsKey(conductor.getCustomName().getString())) {
+      return ensurePng(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS_FOR_NAME.get(conductor.getCustomName().getString()));
     }
     return TEXTURE;
   }
@@ -44,5 +56,18 @@ public class ConductorRenderer extends MobRenderer<ConductorEntity, ConductorEnt
   @Override
   public void render(ConductorEntity entity, float f1, float f2, PoseStack stack, MultiBufferSource source, int i1) {
     super.render(entity, f1, f2, stack, source, i1);
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  @Override
+  protected void setupRotations(ConductorEntity entityLiving, PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    if (entityLiving.visualBaseEntity != null) {
+      EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entityLiving.visualBaseEntity);
+      if (renderer instanceof LivingEntityRenderer<?,?> livingRenderer) {
+        ((AccessorLivingEntityRenderer) livingRenderer).callSetupRotations(entityLiving.visualBaseEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
+        return;
+      }
+    }
+    super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
   }
 }

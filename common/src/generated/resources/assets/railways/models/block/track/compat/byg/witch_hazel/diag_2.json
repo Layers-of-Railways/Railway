@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "0": "byg:block/track/witch_hazel/standard_track_witch_hazel",
     "1": "byg:block/track/witch_hazel/standard_track_mip_witch_hazel",

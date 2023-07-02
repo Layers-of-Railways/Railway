@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "byg:block/track/witch_hazel/portal_track_witch_hazel",
     "2": "byg:block/track/witch_hazel/portal_track_mip_witch_hazel",

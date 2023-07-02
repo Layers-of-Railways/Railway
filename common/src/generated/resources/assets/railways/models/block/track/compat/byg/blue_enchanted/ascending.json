@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "0": "byg:block/track/blue_enchanted/standard_track_blue_enchanted",
     "1": "byg:block/track/blue_enchanted/standard_track_mip_blue_enchanted",

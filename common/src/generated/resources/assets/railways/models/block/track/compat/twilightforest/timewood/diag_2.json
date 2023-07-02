@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "0": "twilightforest:block/track/timewood/standard_track_timewood",
     "1": "twilightforest:block/track/timewood/standard_track_mip_timewood",

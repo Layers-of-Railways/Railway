@@ -16,15 +16,29 @@ public class CRBlockPartials {
     public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
     public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
     public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
+    public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_ONLY_CAPS = new HashMap<>();
     public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS = new HashMap<>();
     public static final Set<String> NO_TILT_CAPS = new HashSet<>();
+    public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS_FOR_NAME = new HashMap<>(); // for if a conductor is renamed, rather than the cap
 
     public static void registerCustomCap(String itemName, String modelLoc) {
         CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
-    public static void preventTiltingCap(String itemName) {
-        NO_TILT_CAPS.add(itemName);
+    public static void registerCustomCap(String itemName, String modelLoc, boolean preventTilting) {
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        if (preventTilting)
+            NO_TILT_CAPS.add(itemName);
+    }
+
+    public static void registerCustomConductorOnlyCap(String itemName, String modelLoc) {
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+    }
+
+    public static void registerCustomConductorOnlyCap(String itemName, String modelLoc, boolean preventTilting) {
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        if (preventTilting)
+            NO_TILT_CAPS.add(itemName);
     }
 
     public static boolean shouldPreventTiltingCap(String name) {
@@ -33,6 +47,10 @@ public class CRBlockPartials {
 
     public static void registerCustomSkin(String itemName, String textureLoc) {
         CUSTOM_CONDUCTOR_SKINS.put(itemName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
+    }
+
+    public static void registerCustomConductorNameBasedSkin(String conductorName, String textureLoc) {
+        CUSTOM_CONDUCTOR_SKINS_FOR_NAME.put(conductorName, Railways.asResource("textures/entity/custom_conductors/"+textureLoc));
     }
 
     public static final PartialModel
@@ -190,6 +208,22 @@ public class CRBlockPartials {
         COUPLER_NONE = block("track_overlay/coupler_none");
 
     public static final PartialModel
+        ANDESITE_SWITCH_FLAG = block("track_switch_andesite/flag"),
+        ANDESITE_SWITCH_HANDLE = block("track_switch_andesite/handle"),
+        BRASS_SWITCH_FLAG = block("track_switch_brass/flag"),
+        SWITCH_NONE = block("track_overlay/switch_none"),
+        SWITCH_RIGHT_STRAIGHT = block("track_overlay/switch_right_straight"),
+        SWITCH_RIGHT_TURN = block("track_overlay/switch_right_turn"),
+        SWITCH_LEFT_STRAIGHT = block("track_overlay/switch_left_straight"),
+        SWITCH_LEFT_TURN = block("track_overlay/switch_left_turn"),
+        SWITCH_3WAY_STRAIGHT = block("track_overlay/switch_3way_straight"),
+        SWITCH_3WAY_LEFT = block("track_overlay/switch_3way_left"),
+        SWITCH_3WAY_RIGHT = block("track_overlay/switch_3way_right"),
+        SWITCH_2WAY_LEFT = block("track_overlay/switch_2way_left"),
+        SWITCH_2WAY_RIGHT = block("track_overlay/switch_2way_right")
+    ;
+
+    public static final PartialModel
         MONORAIL_SEGMENT_TOP = block("monorail/monorail/segment_top"),
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
         MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
@@ -197,7 +231,22 @@ public class CRBlockPartials {
         MONOBOGEY_FRAME = block("bogey/monorail/frame"),
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
+    public static final PartialModel
+        SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
+        LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
+        COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
+        FREIGHT_FRAME = block("bogey/freight/freight_frame"),
+        ARCHBAR_FRAME = block("bogey/archbar/archbar_frame"),
+        PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
+        MODERN_FRAME = block("bogey/modern/modern_frame"),
+        BLOMBERG_FRAME = block("bogey/blomberg/blomberg_frame"),
+        Y25_FRAME = block("bogey/y25/y25_frame"),
+        HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
+        RADIAL_FRAME = block("bogey/radial/radial_frame"),
+        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
+    public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));

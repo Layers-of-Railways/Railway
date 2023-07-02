@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrackDemoCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
@@ -25,7 +26,8 @@ public class CRCommands {
 
     if (Utils.isDevEnv()) {
       railwaysCommand = railwaysCommand
-          .then(TrackDemoCommand.register());
+          .then(TrackDemoCommand.register())
+          .then(ConductorDemoCommand.register());
     }
 
     LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(railwaysCommand);

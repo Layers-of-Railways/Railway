@@ -16,6 +16,8 @@ public abstract class MixinItemModelShaper {
     private void addCustomConductorCapModels(ItemStack stack, CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() instanceof ConductorCapItem) {
             String name = stack.getHoverName().getString();
+            if (name.startsWith("[sus]"))
+                name = name.substring(5);
             if (CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.containsKey(name))
                 cir.setReturnValue(CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.get(name).get());
         }

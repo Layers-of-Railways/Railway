@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "hexcasting:block/track/edified/portal_track_edified",
     "2": "hexcasting:block/track/edified/portal_track_mip_edified",

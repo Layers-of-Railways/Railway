@@ -1,8 +1,8 @@
 {
-  "parent": "railways:block/track_base/tie",
+  "parent": "create:block/track/tie",
   "textures": {
-    "1": "twilightforest:block/track/twilight_oak/standard_track_twilight_oak",
-    "2": "twilightforest:block/track/twilight_oak/standard_track_mip_twilight_oak",
+    "0": "twilightforest:block/track/twilight_oak/standard_track_twilight_oak",
+    "1": "twilightforest:block/track/twilight_oak/standard_track_mip_twilight_oak",
     "particle": "twilightforest:block/track/twilight_oak/standard_track_crossing_twilight_oak"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "0": "blue_skies:block/track/dusk/standard_track_dusk",
     "1": "blue_skies:block/track/dusk/standard_track_mip_dusk",

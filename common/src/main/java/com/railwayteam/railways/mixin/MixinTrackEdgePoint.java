@@ -37,7 +37,8 @@ public abstract class MixinTrackEdgePoint {
 
     @Inject(method = "canCoexistWith", at = @At("RETURN"), cancellable = true)
     private void couplerCoExistWithEverything(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
-        if (getType() == CREdgePointTypes.COUPLER || otherType == CREdgePointTypes.COUPLER)
+        if (getType() == CREdgePointTypes.COUPLER || otherType == CREdgePointTypes.COUPLER
+                || getType() == CREdgePointTypes.SWITCH || otherType == CREdgePointTypes.SWITCH)
             cir.setReturnValue(true);
     }
 }

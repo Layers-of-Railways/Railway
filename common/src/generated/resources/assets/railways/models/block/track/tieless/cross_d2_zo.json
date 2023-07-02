@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_zo",
+  "parent": "create:block/track/cross_d2_zo",
   "textures": {
     "0": "railways:block/track/tieless/standard_track_tieless",
     "1": "railways:block/track/tieless/standard_track_mip_tieless",

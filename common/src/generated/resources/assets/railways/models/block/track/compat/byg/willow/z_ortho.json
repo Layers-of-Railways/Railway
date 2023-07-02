@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/z_ortho",
+  "parent": "create:block/track/z_ortho",
   "textures": {
     "1": "byg:block/track/willow/standard_track_willow",
     "2": "byg:block/track/willow/standard_track_mip_willow",

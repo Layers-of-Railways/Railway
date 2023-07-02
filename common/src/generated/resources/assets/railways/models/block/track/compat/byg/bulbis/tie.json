@@ -1,8 +1,8 @@
 {
-  "parent": "railways:block/track_base/tie",
+  "parent": "create:block/track/tie",
   "textures": {
-    "1": "byg:block/track/bulbis/standard_track_bulbis",
-    "2": "byg:block/track/bulbis/standard_track_mip_bulbis",
+    "0": "byg:block/track/bulbis/standard_track_bulbis",
+    "1": "byg:block/track/bulbis/standard_track_mip_bulbis",
     "particle": "byg:block/track/bulbis/standard_track_crossing_bulbis"
   }
 }

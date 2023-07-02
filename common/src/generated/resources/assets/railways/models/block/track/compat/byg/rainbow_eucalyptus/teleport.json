@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "byg:block/track/rainbow_eucalyptus/portal_track_rainbow_eucalyptus",
     "2": "byg:block/track/rainbow_eucalyptus/portal_track_mip_rainbow_eucalyptus",

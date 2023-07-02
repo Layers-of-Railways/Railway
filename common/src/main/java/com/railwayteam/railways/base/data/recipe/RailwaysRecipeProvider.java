@@ -89,8 +89,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return Items.REDSTONE;
     }
 
+    public static ItemLike lever() { return Items.LEVER; }
+
+    public static ItemLike cogwheel() {
+      return AllBlocks.COGWHEEL.get();
+    }
+
     public static ItemLike railwayCasing() {
       return AllBlocks.RAILWAY_CASING.get();
+    }
+
+    public static ItemLike brassCasing() {
+      return AllBlocks.BRASS_CASING.get();
     }
 
     public static ItemLike andesiteCasing() {
@@ -115,6 +125,14 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static ItemLike phantomMembrane() {
       return Items.PHANTOM_MEMBRANE;
+    }
+
+    public static ItemLike eyeOfEnder() {
+      return Items.ENDER_EYE;
+    }
+
+    public static ItemLike industrialIron() {
+      return AllBlocks.INDUSTRIAL_IRON_BLOCK.get();
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "twilightforest:block/track/twilight_oak/portal_track_twilight_oak",
     "2": "twilightforest:block/track/twilight_oak/portal_track_mip_twilight_oak",

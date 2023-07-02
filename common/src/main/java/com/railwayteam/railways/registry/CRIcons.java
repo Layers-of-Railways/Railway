@@ -37,6 +37,13 @@ public class CRIcons extends AllIcons {
         I_DOOR_NORMAL = next(),
         I_DOOR_SPECIAL = next();
 
+    public static final CRIcons
+        I_SWITCH_MANUAL = newRow(),
+        I_SWITCH_AUTO = next();
+
+    public static final CRIcons
+        I_FAVORITE = newRow();
+
     public CRIcons(int x, int y) {
         super(x, y);
         iconX = x * 16;
@@ -71,7 +78,7 @@ public class CRIcons extends AllIcons {
 
     @Environment(EnvType.CLIENT)
     public void render(PoseStack ms, MultiBufferSource buffer, int color) {
-        VertexConsumer builder = buffer.getBuffer(RenderType.textSeeThrough(ICON_ATLAS));
+        VertexConsumer builder = buffer.getBuffer(RenderType.text(ICON_ATLAS));
         Matrix4f matrix = ms.last().pose();
         Color rgb = new Color(color);
         int light = LightTexture.FULL_BRIGHT;
@@ -95,10 +102,10 @@ public class CRIcons extends AllIcons {
     @Environment(EnvType.CLIENT)
     private void vertex(VertexConsumer builder, Matrix4f matrix, Vec3 vec, Color rgb, float u, float v, int light) {
         builder.vertex(matrix, (float) vec.x, (float) vec.y, (float) vec.z)
-            .color(rgb.getRed(), rgb.getGreen(), rgb.getBlue(), 255)
-            .uv(u, v)
-            .uv2(light)
-            .endVertex();
+                .color(rgb.getRed(), rgb.getGreen(), rgb.getBlue(), 255)
+                .uv(u, v)
+                .uv2(light)
+                .endVertex();
     }
 
     @Environment(EnvType.CLIENT)

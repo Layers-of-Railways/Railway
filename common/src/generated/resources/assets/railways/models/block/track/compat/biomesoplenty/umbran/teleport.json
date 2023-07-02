@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "biomesoplenty:block/track/umbran/portal_track_umbran",
     "2": "biomesoplenty:block/track/umbran/portal_track_mip_umbran",

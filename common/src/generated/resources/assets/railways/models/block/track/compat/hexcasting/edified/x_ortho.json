@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/x_ortho",
+  "parent": "create:block/track/x_ortho",
   "textures": {
     "1": "hexcasting:block/track/edified/standard_track_edified",
     "2": "hexcasting:block/track/edified/standard_track_mip_edified",

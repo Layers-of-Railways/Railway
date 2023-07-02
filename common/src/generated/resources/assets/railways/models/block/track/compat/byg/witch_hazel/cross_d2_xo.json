@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_xo",
+  "parent": "create:block/track/cross_d2_xo",
   "textures": {
     "0": "byg:block/track/witch_hazel/standard_track_witch_hazel",
     "1": "byg:block/track/witch_hazel/standard_track_mip_witch_hazel",

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/teleport",
+  "parent": "create:block/track/teleport",
   "textures": {
     "1": "blue_skies:block/track/starlit/portal_track_starlit",
     "2": "blue_skies:block/track/starlit/portal_track_mip_starlit",

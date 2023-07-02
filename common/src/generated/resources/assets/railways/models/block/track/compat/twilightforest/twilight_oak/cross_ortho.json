@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_ortho",
+  "parent": "create:block/track/cross_ortho",
   "textures": {
     "1": "twilightforest:block/track/twilight_oak/standard_track_twilight_oak",
     "2": "twilightforest:block/track/twilight_oak/standard_track_mip_twilight_oak",

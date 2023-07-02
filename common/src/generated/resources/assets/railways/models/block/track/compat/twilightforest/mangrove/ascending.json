@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "0": "twilightforest:block/track/mangrove/standard_track_mangrove",
     "1": "twilightforest:block/track/mangrove/standard_track_mip_mangrove",

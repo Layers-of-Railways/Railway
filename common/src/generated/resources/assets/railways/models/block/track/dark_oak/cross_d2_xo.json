@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_d2_xo",
+  "parent": "create:block/track/cross_d2_xo",
   "textures": {
     "0": "railways:block/track/dark_oak/standard_track_dark_oak",
     "1": "railways:block/track/dark_oak/standard_track_mip_dark_oak",

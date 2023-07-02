@@ -7,9 +7,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Contract;
+
+import java.util.function.Function;
 
 public class EntityUtils {
 	@ExpectPlatform
@@ -43,5 +46,14 @@ public class EntityUtils {
 	@Contract // shut
 	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
 		throw new AssertionError();
+	}
+
+	public static boolean isHolding(Player player, Function<ItemStack, Boolean> test) {
+		return test.apply(player.getItemInHand(InteractionHand.MAIN_HAND))
+				|| test.apply(player.getItemInHand(InteractionHand.OFF_HAND));
+	}
+
+	public static boolean isHoldingItem(Player player, Function<Item, Boolean> test) {
+		return isHolding(player, (stack) -> test.apply(stack.getItem()));
 	}
 }

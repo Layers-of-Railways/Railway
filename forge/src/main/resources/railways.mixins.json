@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
-    "ClientPacketListenerMixin"
+    "ClientPacketListenerMixin",
+    "TrainHUDMixin"
   ],
   "mixins": [
     "ServerGamePacketListenerImplMixin"

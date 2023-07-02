@@ -18,7 +18,7 @@ public class ModSetup {
     CREdgePointTypes.register();
     CRSchedule.register();
     CRDataFixers.register();
-    CRExtraDisplays.register();
+    CRExtraRegistration.register();
 
     // Compat
     if (TrackCompatUtils.anyLoaded())

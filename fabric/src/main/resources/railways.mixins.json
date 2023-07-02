@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
+    "LevelRendererMixin",
+    "TrainHUDMixin"
   ],
   "mixins": [
     "DetectorRailBlockMixin",

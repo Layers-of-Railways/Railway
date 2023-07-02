@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/diag_2",
+  "parent": "create:block/track/diag_2",
   "textures": {
     "0": "biomesoplenty:block/track/redwood/standard_track_redwood",
     "1": "biomesoplenty:block/track/redwood/standard_track_mip_redwood",

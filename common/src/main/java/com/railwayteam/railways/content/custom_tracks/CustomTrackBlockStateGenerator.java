@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.custom_tracks;
 
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
@@ -67,17 +68,17 @@ public class CustomTrackBlockStateGenerator extends SpecialBlockStateGen {
 
     BlockModelBuilder builder = prov.models()
           .withExistingParent(prefix + value.getModel(),
-              Railways.asResource("block/track_base/" + value.getModel()))
+              Create.asResource("block/track/" + value.getModel()))
         .texture("particle", material.particle);
     for (String k : textureMap.keySet()) {
       builder = builder.texture(k, Railways.asResource(prefix + textureMap.get(k) + material.resourceName()));
     }
-    for (String k : new String[]{"segment_left", "segment_right", "tie"}) {
+    for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
       prov.models()
           .withExistingParent(prefix + k,
-              Railways.asResource("block/track_base/" + k))
-          .texture("1", prefix + "standard_track_" + material.resourceName())
-          .texture("2", prefix + "standard_track_mip_" + material.resourceName())
+              Create.asResource("block/track/" + k))
+          .texture("0", prefix + "standard_track_" + material.resourceName())
+          .texture("1", prefix + "standard_track_mip_" + material.resourceName())
           .texture("particle", material.particle);
     }
     return builder;

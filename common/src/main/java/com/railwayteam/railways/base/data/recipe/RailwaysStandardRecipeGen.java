@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -42,6 +43,12 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .viaShapeless(b -> b
             .requires(Ingredients.copperIngot())
             .requires(Ingredients.brassNugget()));
+
+    GeneratedRecipe REMOTE_LENS = create(CRItems.REMOTE_LENS)
+            .unlockedBy(Ingredients::precisionMechanism)
+            .viaShapeless(b -> b
+                    .requires(Ingredients.precisionMechanism())
+                    .requires(Ingredients.eyeOfEnder()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
         .unlockedBy(Ingredients::campfire)
@@ -111,6 +118,29 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("FCT")
             .pattern(" S ")
         );
+
+    // FIXME: Recipe unlocking doesn't seem to work properly
+    GeneratedRecipe ANDESITE_SWITCH = create(CRBlocks.ANDESITE_SWITCH)
+      .unlockedBy(Ingredients::andesiteCasing)
+      .viaShaped(b -> b
+        .define('L', Ingredients.lever())
+        .define('C', Ingredients.andesiteCasing())
+        .define('W', Ingredients.cogwheel())
+        .pattern("L")
+        .pattern("C")
+        .pattern("W")
+      );
+
+    GeneratedRecipe BRASS_SWITCH = create(CRBlocks.BRASS_SWITCH)
+      .unlockedBy(Ingredients::precisionMechanism)
+      .viaShaped(b -> b
+        .define('L', Ingredients.lever())
+        .define('C', Ingredients.brassCasing())
+        .define('P', Ingredients.precisionMechanism())
+        .pattern("L")
+        .pattern("C")
+        .pattern("P")
+      );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);

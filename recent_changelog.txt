@@ -1,4 +1,12 @@
-v1.3.5:
-- Added back compat (but working now)
-- fixed sloped tracks
-- (1.19 only) fixed mangrove tracks
+v1.4.0:
+- Added switches
+- Added invisible bogeys
+- Fixed rollers breaking custom tracks
+- Fixed display links targeting nixie tube signals
+- Added various single, double, and triple axle bogeys
+- Added Track Replace mode to rollers
+- Added remote control to conductors (experimental)
+- Prevent conductors taking damage while riding trains
+- Prevent conductors being knocked out of their seats
+- Added spy conductors
+- Added vents

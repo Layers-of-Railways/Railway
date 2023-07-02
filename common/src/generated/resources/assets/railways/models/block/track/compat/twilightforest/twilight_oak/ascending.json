@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/ascending",
+  "parent": "create:block/track/ascending",
   "textures": {
     "0": "twilightforest:block/track/twilight_oak/standard_track_twilight_oak",
     "1": "twilightforest:block/track/twilight_oak/standard_track_mip_twilight_oak",

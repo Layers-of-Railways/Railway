@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/track_base/cross_diag",
+  "parent": "create:block/track/cross_diag",
   "textures": {
     "0": "blue_skies:block/track/starlit/standard_track_starlit",
     "1": "blue_skies:block/track/starlit/standard_track_mip_starlit",

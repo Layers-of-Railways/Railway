@@ -4,6 +4,12 @@
 
 All aboard a mod dedicated to expanding the possibilities of Create’s railway system. We are turning a basic logistical system into an extensive and aesthetic integration of railways into Minecraft.
 
+Requirements:
+
+<img src="https://cdn.modrinth.com/data/LNytGWDc/icon.png" width="66" height="66" /><img src="https://i.imgur.com/EWI3uwb.png" width="66" height="66" /><img src="https://i.imgur.com/KAgud6s.png" width="66" height="66" />
+
+Create, Flywheel, and Forge
+
 Features
 
  ****Tracks****
@@ -35,6 +41,8 @@ Features
 **Smokestacks**
 
 *   A variety of decorative alternatives to campfires.
+
+![](https://cdn.discordapp.com/attachments/836395630913781763/1077814829789745253/image.png)![](https://cdn.discordapp.com/attachments/836395630913781763/1077814830184022037/image.png)Trains Not Included
 
  Development
 
