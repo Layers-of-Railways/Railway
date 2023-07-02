@@ -12,6 +12,17 @@ repositories {
     maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
     maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
     maven { url = "https://maven.blamejared.com/" } // JEI, Hex Casting
+
+    maven { // Extended Bogeys
+        url "https://maven.ithundxr.dev/private"
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials(PasswordCredentials) {
+            username = findProperty("IThundxrMavenUsername")
+            password = findProperty("IThundxrMavenPassword")
+        }
+    }
 }
 
 dependencies {
@@ -37,6 +48,8 @@ dependencies {
     modCompileOnly("at.petra-k.paucal:paucal-common-${minecraft_version}:${paucal_version}")
     modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
     modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")
+
+    modCompileOnly("com.rabbitminers:extendedbogeys-common:${EB_verison}+common")
 }
 
 architectury {

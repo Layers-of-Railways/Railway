@@ -82,6 +82,17 @@ repositories {
     flatDir {
         dir 'libs'
     }
+
+    maven { // Extended Bogeys
+        url "https://maven.ithundxr.dev/private"
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials(PasswordCredentials) {
+            username = findProperty("IThundxrMavenUsername")
+            password = findProperty("IThundxrMavenPassword")
+        }
+    }
 }
 
 dependencies {
@@ -130,6 +141,8 @@ dependencies {
     if (enable_sodium_rubidium.toBoolean()) {
         modLocalRuntime("curse.maven:rubidium-574856:${rubidium_version}")
     }
+
+    modImplementation("com.rabbitminers:extendedbogeys-forge:${EB_verison}+forge")
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

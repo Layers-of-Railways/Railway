@@ -63,6 +63,17 @@ repositories {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
     } // Cardinal Components (Hex Casting dependency)
+
+    maven { // Extended Bogeys
+        url "https://maven.ithundxr.dev/private"
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials(PasswordCredentials) {
+            username = findProperty("IThundxrMavenUsername")
+            password = findProperty("IThundxrMavenPassword")
+        }
+    }
 }
 
 dependencies {
@@ -121,6 +132,8 @@ dependencies {
         modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
         modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
     }
+
+    modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
