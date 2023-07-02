@@ -15,7 +15,7 @@ Features
  ****Tracks****
 
 *   Decorate your builds and bring new life and depth to your rail networks with _eight_ new rail types! They’re fully compatible with the existing rails, as well as each other. Try our signature dark oak rails to give your build that distinguished look, make it really stand out with gold and nether wood rails or give our monorail track a go..
-*   Additionally you can right-click a track with any slab creates a grade crossing track,works on slopes and turns for that extra bit of spice.  
+*   Additionally, you can right-click a track with any slab creates a grade crossing track,works on slopes and turns for that extra bit of spice.  
       
     **Semaphores**
 *   Make your train yards and junctions pop with our new Semaphore blocks! They serve the same purpose as nixie tubes, but do so in a far more aesthetically pleasing way.
