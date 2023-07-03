@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
@@ -104,5 +105,6 @@ public class CRBogeyStyles {
         registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("singleaxle_icon"));
         registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
         registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
+        if(Mods.EXTENDEDBOGEYS.isLoaded){registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_driver_tripleaxle_icon"));}
     }
 }

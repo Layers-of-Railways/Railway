@@ -1,6 +1,8 @@
 package com.railwayteam.railways.content.custom_bogeys.selection_menu;
 
+import com.rabbitminers.extendedbogeys.ExtendedBogeys;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.RadialBogeyCategoryMenu.State;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
@@ -8,6 +10,7 @@ import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.AllKeys;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -70,6 +73,15 @@ public class BogeyCategoryHandlerClient {
                 map.put(style.name, style);
             }
             return map;
+        }
+        if(Mods.EXTENDEDBOGEYS.isLoaded){
+            if(id.equals(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP))){
+                Map<ResourceLocation, BogeyStyle> noEB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
+                noEB.remove(ExtendedBogeys.asResource("single_axle"));
+                noEB.remove(ExtendedBogeys.asResource("double_axle"));
+                noEB.remove(ExtendedBogeys.asResource("triple_axle"));
+                return noEB;
+            }
         }
         return AllBogeyStyles.CYCLE_GROUPS.getOrDefault(id, new HashMap<>());
     }
@@ -228,6 +240,8 @@ public class BogeyCategoryHandlerClient {
         for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
             if (style.name.getNamespace().equals(Railways.MODID))
                 addIcon(style, style.name.getPath());
+            else if (Mods.EXTENDEDBOGEYS.isLoaded && style.name.getNamespace().equals(ExtendedBogeys.MOD_ID))
+                addIcon(style, "eb_" + style.name.getPath());
             addIcon(AllBogeyStyles.STANDARD, "default");
         }
     }
