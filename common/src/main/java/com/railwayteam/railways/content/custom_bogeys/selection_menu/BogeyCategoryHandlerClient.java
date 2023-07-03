@@ -75,6 +75,12 @@ public class BogeyCategoryHandlerClient {
             return map;
         }
         if(Mods.EXTENDEDBOGEYS.isLoaded){
+            if(id.equals(Railways.asResource("extendedbogeys"))) {
+                Map<ResourceLocation, BogeyStyle> EB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
+                EB.remove(Create.asResource("standard"));
+                EB.remove(Railways.asResource("invisible"));
+                return EB;
+            }
             if(id.equals(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP))){
                 Map<ResourceLocation, BogeyStyle> noEB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
                 noEB.remove(ExtendedBogeys.asResource("single_axle"));
