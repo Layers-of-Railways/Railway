@@ -142,7 +142,9 @@ dependencies {
         modLocalRuntime("curse.maven:rubidium-574856:${rubidium_version}")
     }
 
-    modImplementation("com.rabbitminers:extendedbogeys-forge:${EB_verison}+forge")
+    if (enable_eb.toBoolean()) {
+        modImplementation("com.rabbitminers:extendedbogeys-forge:${EB_verison}+forge")
+    }
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
