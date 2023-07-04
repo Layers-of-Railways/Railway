@@ -17,7 +17,7 @@ public class RailwaysSequencedAssemblyRecipeGenImpl extends RailwaysSequencedAss
 		RailwaysSequencedAssemblyRecipeGenImpl provider = new RailwaysSequencedAssemblyRecipeGenImpl(gen);
 		return new RecipeProvider(gen) {
 			@Override
-			public void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+			protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 				provider.registerRecipes(consumer);
 			}
 		};
