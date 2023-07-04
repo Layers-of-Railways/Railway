@@ -29,6 +29,8 @@ public abstract class MixinSlidingDoorBlock {
     private void snr$preventManualDoorRedstoneReaction(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock,
                                                        BlockPos pFromPos, boolean pIsMoving, CallbackInfo ci,
                                                        boolean lower, boolean isPowered, SlidingDoorBlockEntity be) {
+        if (be == null)
+            return;
         if (((SlidingDoorMode.IHasDoorMode) be).getSlidingDoorMode() == SlidingDoorMode.MANUAL) {
             ci.cancel();
         }
