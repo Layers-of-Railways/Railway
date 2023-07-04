@@ -6,9 +6,11 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBloc
 import com.railwayteam.railways.content.roller_extensions.TrackReplacePaver;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -34,6 +36,7 @@ public abstract class MixinTrackBlock extends Block {
 
   @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
   private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    //noinspection ConstantValue
     if (!(((Object) this) instanceof MonorailTrackBlock)) {
       InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
       if (result != null) {
@@ -46,11 +49,13 @@ public abstract class MixinTrackBlock extends Block {
   private void placeCustomStyle(BlockGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir) {
     if (BogeyCategoryHandlerServer.currentPlayer == null)
       return;
-    BogeyStyle style = BogeyCategoryHandlerServer.getStyle(BogeyCategoryHandlerServer.currentPlayer);
+    Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(BogeyCategoryHandlerServer.currentPlayer);
+    BogeyStyle style = styleData.getFirst();
+    BogeySize selectedSize = styleData.getSecond();
     if (style == AllBogeyStyles.STANDARD)
       return;
 
-    BogeySizes.BogeySize size = BogeySizes.getAllSizesSmallToLarge().get(0);
+    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.getAllSizesSmallToLarge().get(0);
     int escape = BogeySizes.getAllSizesSmallToLarge().size();
     while (!style.validSizes().contains(size)) {
       if (escape < 0)

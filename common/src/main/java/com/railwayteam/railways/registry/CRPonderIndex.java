@@ -13,6 +13,8 @@ public class CRPonderIndex {
     public static void register() {
         HELPER.forComponents(CRBlocks.SEMAPHORE)
             .addStoryBoard("semaphore", TrainScenes::signaling);
+        HELPER.forComponents(CRBlocks.TRACK_COUPLER)
+                .addStoryBoard("coupler", TrainScenes::coupling);
         HELPER.forComponents(CRItems.ITEM_CONDUCTOR_CAP.values())
             .addStoryBoard("conductor", ConductorScenes::constructing)
             .addStoryBoard("conductor_redstone", ConductorScenes::redstoning)

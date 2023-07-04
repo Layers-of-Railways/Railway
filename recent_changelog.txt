@@ -10,3 +10,5 @@ v1.4.0:
 - Prevent conductors being knocked out of their seats
 - Added spy conductors
 - Added vents
+- Added coupler ponder
+- Fixed coupler trying to couple/decouple partially loaded trains

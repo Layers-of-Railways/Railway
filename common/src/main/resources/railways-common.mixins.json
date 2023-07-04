@@ -49,6 +49,7 @@
     "MixinSlidingDoorBlock",
     "MixinSlidingDoorBlockEntity",
     "MixinSlidingDoorMovementBehaviour",
+    "MixinStandardBogeyTileEntity",
     "MixinStationBlock",
     "MixinStationBlockEntity",
     "MixinStationEditPacket",
@@ -114,7 +115,8 @@
     "conductor_possession.MixinItemInHandRenderer",
     "conductor_possession.MixinLocalPlayer",
     "conductor_possession.MixinMinecraft",
-    "conductor_possession.MixinMouseHandler"
+    "conductor_possession.MixinMouseHandler",
+    "client.MixinBogeyTileEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

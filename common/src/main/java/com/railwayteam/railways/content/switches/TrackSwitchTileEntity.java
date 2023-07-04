@@ -50,6 +50,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
     private SwitchState state;
     private int lastAnalogOutput = 0;
+    private final boolean[] previousPower = new boolean[6];
 
     protected ScrollOptionBehaviour<AutoMode> autoMode;
 
@@ -390,6 +391,19 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         return getLevel() != null && getLevel().hasSignal(getBlockPos().relative(direction), direction);
     }
 
+    private boolean hasNewSignal(Direction direction) {
+        return hasNewSignal(direction, true);
+    }
+
+    private boolean hasNewSignal(Direction direction, boolean updatePreviousPower) {
+        int i = direction.ordinal();
+        boolean powered = hasSignal(direction);
+        boolean ret = !previousPower[i] && powered;
+        if (updatePreviousPower)
+            previousPower[i] = powered;
+        return ret;
+    }
+
     void checkRedstoneInputs() {
         BlockState state = getBlockState();
         Level level = getLevel();
@@ -415,13 +429,13 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         TrackSwitch sw = getSwitch();
         if (sw == null)
             return;
-        if (hasSignal(Direction.EAST) || hasSignal(Direction.WEST)) {
+        if (hasNewSignal(Direction.EAST) || hasNewSignal(Direction.WEST)) {
             sw.setSwitchState(SwitchState.NORMAL);
-        } else if (hasSignal(Direction.NORTH)) {
+        } else if (hasNewSignal(Direction.NORTH)) {
             sw.setSwitchState(SwitchState.REVERSE_RIGHT);
-        } else if (hasSignal(Direction.SOUTH)) {
+        } else if (hasNewSignal(Direction.SOUTH)) {
             sw.setSwitchState(SwitchState.REVERSE_LEFT);
-        } else if (hasSignal(Direction.UP)) {
+        } else if (hasNewSignal(Direction.UP)) {
             cycleState();
         }
     }
@@ -472,6 +486,11 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
         if (clientPacket)
             tag.putString("SwitchState", (state == null ? SwitchState.NORMAL : state).getSerializedName());
         tag.putInt("AnalogOutput", lastAnalogOutput);
+        byte previousPowerState = 0;
+        for (int i = 0; i < 6; i++) {
+            previousPowerState |= (previousPower[i] ? 1 : 0) << i;
+        }
+        tag.putByte("PreviousPowerState", previousPowerState);
     }
 
     @Override
@@ -486,6 +505,10 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
             }
         }
         lastAnalogOutput = tag.getInt("AnalogOutput");
+        byte previousPowerState = tag.getByte("PreviousPowerState");
+        for (int i = 0; i < 6; i++) {
+            previousPower[i] = (previousPowerState & (1 << i)) != 0;
+        }
     }
 
     public int getTargetAnalogOutput() {

@@ -35,6 +35,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -202,10 +203,11 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             } else if (state == State.PICK_STYLE) {
                 if (slot < BogeyCategoryHandlerClient.styleCount(selectedCategory)) {
                     /* render bogey */
-                    ResourceLocation id = BogeyCategoryHandlerClient.getStyleId(selectedCategory, slot);
-                    BogeyStyle style = BogeyCategoryHandlerClient.getStyle(selectedCategory, id);
+                    BogeyStyle style = BogeyCategoryHandlerClient.getStyle(selectedCategory, slot);
                     int sizeIdx = ticksOpen / 40;
-                    BogeySize size = style.validSizes().toArray(BogeySize[]::new)[sizeIdx % style.validSizes().size()];
+                    BogeySize size = BogeyCategoryHandlerClient.getSize(selectedCategory, slot);
+                    if (size == null)
+                        size = style.validSizes().toArray(BogeySize[]::new)[sizeIdx % style.validSizes().size()];
 
                     //BogeyRenderer renderer = style.getInWorldRenderInstance(size);
                     Block block = style.getBlockOfSize(size);
@@ -217,13 +219,14 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                         Consumer<RenderInfo> render = (info) -> {
                             PoseStack ms2 = info.ms;
                             ms2.pushPose();
-                            ms2.translate(-0.5, -0.5, -0.5);
+                            //ms2.translate(-0.5, -0.5, -0.5);
+                            BlockState bogeyState = block.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
                             minecraft.getBlockRenderer().renderSingleBlock(
-                                    block.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z), ms2,
+                                    bogeyState, ms2,
                                     info.buffers, info.packedLight, OverlayTexture.NO_OVERLAY
                             );
                             ms2.popPose();
-                            bogeyBlock.render(null, 0.0f, ms2, partialTicks, info.buffers,
+                            bogeyBlock.render(bogeyState, 0.0f, ms2, partialTicks, info.buffers,
                                     info.packedLight, OverlayTexture.NO_OVERLAY, style, new CompoundTag());
                         };
 
@@ -233,9 +236,9 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     .withStyle(ChatFormatting.GOLD);
                         }
 
-                        if (BogeyCategoryHandlerClient.ICONS.containsKey(style)) {
+                        if (BogeyCategoryHandlerClient.hasIcon(style, size)) {
                             AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
-                            renderIcon(BogeyCategoryHandlerClient.ICONS.get(style), ms);
+                            renderIcon(BogeyCategoryHandlerClient.getIcon(style, size), ms);
                             if (selected) {
                                 AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
                             }
@@ -362,6 +365,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
             if (state == State.PICK_STYLE && selected >= 0 && selected < BogeyCategoryHandlerClient.styleCount(selectedCategory)) {
                 BogeyStyle style = BogeyCategoryHandlerClient.getStyle(selectedCategory, selected);
+                BogeySize size = BogeyCategoryHandlerClient.getSize(selectedCategory, selected);
                 if (favoriteSlot != null) {
                     if (BogeyCategoryHandlerClient.getFavorites().size() <= favoriteSlot) {
                         BogeyCategoryHandlerClient.getFavorites().add(style);
@@ -371,7 +375,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                     }
                     optimizeFavorites();
                 } else {
-                    BogeyCategoryHandlerClient.setSelectedStyle(style);
+                    BogeyCategoryHandlerClient.setSelectedStyle(style, size);
                 }
                 onClose();
                 BogeyCategoryHandlerClient.COOLDOWN = 2;
