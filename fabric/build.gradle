@@ -39,9 +39,40 @@ configurations {
 
 repositories {
     // mavens for Fabric-exclusives
+    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
+    maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+    maven { url = "https://cursemaven.com" } // Forge Config API Port
+    maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
+    maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
     maven { // forge config api port
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
+    maven {
+        url = "https://maven.blamejared.com/"
+        content {
+            includeGroup("at.petra-k")
+            includeGroup("vazkii.patchouli")
+        }
+    } // JEI, Hex Casting
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        content {
+            includeGroup("dev.onyxstudios.cardinal-components-api")
+        }
+    } // Cardinal Components (Hex Casting dependency)
+
+    maven { // Extended Bogeys
+        url "https://maven.ithundxr.dev/private"
+        authentication {
+            basic(BasicAuthentication)
+        }
+        credentials(PasswordCredentials) {
+            username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
+            password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
+        }
     }
 }
 

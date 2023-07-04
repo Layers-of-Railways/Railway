@@ -30,22 +30,11 @@ subprojects {
         maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
         maven { url = "https://jm.gserv.me/repository/maven-public/" } // JourneyMap API
         maven { url = "https://api.modrinth.com/maven" } // LazyDFU, JourneyMap
-        maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
-        maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
-        maven { url = "https://cursemaven.com" } // Forge Config API Port, Biomes O' Plenty
-        maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
-        maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
-        maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
-        maven { url = 'https://ladysnake.jfrog.io/artifactory/mods' } // Cardinal Components (Hex Casting dependency)
-        maven { url = "https://maven.tterrag.com/" } // Flywheel
-        maven { // Extended Bogeys
-            url "https://maven.ithundxr.dev/private"
-            authentication {
-                basic(BasicAuthentication)
-            }
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
+        maven { // Flywheel
+            url = "https://maven.tterrag.com/"
+            content {
+                // need to be specific here due to version overlaps
+                includeGroup("com.jozufozu.flywheel")
             }
         }
     }
