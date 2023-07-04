@@ -49,7 +49,6 @@
     "MixinSlidingDoorBlock",
     "MixinSlidingDoorBlockEntity",
     "MixinSlidingDoorMovementBehaviour",
-    "MixinSlidingDoorTileEntity",
     "MixinStandardBogeyTileEntity",
     "MixinStationBlock",
     "MixinStationBlockEntity",

@@ -1,11 +1,11 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IStandardBogeyTEVirtualCoupling;
-import com.simibubi.create.content.logistics.trains.track.StandardBogeyTileEntity;
+import com.simibubi.create.content.trains.bogey.StandardBogeyBlockEntity;
 import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(value = StandardBogeyTileEntity.class, remap = false)
+@Mixin(value = StandardBogeyBlockEntity.class, remap = false)
 public class MixinStandardBogeyTileEntity implements IStandardBogeyTEVirtualCoupling {
     private double coupling = -1;
     @Override

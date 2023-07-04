@@ -1,12 +1,15 @@
 package com.railwayteam.railways.ponder;
 
 
+import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
+import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity.PonderData;
+import com.railwayteam.railways.mixin_interfaces.IStandardBogeyTEVirtualCoupling;
 import com.railwayteam.railways.registry.CRBlocks;
-import com.railwayteam.railways.registry.CRBlocks;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.content.trains.signal.SignalBlock;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
@@ -18,8 +21,10 @@ import com.simibubi.create.foundation.ponder.instruction.PonderInstruction;
 import com.simibubi.create.foundation.utility.Pointing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.ComparatorBlock;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.phys.AABB;
@@ -858,14 +863,12 @@ public class TrainScenes {
         scene.rotateCameraY(-20);
     }
 
-    public static void couplingAlignment(SceneBuilder scene, SceneBuildingUtil util) {
+    /*public static void couplingAlignment(SceneBuilder scene, SceneBuildingUtil util) {
         scene.title("train_coupler_alignment", "Aligning Trains for Coupling");
         scene.configureBasePlate(0, 0, 21);
         scene.scaleSceneView(.45f);
         scene.showBasePlate();
 
-        /*scene.debug.debugSchematic();
-        scene.idle(1000);*/
 
 
         // reveal tracks
@@ -975,18 +978,18 @@ public class TrainScenes {
         scene.idle(10);
 
         scene.rotateCameraY(-20);
-    }
+    }*/
 
     // Coupler Ponder only code
     public static void movePlate(SceneBuilder scene, SceneBuildingUtil util, BlockPos couplerPos, BlockPos plate, int idleTicks) {
-        scene.world.modifyTileNBT(util.select.position(couplerPos), TrackCouplerTileEntity.class, nbt -> nbt.put("SecondaryTargetTrack", NbtUtils.writeBlockPos(plate)));
+        scene.world.modifyBlockEntityNBT(util.select.position(couplerPos), TrackCouplerBlockEntity.class, nbt -> nbt.put("SecondaryTargetTrack", NbtUtils.writeBlockPos(plate)));
         scene.idle(idleTicks);
     }
 
     public static void coupleTrain(SceneBuilder scene, BlockPos pos, double distance, Direction direction) {
         scene.addInstruction(PonderInstruction.simple(ponderScene -> {
             PonderWorld world = ponderScene.getWorld();
-            world.getBlockEntity(pos, AllTileEntities.BOGEY.get()).ifPresent(sbte -> {
+            world.getBlockEntity(pos, AllBlockEntityTypes.BOGEY.get()).ifPresent(sbte -> {
                 if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
                     virtualCoupling.setCouplingDistance(distance);
                     virtualCoupling.setCouplingDirection(direction);
@@ -998,7 +1001,7 @@ public class TrainScenes {
     public static void decoupleTrain(SceneBuilder scene, BlockPos pos) {
         scene.addInstruction(PonderInstruction.simple(ponderScene -> {
             PonderWorld world = ponderScene.getWorld();
-            world.getBlockEntity(pos, AllTileEntities.BOGEY.get()).ifPresent(sbte -> {
+            world.getBlockEntity(pos, AllBlockEntityTypes.BOGEY.get()).ifPresent(sbte -> {
                 if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
                     virtualCoupling.setCouplingDistance(-1);
                     virtualCoupling.setCouplingDirection(Direction.UP);

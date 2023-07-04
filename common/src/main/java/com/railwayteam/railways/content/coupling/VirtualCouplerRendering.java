@@ -2,9 +2,9 @@ package com.railwayteam.railways.content.coupling;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.AllBlockPartials;
-import com.simibubi.create.content.logistics.trains.IBogeyBlock;
-import com.simibubi.create.content.logistics.trains.track.StandardBogeyTileEntity;
+import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
+import com.simibubi.create.content.trains.bogey.StandardBogeyBlockEntity;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,14 +20,14 @@ public final class VirtualCouplerRendering {
 
     public static void renderCoupler(Direction direction, double couplingDistance, boolean front, float partialTicks,
                                      PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                                     StandardBogeyTileEntity te) {
+                                     StandardBogeyBlockEntity te) {
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
         BlockState air = Blocks.AIR.defaultBlockState();
 
-        if (te.getBlockState().getBlock() instanceof IBogeyBlock bogeyBlock) {
-            Vec3 anchor = bogeyBlock.getConnectorAnchorOffset().multiply(front ? -1 : 1, 1, front ? -1 : 1);
+        if (te.getBlockState().getBlock() instanceof AbstractBogeyBlock<?> bogeyBlock) {
+            Vec3 anchor = bogeyBlock.getConnectorAnchorOffset(false).multiply(front ? -1 : 1, 1, front ? -1 : 1);
 //                .add(Vec3.atBottomCenterOf(te.getBlockPos()));
-            Vec3 anchor2 = anchor.relative(direction, couplingDistance);
+            Vec3 anchor2 = anchor.add(Vec3.atLowerCornerOf(direction.getNormal()).scale(couplingDistance));
 
             double diffX = anchor2.x - anchor.x;
             double diffY = anchor2.y - anchor.y;
@@ -38,7 +38,7 @@ public final class VirtualCouplerRendering {
             ms.pushPose();
             ms.pushPose();
             ms.translate(anchor.x, anchor.y, anchor.z);
-            CachedBufferer.partial(AllBlockPartials.TRAIN_COUPLING_HEAD, air)
+            CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
                 .rotateY(-yRot)
                 .rotateX(xRot)
                 .light(light)
@@ -49,7 +49,7 @@ public final class VirtualCouplerRendering {
             double stretch = 1.0;
 
             for (int j = 0; j < couplingSegments; j++) {
-                CachedBufferer.partial(AllBlockPartials.TRAIN_COUPLING_CABLE, air)
+                CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_CABLE, air)
                     .rotateY(-yRot + 180)
                     .rotateX(-xRot)
                     .translate(0, 0, margin + 2 / 16f)
@@ -63,7 +63,7 @@ public final class VirtualCouplerRendering {
 
             ms.pushPose();
             ms.translate(anchor2.x, anchor2.y, anchor2.z);
-            CachedBufferer.partial(AllBlockPartials.TRAIN_COUPLING_HEAD, air)
+            CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
                 .rotateY(-yRot + 180)
                 .rotateX(-xRot)
                 .light(light)
