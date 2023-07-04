@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.custom_bogeys.selection_menu;
 
-import com.rabbitminers.extendedbogeys.ExtendedBogeys;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.RadialBogeyCategoryMenu.State;
@@ -83,9 +82,9 @@ public class BogeyCategoryHandlerClient {
             }
             if(id.equals(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP))){
                 Map<ResourceLocation, BogeyStyle> noEB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
-                noEB.remove(ExtendedBogeys.asResource("single_axle"));
-                noEB.remove(ExtendedBogeys.asResource("double_axle"));
-                noEB.remove(ExtendedBogeys.asResource("triple_axle"));
+                noEB.remove(new ResourceLocation("extendedbogeys", "single_axle"));
+                noEB.remove(new ResourceLocation("extendedbogeys", "double_axle"));
+                noEB.remove(new ResourceLocation("extendedbogeys", "triple_axle"));
                 return noEB;
             }
         }
@@ -329,7 +328,7 @@ public class BogeyCategoryHandlerClient {
         for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
             if (style.name.getNamespace().equals(Railways.MODID))
                 addIcon(style, style.name.getPath());
-            else if (Mods.EXTENDEDBOGEYS.isLoaded && style.name.getNamespace().equals(ExtendedBogeys.MOD_ID))
+            else if (Mods.EXTENDEDBOGEYS.isLoaded && style.name.getNamespace().equals("extendedbogeys"))
                 addIcon(style, "eb_" + style.name.getPath());
             addIcon(AllBogeyStyles.STANDARD, "default");
         }
