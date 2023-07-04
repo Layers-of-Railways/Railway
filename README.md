@@ -10,6 +10,8 @@
 3. Make a pull request
 4. Have somebody review it, and merge
 
+* If you add mavens, and they are defined more than once (in any build.gradle files) define them in the root build.gradle to make it cleaner to read
+
 ## Contributing (for community members):
 1. Open an issue clearly describing the feature you want to implement
 2. Don't start writing your feature until a core dev recommends you to
