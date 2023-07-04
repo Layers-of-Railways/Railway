@@ -89,8 +89,8 @@ repositories {
             basic(BasicAuthentication)
         }
         credentials(PasswordCredentials) {
-            username = System.getenv("ITHUNDXRMAVENUSERNAME")
-            password = System.getenv("ITHUNDXRMAVENPASSWORD")
+            username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
+            password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
         }
     }
 }
