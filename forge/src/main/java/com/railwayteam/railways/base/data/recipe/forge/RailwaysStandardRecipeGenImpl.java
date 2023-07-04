@@ -17,7 +17,7 @@ public class RailwaysStandardRecipeGenImpl extends RailwaysStandardRecipeGen {
 		RailwaysStandardRecipeGen provider = new RailwaysStandardRecipeGenImpl(gen);
 		return new RecipeProvider(gen) {
 			@Override
-			protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+			public void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
 				provider.registerRecipes(consumer);
 			}
 		};
