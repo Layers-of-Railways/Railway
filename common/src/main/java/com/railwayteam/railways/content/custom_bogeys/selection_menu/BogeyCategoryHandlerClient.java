@@ -6,13 +6,16 @@ import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.RadialBogeyCategoryMenu.State;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
+import com.railwayteam.railways.util.Utils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.gui.ScreenOpener;
+import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -28,10 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Environment(EnvType.CLIENT)
 public class BogeyCategoryHandlerClient {
@@ -104,17 +104,64 @@ public class BogeyCategoryHandlerClient {
     }
 
     public static BogeyStyle getStyle(ResourceLocation categoryId, int styleIdx) {
-        return getStyle(categoryId, getStyleId(categoryId, styleIdx));
+        int offset = 0;
+        for (int i = 0; i < styleCount(categoryId); i++) {
+            BogeyStyle style = getStylesInCategory(categoryId).get(getStyleId(categoryId, i));
+
+            if (!showIndividualSizes(style)) {
+                if (i + offset == styleIdx)
+                    return style;
+                continue;
+            }
+            for (int sizeIdx = 0; sizeIdx < style.validSizes().size(); sizeIdx++) {
+                if (i + offset + sizeIdx == styleIdx)
+                    return style;
+            }
+            offset += style.validSizes().size() - 1;
+        }
+
+        if (Utils.isDevEnv())
+            Railways.LOGGER.error("getStyle failed! category: " + categoryId + ", styleIdx: " + styleIdx);
+        return getStylesInCategory(categoryId).get(getStyleId(categoryId, styleIdx));
     }
 
-    public static BogeyStyle getStyle(ResourceLocation categoryId, ResourceLocation styleId) {
-        return getStylesInCategory(categoryId).get(styleId);
+    public static @Nullable BogeySize getSize(ResourceLocation categoryId, int styleIdx) {
+        int offset = 0;
+        for (int i = 0; i < styleCount(categoryId); i++) {
+            BogeyStyle style = getStylesInCategory(categoryId).get(getStyleId(categoryId, i));
+
+            if (!showIndividualSizes(style)) {
+                if (i + offset == styleIdx)
+                    return null;
+                continue;
+            }
+            int sizeIdx = 0;
+            for (BogeySize size : style.validSizes()) {
+                if (i + offset + sizeIdx == styleIdx)
+                    return size;
+                sizeIdx += 1;
+            }
+
+            offset += style.validSizes().size() - 1;
+        }
+
+        if (Utils.isDevEnv())
+            Railways.LOGGER.error("getStyle failed! category: " + categoryId + ", styleIdx: " + styleIdx);
+        return null;
     }
 
     public static int styleCount(ResourceLocation categoryId) {
         if (categoryId == MANAGE_FAVORITES_CATEGORY)
-            return getFavorites().size();
-        return getStylesInCategory(categoryId).size();
+            return styleAndSizeCount(getFavorites());
+        return styleAndSizeCount(getStylesInCategory(categoryId).values());
+    }
+
+    private static int styleAndSizeCount(Collection<BogeyStyle> styles) {
+        int count = 0;
+        for (BogeyStyle style : styles) {
+            count += showIndividualSizes(style) ? style.validSizes().size() : 1;
+        }
+        return count;
     }
 
     public static void registerStyleCategory(String name, NonNullSupplier<? extends ItemLike> icon) {
@@ -132,16 +179,23 @@ public class BogeyCategoryHandlerClient {
         return selectedStyle;
     }
 
+    public static @Nullable BogeySize getSelectedSize() {
+        return selectedSize;
+    }
+
     @Nullable
     private static BogeyStyle selectedStyle;
+    @Nullable
+    private static BogeySize selectedSize;
 
-    static void setSelectedStyle(@Nullable BogeyStyle style) {
-        if (selectedStyle == style)
+    static void setSelectedStyle(@Nullable BogeyStyle style, @Nullable BogeySize size) {
+        if (selectedStyle == style && selectedSize == size)
             return;
         selectedStyle = style;
+        selectedSize = size;
         if (style == null)
             style = AllBogeyStyles.STANDARD;
-        CRPackets.PACKETS.send(new BogeyStyleSelectionPacket(style));
+        CRPackets.PACKETS.send(new BogeyStyleSelectionPacket(style, size));
     }
 
     @Nullable
@@ -195,6 +249,10 @@ public class BogeyCategoryHandlerClient {
         }
     }
 
+    public static boolean showIndividualSizes(BogeyStyle style) {
+        return style.name.getNamespace().equals("extendedbogeys") && style.name.getPath().equals("double_axle");
+    }
+
     public static void saveFavorites() {
         if (favorites == null)
             return;
@@ -236,10 +294,35 @@ public class BogeyCategoryHandlerClient {
         ScreenOpener.open(new RadialBogeyCategoryMenu(State.PICK_CATEGORY));
     }
 
-    public static final Map<BogeyStyle, ResourceLocation> ICONS = new HashMap<>();
+    public static final Map<Pair<BogeyStyle, @Nullable BogeySize>, ResourceLocation> ICONS = new HashMap<>();
 
     public static void addIcon(BogeyStyle style, String name) {
-        ICONS.put(style, Railways.asResource("textures/gui/bogey_icons/"+name+"_icon.png"));
+        ICONS.put(Pair.of(style, null), Railways.asResource("textures/gui/bogey_icons/"+name+"_icon.png"));
+    }
+
+    /**
+     * Note: it is only valid to add a sized icon for a style that shows individual sizes
+     */
+    public static void addIcon(BogeyStyle style, BogeySize size, String name) {
+        if (!showIndividualSizes(style)) {
+            if (Utils.isDevEnv()) {
+                throw new IllegalStateException("Cannot add sized icon for style that does not show individual sizes");
+            } else {
+                addIcon(style, name);
+                return;
+            }
+        }
+        ICONS.put(Pair.of(style, size), Railways.asResource("textures/gui/bogey_icons/"+name+"_icon.png"));
+    }
+
+    public static boolean hasIcon(BogeyStyle style, BogeySize size) {
+        return (showIndividualSizes(style) && ICONS.containsKey(Pair.of(style, size))) || ICONS.containsKey(Pair.of(style, null));
+    }
+
+    public static ResourceLocation getIcon(BogeyStyle style, BogeySize size) {
+        if (showIndividualSizes(style) && ICONS.containsKey(Pair.of(style, size)))
+            return ICONS.get(Pair.of(style, size));
+        return ICONS.get(Pair.of(style, null));
     }
 
     static {

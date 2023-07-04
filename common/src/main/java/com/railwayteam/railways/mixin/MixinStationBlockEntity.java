@@ -4,12 +4,14 @@ import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCatego
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
+import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -56,7 +58,8 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
                               int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
         if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
             return;
-        BogeyStyle style = BogeyCategoryHandlerServer.getStyle(player.getUUID());
+        Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(player.getUUID());
+        BogeyStyle style = styleData.getFirst();
         if (style == AllBogeyStyles.STANDARD)
             return;
 
