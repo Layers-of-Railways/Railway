@@ -35,6 +35,8 @@ public class TrainUtils {
             return train;
         if (train.carriages.size() <= numberOffEnd)
             return train;
+        if (!allCarriagesLoaded(train))
+            return train;
 
         Integer frontSpacingBackup  = null;
         Carriage[] lastCarriages = new Carriage[numberOffEnd];
@@ -134,6 +136,9 @@ public class TrainUtils {
         if (frontTrain.derailed || backTrain.derailed) {
             return frontTrain;
         }
+        if (!allCarriagesLoaded(frontTrain) || !allCarriagesLoaded(backTrain)) {
+            return frontTrain;
+        }
         int frontTrainSize = frontTrain.carriages.size();
         frontTrain.carriages.addAll(backTrain.carriages);
         backTrain.carriages.clear();
@@ -193,5 +198,14 @@ public class TrainUtils {
             }
         }
         return frontTrain;
+    }
+
+    public static boolean allCarriagesLoaded(Train train) {
+        for (Carriage carriage : train.carriages) {
+            if (carriage.anyAvailableEntity() == null) {
+                return false;
+            }
+        }
+        return true;
     }
 }
