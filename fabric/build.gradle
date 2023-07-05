@@ -63,17 +63,6 @@ repositories {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
     } // Cardinal Components (Hex Casting dependency)
-
-    maven { // Extended Bogeys
-        url "https://maven.ithundxr.dev/private"
-        authentication {
-            basic(BasicAuthentication)
-        }
-        credentials(PasswordCredentials) {
-            username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-            password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-        }
-    }
 }
 
 configurations.configureEach {
