@@ -151,10 +151,11 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     public void execute(ScheduleRuntime runtime) {
         Train train = ((AccessorScheduleRuntime) runtime).getTrain();
-        CarriageContraptionEntity cce = train.carriages.get(0).anyAvailableEntity();
+        Carriage carriage = train.carriages.get(0);
+        CarriageContraptionEntity cce = carriage.anyAvailableEntity();
         if (cce != null) {
             Level level = cce.level;
-            CustomRedstoneActor actor = new CustomRedstoneActor(runtime);
+            CustomRedstoneActor actor = new CustomRedstoneActor(carriage);
             Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(level, actor);
             customActors.get(level).add(actor);
             //Create.REDSTONE_LINK_NETWORK_HANDLER.removeFromNetwork(level, actor);
@@ -164,12 +165,11 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     }
 
     private final class CustomRedstoneActor implements IRedstoneLinkable {
-        public Carriage carriage;
+        private final Carriage carriage;
         private long ticks = 8;
-        private final ScheduleRuntime runtime;
 
-        private CustomRedstoneActor(ScheduleRuntime runtime) {
-            this.runtime = runtime;
+        private CustomRedstoneActor(Carriage carriage) {
+            this.carriage = carriage;
         }
 
         public void decrement() {
@@ -202,7 +202,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
         @Override
         public BlockPos getLocation() {
-            return new BlockPos(((AccessorScheduleRuntime) runtime).getTrain().carriages.get(0).getLeadingPoint().getPosition(carriage.train.graph));
+            return new BlockPos(carriage.getLeadingPoint().getPosition(carriage.train.graph));
         }
     }
 }
