@@ -161,7 +161,7 @@ modrinth {
     gameVersions = [minecraft_version]
     loaders = [project.name]
     dependencies { // A special DSL for creating dependencies
-        required.project "create"
+        required.version "create", p_create_forge_ver
     }
 }
 
