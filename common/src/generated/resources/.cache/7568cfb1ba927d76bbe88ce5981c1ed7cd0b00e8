@@ -1,4 +1,4 @@
-// 1.19.2	2023-07-04T07:15:23.299693191	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-07-06T17:50:53.029951726	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 279852e70ef4039149c234063b476f9055455910 assets/railways/models/block/track/compat/biomesoplenty/redwood/x_ortho.json
 cab9ccb6b369df5be7d78ac18aa15151df358a1f assets/railways/models/block/track/compat/biomesoplenty/magic/segment_left.json
 24a33f97d9163248352afb99fe2be4f0806c13b9 assets/railways/models/block/track/compat/byg/fir/cross_diag.json
@@ -131,6 +131,7 @@ fcca546e74fb593b53f462b9026748572bed81a0 data/railways/loot_tables/blocks/track_
 62fe6a8637abd5a712f98e60fee734972c81e534 assets/railways/models/block/track/compat/biomesoplenty/umbran/cross_d2_zo.json
 679991f9299309e9e7d4dc127e7f788c9e009ef2 assets/railways/models/block/track/compat/byg/zelkova/ascending.json
 20852517b60de066fd3b879a9a0f07fdbaf6be21 assets/railways/models/block/track/compat/byg/baobab/x_ortho.json
+88c2eb9f1c7a2913bcb1baba7fc4f2286b1f0cfb data/railways/tags/items/internal/plates/brass_plates.json
 fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_platform_doubleaxle_bogey.json
 4b1cf5a935eaa8655603bb65e19b2a0d023c857d assets/railways/models/item/track_incomplete_biomesoplenty_willow.json
 d9af6f1d20d881586295016d7b155d65467cb137 assets/railways/models/block/track/blackstone/segment_left.json

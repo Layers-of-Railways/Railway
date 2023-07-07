@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#c:plates/brass",
+      "id": "#c:brass_plates",
       "required": false
     },
     {
