@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Makes sure the server does not move the player viewing a camera to the camera's position
  */
-@Mixin(value = ServerPlayer.class, priority = 1100)
+@Mixin(value = ServerPlayer.class, priority = 1200)
 public class ServerPlayerMixin {
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;absMoveTo(DDDFF)V"))
 	private void securitycraft$tick(ServerPlayer player, double x, double y, double z, float yaw, float pitch) {

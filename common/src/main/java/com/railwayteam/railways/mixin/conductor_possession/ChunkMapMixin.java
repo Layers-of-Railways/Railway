@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * This mixin makes sure that chunks near cameras are properly sent to the player viewing it, as well as fixing block updates
  * not getting sent to chunks loaded by cameras
  */
-@Mixin(value = ChunkMap.class, priority = 1100)
+@Mixin(value = ChunkMap.class, priority = 1200)
 public abstract class ChunkMapMixin {
 	@Shadow
 	int viewDistance;

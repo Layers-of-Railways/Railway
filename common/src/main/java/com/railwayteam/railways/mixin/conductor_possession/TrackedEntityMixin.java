@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 /**
  * Lets entities get sent to the client even though they're not in range of the player
  */
-@Mixin(value = ChunkMap.TrackedEntity.class, priority = 1100)
+@Mixin(value = ChunkMap.TrackedEntity.class, priority = 1200)
 public abstract class TrackedEntityMixin {
 	@Shadow
 	@Final
