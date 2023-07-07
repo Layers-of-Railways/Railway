@@ -1,2 +1,2 @@
-v1.4.1:
-- Fix mixin crash
+v1.4.2:
+- Fix mixin crash (1.19.2)
