@@ -1,2 +1,3 @@
-v1.4.1:
-- Fix mixin crash
+v1.4.3:
+- fix: Custom curved tracks render with flywheel off in production (#169)
+- SecurityCraft compat (#172)

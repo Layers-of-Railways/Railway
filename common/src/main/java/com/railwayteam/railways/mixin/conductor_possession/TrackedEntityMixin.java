@@ -21,6 +21,8 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Lets entities get sent to the client even though they're not in range of the player
+ *
+ * Confirmed working with Security Craft
  */
 @Mixin(value = ChunkMap.TrackedEntity.class, priority = 1200)
 public abstract class TrackedEntityMixin {
@@ -38,7 +40,7 @@ public abstract class TrackedEntityMixin {
 	 * shouldBeSent
 	 */
 	@Inject(method = "updatePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/world/phys/Vec3;x:D", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
-	private void securitycraft$onUpdatePlayer(ServerPlayer player, CallbackInfo callback, Vec3 unused, double viewDistance) {
+	private void snr$securitycraft$onUpdatePlayer(ServerPlayer player, CallbackInfo callback, Vec3 unused, double viewDistance) {
 		if (ConductorPossessionController.isPossessingConductor(player)) {
 			Vec3 relativePosToCamera = player.getCamera().position().subtract(serverEntity.sentPos());
 
@@ -53,7 +55,7 @@ public abstract class TrackedEntityMixin {
 	@SuppressWarnings("InvalidInjectorMethodSignature")
 	// variable name: flag or bl
 	@ModifyVariable(method = "updatePlayer", ordinal = 0, at = @At(value = "JUMP", opcode = Opcodes.IFEQ, shift = At.Shift.BEFORE, ordinal = 1))
-	public boolean securitycraft$modifyFlag(boolean original) {
+	public boolean snr$securitycraft$modifyFlag(boolean original) {
 		boolean shouldBeSent = this.shouldBeSent;
 
 		this.shouldBeSent = false;
