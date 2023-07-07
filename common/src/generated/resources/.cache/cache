@@ -68,6 +68,7 @@ fff3c89ce948488f69017a43d1a78b624155701a assets/railways/models/block/track/dark
 c05ac39daecce06ac686f5601df6747721ac40b5 data/railways/recipes/sequenced_assembly/track_biomesoplenty_dead.json
 be5465a3f31cf6ab9b0aaedfdddc4860ebdf281c assets/railways/models/block/track/compat/hexcasting/edified/tie.json
 50c66d93a8a4aca67653236cd3bf11f8b9f47f20 assets/railways/models/block/track/compat/byg/baobab/x_ortho.json
+9f3f83866892de782ac73be7f5a74fbf9f185627 data/railways/tags/items/internal/plates/brass_plates.json
 16c632ce2490287dbd8122ff81d58277423d7da7 assets/railways/models/block/track/blackstone/segment_left.json
 c6ca010c7b2d9201517eac1a052621e82e52c204 data/railways/tags/items/internal/dyes/magenta_dyes.json
 35d118508b40edd31f0137319c35344be40fd3da assets/railways/models/block/track/phantom/cross_ortho.json
@@ -928,7 +929,7 @@ a83620dcc73d55f05fe786f5df0eb6cb19cac166 assets/railways/models/block/track/comp
 80618614e8e94a2803a91d64d8d8819cd92d7fbe assets/railways/models/block/track/compat/byg/fir/ascending.json
 a6bf44d129e73bc4fd641b4c5682e25f6d1cd552 assets/railways/models/block/track/compat/biomesoplenty/cherry/diag_2.json
 2d84ff369931a288221767f906dcea0c93d460f5 assets/railways/models/item/track_twilightforest_transwood.json
-292b62799e38c554402c95147bf32b438943fd7a data/railways/recipes/crafting/remote_lens.json
+65d3b2d7964e60e45d16d5491ef58f6a5be361fa data/railways/recipes/crafting/remote_lens.json
 ae2db27c28bf02151893ed72cbdc4b13940cf150 data/railways/tags/items/internal/plates/iron_plates.json
 6a9700a1dd19660d65921f11444b73ef80bc896c assets/railways/models/block/track/compat/twilightforest/darkwood/cross_d2_xo.json
 a396e413114573bca913b8753d4dd9cfde478d55 data/railways/advancements/recipes/railways/jukeboxcart.json

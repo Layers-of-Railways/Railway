@@ -16,6 +16,7 @@ public class CommonTags {
 			ZINC_NUGGETS = item("nuggets/zinc_nuggets", "nuggets/zinc", "nuggets/zinc"),
 			BRASS_NUGGETS = item("nuggets/brass_nuggets", "nuggets/brass", "nuggets/brass"),
 			IRON_PLATES = item("plates/iron_plates", "plates/iron", "plates/iron"),
+			BRASS_PLATES = item("plates/brass_plates", "plates/brass", "plates/brass"),
 			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper"),
 			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron");
 

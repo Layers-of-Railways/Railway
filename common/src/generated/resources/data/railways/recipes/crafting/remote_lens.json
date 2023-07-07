@@ -6,6 +6,9 @@
     },
     {
       "item": "minecraft:ender_eye"
+    },
+    {
+      "tag": "railways:internal/plates/brass_plates"
     }
   ],
   "result": {
