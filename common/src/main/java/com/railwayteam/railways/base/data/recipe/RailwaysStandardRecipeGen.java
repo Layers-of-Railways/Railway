@@ -47,8 +47,9 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     GeneratedRecipe REMOTE_LENS = create(CRItems.REMOTE_LENS)
             .unlockedBy(Ingredients::precisionMechanism)
             .viaShapeless(b -> b
-                    .requires(Ingredients.precisionMechanism())
-                    .requires(Ingredients.eyeOfEnder()));
+                .requires(Ingredients.precisionMechanism())
+                .requires(Ingredients.eyeOfEnder())
+                .requires(Ingredients.brassSheet()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
         .unlockedBy(Ingredients::campfire)
