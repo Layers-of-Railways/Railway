@@ -32,16 +32,6 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Cache Gradle Directories
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/loom-cache
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle
-
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
