@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 /**
  * These mixins aim at implementing the camera chunk storage from CameraController into all the places
  * ClientChunkCache#storage is used
+ *
+ * Confirmed working with Security Craft
  */
 @Mixin(value = ClientChunkCache.class, priority = 1200)
 public abstract class ClientChunkCacheMixin {
@@ -50,7 +52,7 @@ public abstract class ClientChunkCacheMixin {
 	 * Initializes the camera storage
 	 */
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
-	public void securitycraft$onInit(ClientLevel level, int viewDistance, CallbackInfo ci) {
+	public void snr$securitycraft$onInit(ClientLevel level, int viewDistance, CallbackInfo ci) {
 		ConductorPossessionController.setCameraStorage(newStorage(Math.max(2, viewDistance) + 3));
 	}
 
@@ -60,7 +62,7 @@ public abstract class ClientChunkCacheMixin {
 	 */
 	@SuppressWarnings({"MixinAnnotationTarget", "UnresolvedMixinReference"})
 	@Inject(method = "updateViewRadius", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientChunkCache$Storage;<init>(Lnet/minecraft/client/multiplayer/ClientChunkCache;I)V"))
-	public void securitycraft$onUpdateViewRadius(int viewDistance, CallbackInfo ci) {
+	public void snr$securitycraft$onUpdateViewRadius(int viewDistance, CallbackInfo ci) {
 		ClientChunkCache.Storage oldStorage = ConductorPossessionController.getCameraStorage();
 		ClientChunkCache.Storage newStorage = newStorage(Math.max(2, viewDistance) + 3);
 
@@ -85,7 +87,7 @@ public abstract class ClientChunkCacheMixin {
 	 * Handles chunks that are dropped in range of the camera storage
 	 */
 	@Inject(method = "drop", at = @At(value = "HEAD"))
-	public void securitycraft$onDrop(int x, int z, CallbackInfo ci) {
+	public void snr$securitycraft$onDrop(int x, int z, CallbackInfo ci) {
 		ClientChunkCache.Storage cameraStorage = ConductorPossessionController.getCameraStorage();
 
 		if (cameraStorage.inRange(x, z)) {
@@ -104,7 +106,7 @@ public abstract class ClientChunkCacheMixin {
 	 * them to be acquired afterwards
 	 */
 	@Inject(method = "replaceWithPacketData", at = @At(value = "HEAD"), cancellable = true)
-	private void securitycraft$onReplace(int x, int z, FriendlyByteBuf buffer, CompoundTag chunkTag, Consumer<ClientboundLevelChunkPacketData.BlockEntityTagOutput> tagOutputConsumer, CallbackInfoReturnable<LevelChunk> callback) {
+	private void snr$securitycraft$onReplace(int x, int z, FriendlyByteBuf buffer, CompoundTag chunkTag, Consumer<ClientboundLevelChunkPacketData.BlockEntityTagOutput> tagOutputConsumer, CallbackInfoReturnable<LevelChunk> callback) {
 		ClientChunkCache.Storage cameraStorage = ConductorPossessionController.getCameraStorage();
 
 		if (ClientHandler.isPlayerMountedOnCamera() && cameraStorage.inRange(x, z)) {
@@ -132,7 +134,7 @@ public abstract class ClientChunkCacheMixin {
 	@Inject(method = "getChunk(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/LevelChunk;",
 			slice = @Slice(from = @At(value = "RETURN", ordinal = 1)),
 			at = @At("RETURN"), cancellable = true)
-	private void securitycraft$onGetChunk(int x, int z, ChunkStatus requiredStatus, boolean load, CallbackInfoReturnable<LevelChunk> callback) {
+	private void snr$securitycraft$onGetChunk(int x, int z, ChunkStatus requiredStatus, boolean load, CallbackInfoReturnable<LevelChunk> callback) {
 		if (ClientHandler.isPlayerMountedOnCamera() && ConductorPossessionController.getCameraStorage().inRange(x, z)) {
 			LevelChunk chunk = ConductorPossessionController.getCameraStorage().getChunk(ConductorPossessionController.getCameraStorage().getIndex(x, z));
 
