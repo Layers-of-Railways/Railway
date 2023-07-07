@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew :forge:build
 
       - name: show folder
-        run: ls build/libs/
+        run: ls forge/build/libs/
 
 #      - name: Upload Mod to Modrinth
 #        run: ./gradlew :forge:modrinth
