@@ -2,7 +2,6 @@ plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
     id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
-    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
 }
 
 architectury {
@@ -73,22 +72,6 @@ subprojects {
 
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
-    }
-
-    tasks.register("forgePublishMod") {
-        if (p_create_forge_ver == "null")
-            throw new GradleException("Create dependency version not set")
-        dependsOn ':forge:build'
-        dependsOn ':forge:publishCurseForge'
-        dependsOn ':forge:modrinth'
-    }
-
-    tasks.register("fabricPublishMod") {
-        if (p_create_fabric_ver == "null")
-            throw new GradleException("Create dependency version not set")
-        dependsOn ':fabric:build'
-        dependsOn ':fabric:publishCurseForge'
-        dependsOn ':fabric:modrinth'
     }
 }
 

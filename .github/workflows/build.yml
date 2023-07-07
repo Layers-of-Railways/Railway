@@ -1,4 +1,4 @@
-name: build
+name: Build
 on:
   workflow_dispatch:
   push:
@@ -17,43 +17,43 @@ jobs:
       ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
     steps:
 
-      - name: checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: send building message to Discord
+      - name: Send Building Notification to Discord
         if: github.event_name != 'pull_request'
         uses: realRobotix/action-discord-notifier@release-master
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           message-title: "Building mod from ${{ github.ref }}"
 
-      - name: setup Java ${{ matrix.java }}
+      - name: Setup Java ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
 
-      - name: setup Gradle
+      - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
           cache-read-only: false
 
-      - name: make gradle wrapper executable
+      - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: build
+      - name: Build
         run: ./gradlew build
 
-      - name: collect built jars
+      - name: Collect built jars
         run: ./gradlew moveBuiltJars
 
-      - name: capture build artifacts
+      - name: Capture build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
           path: jars
 
-      - name: upload production builds to Discord
+      - name: Upload Production builds to Discord
         if: github.event_name != 'pull_request'
         uses: sinshutu/upload-to-discord@master
         env:
