@@ -3,12 +3,6 @@ name: Build Forge Release
 on:
   workflow_dispatch:
     inputs:
-      mc_version:
-        description: Minecraft Version
-        required: true
-      mod_version:
-        description: Mod Version
-        required: true
       create_forge_version:
         description: Create forge dependency version
         required: true
@@ -22,46 +16,31 @@ jobs:
     env:
       ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
       ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
+      CREATE_FORGE_VER: ${{ github.event.inputs.create_forge_version }}
+      RELEASE_BUILD: true
 
     steps:
-      - name: checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: setup jdk ${{ matrix.java }}
+      - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: false
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build
+      - name: Build Forge
         run: ./gradlew :forge:build
 
-      - name: Upload artifacts to Modrinth and Curseforge
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: ZzjhlDgM
-          modrinth-featured: false
-          modrinth-token: ${{ secrets.MODRINTHTOKEN }}
+      - name: Upload Mod to Modrinth
+        run: ./gradlew :forge:modrinth
 
-          curseforge-id: 688231
-          curseforge-token: ${{ secrets.CURSEFORGETOKEN }}
-
-          files: |
-            forge/build/libs/!(*-@(dev|sources|all)).jar
-
-          name: Steam 'n Rails ${{ github.event.inputs.mod_version }} Forge ${{ github.event.inputs.mc_version }}
-          version: ${{ github.event.inputs.mod_version }}-forge-${{ github.event.inputs.mc_version }}
-          version-type: release
-          changelog-file: recent_changelog.txt
-
-          loaders: forge
-          game-versions: ${{ github.event.inputs.mc_version }}
-          game-version-filter: none
-          dependencies: create@${{ github.event.inputs.create_forge_version }}(required){modrinth:LNytGWDc}{curseforge:328085}
-          java: 17
-
-          retry-attempts: 2
-          retry-delay: 10000
-          fail-mode: fail
+      - name: Upload Mod to Curseforge
+        run: ./gradlew :forge:publishCurseForge
