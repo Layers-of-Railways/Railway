@@ -1,3 +1,5 @@
+v1.4.1:
+- Fix mixin crash
 v1.4.0:
 - Added switches
 - Added invisible bogeys
