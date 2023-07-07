@@ -54,7 +54,7 @@ jobs:
           name: Steam 'n Rails ${{ github.event.inputs.mod_version }} Fabric ${{ github.event.inputs.mc_version }}
           version: ${{ github.event.inputs.mod_version }}-fabric-${{ github.event.inputs.mc_version }}
           version-type: release
-          changelog-file: fabric/recent_changelog.*
+          changelog-file: recent_changelog.txt
 
           loaders: fabric quilt
           game-versions: ${{ github.event.inputs.mc_version }}
