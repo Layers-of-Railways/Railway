@@ -58,7 +58,7 @@ public class CRLaunchPluginService implements ILaunchPluginService {
                 node.visitInsn(DUP);
                 node.visitLdcInsn("TRACK_REPLACE");
                 node.visitInsn(ICONST_3);
-                node.visitFieldInsn(GETSTATIC, "com/simibubi/create/foundation/gui/AllIcons", "I_FLIP", "Lcom/simibubi/create/foundation/gui/AllIcons;");
+                node.visitFieldInsn(GETSTATIC, "com/railwayteam/railways/registry/CRIcons", "I_SWAP_TRACKS", "Lcom/railwayteam/railways/registry/CRIcons;");
                 node.visitMethodInsn(INVOKESPECIAL,
                         "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode",
                         "<init>", "(Ljava/lang/String;ILcom/simibubi/create/foundation/gui/AllIcons;)V", false);

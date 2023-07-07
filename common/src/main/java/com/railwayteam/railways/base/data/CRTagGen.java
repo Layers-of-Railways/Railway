@@ -51,6 +51,7 @@ public class CRTagGen {
 		CommonTags.STRING.generateCommon(tags)
 			.generateBoth(tags, tag -> tag.add(Items.STRING));
 		CommonTags.IRON_PLATES.generateCommon(tags);
+		CommonTags.BRASS_PLATES.generateCommon(tags);
 //			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));
 
 		for (AllItemTags tag : AllItemTags.values()) {
