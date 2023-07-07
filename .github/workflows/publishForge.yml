@@ -54,7 +54,7 @@ jobs:
           name: Steam 'n Rails ${{ github.event.inputs.mod_version }} Forge ${{ github.event.inputs.mc_version }}
           version: ${{ github.event.inputs.mod_version }}-forge-${{ github.event.inputs.mc_version }}
           version-type: release
-          changelog-file: forge/recent_changelog.*
+          changelog-file: recent_changelog.txt
 
           loaders: forge
           game-versions: ${{ github.event.inputs.mc_version }}
