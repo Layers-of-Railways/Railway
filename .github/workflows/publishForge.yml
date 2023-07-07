@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew :forge:build
 
       - name: Upload artifacts to Modrinth and Curseforge
-      - uses: Kir-Antipov/mc-publish@v3.3
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ZzjhlDgM
           modrinth-featured: false
