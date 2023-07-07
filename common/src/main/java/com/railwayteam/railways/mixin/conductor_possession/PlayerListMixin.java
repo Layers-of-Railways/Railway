@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
  * When a player is viewing a camera, enables sounds near the camera to be played, while sounds near the player entity are
  * suppressed
  */
-@Mixin(value = PlayerList.class, priority = 1100)
+@Mixin(value = PlayerList.class, priority = 1200)
 public class PlayerListMixin {
 	@SuppressWarnings("InvalidInjectorMethodSignature")
 	@Inject(method = "broadcast", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/level/ServerPlayer;getZ()D"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
