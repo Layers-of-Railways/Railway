@@ -3,12 +3,6 @@ name: Build Fabric Release
 on:
   workflow_dispatch:
     inputs:
-      mc_version:
-        description: Minecraft Version
-        required: true
-      mod_version:
-        description: Mod Version
-        required: true
       create_fabric_version:
         description: Create fabric dependency version
         required: true
@@ -22,46 +16,31 @@ jobs:
     env:
       ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
       ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
+      CREATE_FABRIC_VER: ${{ github.event.inputs.create_fabric_version }}
+      RELEASE_BUILD: true
 
     steps:
-      - name: checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: setup jdk ${{ matrix.java }}
+      - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          cache-read-only: false
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build
+      - name: Build Fabric
         run: ./gradlew :fabric:build
 
-      - name: Upload artifacts to Modrinth and Curseforge
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          modrinth-id: ZzjhlDgM
-          modrinth-featured: false
-          modrinth-token: ${{ secrets.MODRINTHTOKEN }}
+      - name: Upload Mod to Modrinth
+        run: ./gradlew :fabric:modrinth
 
-          curseforge-id: 688231
-          curseforge-token: ${{ secrets.CURSEFORGETOKEN }}
-
-          files: |
-            fabric/build/libs/!(*-@(dev|sources|all)).jar
-
-          name: Steam 'n Rails ${{ github.event.inputs.mod_version }} Fabric ${{ github.event.inputs.mc_version }}
-          version: ${{ github.event.inputs.mod_version }}-fabric-${{ github.event.inputs.mc_version }}
-          version-type: release
-          changelog-file: recent_changelog.txt
-
-          loaders: fabric quilt
-          game-versions: ${{ github.event.inputs.mc_version }}
-          game-version-filter: none
-          dependencies: create-fabric@${{ github.event.inputs.create_fabric_version }}(required){modrinth:Xbc0uyRg}{curseforge:624165}
-          java: 17
-
-          retry-attempts: 2
-          retry-delay: 10000
-          fail-mode: fail
+      - name: Upload Mod to Curseforge
+        run: ./gradlew :fabric:publishCurseForge

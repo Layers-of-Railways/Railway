@@ -1,5 +1,8 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
 }
 
 architectury {
@@ -142,6 +145,35 @@ dependencies {
 
     if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
+    }
+}
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = findProperty('CURSEFORGETOKEN')
+    var projectId = "688231"
+
+    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"))
+    mainFile.changelog = getChangelogText("Fabric", true)
+    mainFile.changelogType = "html"
+    mainFile.displayName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    mainFile.addRequirement("create-fabric")
+    mainFile.addModLoader("Fabric")
+    mainFile.addJavaVersion("Java 17")
+    mainFile.releaseType = "release"
+}
+
+modrinth {
+    token = findProperty('MODRINTHTOKEN')
+    projectId = "ZzjhlDgM"
+    changelog = getChangelogText("Fabric", true)
+    versionName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
+    versionNumber = "${mod_version}-fabric-${minecraft_version}"
+    versionType = "release"
+    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar")
+    gameVersions = [minecraft_version]
+    loaders = ["fabric", "quilt"]
+    dependencies {
+        required.version "Xbc0uyRg", (System.getenv("CREATE_FABRIC_VER") != null ? System.getenv("CREATE_FABRIC_VER") : "null")
     }
 }
 

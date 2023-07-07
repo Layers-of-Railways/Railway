@@ -2,6 +2,7 @@ plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
     id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
+    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
 }
 
 architectury {
@@ -45,8 +46,8 @@ subprojects {
                 basic(BasicAuthentication)
             }
             credentials(PasswordCredentials) {
-                username = findProperty("IThundxrMavenUsername") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("IThundxrMavenPassword") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
+                username = findProperty("IThundxrMavenUsername") != null ? findProperty("IThundxrMavenUsername") : System.getenv("ITHUNDXRMAVENUSERNAME")
+                password = findProperty("IThundxrMavenPassword") != null ? findProperty("IThundxrMavenPassword") : System.getenv("ITHUNDXRMAVENPASSWORD")
             }
         }
     }
@@ -68,7 +69,7 @@ subprojects {
             return
 
         String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-        String version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
+        version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
 
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
@@ -83,10 +84,15 @@ allprojects {
     archivesBaseName = rootProject.archives_base_name
     group = rootProject.maven_group
 
-    // Formats the mod version to include the loader, Minecraft version, and build number (if present)
-    // example: 1.0.0+fabric-1.18.2-100
-    String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-    version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
+    if (System.getenv("RELEASE_BUILD")) {
+        version = "${mod_version}+${project.name}-mc${minecraft_version}"
+    } else {
+        // Formats the mod version to include the loader, Minecraft version, and build number (if present)
+        // example: 1.0.0+fabric-1.18.2-100
+        String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
+        version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
+    }
+
 
     repositories {
     }
