@@ -12,17 +12,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Makes sure the server does not move the player viewing a camera to the camera's position
+ *
+ * Confirmed compatible with SecurityCraft
  */
 @Mixin(value = ServerPlayer.class, priority = 1200)
 public class ServerPlayerMixin {
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;absMoveTo(DDDFF)V"))
-	private void securitycraft$tick(ServerPlayer player, double x, double y, double z, float yaw, float pitch) {
+	private void snr$securitycraft$tick(ServerPlayer player, double x, double y, double z, float yaw, float pitch) { // done add some quiet compat with SC to also cancel if player is on a camera
+		if (player.getCamera().getClass().getName().equals("net.geforcemods.securitycraft.entity.camera.SecurityCamera")) return;
 		if (!ConductorPossessionController.isPossessingConductor(player))
 			player.absMoveTo(x, y, z, yaw, pitch);
 	}
 
 	@Inject(method = "setCamera", at = @At("HEAD"), cancellable = true)
-	private void snr$setCamera(Entity entityToSpectate, CallbackInfo ci) {
+	private void snr$snr$setCamera(Entity entityToSpectate, CallbackInfo ci) {
 		if (entityToSpectate instanceof ConductorEntity) ci.cancel();
 	}
 }

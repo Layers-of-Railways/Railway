@@ -111,6 +111,7 @@ public abstract class TrackCompatUtils {
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
             .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
+            .onRegister(CRTrackMaterials::addToBlockEntityType)
             .item(TrackBlockItem::new)
             .properties(p -> {
                 if (hideInCreativeTabs) //noinspection DataFlowIssue

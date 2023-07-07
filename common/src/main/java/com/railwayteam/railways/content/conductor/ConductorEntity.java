@@ -23,6 +23,7 @@ import com.simibubi.create.content.redstone.link.controller.LinkedControllerItem
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
@@ -1187,6 +1188,9 @@ public class ConductorEntity extends AbstractGolem {
           return;
         Couple<Boolean> controlsPresent = cc.conductorSeats.get(seat);
         if (controlsPresent == null)
+          return;
+        ScheduleRuntime runtime;
+        if (cce.getCarriage() != null && (runtime = cce.getCarriage().train.runtime).getSchedule() != null && !(runtime.completed || runtime.paused))
           return;
         BlockPos controlsPos = null;
         BlockPos reverseControlsPos = null;

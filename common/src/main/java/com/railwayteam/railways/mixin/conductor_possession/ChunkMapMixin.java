@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * This mixin makes sure that chunks near cameras are properly sent to the player viewing it, as well as fixing block updates
  * not getting sent to chunks loaded by cameras
+ *
+ * Confirmed compatible with SecurityCraft
  */
 @Mixin(value = ChunkMap.class, priority = 1200)
 public abstract class ChunkMapMixin {
@@ -35,7 +37,7 @@ public abstract class ChunkMapMixin {
 			"getPlayers", "lambda$setViewDistance$0", "m_ntjylyau"
 	}, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getLastSectionPos()Lnet/minecraft/core/SectionPos;"))
 	private SectionPos securitycraft$getCameraSectionPos(ServerPlayer player) {
-		if (ConductorPossessionController.isPossessingConductor(player))
+		if (ConductorPossessionController.isPossessingConductor(player) || player.getCamera().getClass().getName().equals("net.geforcemods.securitycraft.entity.camera.SecurityCamera"))
 			return SectionPos.of(player.getCamera());
 
 		return player.getLastSectionPos();

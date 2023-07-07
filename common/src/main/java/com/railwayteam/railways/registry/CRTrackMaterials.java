@@ -1,13 +1,20 @@
 package com.railwayteam.railways.registry;
 
+import com.google.common.collect.ImmutableSet;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.mixin.AccessorBlockEntityType;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+
+import java.util.Set;
 
 import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
 
@@ -132,4 +139,19 @@ public class CRTrackMaterials {
     }
 
     public static void register() {}
+
+    public static void addToBlockEntityType(TrackBlock block) {
+        BlockEntityType<?> type;
+        try {
+            type = block.getBlockEntityType();
+        } catch (NullPointerException ignored) {
+            return;
+        }
+        Set<Block> validBlocks = ((AccessorBlockEntityType) type).getValidBlocks();
+        validBlocks = new ImmutableSet.Builder<Block>()
+            .add(validBlocks.toArray(Block[]::new))
+            .add(block)
+            .build();
+        ((AccessorBlockEntityType) type).setValidBlocks(validBlocks);
+    }
 }
