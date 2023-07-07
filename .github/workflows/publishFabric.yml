@@ -1,0 +1,73 @@
+name: Build Fabric Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      mc_version:
+        description: Minecraft Version
+        required: true
+      mod_version:
+        description: Mod Version
+        required: true
+      create_fabric_version:
+        description: Create fabric dependency version
+        required: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        java: [ 17 ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+
+      - name: setup jdk ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+
+      - name: Cache Gradle Directories
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/loom-cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew :fabric:build
+
+      - name: Upload artifacts to Modrinth and Curseforge
+      - uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ZzjhlDgM
+          modrinth-featured: false
+          modrinth-token: ${{ secrets.MODRINTHTOKEN }}
+
+          curseforge-id: 688231
+          curseforge-token: ${{ secrets.CURSEFORGETOKEN }}
+
+          files: |
+            fabric/build/libs/!(*-@(dev|sources|all)).jar
+
+          name: Steam 'n Rails ${{ github.event.inputs.mod_version }} Fabric ${{ github.event.inputs.mc_version }}
+          version: ${{ github.event.inputs.mod_version }}-fabric-${{ github.event.inputs.mc_version }}
+          version-type: release
+          changelog-file: fabric/recent_changelog.html
+
+          loaders: fabric quilt
+          game-versions: ${{ github.event.inputs.mc_version }}
+          game-version-filter: none
+          dependencies: create-fabric@${{ github.event.inputs.create_fabric_version }}(required){modrinth:Xbc0uyRg}{curseforge:624165}
+          java: 17
+
+          retry-attempts: 2
+          retry-delay: 10000
+          fail-mode: fail
