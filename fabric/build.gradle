@@ -173,7 +173,7 @@ modrinth {
     gameVersions = [minecraft_version]
     loaders = [project.name]
     dependencies { // A special DSL for creating dependencies
-        required.version "create-fabric", p_create_fabric_ver
+        required.version "Xbc0uyRg", p_create_fabric_ver
     }
 }
 
