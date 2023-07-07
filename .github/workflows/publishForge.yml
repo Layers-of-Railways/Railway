@@ -39,11 +39,8 @@ jobs:
       - name: Build Forge
         run: ./gradlew :forge:build
 
-      - name: show folder
-        run: ls forge/build/libs/
+      - name: Upload Mod to Modrinth
+        run: ./gradlew :forge:modrinth
 
-#      - name: Upload Mod to Modrinth
-#        run: ./gradlew :forge:modrinth
-#
-#      - name: Upload Mod to Curseforge
-#        run: ./gradlew :forge:publishCurseForge
+      - name: Upload Mod to Curseforge
+        run: ./gradlew :forge:publishCurseForge
