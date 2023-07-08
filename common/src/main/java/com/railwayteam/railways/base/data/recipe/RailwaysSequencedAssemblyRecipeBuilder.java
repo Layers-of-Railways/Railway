@@ -55,7 +55,7 @@ public class RailwaysSequencedAssemblyRecipeBuilder extends SequencedAssemblyRec
 
             JsonArray conds = new JsonArray();
             recipeConditions.forEach(c -> conds.add(toForgeJson(c)));
-            json.add("forge:conditions", conds);
+            json.add("conditions", conds);
         }
 
         /**
