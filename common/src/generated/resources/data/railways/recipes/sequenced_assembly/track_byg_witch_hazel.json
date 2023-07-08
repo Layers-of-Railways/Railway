@@ -1,5 +1,19 @@
 {
   "type": "create:sequenced_assembly",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "byg"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
   "ingredient": {
     "item": "byg:witch_hazel_slab"
   },

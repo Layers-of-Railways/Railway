@@ -1,5 +1,19 @@
 {
   "type": "create:sequenced_assembly",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "biomesoplenty"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "biomesoplenty"
+    }
+  ],
   "ingredient": {
     "item": "biomesoplenty:mahogany_slab"
   },
