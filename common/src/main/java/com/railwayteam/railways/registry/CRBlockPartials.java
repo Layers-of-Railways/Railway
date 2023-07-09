@@ -245,6 +245,9 @@ public class CRBlockPartials {
         RADIAL_FRAME = block("bogey/radial/radial_frame"),
         CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
 
+    public static final PartialModel
+        BUFFER = block("buffer");
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 

@@ -5,6 +5,8 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBl
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
+import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.TrackBufferRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
@@ -32,6 +34,11 @@ public class CRBlockEntities {
         .validBlocks(CRBlocks.TRACK_COUPLER)
         .renderer(() -> TrackCouplerRenderer::new)
         .register();
+
+    public static final BlockEntityEntry<TrackBufferBlockEntity> TRACK_BUFFER = REGISTRATE.blockEntity("track_buffer", TrackBufferBlockEntity::new)
+            .validBlocks(CRBlocks.TRACK_BUFFER)
+            .renderer(() -> TrackBufferRenderer::new)
+            .register();
 
     public static final BlockEntityEntry<TrackSwitchTileEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchTileEntity::new)
       .validBlocks(CRBlocks.ANDESITE_SWITCH)

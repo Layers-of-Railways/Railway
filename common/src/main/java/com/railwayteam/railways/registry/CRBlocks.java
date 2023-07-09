@@ -2,6 +2,8 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.TrackBufferBlockItem;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -90,8 +92,8 @@ public class CRBlocks {
         return makeTrack(material, blockstateGen, onRegister, (p) -> p);
     }
 
-    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
-        return makeTrack(material, blockstateGen, (t) -> {
+    private static BlockEntry<TrackBlock> makeTrack(NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
+        return makeTrack(CRTrackMaterials.MONORAIL, blockstateGen, (t) -> {
         }, collectProperties);
     }
 
@@ -152,7 +154,7 @@ public class CRBlocks {
                 })
                 .properties(p -> p.color(MaterialColor.COLOR_GRAY))
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-                .properties(p -> p.noOcclusion())
+                .properties(BlockBehaviour.Properties::noOcclusion)
                 .addLayer(() -> RenderType::cutoutMipped)
                 .transform(pickaxeOnly())
                 .onRegister(AllMovementBehaviours.movementBehaviour(movementBehaviour))
@@ -197,7 +199,7 @@ public class CRBlocks {
             REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
                     .initialProperties(SharedProperties::softMetal)
                     .properties(p -> p.color(MaterialColor.PODZOL))
-                    .properties(p -> p.noOcclusion())
+                    .properties(BlockBehaviour.Properties::noOcclusion)
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .blockstate((c, p) -> {
                         p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
@@ -223,7 +225,7 @@ public class CRBlocks {
                                     TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
                             ))
                     .properties(p -> p.color(MaterialColor.PODZOL))
-                    .properties(p -> p.noOcclusion())
+                    .properties(BlockBehaviour.Properties::noOcclusion)
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
@@ -242,7 +244,7 @@ public class CRBlocks {
                                     .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
                                     .build(), TrackSwitchBlock.LOCKED))
                     .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
-                    .properties(p -> p.noOcclusion())
+                    .properties(BlockBehaviour.Properties::noOcclusion)
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
@@ -265,7 +267,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
-    public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
+    public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(
             new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
@@ -315,11 +317,11 @@ public class CRBlocks {
             REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
                     .initialProperties(SharedProperties::wooden)
                     .properties(p -> p.color(MaterialColor.COLOR_BROWN))
-                    .properties(p -> p.noOcclusion())
+                    .properties(BlockBehaviour.Properties::noOcclusion)
                     .properties(p -> p.sound(SoundType.WOOD))
-                    .properties(p -> p.instabreak())
-                    .properties(p -> p.noLootTable())
-                    .properties(p -> p.noCollission())
+                    .properties(BlockBehaviour.Properties::instabreak)
+                    .properties(BlockBehaviour.Properties::noLootTable)
+                    .properties(BlockBehaviour.Properties::noCollission)
                     .blockstate((c, p) -> p.getVariantBuilder(c.get())
                             .forAllStates(state -> ConfiguredModel.builder()
                                     .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
@@ -358,7 +360,7 @@ public class CRBlocks {
                             .build()))
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
             .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
@@ -384,6 +386,22 @@ public class CRBlocks {
                     .item()
                     .transform(customItemModel("copycat_vent"))
                     .register();
+
+    public static final BlockEntry<TrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", TrackBufferBlock::create)
+            .initialProperties(SharedProperties::softMetal)
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                    .forAllStates(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer")))
+                            .build()))
+            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .transform(pickaxeOnly())
+            .lang("Buffer")
+            .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
+            .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
+            .build()
+            .register();
 
   /*
     BLOCK_TENDER = reg.block("tender", TenderBlock::new)
