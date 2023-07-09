@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
@@ -165,5 +166,11 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
         NBTHelper.iterateCompoundList(tag.getList("OccupiedCouplers", Tag.TAG_COMPOUND),
             c -> ((IOccupiedCouplers) train).getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).setIndex(tag.getInt("ScheduleHolderIndex"));
+    }
+
+    @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
+    private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
+        if (Config.DISABLE_TRAIN_COLLISION.get())
+            ci.cancel();
     }
 }

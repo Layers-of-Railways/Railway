@@ -11,6 +11,7 @@ public class Config {
 
     public static final String CATEGORY_GENERAL = "general";
     public static final String CATEGORY_SEMAPHORE = "semaphore";
+    public static final String CATEGORY_OPTIMIZATION = "optimization";
 
     public static final ForgeConfigSpec SERVER_CONFIG;
     public static final ForgeConfigSpec CLIENT_CONFIG;
@@ -33,6 +34,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue SWITCH_PLACEMENT_RANGE;
     public static ForgeConfigSpec.BooleanValue DISABLE_DATAFIXER;
     public static ForgeConfigSpec.IntValue MAX_CONDUCTOR_VENT_LENGTH;
+    public static ForgeConfigSpec.BooleanValue DISABLE_TRAIN_COLLISION;
+    public static ForgeConfigSpec.BooleanValue OPTIMIZE_FUNNEL_BELT_INTERACTION;
 
 
     static {
@@ -51,6 +54,8 @@ public class Config {
         setupGeneralCategory(SERVER_BUILDER);
         SERVER_BUILDER.pop().comment("Semaphore settings").push(CATEGORY_SEMAPHORE);
         setupSemaphoreCategory(SERVER_BUILDER);
+        SERVER_BUILDER.pop().comment("Optimization settings").push(CATEGORY_OPTIMIZATION);
+        setupOptimizationCategory(SERVER_BUILDER);
         SERVER_BUILDER.pop();
 
 
@@ -77,6 +82,11 @@ public class Config {
         //Whether yellow is above red when semaphores are flipped upside-down
         SEMAPHORES_FLIP_YELLOW_ORDER = builder.comment("Whether semaphore color order is reversed when the semaphores are oriented upside-down")
             .define("semaphoresFlipYellowOrder", false);
+    }
+
+    private static void setupOptimizationCategory(ForgeConfigSpec.Builder builder) {
+        DISABLE_TRAIN_COLLISION = builder.comment("Disable collisions between trains. May have significant performance impact if playing with many trains").define("disableTrainCollision", false);
+        OPTIMIZE_FUNNEL_BELT_INTERACTION = builder.comment("Optimizes belts placing items onto belts by skipping the calculation of an unused, but expensive, variable").define("optimizeFunnelBeltInteraction", false);
     }
 
     public static void loadConfig(ForgeConfigSpec spec, Path path) {

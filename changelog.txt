@@ -1,5 +1,6 @@
 v1.4.4:
 - Optimize: Remove expensive call to get stack trace in performance-critical navigation code
+- Optimize: Config option to disable train collision
 v1.4.3:
 - fix: Custom curved tracks render with flywheel off in production (#169)
 - SecurityCraft compat (#172)

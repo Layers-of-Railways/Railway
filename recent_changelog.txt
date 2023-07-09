@@ -1,2 +1,3 @@
 v1.4.4:
 - Optimize: Remove expensive call to get stack trace in performance-critical navigation code
+- Optimize: Config option to disable train collision

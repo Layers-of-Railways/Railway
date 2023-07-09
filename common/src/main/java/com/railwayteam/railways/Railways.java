@@ -123,4 +123,7 @@ public class Railways {
 
   @ApiStatus.Internal
   public static int navigationCallDepth = 0;
+
+  @ApiStatus.Internal
+  public static boolean skipUprightCalculation = false;
 }
