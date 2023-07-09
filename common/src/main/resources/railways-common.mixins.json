@@ -46,6 +46,7 @@
     "MixinScheduleRuntime",
     "MixinSeatMovementBehaviour",
     "MixinSignalBoundary",
+    "MixinSignalPropagator",
     "MixinSlidingDoorBlock",
     "MixinSlidingDoorBlockEntity",
     "MixinSlidingDoorMovementBehaviour",
@@ -82,6 +83,7 @@
     "client.AccessorTrackBlockOutline",
     "client.HotbarStorageMixin",
     "client.MixinBezierConnectionClient",
+    "client.MixinBogeyTileEntityRenderer",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
     "client.MixinCarriageSounds",
@@ -115,8 +117,7 @@
     "conductor_possession.MixinItemInHandRenderer",
     "conductor_possession.MixinLocalPlayer",
     "conductor_possession.MixinMinecraft",
-    "conductor_possession.MixinMouseHandler",
-    "client.MixinBogeyTileEntityRenderer"
+    "conductor_possession.MixinMouseHandler"
   ],
   "injectors": {
     "defaultRequire": 1

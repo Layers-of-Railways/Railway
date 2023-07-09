@@ -108,6 +108,7 @@ public class Railways {
     throw new AssertionError();
   }
 
+  // All the below are helper variables for switch mixins
   @ApiStatus.Internal
   public static boolean trackEdgeTemporarilyFlipped = false;
 
@@ -116,4 +117,10 @@ public class Railways {
 
   @ApiStatus.Internal
   public static boolean temporarilySkipSwitches = false;
+
+  @ApiStatus.Internal
+  public static int signalPropagatorCallDepth = 0;
+
+  @ApiStatus.Internal
+  public static int navigationCallDepth = 0;
 }
