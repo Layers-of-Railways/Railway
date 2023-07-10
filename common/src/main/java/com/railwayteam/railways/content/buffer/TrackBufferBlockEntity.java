@@ -1,9 +1,6 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
-import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -14,7 +11,7 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class TrackBufferBlockEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
+public class TrackBufferBlockEntity extends SmartBlockEntity {
 
     public TrackTargetingBehaviour<TrackBuffer> edgePoint;
 
@@ -31,10 +28,5 @@ public class TrackBufferBlockEntity extends SmartBlockEntity implements ITransfo
     protected AABB createRenderBoundingBox() {
         return new AABB(worldPosition, edgePoint.getGlobalPosition())
                 .inflate(2);
-    }
-
-    @Override
-    public void transform(StructureTransform transform) {
-        edgePoint.transform(transform);
     }
 }

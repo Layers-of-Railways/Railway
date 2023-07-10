@@ -1,9 +1,7 @@
 {
 	"credit": "Made with Blockbench",
-	"ambientocclusion": false,
-	"texture_size": [64, 64],
 	"textures": {
-		"0": "railways:block/buffer"
+		"0": "railways:block/buffer/buffer"
 	},
 	"elements": [
 		{
@@ -144,8 +142,8 @@
 		},
 		{
 			"name": "2",
-			"from": [19.5, 13.5, 12],
-			"to": [22.5, 16.5, 15],
+			"from": [20.5, 13.5, 12],
+			"to": [23.5, 16.5, 15],
 			"faces": {
 				"north": {"uv": [0.88889, 12, 2.22222, 13.33333], "texture": "#0"},
 				"east": {"uv": [2.22222, 12, 3.55556, 13.33333], "texture": "#0"},
@@ -157,8 +155,8 @@
 		},
 		{
 			"name": "2",
-			"from": [18.5, 12.5, 15],
-			"to": [23.5, 17.5, 16],
+			"from": [19.5, 12.5, 15],
+			"to": [24.5, 17.5, 16],
 			"faces": {
 				"north": {"uv": [0, 9.77778, 2.22222, 12], "texture": "#0"},
 				"east": {"uv": [3.55556, 12, 4, 14.22222], "texture": "#0"},

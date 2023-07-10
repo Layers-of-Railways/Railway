@@ -391,7 +391,7 @@ public class CRBlocks {
             .initialProperties(SharedProperties::softMetal)
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
                     .forAllStates(state -> ConfiguredModel.builder()
-                            .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer")))
+                            .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/buffer")))
                             .build()))
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
@@ -399,7 +399,7 @@ public class CRBlocks {
             .transform(pickaxeOnly())
             .lang("Buffer")
             .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
-            .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
+            .model((c, p) -> p.generated(c, Railways.asResource("item/buffer/" + c.getName())))
             .build()
             .register();
 

@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 public class TrackBufferRenderer extends SmartBlockEntityRenderer<TrackBufferBlockEntity> {
 
@@ -21,37 +22,43 @@ public class TrackBufferRenderer extends SmartBlockEntityRenderer<TrackBufferBlo
         super(context);
     }
 
-    public static PartialModel getBufferOverlayModel(TrackBufferBlockEntity te) {
+    public static PartialModel getBufferOverlayModel() {
         return CRBlockPartials.BUFFER;
     }
 
     @Override
-    protected void renderSafe(TrackBufferBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
-                              int light, int overlay) {
-        super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
+    protected void renderSafe(TrackBufferBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource,
+                              int packedLight, int packedOverlay) {
+        super.renderSafe(blockEntity, partialTick, poseStack, bufferSource, packedLight, packedOverlay);
 
-        renderEdgePoint(te, ms, buffer, light, overlay, te.edgePoint);
+        renderEdgePoint(blockEntity, poseStack, bufferSource, packedLight, packedOverlay, blockEntity.edgePoint);
     }
 
-    private void renderEdgePoint(TrackBufferBlockEntity te, PoseStack ms, MultiBufferSource buffer,
-                                 int light, int overlay, TrackTargetingBehaviour<TrackBuffer> target) {
-        BlockPos pos = te.getBlockPos();
+    private void renderEdgePoint(TrackBufferBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource bufferSource,
+                                 int packedLight, int packedOverlay, TrackTargetingBehaviour<TrackBuffer> target) {
+        BlockPos pos = blockEntity.getBlockPos();
         boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
 
         BlockPos targetPosition = target.getGlobalPosition();
-        Level level = te.getLevel();
-        assert level != null;
+        Level level = blockEntity.getLevel();
+        if (level == null)
+            return;
         BlockState trackState = level.getBlockState(targetPosition);
         Block block = trackState.getBlock();
 
         if (!(block instanceof ITrackBlock))
             return;
 
-        ms.pushPose();
-        TransformStack.cast(ms)
+        poseStack.pushPose();
+        TransformStack.cast(poseStack)
             .translate(targetPosition.subtract(pos));
-        CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-            buffer, light, overlay, getBufferOverlayModel(te), 1, offsetToSide);
-        ms.popPose();
+        CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), poseStack,
+            bufferSource, packedLight, packedOverlay, getBufferOverlayModel(), 1, offsetToSide);
+        poseStack.popPose();
     }
+
+    public boolean shouldRenderOffScreen(@NotNull TrackBufferBlockEntity blockEntity) {
+        return true;
+    }
+
 }
