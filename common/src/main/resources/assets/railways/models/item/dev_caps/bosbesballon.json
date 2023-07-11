@@ -2,8 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "railways:item/dev_caps/bosbesballon",
-		"particle": "railways:item/dev_caps/bosbesballon"
+		"0": "railways:item/dev_caps/bosbesballon"
 	},
 	"elements": [
 		{
@@ -121,8 +120,6 @@
 			"name": "group",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"nbt": "{}",
-			"armAnimationEnabled": false,
 			"children": [0, 1, 2, 3, 4, 5]
 		}
 	]

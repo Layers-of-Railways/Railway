@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
 	"textures": {
-		"0": "railways:item/dev_caps/neoncitydrifter",
-		"particle": "railways:item/dev_caps/neoncitydrifter"
+		"0": "railways:item/dev_caps/neoncitydrifter"
 	},
 	"elements": [
 		{

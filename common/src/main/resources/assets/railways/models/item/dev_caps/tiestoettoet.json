@@ -29,7 +29,7 @@
 			"scale": [0.68, 0.68, 0.68]
 		},
 		"ground": {
-			"translation": [0, 2, 1.75],
+			"translation": [0, 3, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
