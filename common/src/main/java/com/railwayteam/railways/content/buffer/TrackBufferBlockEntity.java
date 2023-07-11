@@ -26,7 +26,6 @@ public class TrackBufferBlockEntity extends SmartBlockEntity {
 
     @Override
     protected AABB createRenderBoundingBox() {
-        return new AABB(worldPosition, edgePoint.getGlobalPosition())
-                .inflate(2);
+        return new AABB(worldPosition, edgePoint.getGlobalPosition()).inflate(2);
     }
 }

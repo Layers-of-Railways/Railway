@@ -9,12 +9,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.NotNull;
 
 
-public abstract class TrackBufferBlock extends Block implements IBE<TrackBufferBlockEntity>, IWrenchable {
+public abstract class TrackBufferBlock extends HorizontalDirectionalBlock implements IBE<TrackBufferBlockEntity>, IWrenchable {
 	protected TrackBufferBlock(Properties pProperties) {
 		super(pProperties);
 	}
@@ -32,6 +34,11 @@ public abstract class TrackBufferBlock extends Block implements IBE<TrackBufferB
 	@Override
 	public BlockEntityType<? extends TrackBufferBlockEntity> getBlockEntityType() {
 		return CRBlockEntities.TRACK_BUFFER.get();
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+		super.createBlockStateDefinition(pBuilder.add(FACING));
 	}
 
 	@Override
