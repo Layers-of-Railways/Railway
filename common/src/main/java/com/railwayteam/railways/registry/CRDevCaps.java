@@ -39,5 +39,8 @@ public class CRDevCaps {
         registerCustomConductorOnlyCap("IThundxr", "ithundxr", true);
 
         registerCustomCap("rabbitminers", "rabbitminers", true);
+
+        registerCustomCap("TropheusJay", "tropheusjay", true);
+        registerCustomSkin("TropheusJay", "tropheusjay");
     }
 }
