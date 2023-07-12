@@ -38,6 +38,7 @@
     "MixinNixieTubeDisplaySource",
     "MixinNixieTubeDisplayTarget",
     "MixinPlayer",
+    "MixinPonderIndexScreen",
     "MixinRailwaySavedData",
     "MixinRecipeManager",
     "MixinRollerBlockEntity",
