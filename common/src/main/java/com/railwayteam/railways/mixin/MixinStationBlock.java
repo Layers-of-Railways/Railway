@@ -53,23 +53,22 @@ public abstract class MixinStationBlock {
                 cir.setReturnValue(InteractionResult.CONSUME);
                 GlobalStation station = stationBe.getStation();
                 if (station != null && station.getPresentTrain() == null) {
-                    System.out.println("TOMATO");
                     CompoundTag stackTag = itemInHand.getTag();
                     if (stackTag == null || !stackTag.hasUUID("SelectedTrain") || !stackTag.hasUUID("SelectedConductor"))
                         cir.setReturnValue(InteractionResult.FAIL);
 
-                    UUID trainId = stackTag.getUUID("SelectedTrain");
-                    UUID conductorId = stackTag.getUUID("SelectedConductor");
                     BlockPos pos = stationBe.edgePoint.getPos();
                     Level level = pPlayer.getLevel();
 
-                    if (!Create.RAILWAYS.trains.containsKey(trainId))
-                        cir.setReturnValue(InteractionResult.FAIL);
-
+                    UUID trainId = stackTag.getUUID("SelectedTrain");
+                    UUID conductorId = stackTag.getUUID("SelectedConductor");
                     Train train = Create.RAILWAYS.trains.get(trainId);
-                    if(train==null) cir.setReturnValue(InteractionResult.FAIL);
+                    if (!Create.RAILWAYS.trains.containsKey(trainId))
+                        return;
+
                     boolean foundConductor = false;
                     Carriage conductorCarriage = null;
+                    if(train==null)return;
                     for (Carriage carriage : train.carriages) {
                         if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
                             foundConductor = true;
@@ -79,7 +78,7 @@ public abstract class MixinStationBlock {
                     }
 
                     if (!foundConductor)
-                        cir.setReturnValue(InteractionResult.FAIL);
+                        return;
 
                     stackTag.put("SelectedPos", NbtUtils.writeBlockPos(pos));
                     stackTag.remove("Bezier");
@@ -88,10 +87,10 @@ public abstract class MixinStationBlock {
                     if (Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != pPlayer) {
                         stackTag.remove("SelectedPos");
                         itemInHand.setTag(stackTag);
-                        cir.setReturnValue(InteractionResult.FAIL);
+                        return;
                     }
 
-
+                    System.out.println("DB1");
 
                     if (train.runtime.getSchedule() != null && !train.runtime.isAutoSchedule) {
                         ItemStack scheduleStack = train.runtime.returnSchedule();
@@ -135,7 +134,6 @@ public abstract class MixinStationBlock {
                         }
                     }
 
-
                     Schedule schedule = new Schedule();
                     ScheduleEntry entry = new ScheduleEntry();
                     DestinationInstruction instruction = new DestinationInstruction();
@@ -155,8 +153,7 @@ public abstract class MixinStationBlock {
                 else if(station != null && station.getPresentTrain() != null) {
                     UUID trainId = station.getPresentTrain().id;
                     Train train = Create.RAILWAYS.trains.get(trainId);
-                    if(train==null)
-                        cir.setReturnValue(InteractionResult.FAIL);
+                    if(train==null) return;
 
                     AtomicBoolean found = new AtomicBoolean(false);
                     for (Carriage carriage : train.carriages)
