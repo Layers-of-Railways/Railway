@@ -14,6 +14,8 @@ jobs:
         java: [ 17 ]
     runs-on: ubuntu-latest
     env:
+      MODRINTH_TOKEN: ${{ secrets.MODRINTHTOKEN }}
+      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGETOKEN }}
       ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
       ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
       CREATE_FORGE_VER: ${{ github.event.inputs.create_forge_version }}

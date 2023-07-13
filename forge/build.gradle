@@ -140,7 +140,7 @@ dependencies {
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = findProperty('CURSEFORGETOKEN')
+    apiToken = System.getenv("CURSEFORGE_TOKEN")
     var projectId = "688231"
 
     def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
@@ -154,7 +154,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 }
 
 modrinth {
-    token = findProperty('MODRINTHTOKEN')
+    token = System.getenv("MODRINTH_TOKEN")
     projectId = "ZzjhlDgM"
     changelog = getChangelogText("Forge", true)
     versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
