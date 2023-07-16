@@ -116,6 +116,7 @@ public class CRBlocks {
                 .lang(material.langName + " Train Track")
                 .onRegister(onRegister)
                 .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
+                .onRegister(CRTrackMaterials::addToBlockEntityType)
                 .item(TrackBlockItem::new)
                 .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
                 .build()
