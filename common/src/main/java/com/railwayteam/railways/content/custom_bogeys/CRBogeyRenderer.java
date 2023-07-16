@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.registry.CRBogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
@@ -18,9 +19,9 @@ public class CRBogeyRenderer {
 
     public static class SingleaxleBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 1);
-            createModelInstances(materialManager, SINGLEAXLE_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 1);
+            createModelInstance(materialManager, SINGLEAXLE_FRAME);
         }
 
         @Override
@@ -31,11 +32,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(SINGLEAXLE_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(SINGLEAXLE_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
                     .translate(0, -7 / 16f, 0);
@@ -45,9 +46,9 @@ public class CRBogeyRenderer {
 
     public static class LeafspringBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 1);
-            createModelInstances(materialManager, LEAFSPRING_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 1);
+            createModelInstance(materialManager, LEAFSPRING_FRAME);
         }
 
         @Override
@@ -58,11 +59,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(LEAFSPRING_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(LEAFSPRING_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
                     .translate(0, -7 / 16f, 0);
@@ -72,9 +73,9 @@ public class CRBogeyRenderer {
 
     public static class CoilspringBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 1);
-            createModelInstances(materialManager, COILSPRING_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 1);
+            createModelInstance(materialManager, COILSPRING_FRAME);
         }
 
         @Override
@@ -85,11 +86,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(COILSPRING_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(COILSPRING_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransformFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
                     .translate(0, -7 / 16f, 0);
@@ -101,9 +102,9 @@ public class CRBogeyRenderer {
 
     public static class FreightBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, FREIGHT_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, FREIGHT_FRAME);
         }
 
         @Override
@@ -114,11 +115,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(FREIGHT_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(FREIGHT_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -135,9 +136,9 @@ public class CRBogeyRenderer {
 
     public static class ArchbarBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, ARCHBAR_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, ARCHBAR_FRAME);
         }
 
         @Override
@@ -148,11 +149,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(ARCHBAR_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(ARCHBAR_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -169,9 +170,9 @@ public class CRBogeyRenderer {
 
     public static class PassengerBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, PASSENGER_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, PASSENGER_FRAME);
         }
 
         @Override
@@ -182,11 +183,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(PASSENGER_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(PASSENGER_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -205,9 +206,9 @@ public class CRBogeyRenderer {
 
     public static class ModernBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, MODERN_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, MODERN_FRAME);
         }
 
         @Override
@@ -218,11 +219,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(MODERN_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(MODERN_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -239,9 +240,9 @@ public class CRBogeyRenderer {
 
     public static class BlombergBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, BLOMBERG_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, BLOMBERG_FRAME);
         }
 
         @Override
@@ -252,11 +253,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(BLOMBERG_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(BLOMBERG_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -273,9 +274,9 @@ public class CRBogeyRenderer {
 
     public static class Y25BogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 2);
-            createModelInstances(materialManager, Y25_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+            createModelInstance(materialManager, Y25_FRAME);
         }
 
         @Override
@@ -286,11 +287,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(Y25_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(Y25_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -309,9 +310,9 @@ public class CRBogeyRenderer {
 
     public static class HeavyweightBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 3);
-            createModelInstances(materialManager, HEAVYWEIGHT_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 3);
+            createModelInstance(materialManager, HEAVYWEIGHT_FRAME);
         }
 
         @Override
@@ -322,11 +323,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
             for (int side = -1; side < 2; side++) {
                 if (!inInstancedContraption)
                     ms.pushPose();
@@ -343,9 +344,9 @@ public class CRBogeyRenderer {
 
     public static class RadialBogeyRenderer extends BogeyRenderer {
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, CR_BOGEY_WHEELS, 3);
-            createModelInstances(materialManager, RADIAL_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, CR_BOGEY_WHEELS, 3);
+            createModelInstance(materialManager, RADIAL_FRAME);
         }
 
         @Override
@@ -356,11 +357,11 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransformFromPartial(RADIAL_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(RADIAL_FRAME, ms, inInstancedContraption)
                     .translate(0, 5 / 16f, 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
             for (int side = -1; side < 2; side++) {
                 if (!inInstancedContraption)
                     ms.pushPose();
