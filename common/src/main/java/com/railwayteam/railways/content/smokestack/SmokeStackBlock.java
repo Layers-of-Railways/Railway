@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.smokestack;
 
+import com.railwayteam.railways.util.BlockStateUtils;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -7,12 +8,14 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -32,7 +35,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -132,22 +134,40 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
         }
     }
 
-    public static void makeParticles(Level level, BlockPos pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta) {
-        makeParticles(level, new Vec3(pos.getX(), pos.getY(), pos.getZ()), isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta);
+    public static void makeParticlesStationary(Level level, BlockPos pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta) {
+        makeParticles(level, new Vec3(pos.getX(), pos.getY(), pos.getZ()), isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, 1.0, true);
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta) {
         makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, 1.0d);
     }
 
+
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier) {
+        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, false);
+    }
+
+    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary) {
+        BlockPos underPos = new BlockPos(pos.x, pos.y-1, pos.z);
+        BlockState underState = level.getBlockState(underPos);
+        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, underState);
+    }
+
+    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, BlockState underState) {
         RandomSource random = level.getRandom();
-        SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
+        ParticleOptions particleType;
+        if (underState.is(BlockTags.WOOL)) {
+            DyeColor color = BlockStateUtils.getWoolColor(underState.getBlock());//state.getMapColor(level, underPos).col;
+            float[] c = color.getTextureDiffuseColors();
+            particleType = new SmokeParticleData(stationary, c[0], c[1], c[2]);
+        } else {
+            particleType = new SmokeParticleData(stationary);
+        }
         level.addAlwaysVisibleParticle(particleType, true,
-            (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
-            (double)pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y,
-            (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (double)(random.nextBoolean() ? 1 : -1),
-            0.0D, 0.07D*speedMultiplier, 0.0D);
+            (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+            (double)pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+            (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+            0.0D, 0.07D*speedMultiplier * (stationary ? 25 : 1), 0.0D);
         if (spawnExtraSmoke) {
             level.addParticle(ParticleTypes.SMOKE,
                 (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
@@ -164,9 +184,9 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(ENABLED)) {
-            if (random.nextFloat() < type.particleSpawnChance && createsStationarySmoke) {
+            if (random.nextFloat() < type.particleSpawnChance * 1.5 && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
-                    makeParticles(level, pos, random.nextBoolean(), true, type.getParticleSpawnOffset(), type.getParticleSpawnDelta());
+                    makeParticlesStationary(level, pos, random.nextBoolean(), true, type.getParticleSpawnOffset(), type.getParticleSpawnDelta());
                 }
             }
 

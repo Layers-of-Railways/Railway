@@ -5,10 +5,12 @@ import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
@@ -93,6 +95,9 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             maxModifier++;
         }
 
+        minModifier += 5;
+        maxModifier += 15;
+
         // Mostly copied from CampfireBlock and CampfireBlockEntity
         RandomSource random = context.world.random;
         SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
@@ -108,8 +113,12 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                     context.position.y() + random.nextDouble() + random.nextDouble(),
                     context.position.z() + random.nextDouble() / (random.nextBoolean() ? 3D : -3D), 0.0D, 0.07D,
                     0.0D);*/
-                SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5), random.nextBoolean(), true,
-                    type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue());
+                BlockState underState = Blocks.AIR.defaultBlockState();
+                StructureTemplate.StructureBlockInfo info;
+                if ((info = context.contraption.getBlocks().get(context.localPos.below())) != null)
+                    underState = info.state;
+                SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5), random.nextBoolean(), true,
+                    type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, underState);
             }
         }
     }
