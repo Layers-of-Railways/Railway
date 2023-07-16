@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
@@ -17,9 +18,9 @@ public class MonoBogeyRenderer {
     public static class SmallMonoBogeyRenderer extends BogeyRenderer {
 
         @Override
-        public void initialiseContraptionModelData(MaterialManager materialManager) {
-            createModelInstances(materialManager, MONOBOGEY_WHEEL, 4);
-            createModelInstances(materialManager, MONOBOGEY_FRAME);
+        public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+            createModelInstance(materialManager, MONOBOGEY_WHEEL, 4);
+            createModelInstance(materialManager, MONOBOGEY_FRAME);
         }
 
         @Override
@@ -32,12 +33,12 @@ public class MonoBogeyRenderer {
             boolean upsideDown = bogeyData.getBoolean(UPSIDE_DOWN_KEY);
             boolean inInstancedContraption = vb == null;
             boolean specialUpsideDown = !inContraption && upsideDown; // tile entity renderer needs special handling
-            Transform<?> transform = getTransformFromPartial(MONOBOGEY_FRAME, ms, inInstancedContraption)
+            Transform<?> transform = getTransform(MONOBOGEY_FRAME, ms, inInstancedContraption)
                 .rotateZ(specialUpsideDown ? 180 : 0)
                 .translateY(specialUpsideDown ? -3 : 0);
             finalize(transform, ms, light, vb);
 
-            Transform<?>[] wheels = getTransformsFromPartial(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
+            Transform<?>[] wheels = getTransform(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
             for (boolean left : Iterate.trueAndFalse) {
                 for (int front : Iterate.positiveAndNegative) {
                     if (!inInstancedContraption)
