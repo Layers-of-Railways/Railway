@@ -15,11 +15,6 @@ public class HexCastingTrackCompat extends GenericTrackCompat {
         return super.registerTracksAnyway() || Mods.HEXCASTING.isLoaded;
     }
 
-    @Override
-    protected ResourceLocation getSlabLocation(String name) {
-        return asResource("akashic_slab");
-    }
-
     private static boolean registered = false;
     public static void register() {
         if (registered) {

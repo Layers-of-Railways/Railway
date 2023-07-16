@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
@@ -35,9 +36,9 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
     throw new AssertionError();
   }
 
-  protected GeneratedRecipe create(String name, UnaryOperator<SequencedAssemblyRecipeBuilder> transform) {
+  protected GeneratedRecipe create(String name, Function<RailwaysSequencedAssemblyRecipeBuilder, SequencedAssemblyRecipeBuilder> transform) {
     GeneratedRecipe generatedRecipe =
-        c -> transform.apply(new SequencedAssemblyRecipeBuilder(Railways.asResource(name)))
+        c -> transform.apply(new RailwaysSequencedAssemblyRecipeBuilder(Railways.asResource(name)))
             .build(c);
     all.add(generatedRecipe);
     return generatedRecipe;
@@ -86,7 +87,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       TRACKS.put(material, create(
           "track_" + (material.id.getNamespace().equals(Railways.MODID)
               ? "" : material.id.getNamespace()+"_") + material.resourceName(),
-          b -> b.require(material.sleeperIngredient)
+          b -> b.conditionalMaterial(material).require(material.sleeperIngredient)
           .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
           .addOutput(material.getBlock(), 1)
           .loops(1)
