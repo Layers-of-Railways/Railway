@@ -10,8 +10,11 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.ModelFile;
+// FIXME POSSIBLE JANK HERE
+//import net.minecraftforge.client.model.generators.BlockModelBuilder;
+//import net.minecraftforge.client.model.generators.ModelFile;
+import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
+import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockModelBuilder;
 
 import java.util.HashMap;
 import java.util.Map;

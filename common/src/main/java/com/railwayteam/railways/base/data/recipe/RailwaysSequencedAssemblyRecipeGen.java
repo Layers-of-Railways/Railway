@@ -11,7 +11,7 @@ import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import io.github.fabricators_of_create.porting_lib.mixin.common.accessor.TagValueAccessor;
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.TagValueAccessor;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.DyeColor;
@@ -72,6 +72,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       Ingredient railsIngredient = material.railsIngredient;
       if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
         return value instanceof Ingredient.TagValue tagValue
+                // FIXME
             && (tagValue.tag.equals(AllTags.forgeItemTag("nuggets/iron"))
                 || tagValue.tag.equals(AllTags.forgeItemTag("nuggets/zinc"))
                 || tagValue.tag.equals(AllTags.forgeItemTag("iron_nuggets"))

@@ -6,8 +6,6 @@ import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.simibubi.create.content.trains.track.BezierConnection;
@@ -22,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public abstract class CasingRenderUtils {
       for (Vec3 pos : casingPositions(bc)) {
         ms.pushPose();
         BlockPos tePosition = bc.tePositions.getFirst();
-
+        // FIXME HERE
         int light = LevelRenderer.getLightColor(level, new BlockPos(pos).offset(tePosition));
 
         CachedBufferer.partial(texturedPartial, state)
@@ -77,7 +77,8 @@ public abstract class CasingRenderUtils {
         if (i % 2 == 0) continue;
         BezierConnection.SegmentAngles segment = segments[i];
         int light = LevelRenderer.getLightColor(level, segment.lightPosition.offset(tePosition));
-        Matrix4f pose = segment.tieTransform.pose().copy();
+        // FIXME POSSIBLE JANK
+        Matrix4f pose = segment.tieTransform.pose();
         pose.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
         CachedBufferer.partial(texturedPartial, state)
             .mulPose(pose)
@@ -89,7 +90,8 @@ public abstract class CasingRenderUtils {
 
         for (boolean first : Iterate.trueAndFalse) {
           PoseStack.Pose transform = segment.railTransforms.get(first);
-          Matrix4f pose2 = transform.pose().copy();
+          // FIXME POSSIBLE JANK
+          Matrix4f pose2 = transform.pose();
           pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
           CachedBufferer.partial(texturedPartial, state)
               .mulPose(pose2)

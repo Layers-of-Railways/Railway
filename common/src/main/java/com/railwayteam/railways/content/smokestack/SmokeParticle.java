@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
+// FIXME hehe no i hate math
 public class SmokeParticle extends SimpleAnimatedParticle {
 
 	public static final ParticleRenderType TRANSPARENT_SMOKE = new ParticleRenderType() {

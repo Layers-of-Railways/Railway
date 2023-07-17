@@ -35,6 +35,7 @@ public abstract class MixinGameRenderer {
         float g = -(conductor.walkDist + f * partialTicks);
         float h = Mth.lerp(partialTicks, conductor.oBob, conductor.bob);
         matrixStack.translate(Mth.sin(g * (float)Math.PI) * h * 0.5f, -Math.abs(Mth.cos(g * (float)Math.PI) * h), 0.0);
+        // FIXME
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(g * (float)Math.PI) * h * 3.0f));
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(Math.abs(Mth.cos(g * (float)Math.PI - 0.2f) * h) * 5.0f));
         ci.cancel();
