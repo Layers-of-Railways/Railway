@@ -91,6 +91,7 @@
     "client.MixinCurvedTrackInteraction",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
+    "client.MixinParticleEngine",
     "client.MixinPlayerRenderer",
     "client.MixinRadialToolboxMenu",
     "client.MixinStationScreen",
