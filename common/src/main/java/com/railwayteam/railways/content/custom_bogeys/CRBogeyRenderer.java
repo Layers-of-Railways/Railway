@@ -32,15 +32,15 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(SINGLEAXLE_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(SINGLEAXLE_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
-                    .translate(0, -7 / 16f, 0);
-            finalize(bogeyWheels, ms, light, vb);
+                    .translate(0, -7 / 16f, 0)
+                    .render(ms, light, vb);
         }
     }
 
@@ -59,15 +59,15 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(LEAFSPRING_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(LEAFSPRING_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
-                    .translate(0, -7 / 16f, 0);
-            finalize(bogeyWheels, ms, light, vb);
+                    .translate(0, -7 / 16f, 0)
+                    .render(ms, light, vb);
         }
     }
 
@@ -86,15 +86,15 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(COILSPRING_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(COILSPRING_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?> bogeyWheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
+            getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption)
                     .translate(0, 12 / 16f, 0)
                     .rotateX(wheelAngle)
-                    .translate(0, -7 / 16f, 0);
-            finalize(bogeyWheels, ms, light, vb);
+                    .translate(0, -7 / 16f, 0)
+                    .render(ms, light, vb);
         }
     }
 
@@ -115,19 +115,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(FREIGHT_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(FREIGHT_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -149,19 +149,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(ARCHBAR_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(ARCHBAR_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -183,19 +183,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(PASSENGER_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(PASSENGER_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -219,19 +219,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(MODERN_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(MODERN_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -253,19 +253,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(BLOMBERG_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(BLOMBERG_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -287,19 +287,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(Y25_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(Y25_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
             for (int side : Iterate.positiveAndNegative) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[(side + 1) / 2];
+                BogeyModelData wheel = wheels[(side + 1) / 2];
                 wheel.translate(0, 12 / 16f, side)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -323,19 +323,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
             for (int side = -1; side < 2; side++) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[side + 1];
+                BogeyModelData wheel = wheels[side + 1];
                 wheel.translate(0, 12 / 16f, side*1.5)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
@@ -357,19 +357,19 @@ public class CRBogeyRenderer {
         @Override
         public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
             boolean inInstancedContraption = vb == null;
-            Transform<?> transform = getTransform(RADIAL_FRAME, ms, inInstancedContraption)
-                    .translate(0, 5 / 16f, 0);
-            finalize(transform, ms, light, vb);
+            getTransform(RADIAL_FRAME, ms, inInstancedContraption)
+                    .translate(0, 5 / 16f, 0)
+                    .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+            BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
             for (int side = -1; side < 2; side++) {
                 if (!inInstancedContraption)
                     ms.pushPose();
-                Transform<?> wheel = wheels[side + 1];
+                BogeyModelData wheel = wheels[side + 1];
                 wheel.translate(0, 12 / 16f, side*1.5)
                         .rotateX(wheelAngle)
-                        .translate(0, -7 / 16f, 0);
-                finalize(wheel, ms, light, vb);
+                        .translate(0, -7 / 16f, 0)
+                        .render(ms, light, vb);
                 if (!inInstancedContraption)
                     ms.popPose();
             }
