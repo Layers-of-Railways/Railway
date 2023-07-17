@@ -3,16 +3,14 @@ package com.railwayteam.railways.fabric;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.fabric.events.CommonEventsFabric;
+import com.railwayteam.railways.registry.fabric.CRParticleTypesParticleEntryImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraftforge.api.ModLoadingContext;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
-import org.apache.logging.log4j.util.TriConsumer;
 
 import java.util.function.BiConsumer;
 
@@ -20,6 +18,7 @@ public class RailwaysImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Railways.init();
+		CRParticleTypesParticleEntryImpl.register();
 		CommonEventsFabric.init();
 	}
 
