@@ -33,23 +33,21 @@ public class MonoBogeyRenderer {
             boolean upsideDown = bogeyData.getBoolean(UPSIDE_DOWN_KEY);
             boolean inInstancedContraption = vb == null;
             boolean specialUpsideDown = !inContraption && upsideDown; // tile entity renderer needs special handling
-            Transform<?> transform = getTransform(MONOBOGEY_FRAME, ms, inInstancedContraption)
+            getTransform(MONOBOGEY_FRAME, ms, inInstancedContraption)
                 .rotateZ(specialUpsideDown ? 180 : 0)
-                .translateY(specialUpsideDown ? -3 : 0);
-            finalize(transform, ms, light, vb);
+                .translateY(specialUpsideDown ? -3 : 0)
+                .render(ms, light, vb);
 
-            Transform<?>[] wheels = getTransform(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
+            BogeyModelData[] wheels = getTransform(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
             for (boolean left : Iterate.trueAndFalse) {
                 for (int front : Iterate.positiveAndNegative) {
                     if (!inInstancedContraption)
                         ms.pushPose();
-                    Transform<?> wheel = wheels[(left ? 1 : 0) + (front + 1)];
+                    BogeyModelData wheel = wheels[(left ? 1 : 0) + (front + 1)];
                     wheel.translate(left ? -12 / 16f : 12 / 16f, specialUpsideDown ? 35 /16f : 3 / 16f, front * 15 / 16f) //base position
                         .rotateY(left ? wheelAngle : -wheelAngle)
-                        .translate(15/16f, 0, 0/16f);
-                    finalize(wheel, ms, light, vb);
-//                        .light(light)
-                    //                      .renderInto(ms, vb);
+                        .translate(15/16f, 0, 0/16f)
+                        .render(ms, light, vb);
                     if (!inInstancedContraption)
                         ms.popPose();
                 }
