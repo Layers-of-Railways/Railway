@@ -32,6 +32,7 @@ configurations {
 
 repositories {
     // mavens for Forge-exclusives
+    maven { url = "https://maven.terraformersmc.com/releases/" } // EMI Forge
     maven { url = "https://maven.theillusivec4.top/" } // Curios
     maven { // Create Forge and Registrate Forge
         url = "https://maven.tterrag.com/"
@@ -92,8 +93,10 @@ dependencies {
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { transitive = false }
     modImplementation("com.tterrag.registrate:Registrate:${registrate_forge_version}")
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_forge_version}")
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${flywheel_forge_minecraft_version}:${flywheel_forge_version}")
 
+    // JEI is always broken so lets use something that works!
+    modLocalRuntime("dev.emi:emi-forge:${emi_version}")
     // Development QOL
 //    modLocalRuntime("mezz.jei:jei-${minecraft_version}-forge:${jei_forge_version}")
 
