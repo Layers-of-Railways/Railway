@@ -44,7 +44,7 @@ public abstract class MixinTextureAtlasSprite implements IPotentiallyInvisibleTe
         return visible || !shouldDoInvisibility;
     }
 
-    @Mixin(z.class)
+    @Mixin(TextureAtlasSprite.AnimatedTexture.class)
     public abstract static class MixinAnimatedTexture {
 
         @Shadow(aliases = {"this$0", "field_28469", "f_uqrdoixj"})
