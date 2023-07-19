@@ -116,7 +116,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                 BlockState underState = Blocks.AIR.defaultBlockState();
                 StructureTemplate.StructureBlockInfo info;
                 if ((info = context.contraption.getBlocks().get(context.localPos.below())) != null)
-                    underState = info.state;
+                    underState = info.state();
                 SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5), random.nextBoolean(), true,
                     type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, underState);
             }

@@ -10,10 +10,7 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -26,6 +23,7 @@ import net.minecraft.world.level.ItemLike;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
+// fixme replace RecipeCategory.MISC with the proper stuff aka proper categories
 @SuppressWarnings("unused")
 public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
@@ -221,7 +219,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         GeneratedRecipe viaShaped(UnaryOperator<ShapedRecipeBuilder> builder) {
             return register(consumer -> {
-                ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(result.get(), amount));
+                ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result.get(), amount));
                 if (unlockedBy != null)
                     b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                 b.save(consumer, createLocation("crafting"));
@@ -230,7 +228,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         GeneratedRecipe viaShapeless(UnaryOperator<ShapelessRecipeBuilder> builder) {
             return register(consumer -> {
-                ShapelessRecipeBuilder b = builder.apply(ShapelessRecipeBuilder.shapeless(result.get(), amount));
+                ShapelessRecipeBuilder b = builder.apply(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result.get(), amount));
                 if (unlockedBy != null)
                     b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                 b.save(consumer, createLocation("crafting"));
@@ -320,9 +318,10 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                 return register(consumer -> {
                     boolean isOtherMod = compatDatagenOutput != null;
 
+                    // fixme removed serializer from the cooking time
                     SimpleCookingRecipeBuilder b = builder.apply(
-                        SimpleCookingRecipeBuilder.cooking(ingredient.get(), isOtherMod ? Items.DIRT : result.get(),
-                            exp, (int) (cookingTime * cookingTimeModifier), serializer));
+                        SimpleCookingRecipeBuilder.campfireCooking(ingredient.get(), RecipeCategory.MISC, isOtherMod ? Items.DIRT : result.get(),
+                            exp, (int) (cookingTime * cookingTimeModifier)));
                     if (unlockedBy != null)
                         b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                     b.save(result -> {

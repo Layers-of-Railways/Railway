@@ -7,6 +7,7 @@ import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -63,10 +64,10 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
       cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = true)
   private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
     if (getTrackCasing() != null) {
-      if (Registry.BLOCK.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
+      if (BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
         Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());
       } else {
-        compound.putString("Casing", Registry.BLOCK.getKey(getTrackCasing()).toString());
+        compound.putString("Casing", BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString());
       }
     }
     compound.putBoolean("ShiftDown", isAlternate());
@@ -77,7 +78,7 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
   private void netWrite(FriendlyByteBuf buffer, CallbackInfo ci) {
     buffer.writeBoolean(getTrackCasing() != null);
     if (getTrackCasing() != null) {
-      buffer.writeResourceLocation(Registry.BLOCK.getKey(getTrackCasing()));
+      buffer.writeResourceLocation(BuiltInRegistries.BLOCK.getKey(getTrackCasing()));
       buffer.writeBoolean(isAlternate());
     }
   }
@@ -89,7 +90,7 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
         Railways.LOGGER.error("NBTCtor trackCasing was minecraft:block!!! for BezierConnection: primary="+tePositions.getFirst()+", secondary="+tePositions.getSecond());
       }
       //Railways.LOGGER.warn("NBTCtor: Casing="+compound.getString("Casing"));
-      setTrackCasing((SlabBlock) Registry.BLOCK.get(ResourceLocation.of(compound.getString("Casing"), ':')));
+      setTrackCasing((SlabBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.of(compound.getString("Casing"), ':')));
     }
     if (compound.contains("ShiftDown", Tag.TAG_BYTE)) {
       setAlternate(compound.getBoolean("ShiftDown"));
@@ -101,7 +102,7 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
   @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
   private void byteBufConstructor(FriendlyByteBuf buffer, CallbackInfo ci) {
     if (buffer.readBoolean()) {
-      setTrackCasing((SlabBlock) Registry.BLOCK.get(buffer.readResourceLocation()));
+      setTrackCasing((SlabBlock) BuiltInRegistries.BLOCK.get(buffer.readResourceLocation()));
       setAlternate(buffer.readBoolean());
     } else {
       setTrackCasing(null);

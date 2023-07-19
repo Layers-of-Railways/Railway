@@ -5,6 +5,7 @@ import com.railwayteam.railways.multiloader.CommonTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -78,7 +79,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     }
 
     public static TagKey<Item> fence() {
-      return TagKey.<Item>create(Registries.ITEM, new ResourceLocation("minecraft:fences"));
+      return TagKey.create(Registries.ITEM, new ResourceLocation("minecraft:fences"));
     }
 
     public static ItemLike campfire() {

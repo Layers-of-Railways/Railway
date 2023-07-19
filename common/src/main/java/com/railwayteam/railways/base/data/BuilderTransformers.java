@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -16,7 +17,7 @@ public class BuilderTransformers {
     public static <B extends MonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monobogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-                .properties(p -> p.noOcclusion())
+                .properties(BlockBehaviour.Properties::noOcclusion)
                 .transform(pickaxeOnly())
                 .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                         .getExistingFile(p.modLoc("block/bogey/monorail/top" + (s.getValue(MonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
@@ -26,7 +27,7 @@ public class BuilderTransformers {
     public static <B extends InvisibleBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-                .properties(p -> p.noOcclusion())
+                .properties(BlockBehaviour.Properties::noOcclusion)
                 .transform(pickaxeOnly())
                 .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                         .getExistingFile(p.modLoc("block/bogey/invisible/top"))))
@@ -36,7 +37,7 @@ public class BuilderTransformers {
     public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-                .properties(p -> p.noOcclusion())
+                .properties(BlockBehaviour.Properties::noOcclusion)
                 .transform(pickaxeOnly())
                 .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                         .getExistingFile(p.modLoc("block/bogey/top"))))

@@ -202,6 +202,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
 
         @Override
         public BlockPos getLocation() {
+            // fixme
             return new BlockPos(carriage.getLeadingPoint().getPosition(carriage.train.graph));
         }
     }

@@ -139,6 +139,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     protected boolean teleportConductorInternal(Level level, BlockPos start, ConductorEntity conductor, @Nullable Direction prevDirection) {
         if (prevDirection == null) {
             BlockPos normal = conductor.blockPosition().subtract(start);
+            // fixme
             prevDirection = Direction.fromNormal(normal);
             if (prevDirection == null)
                 prevDirection = Direction.NORTH;

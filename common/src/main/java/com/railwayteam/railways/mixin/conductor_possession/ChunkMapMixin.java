@@ -33,6 +33,7 @@ public abstract class ChunkMapMixin {
 	 * Fixes block updates not getting sent to chunks loaded by cameras by returning the camera's SectionPos to the distance
 	 * checking methods
 	 */
+	// fixme
 	@Redirect(method = {
 			"getPlayers", "lambda$setViewDistance$0", "m_ntjylyau"
 	}, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getLastSectionPos()Lnet/minecraft/core/SectionPos;"))

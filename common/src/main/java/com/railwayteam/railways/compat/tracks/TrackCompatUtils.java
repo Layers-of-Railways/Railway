@@ -10,6 +10,7 @@ import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -21,8 +22,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Locale;
@@ -100,9 +100,9 @@ public abstract class TrackCompatUtils {
             addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
 
         return REGISTRATE.block(name, material::createBlock)
-            .initialProperties(Material.STONE)
+            .initialProperties(SharedProperties::stone)
             .properties(p -> collectProperties.apply(p)
-                .color(MaterialColor.METAL)
+                .mapColor(MapColor.METAL)
                 .strength(0.8F)
                 .sound(SoundType.METAL)
                 .noOcclusion())
@@ -113,11 +113,12 @@ public abstract class TrackCompatUtils {
             .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .onRegister(CRTrackMaterials::addToBlockEntityType)
             .item(TrackBlockItem::new)
-            .properties(p -> {
-                if (hideInCreativeTabs) //noinspection DataFlowIssue
-                    p.tab(null);
-                return p;
-            })
+                // fixme
+//            .properties(p -> {
+//                if (hideInCreativeTabs) //noinspection DataFlowIssue
+//                    p.tab(null);
+//                return p;
+//            })
             .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_"+material.resourceName())))
             .build()
             .register();

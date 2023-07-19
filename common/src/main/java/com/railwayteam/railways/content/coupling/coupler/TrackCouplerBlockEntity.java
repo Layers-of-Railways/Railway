@@ -175,7 +175,8 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
 
         double distance = -getEdgeSpacing() * edgePoint.getTargetDirection().getStep();
         Vec3 offset = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0).scale(distance);
-        return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset(offset.x, offset.y, offset.z));
+                                                            // fixme might cause crashes not sure
+        return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset((int) offset.x, (int) offset.y, (int) offset.z));
     }
 
     private @Nullable

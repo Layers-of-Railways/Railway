@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.minecarts;
 
-import com.mojang.math.Vector3d;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.util.packet.PacketSender;
@@ -28,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.JukeboxBlock;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3d;
 
 public abstract class MinecartJukebox extends MinecartBlock {
   public static final Type TYPE = Type.valueOf("RAILWAY_JUKEBOX");
@@ -198,6 +198,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
   @Override
   public void destroy(@NotNull DamageSource source) {
     super.destroy(source);
+    // fixme dont know how to check for explosions :P
     if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS) && this.disc != null && !this.disc.isEmpty()) {
       this.spawnAtLocation(this.disc.copy());
       this.disc = ItemStack.EMPTY;

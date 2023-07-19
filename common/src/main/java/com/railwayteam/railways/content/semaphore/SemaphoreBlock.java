@@ -203,12 +203,12 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             BlockPos newPos = pos.relative(offsetDirection);
             BlockState newState = world.getBlockState(newPos);
 
-            if (!newState.getMaterial().isReplaceable()) {
+            if (!newState.canBeReplaced()) {
                 newPos = pos.relative(offsetDirection.getOpposite());
                 newState = world.getBlockState(newPos);
             }
 
-            if (newState.getMaterial().isReplaceable()) {
+            if (newState.canBeReplaced()) {
 
                 Direction facing = ray.getDirection();
                 if(facing.getAxis()== Direction.Axis.Y)
@@ -261,12 +261,12 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             BlockPos newPos = pos.relative(offsetDirection);
             BlockState newState = world.getBlockState(newPos);
 
-            if (!newState.getMaterial().isReplaceable()) {
+            if (!newState.canBeReplaced()) {
                 newPos = pos.relative(offsetDirection.getOpposite());
                 newState = world.getBlockState(newPos);
             }
 
-            if (newState.getMaterial().isReplaceable()) {
+            if (newState.canBeReplaced()) {
 
                 Direction facing = ray.getDirection();
                 if(facing.getAxis()== Direction.Axis.Y)

@@ -8,6 +8,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 
@@ -37,7 +38,7 @@ public class TrainMarkerDataUpdatePacket implements S2CPacket { //TODO partial s
                 buf.readInt(),
                 buf.readUUID(),
                 buf.readUtf(),
-                ResourceKey.create(Registry.DIMENSION_REGISTRY, buf.readResourceLocation()),
+                ResourceKey.create(Registries.DIMENSION, buf.readResourceLocation()),
                 buf.readBlockPos(),
                 buf.readBoolean()
         );

@@ -9,6 +9,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
@@ -52,7 +53,7 @@ public class GenericTrackCompat {
 
     public void register(String... names) {
         for (String name : names) {
-            Optional<Block> baseBlock = Registry.BLOCK.getOptional(getSlabLocation(name));
+            Optional<Block> baseBlock = BuiltInRegistries.BLOCK.getOptional(getSlabLocation(name));
             if (baseBlock.isEmpty()) {
                 if (!shouldRegisterMissing()) continue; // skip if we shouldn't register tracks for missing base blocks
                 if (isDataGen() || Utils.isDevEnv())

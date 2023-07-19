@@ -12,6 +12,7 @@ import com.simibubi.create.foundation.blockEntity.RemoveBlockEntityPacket;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -109,7 +110,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
   @Inject(method = "write", at = @At("RETURN"))
   private void writeCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
     if (this.getTrackCasing() != null) {
-      tag.putString("TrackCasing", Registry.BLOCK.getKey(getTrackCasing()).toString());
+      tag.putString("TrackCasing", BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString());
     }
     tag.putBoolean("AlternateModel", this.isAlternate());
   }
@@ -124,8 +125,8 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
 
     if (tag.contains("TrackCasing")) {
       ResourceLocation casingName = ResourceLocation.of(tag.getString("TrackCasing"), ':');
-      if (Registry.BLOCK.containsKey(casingName)) {
-        Block casingBlock = Registry.BLOCK.get(casingName);
+      if (BuiltInRegistries.BLOCK.containsKey(casingName)) {
+        Block casingBlock = BuiltInRegistries.BLOCK.get(casingName);
         if (casingBlock instanceof SlabBlock slab) {
           this.setTrackCasing(slab);
           return;

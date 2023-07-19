@@ -14,6 +14,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+//fixme
 @Environment(EnvType.CLIENT)
 public class ToggleButton extends AbstractButton {
 //    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");

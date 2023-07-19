@@ -148,7 +148,8 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary) {
-        BlockPos underPos = new BlockPos(pos.x, pos.y-1, pos.z);
+                                        // fixme casted them to int might break stuff
+        BlockPos underPos = new BlockPos((int) pos.x, (int) pos.y-1, (int) pos.z);
         BlockState underState = level.getBlockState(underPos);
         makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, underState);
     }

@@ -56,6 +56,7 @@ public abstract class MixinCurvedTrackInteraction {
           return;
       }
 
+      // fixme
       CRPackets.PACKETS.send(new SlabUseOnCurvePacket(track.getBlockPos(), curveTarget, new BlockPos(result.vec())));
       player.swing(InteractionHand.MAIN_HAND);
       cir.setReturnValue(true);

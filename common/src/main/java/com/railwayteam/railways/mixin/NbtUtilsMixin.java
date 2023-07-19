@@ -18,10 +18,12 @@ package com.railwayteam.railways.mixin;
 
 import com.mojang.datafixers.DataFixer;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.datafix.DataFixTypes;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,18 +32,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(NbtUtils.class)
 public abstract class NbtUtilsMixin {
-    @Inject(
-        method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/util/datafix/DataFixTypes;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
-        at = @At("RETURN"),
-        cancellable = true
-    )
-    private static void updateDataWithFixers(DataFixer fixer, DataFixTypes fixTypes, CompoundTag compound,
-                                             int oldVersion, int targetVersion, CallbackInfoReturnable<CompoundTag> cir) {
-        cir.setReturnValue(DataFixesInternals.get().updateWithAllFixers(fixTypes, cir.getReturnValue()));
-    }
+    // fixme i dont think this is needed anymore
+//    @Inject(
+//        method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/util/datafix/DataFixTypes;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
+//        at = @At("RETURN"),
+//        cancellable = true
+//    )
+//    private static void updateDataWithFixers(DataFixer fixer, DataFixTypes fixTypes, CompoundTag compound,
+//                                             int oldVersion, int targetVersion, CallbackInfoReturnable<CompoundTag> cir) {
+//        cir.setReturnValue(DataFixesInternals.get().updateWithAllFixers(fixTypes, cir.getReturnValue()));
+//    }
 
     @Inject(method = "readBlockState", at = @At("HEAD"))
-    private static void snr$upgradeMonoBogey(CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
+    private static void snr$upgradeMonoBogey(HolderGetter<Block> blockGetter, CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
         if (tag.contains("Name", Tag.TAG_STRING) && tag.getString("Name").equals("railways:mono_bogey_upside_down")) {
             tag.putString("Name", "railways:mono_bogey");
             CompoundTag properties = tag.getCompound("Properties");

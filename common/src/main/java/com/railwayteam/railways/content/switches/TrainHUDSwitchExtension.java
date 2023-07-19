@@ -8,7 +8,6 @@ import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -72,12 +71,12 @@ public class TrainHUDSwitchExtension {
 
         if (switchProgress.getValue(partialTicks) > 0.99 && switchState != null) {
             switch (switchState) {
-                case NORMAL -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 152, -13);
-                case REVERSE_LEFT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 142, -13);
-                case REVERSE_RIGHT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(poseStack, 162, -13);
+                case NORMAL -> CRGuiTextures.getForSwitch(switchState, isWrong).render(graphics, 152, -13);
+                case REVERSE_LEFT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(graphics, 142, -13);
+                case REVERSE_RIGHT -> CRGuiTextures.getForSwitch(switchState, isWrong).render(graphics, 162, -13);
             }
             if (isLocked)
-                CRGuiTextures.TRAIN_HUD_SWITCH_LOCKED.render(poseStack, 134, -13);
+                CRGuiTextures.TRAIN_HUD_SWITCH_LOCKED.render(graphics, 134, -13);
         }
 
         poseStack.popPose();

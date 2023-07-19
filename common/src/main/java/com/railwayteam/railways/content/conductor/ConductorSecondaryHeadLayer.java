@@ -17,10 +17,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.SkullBlock;
 import org.jetbrains.annotations.NotNull;
@@ -75,9 +72,9 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
             SkullModelBase skullModelBase = this.skullModels.get(type);
             RenderType renderType = SkullBlockRenderer.getRenderType(type, gameProfile);
             SkullBlockRenderer.renderSkull(null, 180.0f, limbSwing, matrixStack, buffer, packedLight, skullModelBase, renderType);
-        } else if (!(item instanceof ArmorItem) || ((ArmorItem)item).getSlot() != EquipmentSlot.HEAD) {
+        } else if (!(item instanceof ArmorItem) || ((ArmorItem)item).getEquipmentSlot() != EquipmentSlot.HEAD) {
             CustomHeadLayer.translateToHead(matrixStack, false);
-            this.itemInHandRenderer.renderItem(conductor, itemStack, ItemTransforms.TransformType.HEAD, false, matrixStack, buffer, packedLight);
+            this.itemInHandRenderer.renderItem(conductor, itemStack, ItemDisplayContext.HEAD, false, matrixStack, buffer, packedLight);
         }
         matrixStack.popPose();
     }

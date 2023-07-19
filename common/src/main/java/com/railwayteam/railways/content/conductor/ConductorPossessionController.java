@@ -141,7 +141,7 @@ public class ConductorPossessionController {
 
                 if (yRotChange != 0.0D || xRotChange != 0.0D || ++ticksSincePacket > 10) {
                     ticksSincePacket = 0;
-                    player.connection.send(new ServerboundMovePlayerPacket.Rot(player.getYRot(), player.getXRot(), player.isOnGround()));
+                    player.connection.send(new ServerboundMovePlayerPacket.Rot(player.getYRot(), player.getXRot(), player.onGround()));
                     player.connection.send(new ServerboundPlayerInputPacket(0, 0, false, false));
                 }
 
@@ -160,7 +160,7 @@ public class ConductorPossessionController {
                 if (bl3 || bl5)
                     CRPackets.PACKETS.send(new CameraMovePacket(cam,
                             new ServerboundMovePlayerPacket.PosRot(cam.getX(), cam.getY(), cam.getZ(),
-                                    cam.getYRot(), cam.getXRot(), cam.isOnGround())));
+                                    cam.getYRot(), cam.getXRot(), cam.onGround())));
             }
         } else if (wasMounted) { // catch in case we didn't want to dismount
             wasMounted = false;

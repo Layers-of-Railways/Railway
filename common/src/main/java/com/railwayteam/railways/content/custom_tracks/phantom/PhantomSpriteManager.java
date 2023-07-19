@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleTextureAtlasSprite;
 import com.railwayteam.railways.registry.CRBlocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,14 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class PhantomSpriteManager {
-    private static final Map<ResourceLocation, WeakReference<TextureAtlasSprite>> map = new HashMap<>();
+    private static final Map<ResourceLocation, WeakReference<SpriteContents>> map = new HashMap<>();
     private static boolean lastVisible = false;
     public static boolean firstRun = true;
     public static boolean hasChanged = false;
 
-    public static boolean register(TextureAtlasSprite sprite) {
-        if (sprite.getName().getNamespace().equals(Railways.MODID) && sprite.getName().getPath().startsWith("block/track/phantom/")) {
-            map.put(sprite.getName(), new WeakReference<>(sprite));
+    public static boolean register(SpriteContents sprite) {
+        if (sprite.name().getNamespace().equals(Railways.MODID) && sprite.name().getPath().startsWith("block/track/phantom/")) {
+            map.put(sprite.name(), new WeakReference<>(sprite));
             firstRun = true;
             return true;
         }
@@ -38,7 +39,7 @@ public abstract class PhantomSpriteManager {
             lastVisible = visible;
             hasChanged = true;
             List<ResourceLocation> expired = new ArrayList<>();
-            for (Map.Entry<ResourceLocation, WeakReference<TextureAtlasSprite>> entry : map.entrySet()) {
+            for (Map.Entry<ResourceLocation, WeakReference<SpriteContents>> entry : map.entrySet()) {
                 if (entry.getValue().get() == null)
                     expired.add(entry.getKey());
             }
@@ -51,8 +52,8 @@ public abstract class PhantomSpriteManager {
     public static void renderTick(Minecraft mc) {
         if (hasChanged) {
             hasChanged = false;
-            for (WeakReference<TextureAtlasSprite> ref : map.values()) {
-                TextureAtlasSprite sprite = ref.get();
+            for (WeakReference<SpriteContents> ref : map.values()) {
+                SpriteContents sprite = ref.get();
                 if (sprite != null) {
                     ((IPotentiallyInvisibleTextureAtlasSprite) sprite).uploadFrame(lastVisible);
                 }
