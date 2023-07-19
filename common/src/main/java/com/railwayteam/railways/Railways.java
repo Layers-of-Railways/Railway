@@ -38,14 +38,15 @@ public class Railways {
   public static final String VERSION = findVersion();
   public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
-  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
-          .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n Rails");
+  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
+          // fixme is this even needed?
+          //.creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n Rails");
 
   static {
-    REGISTRATE.setTooltipModifierFactory(item -> {
-      return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-          .andThen(TooltipModifier.mapNull(KineticStats.create(item)));
-    });
+    REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
+        .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
+// fixme
+    REGISTRATE.defaultCreativeTab(CRItems.mainCreativeTab, "Create Steam 'n Rails");
   }
 
   public static void init() {

@@ -22,8 +22,9 @@ public class TrackCouplerBlockImpl extends TrackCouplerBlock {
 		return true;
 	}
 
-	@Override
-	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
-		return false;
-	}
+	// FIXME  POSSIBLE NEEDED
+//	@Override
+//	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
+//		return false;
+//	}
 }

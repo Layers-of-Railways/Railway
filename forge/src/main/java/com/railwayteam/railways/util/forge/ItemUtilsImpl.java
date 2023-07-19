@@ -10,6 +10,7 @@ public class ItemUtilsImpl {
 		return stack.isEnderMask(wearer, enderman);
 	}
 
+	// FIXME figure out how to fix this *sigh*
 	public static int nextTabId() {
 		return CreativeModeTab.getGroupCountSafe();
 	}

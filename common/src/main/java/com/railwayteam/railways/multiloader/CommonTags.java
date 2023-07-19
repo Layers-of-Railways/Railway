@@ -2,6 +2,7 @@ package com.railwayteam.railways.multiloader;
 
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -38,7 +39,7 @@ public class CommonTags {
 	}
 
 	public static CommonTag<Item> item(String common, String fabric, String forge) {
-		return CommonTag.conventional(Registry.ITEM_REGISTRY, common, fabric, forge);
+		return CommonTag.conventional(Registries.ITEM, common, fabric, forge);
 	}
 
 	public static CommonTag<Item> item(String path) {

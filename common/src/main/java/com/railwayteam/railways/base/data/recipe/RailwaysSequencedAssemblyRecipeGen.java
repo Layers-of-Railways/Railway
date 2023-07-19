@@ -32,7 +32,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
   }
 
   @ExpectPlatform
-  public static RecipeProvider create(DataGenerator gen) {
+  public static RecipeProvider create(DataGenerator.PackGenerator gen) {
     throw new AssertionError();
   }
 

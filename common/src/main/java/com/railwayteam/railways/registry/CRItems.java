@@ -17,6 +17,8 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+// fixme replace RecipeCategory.MISC, with anything else just used it to quickly fix errors
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
   public static final CreativeModeTab mainCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
@@ -50,7 +53,7 @@ public class CRItems {
   }
 
   public static TagKey<Item> makeItemTag(String mod, String path) {
-    return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(mod, path));
+    return TagKey.create(Registries.ITEM, new ResourceLocation(mod, path));
   }
 
   private static ItemBuilder<? extends Item, ?> makeMinecart(String name, AbstractMinecart.Type type) {
@@ -80,12 +83,12 @@ public class CRItems {
   }
 
   public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", MinecartWorkbench.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();
   public static final ItemEntry<? extends Item> ITEM_JUKEBOXCART = makeMinecart("jukeboxcart", MinecartJukebox.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Jukebox")
       .register();
@@ -114,7 +117,7 @@ public class CRItems {
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
-        .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
+        .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())
             .requires(CONDUCTOR_CAPS)
             .requires(CommonTags.DYES.get(color).tag)
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))

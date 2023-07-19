@@ -10,11 +10,12 @@ import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.function.Supplier;
 
 public class CRParticleTypesParticleEntryImpl {
-    private static final LazyRegistrar<ParticleType<?>> REGISTER = LazyRegistrar.create(Registry.PARTICLE_TYPE, Railways.MODID);
+    private static final LazyRegistrar<ParticleType<?>> REGISTER = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, Railways.MODID);
 
     public static void register(String id, Supplier<ParticleType<?>> supplier) {
         REGISTER.register(id, supplier);

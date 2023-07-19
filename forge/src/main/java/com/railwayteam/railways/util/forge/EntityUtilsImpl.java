@@ -28,7 +28,8 @@ public class EntityUtilsImpl {
 	}
 
 	public static double getReachDistance(Player player) {
-		return player.getReachDistance();
+		// fixme might need to use Player#getEntityReach
+		return player.getBlockReach();
 	}
 
 	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {

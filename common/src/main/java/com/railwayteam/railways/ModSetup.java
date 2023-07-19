@@ -22,7 +22,8 @@ public class ModSetup {
 
     // Compat
     if (TrackCompatUtils.anyLoaded())
-      Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+      // fixme
+      Railways.registrate().defaultCreativeTab(CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();

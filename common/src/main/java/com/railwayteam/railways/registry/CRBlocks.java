@@ -48,19 +48,20 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,8 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
+// fixme *notes* Material and MaterialColor went away replaced MaterialColor with MapColor and
+// fixme replaced Material with SharedProperties from create
 public class CRBlocks {
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -102,9 +105,9 @@ public class CRBlocks {
             trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
         //noinspection unchecked
         return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
-                .initialProperties(Material.STONE)
+                .initialProperties(SharedProperties::stone)
                 .properties(p -> collectProperties.apply(p)
-                        .color(MaterialColor.METAL)
+                        .mapColor(MapColor.METAL)
                         .strength(0.8F)
                         .sound(SoundType.METAL)
                         .noOcclusion())
@@ -151,7 +154,7 @@ public class CRBlocks {
                                         .build());
                     }
                 })
-                .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+                .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                 .properties(p -> p.noOcclusion())
                 .addLayer(() -> RenderType::cutoutMipped)
@@ -186,7 +189,7 @@ public class CRBlocks {
                             .build()
                     )
             )
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
             .item(SemaphoreItem::new).transform(customItemModel())
@@ -197,7 +200,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackCouplerBlock> TRACK_COUPLER =
             REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
                     .initialProperties(SharedProperties::softMetal)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .blockstate((c, p) -> {
@@ -223,7 +226,7 @@ public class CRBlocks {
                                             .build(),
                                     TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
                             ))
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
@@ -242,7 +245,7 @@ public class CRBlocks {
                                     .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_brass/block")))
                                     .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
                                     .build(), TrackSwitchBlock.LOCKED))
-                    .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+                    .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(pickaxeOnly())
@@ -271,42 +274,42 @@ public class CRBlocks {
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
             REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.monobogey())
                     .lang("Monorail Bogey")
                     .register();
 
     public static final BlockEntry<InvisibleBogeyBlock> INVISIBLE_BOGEY =
             REGISTRATE.block("invisible_bogey", InvisibleBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.invisibleBogey())
                     .lang("Invisible Bogey")
                     .register();
 
     public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
             REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Single Axle Bogey")
                     .register();
 
     public static final BlockEntry<DoubleAxleBogeyBlock> DOUBLEAXLE_BOGEY =
             REGISTRATE.block("doubleaxle_bogey", DoubleAxleBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Double Axle Bogey")
                     .register();
 
     public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
             REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Platform Double Axle Bogey")
                     .register();
 
     public static final BlockEntry<TripleAxleBogeyBlock> TRIPLEAXLE_BOGEY =
             REGISTRATE.block("tripleaxle_bogey", TripleAxleBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Triple Axle Bogey")
                     .register();
@@ -315,7 +318,7 @@ public class CRBlocks {
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
             REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
                     .initialProperties(SharedProperties::wooden)
-                    .properties(p -> p.color(MaterialColor.COLOR_BROWN))
+                    .properties(p -> p.mapColor(MapColor.COLOR_BROWN))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.WOOD))
                     .properties(p -> p.instabreak())
@@ -357,7 +360,7 @@ public class CRBlocks {
                     .forAllStates(state -> ConfiguredModel.builder()
                             .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
                             .build()))
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .properties(p -> p.noOcclusion())
             .addLayer(() -> RenderType::cutoutMipped)
@@ -381,7 +384,8 @@ public class CRBlocks {
                     .properties(p -> p.isSuffocating((state, level, pos) -> false))
                     .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
                     .lang("Vent Block")
-                    .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
+                    // fixme set this to whatever is good
+                    .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK.get()), RecipeCategory.TRANSPORTATION, c, 2))
                     .item()
                     .transform(customItemModel("copycat_vent"))
                     .register();

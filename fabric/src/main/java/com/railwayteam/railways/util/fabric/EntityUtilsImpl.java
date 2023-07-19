@@ -25,7 +25,7 @@ import java.util.Random;
 
 public class EntityUtilsImpl {
 	public static CompoundTag getPersistentData(Entity entity) {
-		return entity.getExtraCustomData();
+		return entity.getCustomData();
 	}
 
 	public static void givePlayerItem(Player player, ItemStack stack) {

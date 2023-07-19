@@ -1,9 +1,6 @@
 package com.railwayteam.railways.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-// import org.joml.Matrix4f;
-// FIXME WEIRDNESS
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -12,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import org.apache.commons.lang3.StringUtils;
+import org.joml.Matrix4f;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -64,11 +62,19 @@ public class TextUtils {
         int j = (int)(f1 * 255.0F) << 24;
         Font font = Minecraft.getInstance().font;
         float f2 = (float)(-font.width(text) / 2);
-        font.drawInBatch(text, f2, 0, 553648127, false, matrix4f, pBuffer, transparent, j, pPackedLight);
+//        font.drawInBatch(text, f2, 0, 553648127, false, matrix4f, pBuffer, transparent, j, pPackedLight);
+//
+//        if (transparent) {
+//            font.drawInBatch(text, f2, 0, -1, false, matrix4f, pBuffer, false, 0, pPackedLight);
+//        }
+
+        // fixme replace with old code if it doesnt work
+        font.drawInBatch(text, f2, f2, 553648127, false, matrix4f, pBuffer, Font.DisplayMode.NORMAL, j, pPackedLight);
 
         if (transparent) {
-            font.drawInBatch(text, f2, 0, -1, false, matrix4f, pBuffer, false, 0, pPackedLight);
+            font.drawInBatch(text, f2, 0, -1, false, matrix4f, pBuffer, Font.DisplayMode.SEE_THROUGH, 0, pPackedLight);
         }
+
 
         poseStack.popPose();
     }

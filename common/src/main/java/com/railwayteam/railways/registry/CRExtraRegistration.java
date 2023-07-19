@@ -7,6 +7,7 @@ import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -32,8 +33,8 @@ public class CRExtraRegistration {
         } catch (NullPointerException ignored) {
             maybeRegisteredCopycat = null;
         }
-        Create.REGISTRATE.addRegisterCallback("track_signal", Registry.BLOCK_REGISTRY, CRExtraRegistration::addSignalSource);
-        Create.REGISTRATE.addRegisterCallback("copycat", Registry.BLOCK_ENTITY_TYPE_REGISTRY, CRExtraRegistration::addVentAsCopycat);
+        Create.REGISTRATE.addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
+        Create.REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
         if (maybeRegistered != null) {
             addSignalSource(maybeRegistered);
         }

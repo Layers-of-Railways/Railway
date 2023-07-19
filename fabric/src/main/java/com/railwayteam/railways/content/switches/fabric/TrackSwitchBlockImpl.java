@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -28,8 +29,9 @@ public class TrackSwitchBlockImpl extends TrackSwitchBlock implements Connectabl
     return true;
   }
 
+  // fixme
   @Override
-  public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side) {
+  public boolean shouldCheckWeakPower(BlockState state, SignalGetter world, BlockPos pos, Direction side) {
     return false;
   }
 }

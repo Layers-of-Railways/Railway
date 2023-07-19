@@ -3,19 +3,19 @@ package com.railwayteam.railways.registry;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.DelegatedStencilElement;
 import com.simibubi.create.foundation.utility.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 
 public class CRIcons extends AllIcons {
     public static final ResourceLocation ICON_ATLAS = Railways.asResource("textures/gui/icons.png");
@@ -66,15 +66,8 @@ public class CRIcons extends AllIcons {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void render(PoseStack matrixStack, int x, int y) {
-        bind();
-        GuiComponent.blit(matrixStack, x, y, 0, iconX, iconY, 16, 16, 256, 256);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void render(PoseStack matrixStack, int x, int y, GuiComponent component) {
-        bind();
-        component.blit(matrixStack, x, y, iconX, iconY, 16, 16);
+    public void render(GuiGraphics graphics, int x, int y) {
+        graphics.blit(ICON_ATLAS, x, y, 0, iconX, iconY, 16, 16, 256, 256);
     }
 
     @Environment(EnvType.CLIENT)

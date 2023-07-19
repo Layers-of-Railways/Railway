@@ -3,6 +3,8 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
@@ -65,7 +67,7 @@ public class CRTags {
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.BLOCK, id);
+      tag = optionalTag(BuiltInRegistries.BLOCK, id);
     }
 
     @SuppressWarnings("deprecation")
@@ -111,7 +113,7 @@ public class CRTags {
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.ITEM, id);
+      tag = optionalTag(BuiltInRegistries.ITEM, id);
       this.alwaysDatagen = alwaysDatagen;
     }
 

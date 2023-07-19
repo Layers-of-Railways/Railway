@@ -26,8 +26,9 @@ public class TrackSwitchBlockImpl extends TrackSwitchBlock {
     return true;
   }
 
-  @Override
-  public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction direction) {
-    return false;
-  }
+  // FIXME POSSIBLE NEEDED
+//  @Override
+//  public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction direction) {
+//    return false;
+//  }
 }

@@ -9,6 +9,7 @@ import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.GameType;
@@ -35,7 +36,7 @@ public class TrainHUDSwitchExtension {
         return cce.getCarriage();
     }
 
-    public static void renderOverlay(PoseStack poseStack, float partialTicks, int width, int height) {
+    public static void renderOverlay(GuiGraphics graphics, float partialTicks, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.options.hideGui || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)
             return;
@@ -53,6 +54,7 @@ public class TrainHUDSwitchExtension {
         if (localPos == null)
             return;
 
+        PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
         poseStack.translate(width / 2 - 91, height - 29, 0);
 
@@ -62,7 +64,8 @@ public class TrainHUDSwitchExtension {
                     CRGuiTextures.TRAIN_HUD_SWITCH_ANDESITE;
             //bg.render(poseStack, 131, (int) (-bg.height * switchProgress.getValue(partialTicks)));
             bg.bind();
-            GuiComponent.blit(poseStack, 131, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
+            // FIXME POSSIBLE JANK HERE
+            graphics.blit(bg.location, 131, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
                     bg.startX, bg.startY, bg.width, (int) (bg.height * switchProgress.getValue(partialTicks) + 0.5),
                     256, 256);
         }

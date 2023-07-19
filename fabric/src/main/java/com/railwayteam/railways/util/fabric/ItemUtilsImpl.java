@@ -12,6 +12,7 @@ public class ItemUtilsImpl {
 		return stack.is(Items.CARVED_PUMPKIN) || stack.is(CRItems.CONDUCTOR_CAPS);
 	}
 
+	// fixme
 	public static int nextTabId() {
 		return ItemGroupUtil.expandArrayAndGetId();
 	}

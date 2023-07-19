@@ -1,7 +1,6 @@
 package com.railwayteam.railways.registry;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.simibubi.create.foundation.gui.UIRenderHelper;
@@ -9,7 +8,7 @@ import com.simibubi.create.foundation.gui.element.ScreenElement;
 import com.simibubi.create.foundation.utility.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
 /*
@@ -30,8 +29,8 @@ public enum CRGuiTextures implements ScreenElement {
     public static final int FONT_COLOR = 0x575F7A;
 
     public final ResourceLocation location;
-    public int width, height;
-    public int startX, startY;
+    public final int width, height;
+    public final int startX, startY;
 
     private CRGuiTextures(String location, int width, int height) {
         this(location, 0, 0, width, height);
@@ -75,21 +74,13 @@ public enum CRGuiTextures implements ScreenElement {
     }
 
     @Environment(EnvType.CLIENT)
-    @Override
-    public void render(PoseStack ms, int x, int y) {
-        bind();
-        GuiComponent.blit(ms, x, y, 0, startX, startY, width, height, 256, 256);
+    public void render(GuiGraphics graphics, int x, int y) {
+        graphics.blit(location, x, y, startX, startY, width, height);
     }
 
     @Environment(EnvType.CLIENT)
-    public void render(PoseStack ms, int x, int y, GuiComponent component) {
+    public void render(GuiGraphics graphics, int x, int y, Color c) {
         bind();
-        component.blit(ms, x, y, startX, startY, width, height);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void render(PoseStack ms, int x, int y, Color c) {
-        bind();
-        UIRenderHelper.drawColoredTexture(ms, c, x, y, startX, startY, width, height);
+        UIRenderHelper.drawColoredTexture(graphics, c, x, y, startX, startY, width, height);
     }
 }
