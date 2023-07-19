@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin_interfaces;
 
-public interface IPotentiallyInvisibleTextureAtlasSprite {
+public interface IPotentiallyInvisibleSpriteContents {
     void uploadFrame(boolean visible);
 
     boolean shouldDoInvisibility();
