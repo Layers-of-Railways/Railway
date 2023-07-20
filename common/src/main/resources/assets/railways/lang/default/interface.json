@@ -125,5 +125,8 @@
 
   "railways.style_select.category.railways.extendedbogeys": "Extended Bogeys",
 
-  "create.contraptions.roller_mode.track_replace": "Replace Tracks"
+  "create.contraptions.roller_mode.track_replace": "Replace Tracks",
+
+  "itemGroup.railways": "Create: Steam 'n Rails",
+  "itemGroup.railways_compat": "Create: Steam 'n Rails: Compat Tracks"
 }

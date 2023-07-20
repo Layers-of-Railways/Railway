@@ -269,21 +269,7 @@ public class ConductorEntity extends AbstractGolem {
 
   public static final WorldAttached<Set<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new HashSet<>());
 
-  // FIXME: cannot have custom serializers! This will explode!
-  private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
-    public void write(FriendlyByteBuf buf, @NotNull Job job) {
-      buf.writeEnum(job);
-    }
-
-    public @NotNull Job read(FriendlyByteBuf buf) {
-      return buf.readEnum(Job.class);
-    }
-
-    public @NotNull Job copy(@NotNull Job job) {
-      return job;
-    }
-  };
-
+  // FIXME: cannot have custom serializers! This will explode! REDO THIS SLIMEIST
   private static final EntityDataSerializer<FrequencyHolder> FREQUENCY_SERIALIZER = new EntityDataSerializer<>() {
     @Override
     public void write(@NotNull FriendlyByteBuf buffer, @NotNull FrequencyHolder value) {
@@ -315,13 +301,12 @@ public class ConductorEntity extends AbstractGolem {
   };
 
   static {
-    EntityDataSerializers.registerSerializer(JOB_SERIALIZER);
     EntityDataSerializers.registerSerializer(FREQUENCY_SERIALIZER);
   }
 
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
-  public static final EntityDataAccessor<Job> JOB = SynchedEntityData.defineId(ConductorEntity.class, JOB_SERIALIZER);
+  public static final EntityDataAccessor<Integer> JOB = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.INT);
   public static final EntityDataAccessor<Boolean> HOLDING_SCHEDULES = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BOOLEAN);
   public static final EntityDataAccessor<FrequencyHolder> FREQUENCIES = SynchedEntityData.defineId(ConductorEntity.class, FREQUENCY_SERIALIZER);
 
@@ -392,7 +377,7 @@ public class ConductorEntity extends AbstractGolem {
     lastGoodZ = z;
     ServerPlayer player;
     if (isPossessed() && (player = currentlyViewing.get()) != null) {
-      CRPackets.PACKETS.sendTo(player, new CameraMovePacket(this, new ServerboundMovePlayerPacket.PosRot(x, y, z, this.getYRot(), this.getXRot(), this.isOnGround())));
+      CRPackets.PACKETS.sendTo(player, new CameraMovePacket(this, new ServerboundMovePlayerPacket.PosRot(x, y, z, this.getYRot(), this.getXRot(), this.onGround())));
     }
   }
 
@@ -427,7 +412,7 @@ public class ConductorEntity extends AbstractGolem {
     if (current != null && current.getCamera() == this && current.isAlive() && current != player) {
       return false;
     }
-    ServerLevel serverLevel = player.getLevel();
+    ServerLevel serverLevel = player.serverLevel();
     if (serverLevel != level) {
       return false;
     }
@@ -606,10 +591,17 @@ public class ConductorEntity extends AbstractGolem {
       xxa *= 0.3;
     }
     this.jumping = wasJumpPressed();
-    this.flyingSpeed = 0.2f;
+    this.flyingSpeedOverride = 0.2f;
     if (wasSprintPressed()) {
-      this.flyingSpeed += 0.006f;
+      this.flyingSpeedOverride += 0.006f;
     }
+  }
+
+  private Float flyingSpeedOverride = null;
+
+  @Override
+  protected float getFlyingSpeed() {
+    return flyingSpeedOverride == null ? super.getFlyingSpeed() : flyingSpeedOverride;
   }
 
   @Override
@@ -636,7 +628,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   private void moveTowardsClosestSpace(double x, double z) {
-    BlockPos blockpos = new BlockPos(x, this.getY(), z);
+    BlockPos blockpos = BlockPos.containing(x, this.getY(), z);
     if (this.suffocatesAt(blockpos)) {
       Direction[] adirection;
       double d0 = x - (double)blockpos.getX();
@@ -676,7 +668,7 @@ public class ConductorEntity extends AbstractGolem {
     }
     super.aiStep();
     if (isPossessedAndClient()) {
-      float f = !this.onGround || this.isDeadOrDying() || this.isSwimming() ? 0.0f : Math.min(0.1f, (float)this.getDeltaMovement().horizontalDistance());
+      float f = !this.onGround() || this.isDeadOrDying() || this.isSwimming() ? 0.0f : Math.min(0.1f, (float)this.getDeltaMovement().horizontalDistance());
       this.bob += (f - this.bob) * 0.4f;
     }
   }
@@ -708,7 +700,7 @@ public class ConductorEntity extends AbstractGolem {
 
   public ConductorEntity(EntityType<? extends AbstractGolem> type, Level level) {
     super(type, level);
-    this.maxUpStep = 0.5f;
+    this.setMaxUpStep(0.5f);
   }
 
   public boolean isHoldingSchedules() {
@@ -730,7 +722,7 @@ public class ConductorEntity extends AbstractGolem {
     super.defineSynchedData();
     this.entityData.define(COLOR, idFrom(defaultColor()));
     this.entityData.define(BLOCK, this.blockPosition());
-    this.entityData.define(JOB, Job.DEFAULT);
+    this.entityData.define(JOB, Job.DEFAULT.ordinal());
     this.entityData.define(HOLDING_SCHEDULES, this.isHoldingSchedules());
     this.entityData.define(FREQUENCIES, new FrequencyHolder());
   }
@@ -860,11 +852,11 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public void setJob(Job job) {
-    getEntityData().set(JOB, job);
+    getEntityData().set(JOB, job.ordinal());
   }
 
   public Job getJob() {
-    return getEntityData().get(JOB);
+    return Job.values()[getEntityData().get(JOB)];
   }
 
   @Override
@@ -1165,7 +1157,7 @@ public class ConductorEntity extends AbstractGolem {
     }
 
     protected double getGroundY(Vec3 vec) {
-      BlockPos blockPos = new BlockPos(vec);
+      BlockPos blockPos = BlockPos.containing(vec);
       return this.conductor.level.getBlockState(blockPos.below()).isAir() ?
               vec.y :
               WalkNodeEvaluator.getFloorLevel(this.conductor.level, blockPos);

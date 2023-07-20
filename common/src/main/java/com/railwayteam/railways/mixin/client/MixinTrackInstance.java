@@ -19,6 +19,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.casingPositions;
+import static com.railwayteam.railways.util.MathUtils.copy;
 
 @Mixin(value = TrackInstance.class, remap = false)
 public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockEntity> implements IGetBezierConnection {
@@ -135,8 +137,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                         .rotateZ(additionalTransform.rz())
                         .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z());
                     additionalInstance.updateLight(this.world, this.pos);
-                    // FIXME POSSIBLE JANK
-                    casingData.add(Pair.of(additionalInstance, this.pos.offset((int) additionalTransform.x(), (int) additionalTransform.y(), (int) additionalTransform.z())));
+                    casingData.add(Pair.of(additionalInstance, this.pos.offset(Mth.floor(additionalTransform.x()), Mth.floor(additionalTransform.y()), Mth.floor(additionalTransform.z()))));
                 }
                 ms.popPose();
             }
@@ -157,8 +158,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                                 .translate(0, shiftDown, 0)
                                 .translate(pos.x, pos.y, pos.z)
                                 .scale(1.001f);
-                            // FIXME POSSIBLWE JANK
-                            BlockPos relativePos = new BlockPos((int) (this.pos.getX() + pos.x), (int) (this.pos.getY() + pos.y), (int) (this.pos.getZ() + pos.z));
+                            BlockPos relativePos = BlockPos.containing(this.pos.getX() + pos.x, this.pos.getY() + pos.y, this.pos.getZ() + pos.z);
                             casingInstance.updateLight(this.world, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
                         }
@@ -168,8 +168,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                         for (int i = 1; i < segments.length; i++) {
                             if (i % 2 == 0) continue;
                             BezierConnection.SegmentAngles segment = segments[i];
-                            // FIXME POSSIBLE JANK
-                            Matrix4f pose_matrix = segment.tieTransform.pose();
+                            Matrix4f pose_matrix = copy(segment.tieTransform.pose());
                             pose_matrix.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
 
                             ModelData casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
@@ -185,8 +184,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
 
                             for (boolean first : Iterate.trueAndFalse) {
                                 PoseStack.Pose transform = segment.railTransforms.get(first);
-                                // FIXME POSSIBVLE JANK
-                                Matrix4f pose_matrix2 = transform.pose();
+                                Matrix4f pose_matrix2 = copy(transform.pose());
                                 pose_matrix2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
 
                                 ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :

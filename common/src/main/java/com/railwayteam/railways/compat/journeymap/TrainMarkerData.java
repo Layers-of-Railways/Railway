@@ -30,8 +30,8 @@ public record TrainMarkerData(String name, int carriageCount, UUID owner, String
         if (bogey.leading().node1 != null && bogey.leading().node2 != null) {
             dimension = bogey.leading().node1.getLocation().dimension;
             Vec3 vecPos = bogey.leading().getPosition(train.graph);
-            // fixme
-            pos = new BlockPos(vecPos);
+
+            pos = BlockPos.containing(vecPos);
             if (pos.equals(ABSENT_POS))
                 pos = ABSENT_POS.above();
         }

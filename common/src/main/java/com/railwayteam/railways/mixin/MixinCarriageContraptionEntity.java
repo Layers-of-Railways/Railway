@@ -69,7 +69,6 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
                 .get(controlsLocalPos);
         Direction initialOrientation = getInitialOrientation().getCounterClockWise();
         boolean inverted = false;
-        // fixme might need to change this i cahnged info.state to -> info.state()
         if (info != null && info.state().hasProperty(ControlsBlock.FACING))
             inverted = !info.state().getValue(ControlsBlock.FACING)
                     .equals(initialOrientation);

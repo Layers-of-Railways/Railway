@@ -31,6 +31,7 @@ public class CRTagGen {
 			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<ResourceLocation>()).add(id);
 		}
 	}
+
 	public static void generateBlockTags(RegistrateTagsProvider<Block> tags) {
 //		tagAppender(tags, AllBlockTags.TRACKS)
 //			.add(AllBlocks.TRACK.get());
@@ -48,9 +49,8 @@ public class CRTagGen {
 		CommonTags.BRASS_NUGGETS.generateCommon(tags);
 		CommonTags.COPPER_INGOTS.generateCommon(tags);
 		CommonTags.IRON_INGOTS.generateCommon(tags);
-		// fixme
 		CommonTags.STRING.generateCommon(tags)
-			.generateBoth(tags, tag -> tag.add(Items.STRING));
+			.generateBoth(tags, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
 		CommonTags.IRON_PLATES.generateCommon(tags);
 		CommonTags.BRASS_PLATES.generateCommon(tags);
 //			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));

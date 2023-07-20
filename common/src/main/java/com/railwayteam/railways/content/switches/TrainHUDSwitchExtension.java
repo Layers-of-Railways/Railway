@@ -63,7 +63,6 @@ public class TrainHUDSwitchExtension {
                     CRGuiTextures.TRAIN_HUD_SWITCH_ANDESITE;
             //bg.render(poseStack, 131, (int) (-bg.height * switchProgress.getValue(partialTicks)));
             bg.bind();
-            // FIXME POSSIBLE JANK HERE
             graphics.blit(bg.location, 131, (int) (-16 * switchProgress.getValue(partialTicks) - 0.5), 0,
                     bg.startX, bg.startY, bg.width, (int) (bg.height * switchProgress.getValue(partialTicks) + 0.5),
                     256, 256);

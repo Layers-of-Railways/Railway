@@ -53,7 +53,7 @@ public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidMod
   @Override
   public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     // mostly based on HumanoidModel::setupAnim
-    // TODO can't call super directly due to rotation anchor offsets, find a way to fix them?
+    // NOT REALLY WORTH THE EFFORT, THIS WORKS can't call super directly due to rotation anchor offsets, find a way to fix them?
     boolean fallFlying = entity.visualBaseEntity != null && entity.visualBaseEntity.getFallFlyingTicks() > 4;
     boolean visuallySwimming = entity.visualBaseEntity != null && entity.visualBaseEntity.isVisuallySwimming();
     float swimAmount = entity.visualBaseModel != null ? entity.visualBaseModel.swimAmount : this.swimAmount;

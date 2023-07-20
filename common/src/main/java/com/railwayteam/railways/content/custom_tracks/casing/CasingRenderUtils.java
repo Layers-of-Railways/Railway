@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.railwayteam.railways.util.MathUtils.copy;
+
 public abstract class CasingRenderUtils {
 
   private static final HashMap<Pair<PartialModel, SlabBlock>, PartialModel> reTexturedModels = new HashMap<>();
@@ -54,8 +56,7 @@ public abstract class CasingRenderUtils {
       for (Vec3 pos : casingPositions(bc)) {
         ms.pushPose();
         BlockPos tePosition = bc.tePositions.getFirst();
-        // FIXME HERE
-        int light = LevelRenderer.getLightColor(level, new BlockPos(pos).offset(tePosition));
+        int light = LevelRenderer.getLightColor(level, BlockPos.containing(pos).offset(tePosition));
 
         CachedBufferer.partial(texturedPartial, state)
             .translate(pos.x, pos.y, pos.z)
@@ -77,8 +78,7 @@ public abstract class CasingRenderUtils {
         if (i % 2 == 0) continue;
         BezierConnection.SegmentAngles segment = segments[i];
         int light = LevelRenderer.getLightColor(level, segment.lightPosition.offset(tePosition));
-        // FIXME POSSIBLE JANK
-        Matrix4f pose = segment.tieTransform.pose();
+        Matrix4f pose = copy(segment.tieTransform.pose());
         pose.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
         CachedBufferer.partial(texturedPartial, state)
             .mulPose(pose)
@@ -90,8 +90,7 @@ public abstract class CasingRenderUtils {
 
         for (boolean first : Iterate.trueAndFalse) {
           PoseStack.Pose transform = segment.railTransforms.get(first);
-          // FIXME POSSIBLE JANK
-          Matrix4f pose2 = transform.pose();
+          Matrix4f pose2 = copy(transform.pose());
           pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
           CachedBufferer.partial(texturedPartial, state)
               .mulPose(pose2)

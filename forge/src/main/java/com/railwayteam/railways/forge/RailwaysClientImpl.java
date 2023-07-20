@@ -5,15 +5,16 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.railwayteam.railways.registry.CRParticleTypes;
-import com.simibubi.create.Create;
 import com.simibubi.create.foundation.ModFilePackResources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
@@ -79,6 +80,7 @@ public class RailwaysClientImpl {
 	// region --- Built-in Packs ---
 
 	private record PackInfo(String id, String name) {}
+
 	private static final List<PackInfo> packs = new ArrayList<>();
 
 	public static void registerBuiltinPack(String id, String name) {
@@ -91,14 +93,17 @@ public class RailwaysClientImpl {
 			return;
 		IModFile modFile = ModList.get().getModFileById(Railways.MODID).getFile();
 
-		packs.forEach(pack -> event.addRepositorySource((consumer, constructor) -> consumer.accept(
-				Pack.create(Railways.asResource(pack.id).toString(),
-						false,
-						() -> new ModFilePackResources(pack.name, modFile, "resourcepacks/" + pack.id),
-						constructor,
-						Pack.Position.TOP,
-						PackSource.DEFAULT
-				)
+		packs.forEach(pack -> event.addRepositorySource((consumer) -> consumer.accept(
+			Pack.create(Railways.asResource(pack.id).toString(),
+				Component.literal(pack.name),
+				false,
+				(a) -> new ModFilePackResources(pack.name, modFile, "resourcepacks/" + pack.id),
+				new Pack.Info(Component.empty(), 10, FeatureFlagSet.of()),
+				PackType.CLIENT_RESOURCES,
+				Pack.Position.TOP,
+				false,
+				PackSource.DEFAULT
+			)
 		)));
 		packs.clear();
 	}

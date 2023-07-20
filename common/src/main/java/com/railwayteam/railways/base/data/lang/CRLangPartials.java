@@ -2,9 +2,13 @@ package com.railwayteam.railways.base.data.lang;
 
 import com.google.gson.JsonElement;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.AccessorLangMerger;
+import com.simibubi.create.foundation.data.AllLangPartials;
+import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.data.LangPartial;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.foundation.utility.Lang;
+import net.minecraft.data.PackOutput;
 
 import java.util.function.Supplier;
 
@@ -44,4 +48,10 @@ public enum CRLangPartials implements LangPartial {
 		return element;
 	}
 
+	public static <T extends LangPartial> LangMerger createMerger(PackOutput output, String modid, String displayName,
+                                                                  LangPartial[] partials) {
+		LangMerger merger = new LangMerger(output, modid, displayName, new AllLangPartials[0]);
+		((AccessorLangMerger) merger).setLangPartials(partials);
+		return merger;
+	}
 }

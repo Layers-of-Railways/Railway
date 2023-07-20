@@ -4,7 +4,7 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,9 +22,8 @@ public class TrackCouplerBlockImpl extends TrackCouplerBlock {
 		return true;
 	}
 
-	// FIXME  POSSIBLE NEEDED
-//	@Override
-//	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
-//		return false;
-//	}
+	@Override
+	public boolean shouldCheckWeakPower(BlockState state, SignalGetter level, BlockPos pos, Direction side) {
+		return false;
+	}
 }

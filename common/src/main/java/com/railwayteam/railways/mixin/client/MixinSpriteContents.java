@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
+import com.railwayteam.railways.mixin_ducks.AnimatedTextureDuck;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleSpriteContents;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -24,40 +26,61 @@ public abstract class MixinSpriteContents implements IPotentiallyInvisibleSprite
     @Inject(method = "<init>", at = @At("RETURN"))
     private void railways$onInit(ResourceLocation name, FrameSize frameSize, NativeImage originalImage, AnimationMetadataSection metadata, CallbackInfo ci) {
         if (PhantomSpriteManager.register((SpriteContents) (Object) this))
-            shouldDoInvisibility = true;
+            snr$shouldDoInvisibility = true;
     }
 
-    private boolean visible = true;
-    private boolean shouldDoInvisibility = false;
+    private boolean snr$visible = true;
+    private boolean snr$shouldDoInvisibility = false;
 
     @Override
-    public void uploadFrame(boolean visible) {
-        this.visible = visible;
-        this.shouldDoInvisibility = true;
+    public void snr$uploadFrame(boolean visible) {
+        this.snr$visible = visible;
+        this.snr$shouldDoInvisibility = true;
         if (this.animatedTexture != null)
-            // fixme change 1, 1 to whatever it needs to be
-            this.animatedTexture.uploadFirstFrame(1,1);
+            this.animatedTexture.uploadFirstFrame(((AnimatedTextureDuck) this.animatedTexture).snr$getUploadX(),
+                ((AnimatedTextureDuck) this.animatedTexture).snr$getUploadY());
     }
 
-    public boolean shouldDoInvisibility() {
-        return shouldDoInvisibility;
+    public boolean snr$shouldDoInvisibility() {
+        return snr$shouldDoInvisibility;
     }
 
-    public boolean isVisible() {
-        return visible || !shouldDoInvisibility;
+    public boolean snr$isVisible() {
+        return snr$visible || !snr$shouldDoInvisibility;
     }
 
     @Mixin(SpriteContents.AnimatedTexture.class)
-    public abstract static class MixinAnimatedTexture {
+    public abstract static class MixinAnimatedTexture implements AnimatedTextureDuck {
 
         @Shadow(aliases = {"this$0", "field_28469", "f_uqrdoixj"})
         @Final
         private SpriteContents field_28469;
 
+        @Unique
+        private int snr$uploadX = 0;
+        @Unique
+        private int snr$uploadY = 0;
+
+        @Override
+        public int snr$getUploadX() {
+            return snr$uploadX;
+        }
+
+        @Override
+        public int snr$getUploadY() {
+            return snr$uploadY;
+        }
+
+        @Inject(method = "uploadFrame", at = @At("HEAD"))
+        private void railways$onUploadFrame(int frameIndex, int x, int y, CallbackInfo ci) {
+            snr$uploadX = x;
+            snr$uploadY = y;
+        }
+
         @ModifyVariable(method = "uploadFrame", argsOnly = true, ordinal = 0, at = @At("LOAD"))
         private int railways$modifyFrameIndex(int frameIndex) {
-            if (!((IPotentiallyInvisibleSpriteContents) field_28469).shouldDoInvisibility()) return frameIndex;
-            return ((IPotentiallyInvisibleSpriteContents) field_28469).isVisible() ? 0 : 1;
+            if (!((IPotentiallyInvisibleSpriteContents) field_28469).snr$shouldDoInvisibility()) return frameIndex;
+            return ((IPotentiallyInvisibleSpriteContents) field_28469).snr$isVisible() ? 0 : 1;
         }
     }
 }

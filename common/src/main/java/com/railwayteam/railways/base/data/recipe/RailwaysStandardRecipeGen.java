@@ -7,10 +7,12 @@ import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -25,7 +27,7 @@ import java.util.function.UnaryOperator;
 
 // fixme replace RecipeCategory.MISC with the proper stuff aka proper categories
 @SuppressWarnings("unused")
-public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
+public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     GeneratedRecipe TRACK_COUPLER = create(CRBlocks.TRACK_COUPLER)
         .unlockedBy(Ingredients::railwayCasing)
@@ -153,13 +155,8 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         return create(result::get);
     }
 
-    protected RailwaysStandardRecipeGen(DataGenerator pGenerator) {
-        super(pGenerator);
-    }
-
-    @ExpectPlatform
-    public static RecipeProvider create(DataGenerator gen) {
-        throw new AssertionError();
+    public RailwaysStandardRecipeGen(PackOutput pOutput) {
+        super(pOutput);
     }
 
     @Override
@@ -266,9 +263,11 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             private float exp;
             private int cookingTime;
 
-            private final SimpleCookingSerializer<?> FURNACE = RecipeSerializer.SMELTING_RECIPE,
-                SMOKER = RecipeSerializer.SMOKING_RECIPE, BLAST = RecipeSerializer.BLASTING_RECIPE,
-                CAMPFIRE = RecipeSerializer.CAMPFIRE_COOKING_RECIPE;
+            private final SimpleCookingSerializer<?>
+                FURNACE = (SimpleCookingSerializer<?>) RecipeSerializer.SMELTING_RECIPE,
+                SMOKER = (SimpleCookingSerializer<?>) RecipeSerializer.SMOKING_RECIPE,
+                BLAST = (SimpleCookingSerializer<?>) RecipeSerializer.BLASTING_RECIPE,
+                CAMPFIRE = (SimpleCookingSerializer<?>) RecipeSerializer.CAMPFIRE_COOKING_RECIPE;
 
             GeneratedCookingRecipeBuilder(Supplier<Ingredient> ingredient) {
                 this.ingredient = ingredient;

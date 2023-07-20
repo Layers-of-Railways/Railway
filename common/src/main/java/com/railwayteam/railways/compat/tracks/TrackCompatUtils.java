@@ -19,6 +19,7 @@ import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -66,11 +67,11 @@ public abstract class TrackCompatUtils {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, new CompatTrackBlockStateGenerator()::generate);
+        return makeTrack(material, CompatTrackBlockStateGenerator.create()::generate);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, boolean hideInCreativeTabs) {
-        return makeTrack(material, new CompatTrackBlockStateGenerator()::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
+        return makeTrack(material, CompatTrackBlockStateGenerator.create()::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
@@ -113,12 +114,7 @@ public abstract class TrackCompatUtils {
             .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .onRegister(CRTrackMaterials::addToBlockEntityType)
             .item(TrackBlockItem::new)
-                // fixme
-//            .properties(p -> {
-//                if (hideInCreativeTabs) //noinspection DataFlowIssue
-//                    p.tab(null);
-//                return p;
-//            })
+            .removeTab(hideInCreativeTabs ? null : CreativeModeTabs.SEARCH)
             .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_"+material.resourceName())))
             .build()
             .register();

@@ -12,9 +12,4 @@ public class ItemUtils {
 	public static boolean blocksEndermanView(ItemStack stack, Player wearer, EnderMan enderman) {
 		throw new AssertionError();
 	}
-
-	@ExpectPlatform
-	public static int nextTabId() {
-		throw new AssertionError();
-	}
 }

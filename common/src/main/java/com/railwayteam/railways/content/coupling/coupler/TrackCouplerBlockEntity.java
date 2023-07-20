@@ -34,6 +34,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -175,8 +176,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
 
         double distance = -getEdgeSpacing() * edgePoint.getTargetDirection().getStep();
         Vec3 offset = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0).scale(distance);
-                                                            // fixme might cause crashes not sure
-        return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset((int) offset.x, (int) offset.y, (int) offset.z));
+        return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset(Mth.floor(offset.x), Mth.floor(offset.y), Mth.floor(offset.z)));
     }
 
     private @Nullable

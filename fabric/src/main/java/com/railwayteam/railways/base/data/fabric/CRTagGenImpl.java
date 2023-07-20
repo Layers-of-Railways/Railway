@@ -6,7 +6,6 @@ import net.minecraft.tags.TagKey;
 
 public class CRTagGenImpl {
 	public static <T> TagAppender<T> tagAppender(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
-		// fixme should work ig
 		return prov.addTag(tag);
 	}
 }

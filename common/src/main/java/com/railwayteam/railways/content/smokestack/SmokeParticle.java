@@ -4,8 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,8 +15,9 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
-// FIXME hehe no i hate math
 public class SmokeParticle extends SimpleAnimatedParticle {
 
 	public static final ParticleRenderType TRANSPARENT_SMOKE = new ParticleRenderType() {
@@ -108,13 +108,13 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		float f = (float)(Mth.lerp((double)partialTicks, this.xo, this.x) - vec3.x());
 		float g = (float)(Mth.lerp((double)partialTicks, this.yo, this.y) - vec3.y());
 		float h = (float)(Mth.lerp((double)partialTicks, this.zo, this.z) - vec3.z());
-		Quaternion quaternion;
+		Quaternionf quaternion;
 		if (this.roll == 0.0F) {
 			quaternion = renderInfo.rotation();
 		} else {
-			quaternion = new Quaternion(renderInfo.rotation());
+			quaternion = new Quaternionf(renderInfo.rotation());
 			float i = Mth.lerp(partialTicks, this.oRoll, this.roll);
-			quaternion.mul(Vector3f.ZP.rotation(i));
+			quaternion.mul(Axis.ZP.rotation(i));
 		}
 
         /*quaternion.mul(Vector3f.XP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
@@ -122,13 +122,13 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		quaternion.mul(Vector3f.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
 
 		Vector3f vector3f = new Vector3f(-1.0F, -1.0F, 0.0F);
-		vector3f.transform(quaternion);
+		vector3f.rotate(quaternion);
 		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
 		float j = this.getQuadSize(partialTicks);
 
 		for(int k = 0; k < 4; ++k) {
 			Vector3f vector3f2 = vector3fs[k];
-			vector3f2.transform(quaternion);
+			vector3f2.rotate(quaternion);
 			vector3f2.mul(j);
 			vector3f2.add(f, g, h);
 		}
@@ -206,7 +206,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 
 	@Override
 	public int getLightColor(float partialTick) {
-		BlockPos blockpos = new BlockPos(this.x, this.y, this.z);
+		BlockPos blockpos = BlockPos.containing(this.x, this.y, this.z);
 		return this.level.isLoaded(blockpos) ? LevelRenderer.getLightColor(level, blockpos) : 0;
 	}
 

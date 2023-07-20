@@ -2,9 +2,9 @@ package com.railwayteam.railways.fabric;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +22,7 @@ public class RailwaysDataFabric implements DataGeneratorEntrypoint {
 		ExistingFileHelper helper = new ExistingFileHelper(
 			Set.of(railwaysResources), Set.of("create"), false, null, null
 		);
-		Railways.registrate().setupDatagen(gen, helper);
-		Railways.gatherData(gen);
+		Railways.registrate().setupDatagen(gen.createPack(), helper);
+		Railways.gatherData(gen.createPack());
 	}
 }

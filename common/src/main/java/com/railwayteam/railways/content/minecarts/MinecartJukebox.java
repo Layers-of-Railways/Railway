@@ -14,6 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -198,8 +199,7 @@ public abstract class MinecartJukebox extends MinecartBlock {
   @Override
   public void destroy(@NotNull DamageSource source) {
     super.destroy(source);
-    // fixme dont know how to check for explosions :P
-    if (!source.isExplosion() && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS) && this.disc != null && !this.disc.isEmpty()) {
+    if (!source.is(DamageTypeTags.IS_EXPLOSION) && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS) && this.disc != null && !this.disc.isEmpty()) {
       this.spawnAtLocation(this.disc.copy());
       this.disc = ItemStack.EMPTY;
     }

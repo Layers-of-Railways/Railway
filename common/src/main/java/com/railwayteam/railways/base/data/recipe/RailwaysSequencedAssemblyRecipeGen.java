@@ -1,6 +1,7 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.TextUtils;
@@ -10,10 +11,7 @@ import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.content.trains.track.TrackMaterial;
-import dev.architectury.injectables.annotations.ExpectPlatform;
-import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.TagValueAccessor;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,19 +19,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import static com.railwayteam.railways.compat.tracks.TrackCompatUtils.TRACK_COMPAT_MODS;
 
-public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
-  protected RailwaysSequencedAssemblyRecipeGen(DataGenerator pGenerator) {
-    super(pGenerator);
-  }
-
-  @ExpectPlatform
-  public static RecipeProvider create(DataGenerator.PackGenerator gen) {
-    throw new AssertionError();
+public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
+  public RailwaysSequencedAssemblyRecipeGen(PackOutput output) {
+    super(output);
   }
 
   protected GeneratedRecipe create(String name, Function<RailwaysSequencedAssemblyRecipeBuilder, SequencedAssemblyRecipeBuilder> transform) {
@@ -72,15 +64,14 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
       Ingredient railsIngredient = material.railsIngredient;
       if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
         return value instanceof Ingredient.TagValue tagValue
-                // FIXME
-            && (tagValue.tag.equals(AllTags.forgeItemTag("nuggets/iron"))
-                || tagValue.tag.equals(AllTags.forgeItemTag("nuggets/zinc"))
-                || tagValue.tag.equals(AllTags.forgeItemTag("iron_nuggets"))
-                || tagValue.tag.equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+            && (((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
+                || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
+                || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
+                || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
       })) {
         railsIngredient = Ingredient.fromValues(Stream.of(
-            TagValueAccessor.createTagValue(Ingredients.ironNugget()),
-            TagValueAccessor.createTagValue(Ingredients.zincNugget())));
+            AccessorIngredient_TagValue.railway$create(Ingredients.ironNugget()),
+            AccessorIngredient_TagValue.railway$create(Ingredients.zincNugget())));
       }
 
       Ingredient finalRailsIngredient = railsIngredient;

@@ -16,13 +16,10 @@
 
 package com.railwayteam.railways.mixin;
 
-import com.mojang.datafixers.DataFixer;
-import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,16 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(NbtUtils.class)
 public abstract class NbtUtilsMixin {
-    // fixme i dont think this is needed anymore
-//    @Inject(
-//        method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/util/datafix/DataFixTypes;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
-//        at = @At("RETURN"),
-//        cancellable = true
-//    )
-//    private static void updateDataWithFixers(DataFixer fixer, DataFixTypes fixTypes, CompoundTag compound,
-//                                             int oldVersion, int targetVersion, CallbackInfoReturnable<CompoundTag> cir) {
-//        cir.setReturnValue(DataFixesInternals.get().updateWithAllFixers(fixTypes, cir.getReturnValue()));
-//    }
+    // moved general updating to MixinDataFixTypes.java
 
     @Inject(method = "readBlockState", at = @At("HEAD"))
     private static void snr$upgradeMonoBogey(HolderGetter<Block> blockGetter, CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {

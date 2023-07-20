@@ -50,8 +50,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
             Vec3 mainBottom = mainTop.add(secondGirderOffset);
 //            Vec3 rightBottom = rightTop.add(secondGirderOffset);
 
-            // fixme
-            angles.lightPosition = new BlockPos(mainGirder);
+            angles.lightPosition = BlockPos.containing(mainGirder);
 
             Couple<Vec3> offsets =
                 Couple.create(mainTop, mainBottom);

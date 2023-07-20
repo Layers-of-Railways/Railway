@@ -39,7 +39,6 @@ import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackModel;
 import com.simibubi.create.foundation.block.ItemUseOverrides;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -48,17 +47,13 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -67,21 +62,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
-// fixme *notes* Material and MaterialColor went away replaced MaterialColor with MapColor and
-// fixme replaced Material with SharedProperties from create
+// *notes* Material and MaterialColor went away replaced MaterialColor with MapColor and
+// replaced Material with SharedProperties from create
 public class CRBlocks {
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, new CustomTrackBlockStateGenerator()::generate);
+        return makeTrack(material, CustomTrackBlockStateGenerator.create()::generate);
     }
 
     private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
@@ -139,21 +133,7 @@ public class CRBlocks {
         MovementBehaviour movementBehaviour = new SmokeStackMovementBehaviour(spawnExtraSmoke);
         return REGISTRATE.block("smokestack_" + variant, p -> rotates ? new AxisSmokeStackBlock(p, type, shape, emitStationarySmoke) : new SmokeStackBlock(p, type, shape, emitStationarySmoke))
                 .initialProperties(SharedProperties::softMetal)
-                .blockstate((c, p) -> {
-//                rotates ? p.axisBlock(c.get(), p.models().getExistingFile(modelLoc)) : null
-                    if (rotates) {
-                        p.getVariantBuilder(c.get())
-                                .forAllStates(state -> ConfiguredModel.builder()
-                                        .modelFile(p.models().getExistingFile(modelLoc))
-                                        .rotationY((state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0))
-                                        .build());
-                    } else {
-                        p.getVariantBuilder(c.get())
-                                .forAllStates(state -> ConfiguredModel.builder()
-                                        .modelFile(p.models().getExistingFile(modelLoc))
-                                        .build());
-                    }
-                })
+                .transform(BuilderTransformers.smokestack(rotates, modelLoc))
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                 .properties(p -> p.noOcclusion())
@@ -178,17 +158,7 @@ public class CRBlocks {
             .initialProperties(SharedProperties::softMetal)
             //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()
             //.getExistingFile(prov.modLoc("block/" + ctx.getName() + "/block"))))
-            .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry())
-                    .forAllStates(state -> ConfiguredModel.builder()
-                            .modelFile(prov.models().getExistingFile(prov.modLoc(
-                                    "block/semaphore/block" +
-                                            (state.getValue(SemaphoreBlock.FULL) ? "_full" : "") +
-                                            (state.getValue(SemaphoreBlock.FLIPPED) ? "_flipped" : "") +
-                                            (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ? "_down" : ""))))
-                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                            .build()
-                    )
-            )
+            .transform(BuilderTransformers.semaphore())
             .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
@@ -203,11 +173,7 @@ public class CRBlocks {
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-                    .blockstate((c, p) -> {
-                        p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
-                                .modelFile(AssetLookup.partialBaseModel(c, p, state.getValue(TrackCouplerBlock.MODE).getSerializedName()))
-                                .build(), TrackCouplerBlock.POWERED);
-                    })
+                    .transform(BuilderTransformers.trackCoupler())
                     .transform(pickaxeOnly())
                     .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
                     .lang("Train Coupler")
@@ -218,14 +184,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackSwitchBlock> ANDESITE_SWITCH =
             REGISTRATE.block("track_switch_andesite", TrackSwitchBlock::manual)
                     .initialProperties(SharedProperties::softMetal)
-                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                            .forAllStatesExcept(
-                                    state -> ConfiguredModel.builder()
-                                            .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_andesite/block")))
-                                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-                                            .build(),
-                                    TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
-                            ))
+                    .transform(BuilderTransformers.trackSwitch(false))
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
@@ -240,11 +199,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackSwitchBlock> BRASS_SWITCH =
             REGISTRATE.block("track_switch_brass", TrackSwitchBlock::automatic)
                     .initialProperties(SharedProperties::softMetal)
-                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                                    .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_brass/block")))
-                                    .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-                                    .build(), TrackSwitchBlock.LOCKED))
+                    .transform(BuilderTransformers.trackSwitch(true))
                     .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
@@ -270,7 +225,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
-            new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
+            MonorailBlockStateGenerator.create()::generate, BlockBehaviour.Properties::randomTicks);
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
             REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
@@ -324,10 +279,7 @@ public class CRBlocks {
                     .properties(p -> p.instabreak())
                     .properties(p -> p.noLootTable())
                     .properties(p -> p.noCollission())
-                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                            .forAllStates(state -> ConfiguredModel.builder()
-                                    .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
-                                    .build()))
+                    .transform(BuilderTransformers.conductorWhistleFlag())
                     .lang("Conductor Whistle")
                     .item(ConductorWhistleItem::new)
                     .transform(customItemModel())
@@ -356,10 +308,7 @@ public class CRBlocks {
 
     public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, new SmokeStackBlock.SmokeStackType(0.5, 0.25, 0.5), ShapeWrapper.wrapped(CRShapes.DIESEL_STACK), false))
             .initialProperties(SharedProperties::softMetal)
-            .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                    .forAllStates(state -> ConfiguredModel.builder()
-                            .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
-                            .build()))
+            .transform(BuilderTransformers.dieselSmokeStack())
             .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .properties(p -> p.noOcclusion())
@@ -375,16 +324,10 @@ public class CRBlocks {
     public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
             REGISTRATE.block("conductor_vent", VentBlock::create)
                     .transform(copycat())
-                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                            .forAllStates(state -> ConfiguredModel.builder()
-                                    .modelFile(p.models().getExistingFile(state.getValue(CONDUCTOR_VISIBLE) ?
-                                            Railways.asResource("block/copycat_vent_visible") :
-                                            new ResourceLocation("block/air")))
-                                    .build()))
+                    .transform(BuilderTransformers.conductorVent())
                     .properties(p -> p.isSuffocating((state, level, pos) -> false))
                     .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
                     .lang("Vent Block")
-                    // fixme set this to whatever is good
                     .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK.get()), RecipeCategory.TRANSPORTATION, c, 2))
                     .item()
                     .transform(customItemModel("copycat_vent"))

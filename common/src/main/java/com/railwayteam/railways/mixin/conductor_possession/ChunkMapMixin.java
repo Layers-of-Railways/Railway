@@ -33,9 +33,9 @@ public abstract class ChunkMapMixin {
 	 * Fixes block updates not getting sent to chunks loaded by cameras by returning the camera's SectionPos to the distance
 	 * checking methods
 	 */
-	// fixme
 	@Redirect(method = {
-			"getPlayers", "lambda$setViewDistance$0", "m_ntjylyau"
+			"getPlayers",
+			"lambda$setViewDistance$0", "m_ntjylyau", "method_17219" // these 3 all refer to the same thing with different mappings
 	}, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getLastSectionPos()Lnet/minecraft/core/SectionPos;"))
 	private SectionPos securitycraft$getCameraSectionPos(ServerPlayer player) {
 		if (ConductorPossessionController.isPossessingConductor(player) || player.getCamera().getClass().getName().equals("net.geforcemods.securitycraft.entity.camera.SecurityCamera"))

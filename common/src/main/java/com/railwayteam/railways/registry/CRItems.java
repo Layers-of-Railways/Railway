@@ -1,13 +1,11 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.multiloader.CommonTags;
-import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -16,7 +14,6 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -25,26 +22,17 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.*;
 
-import javax.annotation.Nonnull;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-// fixme replace RecipeCategory.MISC, with anything else just used it to quickly fix errors
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
-  public static final CreativeModeTab mainCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID) {
-    @Override
-    @Nonnull
-    public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
-  };
 
-  public static final CreativeModeTab compatTracksCreativeTab = TrackCompatUtils.anyLoaded() ? new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
-    @Override
-    @Nonnull
-    public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack(); }
-  } : mainCreativeTab;
+  public static final CreativeModeTab mainCreativeTab = CRCreativeModeTabs.getBaseTab();
+
+  public static final CreativeModeTab compatTracksCreativeTab = CRCreativeModeTabs.getCompatTracksTab();
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
 
@@ -83,12 +71,12 @@ public class CRItems {
   }
 
   public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", MinecartWorkbench.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();
   public static final ItemEntry<? extends Item> ITEM_JUKEBOXCART = makeMinecart("jukeboxcart", MinecartJukebox.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.get()).requires(Items.MINECART).requires(Items.JUKEBOX)
           .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Jukebox")
       .register();
@@ -117,7 +105,7 @@ public class CRItems {
         .lang(colorName + " Conductor's Cap")
         .tag(CONDUCTOR_CAPS)
         .properties(p -> p.stacksTo(1))
-        .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get())
+        .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ctx.get()) // combat because of armor
             .requires(CONDUCTOR_CAPS)
             .requires(CommonTags.DYES.get(color).tag)
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))

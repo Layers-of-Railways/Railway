@@ -6,8 +6,10 @@ import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
   public static void register() {
+    Railways.registrate().useCreativeTab(CRCreativeModeTabs.getBaseTabKey());
     CRTrackMaterials.register();
     CRBogeyStyles.register();
+    CRCreativeModeTabs.register();
     CRItems.register();
     CRBlockEntities.register();
     CRBlocks.register();
@@ -22,8 +24,7 @@ public class ModSetup {
 
     // Compat
     if (TrackCompatUtils.anyLoaded())
-      // fixme
-      Railways.registrate().defaultCreativeTab(CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
+      Railways.registrate().useCreativeTab(CRCreativeModeTabs.getCompatTracksTabKey());
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();

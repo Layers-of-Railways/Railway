@@ -4,9 +4,8 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -25,11 +24,13 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
   protected final List<GeneratedRecipe> all = new ArrayList<>();
 
-  public RailwaysRecipeProvider(DataGenerator pGenerator) {
-    super(pGenerator);
+  public RailwaysRecipeProvider(PackOutput pOutput) {
+    super(pOutput);
   }
 
-  public void registerRecipes(@NotNull Consumer<FinishedRecipe> p_200404_1_) {
+
+  @Override
+  public void buildRecipes(@NotNull Consumer<FinishedRecipe> p_200404_1_) {
     all.forEach(c -> c.register(p_200404_1_));
     Railways.LOGGER.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
   }

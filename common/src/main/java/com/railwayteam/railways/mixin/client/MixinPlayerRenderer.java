@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.WalkAnimationState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
@@ -73,10 +72,9 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
         conductor.yBodyRot = player.yBodyRot;
         conductor.yBodyRotO = player.yBodyRotO;
         conductor.yHeadRotO = player.yHeadRotO;
-        // fixme
-        conductor.animationPosition = player.animationPosition;
-        conductor.animationSpeed = player.animationSpeed;
-        conductor.animationSpeedOld = player.animationSpeedOld;
+        ((AccessorWalkAnimationState) conductor.walkAnimation).setPosition(player.walkAnimation.position());
+        conductor.walkAnimation.setSpeed(player.walkAnimation.speed());
+        ((AccessorWalkAnimationState) conductor.walkAnimation).setSpeedOld(((AccessorWalkAnimationState) player.walkAnimation).getSpeedOld());
 
         conductor.tickCount = player.tickCount;
 
