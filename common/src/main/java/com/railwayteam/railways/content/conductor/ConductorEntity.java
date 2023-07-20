@@ -269,7 +269,7 @@ public class ConductorEntity extends AbstractGolem {
 
   public static final WorldAttached<Set<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new HashSet<>());
 
-  // FIXME: cannot have custom serializers! This will explode! REDO THIS SLIMEIST
+  // FIXME: cannot have custom serializers! This will explode! REDO THIS IN 1.19 SLIMEIST
   private static final EntityDataSerializer<FrequencyHolder> FREQUENCY_SERIALIZER = new EntityDataSerializer<>() {
     @Override
     public void write(@NotNull FriendlyByteBuf buffer, @NotNull FrequencyHolder value) {
