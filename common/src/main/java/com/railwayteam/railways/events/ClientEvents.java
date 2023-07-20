@@ -1,5 +1,6 @@
 package com.railwayteam.railways.events;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
@@ -7,7 +8,9 @@ import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCatego
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class ClientEvents {
 
@@ -57,5 +60,9 @@ public class ClientEvents {
         if (Minecraft.getInstance().screen != null)
             return;
         BogeyCategoryHandlerClient.onKeyInput(key, pressed);
+    }
+
+    public static void renderWorldLast(PoseStack ms, MultiBufferSource buffer, Vec3 camera) {
+        //GangwayRenderer.renderAll(ms, buffer, camera);
     }
 }

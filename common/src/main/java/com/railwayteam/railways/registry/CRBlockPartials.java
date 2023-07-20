@@ -247,6 +247,7 @@ public class CRBlockPartials {
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
+    public static final PartialModel GANGWAY_CENTER_CONNECTOR = block("gangway/center_connector");
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));
