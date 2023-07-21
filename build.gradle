@@ -1,8 +1,9 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
-    id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
+    id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
     id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
+    id "io.github.pacifistmc.forgix" version "1.2.6" // Merging jars
 }
 
 architectury {
@@ -11,7 +12,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-quiltflower"
+    apply plugin: "io.github.juuxel.loom-vineflower"
 
     loom {
         silentMojangMappingsLicense()
@@ -74,6 +75,27 @@ subprojects {
         from file("build/libs/${archivesBaseName}-${version}.jar")
         into rootProject.file("jars")
     }
+}
+
+tasks.mergeJars.dependsOn(":forge:build", ":fabric:build")
+
+forgix {
+    group = maven_group
+    mergedJarName = "${archives_base_name}-${mod_version}+forge+fabric-mc${minecraft_version}.jar"
+    outputDir = "build/libs/Merged"
+
+    forge {
+        projectName = "forge"
+        jarLocation = "build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"
+
+        mixin "railways.mixins.json" // This is in case if we didn't auto detect the forge mixins.
+        mixin "railways-common.mixins.json"
+    }
+
+    fabric {
+        projectName = "fabric"
+        jarLocation = "build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"
+        }
 }
 
 allprojects {
