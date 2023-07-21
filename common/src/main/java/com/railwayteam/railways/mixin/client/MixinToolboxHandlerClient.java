@@ -59,8 +59,8 @@ public class MixinToolboxHandlerClient {
                   remap = true
           )
   )
+  @SuppressWarnings("DataFlowIssue")
   private static BlockPos railway$useConductorToolboxDistance(BlockPos pos) {
-    //noinspection ConstantConditions
     ConductorEntity conductor = railway$getConductorForSlot(Minecraft.getInstance().player.getInventory().selected);
     railway$conductorForSelectedSlot = conductor;
     return conductor == null ? pos : conductor.blockPosition();

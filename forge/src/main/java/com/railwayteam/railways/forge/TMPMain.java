@@ -13,6 +13,7 @@ This class is just for testing asm transformation and should not be called durin
 @ApiStatus.Internal
 @Deprecated(forRemoval = true) // not actually going to remove this, just want using it to be a very bad warning
 public class TMPMain {
+    @SuppressWarnings("BlockingMethodInNonBlockingContext")
     public static void main(String[] args) {
         CRLaunchPluginService plugin = new CRLaunchPluginService();
         Path path = Path.of("/home/sam/MinecraftFabric/Railway/forge/run/config/in.class");

@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.conductor;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
@@ -25,6 +26,7 @@ import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.WorldAttached;
 import net.fabricmc.api.EnvType;
@@ -38,10 +40,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -121,7 +121,7 @@ public class ConductorEntity extends AbstractGolem {
 
     public FrequencyListener(String key) {
       this.key = key;
-      this.frequency = ConductorEntity.this.getFrequencies().entries().get(this.key).orElse(null);
+      this.frequency = ConductorEntity.this.frequencies.entries().get(this.key).orElse(null);
       if (frequency != null)
         Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(ConductorEntity.this.level, this);
     }
@@ -161,82 +161,79 @@ public class ConductorEntity extends AbstractGolem {
     }
   }
 
-  public static class FrequencyHolder implements Iterable<Optional<Couple<@NotNull Frequency>>> {
-    public @Nullable Couple<@NotNull Frequency> forward;
-    public @Nullable Couple<@NotNull Frequency> backward;
-    public @Nullable Couple<@NotNull Frequency> left;
-    public @Nullable Couple<@NotNull Frequency> right;
-    public @Nullable Couple<@NotNull Frequency> jump;
-    public @Nullable Couple<@NotNull Frequency> sneak;
+  private final FrequencyHolder frequencies = new FrequencyHolder();
 
+  public class FrequencyHolder implements Iterable<Optional<Couple<@NotNull Frequency>>> {
     public FrequencyHolder() {
     }
 
     public FrequencyHolder(@Nullable Couple<@NotNull Frequency> forward, @Nullable Couple<@NotNull Frequency> backward,
                            @Nullable Couple<@NotNull Frequency> left, @Nullable Couple<@NotNull Frequency> right,
                            @Nullable Couple<@NotNull Frequency> jump, @Nullable Couple<@NotNull Frequency> sneak) {
-      this.forward = forward;
-      this.backward = backward;
-      this.left = left;
-      this.right = right;
-      this.jump = jump;
-      this.sneak = sneak;
-    }
-
-    public FrequencyHolder copy() {
-      return new FrequencyHolder(
-              forward == null ? null : forward.copy(),
-              backward == null ? null : backward.copy(),
-              left == null ? null : left.copy(),
-              right == null ? null : right.copy(),
-              jump == null ? null : jump.copy(),
-              sneak == null ? null : sneak.copy()
-      );
+      this.setForward(forward);
+      this.setBackward(backward);
+      this.setLeft(left);
+      this.setRight(right);
+      this.setJump(jump);
+      this.setSneak(sneak);
     }
 
     @NotNull
     @Override
     public Iterator<Optional<Couple<@NotNull Frequency>>> iterator() {
       return List.of(
-              Optional.ofNullable(forward),
-              Optional.ofNullable(backward),
-              Optional.ofNullable(left),
-              Optional.ofNullable(right),
-              Optional.ofNullable(jump),
-              Optional.ofNullable(sneak)
+              Optional.ofNullable(getForward()),
+              Optional.ofNullable(getBackward()),
+              Optional.ofNullable(getLeft()),
+              Optional.ofNullable(getRight()),
+              Optional.ofNullable(getJump()),
+              Optional.ofNullable(getSneak())
       ).iterator();
     }
 
     public Map<String, Optional<Couple<@NotNull Frequency>>> entries() {
       return Map.of(
-              "forward", Optional.ofNullable(forward),
-              "backward", Optional.ofNullable(backward),
-              "left", Optional.ofNullable(left),
-              "right", Optional.ofNullable(right),
-              "jump", Optional.ofNullable(jump),
-              "sneak", Optional.ofNullable(sneak)
+              "forward", Optional.ofNullable(getForward()),
+              "backward", Optional.ofNullable(getBackward()),
+              "left", Optional.ofNullable(getLeft()),
+              "right", Optional.ofNullable(getRight()),
+              "jump", Optional.ofNullable(getJump()),
+              "sneak", Optional.ofNullable(getSneak())
       );
+    }
+
+    public Map<String, Couple<@NotNull ItemStack>> stacks() {
+      Map<String, Couple<@NotNull ItemStack>> stacks = new HashMap<>();
+      for (Map.Entry<String, Optional<Couple<@NotNull Frequency>>> entry : entries().entrySet()) {
+        if (entry.getValue().isEmpty()) {
+          stacks.put(entry.getKey(), Couple.create(ItemStack.EMPTY, ItemStack.EMPTY));
+        } else {
+          Couple<@NotNull Frequency> freqs = entry.getValue().get();
+          stacks.put(entry.getKey(), Couple.create(freqs.getFirst().getStack(), freqs.getSecond().getStack()));
+        }
+      }
+      return ImmutableMap.copyOf(stacks);
     }
 
     public Map<String, Consumer<Optional<Couple<@NotNull Frequency>>>> setters() {
       return Map.of(
-              "forward", (freq) -> forward = freq.orElse(null),
-              "backward", (freq) -> backward = freq.orElse(null),
-              "left", (freq) -> left = freq.orElse(null),
-              "right", (freq) -> right = freq.orElse(null),
-              "jump", (freq) -> jump = freq.orElse(null),
-              "sneak", (freq) -> sneak = freq.orElse(null)
+              "forward", (freq) -> setForward(freq.orElse(null)),
+              "backward", (freq) -> setBackward(freq.orElse(null)),
+              "left", (freq) -> setLeft(freq.orElse(null)),
+              "right", (freq) -> setRight(freq.orElse(null)),
+              "jump", (freq) -> setJump(freq.orElse(null)),
+              "sneak", (freq) -> setSneak(freq.orElse(null))
       );
     }
 
     public List<Consumer<Optional<Couple<@NotNull Frequency>>>> settersInOrder() {
       return List.of(
-              (freq) -> forward = freq.orElse(null),
-              (freq) -> backward = freq.orElse(null),
-              (freq) -> left = freq.orElse(null),
-              (freq) -> right = freq.orElse(null),
-              (freq) -> jump = freq.orElse(null),
-              (freq) -> sneak = freq.orElse(null)
+              (freq) -> setForward(freq.orElse(null)),
+              (freq) -> setBackward(freq.orElse(null)),
+              (freq) -> setLeft(freq.orElse(null)),
+              (freq) -> setRight(freq.orElse(null)),
+              (freq) -> setJump(freq.orElse(null)),
+              (freq) -> setSneak(freq.orElse(null))
       );
     }
 
@@ -265,65 +262,103 @@ public class ConductorEntity extends AbstractGolem {
       }
       return this;
     }
+
+    private static Couple<ItemStack> freqToStacks(@Nullable Couple<Frequency> freqs) {
+      if (freqs == null)
+        return Couple.create(ItemStack.EMPTY, ItemStack.EMPTY);
+      return freqs.map(Frequency::getStack);
+    }
+
+    private static Couple<Frequency> stacksToFreq(Couple<ItemStack> stacks) {
+      return stacks.map(Frequency::of);
+    }
+
+    private void set(String name, @Nullable Couple<Frequency> value) {
+      Couple<ItemStack> stacks = freqToStacks(value);
+
+      Couple<EntityDataAccessor<ItemStack>> freqAccessors = FREQUENCY_DATA.get(name);
+      for (boolean first : Iterate.trueAndFalse)
+        ConductorEntity.this.entityData.set(freqAccessors.get(first), stacks.get(first));
+    }
+
+    private Couple<Frequency> get(String name) {
+      Couple<EntityDataAccessor<ItemStack>> freqAccessors = FREQUENCY_DATA.get(name);
+
+      return stacksToFreq(freqAccessors.map(ConductorEntity.this.entityData::get));
+    }
+
+    @Nullable
+    public Couple<Frequency> getForward() {
+      return get("forward");
+    }
+
+    public void setForward(@Nullable Couple<Frequency> forward) {
+      set("forward", forward);
+    }
+
+    @Nullable
+    public Couple<Frequency> getBackward() {
+      return get("backward");
+    }
+
+    public void setBackward(@Nullable Couple<Frequency> backward) {
+      set("backward", backward);
+    }
+
+    @Nullable
+    public Couple<Frequency> getLeft() {
+      return get("left");
+    }
+
+    public void setLeft(@Nullable Couple<Frequency> left) {
+      set("left", left);
+    }
+
+    @Nullable
+    public Couple<Frequency> getRight() {
+      return get("right");
+    }
+
+    public void setRight(@Nullable Couple<Frequency> right) {
+      set("right", right);
+    }
+
+    @Nullable
+    public Couple<Frequency> getJump() {
+      return get("jump");
+    }
+
+    public void setJump(@Nullable Couple<Frequency> jump) {
+      set("jump", jump);
+    }
+
+    @Nullable
+    public Couple<Frequency> getSneak() {
+      return get("sneak");
+    }
+
+    public void setSneak(@Nullable Couple<Frequency> sneak) {
+      set("sneak", sneak);
+    }
   }
 
   public static final WorldAttached<Set<ConductorEntity>> WITH_TOOLBOXES = new WorldAttached<>(w -> new HashSet<>());
 
-  // FIXME: cannot have custom serializers! This will explode!
-  private static final EntityDataSerializer<Job> JOB_SERIALIZER = new EntityDataSerializer<>() {
-    public void write(FriendlyByteBuf buf, @NotNull Job job) {
-      buf.writeEnum(job);
-    }
-
-    public @NotNull Job read(FriendlyByteBuf buf) {
-      return buf.readEnum(Job.class);
-    }
-
-    public @NotNull Job copy(@NotNull Job job) {
-      return job;
-    }
-  };
-
-  private static final EntityDataSerializer<FrequencyHolder> FREQUENCY_SERIALIZER = new EntityDataSerializer<>() {
-    @Override
-    public void write(@NotNull FriendlyByteBuf buffer, @NotNull FrequencyHolder value) {
-      for (Optional<Couple<Frequency>> freq : value) {
-        buffer.writeBoolean(freq.isPresent());
-        freq.ifPresent((f) -> {
-          buffer.writeItem(f.getFirst().getStack());
-          buffer.writeItem(f.getSecond().getStack());
-        });
-      }
-    }
-
-    @Override
-    public @NotNull FrequencyHolder read(@NotNull FriendlyByteBuf buffer) {
-      return new FrequencyHolder(
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null,
-              buffer.readBoolean() ? Couple.create(Frequency.of(buffer.readItem()), Frequency.of(buffer.readItem())) : null
-      );
-    }
-
-    @Override
-    public @NotNull FrequencyHolder copy(@NotNull FrequencyHolder value) {
-      return value.copy();
-    }
-  };
-
-  static {
-    EntityDataSerializers.registerSerializer(JOB_SERIALIZER);
-    EntityDataSerializers.registerSerializer(FREQUENCY_SERIALIZER);
-  }
-
   public static final EntityDataAccessor<Byte> COLOR = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BYTE);
   public static final EntityDataAccessor<BlockPos> BLOCK = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BLOCK_POS);
-  public static final EntityDataAccessor<Job> JOB = SynchedEntityData.defineId(ConductorEntity.class, JOB_SERIALIZER);
+  public static final EntityDataAccessor<Integer> JOB = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.INT);
   public static final EntityDataAccessor<Boolean> HOLDING_SCHEDULES = SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.BOOLEAN);
-  public static final EntityDataAccessor<FrequencyHolder> FREQUENCIES = SynchedEntityData.defineId(ConductorEntity.class, FREQUENCY_SERIALIZER);
+
+  public static final Map<String, Couple<EntityDataAccessor<ItemStack>>> FREQUENCY_DATA = new HashMap<>();
+
+  static {
+    for (String name : List.of("forward", "backward", "left", "right", "jump", "sneak")) {
+      FREQUENCY_DATA.put(name, Couple.create(
+              SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.ITEM_STACK),
+              SynchedEntityData.defineId(ConductorEntity.class, EntityDataSerializers.ITEM_STACK)
+      ));
+    }
+  }
 
   // keep this small for performance (plus conductors are smol)
   private static final Vec3i REACH = new Vec3i(3, 2, 3);
@@ -730,23 +765,13 @@ public class ConductorEntity extends AbstractGolem {
     super.defineSynchedData();
     this.entityData.define(COLOR, idFrom(defaultColor()));
     this.entityData.define(BLOCK, this.blockPosition());
-    this.entityData.define(JOB, Job.DEFAULT);
+    this.entityData.define(JOB, Job.DEFAULT.ordinal());
     this.entityData.define(HOLDING_SCHEDULES, this.isHoldingSchedules());
-    this.entityData.define(FREQUENCIES, new FrequencyHolder());
-  }
-
-  public FrequencyHolder getFrequencies() {
-    return this.entityData.get(FREQUENCIES);
-  }
-
-  public void setFrequencies(FrequencyHolder holder) {
-      this.entityData.set(FREQUENCIES, holder);
-  }
-
-  public void updateFrequencies(Consumer<FrequencyHolder> consumer) {
-    FrequencyHolder holder = getFrequencies();
-    consumer.accept(holder);
-    setFrequencies(holder);
+    for (Map.Entry<String, Couple<EntityDataAccessor<ItemStack>>> entry : FREQUENCY_DATA.entrySet()) {
+      for (boolean first : Iterate.trueAndFalse) {
+        this.entityData.define(entry.getValue().get(first), ItemStack.EMPTY);
+      }
+    }
   }
 
   @Override
@@ -860,11 +885,11 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   public void setJob(Job job) {
-    getEntityData().set(JOB, job);
+    getEntityData().set(JOB, job.ordinal());
   }
 
   public Job getJob() {
-    return getEntityData().get(JOB);
+    return Job.values()[getEntityData().get(JOB)];
   }
 
   @Override
@@ -936,7 +961,7 @@ public class ConductorEntity extends AbstractGolem {
       } else if (player.getItemInHand(hand).getItem() instanceof LinkedControllerItem) {
         // copy frequencies from linked controller to conductor
         int i = 0;
-        for (var freq : getFrequencies().settersInOrder()) {
+        for (var freq : frequencies.settersInOrder()) {
           freq.accept(Optional.of(LinkedControllerItem.toFrequency(player.getItemInHand(hand), i)));
           i++;
         }
@@ -1433,7 +1458,7 @@ public class ConductorEntity extends AbstractGolem {
         nbt.put("heldSchedules", schedulesTag);
     }
     nbt.putString("job", getJob().name());
-    nbt.put("frequencies", getFrequencies().write());
+    nbt.put("frequencies", frequencies.write());
   }
 
   @Override
@@ -1466,7 +1491,7 @@ public class ConductorEntity extends AbstractGolem {
     }
     if (!level.isClientSide) {
       getEntityData().set(HOLDING_SCHEDULES, isHoldingSchedules());
-      updateFrequencies((freqHolder) -> freqHolder.read(nbt.getCompound("frequencies")));
+      frequencies.read(nbt.getCompound("frequencies"));
       updateFrequencyListeners();
     }
   }
