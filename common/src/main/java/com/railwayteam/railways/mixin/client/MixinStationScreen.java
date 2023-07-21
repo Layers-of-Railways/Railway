@@ -52,23 +52,24 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
                 CRPackets.PACKETS.send(ILimited.makeLimitEnabledPacket(blockEntity.getBlockPos(), this.selected()));
             }
 
-            @Override
-            public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-                Minecraft minecraft = Minecraft.getInstance();
-                RenderSystem.setShaderTexture(0, TEXTURE);
-                RenderSystem.enableDepthTest();
-                Font font = minecraft.font;
-                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-                Checkbox.blit(poseStack, this.x, this.y, this.isFocused() ? 20.0f : 0.0f, this.selected() ? 20.0f : 0.0f, 20, this.height, 64, 64);
-                this.renderBg(poseStack, minecraft, mouseX, mouseY);
-                Checkbox.drawString(poseStack, font, this.getMessage(), this.x + 24, this.y + (this.height - 8) / 2, TEXT_COLOR | Mth.ceil(this.alpha * 255.0f) << 24);
-                if (this.isHoveredOrFocused()) {
-                    renderComponentTooltip(poseStack, ImmutableList.of(Components.translatable("railways.station.train_limit.tooltip.1"), Components.translatable("railways.station.train_limit.tooltip.2")), mouseX, mouseY);
-                }
-            }
+            //fixme no idea what is going on here in the slightest
+//            @Override
+//            public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+//                Minecraft minecraft = Minecraft.getInstance();
+//                RenderSystem.setShaderTexture(0, TEXTURE);
+//                RenderSystem.enableDepthTest();
+//                Font font = minecraft.font;
+//                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, this.alpha);
+//                RenderSystem.enableBlend();
+//                RenderSystem.defaultBlendFunc();
+//                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+//                Checkbox.blit(poseStack, this.x, this.y, this.isFocused() ? 20.0f : 0.0f, this.selected() ? 20.0f : 0.0f, 20, this.height, 64, 64);
+//                this.renderBg(poseStack, minecraft, mouseX, mouseY);
+//                Checkbox.drawString(poseStack, font, this.getMessage(), this.x + 24, this.y + (this.height - 8) / 2, TEXT_COLOR | Mth.ceil(this.alpha * 255.0f) << 24);
+//                if (this.isHoveredOrFocused()) {
+//                    renderComponentTooltip(poseStack, ImmutableList.of(Components.translatable("railways.station.train_limit.tooltip.1"), Components.translatable("railways.station.train_limit.tooltip.2")), mouseX, mouseY);
+//                }
+//            }
         };
         addRenderableWidget(limitEnableCheckbox);
 

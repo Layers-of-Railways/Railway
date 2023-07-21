@@ -9,6 +9,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +48,7 @@ public class TrackDemoCommand {
                                 level.setBlockAndUpdate(pos.east(3), baseState);
                                 level.setBlockAndUpdate(pos.east(3).above(), baseState);
                             } else if (material.sleeperIngredient instanceof SoftIngredient softIngredient) {
-                                Optional<Block> baseBlock = Registry.BLOCK.getOptional(softIngredient.item);
+                                Optional<Block> baseBlock = BuiltInRegistries.BLOCK.getOptional(softIngredient.item);
                                 if (baseBlock.isPresent()) {
                                     BlockState baseState = baseBlock.get().defaultBlockState();
                                     if (baseState.hasProperty(SlabBlock.TYPE))
@@ -60,7 +62,7 @@ public class TrackDemoCommand {
                         pos.move(0, 0, 1);
                     }
 
-                    ctx.getSource().sendSuccess(Components.literal("Placed tracks"), true);
+                    ctx.getSource().sendSuccess(() -> Components.literal("Placed tracks"), true);
                     return 1;
                 }));
     }

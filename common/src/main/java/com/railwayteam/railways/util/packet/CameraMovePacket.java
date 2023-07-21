@@ -9,12 +9,12 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -90,14 +90,14 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
         teleport(player, conductor, x, y, z, yaw, pitch, Collections.emptySet(), false);
     }
 
-    public static void teleport(ServerPlayer player, ConductorEntity conductor, double x, double y, double z, float yaw, float pitch, Set<ClientboundPlayerPositionPacket.RelativeArgument> relativeSet, boolean dismountVehicle) {
-        double d = relativeSet.contains(ClientboundPlayerPositionPacket.RelativeArgument.X) ? conductor.getX() : 0.0;
-        double e = relativeSet.contains(ClientboundPlayerPositionPacket.RelativeArgument.Y) ? conductor.getY() : 0.0;
-        double f = relativeSet.contains(ClientboundPlayerPositionPacket.RelativeArgument.Z) ? conductor.getZ() : 0.0;
-        float g = relativeSet.contains(ClientboundPlayerPositionPacket.RelativeArgument.Y_ROT) ? conductor.getYRot() : 0.0f;
-        float h = relativeSet.contains(ClientboundPlayerPositionPacket.RelativeArgument.X_ROT) ? conductor.getXRot() : 0.0f;
+    public static void teleport(ServerPlayer player, ConductorEntity conductor, double x, double y, double z, float yaw, float pitch, Set<RelativeMovement> relativeSet, boolean dismountVehicle) {
+        double d = relativeSet.contains(RelativeMovement.X) ? conductor.getX() : 0.0;
+        double e = relativeSet.contains(RelativeMovement.Y) ? conductor.getY() : 0.0;
+        double f = relativeSet.contains(RelativeMovement.Z) ? conductor.getZ() : 0.0;
+        float g = relativeSet.contains(RelativeMovement.Y_ROT) ? conductor.getYRot() : 0.0f;
+        float h = relativeSet.contains(RelativeMovement.X_ROT) ? conductor.getXRot() : 0.0f;
         conductor.absMoveTo(x, y, z, yaw, pitch);
-        CRPackets.PACKETS.sendTo(player, new CameraMovePacket(conductor, new ServerboundMovePlayerPacket.PosRot(x, y, z, yaw, pitch, conductor.isOnGround())));
+        CRPackets.PACKETS.sendTo(player, new CameraMovePacket(conductor, new ServerboundMovePlayerPacket.PosRot(x, y, z, yaw, pitch, conductor.onGround())));
 //        conductor.connection.send(new ClientboundPlayerPositionPacket(x - d, y - e, z - f, yaw - g, pitch - h, relativeSet, this.awaitingTeleport, dismountVehicle));
     }
 
@@ -108,7 +108,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
                 sender1.connection.disconnect(Components.translatable("multiplayer.disconnect.invalid_player_movement"));
                 return;
             }
-            if (!(conductor.getLevel() instanceof ServerLevel serverLevel))
+            if (!(conductor.level instanceof ServerLevel serverLevel))
                 return;
             double d = clampHorizontal(packet.getX(conductor.getX()));
             double e = clampVertical(packet.getY(conductor.getY()));
@@ -149,7 +149,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
             n = e - conductor.lastGoodY;
             o = f - conductor.lastGoodZ;
             boolean bl2 = n > 0.0;
-            if (conductor.isOnGround() && !packet.isOnGround() && bl2) {
+            if (conductor.onGround() && !packet.isOnGround() && bl2) {
                 conductor.jumpFromGround();
             }
             boolean bl22 = conductor.verticalCollisionBelow;

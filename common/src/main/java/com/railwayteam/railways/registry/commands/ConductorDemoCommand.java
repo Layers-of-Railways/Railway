@@ -49,7 +49,7 @@ public class ConductorDemoCommand {
                         pos.move(Direction.NORTH);
                     }
 
-                    ctx.getSource().sendSuccess(Components.literal("Spawned custom conductors"), true);
+                    ctx.getSource().sendSuccess(() -> Components.literal("Spawned custom conductors"), true);
                     return 1;
                 }));
     }

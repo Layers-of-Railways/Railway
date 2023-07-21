@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -30,7 +31,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 
 			getParentModel().getHead().translateAndRotate(poseStack);
 
-			//poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+			//poseStack.mulPose(Axis.XP.rotationDegrees(180.0f));
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
@@ -51,7 +52,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 
 			getParentModel().getHead().translateAndRotate(poseStack);
 
-			//poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+			//poseStack.mulPose(Axis.XP.rotationDegrees(180.0f));
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 

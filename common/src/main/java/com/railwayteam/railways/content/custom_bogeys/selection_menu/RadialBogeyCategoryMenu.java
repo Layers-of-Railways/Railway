@@ -6,8 +6,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRIcons;
@@ -25,7 +24,7 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
@@ -38,12 +37,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
 
 import java.util.function.Consumer;
 
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY;
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.optimizeFavorites;
 
+//fixme changed AllGuiTextures.ENUM.render to not pass this in the color field
 public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
     private State state;
@@ -78,9 +79,9 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         PoseStack ms = new PoseStack();
         ms.translate(0.0, 0.0, 1000.0);
         ms.scale(scale, scale, scale);
-        Quaternion zp180 = Vector3f.ZP.rotationDegrees(180.0f);
-        Quaternion xRot = Vector3f.XP.rotationDegrees(-20.0f);
-        Quaternion yRot = Vector3f.YP.rotationDegrees(45.0f);
+        Quaternionf zp180 = Axis.ZP.rotationDegrees(180.0f);
+        Quaternionf xRot = Axis.XP.rotationDegrees(-20.0f);
+        Quaternionf yRot = Axis.YP.rotationDegrees(45.0f);
         zp180.mul(xRot);
         zp180.mul(yRot);
         ms.mulPose(zp180);
@@ -101,7 +102,9 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     }
 
     @Override
-    protected void renderWindow(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+    protected void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        PoseStack ms = graphics.pose();
+
         float fade = Mth.clamp((ticksOpen + AnimationTickHolder.getPartialTicks()) / 10f, 1 / 512f, 1);
 
         hoveredSlot = -1;
@@ -135,12 +138,12 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
             ms.pushPose();
             ms.translate(80 + (-5 * (1 - fade) * (1 - fade)), 0, 0);
-            AllGuiTextures.TOOLBELT_SLOT.render(ms, -12, -12, this);
+            AllGuiTextures.TOOLBELT_SLOT.render(graphics, -12, -12);
             ms.translate(-0.5, 0.5, 0);
-            CRIcons.I_FAVORITE.render(ms, -9, -9, this);
+            CRIcons.I_FAVORITE.render(graphics, -9, -9);
             ms.translate(0.5, -0.5, 0);
             if (!scrollMode && hoveredSlot == MANAGE_FAVORITES) {
-                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -13, -13, this);
+                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -13, -13);
                 tip = Components.translatable(favoriteSlot == null ? "railways.style_select.manage_favorites" : "railways.style_select.managing_favorites")
                         .withStyle(ChatFormatting.GOLD);
             }
@@ -181,24 +184,24 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
                     if (minecraft != null) {
 
-                        AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
+                        AllGuiTextures.TOOLBELT_SLOT.render(graphics, 0, 0);
                         if (icon instanceof CategoryIcon categoryIcon) {
-                            renderIcon(categoryIcon, ms);
+                            renderIcon(categoryIcon, graphics);
                         } else {
                             GuiGameElement.of(icon)
                                     .at(3, 3)
-                                    .render(ms);
+                                    .render(graphics);
                         }
 
 
                         if (selected) {
-                            AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
+                            AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -1, -1);
                             tip = Components.translatable("railways.style_select.category." + id.getNamespace() + "." + id.getPath())
                                     .withStyle(ChatFormatting.GOLD);
                         }
                     }
                 } else {
-                    AllGuiTextures.TOOLBELT_EMPTY_SLOT.render(ms, 0, 0, this);
+                    AllGuiTextures.TOOLBELT_EMPTY_SLOT.render(graphics, 0, 0);
                 }
             } else if (state == State.PICK_STYLE) {
                 if (slot < BogeyCategoryHandlerClient.styleCount(selectedCategory)) {
@@ -237,10 +240,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                         }
 
                         if (BogeyCategoryHandlerClient.hasIcon(style, size)) {
-                            AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
-                            renderIcon(BogeyCategoryHandlerClient.getIcon(style, size), ms);
+                            AllGuiTextures.TOOLBELT_SLOT.render(graphics, 0, 0);
+                            renderIcon(BogeyCategoryHandlerClient.getIcon(style, size), graphics);
                             if (selected) {
-                                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
+                                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -1, -1);
                             }
                         } else {
                             renderInInventory(guiLeft + bogeyX, guiTop + bogeyY, selected ? 10 : 8, render);
@@ -251,7 +254,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                     /* end render bogey */
                     //*
                 } else { // */
-                    AllGuiTextures.TOOLBELT_EMPTY_SLOT.render(ms, 0, 0, this);
+                    AllGuiTextures.TOOLBELT_EMPTY_SLOT.render(graphics, 0, 0);
                 }
             }
 
@@ -260,10 +263,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
         if (renderCenterSlot) {
             ms.pushPose();
-            AllGuiTextures.TOOLBELT_SLOT.render(ms, -12, -12, this);
-            AllIcons.I_CONFIG_BACK.render(ms, -9, -9, this);
+            AllGuiTextures.TOOLBELT_SLOT.render(graphics, -12, -12);
+            AllIcons.I_CONFIG_BACK.render(graphics, -9, -9);
             if (!scrollMode && CENTER == hoveredSlot) {
-                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -13, -13, this);
+                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -13, -13);
                 tip = Components.translatable("railways.style_select.back_to_groups")
                         .withStyle(ChatFormatting.GOLD);
             }
@@ -286,7 +289,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 int k1 = 16777215;
                 int k = i1 << 24 & -16777216;
                 int l = font.width(title);
-                font.draw(ms, title, (float) (-l / 2), -4.0F, k1 | k);
+                graphics.drawString(font, title, (-l / 2), -4, k1 | k);
                 RenderSystem.disableBlend();
                 ms.popPose();
             }
@@ -308,28 +311,29 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 int k1 = 16777215;
                 int k = i1 << 24 & -16777216;
                 int l = font.width(tip);
-                font.draw(ms, tip, (float) (-l / 2), -4.0F, k1 | k);
+                graphics.drawString(font, tip, (-l / 2), -4, k1 | k);
                 RenderSystem.disableBlend();
                 ms.popPose();
             }
         }
     }
 
-    private void renderIcon(CategoryIcon categoryIcon, PoseStack ms) {
-        renderIcon(categoryIcon.location, ms);
+    private void renderIcon(CategoryIcon categoryIcon, GuiGraphics graphics) {
+        renderIcon(categoryIcon.location, graphics);
     }
 
-    private void renderIcon(ResourceLocation location, PoseStack ms) {
+    private void renderIcon(ResourceLocation location, GuiGraphics graphics) {
+        PoseStack ms = graphics.pose();
         ms.pushPose();
         RenderSystem.setShaderTexture(0, location);
-        GuiComponent.blit(ms, 3, 3, 0, 0, 0, 16, 16, 16, 16);
+        graphics.blit(location, 3, 0, 0, 0, 16, 16, 16, 16);
         ms.popPose();
     }
 
     @Override
-    public void renderBackground(@NotNull PoseStack ms, int vOffset) {
+    public void renderBackground(@NotNull GuiGraphics graphics) {
         int a = ((int) (0x50 * Math.min(1, (ticksOpen + AnimationTickHolder.getPartialTicks()) / 20f))) << 24;
-        fillGradient(ms, 0, 0, this.width, this.height, 0x101010 | a, 0x101010 | a);
+        graphics.fillGradient(0, 0, this.width, this.height, 0x101010 | a, 0x101010 | a);
     }
 
     @Override

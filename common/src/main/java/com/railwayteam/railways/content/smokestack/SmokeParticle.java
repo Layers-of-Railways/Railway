@@ -117,9 +117,9 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 			quaternion.mul(Axis.ZP.rotation(i));
 		}
 
-        /*quaternion.mul(Vector3f.XP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
-		quaternion.mul(Vector3f.YP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
-		quaternion.mul(Vector3f.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
+        /*quaternion.mul(Axis.XP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
+		quaternion.mul(Axis.YP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
+		quaternion.mul(Axis.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
 
 		Vector3f vector3f = new Vector3f(-1.0F, -1.0F, 0.0F);
 		vector3f.rotate(quaternion);
@@ -162,9 +162,9 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		float f4 = this.getQuadSize(pPartialTicks);
 
 		for (int i = 0; i < 4; i++) {
-			Quaternion quaternion = new Quaternion(Vector3f.YP, yaw, false);
-			quaternion.mul(Vector3f.XP.rotation(pitch));
-			quaternion.mul(Vector3f.YP.rotation(f3 + Mth.PI / 2 * i + roll));
+			Quaternion quaternion = new Quaternion(Axis.YP, yaw, false);
+			quaternion.mul(Axis.XP.rotation(pitch));
+			quaternion.mul(Axis.YP.rotation(f3 + Mth.PI / 2 * i + roll));
 			Vector3f vector3f1 = new Vector3f(-1.0F, -1.0F, 0.0F);
 			vector3f1.transform(quaternion);
 

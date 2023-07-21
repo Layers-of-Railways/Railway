@@ -25,7 +25,6 @@ import net.minecraft.world.level.ItemLike;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-// fixme replace RecipeCategory.MISC with the proper stuff aka proper categories
 @SuppressWarnings("unused")
 public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
@@ -317,15 +316,13 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                 return register(consumer -> {
                     boolean isOtherMod = compatDatagenOutput != null;
 
-                    // fixme removed serializer from the cooking time
+                    // fixme removed serializer from the cooking time + refactored with whatever intellij said
                     SimpleCookingRecipeBuilder b = builder.apply(
                         SimpleCookingRecipeBuilder.campfireCooking(ingredient.get(), RecipeCategory.MISC, isOtherMod ? Items.DIRT : result.get(),
                             exp, (int) (cookingTime * cookingTimeModifier)));
                     if (unlockedBy != null)
                         b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
-                    b.save(result -> {
-                        consumer.accept(result);
-                    }, createSimpleLocation(RegisteredObjects.getKeyOrThrow(serializer)
+                    b.save(consumer, createSimpleLocation(RegisteredObjects.getKeyOrThrow(serializer)
                         .getPath()));
                 });
             }

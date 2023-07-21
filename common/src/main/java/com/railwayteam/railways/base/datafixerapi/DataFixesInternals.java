@@ -62,7 +62,7 @@ public abstract class DataFixesInternals {
 
             if (latestVanillaSchema == null) {
                 Railways.LOGGER.warn("[Railways DFU] Failed to initialize! Either someone stopped DFU from initializing,");
-                Railways.LOGGER.warn("[Railways DFU]  or this Minecraft build is hosed.");
+                Railways.LOGGER.warn("[Railways DFU] or this Minecraft build is hosed.");
                 Railways.LOGGER.warn("[Railways DFU] Using no-op implementation.");
                 instance = new NoOpDataFixesInternals();
             } else {

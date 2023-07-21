@@ -2,7 +2,7 @@ package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
@@ -46,7 +46,7 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
 
       poseStack.pushPose();
 
-      poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+      poseStack.mulPose(Axis.XP.rotationDegrees(180.0f));
       poseStack.translate(-0.5d, -1.2d, -0.94d);
 
       double rotate = 0;

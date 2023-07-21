@@ -4,10 +4,9 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.railwayteam.railways.registry.CRDevCaps;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
@@ -100,7 +99,7 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 			cap.translateAndRotate(poseStack);
 //			poseStack.mulPose(Quaternion.fromXYZDegrees(new Vector3f(0, 0, 180)));
 			poseStack.translate(0, -0.25d, 0);
-			poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+			poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 			poseStack.scale(0.625F, -0.625F, -0.625F);
 			// DONE: this should be an easy replacement but it requires tweaking and testing - simple replacement
 //			ForgeHooksClient.handleCameraTransforms(poseStack, override.get(), ItemTransforms.TransformType.HEAD, false);

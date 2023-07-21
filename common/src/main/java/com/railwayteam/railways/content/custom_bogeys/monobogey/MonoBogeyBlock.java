@@ -94,7 +94,7 @@ public class MonoBogeyBlock extends AbstractBogeyBlock<MonoBogeyBlockEntity> imp
         if (state != null) {
             ms.translate(.5f, .5f, .5f);
             if (state.getValue(AXIS) == Direction.Axis.X)
-                ms.mulPose(Vector3f.YP.rotationDegrees(90));
+                ms.mulPose(Axis.YP.rotationDegrees(90));
         }
 
         ms.translate(0, (-1.5 - 1 / 128f) * (upsideDown ? (state == null ? 1 : -1) : 1), 0);

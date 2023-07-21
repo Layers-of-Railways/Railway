@@ -26,7 +26,7 @@ public class TrainInfoCommand {
             return 0;
           }
 
-          ctx.getSource().sendSuccess(Components.literal("Train '").append(train.name)
+          ctx.getSource().sendSuccess(() -> Components.literal("Train '").append(train.name)
             .append("' has UUID: "+train.id+", "+count+", total trains found.").append(Components.literal(" [Copy]").withStyle(
                 Style.EMPTY
                     .withColor(ChatFormatting.GOLD)

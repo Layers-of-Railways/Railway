@@ -68,7 +68,7 @@ public class SplitTrainCommand {
             e.printStackTrace();
             return 0;
         }
-        ctx.getSource().sendSuccess(Components.literal("Train '").append(train.name)
+        ctx.getSource().sendSuccess(() -> Components.literal("Train '").append(train.name)
           .append("' split successfully"), true);
         return 1;
     }
