@@ -27,7 +27,7 @@ public class CRParticleTypesParticleEntryImpl {
 
     @OnlyIn(Dist.CLIENT)
     @SuppressWarnings("deprecation")
-    private static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
+    public static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
         engine.register(object, customParticleData.getFactory());
     }
 }
