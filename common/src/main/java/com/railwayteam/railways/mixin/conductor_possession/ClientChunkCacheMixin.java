@@ -60,7 +60,6 @@ public abstract class ClientChunkCacheMixin {
 	 * Updates the camera storage's view radius by creating a new Storage instance with the same view center and chunks as the
 	 * previous one
 	 */
-	@SuppressWarnings({"MixinAnnotationTarget", "UnresolvedMixinReference"})
 	@Inject(method = "updateViewRadius", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientChunkCache$Storage;<init>(Lnet/minecraft/client/multiplayer/ClientChunkCache;I)V"))
 	public void snr$securitycraft$onUpdateViewRadius(int viewDistance, CallbackInfo ci) {
 		ClientChunkCache.Storage oldStorage = ConductorPossessionController.getCameraStorage();
