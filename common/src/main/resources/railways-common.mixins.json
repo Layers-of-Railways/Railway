@@ -36,6 +36,7 @@
     "MixinEdgeData",
     "MixinGlobalStation",
     "MixinIOWorker",
+    "MixinLootDataManager",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",
