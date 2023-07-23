@@ -194,7 +194,7 @@ public class CRCreativeModeTabs {
         private List<Item> collectBlocks(ResourceKey<CreativeModeTab> tab, Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
             for (RegistryEntry<Block> entry : Railways.registrate().getAll(Registries.BLOCK)) {
-                if (!Railways.registrate().isInCreativeTab(entry, tab))
+                if (!isInCreativeTab(entry, tab))
                     continue;
                 Item item = entry.get()
                     .asItem();
@@ -215,7 +215,7 @@ public class CRCreativeModeTabs {
                 return items;
 
             for (RegistryEntry<Item> entry : Railways.registrate().getAll(Registries.ITEM)) {
-                if (!Railways.registrate().isInCreativeTab(entry, tab))
+                if (!isInCreativeTab(entry, tab))
                     continue;
                 Item item = entry.get();
                 if (item instanceof BlockItem)
@@ -227,6 +227,11 @@ public class CRCreativeModeTabs {
                     items.add(item);
             }
             return items;
+        }
+
+        @ExpectPlatform
+        private static boolean isInCreativeTab(RegistryEntry<?> entry, ResourceKey<CreativeModeTab> tab) {
+            throw new AssertionError();
         }
 
         private static void applyOrderings(List<Item> items, List<ItemOrdering> orderings) {

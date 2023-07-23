@@ -33,9 +33,9 @@ public class RailwaysImpl {
 
 	public RailwaysImpl() {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
+		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
 		Railways.init();
 		CRParticleTypesParticleEntryImpl.register(bus);
-		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
 		//noinspection Convert2MethodRef
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
 

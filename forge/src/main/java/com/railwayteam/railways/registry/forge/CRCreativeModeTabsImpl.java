@@ -1,8 +1,8 @@
 package com.railwayteam.railways.registry.forge;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
-import com.simibubi.create.Create;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -21,7 +21,7 @@ import static com.railwayteam.railways.registry.CRItems.ITEM_CONDUCTOR_CAP;
 public class CRCreativeModeTabsImpl {
 
     private static final DeferredRegister<CreativeModeTab> TAB_REGISTER =
-        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Create.ID);
+        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Railways.MODID);
 
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
         () -> CreativeModeTab.builder()

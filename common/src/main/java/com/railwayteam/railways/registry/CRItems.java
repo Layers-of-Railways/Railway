@@ -30,10 +30,6 @@ import java.util.Map;
 public class CRItems {
   private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-  public static final CreativeModeTab mainCreativeTab = CRCreativeModeTabs.getBaseTab();
-
-  public static final CreativeModeTab compatTracksCreativeTab = CRCreativeModeTabs.getCompatTracksTab();
-
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
 
   public static TagKey<Item> makeForgeItemTag(String path) {
