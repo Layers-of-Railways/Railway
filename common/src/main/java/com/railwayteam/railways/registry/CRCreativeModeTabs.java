@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -63,47 +64,30 @@ public class CRCreativeModeTabs {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
 
             List<ItemProviderEntry<?>> simpleExclusions = List.of(
-                AllItems.INCOMPLETE_PRECISION_MECHANISM,
-                AllItems.INCOMPLETE_REINFORCED_SHEET,
-                AllItems.INCOMPLETE_TRACK,
-                AllItems.CHROMATIC_COMPOUND,
-                AllItems.SHADOW_STEEL,
-                AllItems.REFINED_RADIANCE,
-                AllItems.COPPER_BACKTANK_PLACEABLE,
-                AllItems.NETHERITE_BACKTANK_PLACEABLE,
-                AllItems.MINECART_CONTRAPTION,
-                AllItems.FURNACE_MINECART_CONTRAPTION,
-                AllItems.CHEST_MINECART_CONTRAPTION,
-                AllItems.SCHEMATIC,
-                AllBlocks.ANDESITE_ENCASED_SHAFT,
-                AllBlocks.BRASS_ENCASED_SHAFT,
-                AllBlocks.ANDESITE_ENCASED_COGWHEEL,
-                AllBlocks.BRASS_ENCASED_COGWHEEL,
-                AllBlocks.ANDESITE_ENCASED_LARGE_COGWHEEL,
-                AllBlocks.BRASS_ENCASED_LARGE_COGWHEEL,
-                AllBlocks.MYSTERIOUS_CUCKOO_CLOCK,
-                AllBlocks.ELEVATOR_CONTACT,
-                AllBlocks.SHADOW_STEEL_CASING,
-                AllBlocks.REFINED_RADIANCE_CASING
+                AllBlocks.REFINED_RADIANCE_CASING // just as an example
             );
 
             for (ItemProviderEntry<?> entry : simpleExclusions) {
                 exclusions.add(entry.asItem());
             }
 
-            return exclusions::contains;
+            return (item) -> exclusions.contains(item) || item instanceof SequencedAssemblyItem;
         }
 
         private static List<ItemOrdering> makeOrderings() {
             List<ItemOrdering> orderings = new ReferenceArrayList<>();
 
             Map<ItemProviderEntry<?>, ItemProviderEntry<?>> simpleBeforeOrderings = Map.of(
-                AllItems.EMPTY_BLAZE_BURNER, AllBlocks.BLAZE_BURNER,
-                AllItems.SCHEDULE, AllBlocks.TRACK_STATION
+                //AllItems.EMPTY_BLAZE_BURNER, AllBlocks.BLAZE_BURNER,
+                //AllItems.SCHEDULE, AllBlocks.TRACK_STATION
             );
 
             Map<ItemProviderEntry<?>, ItemProviderEntry<?>> simpleAfterOrderings = Map.of(
-                AllItems.VERTICAL_GEARBOX, AllBlocks.GEARBOX
+                CRBlocks.CONDUCTOR_WHISTLE_FLAG, CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED),
+                CRItems.REMOTE_LENS, CRBlocks.CONDUCTOR_WHISTLE_FLAG,
+                CRBlocks.CONDUCTOR_VENT, CRItems.REMOTE_LENS,
+                CRBlocks.MANGROVE_TRACK, CRBlocks.SPRUCE_TRACK,
+                CRBlocks.CRIMSON_TRACK, CRBlocks.WARPED_TRACK
             );
 
             simpleBeforeOrderings.forEach((entry, otherEntry) -> {
