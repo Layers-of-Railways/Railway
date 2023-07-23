@@ -316,7 +316,8 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                 return register(consumer -> {
                     boolean isOtherMod = compatDatagenOutput != null;
 
-                    // fixme removed serializer from the cooking time + refactored with whatever intellij said
+                    // fix|me removed serializer from the cooking time + refactored with whatever intellij said
+                    // can't really test this 'cause we don't have any cooking recipes yet, just assume it's fine for now
                     SimpleCookingRecipeBuilder b = builder.apply(
                         SimpleCookingRecipeBuilder.campfireCooking(ingredient.get(), RecipeCategory.MISC, isOtherMod ? Items.DIRT : result.get(),
                             exp, (int) (cookingTime * cookingTimeModifier)));

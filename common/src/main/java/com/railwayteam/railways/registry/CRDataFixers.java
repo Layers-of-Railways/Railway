@@ -1,14 +1,17 @@
 package com.railwayteam.railways.registry;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
 import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
-import net.minecraft.Util;
+import net.minecraft.SharedConstants;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.BiFunction;
 
 import static com.railwayteam.railways.base.datafixerapi.DataFixesInternals.BASE_SCHEMA;
@@ -27,8 +30,9 @@ public class CRDataFixers {
 
         DataFixerBuilder builder = new DataFixerBuilder(Railways.DATA_FIXER_VERSION);
         addFixers(builder);
-        //fixme
-        api.registerFixer(Railways.DATA_FIXER_VERSION, builder.buildOptimized(Util.bootstrapExecutor()));
+
+        ExecutorService executor = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder().setNameFormat("Railways Datafixer Bootstrap").setDaemon(true).setPriority(1).build());
+        api.registerFixer(Railways.DATA_FIXER_VERSION, builder.buildOptimized(SharedConstants.DATA_FIX_TYPES_TO_OPTIMIZE, executor));
     }
 
     private static void addFixers(DataFixerBuilder builder) {
