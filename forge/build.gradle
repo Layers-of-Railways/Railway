@@ -51,7 +51,7 @@ repositories {
     } // JEI, Hex Casting
     maven {
         name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        url = 'https://maven.ladysnake.org/releases'
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }

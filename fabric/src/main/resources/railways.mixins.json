@@ -10,7 +10,8 @@
   ],
   "mixins": [
     "DetectorRailBlockMixin",
-    "EnderManMixin"
+    "EnderManMixin",
+    "MixinLootDataManager"
   ],
   "injectors": {
     "defaultRequire": 1

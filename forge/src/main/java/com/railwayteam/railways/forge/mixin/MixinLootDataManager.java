@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.google.gson.JsonElement;
 import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
@@ -16,10 +16,8 @@ import java.util.Map;
 @Mixin(LootDataManager.class)
 public class MixinLootDataManager {
     @Inject(method = {
-        "lambda$scheduleElementParse$4",
-//        "method_51195"
+        "lambda$scheduleElementParse$4"
     }, at = @At("HEAD"), cancellable = true)
-    // (LootDataType, ResourceManager, ResourceLocation, JsonElement, CallbackInfo;)V
     private static void skipMissingLoot(LootDataType lootDataType, ResourceManager resourceManager, Map map, ResourceLocation id, JsonElement json, CallbackInfo ci) {
         if (TrackCompatUtils.mixinIgnoreErrorForMissingItem(id)) {
             ci.cancel();

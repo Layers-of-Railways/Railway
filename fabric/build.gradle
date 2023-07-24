@@ -59,7 +59,7 @@ repositories {
     } // JEI, Hex Casting
     maven {
         name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        url = 'https://maven.ladysnake.org/releases'
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
@@ -68,8 +68,9 @@ repositories {
 
 configurations.configureEach {
     resolutionStrategy.eachDependency {
-        if (requested.module.name == "fabric-loader") {
-            useVersion(fabric_loader_version)
+        switch (requested.module.name) { // some dependencies pull in broken, outdated versions of these.
+            case "fabric-loader": useVersion(fabric_loader_version); break
+            case "fabric-api": useVersion(fabric_api_version); break
         }
     }
 }
@@ -116,8 +117,8 @@ dependencies {
 
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
-    // because create fabric is a bit broken I think
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
+    // because create fabric is a bit broken I think (also actually using this library)
+    modApi("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {

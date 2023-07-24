@@ -2,7 +2,6 @@ package com.railwayteam.railways.content.minecarts;
 
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class MinecartWorkbench extends MinecartBlock implements MenuProvider {
+public class MinecartWorkbench extends MinecartBlock implements MenuProvider {
   public static final Type TYPE = Type.valueOf("RAILWAY_WORKBENCH");
 
   private final double VALID_RANGE = 32d;
@@ -32,19 +31,8 @@ public abstract class MinecartWorkbench extends MinecartBlock implements MenuPro
     super(type, level, Blocks.CRAFTING_TABLE);
   }
 
-  protected MinecartWorkbench(Level level, double x, double y, double z) {
+  public MinecartWorkbench(Level level, double x, double y, double z) {
     super(CREntities.CART_BLOCK.get(), level, x, y, z, Blocks.CRAFTING_TABLE);
-  }
-
-  // need to detour through this or generics explode somehow
-  @ExpectPlatform
-  public static MinecartWorkbench create(Level level, double x, double y, double z) {
-    throw new AssertionError();
-  }
-
-  @ExpectPlatform
-  public static MinecartWorkbench create(EntityType<?> type, Level level) {
-    throw new AssertionError();
   }
 
   @Override
