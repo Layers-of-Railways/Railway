@@ -3,6 +3,7 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
+    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
 }
 
 architectury {
@@ -226,27 +227,5 @@ sourcesJar {
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
-    publications {
-        mavenFabric(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
-            from components.java
-        }
     }
 }

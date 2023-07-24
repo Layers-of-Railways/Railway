@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry.forge;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRParticleTypes;
 import com.simibubi.create.foundation.particle.ICustomParticleData;
+import com.simibubi.create.foundation.particle.ICustomParticleDataWithSprite;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -27,7 +28,11 @@ public class CRParticleTypesParticleEntryImpl {
 
     @OnlyIn(Dist.CLIENT)
     @SuppressWarnings("deprecation")
-    private static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
-        engine.register(object, customParticleData.getFactory());
+    public static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
+        if (customParticleData instanceof ICustomParticleDataWithSprite<T> withSprite) {
+            engine.register(object, withSprite.getMetaFactory());
+        } else {
+            engine.register(object, customParticleData.getFactory());
+        }
     }
 }
