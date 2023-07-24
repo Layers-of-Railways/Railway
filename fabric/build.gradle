@@ -86,6 +86,9 @@ dependencies {
     // Create - dependencies are added transitively
     modImplementation("com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}")
 
+    // deprecated modules @ runtime only
+    modLocalRuntime("net.fabricmc.fabric-api:fabric-api-deprecated:$fabric_api_version")
+
     // Fabric ASM (enum extension etc)
     modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
         exclude (group: "net.fabricmc.fabric-api")
