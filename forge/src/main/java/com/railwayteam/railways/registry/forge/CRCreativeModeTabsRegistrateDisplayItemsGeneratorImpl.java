@@ -5,9 +5,20 @@ import com.railwayteam.railways.registry.CRCreativeModeTabs;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraftforge.registries.RegistryObject;
 
 public class CRCreativeModeTabsRegistrateDisplayItemsGeneratorImpl {
     public static boolean isInCreativeTab(RegistryEntry<?> entry, ResourceKey<CreativeModeTab> tab) {
-        return Railways.registrate().isInCreativeTab(entry, tab == CRCreativeModeTabs.getBaseTabKey() ? CRCreativeModeTabsImpl.MAIN_TAB : CRCreativeModeTabsImpl.COMPAT_TAB);
+        RegistryObject<CreativeModeTab> tabObject;
+        if (tab == CRCreativeModeTabs.getBaseTabKey()) {
+            tabObject = CRCreativeModeTabsImpl.MAIN_TAB;
+        } else if (tab == CRCreativeModeTabs.getCapsTabKey()) {
+            tabObject = CRCreativeModeTabsImpl.CAPS_TAB;
+        } else if (tab == CRCreativeModeTabs.getCompatTracksTabKey()) {
+            tabObject = CRCreativeModeTabsImpl.COMPAT_TAB;
+        } else {
+            tabObject = CRCreativeModeTabsImpl.MAIN_TAB;
+        }
+        return Railways.registrate().isInCreativeTab(entry, tabObject);
     }
 }

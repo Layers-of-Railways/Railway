@@ -128,5 +128,6 @@
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
   "itemGroup.railways": "Create: Steam 'n Rails",
-  "itemGroup.railways_compat": "Create: Steam 'n Rails: Compat Tracks"
+  "itemGroup.railways_compat": "Create: Steam 'n Rails: Compat Tracks",
+  "itemGroup.railways_caps": "Create: Steam 'n Rails: Conductor Caps"
 }

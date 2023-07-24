@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.TabInfo;
+import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,15 +25,22 @@ public class CRCreativeModeTabsImpl {
         () -> FabricItemGroup.builder()
             .title(Component.translatable("itemGroup.railways"))
             .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(true))
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.MAIN))
             .build());
 
     private static final TabInfo COMPAT_TAB = TrackCompatUtils.anyLoaded() ? register("compat",
         () -> FabricItemGroup.builder()
             .title(Component.translatable("itemGroup.railways_compat"))
             .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(false))
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.COMPAT))
             .build()) : MAIN_TAB;
+
+    private static final TabInfo CAPS_TAB = register("caps",
+        () -> FabricItemGroup.builder()
+            .title(Component.translatable("itemGroup.railways_caps"))
+            .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.GREEN).asStack())
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
+            .build());
 
     public static CreativeModeTab getBaseTab() {
         return MAIN_TAB.tab();
@@ -42,12 +50,20 @@ public class CRCreativeModeTabsImpl {
         return COMPAT_TAB.tab();
     }
 
+    public static CreativeModeTab getCapsTab() {
+        return CAPS_TAB.tab();
+    }
+
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         return MAIN_TAB.key();
     }
 
     public static ResourceKey<CreativeModeTab> getCompatTracksTabKey() {
         return COMPAT_TAB.key();
+    }
+
+    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
+        return CAPS_TAB.key();
     }
 
     private static TabInfo register(String name, Supplier<CreativeModeTab> supplier) {

@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry.forge;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
+import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -28,7 +29,7 @@ public class CRCreativeModeTabsImpl {
             .title(Component.translatable("itemGroup.railways"))
             .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(true))
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.MAIN))
             .build());
 
     public static final RegistryObject<CreativeModeTab> COMPAT_TAB = TrackCompatUtils.anyLoaded() ? TAB_REGISTER.register("compat",
@@ -36,8 +37,16 @@ public class CRCreativeModeTabsImpl {
             .title(Component.translatable("itemGroup.railways_compat"))
             .withTabsBefore(MAIN_TAB.getKey())
             .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(false))
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.COMPAT))
             .build()) : MAIN_TAB;
+
+    public static final RegistryObject<CreativeModeTab> CAPS_TAB = TAB_REGISTER.register("caps",
+        () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.railways_caps"))
+            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+            .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.GREEN).asStack())
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
+            .build());
 
     public static void register(IEventBus modEventBus) {
         TAB_REGISTER.register(modEventBus);
@@ -51,11 +60,19 @@ public class CRCreativeModeTabsImpl {
         return COMPAT_TAB.get();
     }
 
+    public static CreativeModeTab getCapsTab() {
+        return CAPS_TAB.get();
+    }
+
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         return MAIN_TAB.getKey();
     }
 
     public static ResourceKey<CreativeModeTab> getCompatTracksTabKey() {
         return COMPAT_TAB.getKey();
+    }
+
+    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
+        return CAPS_TAB.getKey();
     }
 }

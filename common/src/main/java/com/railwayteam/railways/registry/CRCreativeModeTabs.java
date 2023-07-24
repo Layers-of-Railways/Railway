@@ -2,10 +2,9 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
+import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -20,12 +19,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.TabVisibility;
 import net.minecraft.world.level.block.Block;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class CRCreativeModeTabs {
     @ExpectPlatform
@@ -39,6 +36,11 @@ public class CRCreativeModeTabs {
     }
 
     @ExpectPlatform
+    public static CreativeModeTab getCapsTab() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         throw new AssertionError();
     }
@@ -48,23 +50,44 @@ public class CRCreativeModeTabs {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
+    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
+        throw new AssertionError();
+    }
+
     public static void register() {
         // just to load class
+    }
+
+    public enum Tabs {
+        MAIN(CRCreativeModeTabs::getBaseTabKey),
+        COMPAT(CRCreativeModeTabs::getCompatTracksTabKey),
+        CAPS(CRCreativeModeTabs::getCapsTabKey);
+
+        private final Supplier<ResourceKey<CreativeModeTab>> keySupplier;
+
+        Tabs(Supplier<ResourceKey<CreativeModeTab>> keySupplier) {
+            this.keySupplier = keySupplier;
+        }
+
+        public ResourceKey<CreativeModeTab> getKey() {
+            return keySupplier.get();
+        }
     }
     
     public static final class RegistrateDisplayItemsGenerator implements CreativeModeTab.DisplayItemsGenerator {
 
-        private final boolean mainTab;
+        private final Tabs tab;
 
-        public RegistrateDisplayItemsGenerator(boolean mainTab) {
-            this.mainTab = mainTab;
+        public RegistrateDisplayItemsGenerator(Tabs tab) {
+            this.tab = tab;
         }
-        // TODO later: add SnR-relevant items to these functions
+
         private static Predicate<Item> makeExclusionPredicate() {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
 
             List<ItemProviderEntry<?>> simpleExclusions = List.of(
-                AllBlocks.REFINED_RADIANCE_CASING // just as an example
+                //AllBlocks.REFINED_RADIANCE_CASING // just as an example
             );
 
             for (ItemProviderEntry<?> entry : simpleExclusions) {
@@ -105,7 +128,7 @@ public class CRCreativeModeTabs {
             Map<Item, Function<Item, ItemStack>> factories = new Reference2ReferenceOpenHashMap<>();
 
             Map<ItemProviderEntry<?>, Function<Item, ItemStack>> simpleFactories = Map.of(
-                AllItems.COPPER_BACKTANK, item -> {
+                /*AllItems.COPPER_BACKTANK, item -> {
                     ItemStack stack = new ItemStack(item);
                     stack.getOrCreateTag().putInt("Air", BacktankUtil.maxAirWithoutEnchants());
                     return stack;
@@ -114,7 +137,7 @@ public class CRCreativeModeTabs {
                     ItemStack stack = new ItemStack(item);
                     stack.getOrCreateTag().putInt("Air", BacktankUtil.maxAirWithoutEnchants());
                     return stack;
-                }
+                }*/
             );
 
             simpleFactories.forEach((entry, factory) -> {
@@ -134,7 +157,7 @@ public class CRCreativeModeTabs {
             Map<Item, TabVisibility> visibilities = new Reference2ObjectOpenHashMap<>();
 
             Map<ItemProviderEntry<?>, TabVisibility> simpleVisibilities = Map.of(
-            AllItems.BLAZE_CAKE_BASE, TabVisibility.SEARCH_TAB_ONLY
+                //AllItems.BLAZE_CAKE_BASE, TabVisibility.SEARCH_TAB_ONLY
             );
 
             simpleVisibilities.forEach((entry, factory) -> {
@@ -157,14 +180,62 @@ public class CRCreativeModeTabs {
             };
         }
 
+        private static final DyeColor[] COLOR_ORDER = new DyeColor[] {
+            DyeColor.RED,
+            DyeColor.ORANGE,
+            DyeColor.YELLOW,
+            DyeColor.LIME,
+            DyeColor.GREEN,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.CYAN,
+            DyeColor.BLUE,
+            DyeColor.PURPLE,
+            DyeColor.MAGENTA,
+            DyeColor.PINK,
+            DyeColor.BROWN,
+            DyeColor.BLACK,
+            DyeColor.GRAY,
+            DyeColor.LIGHT_GRAY,
+            DyeColor.WHITE
+        };
+
         @Override
         public void accept(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output output) {
+            if (this.tab == Tabs.CAPS) {
+                for (boolean prefixSus : Iterate.falseAndTrue) {
+                    for (DyeColor color : COLOR_ORDER) {
+                        ItemEntry<ConductorCapItem> entry = CRItems.ITEM_CONDUCTOR_CAP.get(color);
+                        if (prefixSus) {
+                            output.accept(entry.asStack().setHoverName(
+                                Components.literal("[sus]").append(entry.get().getDescription())
+                            ));
+                        } else {
+                            output.accept(entry.get());
+                        }
+                    }
+
+                    Set<String> customCapNames = new HashSet<>();
+                    customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.keySet());
+                    customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.keySet());
+
+                    int i = 0;
+                    for (String name : customCapNames) {
+                        ItemStack capStack = CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.values()[i++ % DyeColor.values().length]).asStack();
+                        capStack.setHoverName(Components.literal((prefixSus ? "[sus]" : "")+name));
+
+                        output.accept(capStack);
+                    }
+                }
+                return;
+            }
+
+
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
             Predicate<Item> exclusionPredicate = makeExclusionPredicate();
             List<ItemOrdering> orderings = makeOrderings();
             Function<Item, ItemStack> stackFunc = makeStackFunc();
             Function<Item, TabVisibility> visibilityFunc = makeVisibilityFunc();
-            ResourceKey<CreativeModeTab> tab = mainTab ? getBaseTabKey() : getCompatTracksTabKey();
+            ResourceKey<CreativeModeTab> tab = this.tab.getKey();
 
             List<Item> items = new LinkedList<>();
             items.addAll(collectItems(tab, itemRenderer, true, exclusionPredicate));
@@ -194,9 +265,6 @@ public class CRCreativeModeTabs {
         private List<Item> collectItems(ResourceKey<CreativeModeTab> tab, ItemRenderer itemRenderer, boolean special,
                                         Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-
-            if (!mainTab)
-                return items;
 
             for (RegistryEntry<Item> entry : Railways.registrate().getAll(Registries.ITEM)) {
                 if (!isInCreativeTab(entry, tab))
