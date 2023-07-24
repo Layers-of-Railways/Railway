@@ -6,7 +6,8 @@
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
     "LevelRendererMixin",
-    "TrainHUDMixin"
+    "TrainHUDMixin",
+    "PortingLibObjLoaderMixin"
   ],
   "mixins": [
     "DetectorRailBlockMixin",
