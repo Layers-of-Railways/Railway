@@ -22,7 +22,8 @@ public class RailwaysDataFabric implements DataGeneratorEntrypoint {
 		ExistingFileHelper helper = new ExistingFileHelper(
 			Set.of(railwaysResources), Set.of("create"), false, null, null
 		);
-		Railways.registrate().setupDatagen(gen.createPack(), helper);
-		Railways.gatherData(gen.createPack());
+		FabricDataGenerator.Pack pack = gen.createPack();
+		Railways.registrate().setupDatagen(pack, helper);
+		Railways.gatherData(pack);
 	}
 }
