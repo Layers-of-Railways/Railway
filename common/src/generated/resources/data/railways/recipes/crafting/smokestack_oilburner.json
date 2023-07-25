@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "railways:internal/plates/iron_plates"
@@ -14,5 +15,6 @@
   ],
   "result": {
     "item": "railways:smokestack_oilburner"
-  }
+  },
+  "show_notification": true
 }

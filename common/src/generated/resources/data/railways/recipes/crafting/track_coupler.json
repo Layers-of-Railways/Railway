@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "minecraft:redstone"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "railways:track_coupler"
-  }
+  },
+  "show_notification": true
 }

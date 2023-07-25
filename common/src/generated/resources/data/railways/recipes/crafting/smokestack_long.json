@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "+": {
       "item": "minecraft:campfire"
@@ -13,5 +14,6 @@
   ],
   "result": {
     "item": "railways:smokestack_long"
-  }
+  },
+  "show_notification": true
 }

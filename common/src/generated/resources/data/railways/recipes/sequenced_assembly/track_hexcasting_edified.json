@@ -1,17 +1,17 @@
 {
-  "type": "create:sequenced_assembly",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "hexcasting"
-    }
-  ],
   "fabric:load_conditions": [
     {
       "condition": "fabric:all_mods_loaded",
       "values": [
         "hexcasting"
       ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "hexcasting"
     }
   ],
   "ingredient": {

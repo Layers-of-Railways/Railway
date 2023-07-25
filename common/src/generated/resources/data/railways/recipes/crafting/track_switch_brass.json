@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "C": {
       "item": "create:brass_casing"
@@ -18,5 +19,6 @@
   ],
   "result": {
     "item": "railways:track_switch_brass"
-  }
+  },
+  "show_notification": true
 }
