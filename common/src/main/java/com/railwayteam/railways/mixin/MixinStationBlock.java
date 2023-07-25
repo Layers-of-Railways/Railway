@@ -90,7 +90,7 @@ public abstract class MixinStationBlock {
                         return;
                     }
 
-                    System.out.println("DB1");
+                    //System.out.println("DB1");
 
                     if (train.runtime.getSchedule() != null && !train.runtime.isAutoSchedule) {
                         ItemStack scheduleStack = train.runtime.returnSchedule();
