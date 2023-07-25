@@ -45,6 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mixin(value = StationBlock.class, remap = false)
 public abstract class MixinStationBlock {
+    @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
     private void autoWhistle(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir){
         ItemStack itemInHand = pPlayer.getItemInHand(pHand);
@@ -58,7 +59,7 @@ public abstract class MixinStationBlock {
                         cir.setReturnValue(InteractionResult.FAIL);
 
                     BlockPos pos = stationBe.edgePoint.getPos();
-                    Level level = pPlayer.getLevel();
+                    Level level = pPlayer.level();
 
                     UUID trainId = stackTag.getUUID("SelectedTrain");
                     UUID conductorId = stackTag.getUUID("SelectedConductor");
