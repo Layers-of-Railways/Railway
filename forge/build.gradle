@@ -3,6 +3,7 @@ import net.darkhax.curseforgegradle.TaskPublishCurseForge
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
+    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
 }
 
 loom {
@@ -140,7 +141,7 @@ dependencies {
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = findProperty('CURSEFORGETOKEN')
+    apiToken = System.getenv("CURSEFORGE_TOKEN")
     var projectId = "688231"
 
     def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
@@ -154,7 +155,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 }
 
 modrinth {
-    token = findProperty('MODRINTHTOKEN')
+    token = System.getenv("MODRINTH_TOKEN")
     projectId = "ZzjhlDgM"
     changelog = getChangelogText("Forge", true)
     versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
@@ -188,54 +189,69 @@ processResources {
     }
 }
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def hasUnstaged = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'status', '--porcelain'
+        standardOutput = stdout
+    }
+    def result = stdout.toString().replaceAll("M gradlew", "").trim()
+    if (!result.isEmpty())
+        println("Found stageable results:\n${result}\n")
+    return !result.isEmpty()
+}
+
 shadowJar {
     exclude "fabric.mod.json"
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier = null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
-    publications {
-        mavenForge(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
-            from components.java
-        }
     }
 }

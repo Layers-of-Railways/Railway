@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = DirectBeltInputBehaviour.class, remap = false)
+@Mixin(value = DirectBeltInputBehaviour.class)
 public class MixinDirectBeltInputBehaviour {
     @Inject(method = "handleInsertion(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/item/ItemStack;", at = @At("HEAD"))
     private void recordSimulated(ItemStack stack, Direction side, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {

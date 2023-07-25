@@ -1,8 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
-    id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
-    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
+    id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
 }
 
 architectury {
@@ -11,7 +10,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-quiltflower"
+    apply plugin: "io.github.juuxel.loom-vineflower"
 
     loom {
         silentMojangMappingsLicense()
@@ -132,7 +131,7 @@ String getChangelogText(String loader, boolean recent) {
             } else if (it.startsWith('-')) {
                 temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
                 temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
-                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/Layers-of-Railways/Railway/issues/\$1\">\$0</a>");
+                temp = temp.replaceAll("#([0-9]+)\\b(?!</a>)", "<a href=\"https://github.com/Layers-of-Railways/Railway/issues/\$1\">\$0</a>");
             } else {
                 temp = "<h4>$temp</h4>"
             }

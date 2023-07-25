@@ -3,6 +3,7 @@ package com.railwayteam.railways.forge;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.Env;
+import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
 import cpw.mods.modlauncher.LaunchPluginHandler;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
@@ -32,6 +33,7 @@ public class RailwaysImpl {
 	public RailwaysImpl() {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
 		Railways.init();
+		CRParticleTypesParticleEntryImpl.register(bus);
 		//noinspection Convert2MethodRef
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
 

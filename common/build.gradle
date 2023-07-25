@@ -56,25 +56,3 @@ sourceSets.main {
         exclude("src/generated/resources/.cache")
     }
 }
-
-publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
-    publications {
-        mavenCommon(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
-            from components.java
-        }
-    }
-}

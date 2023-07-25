@@ -15,12 +15,6 @@ public class BygTrackCompat extends GenericTrackCompat {
         return super.registerTracksAnyway() || Mods.BYG.isLoaded;
     }
 
-    @Override
-    protected ResourceLocation getSlabLocation(String name) {
-        if (name.equals("white_mangrove")) name = "mangrove";
-        return super.getSlabLocation(name);
-    }
-
     private static boolean registered = false;
     public static void register() {
         if (registered) {

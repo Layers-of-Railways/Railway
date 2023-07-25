@@ -1,7 +1,21 @@
 {
   "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "hexcasting"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "hexcasting"
+      ]
+    }
+  ],
   "ingredient": {
-    "item": "hexcasting:akashic_slab"
+    "item": "hexcasting:edified_slab"
   },
   "loops": 1,
   "results": [
