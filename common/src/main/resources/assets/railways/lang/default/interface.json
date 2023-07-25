@@ -125,5 +125,7 @@
 
   "railways.style_select.category.railways.extendedbogeys": "Extended Bogeys",
 
-  "create.contraptions.roller_mode.track_replace": "Replace Tracks"
+  "create.contraptions.roller_mode.track_replace": "Replace Tracks",
+
+  "sounds.railways.conductor_whistle": "Conductor Whistles"
 }
