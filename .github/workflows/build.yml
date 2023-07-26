@@ -8,13 +8,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        java: [ 17 ]
     runs-on: ubuntu-latest
-    env:
-      ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
-      ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
     steps:
 
       - name: Checkout Repository
@@ -23,18 +17,17 @@ jobs:
       - name: Setup Java ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.java }}
+          java-version: '17'
           distribution: temurin
           cache: gradle
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build
-        run: ./gradlew build
-
-      - name: Upload to Maven
-        run: ./gradlew :fabric:publish :forge:publish
+      - name: Build & Publish to Maven
+        env:
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+        run: ./gradlew build :fabric:publish :forge:publish
 
       - name: Collect built jars
         run: ./gradlew moveBuiltJars
