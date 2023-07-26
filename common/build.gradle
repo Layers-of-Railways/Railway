@@ -56,3 +56,24 @@ sourceSets.main {
         exclude("src/generated/resources/.cache")
     }
 }
+
+publishing {
+    publications {
+        mavenCommon(MavenPublication) {
+            artifactId = rootProject.archivesBaseName
+            from components.java
+        }
+    }
+
+    repositories {
+        if (System.getenv("MAVEN_TOKEN")) {
+            maven {
+                url "https://maven.ithundxr.dev/releases"
+                credentials {
+                    username = "railways-github"
+                    password = System.getenv("MAVEN_TOKEN")
+                }
+            }
+        }
+    }
+}

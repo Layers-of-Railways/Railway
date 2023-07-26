@@ -45,8 +45,13 @@ subprojects {
                 basic(BasicAuthentication)
             }
             credentials(PasswordCredentials) {
-                username = findProperty("IThundxrMavenUsername") != null ? findProperty("IThundxrMavenUsername") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("IThundxrMavenPassword") != null ? findProperty("IThundxrMavenPassword") : System.getenv("ITHUNDXRMAVENPASSWORD")
+                if (System.getenv("GITHUB_RUN_NUMBER")) {
+                    username = "railways-github"
+                    password = System.getenv("MAVEN_TOKEN")
+                } else {
+                    username = findProperty("IThundxrMavenUsername")
+                    password = findProperty("IThundxrMavenPassword")
+                }
             }
         }
     }
