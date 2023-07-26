@@ -20,13 +20,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Send Building Notification to Discord
-        if: github.event_name != 'pull_request'
-        uses: realRobotix/action-discord-notifier@release-master
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message-title: "Building mod from ${{ github.ref }}"
-
       - name: Setup Java ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
