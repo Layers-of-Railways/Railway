@@ -33,6 +33,9 @@ jobs:
       - name: Build
         run: ./gradlew build
 
+      - name: Upload to Maven
+        run: ./gradlew :fabric:publish :forge:publish
+
       - name: Collect built jars
         run: ./gradlew moveBuiltJars
 
@@ -41,11 +44,3 @@ jobs:
         with:
           name: Artifacts
           path: jars
-
-      - name: Upload Production builds to Discord
-        if: github.event_name != 'pull_request'
-        uses: sinshutu/upload-to-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: ./jars/*.jar
