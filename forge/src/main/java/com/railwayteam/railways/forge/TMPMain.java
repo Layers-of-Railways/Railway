@@ -7,6 +7,9 @@ import org.objectweb.asm.tree.ClassNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static com.railwayteam.railways.forge.RollingModeEnumAdder.processRollingMode;
+
 /*
 This class is just for testing asm transformation and should not be called during normal mod use
  */
@@ -15,7 +18,6 @@ This class is just for testing asm transformation and should not be called durin
 public class TMPMain {
     @SuppressWarnings("BlockingMethodInNonBlockingContext")
     public static void main(String[] args) {
-        CRLaunchPluginService plugin = new CRLaunchPluginService();
         Path path = Path.of("/home/sam/MinecraftFabric/Railway/forge/run/config/in.class");
         ClassReader reader;
         try {
@@ -27,7 +29,7 @@ public class TMPMain {
         ClassNode classNode = new ClassNode();
         reader.accept(classNode, 0);
         System.out.println("Processing...");
-        plugin.processRollingMode(classNode);
+        processRollingMode(classNode);
         System.out.println("Success!");
     }
 }
