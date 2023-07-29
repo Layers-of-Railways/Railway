@@ -2,5 +2,5 @@
 	"parent": "railways:block/wide_gauge_base/obj_track",
 	"loader": "forge:obj",
 	"flip_v": true,
-	"model": "railways:models/block/wide_gauge_base/cross_d1_xo.obj"
+	"model": "railways:models/block/wide_gauge_base/segment_left.obj"
 }

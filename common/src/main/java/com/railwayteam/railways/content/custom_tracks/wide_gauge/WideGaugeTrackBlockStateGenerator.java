@@ -77,10 +77,12 @@ public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGene
 /*
 model list
 
-todo: x_ortho
-todo: z_ortho
-todo: tie
-todo: teleport
+done: x_ortho
+done: z_ortho
+done: tie
+done: segment left
+done: segment right
+done: teleport
 todo: diag
 todo: diag2
 todo: ascending

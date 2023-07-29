@@ -40,6 +40,8 @@ dependencies {
 
     if (enable_eb.toBoolean())
         modImplementation("com.rabbitminers:extendedbogeys-common:${EB_verison}+common-patch-")
+
+    implementation("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}")
 }
 
 architectury {

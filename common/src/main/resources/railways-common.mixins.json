@@ -84,6 +84,7 @@
     "client.AccessorTrackBlockOutline",
     "client.HotbarStorageMixin",
     "client.MixinBezierConnectionClient",
+    "client.MixinBlockElement_Deserializer",
     "client.MixinBogeyTileEntityRenderer",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
