@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
@@ -131,8 +133,20 @@ public class CRTrackMaterials {
             .standardModels()
             .build(),
 
-        WIDE_GAUGE = wideVariant(TrackMaterial.ANDESITE);
+        WIDE_GAUGE_ANDESITE = wideVariant(TrackMaterial.ANDESITE);
         ;
+
+    public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_TRACKS = new HashMap<>();
+
+    static {
+        WIDE_GAUGE_TRACKS.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
+        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MODID)) {
+            if (baseMaterial.trackType != TrackType.STANDARD)
+                continue;
+
+            WIDE_GAUGE_TRACKS.put(baseMaterial, wideVariant(baseMaterial));
+        }
+    }
 
     private static TrackMaterial wideVariant(TrackMaterial material) {
         String path = "";
@@ -142,7 +156,7 @@ public class CRTrackMaterials {
         return make(Railways.asResource(path))
             .lang("Wide Gauge " + material.langName)
             .trackType(CRTrackType.WIDE_GAUGE)
-            .block(() -> CRBlocks.WIDE_GAUGE_TRACK)
+            .block(() -> CRBlocks.WIDE_GAUGE_TRACKS.get(WIDE_GAUGE_TRACKS.get(material)))
             .particle(material.particle)
             .noRecipeGen()
             .standardModels()

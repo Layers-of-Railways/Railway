@@ -64,7 +64,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
@@ -267,8 +269,15 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
-    public static final BlockEntry<TrackBlock> WIDE_GAUGE_TRACK = makeTrack(CRTrackMaterials.WIDE_GAUGE,
-        new WideGaugeTrackBlockStateGenerator()::generate);
+
+    public static final Map<TrackMaterial, BlockEntry<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
+
+    static {
+        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE_TRACKS.values()) {
+            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
+        }
+    }
+
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
             new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 

@@ -1,12 +1,16 @@
 package com.railwayteam.railways.content.custom_tracks.wide_gauge;
 
+import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -14,8 +18,14 @@ import net.minecraftforge.client.model.generators.ModelFile;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGenerator {
+
+    private static final Set<String> COMPAT_MODS = ImmutableSet.of(
+        "create"
+    );
+
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
         TrackShape value = state.getValue(TrackBlock.SHAPE);
@@ -39,7 +49,7 @@ public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGene
                 textureMap.put("0", "standard_track_");
                 textureMap.put("1", "standard_track_mip_");
             }
-            case CR_O, XO, ZO -> {
+            case CR_O, XO, ZO, ND, PD, CR_D, CR_NDX, CR_NDZ, CR_PDX, CR_PDZ -> { // switched a *lot* of models to json
                 //cross ortho 1, 2, 3, standard, mip, crossing
                 //normal (x/z)_ortho 1, 2, standard mip
                 textureMap.put("1", "standard_track_");
@@ -54,19 +64,41 @@ public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGene
             }
         }
 
+        String textureModId = Railways.MODID;
+        String resName = material.resourceName().replaceFirst("_wide", "");
+        for (String modPrefix : COMPAT_MODS) {
+            if (resName.startsWith(modPrefix+"_")) {
+                textureModId = modPrefix;
+                resName = resName.replaceFirst(modPrefix+"_", "");
+                break;
+            }
+        }
+
+        if (material == CRTrackMaterials.WIDE_GAUGE_ANDESITE) {
+            BlockModelBuilder builder = prov.models().withExistingParent(prefix + value.getModel(), Railways.asResource("block/wide_gauge_base/" + value.getModel()));
+            for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
+                prov.models()
+                    .withExistingParent(prefix + k,
+                        Railways.asResource("block/wide_gauge_base/" + k))
+                    .texture("0", Create.asResource("block/standard_track"))
+                    .texture("1", Create.asResource("block/standard_track_mip"))
+                    .texture("particle", material.particle);
+            }
+            return builder;
+        }
         BlockModelBuilder builder = prov.models()
             .withExistingParent(prefix + value.getModel(),
                 Railways.asResource("block/wide_gauge_base/" + value.getModel()))
             .texture("particle", material.particle);
         for (String k : textureMap.keySet()) {
-            builder = builder.texture(k, Railways.asResource(prefix + textureMap.get(k) + material.resourceName().replaceFirst("_wide", "")));
+            builder = builder.texture(k, new ResourceLocation(textureModId, prefix + textureMap.get(k) + resName));
         }
         for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
             prov.models()
                 .withExistingParent(prefix + k,
                     Railways.asResource("block/wide_gauge_base/" + k))
-                .texture("0", prefix + "standard_track_" + material.resourceName().replaceFirst("_wide", ""))
-                .texture("1", prefix + "standard_track_mip_" + material.resourceName().replaceFirst("_wide", ""))
+                .texture("0", new ResourceLocation(textureModId, prefix + "standard_track_" + resName))
+                .texture("1", new ResourceLocation(textureModId, prefix + "standard_track_mip_" + resName))
                 .texture("particle", material.particle);
         }
         return builder;
@@ -83,22 +115,14 @@ done: tie
 done: segment left
 done: segment right
 done: teleport
-todo: diag
-todo: diag2
-todo: ascending
+done: diag
+done: diag2
+done: ascending
 todo: cross_ortho
 todo: cross_diag
 todo: cross_d1_xo
 todo: cross_d1_zo
 todo: cross_d2_xo
 todo: cross_d2_zo
-todo:
-todo:
-todo:
-todo:
-todo:
-todo:
-todo:
-todo:
 
  */

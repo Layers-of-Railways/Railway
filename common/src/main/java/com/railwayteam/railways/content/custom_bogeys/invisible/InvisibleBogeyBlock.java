@@ -1,14 +1,19 @@
 package com.railwayteam.railways.content.custom_bogeys.invisible;
 
+import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRShapes;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.TravellingPoint;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.core.BlockPos;
@@ -20,6 +25,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.Set;
+
 public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockEntity>
 	implements IBE<InvisibleBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
@@ -29,8 +36,20 @@ public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockE
 	}
 
 	@Override
-	public TrackMaterial.TrackType getTrackType(BogeyStyle style) {
-		return TrackMaterial.TrackType.STANDARD;
+	public TrackType getTrackType(BogeyStyle style) {
+		return TrackType.STANDARD;
+	}
+
+	@Override
+	public boolean isOnIncompatibleTrack(Carriage carriage, boolean leading) {
+		TravellingPoint point = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
+		CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
+		return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle()) && point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE;
+	}
+
+	@Override
+	public Set<TrackType> getValidPathfindingTypes(BogeyStyle style) {
+		return ImmutableSet.of(getTrackType(style), CRTrackType.WIDE_GAUGE);
 	}
 
 	@Override
