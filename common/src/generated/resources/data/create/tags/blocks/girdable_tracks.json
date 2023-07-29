@@ -14,6 +14,7 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_mangrove",
+    "railways:track_create_andesite_wide",
     {
       "id": "railways:track_hexcasting_edified",
       "required": false

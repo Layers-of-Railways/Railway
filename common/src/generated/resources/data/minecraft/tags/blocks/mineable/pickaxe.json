@@ -17,6 +17,7 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_mangrove",
+    "railways:track_create_andesite_wide",
     "railways:track_monorail",
     "railways:mono_bogey",
     "railways:invisible_bogey",

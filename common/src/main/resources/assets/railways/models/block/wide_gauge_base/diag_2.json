@@ -1,0 +1,6 @@
+{
+	"parent": "railways:models/block/wide_gauge_base/obj_track",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "railways:models/block/wide_gauge_base/diag_2.obj"
+}

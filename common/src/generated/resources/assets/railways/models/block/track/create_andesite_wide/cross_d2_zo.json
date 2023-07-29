@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_zo",
+  "textures": {
+    "0": "railways:block/track/create_andesite_wide/standard_track_create_andesite",
+    "1": "railways:block/track/create_andesite_wide/standard_track_mip_create_andesite",
+    "2": "railways:block/track/create_andesite_wide/standard_track_crossing_create_andesite",
+    "particle": "create:block/palettes/stone_types/polished/andesite_cut_polished"
+  }
+}
