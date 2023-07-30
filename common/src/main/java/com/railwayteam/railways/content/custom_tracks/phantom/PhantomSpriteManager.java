@@ -2,7 +2,7 @@ package com.railwayteam.railways.content.custom_tracks.phantom;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleTextureAtlasSprite;
-import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
@@ -31,8 +31,8 @@ public abstract class PhantomSpriteManager {
 
     public static void tick(Minecraft mc) {
         boolean visible = mc.player != null
-            && (mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() == CRBlocks.PHANTOM_TRACK.get().asItem()
-                || mc.player.getItemBySlot(EquipmentSlot.OFFHAND).getItem() == CRBlocks.PHANTOM_TRACK.get().asItem());
+            && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())
+                || CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.OFFHAND).getItem()));
         if (visible != lastVisible || firstRun) {
             firstRun = false;
             lastVisible = visible;

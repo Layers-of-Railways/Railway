@@ -53,6 +53,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -103,6 +104,10 @@ public class CRBlocks {
         trackTags.add(AllTags.AllBlockTags.TRACKS.tag);
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+        List<TagKey<Item>> itemTags = new ArrayList<>();
+        if (material == CRTrackMaterials.PHANTOM || material == CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM)) {
+            itemTags.add(CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.tag);
+        }
         //noinspection unchecked
         return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
                 .initialProperties(Material.STONE)
@@ -122,6 +127,7 @@ public class CRBlocks {
                 .onRegister(CRTrackMaterials::addToBlockEntityType)
                 .item(TrackBlockItem::new)
                 .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
+                .tag((TagKey<Item>[]) itemTags.toArray(new TagKey[0]))
                 .build()
                 .register();
     }
@@ -273,7 +279,7 @@ public class CRBlocks {
     public static final Map<TrackMaterial, BlockEntry<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
 
     static {
-        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE_TRACKS.values()) {
+        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
         }
     }

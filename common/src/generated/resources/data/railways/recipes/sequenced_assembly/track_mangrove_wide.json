@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "railways:track_mangrove"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_mangrove_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        },
+        {
+          "item": "minecraft:mangrove_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_mangrove_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_mangrove_wide"
+  }
+}

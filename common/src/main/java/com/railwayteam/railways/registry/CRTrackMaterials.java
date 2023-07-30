@@ -15,6 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -136,16 +137,31 @@ public class CRTrackMaterials {
         WIDE_GAUGE_ANDESITE = wideVariant(TrackMaterial.ANDESITE);
         ;
 
-    public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_TRACKS = new HashMap<>();
+    public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE = new HashMap<>();
+    private static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_REVERSE = new HashMap<>();
 
     static {
-        WIDE_GAUGE_TRACKS.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
+        WIDE_GAUGE.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
+        WIDE_GAUGE_REVERSE.put(WIDE_GAUGE_ANDESITE, TrackMaterial.ANDESITE);
         for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MODID)) {
             if (baseMaterial.trackType != TrackType.STANDARD)
                 continue;
 
-            WIDE_GAUGE_TRACKS.put(baseMaterial, wideVariant(baseMaterial));
+            TrackMaterial wideMaterial = wideVariant(baseMaterial);
+            WIDE_GAUGE.put(baseMaterial, wideMaterial);
+            WIDE_GAUGE_REVERSE.put(wideMaterial, baseMaterial);
         }
+    }
+
+    public static TrackMaterial getWide(TrackMaterial material) {
+        return WIDE_GAUGE.get(material);
+    }
+
+    @Nullable
+    public static TrackMaterial getBaseFromWide(TrackMaterial material) {
+        if (!WIDE_GAUGE_REVERSE.containsKey(material))
+            return null;
+        return WIDE_GAUGE_REVERSE.get(material);
     }
 
     private static TrackMaterial wideVariant(TrackMaterial material) {
@@ -154,9 +170,9 @@ public class CRTrackMaterials {
             path = material.id.getNamespace() + "_";
         path += material.id.getPath() + "_wide";
         return make(Railways.asResource(path))
-            .lang("Wide Gauge " + material.langName)
+            .lang("Wide " + material.langName)
             .trackType(CRTrackType.WIDE_GAUGE)
-            .block(() -> CRBlocks.WIDE_GAUGE_TRACKS.get(WIDE_GAUGE_TRACKS.get(material)))
+            .block(() -> CRBlocks.WIDE_GAUGE_TRACKS.get(WIDE_GAUGE.get(material)))
             .particle(material.particle)
             .noRecipeGen()
             .standardModels()

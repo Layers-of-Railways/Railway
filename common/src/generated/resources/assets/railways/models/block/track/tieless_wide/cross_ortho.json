@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_ortho",
+  "textures": {
+    "1": "railways:block/track/tieless/standard_track_tieless",
+    "2": "railways:block/track/tieless/standard_track_mip_tieless",
+    "3": "railways:block/track/tieless/standard_track_crossing_tieless",
+    "particle": "minecraft:block/glass"
+  }
+}
