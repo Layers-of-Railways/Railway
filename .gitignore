@@ -47,3 +47,4 @@ jars
 # Slimeist (techno-sam)
 /build_archive/
 /common/src/main/resources/assets/create/
+/development_assets/venv/
