@@ -263,6 +263,9 @@ public class CRBlocks {
                     .transform(customItemModel())
                     .register();
 
+    static {
+        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+    }
     public static final BlockEntry<TrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
     public static final BlockEntry<TrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
     public static final BlockEntry<TrackBlock> CRIMSON_TRACK = makeTrack(CRTrackMaterials.CRIMSON);
@@ -287,6 +290,10 @@ public class CRBlocks {
 
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
             new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
+
+    static {
+        Railways.registrate().creativeModeTab(() -> CRItems.mainCreativeTab);
+    }
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
             REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)

@@ -346,6 +346,8 @@
 
 	"itemGroup.railways_compat": "Create Steam 'n Rails: Compat Tracks",
 
+	"itemGroup.railways_tracks": "Create Steam 'n Rails: Tracks",
+
 	"railways.ponder.conductor_constructing.header": "Constructing a Conductor",
 	"railways.ponder.conductor_constructing.text_1": "Conductors are constructed with an andesite casing.",
 
