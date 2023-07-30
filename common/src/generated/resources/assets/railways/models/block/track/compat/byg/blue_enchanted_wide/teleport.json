@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/blue_enchanted/portal_track_blue_enchanted",
+    "2": "byg:block/track/blue_enchanted/portal_track_mip_blue_enchanted",
+    "3": "byg:block/track/blue_enchanted/standard_track_blue_enchanted",
+    "particle": "byg:block/track/blue_enchanted/standard_track_crossing_blue_enchanted"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/segment_right",
+  "textures": {
+    "0": "byg:block/track/fir/standard_track_fir",
+    "1": "byg:block/track/fir/standard_track_mip_fir",
+    "particle": "byg:block/track/fir/standard_track_crossing_fir"
+  }
+}

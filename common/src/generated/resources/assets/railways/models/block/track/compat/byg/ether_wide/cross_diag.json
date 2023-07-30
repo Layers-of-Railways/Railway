@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_diag",
+  "textures": {
+    "1": "byg:block/track/ether/standard_track_ether",
+    "2": "byg:block/track/ether/standard_track_mip_ether",
+    "3": "byg:block/track/ether/standard_track_crossing_ether",
+    "particle": "byg:block/track/ether/standard_track_crossing_ether"
+  }
+}

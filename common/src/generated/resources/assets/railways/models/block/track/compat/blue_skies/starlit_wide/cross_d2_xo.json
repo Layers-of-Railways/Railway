@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "blue_skies:block/track/starlit/standard_track_starlit",
+    "2": "blue_skies:block/track/starlit/standard_track_mip_starlit",
+    "3": "blue_skies:block/track/starlit/standard_track_crossing_starlit",
+    "particle": "blue_skies:block/track/starlit/standard_track_crossing_starlit"
+  }
+}

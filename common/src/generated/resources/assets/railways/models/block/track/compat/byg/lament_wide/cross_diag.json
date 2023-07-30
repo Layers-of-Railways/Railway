@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_diag",
+  "textures": {
+    "1": "byg:block/track/lament/standard_track_lament",
+    "2": "byg:block/track/lament/standard_track_mip_lament",
+    "3": "byg:block/track/lament/standard_track_crossing_lament",
+    "particle": "byg:block/track/lament/standard_track_crossing_lament"
+  }
+}

@@ -120,11 +120,11 @@ done: teleport
 done: diag
 done: diag2
 done: ascending
-todo: cross_ortho
-todo: cross_diag
-todo: cross_d1_xo
-todo: cross_d1_zo
-todo: cross_d2_xo
-todo: cross_d2_zo
+done: cross_ortho
+done: cross_diag
+done: cross_d1_xo
+done: cross_d1_zo
+done: cross_d2_xo
+done: cross_d2_zo
 
  */

@@ -67,6 +67,9 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
             trackMaterials.addAll(TrackMaterial.allFromMod(mod));
 
         for (TrackMaterial material : trackMaterials) {
+            if (material.trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE && !material.isFromMod(Railways.MODID)) {
+                int test = 0;
+            }
             if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) {
                 if (material.trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
                     TrackMaterial baseMaterial = CRTrackMaterials.getBaseFromWide(material);

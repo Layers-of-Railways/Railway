@@ -138,7 +138,7 @@ public class CRTrackMaterials {
         ;
 
     public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE = new HashMap<>();
-    private static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_REVERSE = new HashMap<>();
+    public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_REVERSE = new HashMap<>();
 
     static {
         WIDE_GAUGE.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
