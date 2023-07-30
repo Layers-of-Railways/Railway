@@ -9,15 +9,8 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        java: [ 17 ]
     runs-on: ubuntu-latest
     env:
-      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-      ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
-      ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
       CREATE_FABRIC_VER: ${{ github.event.inputs.create_fabric_version }}
       RELEASE_BUILD: true
 
@@ -28,17 +21,24 @@ jobs:
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
         with:
-          java-version: ${{ matrix.java }}
+          java-version: '17'
+          distribution: temurin
           cache: gradle
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build Fabric
-        run: ./gradlew :fabric:build
+      - name: Build Fabric & Publish to Maven
+        env:
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+        run: ./gradlew :fabric:build :fabric:publish
 
       - name: Upload Mod to Modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: ./gradlew :fabric:modrinth
 
       - name: Upload Mod to Curseforge
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
         run: ./gradlew :fabric:publishCurseForge
