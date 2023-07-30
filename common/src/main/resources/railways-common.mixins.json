@@ -61,6 +61,7 @@
     "MixinTrackEdge",
     "MixinTrackEdgePoint",
     "MixinTrackMaterial",
+    "MixinTrackPlacement",
     "MixinTrackTargetingBlockItem",
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
