@@ -637,8 +637,8 @@ public class ConductorEntity extends AbstractGolem {
     this.zza = calculateImpulse(wasUpPressed(), wasDownPressed());
     this.xxa = calculateImpulse(wasLeftPressed(), wasRightPressed());
     if (!wasSprintPressed()) {
-      zza *= 0.3;
-      xxa *= 0.3;
+      zza *= 0.3F;
+      xxa *= 0.3F;
     }
     this.jumping = wasJumpPressed();
     this.flyingSpeedOverride = 0.2f;
