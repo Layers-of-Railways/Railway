@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/tie",
+  "textures": {
+    "0": "byg:block/track/embur/standard_track_embur",
+    "1": "byg:block/track/embur/standard_track_mip_embur",
+    "particle": "byg:block/track/embur/standard_track_crossing_embur"
+  }
+}

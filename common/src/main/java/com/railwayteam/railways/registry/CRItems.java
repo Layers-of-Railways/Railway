@@ -37,6 +37,12 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
+  public static final CreativeModeTab tracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_tracks") {
+    @Override
+    @Nonnull
+    public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
+  };
+
   public static final CreativeModeTab compatTracksCreativeTab = TrackCompatUtils.anyLoaded() ? new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
     @Override
     @Nonnull

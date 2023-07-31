@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "byg:block/track/skyris/standard_track_skyris",
+    "2": "byg:block/track/skyris/standard_track_mip_skyris",
+    "3": "byg:block/track/skyris/standard_track_crossing_skyris",
+    "particle": "byg:block/track/skyris/standard_track_crossing_skyris"
+  }
+}

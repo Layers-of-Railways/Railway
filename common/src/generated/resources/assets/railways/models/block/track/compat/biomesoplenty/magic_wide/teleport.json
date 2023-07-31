@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "biomesoplenty:block/track/magic/portal_track_magic",
+    "2": "biomesoplenty:block/track/magic/portal_track_mip_magic",
+    "3": "biomesoplenty:block/track/magic/standard_track_magic",
+    "particle": "biomesoplenty:block/track/magic/standard_track_crossing_magic"
+  }
+}

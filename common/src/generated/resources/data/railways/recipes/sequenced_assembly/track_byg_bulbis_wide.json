@@ -1,0 +1,73 @@
+{
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "byg"
+      ]
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_byg_bulbis"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_byg_bulbis_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        },
+        {
+          "item": "byg:bulbis_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_byg_bulbis_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_byg_bulbis_wide"
+  }
+}

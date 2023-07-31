@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag_2",
+  "textures": {
+    "1": "byg:block/track/mahogany/standard_track_mahogany",
+    "2": "byg:block/track/mahogany/standard_track_mip_mahogany",
+    "3": "byg:block/track/mahogany/standard_track_crossing_mahogany",
+    "particle": "byg:block/track/mahogany/standard_track_crossing_mahogany"
+  }
+}

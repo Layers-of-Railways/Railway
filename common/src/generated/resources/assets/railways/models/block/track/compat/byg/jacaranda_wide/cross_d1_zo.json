@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "byg:block/track/jacaranda/standard_track_jacaranda",
+    "2": "byg:block/track/jacaranda/standard_track_mip_jacaranda",
+    "3": "byg:block/track/jacaranda/standard_track_crossing_jacaranda",
+    "particle": "byg:block/track/jacaranda/standard_track_crossing_jacaranda"
+  }
+}

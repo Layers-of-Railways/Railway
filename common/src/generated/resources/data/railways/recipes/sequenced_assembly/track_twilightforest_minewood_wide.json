@@ -1,0 +1,73 @@
+{
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "twilightforest"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "twilightforest"
+      ]
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_twilightforest_minewood"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_twilightforest_minewood_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        },
+        {
+          "item": "twilightforest:mining_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_twilightforest_minewood_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_twilightforest_minewood_wide"
+  }
+}

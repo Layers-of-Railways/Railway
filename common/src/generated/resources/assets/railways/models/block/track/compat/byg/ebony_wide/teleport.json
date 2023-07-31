@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/ebony/portal_track_ebony",
+    "2": "byg:block/track/ebony/portal_track_mip_ebony",
+    "3": "byg:block/track/ebony/standard_track_ebony",
+    "particle": "byg:block/track/ebony/standard_track_crossing_ebony"
+  }
+}

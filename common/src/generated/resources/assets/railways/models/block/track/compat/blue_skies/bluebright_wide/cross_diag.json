@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_diag",
+  "textures": {
+    "1": "blue_skies:block/track/bluebright/standard_track_bluebright",
+    "2": "blue_skies:block/track/bluebright/standard_track_mip_bluebright",
+    "3": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright",
+    "particle": "blue_skies:block/track/bluebright/standard_track_crossing_bluebright"
+  }
+}

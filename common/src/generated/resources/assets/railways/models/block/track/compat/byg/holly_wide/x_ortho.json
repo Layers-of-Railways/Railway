@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/x_ortho",
+  "textures": {
+    "1": "byg:block/track/holly/standard_track_holly",
+    "2": "byg:block/track/holly/standard_track_mip_holly",
+    "3": "byg:block/track/holly/standard_track_crossing_holly",
+    "particle": "byg:block/track/holly/standard_track_crossing_holly"
+  }
+}

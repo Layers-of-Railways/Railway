@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/z_ortho",
+  "textures": {
+    "1": "blue_skies:block/track/frostbright/standard_track_frostbright",
+    "2": "blue_skies:block/track/frostbright/standard_track_mip_frostbright",
+    "3": "blue_skies:block/track/frostbright/standard_track_crossing_frostbright",
+    "particle": "blue_skies:block/track/frostbright/standard_track_crossing_frostbright"
+  }
+}

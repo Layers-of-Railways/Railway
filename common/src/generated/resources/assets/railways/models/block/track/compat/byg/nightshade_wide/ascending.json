@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "byg:block/track/nightshade/standard_track_nightshade",
+    "1": "byg:block/track/nightshade/standard_track_mip_nightshade",
+    "particle": "byg:block/track/nightshade/standard_track_crossing_nightshade"
+  }
+}

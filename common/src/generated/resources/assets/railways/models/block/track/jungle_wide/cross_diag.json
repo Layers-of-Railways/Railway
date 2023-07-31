@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_diag",
+  "textures": {
+    "1": "railways:block/track/jungle/standard_track_jungle",
+    "2": "railways:block/track/jungle/standard_track_mip_jungle",
+    "3": "railways:block/track/jungle/standard_track_crossing_jungle",
+    "particle": "minecraft:block/jungle_planks"
+  }
+}

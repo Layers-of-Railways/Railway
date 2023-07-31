@@ -87,7 +87,8 @@ public class CRTags {
   }
 
   public enum AllItemTags {
-    CONDUCTOR_CAPS
+    CONDUCTOR_CAPS,
+    PHANTOM_TRACK_REVEALING
     ;
 
     public final TagKey<Item> tag;
