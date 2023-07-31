@@ -1,9 +1,6 @@
 name: Build
 on:
   workflow_dispatch:
-  push:
-    branches-ignore:
-      'l10n_1.19/dev'
   pull_request:
 
 jobs:
