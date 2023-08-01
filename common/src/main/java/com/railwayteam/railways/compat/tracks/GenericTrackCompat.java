@@ -3,6 +3,7 @@ package com.railwayteam.railways.compat.tracks;
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.TextUtils;
 import com.railwayteam.railways.util.Utils;
@@ -39,6 +40,10 @@ public class GenericTrackCompat {
 
     public static boolean isDataGen() {
         return Utils.isEnvVarTrue("DATAGEN");
+    }
+
+    static {
+        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
     }
 
     protected static boolean registerTracksAnywayGlobal() {

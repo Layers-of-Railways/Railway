@@ -43,12 +43,6 @@ public class CRItems {
     public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
   };
 
-  public static final CreativeModeTab compatTracksCreativeTab = TrackCompatUtils.anyLoaded() ? new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_compat") {
-    @Override
-    @Nonnull
-    public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack(); }
-  } : mainCreativeTab;
-
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
 
   public static TagKey<Item> makeForgeItemTag(String path) {
