@@ -59,7 +59,7 @@ repositories {
     } // JEI, Hex Casting
     maven {
         name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        url = 'https://maven.ladysnake.org/releases'
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
@@ -127,8 +127,10 @@ dependencies {
     }
 
     if (enable_byg.toBoolean()) {
-        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version}-fabric")
         modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
+        modLocalRuntime("maven.modrinth:geckolib:${geckolib_version_fabric}")
+        modLocalRuntime("maven.modrinth:corgilib:${corgilib_version_fabric}")
     }
 
     if (enable_tweakeroo.toBoolean()) {
