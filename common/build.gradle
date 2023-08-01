@@ -60,7 +60,7 @@ sourceSets.main {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = rootProject.archivesBaseName
+            artifactId = "${rootProject.archives_base_name}-${project.name}"
             from components.java
         }
     }
