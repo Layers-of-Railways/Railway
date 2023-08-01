@@ -107,7 +107,7 @@ public class CRBlocks {
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
         List<TagKey<Item>> itemTags = new ArrayList<>();
-        if (material == CRTrackMaterials.PHANTOM || material == CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM)) {
+        if (material == CRTrackMaterials.PHANTOM || material == CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM) || material == CRTrackMaterials.getNarrow(CRTrackMaterials.PHANTOM)) {
             itemTags.add(CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.tag);
         }
         //noinspection unchecked

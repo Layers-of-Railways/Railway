@@ -194,6 +194,17 @@ public class CRTrackMaterials {
             .build();
     }
 
+    public static TrackMaterial getNarrow(TrackMaterial material) {
+        return NARROW_GAUGE.get(material);
+    }
+
+    @Nullable
+    public static TrackMaterial getBaseFromNarrow(TrackMaterial material) {
+        if (!NARROW_GAUGE_REVERSE.containsKey(material))
+            return null;
+        return NARROW_GAUGE_REVERSE.get(material);
+    }
+
     private static TrackMaterial narrowVariant(TrackMaterial material) {
         String path = "";
         if (!material.id.getNamespace().equals(Railways.MODID))
