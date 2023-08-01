@@ -132,7 +132,7 @@ dependencies {
     }
 
     if (enable_sodium_rubidium.toBoolean()) {
-        modLocalRuntime("curse.maven:rubidium-574856:${rubidium_version}")
+        modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")
     }
 
     if (enable_eb.toBoolean())
