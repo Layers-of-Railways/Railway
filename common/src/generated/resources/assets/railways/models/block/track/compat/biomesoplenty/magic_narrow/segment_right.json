@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_right",
+  "textures": {
+    "0": "biomesoplenty:block/track/magic/standard_track_magic",
+    "1": "biomesoplenty:block/track/magic/standard_track_mip_magic",
+    "particle": "biomesoplenty:block/track/magic/standard_track_crossing_magic"
+  }
+}

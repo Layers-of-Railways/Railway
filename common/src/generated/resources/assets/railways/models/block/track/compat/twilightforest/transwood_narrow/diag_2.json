@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag_2",
+  "textures": {
+    "1": "twilightforest:block/track/transwood/standard_track_transwood",
+    "2": "twilightforest:block/track/transwood/standard_track_mip_transwood",
+    "3": "twilightforest:block/track/transwood/standard_track_crossing_transwood",
+    "particle": "twilightforest:block/track/transwood/standard_track_crossing_transwood"
+  }
+}

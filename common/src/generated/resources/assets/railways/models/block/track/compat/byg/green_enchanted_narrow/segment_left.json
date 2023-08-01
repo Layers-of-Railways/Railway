@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "byg:block/track/green_enchanted/standard_track_green_enchanted",
+    "1": "byg:block/track/green_enchanted/standard_track_mip_green_enchanted",
+    "particle": "byg:block/track/green_enchanted/standard_track_crossing_green_enchanted"
+  }
+}

@@ -67,9 +67,6 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
             trackMaterials.addAll(TrackMaterial.allFromMod(mod));
 
         for (TrackMaterial material : trackMaterials) {
-            if (material.trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE && !material.isFromMod(Railways.MODID)) {
-                int test = 0;
-            }
             if (material.railsIngredient.isEmpty() || material.sleeperIngredient.isEmpty()) {
                 if (material.trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
                     TrackMaterial baseMaterial = CRTrackMaterials.getBaseFromWide(material);
@@ -91,6 +88,44 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
                             .loops(1)
                             .addStep(CuttingRecipe::new, rb -> rb)
                             .addStep(DeployerApplicationRecipe::new, rb -> rb.require(sleeperIngredient))
+                            .addStep(PressingRecipe::new, rb -> rb)
+                    ));
+                } else if (material.trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE) {
+                    TrackMaterial baseMaterial = CRTrackMaterials.getBaseFromWide(material);
+                    if (baseMaterial == null)
+                        continue;
+                    Ingredient sleeperIngredient;
+                    if (material == CRTrackMaterials.WIDE_GAUGE_ANDESITE) {
+                        sleeperIngredient = Ingredient.of(AllTags.AllItemTags.SLEEPERS.tag);
+                    } else {
+                        sleeperIngredient = baseMaterial.sleeperIngredient;
+                    }
+                    if (sleeperIngredient.isEmpty()) continue;
+                    if (baseMaterial.railsIngredient.isEmpty()) continue;
+
+                    Ingredient railsIngredient = material.railsIngredient;
+                    if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
+                        return value instanceof Ingredient.TagValue tagValue
+                            && (tagValue.tag.equals(AllTags.forgeItemTag("nuggets/iron"))
+                            || tagValue.tag.equals(AllTags.forgeItemTag("nuggets/zinc"))
+                            || tagValue.tag.equals(AllTags.forgeItemTag("iron_nuggets"))
+                            || tagValue.tag.equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+                    })) {
+                        railsIngredient = Ingredient.fromValues(Stream.of(
+                            TagValueAccessor.createTagValue(Ingredients.ironNugget()),
+                            TagValueAccessor.createTagValue(Ingredients.zincNugget())));
+                    }
+
+                    Ingredient finalRailsIngredient = railsIngredient;
+                    TRACKS.put(material, create( // fixme can this even be crafted?
+                        "track_" + (material.id.getNamespace().equals(Railways.MODID)
+                            ? "" : material.id.getNamespace()+"_") + material.resourceName(),
+                        b -> b.conditionalMaterial(material).require(baseMaterial.sleeperIngredient)
+                            .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
+                            .addOutput(material.getBlock(), 1)
+                            .loops(1)
+                            .addStep(CuttingRecipe::new, rb -> rb)
+                            .addStep(DeployerApplicationRecipe::new, rb -> rb.require(finalRailsIngredient))
                             .addStep(PressingRecipe::new, rb -> rb)
                     ));
                 }

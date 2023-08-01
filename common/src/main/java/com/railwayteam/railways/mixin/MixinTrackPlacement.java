@@ -23,6 +23,8 @@ public class MixinTrackPlacement {
     private static double widerCurveForWideGauge(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
         if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE)
             return value * 2;
+        else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE)
+            return value * 0.5;
 
         return value;
     }

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_xo",
+  "textures": {
+    "1": "byg:block/track/sythian/standard_track_sythian",
+    "2": "byg:block/track/sythian/standard_track_mip_sythian",
+    "3": "byg:block/track/sythian/standard_track_crossing_sythian",
+    "particle": "byg:block/track/sythian/standard_track_crossing_sythian"
+  }
+}

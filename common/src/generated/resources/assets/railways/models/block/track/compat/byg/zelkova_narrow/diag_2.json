@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag_2",
+  "textures": {
+    "1": "byg:block/track/zelkova/standard_track_zelkova",
+    "2": "byg:block/track/zelkova/standard_track_mip_zelkova",
+    "3": "byg:block/track/zelkova/standard_track_crossing_zelkova",
+    "particle": "byg:block/track/zelkova/standard_track_crossing_zelkova"
+  }
+}

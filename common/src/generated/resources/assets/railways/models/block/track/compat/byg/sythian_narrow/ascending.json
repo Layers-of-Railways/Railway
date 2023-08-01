@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/ascending",
+  "textures": {
+    "0": "byg:block/track/sythian/standard_track_sythian",
+    "1": "byg:block/track/sythian/standard_track_mip_sythian",
+    "particle": "byg:block/track/sythian/standard_track_crossing_sythian"
+  }
+}

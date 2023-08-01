@@ -2,8 +2,6 @@ package com.railwayteam.railways.compat.tracks;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
-import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
@@ -62,18 +60,6 @@ public class WideGaugeCompatTrackBlockStateGenerator extends CustomTrackBlockSta
             }
         }
 
-        if (material == CRTrackMaterials.WIDE_GAUGE_ANDESITE) {
-            BlockModelBuilder builder = prov.models().withExistingParent(outputPrefix + value.getModel(), Railways.asResource("block/wide_gauge_base/" + value.getModel()));
-            for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
-                prov.models()
-                    .withExistingParent(outputPrefix + k,
-                        Railways.asResource("block/wide_gauge_base/" + k))
-                    .texture("0", Create.asResource("block/standard_track"))
-                    .texture("1", Create.asResource("block/standard_track_mip"))
-                    .texture("particle", material.particle);
-            }
-            return builder;
-        }
         BlockModelBuilder builder = prov.models()
             .withExistingParent(outputPrefix + value.getModel(),
                 Railways.asResource("block/wide_gauge_base/" + value.getModel()))

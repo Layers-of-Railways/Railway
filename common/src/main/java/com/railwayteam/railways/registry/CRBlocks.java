@@ -17,6 +17,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -281,10 +282,15 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
 
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
 
     static {
         for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
+        }
+
+        for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
+            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
         }
     }
 

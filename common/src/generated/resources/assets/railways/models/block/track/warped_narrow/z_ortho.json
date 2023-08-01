@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/z_ortho",
+  "textures": {
+    "1": "railways:block/track/warped/standard_track_warped",
+    "2": "railways:block/track/warped/standard_track_mip_warped",
+    "3": "railways:block/track/warped/standard_track_crossing_warped",
+    "particle": "minecraft:block/warped_planks"
+  }
+}

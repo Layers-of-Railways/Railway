@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "biomesoplenty:block/track/magic/standard_track_magic",
+    "2": "biomesoplenty:block/track/magic/standard_track_mip_magic",
+    "3": "biomesoplenty:block/track/magic/standard_track_crossing_magic",
+    "particle": "biomesoplenty:block/track/magic/standard_track_crossing_magic"
+  }
+}

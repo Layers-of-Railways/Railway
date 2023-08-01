@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_right",
+  "textures": {
+    "0": "biomesoplenty:block/track/redwood/standard_track_redwood",
+    "1": "biomesoplenty:block/track/redwood/standard_track_mip_redwood",
+    "particle": "biomesoplenty:block/track/redwood/standard_track_crossing_redwood"
+  }
+}

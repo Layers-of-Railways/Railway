@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "railways:block/track/spruce/portal_track_spruce",
+    "2": "railways:block/track/spruce/portal_track_mip_spruce",
+    "3": "railways:block/track/spruce/standard_track_spruce",
+    "particle": "minecraft:block/spruce_planks"
+  }
+}
