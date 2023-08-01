@@ -1,23 +1,36 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
-import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlockOutline;
-import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_tracks.monorail.CustomTrackBlockOutline;
 import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.track.TrackMaterial;
+import net.minecraft.client.Camera;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrackBlockOutline.class, remap = false)
 public abstract class MixinTrackBlockOutline {
 
     @Unique
-    private static boolean railway$resultIsMonorail;
+    private static TrackMaterial railway$resultMaterial;
+
+    @Inject(method = "drawCustomBlockSelection", at = @At("HEAD"), cancellable = true)
+    private static void snr$cancel(LevelRenderer context, Camera info, HitResult hitResult, float partialTicks, PoseStack ms, MultiBufferSource buffers, CallbackInfoReturnable<Boolean> cir) {
+        if (CustomTrackBlockOutline.skipCustomRendering())
+            cir.setReturnValue(false);
+    }
 
     @ModifyVariable(
             method = "pickCurves",
@@ -28,7 +41,7 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultIsMonorail = bc.getMaterial() == CRTrackMaterials.MONORAIL;
+        railway$resultMaterial = bc.getMaterial();
         return bc;
     }
 
@@ -41,10 +54,10 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static VoxelShape railway$renderCurvedMonorailShape(VoxelShape shape) {
-        return MonorailTrackBlockOutline.convert(shape, railway$resultIsMonorail);
+        return CustomTrackBlockOutline.convert(shape, railway$resultMaterial);
     }
 
-    private static boolean railway$walkingMonorail;
+    private static TrackMaterial railway$walkingMaterial;
 
     @ModifyVariable(
             method = "drawCustomBlockSelection",
@@ -55,7 +68,7 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static BlockState railway$grabMonorailState(BlockState state) {
-        railway$walkingMonorail = state.getBlock() instanceof MonorailTrackBlock;
+        railway$walkingMaterial = state.getBlock() instanceof TrackBlock trackBlock ? trackBlock.getMaterial() : TrackMaterial.ANDESITE;
         return state;
     }
 
@@ -67,7 +80,7 @@ public abstract class MixinTrackBlockOutline {
             )
     )
     private static Object railway$renderMonorailBlockShape(Object o) {
-        return MonorailTrackBlockOutline.convert(o, railway$walkingMonorail);
+        return CustomTrackBlockOutline.convert(o, railway$walkingMaterial);
     }
 }
 

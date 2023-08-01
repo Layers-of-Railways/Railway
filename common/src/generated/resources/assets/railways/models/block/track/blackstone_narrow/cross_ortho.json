@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_ortho",
+  "textures": {
+    "1": "railways:block/track/blackstone/standard_track_blackstone",
+    "2": "railways:block/track/blackstone/standard_track_mip_blackstone",
+    "3": "railways:block/track/blackstone/standard_track_crossing_blackstone",
+    "particle": "minecraft:block/blackstone"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag",
+  "textures": {
+    "1": "railways:block/track/acacia/standard_track_acacia",
+    "2": "railways:block/track/acacia/standard_track_mip_acacia",
+    "3": "railways:block/track/acacia/standard_track_crossing_acacia",
+    "particle": "minecraft:block/acacia_planks"
+  }
+}

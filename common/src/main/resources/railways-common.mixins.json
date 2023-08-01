@@ -91,6 +91,7 @@
     "client.MixinCarriageContraptionInstance",
     "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
+    "client.MixinDebugRenderer",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
     "client.MixinParticleEngine",

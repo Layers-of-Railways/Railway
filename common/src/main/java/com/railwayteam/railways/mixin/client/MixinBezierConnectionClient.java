@@ -116,8 +116,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
     @SuppressWarnings("unused")
     @ModifyExpressionValue(method="getBakedSegments", at = @At(value = "CONSTANT", args = "doubleValue=0.9649999737739563"))
     private double modifyRailWidth(double original) {
-        if (((BezierConnection) (Object) this).getMaterial().trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
+        BezierConnection this$ = (BezierConnection) (Object) this;
+        if (this$.getMaterial().trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
             return original + 0.5;
+        } else if (this$.getMaterial().trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE) {
+            return original - (7 / 16.);
         }
         return original;
     }

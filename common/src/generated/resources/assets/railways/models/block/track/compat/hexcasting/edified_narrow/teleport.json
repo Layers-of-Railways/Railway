@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "hexcasting:block/track/edified/portal_track_edified",
+    "2": "hexcasting:block/track/edified/portal_track_mip_edified",
+    "3": "hexcasting:block/track/edified/standard_track_edified",
+    "particle": "hexcasting:block/track/edified/standard_track_crossing_edified"
+  }
+}

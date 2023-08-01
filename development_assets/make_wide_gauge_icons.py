@@ -20,7 +20,7 @@ for directory in directories:
     for filename in os.listdir(directory):
         filepath = os.path.join(directory, filename)
         if os.path.isfile(filepath) and filename.endswith(".png") and filename.startswith("track_"):
-            if "_wide" in filename:
+            if "_wide" in filename or "_narrow" in filename:
                 continue
             textures.append(filepath)
         else:

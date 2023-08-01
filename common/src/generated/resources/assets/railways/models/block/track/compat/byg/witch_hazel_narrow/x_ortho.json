@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/x_ortho",
+  "textures": {
+    "1": "byg:block/track/witch_hazel/standard_track_witch_hazel",
+    "2": "byg:block/track/witch_hazel/standard_track_mip_witch_hazel",
+    "3": "byg:block/track/witch_hazel/standard_track_crossing_witch_hazel",
+    "particle": "byg:block/track/witch_hazel/standard_track_crossing_witch_hazel"
+  }
+}

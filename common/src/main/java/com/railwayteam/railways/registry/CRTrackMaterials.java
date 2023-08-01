@@ -5,6 +5,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlock;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.simibubi.create.content.trains.track.TrackBlock;
@@ -133,12 +134,15 @@ public class CRTrackMaterials {
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
             .standardModels()
             .build(),
-
-        WIDE_GAUGE_ANDESITE = wideVariant(TrackMaterial.ANDESITE);
+        WIDE_GAUGE_ANDESITE = wideVariant(TrackMaterial.ANDESITE),
+        NARROW_GAUGE_ANDESITE = narrowVariant(TrackMaterial.ANDESITE)
         ;
 
     public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE = new HashMap<>();
     public static final Map<TrackMaterial, TrackMaterial> WIDE_GAUGE_REVERSE = new HashMap<>();
+
+    public static final Map<TrackMaterial, TrackMaterial> NARROW_GAUGE = new HashMap<>();
+    public static final Map<TrackMaterial, TrackMaterial> NARROW_GAUGE_REVERSE = new HashMap<>();
 
     static {
         WIDE_GAUGE.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
@@ -150,6 +154,17 @@ public class CRTrackMaterials {
             TrackMaterial wideMaterial = wideVariant(baseMaterial);
             WIDE_GAUGE.put(baseMaterial, wideMaterial);
             WIDE_GAUGE_REVERSE.put(wideMaterial, baseMaterial);
+        }
+
+        NARROW_GAUGE.put(TrackMaterial.ANDESITE, NARROW_GAUGE_ANDESITE);
+        NARROW_GAUGE_REVERSE.put(NARROW_GAUGE_ANDESITE, TrackMaterial.ANDESITE);
+        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MODID)) {
+            if (baseMaterial.trackType != TrackType.STANDARD)
+                continue;
+
+            TrackMaterial narrowMaterial = narrowVariant(baseMaterial);
+            NARROW_GAUGE.put(baseMaterial, narrowMaterial);
+            NARROW_GAUGE_REVERSE.put(narrowMaterial, baseMaterial);
         }
     }
 
@@ -179,10 +194,38 @@ public class CRTrackMaterials {
             .build();
     }
 
+    public static TrackMaterial getNarrow(TrackMaterial material) {
+        return NARROW_GAUGE.get(material);
+    }
+
+    @Nullable
+    public static TrackMaterial getBaseFromNarrow(TrackMaterial material) {
+        if (!NARROW_GAUGE_REVERSE.containsKey(material))
+            return null;
+        return NARROW_GAUGE_REVERSE.get(material);
+    }
+
+    private static TrackMaterial narrowVariant(TrackMaterial material) {
+        String path = "";
+        if (!material.id.getNamespace().equals(Railways.MODID))
+            path = material.id.getNamespace() + "_";
+        path += material.id.getPath() + "_narrow";
+        return make(Railways.asResource(path))
+            .lang("Narrow " + material.langName)
+            .trackType(CRTrackType.NARROW_GAUGE)
+            .block(() -> CRBlocks.NARROW_GAUGE_TRACKS.get(NARROW_GAUGE.get(material)))
+            .particle(material.particle)
+            .noRecipeGen()
+            .standardModels()
+            .build();
+    }
+
     public static class CRTrackType extends TrackType {
         public static final TrackType MONORAIL = new CRTrackType(Railways.asResource("monorail"), MonorailTrackBlock::new);
 
         public static final TrackType WIDE_GAUGE = new CRTrackType(Railways.asResource("wide_gauge"), WideGaugeTrackBlock::new);
+
+        public static final TrackType NARROW_GAUGE = new CRTrackType(Railways.asResource("narrow_gauge"), NarrowGaugeTrackBlock::new);
 
         public CRTrackType(ResourceLocation id, TrackBlockFactory factory) {
             super(id, factory);
