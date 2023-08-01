@@ -59,12 +59,13 @@ public class CRShapes {
         return Shapes.or(shape, shapes);
     }
 
+    @SuppressWarnings("ConstantValue")
     public static VoxelShape narrowDiagonal() {
         VoxelShape shape = Block.box(0, 0, 0, 16, 4, 16);
-        VoxelShape[] shapes = new VoxelShape[12];
+        VoxelShape[] shapes = new VoxelShape[6];
         int off = 0;
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 3; i++) {
             off = (i + 1) * 2;
             shapes[i * 2] = Block.box(off, 0, off, 16 + off, 4, 16 + off);
             shapes[i * 2 + 1] = Block.box(-off, 0, -off, 16 - off, 4, 16 - off);
@@ -72,11 +73,11 @@ public class CRShapes {
 
         shape = Shapes.or(shape, shapes);
 
-        off = 10 * 2;
+        off = 16;
         shape = Shapes.join(shape, Block.box(off, 0, off, 16 + off, 4, 16 + off), BooleanOp.ONLY_FIRST);
         shape = Shapes.join(shape, Block.box(-off, 0, -off, 16 - off, 4, 16 - off), BooleanOp.ONLY_FIRST);
 
-        off = 4 * 2;
+        off = 4;
         shape = Shapes.or(shape, Block.box(off, 0, off, 16 + off, 4, 16 + off));
         shape = Shapes.or(shape, Block.box(-off, 0, -off, 16 - off, 4, 16 - off));
 
@@ -128,8 +129,8 @@ public class CRShapes {
             .forHorizontalAxis(),
         LONG_STACK = shape(1, 0, 3, 15, 4, 13)
         .forHorizontalAxis();
-// fixme temp
-    public static Builder shape(VoxelShape shape) {
+
+    private static Builder shape(VoxelShape shape) {
         return new Builder(shape);
     }
 

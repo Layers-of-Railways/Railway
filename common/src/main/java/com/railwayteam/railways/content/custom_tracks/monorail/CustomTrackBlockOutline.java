@@ -35,7 +35,7 @@ public class CustomTrackBlockOutline {
 
 	public static final Map<VoxelShape, VoxelShape> TRACK_TO_NARROW = ImmutableMap.<VoxelShape, VoxelShape>builder().putAll(Map.of(
 		AllShapes.TRACK_ORTHO.get(Direction.EAST), CRShapes.NARROW_TRACK_ORTHO.get(Direction.EAST),
-		AllShapes.TRACK_ORTHO.get(Direction.SOUTH), CRShapes.NARROW_TRACK_ORTHO.get(Direction.SOUTH), // todo shapes
+		AllShapes.TRACK_ORTHO.get(Direction.SOUTH), CRShapes.NARROW_TRACK_ORTHO.get(Direction.SOUTH),
 		AllShapes.TRACK_CROSS, CRShapes.NARROW_TRACK_CROSS,
 		AllShapes.TRACK_DIAG.get(Direction.EAST), CRShapes.NARROW_TRACK_DIAG.get(Direction.EAST),
 		AllShapes.TRACK_DIAG.get(Direction.SOUTH), CRShapes.NARROW_TRACK_DIAG.get(Direction.SOUTH))).putAll(Map.of(
@@ -51,29 +51,15 @@ public class CustomTrackBlockOutline {
 		throw new IllegalArgumentException("object is not a VoxelShape");
 	}
 
-	public static Map<VoxelShape, VoxelShape> getTRACK_TO_NARROW() {
-		return ImmutableMap.<VoxelShape, VoxelShape>builder().putAll(Map.of(
-			AllShapes.TRACK_ORTHO.get(Direction.EAST), CRShapes.NARROW_TRACK_ORTHO.get(Direction.EAST),
-			AllShapes.TRACK_ORTHO.get(Direction.SOUTH), CRShapes.NARROW_TRACK_ORTHO.get(Direction.SOUTH), // todo shapes
-			AllShapes.TRACK_CROSS, CRShapes.NARROW_TRACK_CROSS,
-			AllShapes.TRACK_DIAG.get(Direction.EAST), CRShapes.NARROW_TRACK_DIAG.get(Direction.EAST),
-			AllShapes.TRACK_DIAG.get(Direction.SOUTH), CRShapes.NARROW_TRACK_DIAG.get(Direction.SOUTH))).putAll(Map.of(
-			AllShapes.TRACK_CROSS_DIAG, CRShapes.NARROW_TRACK_CROSS_DIAG,
-			AccessorTrackBlockOutline.getLONG_ORTHO_OFFSET(), NARROW_LONG_ORTHO_OFFSET,
-			AccessorTrackBlockOutline.getLONG_ORTHO(), NARROW_LONG_ORTHO,
-			AccessorTrackBlockOutline.getLONG_CROSS(), NARROW_LONG_CROSS
-		)).build();
-	}
-
 	public static VoxelShape convert(VoxelShape trackShape, TrackMaterial material) {
 		if (material == CRTrackMaterials.MONORAIL)
 			return TRACK_TO_MONORAIL.getOrDefault(trackShape, trackShape);
 		if (material.trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE)
-			return getTRACK_TO_NARROW().getOrDefault(trackShape, trackShape);
+			return TRACK_TO_NARROW.getOrDefault(trackShape, trackShape);
 		return trackShape;
 	}
 
 	public static boolean skipCustomRendering() {
-		return Utils.isDevEnv() && true;
+		return Utils.isDevEnv() && false; // turn on if debugging hitboxes
 	}
 }

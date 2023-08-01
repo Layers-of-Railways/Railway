@@ -11,10 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import static com.railwayteam.railways.registry.CRShapes.narrowDiagonal;
-import static com.railwayteam.railways.registry.CRShapes.shape;
-import static net.minecraft.core.Direction.SOUTH;
-
 public class NarrowGaugeTrackBlock extends TrackBlock {
     public NarrowGaugeTrackBlock(Properties properties, TrackMaterial material) {
         super(properties, material);
@@ -31,7 +27,6 @@ public class NarrowGaugeTrackBlock extends TrackBlock {
     }
 
     private VoxelShape getFullShape(BlockState state) {
-        var NARROW_TRACK_DIAG = shape(narrowDiagonal()).forHorizontal(SOUTH);
         switch (state.getValue(SHAPE)) {
             case AE -> {
                 return CRShapes.NARROW_TRACK_ASC.get(Direction.EAST);
@@ -64,10 +59,10 @@ public class NarrowGaugeTrackBlock extends TrackBlock {
                 return CRShapes.NARROW_TRACK_CROSS_ORTHO_DIAG.get(Direction.EAST);
             }
             case ND -> {
-                return NARROW_TRACK_DIAG.get(Direction.SOUTH);
+                return CRShapes.NARROW_TRACK_DIAG.get(Direction.SOUTH);
             }
             case PD -> {
-                return NARROW_TRACK_DIAG.get(Direction.EAST);
+                return CRShapes.NARROW_TRACK_DIAG.get(Direction.EAST);
             }
             case XO -> {
                 return CRShapes.NARROW_TRACK_ORTHO.get(Direction.EAST);
