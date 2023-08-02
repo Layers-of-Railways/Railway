@@ -133,7 +133,5 @@
 	"railways.whistle.failure.conductor_missing": "Nie znaleziono konduktora lub nie jeździł powiązanym pociągiem.",
 	"railways.whistle.failure.no_space": "Brak miejsca na flagę.",
 	"railways.whistle.failure.not_owner": "Musisz być właścicielem pociągu, aby skasować ten rozkład.",
-	"block.railways.track_coupler.tooltip": "ŁĄCZNIK POCIĄGÓW",
-	"block.railways.track_coupler.tooltip.summary": "Zaznacz tor pod _środkiem przednich kół_ pociągu, następnie przescrolluj na górze łącznika kluczem, aby rozszerzyć pod _środek tylnich kół_ następnego pociągu.",
 	"block.create.track_station.tooltip": "STACJA KOLEJOWA"
 }
