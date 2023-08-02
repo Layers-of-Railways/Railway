@@ -1,0 +1,78 @@
+{
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "hexcasting"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "hexcasting"
+      ]
+    }
+  ],
+  "ingredient": {
+    "item": "hexcasting:edified_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_hexcasting_edified_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_hexcasting_edified_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_hexcasting_edified_narrow"
+  }
+}

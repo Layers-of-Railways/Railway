@@ -32,6 +32,12 @@ public class CRBogeyStyles {
             .contactParticle(new CubeParticleData())
             .build();
 
+    public static final BogeyStyle INVISIBLE_MONOBOGEY = create("invisible_monobogey", "monobogey")
+        .displayName(Components.translatable("railways.bogeys.styles.invisible_monobogey"))
+        .size(BogeySizes.SMALL, () -> InvisibleBogeyRenderer::new, CRBlocks.INVISIBLE_MONO_BOGEY)
+        .contactParticle(new CubeParticleData())
+        .build();
+
     public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
     public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";

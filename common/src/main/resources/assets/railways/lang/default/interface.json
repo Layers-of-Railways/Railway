@@ -99,6 +99,8 @@
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
+  "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
+  "railways.bogeys.styles.monobogey": "Monobogey",
 
   "railways.bogeys.styles.singleaxle": "Singleaxle",
   "railways.bogeys.styles.leafspring": "Leafspring",

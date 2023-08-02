@@ -91,11 +91,11 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
                             .addStep(PressingRecipe::new, rb -> rb)
                     ));
                 } else if (material.trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE) {
-                    TrackMaterial baseMaterial = CRTrackMaterials.getBaseFromWide(material);
+                    TrackMaterial baseMaterial = CRTrackMaterials.getBaseFromNarrow(material);
                     if (baseMaterial == null)
                         continue;
                     Ingredient sleeperIngredient;
-                    if (material == CRTrackMaterials.WIDE_GAUGE_ANDESITE) {
+                    if (material == CRTrackMaterials.NARROW_GAUGE_ANDESITE) {
                         sleeperIngredient = Ingredient.of(AllTags.AllItemTags.SLEEPERS.tag);
                     } else {
                         sleeperIngredient = baseMaterial.sleeperIngredient;
@@ -103,7 +103,7 @@ public abstract class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeP
                     if (sleeperIngredient.isEmpty()) continue;
                     if (baseMaterial.railsIngredient.isEmpty()) continue;
 
-                    Ingredient railsIngredient = material.railsIngredient;
+                    Ingredient railsIngredient = baseMaterial.railsIngredient;
                     if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
                         return value instanceof Ingredient.TagValue tagValue
                             && (tagValue.tag.equals(AllTags.forgeItemTag("nuggets/iron"))

@@ -6,6 +6,7 @@
 	"block.railways.conductor_whistle": "Conductor Whistle",
 	"block.railways.doubleaxle_bogey": "Double Axle Bogey",
 	"block.railways.invisible_bogey": "Invisible Bogey",
+	"block.railways.invisible_mono_bogey": "Invisible Mono Bogey",
 	"block.railways.large_platform_doubleaxle_bogey": "Large Platform Double Axle Bogey",
 	"block.railways.mono_bogey": "Monorail Bogey",
 	"block.railways.semaphore": "Semaphore",
@@ -637,6 +638,8 @@
 	"create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
 	"railways.bogeys.styles.invisible": "Invisible",
+	"railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
+	"railways.bogeys.styles.monobogey": "Monobogey",
 	"railways.bogeys.styles.singleaxle": "Singleaxle",
 	"railways.bogeys.styles.leafspring": "Leafspring",
 	"railways.bogeys.styles.coilspring": "Coilspring",

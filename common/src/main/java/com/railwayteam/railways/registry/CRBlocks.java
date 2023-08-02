@@ -14,6 +14,7 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
@@ -314,6 +315,13 @@ public class CRBlocks {
                     .transform(BuilderTransformers.invisibleBogey())
                     .lang("Invisible Bogey")
                     .register();
+
+    public static final BlockEntry<InvisibleMonoBogeyBlock> INVISIBLE_MONO_BOGEY =
+        REGISTRATE.block("invisible_mono_bogey", InvisibleMonoBogeyBlock::new)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.invisibleMonoBogey())
+            .lang("Invisible Mono Bogey")
+            .register();
 
     public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
             REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)

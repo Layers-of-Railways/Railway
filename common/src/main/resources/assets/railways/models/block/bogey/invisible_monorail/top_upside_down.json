@@ -1,0 +1,32 @@
+{
+	"credit": "By the Railway Team",
+	"texture_size": [32, 32],
+	"textures": {
+		"2": "railways:block/bogeys/top_invisible",
+		"particle": "create:block/bogey/particle"
+	},
+	"elements": [
+		{
+			"name": "top",
+			"from": [0, 0, 0],
+			"to": [16, 9, 16],
+			"rotation": {"angle": 0, "axis": "z", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [8, 8, 16, 12.5], "rotation": 180, "texture": "#2"},
+				"east": {"uv": [0, 8, 8, 12.5], "rotation": 180, "texture": "#2"},
+				"south": {"uv": [8, 8, 16, 12.5], "rotation": 180, "texture": "#2"},
+				"west": {"uv": [0, 8, 8, 12.5], "rotation": 180, "texture": "#2"},
+				"up": {"uv": [8, 0, 16, 8], "rotation": 180, "texture": "#2"},
+				"down": {"uv": [0, 0, 8, 8], "rotation": 270, "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

@@ -46,12 +46,13 @@ public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockE
 		CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
 		return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle())
 			&& point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
-			&& point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE;
+			&& point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE
+			&& point.edge.getTrackMaterial().trackType != CRTrackType.MONORAIL;
 	}
 
 	@Override
 	public Set<TrackType> getValidPathfindingTypes(BogeyStyle style) {
-		return ImmutableSet.of(getTrackType(style), CRTrackType.WIDE_GAUGE, CRTrackType.NARROW_GAUGE);
+		return ImmutableSet.of(getTrackType(style), CRTrackType.WIDE_GAUGE, CRTrackType.NARROW_GAUGE, CRTrackType.MONORAIL);
 	}
 
 	@Override
