@@ -11,3 +11,5 @@ v1.4.4:
 - update to Create 0.5.1c
 - fix: use 'proper' class tranformation to add Track Replace rolling mode (#194)
 - Added wide gauge tracks
+- Added narrow gauge tracks
+- Added invisible monobogeys
