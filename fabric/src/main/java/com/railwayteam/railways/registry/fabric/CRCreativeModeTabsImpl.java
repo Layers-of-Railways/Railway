@@ -1,7 +1,7 @@
 package com.railwayteam.railways.registry.fabric;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.TabInfo;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
@@ -28,12 +28,13 @@ public class CRCreativeModeTabsImpl {
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.MAIN))
             .build());
 
-    private static final TabInfo COMPAT_TAB = TrackCompatUtils.anyLoaded() ? register("compat",
+    @SuppressWarnings("Convert2MethodRef")
+    private static final TabInfo TRACKS_TAB = register("tracks",
         () -> FabricItemGroup.builder()
-            .title(Component.translatable("itemGroup.railways_compat"))
-            .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.PURPLE).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.COMPAT))
-            .build()) : MAIN_TAB;
+            .title(Component.translatable("itemGroup.railways_tracks"))
+            .icon(() -> CRBlocks.DARK_OAK_TRACK.asStack())
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.TRACK))
+            .build());
 
     private static final TabInfo CAPS_TAB = register("caps",
         () -> FabricItemGroup.builder()
@@ -46,8 +47,8 @@ public class CRCreativeModeTabsImpl {
         return MAIN_TAB.tab();
     }
 
-    public static CreativeModeTab getCompatTracksTab() {
-        return COMPAT_TAB.tab();
+    public static CreativeModeTab getTracksTab() {
+        return TRACKS_TAB.tab();
     }
 
     public static CreativeModeTab getCapsTab() {
@@ -58,8 +59,8 @@ public class CRCreativeModeTabsImpl {
         return MAIN_TAB.key();
     }
 
-    public static ResourceKey<CreativeModeTab> getCompatTracksTabKey() {
-        return COMPAT_TAB.key();
+    public static ResourceKey<CreativeModeTab> getTracksTabKey() {
+        return TRACKS_TAB.key();
     }
 
     public static ResourceKey<CreativeModeTab> getCapsTabKey() {

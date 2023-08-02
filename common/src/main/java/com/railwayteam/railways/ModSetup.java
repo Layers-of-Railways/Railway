@@ -1,6 +1,5 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.registry.*;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -8,12 +7,12 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 public class ModSetup {
 
   @ExpectPlatform
-  private static void useBaseTab() {
+  public static void useBaseTab() {
     throw new AssertionError();
   }
 
   @ExpectPlatform
-  private static void useCompatTab() {
+  public static void useTracksTab() {
     throw new AssertionError();
   }
 
@@ -35,8 +34,7 @@ public class ModSetup {
     CRExtraRegistration.register();
 
     // Compat
-    if (TrackCompatUtils.anyLoaded())
-      useCompatTab(); // fixme use track tab
+    useTracksTab();
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();

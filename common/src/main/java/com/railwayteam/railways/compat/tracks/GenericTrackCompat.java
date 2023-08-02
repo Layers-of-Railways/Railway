@@ -1,9 +1,9 @@
 package com.railwayteam.railways.compat.tracks;
 
 import com.railwayteam.railways.Config;
+import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
-import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.railwayteam.railways.util.TextUtils;
@@ -12,7 +12,6 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -43,7 +42,7 @@ public class GenericTrackCompat {
     }
 
     static {
-        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+        ModSetup.useTracksTab();
     }
 
     protected static boolean registerTracksAnywayGlobal() {
@@ -90,7 +89,7 @@ public class GenericTrackCompat {
             CRTrackMaterials.WIDE_GAUGE.put(standardMaterial, wideMaterial);
             CRTrackMaterials.WIDE_GAUGE_REVERSE.put(wideMaterial, standardMaterial);
 
-            NonNullSupplier<TrackBlock> wideBlock = makeTrack(wideMaterial, new WideGaugeCompatTrackBlockStateGenerator()::generate);
+            NonNullSupplier<TrackBlock> wideBlock = makeTrack(wideMaterial, WideGaugeCompatTrackBlockStateGenerator.create()::generate);
             CRBlocks.WIDE_GAUGE_TRACKS.put(wideMaterial, wideBlock);
             BLOCKS.put(name+"_wide", wideBlock);
 
@@ -105,7 +104,7 @@ public class GenericTrackCompat {
             CRTrackMaterials.NARROW_GAUGE.put(standardMaterial, narrowMaterial);
             CRTrackMaterials.NARROW_GAUGE_REVERSE.put(narrowMaterial, standardMaterial);
 
-            NonNullSupplier<TrackBlock> narrowBlock = makeTrack(narrowMaterial, new NarrowGaugeCompatTrackBlockStateGenerator()::generate);
+            NonNullSupplier<TrackBlock> narrowBlock = makeTrack(narrowMaterial, NarrowGaugeCompatTrackBlockStateGenerator.create()::generate);
             CRBlocks.NARROW_GAUGE_TRACKS.put(narrowMaterial, narrowBlock);
             BLOCKS.put(name+"_narrow", narrowBlock);
 

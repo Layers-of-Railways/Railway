@@ -1,5 +1,6 @@
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
@@ -224,7 +225,7 @@ public class CRBlocks {
                     .register();
 
     static {
-        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+        ModSetup.useTracksTab();
     }
     public static final BlockEntry<TrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
     public static final BlockEntry<TrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
@@ -245,11 +246,11 @@ public class CRBlocks {
 
     static {
         for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
-            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
+            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, WideGaugeTrackBlockStateGenerator.create()::generate));
         }
 
         for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
-            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
+            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, NarrowGaugeTrackBlockStateGenerator.create()::generate));
         }
     }
 
@@ -257,7 +258,7 @@ public class CRBlocks {
             MonorailBlockStateGenerator.create()::generate, BlockBehaviour.Properties::randomTicks);
 
     static {
-        Railways.registrate().creativeModeTab(() -> CRItems.mainCreativeTab);
+        ModSetup.useBaseTab();
     }
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
@@ -276,7 +277,7 @@ public class CRBlocks {
 
     public static final BlockEntry<InvisibleMonoBogeyBlock> INVISIBLE_MONO_BOGEY =
         REGISTRATE.block("invisible_mono_bogey", InvisibleMonoBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.invisibleMonoBogey())
             .lang("Invisible Mono Bogey")
             .register();

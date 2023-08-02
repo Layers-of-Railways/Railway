@@ -6,6 +6,8 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBl
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
@@ -39,7 +41,7 @@ public class BuilderTransformersImpl {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(pickaxeOnly())
                 .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
-                        .getExistingFile(p.modLoc("block/bogey/monorail/top" + (s.getValue(MonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
+                        .getExistingFile(p.modLoc("block/bogey/monorail/top" + (s.getValue(AbstractMonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
@@ -135,5 +137,15 @@ public class BuilderTransformersImpl {
                     Railways.asResource("block/copycat_vent_visible") :
                     new ResourceLocation("block/air")))
                 .build()));
+    }
+
+    public static <B extends InvisibleMonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleMonoBogey() {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(p -> p.noOcclusion())
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/invisible_monorail/top" + (s.getValue(AbstractMonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
+            .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 }

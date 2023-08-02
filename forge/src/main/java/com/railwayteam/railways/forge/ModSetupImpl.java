@@ -8,7 +8,7 @@ public class ModSetupImpl {
         Railways.registrate().useCreativeTab(CRCreativeModeTabsImpl.MAIN_TAB);
     }
 
-    public static void useCompatTab() {
-        Railways.registrate().useCreativeTab(CRCreativeModeTabsImpl.COMPAT_TAB);
+    public static void useTracksTab() {
+        Railways.registrate().useCreativeTab(CRCreativeModeTabsImpl.TRACKS_TAB);
     }
 }
