@@ -132,12 +132,6 @@
 	"railways.whistle.failure.conductor_missing": "Maquinista no encontrado o no está conduciendo el mismo tren.",
 	"railways.whistle.failure.not_owner": "Tienes que ser el dueño del tren para cancelar la programación.",
 	"railways.journeymap.train_marker_toggle": "Marcadores de trenes",
-	"block.railways.track_coupler.tooltip": "ACOPLADOR DE TRENES",
-	"block.railways.track_coupler.tooltip.summary": "Conéctalo a una vía alineándolo con el _centro_ del _vagón frontal_ de un tren, luego gira la rueda del ratón en la parte superior del bloque _con una llave inglesa_ para ajustar la distancia del punto de acople del _vagón trasero_.",
-	"block.railways.track_coupler.tooltip.condition1": "Cuando los vagones adecuados están sobre los puntos de acople, y el acople está en el modo correcto...",
-	"block.railways.track_coupler.tooltip.behaviour1": "Una _señal de redstone_ _acoplará_ los 2 vagones.",
-	"block.railways.track_coupler.tooltip.condition2": "Cuando otro bloque relacionado con los trenes (como una señal de tren) está conectado a la misma vía...",
-	"block.railways.track_coupler.tooltip.behaviour2": "El icono del acople _se desplazará_ a un lado, y _compartirán espacio_.",
 	"block.create.track_station.tooltip": "ESTACIÓN DE TREN",
 	"block.create.track_station.tooltip.summary": "Un _desplegador_ sujetando una _llave inglesa_ puede ensamblar y desensamblar automáticamente trenes interactuando con una _estación_. _Pista_: puedes usar una tolva para dar una llave inglesa a un desplegador."
 }

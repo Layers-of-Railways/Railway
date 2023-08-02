@@ -158,12 +158,6 @@
 	"railways.display_source.switch.normal": "Rechtdoor",
 	"railways.display_source.switch.reverse_left": "Links",
 	"railways.display_source.switch.reverse_right": "Rechts",
-	"block.railways.track_coupler.tooltip": "TRAIN COUPLER",
-	"block.railways.track_coupler.tooltip.summary": "Verbind aan een spoor onder het _midden_ van de trein z'n _voorste draaistel_, scroll dan op de bovenkant met een moersleutel om de koppelaar te verlengen onder een andere trein z'n _achterste draaistel_.",
-	"block.railways.track_coupler.tooltip.condition1": "Wanneer de juiste wagens over de spoor punten zijn, en de Koppelaar in de juiste stand is",
-	"block.railways.track_coupler.tooltip.behaviour1": "Zal een _redstone signaal_ geven de twee treinen samen _koppelen_.",
-	"block.railways.track_coupler.tooltip.condition2": "Wanneer een ander spoor gericht blok (zoals een trein signaal) is verbonden aan hetzelfde spoor",
-	"block.railways.track_coupler.tooltip.behaviour2": "Zal het koppelaar icoon _bewegen_ naar de zijkant, en ze zullen naast elkaar bestaan.",
 	"block.create.track_station.tooltip": "TREIN STATION",
 	"block.create.track_station.tooltip.summary": "Een _uitvoerder_ met een _moersleutel_ kan automatisch treinen monteren en demonteren door een _station_ te raken. _Hint_: trechters kunnen gebruikt worden om een moeras in een uitvoerder te plaatsen."
 }
