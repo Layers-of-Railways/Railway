@@ -40,7 +40,7 @@ jobs:
                   create_pull_request: true
                   pull_request_title: 'New Crowdin translations'
                   pull_request_body: 'New Crowdin pull request with translations'
-                  pull_request_base_branch_name: '1.18/dev'
+                  pull_request_base_branch_name: '1.19/dev'
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
                   CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
