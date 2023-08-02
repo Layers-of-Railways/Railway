@@ -1,9 +1,6 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
-    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
+    id "me.shedaniel.unified-publishing" version "0.1.+" // https://github.com/shedaniel/unified-publishing
 }
 
 loom {
@@ -144,35 +141,6 @@ dependencies {
     implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}"))
 }
 
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = System.getenv("CURSEFORGE_TOKEN")
-    var projectId = "688231"
-
-    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
-    mainFile.changelog = getChangelogText("Forge", true)
-    mainFile.changelogType = "html"
-    mainFile.displayName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    mainFile.addRequirement("create")
-    mainFile.addModLoader("Forge")
-    mainFile.addJavaVersion("Java 17")
-    mainFile.releaseType = "release"
-}
-
-modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
-    projectId = "ZzjhlDgM"
-    changelog = getChangelogText("Forge", true)
-    versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    versionNumber = "${mod_version}-forge-${minecraft_version}"
-    versionType = "release"
-    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar")
-    gameVersions = [minecraft_version]
-    loaders = ["forge"]
-    dependencies {
-        required.version "LNytGWDc", (System.getenv("CREATE_FORGE_VER") != null ? System.getenv("CREATE_FORGE_VER") : "null")
-    }
-}
-
 processResources {
     // include packs
     from(rootProject.file("common/src/main/resources")) {
@@ -181,7 +149,7 @@ processResources {
 
     // set up properties for filling into metadata
     Map<String, String> properties = Map.of(
-            "version", version,
+            "version", version as String,
             "forge_version", forge_version.split("\\.")[0], // only specify major version of forge
             "minecraft_version", minecraft_version,
             "create_version", create_forge_version.split("-")[0] // cut off build number
@@ -223,7 +191,7 @@ shadowJar {
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
     archiveClassifier = null
 }
@@ -257,6 +225,38 @@ sourcesJar {
 components.java {
     withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
         skip()
+    }
+}
+
+unifiedPublishing {
+    project {
+        releaseType = "release"
+        gameVersions = [minecraft_version]
+        gameLoaders = ["forge"]
+        displayName = "Steam 'n Rails $mod_version Forge $minecraft_version"
+        changelog = getChangelogText("Forge", true)
+        mainPublication remapJar
+
+        relations {
+            depends {
+                curseforge = modrinth = "create"
+            }
+        }
+
+        if (System.getenv("CURSEFORGE_TOKEN")) {
+            curseforge {
+                token = System.getenv("CURSEFORGE_TOKEN")
+                id = project.curseforge_id
+            }
+        }
+
+        if (System.getenv("MODRINTH_TOKEN")) {
+            modrinth {
+                token = System.getenv("MODRINTH_TOKEN")
+                id = project.modrinth_id
+                version = "$mod_version-forge-mc$minecraft_version"
+            }
+        }
     }
 }
 
