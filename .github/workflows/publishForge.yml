@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      CREATE_FORGE_VER: ${{ github.event.inputs.create_forge_version }}
-      RELEASE_BUILD: true
 
     steps:
       - name: Checkout Repository
@@ -31,14 +28,11 @@ jobs:
       - name: Build Forge & Publish to Maven
         env:
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+          RELEASE_BUILD: true
         run: ./gradlew :forge:build :forge:publish
 
-      - name: Upload Mod to Modrinth
+      - name: Release to Modrinth and Curseforge
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        run: ./gradlew :forge:modrinth
-
-      - name: Upload Mod to Curseforge
-        env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-        run: ./gradlew :forge:publishCurseForge
+        run: ./gradlew :forge:modrinth :forge:curseforge
