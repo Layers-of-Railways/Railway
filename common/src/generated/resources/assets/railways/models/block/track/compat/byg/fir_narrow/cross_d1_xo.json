@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_xo",
+  "textures": {
+    "1": "byg:block/track/fir/standard_track_fir",
+    "2": "byg:block/track/fir/standard_track_mip_fir",
+    "3": "byg:block/track/fir/standard_track_crossing_fir",
+    "particle": "byg:block/track/fir/standard_track_crossing_fir"
+  }
+}

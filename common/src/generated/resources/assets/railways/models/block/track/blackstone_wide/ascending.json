@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "railways:block/track/blackstone/standard_track_blackstone",
+    "1": "railways:block/track/blackstone/standard_track_mip_blackstone",
+    "particle": "minecraft:block/blackstone"
+  }
+}

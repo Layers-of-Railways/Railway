@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "twilightforest:block/track/minewood/portal_track_minewood",
+    "2": "twilightforest:block/track/minewood/portal_track_mip_minewood",
+    "3": "twilightforest:block/track/minewood/standard_track_minewood",
+    "particle": "twilightforest:block/track/minewood/standard_track_crossing_minewood"
+  }
+}

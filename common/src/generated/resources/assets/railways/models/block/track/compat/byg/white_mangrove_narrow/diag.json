@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag",
+  "textures": {
+    "1": "byg:block/track/white_mangrove/standard_track_white_mangrove",
+    "2": "byg:block/track/white_mangrove/standard_track_mip_white_mangrove",
+    "3": "byg:block/track/white_mangrove/standard_track_crossing_white_mangrove",
+    "particle": "byg:block/track/white_mangrove/standard_track_crossing_white_mangrove"
+  }
+}

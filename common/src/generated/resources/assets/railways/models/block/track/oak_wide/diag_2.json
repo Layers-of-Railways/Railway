@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag_2",
+  "textures": {
+    "1": "railways:block/track/oak/standard_track_oak",
+    "2": "railways:block/track/oak/standard_track_mip_oak",
+    "3": "railways:block/track/oak/standard_track_crossing_oak",
+    "particle": "minecraft:block/oak_planks"
+  }
+}

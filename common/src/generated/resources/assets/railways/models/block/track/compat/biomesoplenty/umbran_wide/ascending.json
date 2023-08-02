@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "biomesoplenty:block/track/umbran/standard_track_umbran",
+    "1": "biomesoplenty:block/track/umbran/standard_track_mip_umbran",
+    "particle": "biomesoplenty:block/track/umbran/standard_track_crossing_umbran"
+  }
+}

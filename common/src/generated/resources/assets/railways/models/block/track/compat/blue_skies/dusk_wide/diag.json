@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag",
+  "textures": {
+    "1": "blue_skies:block/track/dusk/standard_track_dusk",
+    "2": "blue_skies:block/track/dusk/standard_track_mip_dusk",
+    "3": "blue_skies:block/track/dusk/standard_track_crossing_dusk",
+    "particle": "blue_skies:block/track/dusk/standard_track_crossing_dusk"
+  }
+}

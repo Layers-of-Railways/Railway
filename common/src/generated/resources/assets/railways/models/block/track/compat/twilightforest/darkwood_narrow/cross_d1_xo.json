@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_xo",
+  "textures": {
+    "1": "twilightforest:block/track/darkwood/standard_track_darkwood",
+    "2": "twilightforest:block/track/darkwood/standard_track_mip_darkwood",
+    "3": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood",
+    "particle": "twilightforest:block/track/darkwood/standard_track_crossing_darkwood"
+  }
+}

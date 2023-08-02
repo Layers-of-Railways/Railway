@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/z_ortho",
+  "textures": {
+    "1": "byg:block/track/cika/standard_track_cika",
+    "2": "byg:block/track/cika/standard_track_mip_cika",
+    "3": "byg:block/track/cika/standard_track_crossing_cika",
+    "particle": "byg:block/track/cika/standard_track_crossing_cika"
+  }
+}

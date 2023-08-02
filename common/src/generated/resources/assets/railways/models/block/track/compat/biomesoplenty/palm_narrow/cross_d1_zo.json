@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "biomesoplenty:block/track/palm/standard_track_palm",
+    "2": "biomesoplenty:block/track/palm/standard_track_mip_palm",
+    "3": "biomesoplenty:block/track/palm/standard_track_crossing_palm",
+    "particle": "biomesoplenty:block/track/palm/standard_track_crossing_palm"
+  }
+}

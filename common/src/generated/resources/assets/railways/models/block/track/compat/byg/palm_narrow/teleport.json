@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/palm/portal_track_palm",
+    "2": "byg:block/track/palm/portal_track_mip_palm",
+    "3": "byg:block/track/palm/standard_track_palm",
+    "particle": "byg:block/track/palm/standard_track_crossing_palm"
+  }
+}

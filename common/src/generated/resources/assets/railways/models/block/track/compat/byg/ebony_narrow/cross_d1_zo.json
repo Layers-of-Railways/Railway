@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "byg:block/track/ebony/standard_track_ebony",
+    "2": "byg:block/track/ebony/standard_track_mip_ebony",
+    "3": "byg:block/track/ebony/standard_track_crossing_ebony",
+    "particle": "byg:block/track/ebony/standard_track_crossing_ebony"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "railways:block/track/birch/portal_track_birch",
+    "2": "railways:block/track/birch/portal_track_mip_birch",
+    "3": "railways:block/track/birch/standard_track_birch",
+    "particle": "minecraft:block/birch_planks"
+  }
+}

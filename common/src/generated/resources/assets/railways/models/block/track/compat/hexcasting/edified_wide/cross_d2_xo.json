@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "hexcasting:block/track/edified/standard_track_edified",
+    "2": "hexcasting:block/track/edified/standard_track_mip_edified",
+    "3": "hexcasting:block/track/edified/standard_track_crossing_edified",
+    "particle": "hexcasting:block/track/edified/standard_track_crossing_edified"
+  }
+}

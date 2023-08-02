@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "biomesoplenty:block/track/hellbark/standard_track_hellbark",
+    "2": "biomesoplenty:block/track/hellbark/standard_track_mip_hellbark",
+    "3": "biomesoplenty:block/track/hellbark/standard_track_crossing_hellbark",
+    "particle": "biomesoplenty:block/track/hellbark/standard_track_crossing_hellbark"
+  }
+}

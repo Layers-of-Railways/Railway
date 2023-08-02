@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag_2",
+  "textures": {
+    "1": "railways:block/track/crimson/standard_track_crimson",
+    "2": "railways:block/track/crimson/standard_track_mip_crimson",
+    "3": "railways:block/track/crimson/standard_track_crossing_crimson",
+    "particle": "minecraft:block/crimson_planks"
+  }
+}

@@ -99,6 +99,8 @@
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
+  "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
+  "railways.bogeys.styles.monobogey": "Monobogey",
 
   "railways.bogeys.styles.singleaxle": "Singleaxle",
   "railways.bogeys.styles.leafspring": "Leafspring",
@@ -128,7 +130,7 @@
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
   "itemGroup.railways": "Create: Steam 'n Rails",
-  "itemGroup.railways_compat": "Create: Steam 'n Rails: Compat Tracks",
+  "itemGroup.railways_tracks": "Create: Steam 'n Rails: Tracks",
   "itemGroup.railways_caps": "Create: Steam 'n Rails: Conductor Caps",
 
   "sounds.railways.conductor_whistle": "Conductor Whistles"

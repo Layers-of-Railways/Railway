@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_ortho",
+  "textures": {
+    "1": "byg:block/track/imparius/standard_track_imparius",
+    "2": "byg:block/track/imparius/standard_track_mip_imparius",
+    "3": "byg:block/track/imparius/standard_track_crossing_imparius",
+    "particle": "byg:block/track/imparius/standard_track_crossing_imparius"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "twilightforest:block/track/twilight_oak/standard_track_twilight_oak",
+    "1": "twilightforest:block/track/twilight_oak/standard_track_mip_twilight_oak",
+    "particle": "twilightforest:block/track/twilight_oak/standard_track_crossing_twilight_oak"
+  }
+}

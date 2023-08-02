@@ -10,9 +10,11 @@
   ],
   "mixins": [
     "MixinLootDataManager",
+    "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.forge.mixin.CRMixinPlugin"
 }

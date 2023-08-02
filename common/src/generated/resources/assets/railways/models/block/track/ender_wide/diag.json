@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag",
+  "textures": {
+    "1": "railways:block/track/ender/standard_track_ender",
+    "2": "railways:block/track/ender/standard_track_mip_ender",
+    "3": "railways:block/track/ender/standard_track_crossing_ender",
+    "particle": "minecraft:block/end_stone"
+  }
+}

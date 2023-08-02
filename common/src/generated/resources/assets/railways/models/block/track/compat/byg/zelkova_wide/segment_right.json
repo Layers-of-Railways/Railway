@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/segment_right",
+  "textures": {
+    "0": "byg:block/track/zelkova/standard_track_zelkova",
+    "1": "byg:block/track/zelkova/standard_track_mip_zelkova",
+    "particle": "byg:block/track/zelkova/standard_track_crossing_zelkova"
+  }
+}

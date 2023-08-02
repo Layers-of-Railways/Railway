@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_ortho",
+  "textures": {
+    "1": "byg:block/track/redwood/standard_track_redwood",
+    "2": "byg:block/track/redwood/standard_track_mip_redwood",
+    "3": "byg:block/track/redwood/standard_track_crossing_redwood",
+    "particle": "byg:block/track/redwood/standard_track_crossing_redwood"
+  }
+}

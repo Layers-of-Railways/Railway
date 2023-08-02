@@ -14,9 +14,12 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
@@ -47,10 +50,12 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -59,7 +64,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
@@ -97,6 +104,10 @@ public class CRBlocks {
         trackTags.add(AllTags.AllBlockTags.TRACKS.tag);
         if (material.trackType != CRTrackMaterials.CRTrackType.MONORAIL)
             trackTags.add(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
+        List<TagKey<Item>> itemTags = new ArrayList<>();
+        if (material == CRTrackMaterials.PHANTOM || material == CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM) || material == CRTrackMaterials.getNarrow(CRTrackMaterials.PHANTOM)) {
+            itemTags.add(CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.tag);
+        }
         //noinspection unchecked
         return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
                 .initialProperties(SharedProperties::stone)
@@ -116,6 +127,7 @@ public class CRBlocks {
                 .onRegister(CRTrackMaterials::addToBlockEntityType)
                 .item(TrackBlockItem::new)
                 .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
+                .tag((TagKey<Item>[]) itemTags.toArray(new TagKey[0]))
                 .build()
                 .register();
     }
@@ -211,6 +223,9 @@ public class CRBlocks {
                     .transform(customItemModel())
                     .register();
 
+    static {
+        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+    }
     public static final BlockEntry<TrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
     public static final BlockEntry<TrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);
     public static final BlockEntry<TrackBlock> CRIMSON_TRACK = makeTrack(CRTrackMaterials.CRIMSON);
@@ -224,8 +239,26 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> TIELESS_TRACK = makeTrack(CRTrackMaterials.TIELESS);
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
+
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
+
+    static {
+        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
+            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
+        }
+
+        for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
+            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
+        }
+    }
+
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
             MonorailBlockStateGenerator.create()::generate, BlockBehaviour.Properties::randomTicks);
+
+    static {
+        Railways.registrate().creativeModeTab(() -> CRItems.mainCreativeTab);
+    }
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
             REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
@@ -240,6 +273,13 @@ public class CRBlocks {
                     .transform(BuilderTransformers.invisibleBogey())
                     .lang("Invisible Bogey")
                     .register();
+
+    public static final BlockEntry<InvisibleMonoBogeyBlock> INVISIBLE_MONO_BOGEY =
+        REGISTRATE.block("invisible_mono_bogey", InvisibleMonoBogeyBlock::new)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.invisibleMonoBogey())
+            .lang("Invisible Mono Bogey")
+            .register();
 
     public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
             REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/x_ortho",
+  "textures": {
+    "1": "blue_skies:block/track/lunar/standard_track_lunar",
+    "2": "blue_skies:block/track/lunar/standard_track_mip_lunar",
+    "3": "blue_skies:block/track/lunar/standard_track_crossing_lunar",
+    "particle": "blue_skies:block/track/lunar/standard_track_crossing_lunar"
+  }
+}

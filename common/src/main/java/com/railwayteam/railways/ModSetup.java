@@ -36,7 +36,7 @@ public class ModSetup {
 
     // Compat
     if (TrackCompatUtils.anyLoaded())
-      useCompatTab();
+      useCompatTab(); // fixme use track tab
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();

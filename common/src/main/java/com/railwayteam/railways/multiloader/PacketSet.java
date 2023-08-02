@@ -143,7 +143,7 @@ public abstract class PacketSet {
 	@Internal
 	public void handleC2SPacket(ServerPlayer sender, FriendlyByteBuf buf) {
 		int i = buf.readVarInt();
-		if (i < 0 || i >= s2cPackets.size()) {
+		if (i < 0 || i >= c2sPackets.size()) {
 			Railways.LOGGER.error("Invalid C2S Packet {}, ignoring", i);
 			return;
 		}

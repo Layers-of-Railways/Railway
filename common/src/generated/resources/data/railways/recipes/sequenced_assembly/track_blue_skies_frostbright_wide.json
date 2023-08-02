@@ -1,0 +1,73 @@
+{
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "blue_skies"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "blue_skies"
+      ]
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_blue_skies_frostbright"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_blue_skies_frostbright_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        },
+        {
+          "item": "blue_skies:frostbright_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_blue_skies_frostbright_wide"
+  }
+}

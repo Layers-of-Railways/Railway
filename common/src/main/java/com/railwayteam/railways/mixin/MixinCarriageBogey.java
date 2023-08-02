@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Couple;
@@ -36,7 +37,7 @@ public class MixinCarriageBogey {
     @Inject(method = "updateCouplingAnchor", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Couple;set(ZLjava/lang/Object;)V"), cancellable = true)
     private void snr$hideInvisibleCoupler(Vec3 entityPos, float entityXRot, float entityYRot, int bogeySpacing,
                                           float partialTicks, boolean leading, CallbackInfo ci) {
-        if (type instanceof InvisibleBogeyBlock) {
+        if (type instanceof InvisibleBogeyBlock || type instanceof InvisibleMonoBogeyBlock) {
             couplingAnchors.set(leading, null);
             ci.cancel();
         }

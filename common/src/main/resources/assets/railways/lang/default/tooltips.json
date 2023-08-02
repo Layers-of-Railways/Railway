@@ -9,6 +9,18 @@
   "block.railways.track_phantom.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
   "block.railways.track_phantom.tooltip.behaviour2": "_Phantom Tracks_ in the world will be _invisible_",
 
+  "block.railways.track_phantom_wide.tooltip": "WIDE PHANTOM TRACK",
+  "block.railways.track_phantom_wide.tooltip.condition1": "When you hold a Phantom Track in your hand",
+  "block.railways.track_phantom_wide.tooltip.behaviour1": "_Phantom Tracks_ in the world will be _visible_",
+  "block.railways.track_phantom_wide.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
+  "block.railways.track_phantom_wide.tooltip.behaviour2": "_Phantom Tracks_ in the world will be _invisible_",
+
+  "block.railways.track_phantom_narrow.tooltip": "NARROW PHANTOM TRACK",
+  "block.railways.track_phantom_narrow.tooltip.condition1": "When you hold a Phantom Track in your hand",
+  "block.railways.track_phantom_narrow.tooltip.behaviour1": "_Phantom Tracks_ in the world will be _visible_",
+  "block.railways.track_phantom_narrow.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
+  "block.railways.track_phantom_narrow.tooltip.behaviour2": "_Phantom Tracks_ in the world will be _invisible_",
+
   "block.create.railway_casing.tooltip": "TRAIN CASING",
   "block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place."
 }

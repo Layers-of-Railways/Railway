@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/ascending",
+  "textures": {
+    "0": "blue_skies:block/track/starlit/standard_track_starlit",
+    "1": "blue_skies:block/track/starlit/standard_track_mip_starlit",
+    "particle": "blue_skies:block/track/starlit/standard_track_crossing_starlit"
+  }
+}

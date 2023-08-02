@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_ortho",
+  "textures": {
+    "1": "biomesoplenty:block/track/jacaranda/standard_track_jacaranda",
+    "2": "biomesoplenty:block/track/jacaranda/standard_track_mip_jacaranda",
+    "3": "biomesoplenty:block/track/jacaranda/standard_track_crossing_jacaranda",
+    "particle": "biomesoplenty:block/track/jacaranda/standard_track_crossing_jacaranda"
+  }
+}

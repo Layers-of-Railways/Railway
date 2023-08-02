@@ -111,10 +111,11 @@ dependencies {
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
         modLocalRuntime("at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucal_version}")
-        modLocalRuntime("railways:hexcasting-forge-${minecraft_version}:${hexcasting_version}") {
+        modLocalRuntime("at.petra-k.hexcasting:hexcasting-forge-${minecraft_version}:${hexcasting_version}") {
             exclude group: "com.github.Virtuoel", module: "Pehkui"
             exclude group: "net.minecraftforge", module: "forge"
             exclude group: "top.theillusivec4.curios", module: "curios-forge"
+            exclude group: "mezz.jei", module: "jei-1.19.2-forge"
         }
         //modApi("com.github.Virtuoel:Pehkui:${pehkui_version}-${minecraft_version}-forge") // probably not needed
         modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
@@ -122,7 +123,7 @@ dependencies {
     }
 
     if (enable_byg.toBoolean()) {
-        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_forge}")
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version}-forge")
     }
     if (enable_byg.toBoolean() || enable_bop.toBoolean()) {
         modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_forge}")
@@ -141,6 +142,9 @@ dependencies {
     if (enable_sc.toBoolean()) {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
     }
+
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}"))
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}"))
 }
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {

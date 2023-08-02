@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "byg:block/track/baobab/standard_track_baobab",
+    "2": "byg:block/track/baobab/standard_track_mip_baobab",
+    "3": "byg:block/track/baobab/standard_track_crossing_baobab",
+    "particle": "byg:block/track/baobab/standard_track_crossing_baobab"
+  }
+}

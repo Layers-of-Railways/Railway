@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "biomesoplenty:block/track/dead/portal_track_dead",
+    "2": "biomesoplenty:block/track/dead/portal_track_mip_dead",
+    "3": "biomesoplenty:block/track/dead/standard_track_dead",
+    "particle": "biomesoplenty:block/track/dead/standard_track_crossing_dead"
+  }
+}

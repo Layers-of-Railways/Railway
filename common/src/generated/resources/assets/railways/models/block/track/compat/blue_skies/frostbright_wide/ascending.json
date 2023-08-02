@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "blue_skies:block/track/frostbright/standard_track_frostbright",
+    "1": "blue_skies:block/track/frostbright/standard_track_mip_frostbright",
+    "particle": "blue_skies:block/track/frostbright/standard_track_crossing_frostbright"
+  }
+}

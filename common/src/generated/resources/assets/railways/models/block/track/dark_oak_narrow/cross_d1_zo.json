@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "railways:block/track/dark_oak/standard_track_dark_oak",
+    "2": "railways:block/track/dark_oak/standard_track_mip_dark_oak",
+    "3": "railways:block/track/dark_oak/standard_track_crossing_dark_oak",
+    "particle": "minecraft:block/dark_oak_planks"
+  }
+}
