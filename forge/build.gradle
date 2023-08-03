@@ -260,7 +260,7 @@ unifiedPublishing {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = "${rootProject.archives_base_name}-${project.name}"
+            artifactId = "${archives_base_name}-${project.name}-${mod_version}"
             from components.java
         }
     }
