@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.*;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.DevCapeUtils;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -39,6 +40,8 @@ public class RailwaysClient {
 
     CRDevCaps.register();
     CRBogeyStyles.registerClient();
+
+    DevCapeUtils.INSTANCE.init();
   }
 
   @ExpectPlatform
