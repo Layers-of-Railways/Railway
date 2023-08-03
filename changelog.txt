@@ -1,4 +1,4 @@
-v1.4.4:
+v1.5.0:
 - Optimize: Remove expensive call to get stack trace in performance-critical navigation code
 - Optimize: Config option to disable train collision
 - Improved smoke from smokestacks
@@ -13,6 +13,8 @@ v1.4.4:
 - Added wide gauge tracks
 - Added narrow gauge tracks
 - Added invisible monobogeys
+- feat: (Invisible) Monobogeys can drive on phantom tracks
+- feat: Invisible (mono)bogeys can drive on any track type
 v1.4.3:
 - fix: Custom curved tracks render with flywheel off in production (#169)
 - SecurityCraft compat (#172)

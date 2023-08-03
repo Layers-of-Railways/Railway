@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/narrow_gauge_base/cross_ortho",
-  "textures": {
-    "1": "railways:block/track/phantom/standard_track_phantom",
-    "2": "railways:block/track/phantom/standard_track_mip_phantom",
-    "3": "railways:block/track/phantom/standard_track_crossing_phantom",
-    "particle": "minecraft:block/glass"
-  }
-}
