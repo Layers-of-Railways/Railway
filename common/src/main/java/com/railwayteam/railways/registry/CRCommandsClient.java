@@ -6,6 +6,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.ClearCapCacheCommand;
 import com.railwayteam.railways.registry.commands.ClearCasingCacheCommand;
+import com.railwayteam.railways.registry.commands.ReloadDevCapesCommand;
 import com.railwayteam.railways.registry.commands.ReloadJourneymapCommand;
 import net.minecraft.commands.SharedSuggestionProvider;
 
@@ -20,6 +21,7 @@ public class CRCommandsClient {
 				.then(ClearCasingCacheCommand.register())
 				.then(ClearCapCacheCommand.register())
 				.then(ReloadJourneymapCommand.register())
+				.then(ReloadDevCapesCommand.register())
 		);
 
 		CommandNode<SharedSuggestionProvider> snrc = dispatcher.findNode(Collections.singleton("snrc"));

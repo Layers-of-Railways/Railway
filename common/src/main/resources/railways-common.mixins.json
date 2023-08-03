@@ -76,7 +76,7 @@
     "conductor_possession.TrackedEntityMixin"
   ],
   "client": [
-    "MixinPlayerInfo",
+    "client.MixinPlayerInfo",
     "client.AccessorControlsHandler",
     "client.AccessorEntity",
     "client.AccessorInstance",
