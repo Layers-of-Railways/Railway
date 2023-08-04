@@ -22,8 +22,8 @@ public class RailwaysClient {
     registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
 
-    registerBuiltinPack("legacy_semaphore", "Steam 'n Rails Legacy Semaphores");
-    registerBuiltinPack("green_signals", "Steam 'n Rails Green Signals");
+    registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
+    registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
 
     registerClientCommands(CRCommandsClient::register);
 

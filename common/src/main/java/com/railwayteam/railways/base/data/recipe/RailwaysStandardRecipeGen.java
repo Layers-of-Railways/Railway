@@ -160,7 +160,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     @Override
     public String getName() {
-        return "Steam 'n Rails Standard Recipes";
+        return "Steam 'n' Rails Standard Recipes";
     }
 
     class GeneratedRecipeBuilder {

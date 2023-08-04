@@ -1,6 +1,6 @@
 /*
  * Copyright 2022 QuiltMC
- * Modified by the Steam 'n Rails (Railways) team
+ * Modified by the Steam 'n' Rails (Railways) team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

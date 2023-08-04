@@ -129,9 +129,9 @@
 
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
-  "itemGroup.railways": "Create: Steam 'n Rails",
-  "itemGroup.railways_tracks": "Create: Steam 'n Rails: Tracks",
-  "itemGroup.railways_caps": "Create: Steam 'n Rails: Conductor Caps",
+  "itemGroup.railways": "Create: Steam 'n' Rails",
+  "itemGroup.railways_tracks": "Create: Steam 'n' Rails: Tracks",
+  "itemGroup.railways_caps": "Create: Steam 'n' Rails: Caps",
 
   "sounds.railways.conductor_whistle": "Conductor Whistles"
 }

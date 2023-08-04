@@ -77,7 +77,7 @@ public class Railways {
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     PonderLocalization.provideRegistrateLang(REGISTRATE);
-    gen.addProvider((PackOutput output) -> CRLangPartials.createMerger(output, MODID, "Steam 'n Rails", CRLangPartials.values()));
+    gen.addProvider((PackOutput output) -> CRLangPartials.createMerger(output, MODID, "Steam 'n' Rails", CRLangPartials.values()));
   }
 
   public static CreateRegistrate registrate() {

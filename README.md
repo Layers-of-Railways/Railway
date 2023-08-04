@@ -1,8 +1,8 @@
-<h1 align="center">Create Steam 'n Rails</h1>
+<h1 align="center">Create Steam 'n' Rails</h1>
 <br><br>
 <img src="https://discordapp.com/api/guilds/706277846389227612/widget.png?style=banner3" alt="Discord Banner 3" align="right"/>
 
-**Create Steam 'n Rails** is an addon mod for Create that aims to extend Create's train and steam systems. Current features include custom tracks, semaphores, and conductors.
+**Create Steam 'n' Rails** is an addon mod for Create that aims to extend Create's train and steam systems. Current features include custom tracks, semaphores, and conductors.
 
 ## Contributing (for team members):
 1. Create a new branch for your feature (named `1.18/<feat>`)
@@ -32,7 +32,7 @@ a preview, or if you are just fixing a typo in the README, etc.
 
 
 ## License
-Steam 'n Rails is licensed under the MIT license. See [LICENSE](LICENSE) for more information.
+Steam 'n' Rails is licensed under the MIT license. See [LICENSE](LICENSE) for more information.
 
 Certain sections of the code are from the Create mod, which is licensed under the MIT license. See [Create's license](https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/LICENSE) for more information.
 
