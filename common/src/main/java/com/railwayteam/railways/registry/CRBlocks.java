@@ -266,7 +266,7 @@ public class CRBlocks {
                     .register();
 
     static {
-        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
     }
     public static final BlockEntry<TrackBlock> ACACIA_TRACK = makeTrack(CRTrackMaterials.ACACIA);
     public static final BlockEntry<TrackBlock> BIRCH_TRACK = makeTrack(CRTrackMaterials.BIRCH);

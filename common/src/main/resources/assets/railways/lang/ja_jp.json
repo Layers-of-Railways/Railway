@@ -280,7 +280,7 @@
 	"item.railways.white_incomplete_conductor_cap": "組み立て中の白色の車掌帽",
 	"item.railways.yellow_conductor_cap": "黄色の車掌帽",
 	"item.railways.yellow_incomplete_conductor_cap": "組み立て中の黄色の車掌帽",
-	"itemGroup.railways": "Create Steam 'n Rails",
+	"itemGroup.railways": "Create Steam 'n' Rails",
 	"railways.ponder.conductor_constructing.header": "車掌の組み立て",
 	"railways.ponder.conductor_constructing.text_1": "車掌は安山岩ケーシングで構築します。",
 	"railways.ponder.conductor_redstoning.header": "車掌による遠隔レッドストーン制御",

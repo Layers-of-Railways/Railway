@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "railways",
   "version": "${version}",
-  "name": "Create: Steam 'n Rails",
+  "name": "Create: Steam 'n' Rails",
   "description": "Customization and extension of Create rail systems and steam system",
   "authors": [
     "The Railways Team"

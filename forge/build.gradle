@@ -227,7 +227,7 @@ unifiedPublishing {
         releaseType = "release"
         gameVersions = [minecraft_version]
         gameLoaders = ["forge"]
-        displayName = "Steam 'n Rails $mod_version Forge $minecraft_version"
+        displayName = "Steam 'n' Rails $mod_version Forge $minecraft_version"
         changelog = getChangelogText("Forge", true)
         mainPublication remapJar
 

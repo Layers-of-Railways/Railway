@@ -131,8 +131,8 @@ String getChangelogText(String loader, boolean recent) {
         if (it.size() > 1) {
             def temp = it
             if (lineCount == 0) {
-                temp = "Steam 'n Rails ${version}"
-                temp = "<span style=\"font-size: 18px; color: #333399;\">Steam 'n Rails v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft $loader ${minecraft_version}</em><br/>"
+                temp = "Steam 'n' Rails ${version}"
+                temp = "<span style=\"font-size: 18px; color: #333399;\">Steam 'n' Rails v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft $loader ${minecraft_version}</em><br/>"
             } else if (it.startsWith('-')) {
                 temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
                 temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
