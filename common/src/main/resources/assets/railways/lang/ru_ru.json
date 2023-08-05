@@ -1,5 +1,5 @@
 {
-	"_": "Благодарим вас за перевод Steam 'n Rails!",
+	"_": "Благодарим вас за перевод Steam 'n' Rails!",
 	"block.railways.conductor_whistle": "Свисток машиниста",
 	"block.railways.invisible_bogey": "Невидимая вагонная тележка",
 	"block.railways.mono_bogey": "Монорельсовая вагонная тележка",
@@ -189,7 +189,7 @@
 	"item.railways.white_incomplete_conductor_cap": "Незаконченная белая фуражка машиниста",
 	"item.railways.yellow_conductor_cap": "Жёлтая фуражка машиниста",
 	"item.railways.yellow_incomplete_conductor_cap": "Незаконченная жёлтая фуражка машиниста",
-	"itemGroup.railways": "Create Steam 'n Rails",
+	"itemGroup.railways": "Create Steam 'n' Rails",
 	"railways.ponder.conductor_constructing.header": "Конструированием помощника",
 	"railways.ponder.conductor_constructing.text_1": "Помощники создаются из андезитового корпуса",
 	"railways.ponder.conductor_redstoning.header": "Удалённой активации редстоун-сигнала помощниками",

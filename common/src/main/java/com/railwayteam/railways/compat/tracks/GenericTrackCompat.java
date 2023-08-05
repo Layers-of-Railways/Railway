@@ -42,7 +42,7 @@ public class GenericTrackCompat {
     }
 
     static {
-        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n Rails: Tracks");
+        Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
     }
 
     protected static boolean registerTracksAnywayGlobal() {

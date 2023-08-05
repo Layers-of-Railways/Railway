@@ -39,7 +39,7 @@ public class Railways {
   public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
-          .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n Rails");
+          .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n' Rails");
 
   static {
     REGISTRATE.setTooltipModifierFactory(item -> {
@@ -81,7 +81,7 @@ public class Railways {
     gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
-    gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n Rails", CRLangPartials.values()));
+    gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n' Rails", CRLangPartials.values()));
   }
 
   public static CreateRegistrate registrate() {

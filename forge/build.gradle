@@ -74,12 +74,6 @@ repositories {
             includeGroup "curse.maven"
         }
     } // Biomes O' Plenty
-
-    // according to https://github.com/Talia-12/Hexal/blob/main/addon_guide.md, this is needed for hex casting (you should download the mod into here)
-    // VERSION USED: hexcasting-forge-1.18.2-0.9.6-pre-6.jar (https://maven.blamejared.com/at/petra-k/hexcasting/hexcasting-forge-1.18.2/0.9.6-pre-6/)
-    flatDir {
-        dir 'libs'
-    }
 }
 
 dependencies {
@@ -233,7 +227,7 @@ unifiedPublishing {
         releaseType = "release"
         gameVersions = [minecraft_version]
         gameLoaders = ["forge"]
-        displayName = "Steam 'n Rails $mod_version Forge $minecraft_version"
+        displayName = "Steam 'n' Rails $mod_version Forge $minecraft_version"
         changelog = getChangelogText("Forge", true)
         mainPublication remapJar
 
@@ -263,7 +257,7 @@ unifiedPublishing {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = "${rootProject.archives_base_name}-${project.name}"
+            artifactId = "${archives_base_name}-${project.name}-${minecraft_version}"
             from components.java
         }
     }

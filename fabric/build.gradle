@@ -243,7 +243,7 @@ unifiedPublishing {
         releaseType = "release"
         gameVersions = [minecraft_version]
         gameLoaders = ["fabric"]
-        displayName = "Steam 'n Rails $mod_version Fabric $minecraft_version"
+        displayName = "Steam 'n' Rails $mod_version Fabric $minecraft_version"
         changelog = getChangelogText("Fabric", true)
         mainPublication remapJar
 
@@ -273,7 +273,7 @@ unifiedPublishing {
 publishing {
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = "${rootProject.archives_base_name}-${project.name}"
+            artifactId = "${archives_base_name}-${project.name}-${minecraft_version}"
             from components.java
         }
     }
