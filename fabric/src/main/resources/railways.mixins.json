@@ -14,5 +14,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.fabric.mixin.CRMixinPlugin"
 }

@@ -9,9 +9,10 @@ v1.5.0:
 - Added new dev caps for Rabbitminers and TropheusJay
 - fix: use vanilla entity data accessors, hopefully quilt clients can join fabric servers now
 - update to Create 0.5.1c
-- fix: use 'proper' class tranformation to add Track Replace rolling mode (#194)
+- fix: use 'proper' class transformation to add Track Replace rolling mode (#194)
 - Added wide gauge tracks
 - Added narrow gauge tracks
 - Added invisible monobogeys
 - feat: (Invisible) Monobogeys can drive on phantom tracks
 - feat: Invisible (mono)bogeys can drive on any track type
+- feat: Simple Voice Chat integration for conductor spies

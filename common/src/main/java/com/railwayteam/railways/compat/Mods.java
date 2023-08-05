@@ -18,7 +18,8 @@ public enum Mods {
 	BYG("byg"),
 	HEXCASTING("hexcasting",true),
 	TWILIGHTFOREST("twilightforest"),
-	SODIUM("sodium")
+	SODIUM("sodium"),
+	VOICECHAT("voicechat")
 	;
 
 	public final boolean isLoaded;

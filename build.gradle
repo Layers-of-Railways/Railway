@@ -55,6 +55,7 @@ subprojects {
                 }
             }
         }
+        maven { url = 'https://maven.maxhenkel.de/repository/public' } // Simple Voice Chat
     }
 
     dependencies {
