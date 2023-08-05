@@ -40,8 +40,8 @@ public class CustomTrackBlockOutline {
 		AllShapes.TRACK_DIAG.get(Direction.EAST), CRShapes.NARROW_TRACK_DIAG.get(Direction.EAST),
 		AllShapes.TRACK_DIAG.get(Direction.SOUTH), CRShapes.NARROW_TRACK_DIAG.get(Direction.SOUTH))).putAll(Map.of(
 		AllShapes.TRACK_CROSS_DIAG, CRShapes.NARROW_TRACK_CROSS_DIAG,
-		AccessorTrackBlockOutline.getLONG_ORTHO_OFFSET(), MONORAIL_LONG_ORTHO_OFFSET,
-		AccessorTrackBlockOutline.getLONG_ORTHO(), CRShapes.NARROW_TRACK_ORTHO_LONG.get(Direction.SOUTH),
+		AccessorTrackBlockOutline.getLONG_ORTHO_OFFSET(), NARROW_LONG_ORTHO_OFFSET,
+		AccessorTrackBlockOutline.getLONG_ORTHO(), NARROW_LONG_ORTHO,
 		AccessorTrackBlockOutline.getLONG_CROSS(), NARROW_LONG_CROSS
 	)).build();
 
