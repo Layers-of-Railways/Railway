@@ -46,7 +46,7 @@ public class Railways {
 
   public static void init() {
     registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-    registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+    registerConfig(ModConfig.Type.COMMON, Config.SERVER_CONFIG);
     Path configDir = Utils.configDir();
     Config.loadConfig(Config.CLIENT_CONFIG, configDir.resolve(MODID + "-client.toml"));
     Config.loadConfig(Config.SERVER_CONFIG, configDir.resolve(MODID + "-common.toml"));

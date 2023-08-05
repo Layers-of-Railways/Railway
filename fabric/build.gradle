@@ -117,6 +117,12 @@ dependencies {
 
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
+    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+
+    if (enable_simple_voice_chat.toBoolean()) {
+        modLocalRuntime "maven.modrinth:simple-voice-chat:fabric-${voicechat_version}"
+    }
+
     // because create fabric is a bit broken I think (also actually using this library)
     modApi("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
@@ -150,8 +156,8 @@ dependencies {
     if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
     }
-
-    include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}")))
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}"))
+    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}")
 }
 
 processResources {
@@ -166,7 +172,8 @@ processResources {
             "fabric_loader_version", fabric_loader_version,
             "fabric_api_version", fabric_api_version,
             "minecraft_version", minecraft_version,
-            "create_version", create_fabric_version // on fabric, use the entire version, unlike forge
+            "create_version", create_fabric_version, // on fabric, use the entire version, unlike forge
+            "voicechat_api_version", voicechat_api_version
     )
     properties.forEach((k, v) -> inputs.property(k, v))
 

@@ -7,6 +7,7 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -51,13 +52,18 @@ public class MixinTrackBlockClient {
             msr.translate(0, 14/16f, 0);
             return;
         }
-        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
+        if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (casingTE.getTrackCasing() != null) {
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
+                TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
-                    msr.translate(spec.getXShift(), (spec.getTopSurfacePixelHeight(casingTE.isAlternate()) - 2)/16f, spec.getZShift());
+                    msr.translate(
+                        spec.getXShift(trackType),
+                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2)/16f,
+                        spec.getZShift(trackType)
+                    );
             }
         }
     }

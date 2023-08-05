@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.jozufozu.flywheel.api.Material;
+import com.jozufozu.flywheel.backend.Backend;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
@@ -8,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
+import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -29,12 +31,17 @@ import java.util.List;
 
 import static com.railwayteam.railways.util.MathUtils.copy;
 
+import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NARROW_GAUGE;
+import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
+
 public abstract class CasingRenderUtils {
 
   private static final HashMap<Pair<PartialModel, SlabBlock>, PartialModel> reTexturedModels = new HashMap<>();
 
   public static void clearModelCache() {
     reTexturedModels.clear();
+    CRBlockPartials.registerCasingSpecs();
+    Backend.reloadWorldRenderers();
   }
 
   public static PartialModel reTexture(PartialModel model, SlabBlock block) {
@@ -88,16 +95,32 @@ public abstract class CasingRenderUtils {
             .light(light)
             .renderInto(ms, vb);
 
-        for (boolean first : Iterate.trueAndFalse) {
-          PoseStack.Pose transform = segment.railTransforms.get(first);
-          Matrix4f pose2 = copy(transform.pose());
-          pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
-          CachedBufferer.partial(texturedPartial, state)
-              .mulPose(pose2)
-              .mulNormal(transform.normal())
-              .translate(-0.5, shiftDown, 0)
-              .light(light)
-              .renderInto(ms, vb);
+        if (bc.getMaterial().trackType == WIDE_GAUGE) {
+          for (boolean first : Iterate.trueAndFalse) {
+            for (boolean inner : Iterate.trueAndFalse) {
+              PoseStack.Pose transform = segment.railTransforms.get(first);
+              Matrix4f pose2 = transform.pose().copy();
+              pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
+              CachedBufferer.partial(texturedPartial, state)
+                  .mulPose(pose2)
+                  .mulNormal(transform.normal())
+                  .translate((first ? -(61 / 64.) : -(1 / 32.)) + (inner ? 0 : (first ? 1 : -1)), shiftDown, 0)
+                  .light(light)
+                  .renderInto(ms, vb);
+            }
+          }
+        } else {
+          for (boolean first : Iterate.trueAndFalse) {
+            PoseStack.Pose transform = segment.railTransforms.get(first);
+            Matrix4f pose2 = copy(transform.pose());
+            pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
+            CachedBufferer.partial(texturedPartial, state)
+                .mulPose(pose2)
+                .mulNormal(transform.normal())
+                .translate(-0.5, shiftDown, 0)
+                .light(light)
+                .renderInto(ms, vb);
+          }
         }
       }
       ms.popPose();
@@ -108,8 +131,13 @@ public abstract class CasingRenderUtils {
     List<Vec3> positions = new ArrayList<>();
     List<int[]> takenPositions = new ArrayList<>();
     for (BezierConnection.Segment segment : bc) {
-      Vec3 pos1 = segment.position.add(segment.normal.scale(1.3));
-      Vec3 pos2 = segment.position.add(segment.normal.scale(-1.3));
+      double factor = 1.3;
+      if (bc.getMaterial().trackType == WIDE_GAUGE)
+        factor += 0.5;
+      else if (bc.getMaterial().trackType == NARROW_GAUGE)
+        factor -= 7 / 16.;
+      Vec3 pos1 = segment.position.add(segment.normal.scale(factor));
+      Vec3 pos2 = segment.position.add(segment.normal.scale(-factor));
 
       float steps = 4;
       Vec3 stepVec = pos1.vectorTo(pos2).scale(1 / steps);

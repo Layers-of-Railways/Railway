@@ -50,9 +50,16 @@ public class MixinTrackRenderer {
                             .rotateZ(angle);
                     }
                 }
+
+                TrackMaterial.TrackType trackType = null;
+                if (te.getBlockState().getBlock() instanceof TrackBlock trackBlock)
+                    trackType = trackBlock.getMaterial().trackType;
+
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 if (((IHasTrackCasing) te).isAlternate())
-                    spec = spec.getAltSpec();
+                    spec = spec.getNonNullAltSpec(trackType);
+                else
+                    spec = spec.getFor(trackType);
                 CRBlockPartials.ModelTransform transform = spec.transform;
 
                 PartialModel texturedPartial = reTexture(spec.model, casingBlock);

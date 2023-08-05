@@ -14,11 +14,11 @@ import java.util.Optional;
 
 public interface IGenerallySearchableNavigation {
 
-    void searchGeneral(double maxDistance, boolean forward, PointTest pointTest);
+    void snr$searchGeneral(double maxDistance, boolean forward, PointTest pointTest);
 
-    void searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest);
+    void snr$searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest);
 
-    Pair<TrackSwitch, Pair<Boolean, Optional<TrackSwitchBlock.SwitchState>>> findNearestApproachableSwitch(boolean forward);
+    Pair<TrackSwitch, Pair<Boolean, Optional<TrackSwitchBlock.SwitchState>>> snr$findNearestApproachableSwitch(boolean forward);
 
     @ApiStatus.Internal
     class FrontierEntry implements Comparable<FrontierEntry> {

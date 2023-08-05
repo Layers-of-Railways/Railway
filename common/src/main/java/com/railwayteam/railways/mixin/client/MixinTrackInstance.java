@@ -27,6 +27,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.casingPositions;
+import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
 import static com.railwayteam.railways.util.MathUtils.copy;
 
 @Mixin(value = TrackInstance.class, remap = false)
@@ -66,14 +68,14 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
     @Inject(method = "update", at = @At(value = "RETURN", ordinal = 0))
     private void updateWithoutConnections(CallbackInfo ci) { //otherwise it visually stays when an encased track is broken
         this.remove();
-        makeCasingData(false);
+        snr$makeCasingData(false);
         LightUpdater.get(world)
             .addListener(this);
     }
 
     @Inject(method = "update", at = @At(value = "RETURN", ordinal = 1))
     private void updateWithConnections(CallbackInfo ci) {
-        makeCasingData(true);
+        snr$makeCasingData(true);
     }
 
     @Inject(method = "updateLight", at = @At("HEAD"))
@@ -92,7 +94,8 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
         out.add(this.pos);
     }
 
-    private void makeCasingData(boolean connections) {
+    @Unique
+    private void snr$makeCasingData(boolean connections) {
         Material<ModelData> mat = this.materialManager.cutout(RenderType.cutoutMipped()).material(Materials.TRANSFORMED);
 
         PoseStack ms = new PoseStack();
@@ -114,9 +117,15 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                             .rotateZ(angle);
                     }
                 }
+                TrackMaterial.TrackType trackType = null;
+                if (this.blockState.getBlock() instanceof TrackBlock trackBlock)
+                    trackType = trackBlock.getMaterial().trackType;
+
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 if (((IHasTrackCasing) this.blockEntity).isAlternate())
-                    spec = spec.getAltSpec();
+                    spec = spec.getNonNullAltSpec(trackType);
+                else
+                    spec = spec.getFor(trackType);
                 PartialModel rawCasingModel = spec.model;
                 CRBlockPartials.ModelTransform transform = spec.transform;
 
@@ -182,20 +191,40 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                             casingInstance.updateLight(this.world, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
 
-                            for (boolean first : Iterate.trueAndFalse) {
-                                PoseStack.Pose transform = segment.railTransforms.get(first);
-                                Matrix4f pose_matrix2 = copy(transform.pose());
-                                pose_matrix2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
+                            if (bc.getMaterial().trackType == WIDE_GAUGE) {
+                                for (boolean first : Iterate.trueAndFalse) {
+                                    for (boolean inner : Iterate.trueAndFalse) {
+                                        PoseStack.Pose transform = segment.railTransforms.get(first);
+                                        Matrix4f pose_matrix2 = transform.pose().copy();
+                                        pose_matrix2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
 
-                                ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
-                                    CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
-                                casingInstance2.setTransform(ms)
-                                    .mulPose(pose_matrix2)
-                                    .mulNormal(transform.normal())
-                                    .translate(-0.5, shiftDown, 0);
-                                BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
-                                casingInstance2.updateLight(this.world, relativePos2);
-                                casingData.add(Pair.of(casingInstance2, relativePos2));
+                                        ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff == 0 ? CRBlockPartials.TRACK_CASING_FLAT :
+                                            CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
+                                        casingInstance2.setTransform(ms)
+                                            .mulPose(pose_matrix2)
+                                            .mulNormal(transform.normal())
+                                            .translate((first ? -(61 / 64.) : -(1 / 32.)) + (inner ? 0 : (first ? 1 : -1)), shiftDown, 0);
+                                        BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
+                                        casingInstance2.updateLight(this.world, relativePos2);
+                                        casingData.add(Pair.of(casingInstance2, relativePos2));
+                                    }
+                                }
+                            } else {
+                                for (boolean first : Iterate.trueAndFalse) {
+                                    PoseStack.Pose transform = segment.railTransforms.get(first);
+                                    Matrix4f pose_matrix2 = copy(transform.pose());
+                                    pose_matrix2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
+
+                                    ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff == 0 ? CRBlockPartials.TRACK_CASING_FLAT :
+                                        CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, mat);
+                                    casingInstance2.setTransform(ms)
+                                        .mulPose(pose_matrix2)
+                                        .mulNormal(transform.normal())
+                                        .translate(-0.5, shiftDown, 0);
+                                    BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
+                                    casingInstance2.updateLight(this.world, relativePos2);
+                                    casingData.add(Pair.of(casingInstance2, relativePos2));
+                                }
                             }
                         }
                     }

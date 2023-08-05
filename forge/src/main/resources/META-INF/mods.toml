@@ -42,3 +42,10 @@ mandatory=false
 versionRange="," # Any version
 ordering="AFTER" # Steam 'n' Rails should load after hexcasting
 side="BOTH"
+
+[[dependencies.railways]]
+modId="voicechat"
+mandatory=false
+versionRange="[${minecraft_version}-${voicechat_api_version},)"
+ordering="AFTER"
+side="BOTH"

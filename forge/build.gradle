@@ -99,6 +99,12 @@ dependencies {
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-SNAPSHOT") // for some reason this is needed explicitly
 
+    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+
+    if (enable_simple_voice_chat.toBoolean()) {
+        modLocalRuntime "maven.modrinth:simple-voice-chat:forge-${voicechat_version}"
+    }
+
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
         modLocalRuntime("at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucal_version}")
@@ -149,7 +155,8 @@ processResources {
             "version", version as String,
             "forge_version", forge_version.split("\\.")[0], // only specify major version of forge
             "minecraft_version", minecraft_version,
-            "create_version", create_forge_version.split("-")[0] // cut off build number
+            "create_version", create_forge_version.split("-")[0], // cut off build number
+            "voicechat_api_version", voicechat_api_version
     )
     properties.forEach((k, v) -> inputs.property(k, v))
 

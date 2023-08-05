@@ -110,10 +110,10 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                     }
 
                     Ingredient finalRailsIngredient = railsIngredient;
-                    TRACKS.put(material, create( // fixme can this even be crafted?
+                    TRACKS.put(material, create(
                         "track_" + (material.id.getNamespace().equals(Railways.MODID)
                             ? "" : material.id.getNamespace()+"_") + material.resourceName(),
-                        b -> b.conditionalMaterial(material).require(baseMaterial.sleeperIngredient)
+                        b -> b.conditionalMaterial(material).require(sleeperIngredient)
                             .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
                             .addOutput(material.getBlock(), 1)
                             .loops(1)
@@ -158,15 +158,6 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
             .addOutput(new ItemStack(CRTrackMaterials.PHANTOM.getBlock(), 32), 1)
             .loops(1)
             .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
-            .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
-            .addStep(PressingRecipe::new, rb -> rb)
-        ));
-
-        TRACKS.put(CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM), create("track_phantom_wide", b -> b.require(CRBlocks.PHANTOM_TRACK.get())
-            .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM)).get())
-            .addOutput(new ItemStack(CRTrackMaterials.getWide(CRTrackMaterials.PHANTOM).getBlock()), 1)
-            .loops(1)
-            .addStep(CuttingRecipe::new, rb -> rb)
             .addStep(DeployerApplicationRecipe::new, rb -> rb.require(Ingredients.ironIngot()))
             .addStep(PressingRecipe::new, rb -> rb)
         ));

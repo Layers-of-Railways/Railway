@@ -48,3 +48,4 @@ jars
 /build_archive/
 /common/src/main/resources/assets/create/
 /development_assets/venv/
+/common/src/main/resources/assets/minecraft/textures/block/

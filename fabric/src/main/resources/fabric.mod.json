@@ -28,6 +28,9 @@
     ],
     "mm:early_risers": [
       "com.railwayteam.railways.fabric.EarlyRiser"
+    ],
+    "preLaunch": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ]
   },
   "mixins": [
@@ -45,6 +48,7 @@
     "mm": ">=2.3"
   },
   "suggests": {
-    "hexcasting": "*"
+    "hexcasting": "*",
+    "voicechat": ">=${minecraft_version}-${voicechat_api_version}"
   }
 }

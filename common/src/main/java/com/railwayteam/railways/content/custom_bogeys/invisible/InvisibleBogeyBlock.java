@@ -37,7 +37,7 @@ public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockE
 
 	@Override
 	public TrackType getTrackType(BogeyStyle style) {
-		return TrackType.STANDARD;
+		return CRTrackType.STANDARD;
 	}
 
 	@Override

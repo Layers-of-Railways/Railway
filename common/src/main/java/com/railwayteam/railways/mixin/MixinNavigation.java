@@ -1,5 +1,7 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
@@ -7,6 +9,7 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -21,7 +24,7 @@ import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.station.GlobalStation;
-import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
@@ -91,52 +94,66 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return ((ILimitedGlobalStation) instance).orDisablingTrain(instance.getPresentTrain(), train);
     }
 
-    // this is probably unnecessary since we already mixin into TrackEdge#canTravelTo
-/*    private TrackEdge edge;
-    @SuppressWarnings({"MixinAnnotationTarget", "UnresolvedMixinReference", "InvalidInjectorMethodSignature"})
-    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
-            at = @At(value = "INVOKE", target = "Ljava/util/Map$Entry;getValue()Ljava/lang/Object;", ordinal = 1))
-    private Object snr$captureEdge(Map.Entry<TrackNode, TrackEdge> instance) {
-        edge = instance.getValue();
-        return instance.getValue();
-    }
-
-    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
-            at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
-    private boolean snr$blockSwitches(Set<TrackMaterial.TrackType> instance, Object o) {
-        if (edge != null && !((ISwitchDisabledEdge) edge.getEdgeData()).isEnabled()) {
-            edge = null;
+    @SuppressWarnings("unused")
+    @ModifyExpressionValue(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
+        at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+    private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
+        if (target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL)
             return false;
-        }
-        edge = null;
-        TrackMaterial.TrackType type = (TrackMaterial.TrackType) o;
-        return instance.contains(type);
-    }*/
-
-    public void searchGeneral(double maxDistance, boolean forward, PointTest pointTest) {
-        searchGeneral(maxDistance, -1, forward, pointTest);
+        return original;
     }
 
-    public void searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest) {
+    @Override
+    public void snr$searchGeneral(double maxDistance, boolean forward, PointTest pointTest) {
+        snr$searchGeneral(maxDistance, -1, forward, pointTest);
+    }
+
+    @Override
+    public void snr$searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return;
 
+        /*
+        Valid types work as follows:
+        if the FIRST bogey is universal, set skipValidCheck to true
+        if any bogey is not universal, set skipValidCheck to false
+
+        if addAllDone not set yet, do addAll
+        else: if universal, do nothing, else retainAll
+         */
+
         // Cache the list of track types that the train can travel on
-        Set<TrackMaterial.TrackType> validTypes = new HashSet<>();
+        boolean skipValidCheck = false;
+        Set<TrackType> validTypes = new HashSet<>();
         for (int i = 0; i < train.carriages.size(); i++) {
             Carriage carriage = train.carriages.get(i);
             AbstractBogeyBlock<?> leadingType = ((AccessorCarriageBogey) carriage.leadingBogey()).getType();
             AbstractBogeyBlock<?> trailingType = ((AccessorCarriageBogey) carriage.trailingBogey()).getType();
-            if (i == 0) {
-                validTypes.addAll(leadingType.getValidPathfindingTypes(carriage.leadingBogey().getStyle()));
+            if (leadingType.getTrackType(carriage.leadingBogey().getStyle()) == CRTrackType.UNIVERSAL) { // todo PR this into Create
+                if (i == 0) {
+                    skipValidCheck = true;
+                }
             } else {
-                validTypes.retainAll(leadingType.getValidPathfindingTypes(carriage.leadingBogey().getStyle()));
+                if (i == 0 || skipValidCheck) {
+                    validTypes.addAll(leadingType.getValidPathfindingTypes(carriage.leadingBogey().getStyle()));
+                } else {
+                    validTypes.retainAll(leadingType.getValidPathfindingTypes(carriage.leadingBogey().getStyle()));
+                }
+                skipValidCheck = false;
             }
-            if (carriage.isOnTwoBogeys())
-                validTypes.retainAll(trailingType.getValidPathfindingTypes(carriage.trailingBogey().getStyle()));
+            if (carriage.isOnTwoBogeys()) {
+                if (trailingType.getTrackType(carriage.trailingBogey().getStyle()) != CRTrackType.UNIVERSAL) {
+                    if (skipValidCheck) {
+                        validTypes.addAll(trailingType.getValidPathfindingTypes(carriage.trailingBogey().getStyle()));
+                    } else {
+                        validTypes.retainAll(trailingType.getValidPathfindingTypes(carriage.trailingBogey().getStyle()));
+                    }
+                    skipValidCheck = false;
+                }
+            }
         }
-        if (validTypes.isEmpty()) // if there are no valid track types, a route can't be found
+        if (validTypes.isEmpty() && !skipValidCheck) // if there are no valid track types, a route can't be found
             return;
 
         Map<TrackEdge, Integer> penalties = new IdentityHashMap<>();
@@ -261,7 +278,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
                 continue;
 
             for (Map.Entry<TrackNode, TrackEdge> target : validTargets) {
-                if (!validTypes.contains(target.getValue().getTrackMaterial().trackType))
+                if (!(skipValidCheck || validTypes.contains(target.getValue().getTrackMaterial().trackType) || target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL))
                     continue;
                 TrackNode newNode = target.getKey();
                 TrackEdge newEdge = target.getValue();
@@ -273,7 +290,8 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         }
     }
 
-    public Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> findNearestApproachableSwitch(boolean forward) {
+    @Override
+    public Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> snr$findNearestApproachableSwitch(boolean forward) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return null;
@@ -285,7 +303,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         double minDistance = 0;//.75f * (train.speed * train.speed) / (2 * acceleration);
         double maxDistance = Math.max(32, 1.5f * (train.speed * train.speed) / (2 * acceleration));
 
-        searchGeneral(maxDistance, forward, (distance, cost, reachedVia, currentEntry, trackPoint) -> {
+        snr$searchGeneral(maxDistance, forward, (distance, cost, reachedVia, currentEntry, trackPoint) -> {
             if (distance < minDistance)
                 return false;
 

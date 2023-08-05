@@ -96,7 +96,8 @@ public class ConductorEntity extends AbstractGolem {
       return false;
     if (!CRTags.AllItemTags.CONDUCTOR_CAPS.matches(headStack))
       return false;
-    return headStack.getHoverName().getString().startsWith("[sus]");
+    String hoverName = headStack.getHoverName().getString();
+    return hoverName.startsWith("[sus]") || hoverName.equals("sus");
   }
 
   public static final GameProfile FAKE_PLAYER_PROFILE = new GameProfile(

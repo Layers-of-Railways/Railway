@@ -1,6 +1,8 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": [],
+  "ingredient": {
+    "tag": "create:sleepers"
+  },
   "loops": 1,
   "results": [
     {

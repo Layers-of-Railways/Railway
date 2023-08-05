@@ -70,6 +70,9 @@
     "NbtUtilsMixin",
     "PlayerEntityMixin",
     "StructureMixin",
+    "compat.voicechat.EntityAudioChannelImplMixin",
+    "compat.voicechat.ServerMixin",
+    "compat.voicechat.ServerWorldUtilsMixin",
     "conductor_possession.ChunkMapMixin",
     "conductor_possession.MixinEntity",
     "conductor_possession.PlayerListMixin",
@@ -98,6 +101,7 @@
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
     "client.MixinParticleEngine",
+    "client.MixinPlayerInfo",
     "client.MixinPlayerRenderer",
     "client.MixinRadialToolboxMenu",
     "client.MixinSpriteContents",
@@ -117,6 +121,7 @@
     "client.MixinTrainHatOffsets",
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
+    "compat.voicechat.FreecamUtilMixin",
     "conductor_possession.AccessorKeyMapping",
     "conductor_possession.ClientChunkCacheMixin",
     "conductor_possession.LevelRendererMixin",
@@ -129,5 +134,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.mixin.CRMixinPlugin"
 }

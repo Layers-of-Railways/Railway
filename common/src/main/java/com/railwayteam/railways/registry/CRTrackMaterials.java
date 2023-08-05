@@ -131,6 +131,7 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.PHANTOM_TRACK)
             .particle(new ResourceLocation("block/glass"))
             .noRecipeGen()
+            .trackType(CRTrackType.UNIVERSAL)
             .customBlockFactory(NoCollisionCustomTrackBlock::new)
             .standardModels()
             .build(),
@@ -226,6 +227,8 @@ public class CRTrackMaterials {
         public static final TrackType WIDE_GAUGE = new CRTrackType(Railways.asResource("wide_gauge"), WideGaugeTrackBlock::new);
 
         public static final TrackType NARROW_GAUGE = new CRTrackType(Railways.asResource("narrow_gauge"), NarrowGaugeTrackBlock::new);
+
+        public static final TrackType UNIVERSAL = new CRTrackType(Railways.asResource("universal"), TrackBlock::new);
 
         public CRTrackType(ResourceLocation id, TrackBlockFactory factory) {
             super(id, factory);
