@@ -17,3 +17,4 @@ v1.5.0:
 - feat: Invisible (mono)bogeys can drive on any track type
 - feat: Simple Voice Chat integration for conductor spies
 - feat: Oilburner Smokestack can be encased with industrial iron
+- fix: polymer will no longer crash with Steam 'n' Rails
