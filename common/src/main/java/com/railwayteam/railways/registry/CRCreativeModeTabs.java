@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
+import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -200,7 +201,7 @@ public class CRCreativeModeTabs {
 
         @Override
         public void accept(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output output) {
-            if (this.tab == Tabs.CAPS) {
+            if (Env.CLIENT.isCurrent() && this.tab == Tabs.CAPS) {
                 for (boolean prefixSus : Iterate.falseAndTrue) {
                     for (DyeColor color : COLOR_ORDER) {
                         ItemEntry<ConductorCapItem> entry = CRItems.ITEM_CONDUCTOR_CAP.get(color);
@@ -213,21 +214,20 @@ public class CRCreativeModeTabs {
                         }
                     }
 
-                    Set<String> customCapNames = new HashSet<>();
-                    customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.keySet());
-                    customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.keySet());
+                        Set<String> customCapNames = new HashSet<>();
+                        customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.keySet());
+                        customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.keySet());
 
-                    int i = 0;
-                    for (String name : customCapNames) {
-                        ItemStack capStack = CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.values()[i++ % DyeColor.values().length]).asStack();
-                        capStack.setHoverName(Components.literal((prefixSus ? "[sus]" : "")+name));
+                        int i = 0;
+                        for (String name : customCapNames) {
+                            ItemStack capStack = CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.values()[i++ % DyeColor.values().length]).asStack();
+                            capStack.setHoverName(Components.literal((prefixSus ? "[sus]" : "") + name));
 
-                        output.accept(capStack);
-                    }
+                            output.accept(capStack);
+                        }
                 }
                 return;
             }
-
 
             Predicate<Item> exclusionPredicate = makeExclusionPredicate();
             List<ItemOrdering> orderings = makeOrderings();
