@@ -197,7 +197,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackSwitchBlock> ANDESITE_SWITCH =
             REGISTRATE.block("track_switch_andesite", TrackSwitchBlock::manual)
                     .initialProperties(SharedProperties::softMetal)
-                    .transform(BuilderTransformers.trackSwitch(false))
+                    .transform(BuilderTransformers.trackSwitch(true))
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
@@ -212,7 +212,7 @@ public class CRBlocks {
     public static final BlockEntry<TrackSwitchBlock> BRASS_SWITCH =
             REGISTRATE.block("track_switch_brass", TrackSwitchBlock::automatic)
                     .initialProperties(SharedProperties::softMetal)
-                    .transform(BuilderTransformers.trackSwitch(true))
+                    .transform(BuilderTransformers.trackSwitch(false))
                     .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
                     .properties(p -> p.noOcclusion())
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))

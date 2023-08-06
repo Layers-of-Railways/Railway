@@ -194,8 +194,6 @@
 	"block.railways.track_oak_narrow": "Narrow Oak Train Track",
 	"block.railways.track_oak_wide": "Wide Oak Train Track",
 	"block.railways.track_phantom": "Phantom Train Track",
-	"block.railways.track_phantom_narrow": "Narrow Phantom Train Track",
-	"block.railways.track_phantom_wide": "Wide Phantom Train Track",
 	"block.railways.track_spruce": "Spruce Train Track",
 	"block.railways.track_spruce_narrow": "Narrow Spruce Train Track",
 	"block.railways.track_spruce_wide": "Wide Spruce Train Track",
@@ -443,8 +441,6 @@
 	"item.railways.track_incomplete_oak_narrow": "Incomplete Narrow Oak Track",
 	"item.railways.track_incomplete_oak_wide": "Incomplete Wide Oak Track",
 	"item.railways.track_incomplete_phantom": "Incomplete Phantom Track",
-	"item.railways.track_incomplete_phantom_narrow": "Incomplete Narrow Phantom Track",
-	"item.railways.track_incomplete_phantom_wide": "Incomplete Wide Phantom Track",
 	"item.railways.track_incomplete_spruce": "Incomplete Spruce Track",
 	"item.railways.track_incomplete_spruce_narrow": "Incomplete Narrow Spruce Track",
 	"item.railways.track_incomplete_spruce_wide": "Incomplete Wide Spruce Track",
@@ -658,11 +654,11 @@
 
 	"create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
-	"itemGroup.railways": "Create: Steam 'n' Rails",
+	"itemGroup.railways": "Steam 'n' Rails",
 
-	"itemGroup.railways_tracks": "Create: Steam 'n' Rails: Tracks",
+	"itemGroup.railways_tracks": "Steam 'n' Rails: Tracks",
 
-	"itemGroup.railways_caps": "Create: Steam 'n' Rails: Caps",
+	"itemGroup.railways_caps": "Steam 'n' Rails: Conductor Caps",
 
 	"sounds.railways.conductor_whistle": "Conductor Whistles",
 

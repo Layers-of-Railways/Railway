@@ -195,7 +195,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                                 for (boolean first : Iterate.trueAndFalse) {
                                     for (boolean inner : Iterate.trueAndFalse) {
                                         PoseStack.Pose transform = segment.railTransforms.get(first);
-                                        Matrix4f pose_matrix2 = transform.pose().copy();
+                                        Matrix4f pose_matrix2 = copy(transform.pose());
                                         pose_matrix2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
 
                                         ModelData casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff == 0 ? CRBlockPartials.TRACK_CASING_FLAT :
