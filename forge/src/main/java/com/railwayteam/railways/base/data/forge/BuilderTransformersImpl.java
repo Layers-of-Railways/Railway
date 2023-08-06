@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.OilburnerSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.simibubi.create.AllBlocks;
@@ -18,9 +19,13 @@ import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -146,5 +151,32 @@ public class BuilderTransformersImpl {
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/invisible_monorail/top" + (s.getValue(AbstractMonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
+    }
+
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(ResourceLocation modelLoc, boolean rotates) {
+        return (c, p) -> {
+//                rotates ? p.axisBlock(c.get(), p.models().getExistingFile(modelLoc)) : null
+            if (rotates) {
+                p.getVariantBuilder(c.get())
+                    .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(modelLoc))
+                        .rotationY((state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0))
+                        .build());
+            } else {
+                p.getVariantBuilder(c.get())
+                    .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(modelLoc))
+                        .build());
+            }
+        };
+    }
+
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> oilburnerSmokeStack() {
+        return (c, p) -> {
+            p.getVariantBuilder(c.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                    .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_oilburner"+(state.getValue(OilburnerSmokeStackBlock.ENCASED) ? "_encased" : ""))))
+                    .build());
+        };
     }
 }

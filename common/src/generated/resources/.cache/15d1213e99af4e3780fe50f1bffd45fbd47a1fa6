@@ -1,7 +1,7 @@
-// 1.20.1	2023-08-05T14:49:48.861741474	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2023-08-06T06:59:05.181369285	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 3bce8d12f5b40f69f2d3a2501173010b71a2cecd data/railways/advancements/recipes/misc/crafting/smokestack_coalburner.json
-a5a54be5fc29246fae6f0aa5313fdcda193a907b data/railways/advancements/recipes/misc/crafting/remote_lens.json
 33825b5fe31d2507ce22d3f9304356c751bdeb76 data/railways/advancements/recipes/misc/crafting/smokestack_streamlined.json
+a5a54be5fc29246fae6f0aa5313fdcda193a907b data/railways/advancements/recipes/misc/crafting/remote_lens.json
 b0cfa270050e2aa89bf31cbf028b49a0d444b46d data/railways/advancements/recipes/misc/crafting/track_switch_brass.json
 936f3bf0fd700bab8a2b226547d637d759ce4a1b data/railways/recipes/crafting/track_switch_brass.json
 3b19e7661367f4b05a9b5c31077b6a64a9bbd4d4 data/railways/recipes/crafting/smokestack_woodburner.json
