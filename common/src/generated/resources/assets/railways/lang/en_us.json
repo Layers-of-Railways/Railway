@@ -2,6 +2,7 @@
 
 	"_": "->------------------------]  Game Elements  [------------------------<-",
 
+	"block.railways.casing_collision": "Track Casing Collision Block",
 	"block.railways.conductor_vent": "Vent Block",
 	"block.railways.conductor_whistle": "Conductor Whistle",
 	"block.railways.doubleaxle_bogey": "Double Axle Bogey",

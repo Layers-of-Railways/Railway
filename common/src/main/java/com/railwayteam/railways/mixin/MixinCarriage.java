@@ -3,6 +3,7 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.entity.*;
@@ -125,7 +126,7 @@ public abstract class MixinCarriage implements ICarriageConductors {
         TravellingPoint point = leading ? getLeadingPoint() : getTrailingPoint();
         if (point.edge.getTrackMaterial().trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
-        if (((AccessorCarriageBogey) bogey).getType().getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)
+        if (CarriageBogeyUtils.getType(bogey).getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
         return original;
     }

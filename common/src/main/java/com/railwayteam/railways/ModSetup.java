@@ -1,7 +1,7 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.compat.tracks.mods.*;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
@@ -19,6 +19,7 @@ public class ModSetup {
     CRSchedule.register();
     CRDataFixers.register();
     CRExtraRegistration.register();
+    CasingCollisionUtils.register();
 
     // Compat
     HexCastingTrackCompat.register();

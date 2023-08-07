@@ -17,6 +17,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
@@ -271,6 +272,15 @@ public class CRBlocks {
                     .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
                     .transform(customItemModel())
                     .register();
+
+    public static final BlockEntry<CasingCollisionBlock> CASING_COLLISION = REGISTRATE.block("casing_collision", CasingCollisionBlock::create)
+        .initialProperties((new Material.Builder(MaterialColor.METAL))
+            .replaceable()
+            .build())
+        .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+            .withExistingParent(c.getName(), p.mcLoc("block/air"))))
+        .lang("Track Casing Collision Block")
+        .register();
 
     static {
         Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
