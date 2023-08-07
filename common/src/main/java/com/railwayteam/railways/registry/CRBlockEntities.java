@@ -9,6 +9,7 @@ import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
@@ -16,6 +17,7 @@ import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
 import com.railwayteam.railways.content.tender.TenderBlockEntity;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -77,6 +79,11 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)
         .validBlocks(CRBlocks.DIESEL_STACK)
         .renderer(() -> DieselSmokeStackRenderer::new)
+        .register();
+
+    public static final BlockEntityEntry<CasingCollisionBlockEntity> CASING_COLLISION = REGISTRATE
+        .blockEntity("casing_collision", CasingCollisionBlockEntity::new)
+        .validBlocks(CRBlocks.CASING_COLLISION)
         .register();
 
 

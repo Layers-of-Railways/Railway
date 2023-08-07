@@ -52,7 +52,7 @@ public class DebugRendererExtensions {
             return EMPTY;
 
         return ImmutableSet.of(
-//            Renderers.COLLISION_BOX
+            //Renderers.COLLISION_BOX
             //Renderers.SOLID_FACE
         );
     }

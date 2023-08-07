@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
@@ -52,6 +53,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
     this.trackCasing = trackCasing;
     notifyUpdate();
     if (this.trackCasing == null && this.level != null && !this.level.isClientSide) { //Clean up the tile entity if it is no longer needed
+      CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, true);
       if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
           .orElse(TrackShape.NONE)
           .isPortal())
@@ -70,7 +72,13 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
 
   @Override
   public void setAlternate(boolean alternate) {
+    if (getBlockState().getValue(TrackBlock.SHAPE).getModel().equals("ascending")) {
+      alternate = false;
+    }
     this.isAlternateModel = alternate;
+    if (trackCasing != null) {
+      CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, alternate);
+    }
     notifyUpdate();
   }
 
@@ -134,5 +142,11 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
       }
     }
     this.setTrackCasing(null);
+  }
+
+  @Inject(method = "lazyTick", at = @At("HEAD"))
+  private void manageCasingCollisions(CallbackInfo ci) {
+    if (trackCasing == null || isAlternateModel) return;
+    CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, false);
   }
 }

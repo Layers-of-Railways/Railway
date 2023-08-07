@@ -130,7 +130,10 @@ public class CRShapes {
         LONG_STACK = shape(1, 0, 3, 15, 4, 13)
         .forHorizontalAxis();
 
-    public static final VoxelShape BLOCK = Shapes.block();
+    public static final VoxelShape
+        BLOCK = Shapes.block(),
+        BOTTOM_SLAB = shape(0, 0, 0, 16, 8, 16).build(),
+        TOP_SLAB = shape(0, 8, 0, 16, 16, 16).build();
 
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);

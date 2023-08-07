@@ -2,13 +2,16 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.roller_extensions.TrackReplacePaver;
+import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
@@ -22,10 +25,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrackBlock.class, remap = false)
@@ -76,5 +82,21 @@ public abstract class MixinTrackBlock extends Block {
     if (TrackReplacePaver.tickInstantly)
       i = 0;
     instance.scheduleTick(blockPos, block, i);
+  }
+
+  @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true, remap = true)
+  private void casingCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext, CallbackInfoReturnable<VoxelShape> cir) {
+    if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
+      if (CasingCollisionUtils.shouldMakeCollision(tbe, pState)) {
+        cir.setReturnValue(CRShapes.BOTTOM_SLAB);
+      }
+    }
+  }
+
+  @Inject(method = "onRemove", at = @At("HEAD"), remap = true)
+  private void removeCasingCollisions(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving, CallbackInfo ci) {
+    if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
+      CasingCollisionUtils.manageTracks(tbe, true);
+    }
   }
 }
