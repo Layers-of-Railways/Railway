@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.railwayteam.railways.util.AdventureUtils;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
@@ -46,6 +47,8 @@ public class SlabUseOnCurvePacket implements C2SPacket {
   @Override
   public void handle(ServerPlayer player) {
     Level world = player.level;
+    if (AdventureUtils.isAdventure(player))
+      return;
     if (!world.isLoaded(pos))
       return;
     if (!pos.closerThan(player.blockPosition(), 64))

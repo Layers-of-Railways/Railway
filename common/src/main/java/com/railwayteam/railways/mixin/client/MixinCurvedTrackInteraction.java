@@ -4,6 +4,7 @@ import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacke
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.railwayteam.railways.util.AdventureUtils;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.content.trains.track.TrackBlockOutline.BezierPointSelection;
 import net.minecraft.client.Minecraft;
@@ -44,6 +45,8 @@ public abstract class MixinCurvedTrackInteraction {
     // todo: that doesn't seem right? same as old behavior though
     if (connection == null || connection.getMaterial().trackType != CRTrackMaterials.CRTrackType.MONORAIL) {
       LocalPlayer player = Minecraft.getInstance().player;
+      if (AdventureUtils.isAdventure(player))
+        return;
       ItemStack held = player.getMainHandItem();
 
       // if non-empty, must be a valid slab
