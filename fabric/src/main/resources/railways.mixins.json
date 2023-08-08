@@ -8,7 +8,9 @@
     "LevelRendererMixin",
     "TrainHUDMixin",
     "PortingLibObjLoaderMixin",
-    "PortingLibModelsMixin"
+    "PortingLibModelsMixin",
+    "TrainHUDMixin",
+    "TrackBlockOutlineMixin"
   ],
   "mixins": [
     "DetectorRailBlockMixin",

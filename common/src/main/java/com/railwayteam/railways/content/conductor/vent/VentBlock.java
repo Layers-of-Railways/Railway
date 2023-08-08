@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.conductor.vent;
 
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -193,7 +194,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     }
 
     public static final VoxelShape COLLISION_SHAPE = Block.box(1.0, 1.0, 1.0, 15.0, 15.0, 15.0);
-    public static final VoxelShape OUTLINE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+    public static final VoxelShape OUTLINE_SHAPE = CRShapes.BLOCK;
 
     @Override
     @SuppressWarnings("deprecation")
