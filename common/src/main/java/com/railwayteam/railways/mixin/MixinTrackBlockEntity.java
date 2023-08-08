@@ -51,16 +51,22 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
       return;
     this.trackCasing = trackCasing;
     notifyUpdate();
-    if (this.trackCasing == null && this.level != null && !this.level.isClientSide) { //Clean up the tile entity if it is no longer needed
-      CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, true);
-      if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
-          .orElse(TrackShape.NONE)
-          .isPortal())
-        return;
-      BlockState blockState = this.level.getBlockState(worldPosition);
-      if (blockState.hasProperty(TrackBlock.HAS_BE))
-        level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_BE, false));
-      CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveBlockEntityPacket(worldPosition));
+    if (this.level != null) {
+      if (this.trackCasing == null) { //Clean up the tile entity if it is no longer needed
+        CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, true);
+        if (!this.level.isClientSide) {
+          if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
+              .orElse(TrackShape.NONE)
+              .isPortal())
+            return;
+          BlockState blockState = this.level.getBlockState(worldPosition);
+          if (blockState.hasProperty(TrackBlock.HAS_BE))
+            level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_BE, false));
+          CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveBlockEntityPacket(worldPosition));
+        }
+      } else if (trackCasing != null && !isAlternateModel) {
+        CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, false);
+      }
     }
   }
 

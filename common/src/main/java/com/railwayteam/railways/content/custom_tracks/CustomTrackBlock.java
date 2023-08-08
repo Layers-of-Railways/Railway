@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.custom_tracks;
 
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.AdventureUtils;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.trains.track.TrackPropagator;
@@ -20,6 +21,8 @@ import org.jetbrains.annotations.Nullable;
 public class CustomTrackBlock  { //done using a brass hand on a track should call TrackPropagator.onRailAdded to update materials
     @Nullable
     public static InteractionResult casingUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (AdventureUtils.isAdventure(player))
+            return InteractionResult.FAIL;
         ItemStack handStack = player.getItemInHand(hand);
         if (AllItems.BRASS_HAND.isIn(handStack)) {
             TrackPropagator.onRailAdded(world, pos, state);
