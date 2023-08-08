@@ -120,7 +120,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
         if (this$.getMaterial().trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
             return original + 0.5;
         } else if (this$.getMaterial().trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE) {
-            //return original - (7 / 16.);
+            return original - (7 / 16.);
         }
         return original;
     }

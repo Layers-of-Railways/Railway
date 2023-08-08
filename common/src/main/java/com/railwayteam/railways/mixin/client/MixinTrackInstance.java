@@ -17,6 +17,7 @@ import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.renderer.RenderType;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils.casingPositions;
+import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NARROW_GAUGE;
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
 
 @Mixin(value = TrackInstance.class, remap = false)
@@ -115,7 +117,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                             .rotateZ(angle);
                     }
                 }
-                TrackMaterial.TrackType trackType = null;
+                TrackType trackType = null;
                 if (this.blockState.getBlock() instanceof TrackBlock trackBlock)
                     trackType = trackBlock.getMaterial().trackType;
 
@@ -189,7 +191,8 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                             casingInstance.updateLight(this.world, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
 
-                            if (bc.getMaterial().trackType == WIDE_GAUGE) {
+                            TrackType trackType = bc.getMaterial().trackType;
+                            if (trackType == WIDE_GAUGE) {
                                 for (boolean first : Iterate.trueAndFalse) {
                                     for (boolean inner : Iterate.trueAndFalse) {
                                         PoseStack.Pose transform = segment.railTransforms.get(first);
@@ -218,7 +221,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                                     casingInstance2.setTransform(ms)
                                         .mulPose(pose_matrix2)
                                         .mulNormal(transform.normal())
-                                        .translate(-0.5, shiftDown, 0);
+                                        .translate(-0.5 + (trackType == NARROW_GAUGE ? (first ? 0.5 : -0.5) : 0), shiftDown, 0);
                                     BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
                                     casingInstance2.updateLight(this.world, relativePos2);
                                     casingData.add(Pair.of(casingInstance2, relativePos2));
