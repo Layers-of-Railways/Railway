@@ -11,6 +11,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
@@ -95,7 +96,8 @@ public abstract class CasingRenderUtils {
             .light(light)
             .renderInto(ms, vb);
 
-        if (bc.getMaterial().trackType == WIDE_GAUGE) {
+        TrackType trackType = bc.getMaterial().trackType;
+        if (trackType == WIDE_GAUGE) {
           for (boolean first : Iterate.trueAndFalse) {
             for (boolean inner : Iterate.trueAndFalse) {
               PoseStack.Pose transform = segment.railTransforms.get(first);
@@ -117,7 +119,7 @@ public abstract class CasingRenderUtils {
             CachedBufferer.partial(texturedPartial, state)
                 .mulPose(pose2)
                 .mulNormal(transform.normal())
-                .translate(-0.5, shiftDown, 0)
+                .translate(-0.5 + (trackType == NARROW_GAUGE ? (first ? 0.5 : -0.5) : 0), shiftDown, 0)
                 .light(light)
                 .renderInto(ms, vb);
           }

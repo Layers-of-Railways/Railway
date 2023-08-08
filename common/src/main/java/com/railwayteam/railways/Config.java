@@ -24,6 +24,7 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue EXTENDED_COUPLER_DEBUG;
     public static ForgeConfigSpec.BooleanValue SKIP_CLIENT_DERAILING;
     public static ForgeConfigSpec.BooleanValue CONDUCTOR_SPY_SHADER;
+    public static ForgeConfigSpec.DoubleValue TRACK_OVERLAY_OFFSET;
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
@@ -49,6 +50,7 @@ public class Config {
         EXTENDED_COUPLER_DEBUG = CLIENT_BUILDER.comment("Show extended debug info in coupler goggle overlay").define("extendedCouplerDebug", false);
         SKIP_CLIENT_DERAILING = CLIENT_BUILDER.comment("Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash").define("skipClientsideDerailing", false);
         CONDUCTOR_SPY_SHADER = CLIENT_BUILDER.comment("Use a scanline shader when spying through a conductor").define("conductorSpyShader", true);
+        TRACK_OVERLAY_OFFSET = CLIENT_BUILDER.comment("Vertical offset for track overlays").defineInRange("trackOverlayOffset", 0.0, -Double.MAX_VALUE, Double.MAX_VALUE);
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         setupGeneralCategory(SERVER_BUILDER);

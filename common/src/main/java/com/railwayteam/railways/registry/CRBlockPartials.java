@@ -166,10 +166,8 @@ public class CRBlockPartials {
             TrackCasingSpec altSpec;
             if (alt && (altSpec = getAltSpec(type)) != null) {
                 return altSpec.topSurfacePixelHeight;
-            } else if (specsByTrackType.containsKey(type)) {
-                return specsByTrackType.get(type).topSurfacePixelHeight;
             } else {
-                return topSurfacePixelHeight;
+                return getTopSurfacePixelHeight(alt);
             }
         }
 
