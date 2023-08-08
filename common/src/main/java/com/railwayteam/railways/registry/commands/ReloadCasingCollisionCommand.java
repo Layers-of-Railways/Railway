@@ -12,7 +12,7 @@ public class ReloadCasingCollisionCommand {
             .requires(cs -> cs.hasPermission(2))
             .executes(ctx -> {
                 CasingCollisionUtils.register();
-                ctx.getSource().sendSuccess(Components.literal("Reloaded Casing Collisions"), true);
+                ctx.getSource().sendSuccess(() -> Components.literal("Reloaded Casing Collisions"), true);
                 return 1;
             });
     }

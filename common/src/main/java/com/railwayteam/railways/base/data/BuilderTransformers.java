@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
@@ -83,6 +84,11 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> oilburnerSmokeStack() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {
         throw new AssertionError();
     }
 }

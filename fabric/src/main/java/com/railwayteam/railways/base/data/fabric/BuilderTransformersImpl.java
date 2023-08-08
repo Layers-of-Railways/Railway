@@ -9,6 +9,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.OilburnerSmokeStackBlock;
@@ -179,5 +180,10 @@ public class BuilderTransformersImpl {
                     .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_oilburner"+(state.getValue(OilburnerSmokeStackBlock.ENCASED) ? "_encased" : ""))))
                     .build());
         };
+    }
+
+    public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {
+        return a -> a.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+            .withExistingParent(c.getName(), p.mcLoc("block/air"))));
     }
 }

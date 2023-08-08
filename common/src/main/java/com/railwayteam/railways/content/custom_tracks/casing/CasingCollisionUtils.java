@@ -281,8 +281,7 @@ public class CasingCollisionUtils {
             if (!fluidState.isEmpty() && !fluidState.isSourceOfType(Fluids.WATER))
                 continue;
 
-            if (!present && stateAtPos.getMaterial()
-                .isReplaceable())
+            if (!present && stateAtPos.canBeReplaced())
                 level.setBlock(pos,
                     ProperWaterloggedBlock.withWater(level, CRBlocks.CASING_COLLISION.getDefaultState(), pos), 3);
             CasingCollisionBlock.keepAlive(level, pos);

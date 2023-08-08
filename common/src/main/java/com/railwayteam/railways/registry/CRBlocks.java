@@ -233,11 +233,10 @@ public class CRBlocks {
                     .register();
 
     public static final BlockEntry<CasingCollisionBlock> CASING_COLLISION = REGISTRATE.block("casing_collision", CasingCollisionBlock::create)
-        .initialProperties((new Material.Builder(MaterialColor.METAL))
-            .replaceable()
-            .build())
-        .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-            .withExistingParent(c.getName(), p.mcLoc("block/air"))))
+        .properties(p -> p.mapColor(MapColor.METAL)
+            .noOcclusion()
+            .replaceable())
+        .transform(BuilderTransformers.casingCollision())
         .lang("Track Casing Collision Block")
         .register();
 
