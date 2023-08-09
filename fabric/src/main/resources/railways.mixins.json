@@ -6,12 +6,13 @@
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
     "LevelRendererMixin",
-    "TrainHUDMixin",
-    "TrackBlockOutlineMixin"
+    "TrackBlockOutlineMixin",
+    "TrainHUDMixin"
   ],
   "mixins": [
     "DetectorRailBlockMixin",
-    "EnderManMixin"
+    "EnderManMixin",
+    "TrainMixin"
   ],
   "injectors": {
     "defaultRequire": 1

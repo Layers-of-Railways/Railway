@@ -6,12 +6,13 @@
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
     "ClientPacketListenerMixin",
-    "TrainHUDMixin",
-    "TrackBlockOutlineMixin"
+    "TrackBlockOutlineMixin",
+    "TrainHUDMixin"
   ],
   "mixins": [
     "RollingModeMixin",
-    "ServerGamePacketListenerImplMixin"
+    "ServerGamePacketListenerImplMixin",
+    "TrainMixin"
   ],
   "injectors": {
     "defaultRequire": 1
