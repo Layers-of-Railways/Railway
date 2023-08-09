@@ -28,7 +28,6 @@ import com.railwayteam.railways.content.smokestack.*;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
-import com.railwayteam.railways.content.tender.TenderBlock;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllBlocks;
@@ -184,7 +183,6 @@ public class CRBlocks {
                 .register();
     }
 
-    public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
 
 //  commented out because I'm pretty sure but not 100% that it was removed.
 //    static {
@@ -447,27 +445,6 @@ public class CRBlocks {
                     .item()
                     .transform(customItemModel("copycat_vent"))
                     .register();
-
-  /*
-    BLOCK_TENDER = reg.block("tender", TenderBlock::new)
-    .blockstate((ctx,prov)->
-      prov.getVariantBuilder(ctx.get()).forAllStates(state -> {
-        ResourceLocation loc = prov.modLoc("block/tender/" + state.getValue(TenderBlock.SHAPE).getSerializedName());
-        return ConfiguredModel.builder().modelFile(prov.models().getExistingFile(loc))
-        .rotationY(switch(state.getValue(TenderBlock.FACING)) {
-          case SOUTH -> 180;
-          case EAST  ->  90;
-          case WEST  -> -90;
-          default    ->   0;
-        })
-        .build();
-      }))
-    .item()
-      .model((ctx,prov)-> prov.getExistingFile(prov.modLoc("tender")))
-      .build()
-    .lang("Tender")
-    .addLayer(()-> RenderType::cutoutMipped)
-    .register();*/
 
     @SuppressWarnings("EmptyMethod")
     public static void register() {

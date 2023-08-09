@@ -16,8 +16,6 @@ import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
-import com.railwayteam.railways.content.tender.TenderBlockEntity;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -25,7 +23,6 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 public class CRBlockEntities {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    public static final BlockEntityEntry<TenderBlockEntity> TENDER_BE = null;
     public static final BlockEntityEntry<SemaphoreBlockEntity> SEMAPHORE = REGISTRATE.blockEntity("semaphore", SemaphoreBlockEntity::new)
         .validBlocks(CRBlocks.SEMAPHORE)
         .renderer(() -> SemaphoreRenderer::new)
