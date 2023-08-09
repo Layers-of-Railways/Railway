@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin(Train.class)
+@Mixin(value = Train.class, remap = false)
 public class TrainMixin {
     @Shadow public double speed;
     @Shadow public List<Carriage> carriages;
