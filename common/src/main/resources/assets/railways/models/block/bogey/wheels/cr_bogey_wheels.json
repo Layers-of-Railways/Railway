@@ -2,8 +2,8 @@
 	"parent": "block/block",
 	"loader": "forge:obj",
 	"flip_v": true,
-    	"model": "railways:models/block/bogey/wheels/cr_bogey_wheels.obj",
-    	"textures": {
-    		"0": "railways:block/bogeys/cr_bogey_wheels"
-    }
+	"model": "railways:models/block/bogey/wheels/cr_bogey_wheels.obj",
+	"textures": {
+		"0": "railways:block/bogeys/cr_bogey_wheels"
+	}
 }

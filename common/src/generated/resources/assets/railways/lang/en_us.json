@@ -231,6 +231,7 @@
 	"block.railways.track_warped_narrow": "Narrow Warped Train Track",
 	"block.railways.track_warped_wide": "Wide Warped Train Track",
 	"block.railways.tripleaxle_bogey": "Triple Axle Bogey",
+	"block.railways.wide_doubleaxle_bogey": "Wide Gauge Double Axle Bogey",
 
 	"entity.railways.benchcart": "Minecart with Workbench",
 	"entity.railways.conductor": "Conductor",
@@ -648,6 +649,7 @@
 	"railways.bogeys.styles.y25": "Y25",
 	"railways.bogeys.styles.heavyweight": "Heavyweight",
 	"railways.bogeys.styles.radial": "Radial",
+	"railways.bogeys.styles.wide_default": "Wide",
 
 	"railways.style_select.manage_favorites": "Manage Favorites",
 	"railways.style_select.title.favorites.pick_slot": "Pick Slot",

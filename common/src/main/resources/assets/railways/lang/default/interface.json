@@ -113,6 +113,7 @@
   "railways.bogeys.styles.y25": "Y25",
   "railways.bogeys.styles.heavyweight": "Heavyweight",
   "railways.bogeys.styles.radial": "Radial",
+  "railways.bogeys.styles.wide_default": "Wide",
 
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",

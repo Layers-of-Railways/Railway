@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
@@ -10,6 +11,7 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
@@ -29,6 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 @Mixin(value = StationBlockEntity.class, remap = false)
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
@@ -60,6 +63,13 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
             return;
         Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(player.getUUID());
         BogeyStyle style = styleData.getFirst();
+
+        TrackMaterial.TrackType trackType = track.getMaterial().trackType;
+
+        Optional<BogeyStyle> mappedStyleOptional = CRBogeyStyles.getMapped(style, trackType, true);
+        if (mappedStyleOptional.isPresent())
+            style = mappedStyleOptional.get();
+
         if (style == AllBogeyStyles.STANDARD)
             return;
 

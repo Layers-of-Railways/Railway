@@ -415,7 +415,10 @@ public class CRBlockPartials {
         Y25_FRAME = block("bogey/y25/y25_frame"),
         HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
         RADIAL_FRAME = block("bogey/radial/radial_frame"),
-        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
+        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels"),
+        CR_WIDE_BOGEY_WHEELS = block("bogey/wide/wheels"),
+        WIDE_DEFAULT_FRAME = block("bogey/wide/default/frame")
+    ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
