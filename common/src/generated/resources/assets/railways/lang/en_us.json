@@ -10,6 +10,9 @@
 	"block.railways.invisible_mono_bogey": "Invisible Mono Bogey",
 	"block.railways.large_platform_doubleaxle_bogey": "Large Platform Double Axle Bogey",
 	"block.railways.mono_bogey": "Monorail Bogey",
+	"block.railways.narrow_double_scotch_bogey": "Narrow Gauge Double Scotch Yoke Bogey",
+	"block.railways.narrow_scotch_bogey": "Narrow Gauge Scotch Yoke Bogey",
+	"block.railways.narrow_small_bogey": "Narrow Gauge Small Bogey",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.singleaxle_bogey": "Single Axle Bogey",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
@@ -650,6 +653,8 @@
 	"railways.bogeys.styles.heavyweight": "Heavyweight",
 	"railways.bogeys.styles.radial": "Radial",
 	"railways.bogeys.styles.wide_default": "Wide",
+	"railways.bogeys.styles.narrow_default": "Narrow",
+	"railways.bogeys.styles.narrow_double_scotch": "Narrow Double Scotch Yoke",
 
 	"railways.style_select.manage_favorites": "Manage Favorites",
 	"railways.style_select.title.favorites.pick_slot": "Pick Slot",

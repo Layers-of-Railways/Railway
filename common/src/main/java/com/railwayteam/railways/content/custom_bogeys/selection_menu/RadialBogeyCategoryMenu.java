@@ -220,11 +220,19 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     boolean[] allOk = new boolean[] {true, true, true};
                                     boolean hasContents = false;
                                     for (BogeyStyle style : BogeyCategoryHandlerClient.getStylesInCategory(id).values()) {
+                                        if (CRBogeyStyles.hideInSelectionMenu(style))
+                                            continue;
                                         hasContents = true;
                                         boolean[] c = new boolean[3];
-                                        c[0] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.WIDE_GAUGE);
+                                        c[0] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.NARROW_GAUGE);
                                         c[1] = CRBogeyStyles.styleFitsTrack(style, TrackType.STANDARD);
-                                        c[2] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.NARROW_GAUGE);
+                                        c[2] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.WIDE_GAUGE);
+
+                                        for (BogeyStyle subStyle : CRBogeyStyles.getSubStyles(style)) {
+                                            c[0] |= CRBogeyStyles.styleFitsTrack(subStyle, CRTrackType.NARROW_GAUGE);
+                                            c[1] |= CRBogeyStyles.styleFitsTrack(subStyle, TrackType.STANDARD);
+                                            c[2] |= CRBogeyStyles.styleFitsTrack(subStyle, CRTrackType.WIDE_GAUGE);
+                                        }
 
                                         for (int i = 0; i < 3; i++) {
                                             anyOk[i] |= c[i];
@@ -305,7 +313,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     info.buffers, info.packedLight, OverlayTexture.NO_OVERLAY
                             );
                             ms2.popPose();
-                            bogeyBlock.render(bogeyState, 0.0f, ms2, partialTicks, info.buffers,
+                            bogeyBlock.render(bogeyState, -3 * AnimationTickHolder.getRenderTime(minecraft.level), ms2, partialTicks, info.buffers,
                                     info.packedLight, OverlayTexture.NO_OVERLAY, renderStyle, new CompoundTag());
                         };
 
@@ -317,9 +325,9 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                             boolean[] compats = CACHED_COMPATS.computeIfAbsent(style, (k) -> {
                                 boolean[] c = new boolean[] {false, false, false};
                                 for (Pair<BogeyStyle, BogeySize> pair : renderCycle) {
-                                    c[0] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.WIDE_GAUGE);
+                                    c[0] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.NARROW_GAUGE);
                                     c[1] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), TrackType.STANDARD);
-                                    c[2] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.NARROW_GAUGE);
+                                    c[2] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.WIDE_GAUGE);
                                 }
                                 return c;
                             });

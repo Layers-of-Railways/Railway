@@ -29,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Mixin(value = AbstractBogeyBlock.class, remap = false)
@@ -63,7 +64,7 @@ public abstract class MixinAbstractBogeyBlock {
     @Unique
     private final ThreadLocal<TrackType> snr$trackType = new ThreadLocal<>();
 
-    @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("HEAD"))
+    @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("HEAD"), remap = true)
     private void storeSupportType(Level level, BlockPos pos, CallbackInfoReturnable<BogeyStyle> cir) {
         AbstractBogeyBlock<?> $this = (AbstractBogeyBlock<?>) (Object) this;
         BlockPos trackPos = $this.isUpsideDown(level.getBlockState(pos)) ? pos.above() : pos.below();
@@ -74,7 +75,7 @@ public abstract class MixinAbstractBogeyBlock {
         }
     }
 
-    @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("RETURN"))
+    @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("RETURN"), remap = true)
     private void clearSupportType(Level level, BlockPos pos, CallbackInfoReturnable<BogeyStyle> cir) {
         snr$trackType.remove();
     }
@@ -104,6 +105,15 @@ public abstract class MixinAbstractBogeyBlock {
             return original.call(instance);
         } else {
             return original.call(instance).stream().filter((style) -> CRBogeyStyles.styleFitsTrack(style, trackType)).toList();
+        }
+    }
+
+    @WrapOperation(method = "getNextStyle(Lcom/simibubi/create/content/trains/bogey/BogeyStyle;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Iterate;cycleValue(Ljava/util/List;Ljava/lang/Object;)Ljava/lang/Object;"))
+    private Object wrapCycleWithFallback(List<Object> list, Object style, Operation<Object> original) {
+        try {
+            return original.call(list, style);
+        } catch (IllegalArgumentException e) {
+            return list.get(0);
         }
     }
 }

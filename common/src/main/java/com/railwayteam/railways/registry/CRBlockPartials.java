@@ -420,6 +420,17 @@ public class CRBlockPartials {
         WIDE_DEFAULT_FRAME = block("bogey/wide/default/frame")
     ;
 
+    public static final PartialModel
+        NARROW_WHEELS = block("bogey/narrow/wheels"),
+        NARROW_FRAME = block("bogey/narrow/default_small/frame"),
+        NARROW_SCOTCH_WHEELS = block("bogey/narrow/scotch_wheels"),
+        NARROW_SCOTCH_WHEEL_PINS = block("bogey/narrow/scotch_wheel_pins"),
+        NARROW_SCOTCH_FRAME = block("bogey/narrow/default_scotch/frame"),
+        NARROW_SCOTCH_PISTONS = block("bogey/narrow/default_scotch/pistons"),
+        NARROW_DOUBLE_SCOTCH_FRAME = block("bogey/narrow/double_scotch/frame"),
+        NARROW_DOUBLE_SCOTCH_PISTONS = block("bogey/narrow/double_scotch/pistons")
+    ;
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 

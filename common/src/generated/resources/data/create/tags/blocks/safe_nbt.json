@@ -8,6 +8,9 @@
     "railways:doubleaxle_bogey",
     "railways:large_platform_doubleaxle_bogey",
     "railways:tripleaxle_bogey",
-    "railways:wide_doubleaxle_bogey"
+    "railways:wide_doubleaxle_bogey",
+    "railways:narrow_small_bogey",
+    "railways:narrow_scotch_bogey",
+    "railways:narrow_double_scotch_bogey"
   ]
 }

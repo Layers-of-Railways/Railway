@@ -94,6 +94,8 @@ public class BogeyCategoryHandlerClient {
                 EB.remove(AllBogeyStyles.STANDARD.name);
                 EB.remove(CRBogeyStyles.INVISIBLE.name);
                 EB.remove(CRBogeyStyles.WIDE_DEFAULT.name);
+                EB.remove(CRBogeyStyles.NARROW_DEFAULT.name);
+                EB.remove(CRBogeyStyles.NARROW_DOUBLE_SCOTCH.name);
                 return filterHidden(EB, false);
             }
             if(id.equals(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP))){

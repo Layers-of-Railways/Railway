@@ -38,7 +38,11 @@ public class CRBogeyStyles {
     public static void map(BogeyStyle from, TrackType toType, BogeyStyle toStyle, boolean reverseToStandardGauge) {
         STYLES_FOR_GAUGES.put(Pair.of(from, toType), toStyle);
         if (reverseToStandardGauge)
-            STYLES_TO_STANDARD_GAUGE.put(toStyle, from);
+            mapReverse(toStyle, from);
+    }
+
+    public static void mapReverse(BogeyStyle gaugeStyle, BogeyStyle standardStyle) {
+        STYLES_TO_STANDARD_GAUGE.put(gaugeStyle, standardStyle);
     }
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
@@ -158,11 +162,23 @@ public class CRBogeyStyles {
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.RadialBogeyRenderer::new, CRBlocks.TRIPLEAXLE_BOGEY)
             .build();
 
-    // Broad Double Axles
+    // Wide Double Axles
     public static final BogeyStyle
         WIDE_DEFAULT = create("wide_default", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.wide_default"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
+            .build();
+
+    // Narrow Bogeys
+    public static final BogeyStyle
+        NARROW_DEFAULT = create("narrow_default", Create.asResource(STANDARD_CYCLE_GROUP))
+            .displayName(Components.translatable("railways.bogeys.styles.narrow_default"))
+            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.NarrowSmallBogeyRenderer::new, CRBlocks.NARROW_SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowScotchYokeBogeyRenderer::new, CRBlocks.NARROW_SCOTCH_BOGEY)
+            .build(),
+        NARROW_DOUBLE_SCOTCH = create("narrow_double_scotch", Create.asResource(STANDARD_CYCLE_GROUP))
+            .displayName(Components.translatable("railways.bogeys.styles.narrow_double_scotch"))
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
             .build();
 
 
@@ -182,7 +198,11 @@ public class CRBogeyStyles {
     public static void register() {
         Railways.LOGGER.info("Registered bogey styles from " + Railways.MODID);
         map(AllBogeyStyles.STANDARD, CRTrackType.WIDE_GAUGE, WIDE_DEFAULT);
+        map(AllBogeyStyles.STANDARD, CRTrackType.NARROW_GAUGE, NARROW_DEFAULT);
+        mapReverse(NARROW_DOUBLE_SCOTCH, AllBogeyStyles.STANDARD);
+
         listUnder(WIDE_DEFAULT, AllBogeyStyles.STANDARD);
+        listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
     }
 
     @Environment(EnvType.CLIENT)
