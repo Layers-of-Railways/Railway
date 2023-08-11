@@ -10,7 +10,6 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
 import it.unimi.dsi.fastutil.objects.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -236,7 +235,7 @@ public class CRCreativeModeTabs {
             ResourceKey<CreativeModeTab> tab = this.tab.getKey();
 
             List<Item> items = new LinkedList<>();
-            Predicate<Item> is3d = EnvExecutor.unsafeRunForDist(
+            Predicate<Item> is3d = Env.unsafeRunForDist(
                     () -> () -> item -> Minecraft.getInstance().getItemRenderer().getModel(new ItemStack(item), null, null, 0).isGui3d(),
                     () -> () -> item -> false // don't crash servers
             );
