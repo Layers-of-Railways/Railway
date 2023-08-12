@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-07T17:34:54.955329016	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2023-08-12T11:53:57.894236756	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 3bce8d12f5b40f69f2d3a2501173010b71a2cecd data/railways/advancements/recipes/misc/crafting/smokestack_coalburner.json
 a5a54be5fc29246fae6f0aa5313fdcda193a907b data/railways/advancements/recipes/misc/crafting/remote_lens.json
 33825b5fe31d2507ce22d3f9304356c751bdeb76 data/railways/advancements/recipes/misc/crafting/smokestack_streamlined.json
@@ -23,5 +23,5 @@ da3691593d4440ab6ebac0d156f1c1170e883d5e data/railways/recipes/crafting/smokesta
 0cfa5c2198d6dfbef41e6a9612fb6b74582652a1 data/railways/advancements/recipes/misc/crafting/semaphore.json
 b5ff9baafe807ec45a87d26e835f23ae9de02175 data/railways/advancements/recipes/misc/crafting/smokestack_oilburner.json
 b8693ec7a8b365d9a484ff4b91c0dbc0afafac22 data/railways/recipes/crafting/smokestack_streamlined.json
-223743b2f70ca6928f324e2ca5ee291f1dc7427d data/railways/advancements/recipes/misc/crafting/track_switch_andesite.json
 ffd17ce3e3f906a489deeebe4d4ea1938b1eba51 data/railways/recipes/crafting/semaphore.json
+223743b2f70ca6928f324e2ca5ee291f1dc7427d data/railways/advancements/recipes/misc/crafting/track_switch_andesite.json

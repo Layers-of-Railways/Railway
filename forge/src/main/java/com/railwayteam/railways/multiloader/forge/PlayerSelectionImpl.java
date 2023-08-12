@@ -46,7 +46,7 @@ public class PlayerSelectionImpl extends PlayerSelection {
 			Entity entity = pair.getFirst();
 			Predicate<ServerPlayer> predicate = pair.getSecond();
 
-			ServerChunkCache manager = (ServerChunkCache) entity.getLevel().getChunkSource();
+			ServerChunkCache manager = (ServerChunkCache) entity.level().getChunkSource();
 			ChunkMap storage = manager.chunkMap;
 			ChunkMap.TrackedEntity trackedEntity = ((ChunkMapAccessor)storage).getEntityMap().get(entity.getId());
 

@@ -333,42 +333,42 @@ public class CRBlocks {
 
     public static final BlockEntry<WideGaugeBogeyBlock> WIDE_DOUBLEAXLE_BOGEY =
         REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeBogeyBlock.create(false))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
             .lang("Wide Gauge Double Axle Bogey")
             .register();
 
     public static final BlockEntry<WideGaugeBogeyBlock> WIDE_SCOTCH_BOGEY =
         REGISTRATE.block("wide_scotch_bogey", WideGaugeBogeyBlock.create(true))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
             .lang("Wide Gauge Scotch Yoke Bogey")
             .register();
 
     public static final BlockEntry<WideGaugeComicallyLargeBogeyBlock> WIDE_COMICALLY_LARGE_BOGEY =
         REGISTRATE.block("wide_comically_large_bogey", WideGaugeComicallyLargeBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
             .lang("Wide Gauge Comically Large Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SMALL_BOGEY =
         REGISTRATE.block("narrow_small_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SMALL))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.narrowBogey())
             .lang("Narrow Gauge Small Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SCOTCH_BOGEY =
         REGISTRATE.block("narrow_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SCOTCH_YOKE))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.narrowBogey())
             .lang("Narrow Gauge Scotch Yoke Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_DOUBLE_SCOTCH_BOGEY =
         REGISTRATE.block("narrow_double_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.DOUBLE_SCOTCH_YOKE))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.narrowBogey())
             .lang("Narrow Gauge Double Scotch Yoke Bogey")
             .register();

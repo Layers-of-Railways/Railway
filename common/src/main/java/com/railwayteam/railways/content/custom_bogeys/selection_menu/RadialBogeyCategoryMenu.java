@@ -257,9 +257,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                     return states;
                                 });
 
-                                PoseStack ms2 = new PoseStack();
+                                GuiGraphics graphics2 = new GuiGraphics(Minecraft.getInstance(), graphics.bufferSource());
+                                PoseStack ms2 = graphics2.pose();
                                 ms2.translate(width / 2, height / 2, 0);
-                                renderCompatLabels(ms2, compats[0], compats[1], compats[2]);
+                                renderCompatLabels(graphics2, compats[0], compats[1], compats[2]);
                             }
                         }
                     }
@@ -335,9 +336,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                                 return c;
                             });
 
-                            PoseStack ms2 = new PoseStack();
+                            GuiGraphics graphics2 = new GuiGraphics(Minecraft.getInstance(), graphics.bufferSource());
+                            PoseStack ms2 = graphics2.pose();
                             ms2.translate(width / 2, height / 2, 0);
-                            renderCompatLabels(ms2, compats[0], compats[1], compats[2]);
+                            renderCompatLabels(graphics2, compats[0], compats[1], compats[2]);
                         }
 
                         if (BogeyCategoryHandlerClient.hasIcon(style, renderSize)) {
@@ -363,7 +365,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         }
 
         if ((state == State.PICK_STYLE || state == State.PICK_CATEGORY) && !selectedAny) {
-            renderCompatLabels(ms);
+            renderCompatLabels(graphics);
         }
 
         if (renderCenterSlot) {
@@ -423,18 +425,19 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         }
     }
 
-    private void renderCompatLabels(PoseStack ms) {
-        renderCompatLabels(ms, Indicator.State.OFF, Indicator.State.OFF, Indicator.State.OFF);
+    private void renderCompatLabels(GuiGraphics graphics) {
+        renderCompatLabels(graphics, Indicator.State.OFF, Indicator.State.OFF, Indicator.State.OFF);
     }
 
-    private void renderCompatLabels(PoseStack ms, boolean narrowCompat, boolean standardCompat, boolean wideCompat) {
-        renderCompatLabels(ms,
+    private void renderCompatLabels(GuiGraphics graphics, boolean narrowCompat, boolean standardCompat, boolean wideCompat) {
+        renderCompatLabels(graphics,
             narrowCompat ? Indicator.State.GREEN : Indicator.State.RED,
             standardCompat ? Indicator.State.GREEN : Indicator.State.RED,
             wideCompat ? Indicator.State.GREEN : Indicator.State.RED);
     }
 
-    private void renderCompatLabels(PoseStack ms, Indicator.State narrowState, Indicator.State standardState, Indicator.State wideState) {
+    private void renderCompatLabels(GuiGraphics graphics, Indicator.State narrowState, Indicator.State standardState, Indicator.State wideState) {
+        PoseStack ms = graphics.pose();
         ms.pushPose();
         ms.translate(-27, (height/2) - 55, 0);
         String[] labels = new String[] {"N", "S", "W"};
@@ -450,7 +453,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 case YELLOW -> AllGuiTextures.INDICATOR_YELLOW;
                 case GREEN -> AllGuiTextures.INDICATOR_GREEN;
             };
-            toDraw.render(ms, 0, 0);
+            toDraw.render(graphics, 0, 0);
             {
                 ms.pushPose();
                 ms.translate(9, 9, 0);
@@ -458,7 +461,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 RenderSystem.defaultBlendFunc();
                 Component label = Components.literal(labels[i]);
                 int l = font.width(label);
-                font.drawShadow(ms, label, (float) (-l / 2), 0, 0xFFFFFFFF);
+                graphics.drawString(font, label, (-l / 2), 0, 0xFFFFFFFF, true);
                 RenderSystem.disableBlend();
                 ms.popPose();
             }
@@ -476,7 +479,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         PoseStack ms = graphics.pose();
         ms.pushPose();
         RenderSystem.setShaderTexture(0, location);
-        graphics.blit(location, 3, 0, 0, 0, 16, 16, 16, 16);
+        graphics.blit(location, 3, 3, 0, 0, 16, 16, 16, 16);
         ms.popPose();
     }
 

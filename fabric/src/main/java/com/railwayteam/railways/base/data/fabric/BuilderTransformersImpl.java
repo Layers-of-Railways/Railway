@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
+import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -58,16 +59,6 @@ public class BuilderTransformersImpl {
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/invisible/top"))))
-            .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
-    }
-
-    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
-        return b -> b.initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
-                .getExistingFile(p.modLoc("block/bogey/top"))))
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
@@ -185,5 +176,23 @@ public class BuilderTransformersImpl {
     public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {
         return a -> a.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
             .withExistingParent(c.getName(), p.mcLoc("block/air"))));
+    }
+
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/top"))));
+    }
+
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> wideBogey() {
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/wide/top"))));
+    }
+
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> narrowBogey() {
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/narrow/top"))));
     }
 }
