@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.custom_bogeys.narrow_gauge;
 
-import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
 
-public class NarrowGaugeBogeyBlock extends DoubleAxleBogeyBlock {
+public class NarrowGaugeBogeyBlock extends CRBogeyBlock {
 
     public final NarrowGaugeStandardStyle style;
 
@@ -35,7 +35,6 @@ public class NarrowGaugeBogeyBlock extends DoubleAxleBogeyBlock {
         return switch (style) {
             case SMALL, SCOTCH_YOKE -> new Vec3(0, 7 / 32f, 32 / 32f);
             case DOUBLE_SCOTCH_YOKE -> new Vec3(0, 7 / 32f, 38 / 32f);
-            default -> new Vec3(0, 7 / 32f, 32 / 32f);
         };
     }
 

@@ -162,11 +162,12 @@ public class CRBogeyStyles {
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.RadialBogeyRenderer::new, CRBlocks.TRIPLEAXLE_BOGEY)
             .build();
 
-    // Wide Double Axles
+    // Wide Bogeys
     public static final BogeyStyle
         WIDE_DEFAULT = create("wide_default", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.wide_default"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.WideScotchYokeBogeyRenderer::new, CRBlocks.WIDE_SCOTCH_BOGEY)
             .build();
 
     // Narrow Bogeys

@@ -421,6 +421,13 @@ public class CRBlockPartials {
     ;
 
     public static final PartialModel
+        WIDE_SCOTCH_FRAME = block("bogey/wide/scotch_yoke/frame"),
+        WIDE_SCOTCH_PINS = block("bogey/wide/scotch_yoke/pins"),
+        WIDE_SCOTCH_PISTONS = block("bogey/wide/scotch_yoke/pistons"),
+        WIDE_SCOTCH_WHEELS = block("bogey/wide/scotch_yoke/wheels")
+    ;
+
+    public static final PartialModel
         NARROW_WHEELS = block("bogey/narrow/wheels"),
         NARROW_FRAME = block("bogey/narrow/default_small/frame"),
         NARROW_SCOTCH_WHEELS = block("bogey/narrow/scotch_wheels"),

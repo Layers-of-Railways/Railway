@@ -15,6 +15,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
+import com.railwayteam.railways.content.custom_bogeys.wide_gauge.WideGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
@@ -371,11 +372,18 @@ public class CRBlocks {
             .lang("Triple Axle Bogey")
             .register();
 
-    public static final BlockEntry<WideGaugeDoubleAxleBogeyBlock> WIDE_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeDoubleAxleBogeyBlock::new)
+    public static final BlockEntry<WideGaugeBogeyBlock> WIDE_DOUBLEAXLE_BOGEY =
+        REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeBogeyBlock.create(false))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
             .lang("Wide Gauge Double Axle Bogey")
+            .register();
+
+    public static final BlockEntry<WideGaugeBogeyBlock> WIDE_SCOTCH_BOGEY =
+        REGISTRATE.block("wide_scotch_bogey", WideGaugeBogeyBlock.create(true))
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.wideBogey())
+            .lang("Wide Gauge Scotch Yoke Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SMALL_BOGEY =
