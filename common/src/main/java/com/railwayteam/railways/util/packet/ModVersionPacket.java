@@ -1,7 +1,9 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.multiloader.S2CPacket;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.utility.Components;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,16 +12,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 
-public class ModVersionPacket implements S2CPacket {
-
-  final String version;
-
-  public ModVersionPacket(String version) {
-    this.version = version;
-  }
-
+public record ModVersionPacket(String version) implements S2CPacket {
   public ModVersionPacket(FriendlyByteBuf buf) {
-    version = buf.readUtf();
+    this(buf.readUtf());
   }
 
   @Override
@@ -39,5 +34,6 @@ public class ModVersionPacket implements S2CPacket {
               false
       );
     }
+    CRPackets.PACKETS.send(new JourneymapConfigurePacket(Mods.JOURNEYMAP.isLoaded));
   }
 }
