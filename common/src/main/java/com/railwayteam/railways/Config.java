@@ -3,6 +3,7 @@ package com.railwayteam.railways;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.railwayteam.railways.content.smokestack.SmokeParticle.SmokeQuality;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.nio.file.Path;
@@ -25,6 +26,9 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue SKIP_CLIENT_DERAILING;
     public static ForgeConfigSpec.BooleanValue CONDUCTOR_SPY_SHADER;
     public static ForgeConfigSpec.DoubleValue TRACK_OVERLAY_OFFSET;
+    public static ForgeConfigSpec.IntValue TRAIN_SMOKE_LIFETIME;
+    public static ForgeConfigSpec.DoubleValue TRAIN_SMOKE_PERCENTAGE;
+    public static ForgeConfigSpec.EnumValue<SmokeQuality> SMOKE_TEXTURE_QUALITY;
 
     public static ForgeConfigSpec.BooleanValue SIMPLIFIED_SEMAPHORE_PLACEMENT;
     public static ForgeConfigSpec.BooleanValue SEMAPHORES_FLIP_YELLOW_ORDER;
@@ -51,6 +55,9 @@ public class Config {
         SKIP_CLIENT_DERAILING = CLIENT_BUILDER.comment("Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash").define("skipClientsideDerailing", false);
         CONDUCTOR_SPY_SHADER = CLIENT_BUILDER.comment("Use a scanline shader when spying through a conductor").define("conductorSpyShader", true);
         TRACK_OVERLAY_OFFSET = CLIENT_BUILDER.comment("Vertical offset for track overlays").defineInRange("trackOverlayOffset", 0.0, -Double.MAX_VALUE, Double.MAX_VALUE);
+        TRAIN_SMOKE_LIFETIME = CLIENT_BUILDER.comment("Lifetime of smoke particles emitted by trains").defineInRange("trainSmokeLifetime", 610, 20, 1000);
+        TRAIN_SMOKE_PERCENTAGE = CLIENT_BUILDER.comment("Percentage of smoke emission rate on trains").defineInRange("trainSmokePercentage", 1.0, 0.0, 10.0);
+        SMOKE_TEXTURE_QUALITY = CLIENT_BUILDER.comment("Smoke texture quality").defineEnum("smokeTextureQuality", SmokeQuality.ULTRA);
 
         SERVER_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         setupGeneralCategory(SERVER_BUILDER);

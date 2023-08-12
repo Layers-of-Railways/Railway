@@ -19,6 +19,7 @@ v1.5.0:
 - feat: Oilburner Smokestack can be encased with industrial iron
 - fix: polymer will no longer crash with Steam 'n' Rails
 - Added collision to track encasement
+- Added narrow and wide gauge bogeys
 v1.4.3:
 - fix: Custom curved tracks render with flywheel off in production (#169)
 - SecurityCraft compat (#172)

@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.smokestack;
 
 
+import com.railwayteam.railways.Config;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
@@ -104,7 +105,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         double speedModifierTarget = 5 * (0.5+maxModifier);
         speedMultiplierChaser.chase(speedModifierTarget, 0.4, LerpedFloat.Chaser.LINEAR);
         speedMultiplierChaser.tickChaser();
-        if (random.nextFloat() < type.particleSpawnChance * chanceModifier) {
+        if (random.nextFloat() < type.particleSpawnChance * chanceModifier * Config.TRAIN_SMOKE_PERCENTAGE.get()) {
             for(int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
                 /*context.world.addAlwaysVisibleParticle(
                     context.state.getValue(CampfireBlock.SIGNAL_FIRE) ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE

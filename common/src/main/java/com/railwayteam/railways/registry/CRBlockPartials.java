@@ -415,7 +415,35 @@ public class CRBlockPartials {
         Y25_FRAME = block("bogey/y25/y25_frame"),
         HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
         RADIAL_FRAME = block("bogey/radial/radial_frame"),
-        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels");
+        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels"),
+        CR_WIDE_BOGEY_WHEELS = block("bogey/wide/wheels"),
+        WIDE_DEFAULT_FRAME = block("bogey/wide/default/frame")
+    ;
+
+    public static final PartialModel
+        WIDE_SCOTCH_FRAME = block("bogey/wide/scotch_yoke/frame"),
+        WIDE_SCOTCH_PINS = block("bogey/wide/scotch_yoke/pins"),
+        WIDE_SCOTCH_PISTONS = block("bogey/wide/scotch_yoke/pistons"),
+        WIDE_SCOTCH_WHEELS = block("bogey/wide/scotch_yoke/wheels")
+    ;
+
+    public static final PartialModel
+        WIDE_COMICALLY_LARGE_FRAME = block("bogey/wide/comically_large/frame"),
+        WIDE_COMICALLY_LARGE_PINS = block("bogey/wide/comically_large/pins"),
+        WIDE_COMICALLY_LARGE_PISTONS = block("bogey/wide/comically_large/pistons"),
+        WIDE_COMICALLY_LARGE_WHEELS = block("bogey/wide/comically_large/wheels")
+    ;
+
+    public static final PartialModel
+        NARROW_WHEELS = block("bogey/narrow/wheels"),
+        NARROW_FRAME = block("bogey/narrow/default_small/frame"),
+        NARROW_SCOTCH_WHEELS = block("bogey/narrow/scotch_wheels"),
+        NARROW_SCOTCH_WHEEL_PINS = block("bogey/narrow/scotch_wheel_pins"),
+        NARROW_SCOTCH_FRAME = block("bogey/narrow/default_scotch/frame"),
+        NARROW_SCOTCH_PISTONS = block("bogey/narrow/default_scotch/pistons"),
+        NARROW_DOUBLE_SCOTCH_FRAME = block("bogey/narrow/double_scotch/frame"),
+        NARROW_DOUBLE_SCOTCH_PISTONS = block("bogey/narrow/double_scotch/pistons")
+    ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");

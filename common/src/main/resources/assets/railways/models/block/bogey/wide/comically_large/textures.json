@@ -1,0 +1,13 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"piston": "create:block/bogey/piston",
+		"frame": "create:block/bogey/frame",
+		"wheel": "create:block/bogey/wheel",
+		"axis": "create:block/axis",
+		"broad_piston": "railways:block/bogeys/wide/scotch_yoke/broad_piston",
+		"broad_connector": "railways:block/bogeys/wide/scotch_yoke/broad_connector",
+		"huge_scotch_yoke": "railways:block/bogeys/wide/comically_large/huge_scotch_yoke",
+		"huge_scotch_yoke_axle": "railways:block/bogeys/wide/comically_large/huge_scotch_yoke_axle"
+	}
+}

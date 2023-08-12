@@ -9,6 +9,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
+import com.simibubi.create.AllTags;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
@@ -37,9 +38,31 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
-    @ExpectPlatform
+    private static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> sharedBogey() {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(p -> p.noOcclusion())
+            .transform(pickaxeOnly())
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
+    }
+
     public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
-        throw new AssertionError();
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/top"))));
+    }
+
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> wideBogey() {
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/wide/top"))));
+    }
+
+    public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> narrowBogey() {
+        return b -> b.transform(sharedBogey())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.modLoc("block/bogey/narrow/top"))));
     }
 
     @ExpectPlatform

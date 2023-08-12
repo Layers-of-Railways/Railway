@@ -100,7 +100,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
-        edgeSpacingScroll.between(3, 10);
+        edgeSpacingScroll.between(3, 15);
         edgeSpacingScroll.withFormatter(i -> String.valueOf(Components.translatable("railways.coupler.edge_spacing.meters")));
         edgeSpacingScroll.withFormatter(i -> i + "m");
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
@@ -141,20 +141,20 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
 //        this.getSecondaryCoupler().blockEntityAdded(this, false); //FIX_ME remove this
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
-            case DECOUPLING:
+            case DECOUPLING -> {
                 Train train = info.frontCarriage.train;
                 int numberOffEnd = train.carriages.size() - train.carriages.indexOf(info.backCarriage); // all carriages after and including the back carriage
                 TrainUtils.splitTrain(train, numberOffEnd);
-                break;
-            case COUPLING:
+            }
+            case COUPLING -> {
                 Train frontTrain = info.frontCarriage.train;
                 Train backTrain = info.backCarriage.train;
                 if (frontTrain == backTrain)
                     break;
                 TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing());
-                break;
-            case NONE:
-                break;
+            }
+            case NONE -> {
+            }
         }
     }
 
@@ -383,9 +383,20 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                 Carriage primaryCarriage = getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, true);
                 Carriage secondaryCarriage = getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, false);
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
-                        secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
-                    return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
-                else {
+                        secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1) {
+                    // ensure correct order when only one bogey (if 'outer' points are closer together than 'inner' points, then something is off
+                    double outerLength = secondaryCarriage.getLeadingPoint().getPosition(secondaryTrain.graph)
+                        .subtract(primaryCarriage.getTrailingPoint().getPosition(primaryTrain.graph))
+                        .lengthSqr();
+                    double innerLength = secondaryCarriage.getTrailingPoint().getPosition(secondaryTrain.graph)
+                        .subtract(primaryCarriage.getLeadingPoint().getPosition(primaryTrain.graph))
+                        .lengthSqr();
+                    if (outerLength < innerLength) {
+                        return OperationInfo.NONE;
+                    } else {
+                        return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
+                    }
+                } else {
                     if (primaryCarriage != null && getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, true) != null) {
                         setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
                     } else if (secondaryCarriage != null && getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, false) != null) {

@@ -17,7 +17,6 @@ import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
 import com.railwayteam.railways.content.tender.TenderBlockEntity;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -67,8 +66,10 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<CRBogeyBlockEntity> BOGEY = REGISTRATE
             .blockEntity("bogey", CRBogeyBlockEntity::new)
             .renderer(() -> BogeyBlockEntityRenderer::new)
-            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY,
-                    CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY, CRBlocks.TRIPLEAXLE_BOGEY)
+            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,
+                CRBlocks.TRIPLEAXLE_BOGEY, CRBlocks.WIDE_DOUBLEAXLE_BOGEY, CRBlocks.WIDE_SCOTCH_BOGEY,
+                CRBlocks.WIDE_COMICALLY_LARGE_BOGEY, CRBlocks.NARROW_SMALL_BOGEY, CRBlocks.NARROW_SCOTCH_BOGEY,
+                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)

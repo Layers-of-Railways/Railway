@@ -1,0 +1,10 @@
+{
+	"parent": "block/block",
+	"loader": "forge:obj",
+	"ambientocclusion": false,
+	"flip_v": true,
+	"model": "railways:models/block/bogey/wide/wheels.obj",
+	"textures": {
+		"0": "railways:block/bogeys/wide/axle"
+	}
+}
