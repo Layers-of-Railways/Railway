@@ -1,0 +1,16 @@
+# Made in Blockbench 4.6.1
+newmtl m_huge_scotch_yoke
+map_Kd #huge_scotch_yoke
+newmtl m_huge_scotch_yoke_axle
+map_Kd #huge_scotch_yoke_axle
+newmtl m_frame
+map_Kd #frame
+newmtl m_wheel
+map_Kd #wheel
+newmtl m_broad_piston
+map_Kd #broad_piston
+newmtl m_piston
+map_Kd #piston
+newmtl m_axis
+map_Kd #axis
+newmtl none

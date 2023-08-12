@@ -234,6 +234,7 @@
 	"block.railways.track_warped_narrow": "Narrow Warped Train Track",
 	"block.railways.track_warped_wide": "Wide Warped Train Track",
 	"block.railways.tripleaxle_bogey": "Triple Axle Bogey",
+	"block.railways.wide_comically_large_bogey": "Wide Gauge Comically Large Bogey",
 	"block.railways.wide_doubleaxle_bogey": "Wide Gauge Double Axle Bogey",
 	"block.railways.wide_scotch_bogey": "Wide Gauge Scotch Yoke Bogey",
 
@@ -654,6 +655,7 @@
 	"railways.bogeys.styles.heavyweight": "Heavyweight",
 	"railways.bogeys.styles.radial": "Radial",
 	"railways.bogeys.styles.wide_default": "Wide",
+	"railways.bogeys.styles.wide_comically_large": "Comically Large",
 	"railways.bogeys.styles.narrow_default": "Narrow",
 	"railways.bogeys.styles.narrow_double_scotch": "Narrow Double Scotch Yoke",
 

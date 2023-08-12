@@ -54,6 +54,8 @@ public class CRBogeyStyles {
     }
 
     public static Optional<BogeyStyle> getMapped(BogeyStyle from, TrackType toType) {
+        if (from.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock && bogeyBlock.getValidPathfindingTypes(from).contains(toType))
+            return Optional.of(from);
         Pair<BogeyStyle, TrackType> key = Pair.of(from, toType);
         if (STYLES_FOR_GAUGES.containsKey(key)) {
             return Optional.of(STYLES_FOR_GAUGES.get(key));
@@ -168,6 +170,10 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.wide_default"))
             .size(BogeySizes.SMALL, () -> CRBogeyRenderer.WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.WideScotchYokeBogeyRenderer::new, CRBlocks.WIDE_SCOTCH_BOGEY)
+            .build(),
+        WIDE_COMICALLY_LARGE = create("wide_comically_large", Create.asResource(STANDARD_CYCLE_GROUP))
+            .displayName(Components.translatable("railways.bogeys.styles.wide_comically_large"))
+            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.WideComicallyLargeScotchYokeBogeyRenderer::new, CRBlocks.WIDE_COMICALLY_LARGE_BOGEY)
             .build();
 
     // Narrow Bogeys
@@ -201,6 +207,7 @@ public class CRBogeyStyles {
         map(AllBogeyStyles.STANDARD, CRTrackType.WIDE_GAUGE, WIDE_DEFAULT);
         map(AllBogeyStyles.STANDARD, CRTrackType.NARROW_GAUGE, NARROW_DEFAULT);
         mapReverse(NARROW_DOUBLE_SCOTCH, AllBogeyStyles.STANDARD);
+        mapReverse(WIDE_COMICALLY_LARGE, AllBogeyStyles.STANDARD);
 
         listUnder(WIDE_DEFAULT, AllBogeyStyles.STANDARD);
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);

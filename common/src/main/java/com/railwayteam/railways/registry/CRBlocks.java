@@ -16,6 +16,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
 import com.railwayteam.railways.content.custom_bogeys.wide_gauge.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
@@ -384,6 +385,13 @@ public class CRBlocks {
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
             .lang("Wide Gauge Scotch Yoke Bogey")
+            .register();
+
+    public static final BlockEntry<WideGaugeComicallyLargeBogeyBlock> WIDE_COMICALLY_LARGE_BOGEY =
+        REGISTRATE.block("wide_comically_large_bogey", WideGaugeComicallyLargeBogeyBlock::new)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.wideBogey())
+            .lang("Wide Gauge Comically Large Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SMALL_BOGEY =
