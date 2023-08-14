@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.smokestack;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class SmokeParticle extends SimpleAnimatedParticle {
 
@@ -39,7 +40,8 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 			RenderSystem.depthMask(false);
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
 			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+			RenderSystem.enableDepthTest();
+			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
 		}
 
@@ -53,7 +55,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 
 		@Override
 		public String toString() {
-			return "TRANSPARENT";
+			return "TRANSPARENT_SMOKE";
 		}
 	};
 
@@ -85,7 +87,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
+	public @NotNull ParticleRenderType getRenderType() {
 		return TRANSPARENT_SMOKE;
 	}
 
