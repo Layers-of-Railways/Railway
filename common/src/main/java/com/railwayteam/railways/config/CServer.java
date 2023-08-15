@@ -4,7 +4,7 @@ import com.simibubi.create.foundation.config.ConfigBase;
 
 public class CServer extends ConfigBase {
 
-    public final ConfigGroup server = group(0, "server", Comments.server);
+    public final ConfigGroup misc = group(0, "misc", Comments.misc);
 
     public final ConfigBool strictCoupler = b(false, "strictCoupler", Comments.strictCoupler);
     public final ConfigBool flipDistantSwitches = b(true, "flipDistantSwitches", Comments.flipDistantSwitches);
@@ -21,7 +21,7 @@ public class CServer extends ConfigBase {
     }
 
     private static class Comments {
-        static String server = "Server settings";
+        static String misc = "Miscellaneous settings";
 
         static String strictCoupler = "Coupler will require points to be on the same or adjacent track edge, this will prevent the coupler from working if there is any form of junction in between the two points.";
         static String flipDistantSwitches = "Allow controlling Brass Switches remotely when approaching them on a train";
