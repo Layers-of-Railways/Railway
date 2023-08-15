@@ -2,9 +2,9 @@ package com.railwayteam.railways.compat.tracks;
 
 import com.google.common.collect.ImmutableSet;
 import com.jozufozu.flywheel.core.PartialModel;
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.mixin.AccessorTrackMaterialFactory;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
@@ -44,7 +44,7 @@ public abstract class TrackCompatUtils {
     );
 
     public static boolean anyLoaded() {
-        if (GenericTrackCompat.isDataGen() || Config.REGISTER_MISSING_TRACKS.get())
+        if (GenericTrackCompat.isDataGen() || CRConfigs.common().registerMissingTracks.get())
             return true;
         for (String mod : TRACK_COMPAT_MODS) {
             if (Mods.valueOf(mod.toUpperCase(Locale.ROOT)).isLoaded)

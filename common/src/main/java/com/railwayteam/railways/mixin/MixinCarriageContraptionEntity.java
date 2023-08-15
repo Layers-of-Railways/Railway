@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
@@ -96,7 +96,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
         if (lookAhead != null) {
             // try to reserve switch
-            if (Config.FLIP_DISTANT_SWITCHES.get() && spaceDown && lookAhead.isAutomatic()
+            if (CRConfigs.server().flipDistantSwitches.get() && spaceDown && lookAhead.isAutomatic()
                     && !lookAhead.isLocked() && !carriage.train.navigation.isActive()) {
                 if (headOn) {
                     lookAhead.trySetSwitchState(SwitchState.fromSteerDirection(carriage.train.manualSteer, forward));
@@ -132,7 +132,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "updateTrackGraph", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;graph:Lcom/simibubi/create/content/trains/graph/TrackGraph;", opcode = Opcodes.H_PUTFIELD, ordinal = 0), cancellable = true)
     private void cancelDerailing(CallbackInfo ci) {
-        if (Config.SKIP_CLIENT_DERAILING.get())
+        if (CRConfigs.client().skipClientDerailing.get())
             ci.cancel();
     }
 }

@@ -3,10 +3,10 @@ package com.railwayteam.railways.registry;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
 import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
+import com.railwayteam.railways.config.CRConfigs;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
@@ -22,7 +22,7 @@ public class CRDataFixers {
     private static final BiFunction<Integer, Schema, Schema> SAME_NAMESPACED = NamespacedSchema::new;
     public static void register() {
         Railways.LOGGER.info("Registering data fixers");
-        if (Config.DISABLE_DATAFIXER.get()) {
+        if (CRConfigs.getDisableDatafixer()) {
             Railways.LOGGER.warn("SKIPPING DATAFIXER REGISTRATION DUE TO CONFIG");
             return;
         }

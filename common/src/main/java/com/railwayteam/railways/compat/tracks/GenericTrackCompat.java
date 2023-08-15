@@ -1,8 +1,8 @@
 package com.railwayteam.railways.compat.tracks;
 
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
@@ -46,7 +46,7 @@ public class GenericTrackCompat {
     }
 
     protected static boolean registerTracksAnywayGlobal() {
-        return Config.REGISTER_MISSING_TRACKS.get();// || Utils.isDevEnv();
+        return CRConfigs.getRegisterMissingTracks(); // || Utils.isDevEnv();
     }
 
     protected boolean registerTracksAnyway() {

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
@@ -170,7 +170,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
 
     @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
     private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
-        if (Config.DISABLE_TRAIN_COLLISION.get())
+        if (CRConfigs.server().optimization.disableTrainCollision.get())
             ci.cancel();
     }
 }

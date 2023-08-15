@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
@@ -282,7 +282,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
             edgePointsOk = false;
             return;
         }
-        if (Config.STRICT_COUPLER.get()) {
+        if (CRConfigs.server().strictCoupler.get()) {
             edgePointsOk = edgePointLocations.getFirst().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getFirst().equals(secondEdgePointLocations.getSecond()) ||
                     edgePointLocations.getSecond().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getSecond().equals(secondEdgePointLocations.getSecond());
             if (!edgePointsOk)
@@ -609,7 +609,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                         .style(ChatFormatting.DARK_RED)
                         .forGoggles(tooltip);
             }
-            if (clientInfo.error2 != null && Config.EXTENDED_COUPLER_DEBUG.get()) {
+            if (clientInfo.error2 != null && CRConfigs.client().showExtendedCouplerDebug.get()) {
                 b().add(clientInfo.error2)
                         .style(ChatFormatting.DARK_PURPLE)
                         .forGoggles(tooltip);

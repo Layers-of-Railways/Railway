@@ -6,6 +6,7 @@ import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
@@ -28,8 +29,12 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
@@ -44,12 +49,31 @@ public class Railways {
         .andThen(TooltipModifier.mapNull(KineticStats.create(item))));
   }
 
+  private static void migrateConfig(Path path, Function<String, String> converter) {
+    Convert: try {
+
+      String str = new String(Files.readAllBytes(path));
+      if (str.contains("#General settings") || str.contains("[general]")) { // we found a legacy config
+        String migrated;
+        try {
+          migrated = converter.apply(new String(Files.readAllBytes(path)));
+        } catch (IOException e) {
+          break Convert;
+        }
+        try (FileWriter writer = new FileWriter(path.toFile())) {
+          writer.write(migrated);
+        }
+      }
+    } catch (IOException ignored) {}
+  }
+
   public static void init() {
-    registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-    registerConfig(ModConfig.Type.COMMON, Config.SERVER_CONFIG);
     Path configDir = Utils.configDir();
-    Config.loadConfig(Config.CLIENT_CONFIG, configDir.resolve(MODID + "-client.toml"));
-    Config.loadConfig(Config.SERVER_CONFIG, configDir.resolve(MODID + "-common.toml"));
+    Path clientConfigDir = configDir.resolve(MODID + "-client.toml");
+    migrateConfig(clientConfigDir, CRConfigs::migrateClient);
+
+    Path commonConfigDir = configDir.resolve(MODID + "-common.toml");
+    migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
 
     ModSetup.register();
     finalizeRegistrate();

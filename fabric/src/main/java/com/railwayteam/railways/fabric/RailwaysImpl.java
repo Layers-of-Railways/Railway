@@ -2,6 +2,7 @@ package com.railwayteam.railways.fabric;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.fabric.CRConfigsImpl;
 import com.railwayteam.railways.fabric.events.CommonEventsFabric;
 import com.railwayteam.railways.registry.fabric.CRParticleTypesParticleEntryImpl;
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
@@ -18,6 +19,7 @@ public class RailwaysImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Railways.init();
+		CRConfigsImpl.register();
 		CRParticleTypesParticleEntryImpl.register();
 		CommonEventsFabric.init();
 	}
