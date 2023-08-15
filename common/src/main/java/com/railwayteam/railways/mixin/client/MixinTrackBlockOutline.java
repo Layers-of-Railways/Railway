@@ -19,7 +19,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = TrackBlockOutline.class, remap = false)
 public abstract class MixinTrackBlockOutline {
-    @Redirect(method = "pickCurves", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;"))
+    @Redirect(method = "pickCurves",
+            at = @At(
+                    value = "INVOKE",
+                target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+                remap = true
+            )
+    )
     private static VoxelShape pickWithCorrectShape(VoxelShaper instance, Direction direction, @Local BezierConnection bc) {
         return CustomTrackBlockOutline.convert(instance.get(direction), bc.getMaterial());
     }
