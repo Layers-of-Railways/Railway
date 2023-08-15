@@ -6,6 +6,7 @@ import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBogeyStyles;
@@ -47,13 +48,17 @@ public class CRBogeyStyles {
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
         if (style.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock) {
-            return bogeyBlock.getValidPathfindingTypes(style).contains(trackType);
+            return bogeyBlock.getValidPathfindingTypes(style).contains(trackType) && (trackType != CRTrackType.MONORAIL ^ bogeyBlock instanceof InvisibleMonoBogeyBlock);
         } else { // someone is doing something very weird. not going to stop them
             return true;
         }
     }
 
     public static Optional<BogeyStyle> getMapped(BogeyStyle from, TrackType toType) {
+        return getMappedRecursive(from, toType, false);
+    }
+
+    private static Optional<BogeyStyle> getMappedRecursive(BogeyStyle from, TrackType toType, boolean recursive) {
         if (from.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock && bogeyBlock.getValidPathfindingTypes(from).contains(toType))
             return Optional.of(from);
         Pair<BogeyStyle, TrackType> key = Pair.of(from, toType);
@@ -61,8 +66,8 @@ public class CRBogeyStyles {
             return Optional.of(STYLES_FOR_GAUGES.get(key));
         } else if (toType == TrackType.STANDARD && STYLES_TO_STANDARD_GAUGE.containsKey(from)) {
             return Optional.of(STYLES_TO_STANDARD_GAUGE.get(from));
-        } else if (toType != TrackType.STANDARD) {
-            return getMapped(from, TrackType.STANDARD).flatMap(standardStyle -> getMapped(standardStyle, toType));
+        } else if (toType != TrackType.STANDARD && !recursive) {
+            return getMappedRecursive(from, TrackType.STANDARD, true).flatMap(standardStyle -> getMappedRecursive(standardStyle, toType, true));
         } else {
             return Optional.empty();
         }
