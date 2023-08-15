@@ -2,6 +2,7 @@ package com.railwayteam.railways.forge;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.forge.CRConfigsImpl;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
 import net.minecraft.commands.CommandSourceStack;
@@ -31,6 +32,7 @@ public class RailwaysImpl {
 	public RailwaysImpl() {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
 		Railways.init();
+		CRConfigsImpl.register(ModLoadingContext.get());
 		CRParticleTypesParticleEntryImpl.register(bus);
 		//noinspection Convert2MethodRef
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
@@ -84,7 +84,7 @@ public abstract class MixinStationBlock {
                     stackTag.remove("Bezier");
                     itemInHand.setTag(stackTag);
 
-                    if (Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != pPlayer) {
+                    if (CRConfigs.server().conductors.whistleRequiresOwning.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != pPlayer) {
                         stackTag.remove("SelectedPos");
                         itemInHand.setTag(stackTag);
                         return;

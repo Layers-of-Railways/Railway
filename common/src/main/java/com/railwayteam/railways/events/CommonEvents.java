@@ -1,6 +1,6 @@
 package com.railwayteam.railways.events;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRExtraRegistration;
@@ -28,11 +28,11 @@ public class CommonEvents {
         long ticks = level.getGameTime();
         for (Train train : Create.RAILWAYS.trains.values()) {
             long offsetTicks = ticks + train.id.hashCode();
-            if (offsetTicks % Config.FAR_TRAIN_SYNC_TICKS.get() == 0) {
+            if (offsetTicks % CRConfigs.server().journeymap.farTrainSyncTicks.get() == 0) {
                 CRPackets.PACKETS.sendTo(PlayerSelection.allWith(p -> journeymapUsers.contains(p.getUUID())),
                     new TrainMarkerDataUpdatePacket(train));
             }
-            if (offsetTicks % Config.NEAR_TRAIN_SYNC_TICKS.get() == 0) { //DONE train *might* not have any carriages if it just got coupled, fix that
+            if (offsetTicks % CRConfigs.server().journeymap.nearTrainSyncTicks.get() == 0) { //DONE train *might* not have any carriages if it just got coupled, fix that
                 if (!train.carriages.isEmpty()) {
                     Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
                     if (trainEntity != null)

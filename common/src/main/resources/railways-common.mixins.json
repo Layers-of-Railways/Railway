@@ -29,6 +29,7 @@
     "MixinCarriage",
     "MixinCarriageBogey",
     "MixinCarriageContraptionEntity",
+    "MixinConfigHelper",
     "MixinDirectBeltInputBehaviour",
     "MixinDoorMovingInteraction",
     "MixinEdgeData",

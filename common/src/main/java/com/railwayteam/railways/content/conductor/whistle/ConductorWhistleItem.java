@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.conductor.whistle;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin.AccessorCarriage;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
@@ -110,7 +110,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             return InteractionResult.PASS;
         if (pInteractionTarget instanceof ConductorEntity conductor && conductor.getVehicle() instanceof CarriageContraptionEntity cce) {
             Train train = cce.getCarriage().train;
-            if (train.owner == pPlayer.getUUID() || !Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get()) {
+            if (train.owner == pPlayer.getUUID() || !CRConfigs.server().conductors.whistleRequiresOwning.get()) {
                 CompoundTag stackTag = pStack.getOrCreateTag();
                 stackTag.putUUID("SelectedTrain", train.id);
                 stackTag.putUUID("SelectedConductor", conductor.getUUID());
@@ -220,7 +220,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             }
 
             // have to own train if: non-auto schedule is in progress
-            if (Config.CONDUCTOR_WHISTLE_REQUIRES_OWNING.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != player) {
+            if (CRConfigs.server().conductors.whistleRequiresOwning.get() && train.runtime.getSchedule() != null && !train.runtime.completed && !train.runtime.isAutoSchedule && train.getOwner(level) != player) {
                 stackTag.remove("SelectedPos");
                 stackTag.remove("SelectedDirection");
                 stack.setTag(stackTag);
