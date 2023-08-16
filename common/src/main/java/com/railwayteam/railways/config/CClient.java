@@ -3,6 +3,7 @@ package com.railwayteam.railways.config;
 import com.railwayteam.railways.content.smokestack.SmokeParticle.SmokeQuality;
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class CClient extends ConfigBase {
 
     public final ConfigGroup client = group(0, "client", Comments.client);
@@ -15,9 +16,9 @@ public class CClient extends ConfigBase {
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
-    public final ConfigInt smokeLifetime = i(610, 20, 1000, "smokeLifetime", Comments.inTicks, Comments.smokeLifetime);
-    public final ConfigFloat smokePercentage = f(1.0f, 0.0f, 10.0f, "smokePercentage", Comments.smokePercentage);
-    public final ConfigEnum<SmokeQuality> smokeQuality = e(SmokeQuality.ULTRA, "smokeQuality", Comments.smokeQuality);
+    public final ConfigInt smokeLifetime = i(500, 20, 1000, "smokeLifetime", Comments.inTicks, Comments.smokeLifetime);
+    public final ConfigFloat smokePercentage = f(0.75f, 0.0f, 10.0f, "smokePercentage", Comments.smokePercentage);
+    public final ConfigEnum<SmokeQuality> smokeQuality = e(SmokeQuality.HIGH, "smokeQuality", Comments.smokeQuality);
 
     // journeymap
     public final ConfigGroup journeymap = group(1, "journeymap", Comments.journeymap);

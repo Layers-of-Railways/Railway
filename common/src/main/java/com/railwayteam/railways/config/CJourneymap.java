@@ -2,6 +2,7 @@ package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class CJourneymap extends ConfigBase {
 
     public final ConfigInt farTrainSyncTicks = i(200, 10, 600, "farTrainSyncTicks", Comments.inTicks, Comments.farTrainSyncTicks);

@@ -2,6 +2,7 @@ package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class COptimization extends ConfigBase {
 
     public final ConfigBool disableTrainCollision = b(false, "disableTrainCollision", Comments.disableTrainCollision);

@@ -3,6 +3,7 @@ package com.railwayteam.railways.config;
 import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
 
+@SuppressWarnings("unused")
 public class CCommon extends ConfigBase {
 
     public final ConfigBool registerMissingTracks = b(false, "registerMissingTracks", Comments.registerMissingTracks, ConfigAnnotations.RequiresRestart.BOTH.asComment());
