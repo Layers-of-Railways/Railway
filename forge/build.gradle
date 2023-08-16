@@ -1,8 +1,6 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
+    id "me.shedaniel.unified-publishing"
 }
 
 loom {
@@ -139,33 +137,35 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
     }
 }
+unifiedPublishing {
+    project {
+        releaseType = "release"
+        gameVersions = [minecraft_version]
+        gameLoaders = ["forge"]
+        displayName = "Steam 'n' Rails $mod_version Forge $minecraft_version"
+        changelog = getChangelogText("Forge", true)
+        mainPublication remapJar
 
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = findProperty('CURSEFORGETOKEN')
-    var projectId = "688231"
+        relations {
+            depends {
+                curseforge = modrinth = "create"
+            }
+        }
 
-    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
-    mainFile.changelog = getChangelogText("Forge", true)
-    mainFile.changelogType = "html"
-    mainFile.displayName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    mainFile.addRequirement("create")
-    mainFile.addModLoader("Forge")
-    mainFile.addJavaVersion("Java 17")
-    mainFile.releaseType = "release"
-}
+        if (System.getenv("CURSEFORGE_TOKEN")) {
+            curseforge {
+                token = System.getenv("CURSEFORGE_TOKEN")
+                id = project.curseforge_id
+            }
+        }
 
-modrinth {
-    token = findProperty('MODRINTHTOKEN')
-    projectId = "ZzjhlDgM"
-    changelog = getChangelogText("Forge", true)
-    versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    versionNumber = "${mod_version}-forge-${minecraft_version}"
-    versionType = "release"
-    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar")
-    gameVersions = [minecraft_version]
-    loaders = ["forge"]
-    dependencies {
-        required.version "LNytGWDc", (System.getenv("CREATE_FORGE_VER") != null ? System.getenv("CREATE_FORGE_VER") : "null")
+        if (System.getenv("MODRINTH_TOKEN")) {
+            modrinth {
+                token = System.getenv("MODRINTH_TOKEN")
+                id = project.modrinth_id
+                version = "$mod_version-forge-mc$minecraft_version"
+            }
+        }
     }
 }
 

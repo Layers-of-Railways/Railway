@@ -1,8 +1,8 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.1.+" apply false
-    id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
-    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
+    id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
+    id "me.shedaniel.unified-publishing" version "0.1.+" apply false // https://github.com/shedaniel/unified-publishing
 }
 
 architectury {
@@ -11,7 +11,7 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-quiltflower"
+    apply plugin: "io.github.juuxel.loom-vineflower"
 
     loom {
         silentMojangMappingsLicense()
@@ -46,8 +46,13 @@ subprojects {
                 basic(BasicAuthentication)
             }
             credentials(PasswordCredentials) {
-                username = findProperty("IThundxrMavenUsername") != null ? findProperty("IThundxrMavenUsername") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("IThundxrMavenPassword") != null ? findProperty("IThundxrMavenPassword") : System.getenv("ITHUNDXRMAVENPASSWORD")
+                if (System.getenv("GITHUB_RUN_NUMBER")) {
+                    username = "railways-github"
+                    password = System.getenv("MAVEN_TOKEN")
+                } else {
+                    username = findProperty("IThundxrMavenUsername")
+                    password = findProperty("IThundxrMavenPassword")
+                }
             }
         }
     }

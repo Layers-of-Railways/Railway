@@ -1,42 +1,23 @@
 name: Build
 on:
   workflow_dispatch:
-  push:
-    branches-ignore:
-      'l10n_1.19/dev'
   pull_request:
+  push:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        java: [ 17 ]
     runs-on: ubuntu-latest
-    env:
-      ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
-      ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
     steps:
 
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Send Building Notification to Discord
-        if: github.event_name != 'pull_request'
-        uses: realRobotix/action-discord-notifier@release-master
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message-title: "Building mod from ${{ github.ref }}"
-
-      - name: Setup Java ${{ matrix.java }}
+      - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.java }}
+          java-version: '17'
           distribution: temurin
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
+          cache: gradle
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
@@ -52,11 +33,3 @@ jobs:
         with:
           name: Artifacts
           path: jars
-
-      - name: Upload Production builds to Discord
-        if: github.event_name != 'pull_request'
-        uses: sinshutu/upload-to-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: ./jars/*.jar
