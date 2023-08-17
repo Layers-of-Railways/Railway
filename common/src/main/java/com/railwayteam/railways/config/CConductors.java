@@ -2,6 +2,7 @@ package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class CConductors extends ConfigBase {
 
     public final ConfigBool whistleRequiresOwning = b(false, "mustOwnBoundTrain", Comments.whistleRequiresOwning);

@@ -2,6 +2,7 @@ package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class CSemaphores extends ConfigBase {
 
     public final ConfigBool simplifiedPlacement = b(true, "simplifiedPlacement", Comments.simplifiedPlacement);

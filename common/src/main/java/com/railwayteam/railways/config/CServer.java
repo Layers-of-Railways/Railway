@@ -2,6 +2,7 @@ package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
 
+@SuppressWarnings("unused")
 public class CServer extends ConfigBase {
 
     public final ConfigGroup misc = group(0, "misc", Comments.misc);

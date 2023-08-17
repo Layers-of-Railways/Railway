@@ -11,13 +11,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public enum DevCapeUtils {
     INSTANCE;
+
+    public static final Map<UUID, Boolean> usageStatusServerside = new HashMap<>();
+    public static final Map<UUID, Boolean> usageStatusClientside = new HashMap<>();
 
     private final Set<UUID> registeredDevs = new HashSet<>();
 
@@ -63,5 +64,9 @@ public enum DevCapeUtils {
 
     public boolean isDev(UUID id) {
         return registeredDevs.contains(id) || Utils.isDevEnv();
+    }
+
+    public boolean useDevCape(UUID id) {
+        return isDev(id) && usageStatusClientside.getOrDefault(id, true);
     }
 }
