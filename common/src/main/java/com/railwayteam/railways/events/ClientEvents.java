@@ -6,10 +6,16 @@ import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.registry.CRExtraRegistration;
+import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.packet.ConfigureDevCapeC2SPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.ApiStatus;
 
 public class ClientEvents {
+
+    @ApiStatus.Internal
+    public static boolean previousDevCapeSetting = false;
 
     public static void onClientTickStart(Minecraft mc) {
         PhantomSpriteManager.tick(mc);
@@ -18,6 +24,9 @@ public class ClientEvents {
 
         Level level = mc.level;
         long ticks = level == null ? 1 : level.getGameTime();
+        if (ticks % 40 == 0 && previousDevCapeSetting != (previousDevCapeSetting = CRConfigs.client().useDevCape.get())) {
+            CRPackets.PACKETS.send(new ConfigureDevCapeC2SPacket(previousDevCapeSetting));
+        }
         if (ticks % CRConfigs.client().journeymapRemoveObsoleteTicks.get() == 0) {
             DummyRailwayMarkerHandler.getInstance().removeObsolete();
             DummyRailwayMarkerHandler.getInstance().reloadMarkers();
