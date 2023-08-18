@@ -13,6 +13,7 @@ public class CClient extends ConfigBase {
     public final ConfigBool skipClientDerailing = b(false, "skipClientDerailing", Comments.skipClientDerailing);
     public final ConfigBool useConductorSpyShader = b(true, "useConductorSpyShader", Comments.useConductorSpyShader);
     public final ConfigFloat trackOverlayOffset = f(0.0f, -256.0f, 256.0f, "trackOverlayOffset", Comments.trackOverlayOffset);
+    public final ConfigBool useDevCape = b(true, "useDevCape", Comments.useDevCape, Comments.useDevCape2);
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
@@ -40,6 +41,8 @@ public class CClient extends ConfigBase {
         static String skipClientDerailing = "Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash";
         static String useConductorSpyShader = "Use a scanline shader when spying through a conductor";
         static String trackOverlayOffset = "Vertical offset for track overlays";
+        static String useDevCape = "Whether to actually apply the dev cape (ignored for non-devs)";
+        static String useDevCape2 = "This setting may require a relog to take effect";
 
         static String smoke = "Smoke Settings";
         static String smokeLifetime = "Lifetime of smoke particles emitted by contraptions";
