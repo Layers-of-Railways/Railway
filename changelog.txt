@@ -1,13 +1,4 @@
 v1.4.4:
-- Optimize: Remove expensive call to get stack trace in performance-critical navigation code
-- Optimize: Config option to disable train collision
-- Improved smoke from smokestacks
-- Added smoke dying: place wool under a smokestack to change the smoke color
-- fix: Non-compat custom curved tracks render with flywheel off in production (#180)
-- fix: Disabling datafixers should work now (#186)
-- Added automatic whistle operation
-- Added new dev caps for Rabbitminers and TropheusJay
-- fix: use vanilla entity data accessors, hopefully quilt clients can join fabric servers now
 - update to Create 0.5.1c
 - fix: use 'proper' class tranformation to add Track Replace rolling mode (#194)
 v1.4.3:
