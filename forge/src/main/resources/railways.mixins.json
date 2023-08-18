@@ -9,10 +9,12 @@
     "TrainHUDMixin"
   ],
   "mixins": [
+    "RollingModeMixin",
     "ServerGamePacketListenerImplMixin",
     "SlidingDoorBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.forge.mixin.CRMixinPlugin"
 }

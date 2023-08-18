@@ -1,39 +1,13 @@
 package com.railwayteam.railways.forge;
 
-import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import org.objectweb.asm.Label;
-import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
-
-import java.util.EnumSet;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class CRLaunchPluginService implements ILaunchPluginService {
-    @Override
-    public String name() {
-        return "railways";
-    }
-
-    private static final EnumSet<Phase> YES = EnumSet.of(Phase.AFTER);
-    private static final EnumSet<Phase> NO = EnumSet.noneOf(Phase.class);
-
-    @Override
-    public EnumSet<Phase> handlesClass(Type classType, boolean isEmpty) {
-        if (classType.getDescriptor().equals("Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;")) {
-            return YES;
-        }
-        return NO;
-    }
-
-    @Override
-    public boolean processClass(Phase phase, ClassNode classNode, Type classType) {
-        processRollingMode(classNode);
-        return true;
-    }
-
+public abstract class RollingModeEnumAdder {
     // ~/.jdks/openjdk-17.0.2/bin/javap -v -p out.class
-    public void processRollingMode(ClassNode classNode) {
+    public static void processRollingMode(ClassNode classNode) {
         FieldNode TRACK_REPLACE_field = new FieldNode(ACC_PUBLIC | ACC_STATIC | ACC_FINAL | ACC_ENUM, "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;", null, null);
         classNode.fields.add(3, TRACK_REPLACE_field); // insert after WIDE_FILL but before translationKey
         for (MethodNode node : classNode.methods) {
@@ -60,8 +34,8 @@ public class CRLaunchPluginService implements ILaunchPluginService {
                 node.visitInsn(ICONST_3);
                 node.visitFieldInsn(GETSTATIC, "com/railwayteam/railways/registry/CRIcons", "I_SWAP_TRACKS", "Lcom/railwayteam/railways/registry/CRIcons;");
                 node.visitMethodInsn(INVOKESPECIAL,
-                        "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode",
-                        "<init>", "(Ljava/lang/String;ILcom/simibubi/create/foundation/gui/AllIcons;)V", false);
+                    "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode",
+                    "<init>", "(Ljava/lang/String;ILcom/simibubi/create/foundation/gui/AllIcons;)V", false);
                 node.visitFieldInsn(PUTSTATIC, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode", "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;");
                 for (AbstractInsnNode insnNode : end) {
                     node.instructions.add(insnNode);
