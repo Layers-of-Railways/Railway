@@ -786,7 +786,7 @@ public class ConductorEntity extends AbstractGolem {
   protected void registerGoals() {
     super.registerGoals();
     //NOTE: priority 0 is the highest priority, priority infinity lowest
-    goalSelector.addGoal(2, new ConductorLookedAtGoal(this));
+    //goalSelector.addGoal(2, new ConductorLookedAtGoal(this));
     goalSelector.addGoal(1, new ConductorPonderBlockGoal(this));
     goalSelector.addGoal(1, new FollowToolboxPlayerGoal(this, 1.25d));
     goalSelector.addGoal(1, new RemoteControlGoal(this, 1.25d));
