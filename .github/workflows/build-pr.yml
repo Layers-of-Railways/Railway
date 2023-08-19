@@ -1,5 +1,5 @@
 name: Build
-on: [workflow_dispatch, push]
+on: [pull_request]
 
 jobs:
   build:
@@ -20,9 +20,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build & Publish to Maven
-        env:
-          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-        run: ./gradlew build :fabric:publish :forge:publish
+        run: ./gradlew build
 
       - name: Collect built jars
         run: ./gradlew moveBuiltJars
