@@ -19,7 +19,8 @@ public enum Mods {
 	HEXCASTING("hexcasting",true),
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
-	VOICECHAT("voicechat")
+	VOICECHAT("voicechat"),
+	FIGURA("figura")
 	;
 
 	public final boolean isLoaded;

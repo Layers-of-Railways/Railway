@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.content.conductor.ConductorRenderer;
@@ -41,6 +42,9 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             return;
         }
         this.shadowRadius = 0.2f;
+        Minecraft mc = Minecraft.getInstance();
+        if (entity.isLocalPlayer() && mc.options.getCameraType().isFirstPerson() && Mods.FIGURA.isLoaded)
+            return;
         ci.cancel();
 
         if (visualEntity == null) {
