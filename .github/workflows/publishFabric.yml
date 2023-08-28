@@ -25,14 +25,14 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build Fabric & Publish to Maven
+      - name: Build Fabric
         env:
-          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
           RELEASE_BUILD: true
-        run: ./gradlew :fabric:build :fabric:publish
+        run: ./gradlew :fabric:build
 
-      - name: Release to Modrinth and Curseforge
+      - name: Release to Modrinth, Curseforge & Maven
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-        run: ./gradlew :fabric:modrinth :fabric:curseforge
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+        run: ./gradlew :fabric:modrinth :fabric:curseforge :fabric:publish
