@@ -1,6 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "me.shedaniel.unified-publishing"
+    id "me.modmuss50.mod-publish-plugin"
 }
 
 architectury {
@@ -246,34 +246,32 @@ components.java {
     }
 }
 
-unifiedPublishing {
-    project {
-        releaseType = "release"
-        gameVersions = [minecraft_version]
-        gameLoaders = ["fabric"]
-        displayName = "Steam 'n' Rails $mod_version Fabric $minecraft_version"
-        changelog = getChangelogText("Fabric", true)
-        mainPublication remapJar
+publishMods {
+    file = remapJar.archiveFile
+    version = "$mod_version-fabric-mc$minecraft_version"
+    changelog = getChangelogText("Fabric", true)
+    type = STABLE
+    displayName = "Steam 'n' Rails $mod_version Fabric $minecraft_version"
+    modLoaders.add("fabric")
+    modLoaders.add("quilt")
 
-        relations {
-            depends {
-                curseforge = modrinth = "create-fabric"
-            }
+    curseforge {
+        projectId = curseforge_id
+        accessToken = System.getenv("CURSEFORGE_TOKEN")
+        minecraftVersions.add(minecraft_version)
+
+        requires {
+            slug = "create-fabric"
         }
+    }
 
-        if (System.getenv("CURSEFORGE_TOKEN")) {
-            curseforge {
-                token = System.getenv("CURSEFORGE_TOKEN")
-                id = curseforge_id
-            }
-        }
+    modrinth {
+        projectId = modrinth_id
+        accessToken = System.getenv("MODRINTH_TOKEN")
+        minecraftVersions.add(minecraft_version)
 
-        if (System.getenv("MODRINTH_TOKEN")) {
-            modrinth {
-                token = System.getenv("MODRINTH_TOKEN")
-                id = modrinth_id
-                version = "$mod_version-fabric-mc$minecraft_version"
-            }
+        requires {
+            slug = "create-fabric"
         }
     }
 }
