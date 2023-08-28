@@ -264,14 +264,14 @@ unifiedPublishing {
         if (System.getenv("CURSEFORGE_TOKEN")) {
             curseforge {
                 token = System.getenv("CURSEFORGE_TOKEN")
-                id = project.curseforge_id
+                id = curseforge_id
             }
         }
 
         if (System.getenv("MODRINTH_TOKEN")) {
             modrinth {
                 token = System.getenv("MODRINTH_TOKEN")
-                id = project.modrinth_id
+                id = modrinth_id
                 version = "$mod_version-forge-mc$minecraft_version"
             }
         }
