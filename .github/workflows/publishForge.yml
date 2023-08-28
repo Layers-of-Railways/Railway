@@ -1,11 +1,6 @@
 name: Build Forge Release
 
-on:
-  workflow_dispatch:
-    inputs:
-      create_forge_version:
-        description: Create forge dependency version
-        required: true
+on: [workflow_dispatch]
 
 jobs:
   build:
