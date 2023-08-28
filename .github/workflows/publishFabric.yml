@@ -5,6 +5,8 @@ on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_BUILD: true
 
     steps:
       - name: Checkout Repository
@@ -21,8 +23,6 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Fabric
-        env:
-          RELEASE_BUILD: true
         run: ./gradlew :fabric:build
 
       - name: Release to Modrinth, Curseforge & Maven
