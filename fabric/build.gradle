@@ -275,7 +275,7 @@ unifiedPublishing {
             modrinth {
                 token = System.getenv("MODRINTH_TOKEN")
                 id = modrinth_id
-                version = "$mod_version-forge-mc$minecraft_version"
+                version = "$mod_version-fabric-mc$minecraft_version"
             }
         }
     }
