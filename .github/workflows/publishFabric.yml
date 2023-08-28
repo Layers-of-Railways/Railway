@@ -1,11 +1,6 @@
 name: Build Fabric Release
 
-on:
-  workflow_dispatch:
-    inputs:
-      create_fabric_version:
-        description: Create fabric dependency version
-        required: true
+on: [workflow_dispatch]
 
 jobs:
   build:
