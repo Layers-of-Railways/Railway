@@ -2,16 +2,17 @@ package com.railwayteam.railways.ponder;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.ponder.temp.CreateSceneBuilder;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.ponder.ElementLink;
-import com.simibubi.create.foundation.ponder.PonderPalette;
-import com.simibubi.create.foundation.ponder.SceneBuilder;
-import com.simibubi.create.foundation.ponder.SceneBuildingUtil;
-import com.simibubi.create.foundation.ponder.element.EntityElement;
-import com.simibubi.create.foundation.ponder.element.InputWindowElement;
-import com.simibubi.create.foundation.utility.Pointing;
+import net.createmod.catnip.utility.Pointing;
+import net.createmod.ponder.foundation.ElementLink;
+import net.createmod.ponder.foundation.PonderPalette;
+import net.createmod.ponder.foundation.SceneBuilder;
+import net.createmod.ponder.foundation.SceneBuildingUtil;
+import net.createmod.ponder.foundation.element.EntityElement;
+import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -98,7 +99,8 @@ public class ConductorScenes {
     });
   }
 
-  public static void constructing(SceneBuilder scene, SceneBuildingUtil util) {
+  public static void constructing(SceneBuilder builder, SceneBuildingUtil util) {
+    CreateSceneBuilder scene = new CreateSceneBuilder(builder);
     scene.title("conductor_constructing", "Constructing a Conductor");
     scene.configureBasePlate(0, 0, 3);
     scene.scaleSceneView(1.0f);

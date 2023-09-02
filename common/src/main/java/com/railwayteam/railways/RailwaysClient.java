@@ -9,6 +9,7 @@ import com.railwayteam.railways.registry.*;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.util.DevCapeUtils;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -29,7 +30,7 @@ public class RailwaysClient {
 
     CRPackets.PACKETS.registerS2CListener();
 
-    CRPonderIndex.register();
+    PonderIndex.addPlugin(new CRPonderPlugin());
 
     CRBlockPartials.init();
 

@@ -25,6 +25,10 @@ dependencies {
     // Flywheel and Registrate must also be used carefully due to differences.
     modCompileOnly("com.simibubi.create:create-fabric-${minecraft_version}:${create_fabric_version}")
 
+    compileOnly "com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}"
+    compileOnly "net.createmod.catnip:Catnip-Common-${minecraft_version}:${catnip_version}"
+    compileOnly "net.createmod.ponder:Ponder-Common-${minecraft_version}:${ponder_version}"
+
     // required for proper remapping and compiling
     modCompileOnly("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 

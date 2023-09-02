@@ -8,17 +8,19 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity.PonderData;
 import com.railwayteam.railways.mixin_interfaces.IStandardBogeyTEVirtualCoupling;
+import com.railwayteam.railways.ponder.temp.CreateSceneBuilder;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.content.trains.signal.SignalBlock;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
-import com.simibubi.create.foundation.ponder.*;
-import com.simibubi.create.foundation.ponder.element.InputWindowElement;
-import com.simibubi.create.foundation.ponder.element.ParrotElement;
-import com.simibubi.create.foundation.ponder.element.WorldSectionElement;
-import com.simibubi.create.foundation.ponder.instruction.PonderInstruction;
-import com.simibubi.create.foundation.utility.Pointing;
+import net.createmod.catnip.utility.Pointing;
+import net.createmod.ponder.foundation.*;
+import net.createmod.ponder.foundation.element.InputWindowElement;
+import net.createmod.ponder.foundation.element.ParrotElement;
+import net.createmod.ponder.foundation.element.WorldSectionElement;
+import net.createmod.ponder.foundation.instruction.PonderInstruction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.NbtUtils;
@@ -35,7 +37,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 
 public class TrainScenes {
-    public static void signaling(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void signaling(SceneBuilder builder, SceneBuildingUtil util) {
+        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("train_semaphore", "Visualizing Signal states using Semaphores");
         scene.configureBasePlate(1, 0, 15);
         scene.scaleSceneView(.5f);
@@ -186,7 +189,7 @@ public class TrainScenes {
 
         scene.overlay.showControls(
                 new InputWindowElement(util.vector.blockSurface(signal1, Direction.EAST), Pointing.RIGHT).rightClick()
-                        .withWrench(),
+                        .withItem(AllItems.WRENCH.asStack()),
                 40);
         scene.idle(6);
         scene.world.cycleBlockProperty(signal1, SignalBlock.TYPE);
@@ -357,7 +360,8 @@ public class TrainScenes {
         scene.idle(10);
     }
 
-    public static void trackSwitch(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void trackSwitch(SceneBuilder builder, SceneBuildingUtil util) {
+        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("train_switch", "Using Track Switches");
         scene.configureBasePlate(0, 0, 15);
         scene.scaleSceneView(.45f);
@@ -555,8 +559,8 @@ public class TrainScenes {
                             nixieBE.updateDisplayedStrings();
                         }
 
-                        if (level instanceof PonderWorld ponderWorld)
-                            ponderWorld.scene.forEach(WorldSectionElement.class, WorldSectionElement::queueRedraw);
+                        if (level instanceof PonderLevel ponderLevel)
+                            ponderLevel.scene.forEach(WorldSectionElement.class, WorldSectionElement::queueRedraw);
                     }
                     discard();
                 }
@@ -662,7 +666,8 @@ public class TrainScenes {
         });
     }
 
-    public static void coupling(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void coupling(SceneBuilder builder, SceneBuildingUtil util) {
+        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         // Coupler placement sequence 'borrowed' from Create's Station placement sequence
         scene.title("train_coupler", "Using a Coupler");
         scene.configureBasePlate(0, 0, 21);
@@ -740,7 +745,7 @@ public class TrainScenes {
 
         scene.overlay
             .showControls(new InputWindowElement(couplerTop, Pointing.DOWN).scroll()
-                .withWrench(), 60);
+                .withItem(AllItems.WRENCH.asStack()), 60);
         scene.overlay.showScrollInput(couplerTop, Direction.DOWN, 60);
         scene.idle(5);
 
@@ -767,7 +772,7 @@ public class TrainScenes {
         // show mode cycling with a wrench
 
         scene.overlay.showControls(new InputWindowElement(couplerTop, Pointing.DOWN).rightClick()
-                .withWrench(), 60);
+                .withItem(AllItems.WRENCH.asStack()), 60);
         scene.idle(5);
 
         scene.overlay.showText(70)
@@ -988,7 +993,7 @@ public class TrainScenes {
 
     public static void coupleTrain(SceneBuilder scene, BlockPos pos, double distance, Direction direction) {
         scene.addInstruction(PonderInstruction.simple(ponderScene -> {
-            PonderWorld world = ponderScene.getWorld();
+            PonderLevel world = ponderScene.getWorld();
             world.getBlockEntity(pos, AllBlockEntityTypes.BOGEY.get()).ifPresent(sbte -> {
                 if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
                     virtualCoupling.setCouplingDistance(distance);
@@ -1000,7 +1005,7 @@ public class TrainScenes {
 
     public static void decoupleTrain(SceneBuilder scene, BlockPos pos) {
         scene.addInstruction(PonderInstruction.simple(ponderScene -> {
-            PonderWorld world = ponderScene.getWorld();
+            PonderLevel world = ponderScene.getWorld();
             world.getBlockEntity(pos, AllBlockEntityTypes.BOGEY.get()).ifPresent(sbte -> {
                 if (sbte instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
                     virtualCoupling.setCouplingDistance(-1);

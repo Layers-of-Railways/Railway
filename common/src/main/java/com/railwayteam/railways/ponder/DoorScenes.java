@@ -1,14 +1,16 @@
 package com.railwayteam.railways.ponder;
 
+import com.railwayteam.railways.ponder.temp.CreateSceneBuilder;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.elevator.ElevatorContactBlock;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
-import com.simibubi.create.foundation.ponder.*;
-import com.simibubi.create.foundation.ponder.element.InputWindowElement;
-import com.simibubi.create.foundation.ponder.element.WorldSectionElement;
-import com.simibubi.create.foundation.ponder.instruction.PonderInstruction;
-import com.simibubi.create.foundation.utility.Pointing;
+import net.createmod.catnip.utility.Pointing;
+import net.createmod.ponder.foundation.*;
+import net.createmod.ponder.foundation.element.InputWindowElement;
+import net.createmod.ponder.foundation.element.WorldSectionElement;
+import net.createmod.ponder.foundation.instruction.PonderInstruction;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +18,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 public class DoorScenes {
-    public static void modes(SceneBuilder scene, SceneBuildingUtil util) {
+    public static void modes(SceneBuilder builder, SceneBuildingUtil util) {
+        CreateSceneBuilder scene = new CreateSceneBuilder(builder);
         scene.title("door_modes", "Door Modes");
         scene.configureBasePlate(1, 0, 5);
         //scene.scaleSceneView(.85f);
@@ -92,7 +95,7 @@ public class DoorScenes {
             .add(0, 1 / 16f, 0);
         scene.overlay.showFilterSlotInput(blockSurface, Direction.NORTH, 60);
         scene.overlay.showControls(new InputWindowElement(blockSurface, Pointing.DOWN).scroll()
-            .withWrench(), 60);
+            .withItem(AllItems.WRENCH.asStack()), 60);
         scene.idle(10);
         scene.overlay.showText(60)
             .pointAt(blockSurface)
@@ -141,8 +144,7 @@ public class DoorScenes {
 
         scene.addInstruction(new PonderInstruction() {
 
-            private int ticks = 0;
-            private LerpedFloat scale = LerpedFloat.linear().startWithValue(1.0);
+            private final LerpedFloat scale = LerpedFloat.linear().startWithValue(1.0);
 
             @Override
             public void onScheduled(PonderScene scene) {

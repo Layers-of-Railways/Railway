@@ -50,6 +50,7 @@ subprojects {
             }
         }
         maven { url = 'https://maven.maxhenkel.de/repository/public' } // Simple Voice Chat
+        maven { url = 'https://maven.createmod.net' } // Ponder & Catnip
     }
 
     dependencies {
