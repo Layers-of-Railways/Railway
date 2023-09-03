@@ -1,11 +1,12 @@
 package com.railwayteam.railways.content.smokestack;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import com.railwayteam.railways.config.CRConfigs;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,8 +17,22 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class SmokeParticle extends SimpleAnimatedParticle {
+
+	public enum SmokeQuality {
+		LOW("smoke_16"),
+		MEDIUM("smoke_32"),
+		HIGH("smoke_64"),
+		ULTRA("smoke");
+		public final String name;
+
+
+		SmokeQuality(String name) {
+			this.name = name;
+		}
+	}
 
 	public static final ParticleRenderType TRANSPARENT_SMOKE = new ParticleRenderType() {
 		@Override
@@ -25,7 +40,8 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 			RenderSystem.depthMask(false);
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
 			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+			RenderSystem.enableDepthTest();
+			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
 		}
 
@@ -39,7 +55,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 
 		@Override
 		public String toString() {
-			return "TRANSPARENT";
+			return "TRANSPARENT_SMOKE";
 		}
 	};
 
@@ -57,11 +73,11 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		zd = dz*scale;
 		this.gravity = 3.0E-6f;
 		quadSize = .375f*4;
-		setLifetime(data.stationary ? 400 : 610);
+		setLifetime(data.stationary ? 400 : CRConfigs.client().smokeLifetime.get());
 		setPos(x, y, z);
 		roll = oRoll = world.random.nextFloat() * Mth.PI;
 		//this.setSpriteFromAge(sprite);
-		this.pickSprite(sprite);
+		this.setSprite(sprite.get(CRConfigs.client().smokeQuality.get().ordinal(), SmokeQuality.values().length - 1));
 		alpha = data.stationary ? 0.25f : 0.1f;
 		ascendScale.chase(data.stationary ? 0.3 : 0.1, data.stationary ? 0.001 : 0.03, LerpedFloat.Chaser.EXP);
 		rCol = data.red;
@@ -71,7 +87,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
+	public @NotNull ParticleRenderType getRenderType() {
 		return TRANSPARENT_SMOKE;
 	}
 

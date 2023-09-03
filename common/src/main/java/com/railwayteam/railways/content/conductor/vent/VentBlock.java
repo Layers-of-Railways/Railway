@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.conductor.vent;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
@@ -74,7 +74,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         Set<BlockPos> visited = new HashSet<>();
         BlockPos.MutableBlockPos end = start.mutable();
 
-        int panic = Config.MAX_CONDUCTOR_VENT_LENGTH.get();
+        int panic = CRConfigs.server().conductors.maxVentLength.get();
         Outer: while (true) {
             if (panic-- < 0) {
                 return Optional.empty();

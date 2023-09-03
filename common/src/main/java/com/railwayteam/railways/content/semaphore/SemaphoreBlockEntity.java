@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.semaphore;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.distant_signals.IOverridableSignal;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRIcons;
@@ -159,7 +159,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         isDistantSignal=false;
         BlockPos currentPos = upsideDown?worldPosition.above():worldPosition.below();
         int semaphoresBelow = 0;
-        boolean constantOrder = !(getBlockState().getValue(SemaphoreBlock.UPSIDE_DOWN) && Config.SEMAPHORES_FLIP_YELLOW_ORDER.get());
+        boolean constantOrder = !(getBlockState().getValue(SemaphoreBlock.UPSIDE_DOWN) && CRConfigs.server().semaphores.flipYellowOrder.get());
         //count downwards from the semaphore along the pole blocks, until a signal is reached
         for (int i = 0; i < 16; i++) {
             BlockState blockState = level.getBlockState(currentPos);

@@ -18,6 +18,7 @@ v1.5.0:
 - feat: Simple Voice Chat integration for conductor spies
 - feat: Oilburner Smokestack can be encased with industrial iron
 - Added collision to track encasement
+- Added narrow and wide gauge bogeys
 v1.4.3:
 - fix: Custom curved tracks render with flywheel off in production (#169)
 - SecurityCraft compat (#172)

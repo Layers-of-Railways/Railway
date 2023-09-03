@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Predicate;
 
 public class PlayerSelectionImpl extends PlayerSelection {
 
@@ -37,12 +38,21 @@ public class PlayerSelectionImpl extends PlayerSelection {
 		return new PlayerSelectionImpl(PlayerLookup.all(ServerLifecycleHooks.getCurrentServer()));
 	}
 
+	public static PlayerSelection allWith(Predicate<ServerPlayer> condition) {
+		return new PlayerSelectionImpl(PlayerLookup.all(ServerLifecycleHooks.getCurrentServer()).stream()
+			.filter(condition).toList());
+	}
+
 	public static PlayerSelection of(ServerPlayer player) {
 		return new PlayerSelectionImpl(Collections.singleton(player));
 	}
 
 	public static PlayerSelection tracking(Entity entity) {
 		return new PlayerSelectionImpl(PlayerLookup.tracking(entity));
+	}
+
+	public static PlayerSelection trackingWith(Entity entity, Predicate<ServerPlayer> condition) {
+		return new PlayerSelectionImpl(PlayerLookup.tracking(entity).stream().filter(condition).toList());
 	}
 
 	public static PlayerSelection tracking(BlockEntity be) {

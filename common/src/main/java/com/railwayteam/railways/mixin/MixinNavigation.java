@@ -99,7 +99,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
         if (target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL)
-            return false;
+            return true;
         return original;
     }
 

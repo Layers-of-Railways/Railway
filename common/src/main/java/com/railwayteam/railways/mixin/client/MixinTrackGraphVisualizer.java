@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.mixin_interfaces.ISwitchDisabledEdge;
 import com.simibubi.create.content.trains.graph.*;
 import com.simibubi.create.foundation.outliner.Outline;
@@ -52,7 +52,7 @@ public class MixinTrackGraphVisualizer {
         "debugViewGraph"
     }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showLine(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
     private static Outline.OutlineParams snr$offsetLineVisualization(Outliner instance, Object slot, Vec3 start, Vec3 end, Operation<Outline.OutlineParams> original) {
-        double offset = Config.TRACK_OVERLAY_OFFSET.get();
+        double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, start.add(0, offset, 0), end.add(0, offset, 0));
     }
 
@@ -62,7 +62,7 @@ public class MixinTrackGraphVisualizer {
         "debugViewGraph"
     }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showAABB(Ljava/lang/Object;Lnet/minecraft/world/phys/AABB;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
     private static Outline.OutlineParams snr$offsetAABBVisualization(Outliner instance, Object slot, AABB aabb, Operation<Outline.OutlineParams> original) {
-        double offset = Config.TRACK_OVERLAY_OFFSET.get();
+        double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, aabb.move(0, offset, 0));
     }
 
@@ -72,7 +72,7 @@ public class MixinTrackGraphVisualizer {
         "debugViewGraph"
     }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showItem(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
     private static Outline.OutlineParams snr$offsetAABBVisualization(Outliner instance, Object slot, Vec3 pos, ItemStack itemStack, Operation<Outline.OutlineParams> original) {
-        double offset = Config.TRACK_OVERLAY_OFFSET.get();
+        double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, pos.add(0, offset, 0), itemStack);
     }
 }

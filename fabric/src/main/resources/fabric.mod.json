@@ -50,5 +50,17 @@
   "suggests": {
     "hexcasting": "*",
     "voicechat": ">=${minecraft_version}-${voicechat_api_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "parent": {
+        "id": "create"
+      },
+      "links": {
+        "Modrinth": "https://modrinth.com/mod/create-steam-n-rails",
+        "CurseForge": "https://curseforge.com/minecraft/mc-mods/create-steam-n-rails",
+        "Discord": "https://discord.gg/md78MGbEfK"
+      }
+    }
   }
 }

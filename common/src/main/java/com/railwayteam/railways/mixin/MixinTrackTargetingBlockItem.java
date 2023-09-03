@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
@@ -44,7 +44,7 @@ public class MixinTrackTargetingBlockItem {
     @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true), remap = true)
     private boolean changeCloserThan(BlockPos instance, Vec3i vec3i, double v) {
         if (type == CREdgePointTypes.SWITCH) {
-            return instance.closerThan(vec3i, Config.SWITCH_PLACEMENT_RANGE.get());
+            return instance.closerThan(vec3i, CRConfigs.server().switchPlacementRange.get());
         }
         return instance.closerThan(vec3i, v);
     }
