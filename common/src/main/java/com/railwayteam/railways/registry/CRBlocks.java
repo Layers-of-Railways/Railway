@@ -9,7 +9,10 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.*;
+import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -23,6 +26,10 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStat
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
+import com.railwayteam.railways.content.fuel_tank.FuelTankBlock;
+import com.railwayteam.railways.content.fuel_tank.FuelTankGenerator;
+import com.railwayteam.railways.content.fuel_tank.FuelTankItem;
+import com.railwayteam.railways.content.fuel_tank.FuelTankModel;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.*;
@@ -183,8 +190,6 @@ public class CRBlocks {
             .build()
             .register();
     }
-
-    public static final BlockEntry<TenderBlock> BLOCK_TENDER = null;
 
 //  commented out because I'm pretty sure but not 100% that it was removed.
 //    static {
@@ -492,6 +497,19 @@ public class CRBlocks {
             .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
             .item()
             .transform(customItemModel("copycat_vent"))
+            .register();
+
+    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))
+            .transform(pickaxeOnly())
+            .blockstate(new FuelTankGenerator()::generate)
+            .onRegister(CreateRegistrate.blockModel(() -> FuelTankModel::standard))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item(FuelTankItem::new)
+            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
+            .build()
             .register();
 
     @SuppressWarnings("EmptyMethod")

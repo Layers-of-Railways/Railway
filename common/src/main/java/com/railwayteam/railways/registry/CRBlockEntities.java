@@ -10,12 +10,16 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
+import com.railwayteam.railways.content.fuel_tank.FuelTankBlockEntity;
+import com.railwayteam.railways.content.fuel_tank.FuelTankRenderer;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -84,6 +88,12 @@ public class CRBlockEntities {
         .blockEntity("casing_collision", CasingCollisionBlockEntity::new)
         .validBlocks(CRBlocks.CASING_COLLISION)
         .register();
+
+    public static final BlockEntityEntry<FuelTankBlockEntity> FUEL_TANK = REGISTRATE
+            .blockEntity("fuel_tank", FuelTankBlockEntity::new)
+            .validBlocks(CRBlocks.FUEL_TANK)
+            .renderer(() -> FuelTankRenderer::new)
+            .register();
 
 
     @SuppressWarnings("EmptyMethod")
