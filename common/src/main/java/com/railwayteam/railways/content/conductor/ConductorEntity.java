@@ -5,6 +5,7 @@ import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
+import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
@@ -541,14 +542,12 @@ public class ConductorEntity extends AbstractGolem {
 
   @Override
   public boolean isCrouching() {
-    return visualBaseEntity != null ? visualBaseEntity.isCrouching() : super.isCrouching();
+    return level.isClientSide ? visualBaseEntity.isCrouching() : super.isCrouching();
   }
-
-  @Environment(EnvType.CLIENT)
-
 
   // make public
   @Override
+  @Environment(EnvType.CLIENT)
   public void setSharedFlag(int flag, boolean set) {
     super.setSharedFlag(flag, set);
   }
