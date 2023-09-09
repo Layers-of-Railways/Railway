@@ -39,6 +39,7 @@ subprojects {
         }
         maven { // Extended Bogeys
             url = "https://maven.ithundxr.dev/private"
+            content { includeGroup("com.rabbitminers") }
             credentials {
                 if (System.getenv("GITHUB_RUN_NUMBER")) {
                     username = "railways-github"
