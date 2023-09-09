@@ -107,8 +107,9 @@ allprojects {
 
     configurations.configureEach {
         resolutionStrategy.eachDependency {
-            if (requested.module.name == "fabric-loader") {
-                useVersion(fabric_loader_version)
+            switch (requested.module.name) { // some dependencies pull in broken, outdated versions of these.
+                case "fabric-loader": useVersion(fabric_loader_version); break
+                case "fabric-api": useVersion(fabric_api_version); break
             }
         }
     }
