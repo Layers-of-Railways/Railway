@@ -25,23 +25,23 @@ public class OptifineWarningScreen extends WarningScreen {
     @Override
     protected void initButtons(int yOffset) {
         addRenderableWidget(
-                new Button(width / 2 - 155, 100 + yOffset, 150, 20,
-                        OPEN_MODS_FOLDER, buttonWidget -> Util.getPlatform().openFile(Utils.modsDir().toFile())
-                )
+                Button.builder(OPEN_MODS_FOLDER, buttonWidget -> Util.getPlatform().openFile(Utils.modsDir().toFile()))
+                        .bounds(width / 2 - 155, 100 + yOffset, 150, 20)
+                        .build()
         );
 
         addRenderableWidget(
-                new Button(width / 2 - 155 + 160, 100 + yOffset, 150, 20,
-                        OPTIFINE_ALTERNATIVES, buttonWidget -> Util.getPlatform().openUri(
-                                "https://prismlauncher.org/wiki/getting-started/install-of-alternatives/"
-                        )
-                )
+                Button.builder(OPTIFINE_ALTERNATIVES, buttonWidget -> Util.getPlatform().openUri(
+                        "https://prismlauncher.org/wiki/getting-started/install-of-alternatives/"
+                ))
+                        .bounds(width / 2 - 155 + 160, 100 + yOffset, 150, 20)
+                        .build()
         );
 
         addRenderableWidget(
-                new Button(width / 2 - 75, 130 + yOffset, 150, 20,
-                        QUIT_GAME, buttonWidget -> this.minecraft.stop()
-                )
+                Button.builder(QUIT_GAME, buttonWidget -> this.minecraft.stop())
+                        .bounds(width / 2 - 75, 130 + yOffset, 150, 20)
+                        .build()
         );
     }
 
