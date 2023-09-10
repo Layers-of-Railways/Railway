@@ -33,7 +33,7 @@ public class OptifineWarningScreen extends WarningScreen {
         addRenderableWidget(
                 new Button(width / 2 - 155 + 160, 100 + yOffset, 150, 20,
                         OPTIFINE_ALTERNATIVES, buttonWidget -> Util.getPlatform().openUri(
-                                "https://lambdaurora.dev/optifine_alternatives/"
+                                "https://prismlauncher.org/wiki/getting-started/install-of-alternatives/"
                         )
                 )
         );
