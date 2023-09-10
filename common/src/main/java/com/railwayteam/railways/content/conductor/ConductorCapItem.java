@@ -85,7 +85,7 @@ public abstract class ConductorCapItem extends ArmorItem {
 
     @Override
     public @NotNull Ingredient getRepairIngredient() {
-      return null;
+      return Ingredient.EMPTY;
     }
 
     @Override

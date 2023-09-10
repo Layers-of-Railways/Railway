@@ -27,6 +27,11 @@ public class Utils {
 	}
 
 	@ExpectPlatform
+	public static Path modsDir() {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
 	@Contract // shut
 	public static boolean isDevEnv() {
 		throw new AssertionError();

@@ -90,6 +90,7 @@
     "client.AccessorToolboxHandlerClient",
     "client.AccessorTrackBlockOutline",
     "client.AccessorWalkAnimationState",
+    "client.AccessorWarningScreen",
     "client.HotbarStorageMixin",
     "client.MixinBezierConnectionClient",
     "client.MixinBlockElement_Deserializer",
