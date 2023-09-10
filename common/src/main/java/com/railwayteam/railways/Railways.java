@@ -47,10 +47,10 @@ public class Railways {
           .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n' Rails");
 
   static {
-    REGISTRATE.setTooltipModifierFactory(item -> {
-      return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-          .andThen(TooltipModifier.mapNull(KineticStats.create(item)));
-    });
+    REGISTRATE.setTooltipModifierFactory(
+            item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
+        .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
+    );
   }
 
   private static void migrateConfig(Path path, Function<String, String> converter) {
