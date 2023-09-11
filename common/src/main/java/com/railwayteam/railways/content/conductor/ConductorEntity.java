@@ -541,14 +541,12 @@ public class ConductorEntity extends AbstractGolem {
 
   @Override
   public boolean isCrouching() {
-    return visualBaseEntity != null ? visualBaseEntity.isCrouching() : super.isCrouching();
+    return level.isClientSide ? (visualBaseEntity != null ? visualBaseEntity.isCrouching() : super.isCrouching()) : super.isCrouching();
   }
-
-  @Environment(EnvType.CLIENT)
-
 
   // make public
   @Override
+  @Environment(EnvType.CLIENT)
   public void setSharedFlag(int flag, boolean set) {
     super.setSharedFlag(flag, set);
   }

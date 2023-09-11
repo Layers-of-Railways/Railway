@@ -1,5 +1,6 @@
 package com.railwayteam.railways.events;
 
+import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
@@ -16,6 +17,10 @@ public class ClientEvents {
 
     @ApiStatus.Internal
     public static boolean previousDevCapeSetting = false;
+
+    public static void onClientStarted(Minecraft mc) {
+        IncompatibleModsCheck.warnings(mc);
+    }
 
     public static void onClientTickStart(Minecraft mc) {
         PhantomSpriteManager.tick(mc);
