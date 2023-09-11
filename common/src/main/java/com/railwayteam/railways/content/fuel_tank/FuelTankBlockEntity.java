@@ -313,7 +313,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     private FluidTank handlerForCapability() {
-        return getControllerBE() != null ? getControllerBE().handlerForCapability() : new FluidTank(0);
+        return new FluidTank(0);
     }
 
     @Override
