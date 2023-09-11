@@ -212,7 +212,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
 
         if (!fluidInTank.isFluidEqual(prevFluidInTank)) {
             if (be instanceof FuelTankBlockEntity) {
-                FuelTankBlockEntity controllerBE = ((FuelTankBlockEntity) be).getControllerBE();
+                FuelTankBlockEntity controllerBE = be.getControllerBE();
                 if (controllerBE != null) {
                     if (fluidState != null && onClient) {
                         BlockParticleOption blockParticleData =
@@ -323,9 +323,10 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     @Override
     public SoundType getSoundType(BlockState state, LevelReader world, BlockPos pos, Entity entity) {
         SoundType soundType = getSoundType(state);
-        if (entity != null && entity.getExtraCustomData()
-                .method_10545("SilenceTankSound"))
-            return SILENCED_METAL;
+        //fixme
+//        if (entity != null && entity.getCustomData()
+//                .method_10545("SilenceTankSound"))
+//            return SILENCED_METAL;
         return soundType;
     }
 

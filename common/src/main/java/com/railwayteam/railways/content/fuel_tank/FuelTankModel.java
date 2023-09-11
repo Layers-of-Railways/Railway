@@ -1,9 +1,7 @@
 package com.railwayteam.railways.content.fuel_tank;
 
 import com.railwayteam.railways.registry.CRSpriteShifts;
-import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
-import com.simibubi.create.content.fluids.tank.FluidTankCTBehaviour;
 import com.simibubi.create.foundation.block.connected.CTModel;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -27,7 +25,7 @@ public class FuelTankModel extends CTModel {
 
     private FuelTankModel(BakedModel originalModel, CTSpriteShiftEntry side, CTSpriteShiftEntry top,
                            CTSpriteShiftEntry inner) {
-        super(originalModel, new FluidTankCTBehaviour(side, top, inner));
+        super(originalModel, new FuelTankCTBehaviour(side, top, inner));
     }
 
     @Override
