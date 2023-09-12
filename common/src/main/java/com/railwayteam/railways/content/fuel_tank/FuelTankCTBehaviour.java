@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class FuelTankCTBehaviour extends HorizontalCTBehaviour {
-    private CTSpriteShiftEntry innerShift;
+    private final CTSpriteShiftEntry innerShift;
 
     public FuelTankCTBehaviour(CTSpriteShiftEntry layerShift, CTSpriteShiftEntry topShift, CTSpriteShiftEntry innerShift) {
         super(layerShift, topShift);

@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.fuel_tank;
 
-import com.simibubi.create.AllBlockEntityTypes;
-import com.simibubi.create.AllBlocks;
+import com.railwayteam.railways.registry.CRBlockEntities;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -86,10 +85,7 @@ public class FuelTankItem extends BlockItem {
 
         if (!FuelTankBlock.isTank(placedOnState))
             return;
-        boolean creative = getBlock().equals(AllBlocks.CREATIVE_FLUID_TANK.get());
-        FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(
-                creative ? AllBlockEntityTypes.CREATIVE_FLUID_TANK.get() : AllBlockEntityTypes.FLUID_TANK.get(), world, placedOnPos
-        );
+        FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(CRBlockEntities.FUEL_TANK.get(), world, placedOnPos);
         if (tankAt == null)
             return;
         FuelTankBlockEntity controllerBE = tankAt.getControllerBE();
