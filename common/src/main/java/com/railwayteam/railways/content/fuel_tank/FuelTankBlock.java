@@ -34,7 +34,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
@@ -64,14 +63,13 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     public static final EnumProperty<FuelTankBlock.Shape> SHAPE = EnumProperty.create("shape", FuelTankBlock.Shape.class);
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level", 0, 15);
 
-
     public static FuelTankBlock regular(Properties properties) {
         return new FuelTankBlock(properties);
     }
 
     @Override
-    public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState,
-                            LivingEntity pPlacer, @NotNull ItemStack pStack) {
+    public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState, LivingEntity pPlacer,
+                            @NotNull ItemStack pStack) {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
         AdvancementBehaviour.setPlacedBy(pLevel, pPos, pPlacer);
     }
@@ -93,12 +91,13 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     }
 
     @Override
-    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean moved) {
+    @SuppressWarnings("deprecation")
+    public void onPlace(BlockState state, @NotNull Level world, @NotNull BlockPos pos, BlockState oldState, boolean moved) {
         if (oldState.getBlock() == state.getBlock())
             return;
         if (moved)
             return;
-        // fabric: see comment in FluidTankItem
+        // fabric: see comment in FuelTankItem
         Consumer<FuelTankBlockEntity> consumer = FuelTankItem.IS_PLACING_NBT
                 ? FuelTankBlockEntity::queueConnectivityUpdate
                 : FuelTankBlockEntity::updateConnectivity;
@@ -106,17 +105,17 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateDefinitionBuilder) {
-        stateDefinitionBuilder.add(TOP, BOTTOM, SHAPE, LIGHT_LEVEL);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
+        p_206840_1_.add(TOP, BOTTOM, SHAPE, LIGHT_LEVEL);
     }
 
     // Handled via LIGHT_LEVEL state property
 //	@Override
 //	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
-//		FluidTankBlockEntity tankAt = ConnectivityHandler.partAt(getBlockEntityType(), world, pos);
+//		FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(getBlockEntityType(), world, pos);
 //		if (tankAt == null)
 //			return 0;
-//		FluidTankBlockEntity controllerBE = tankAt.getControllerBE();
+//		FuelTankBlockEntity controllerBE = tankAt.getControllerBE();
 //		if (controllerBE == null || !controllerBE.window)
 //			return 0;
 //		return tankAt.luminosity;
@@ -131,31 +130,31 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     static final VoxelShape CAMPFIRE_SMOKE_CLIP = Block.box(0, 4, 0, 16, 16, 16);
 
     @Override
-    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
-                                        CollisionContext pContext) {
+    @SuppressWarnings("deprecation")
+    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState pState, @NotNull BlockGetter pLevel,
+                                                 @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
         if (pContext == CollisionContext.empty())
             return CAMPFIRE_SMOKE_CLIP;
         return pState.getShape(pLevel, pPos);
     }
 
     @Override
-    public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
+    @SuppressWarnings("deprecation")
+    public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState pState, @NotNull BlockGetter pReader,
+                                                    @NotNull BlockPos pPos) {
         return Shapes.block();
     }
 
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState,
-                                  LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
-        return pState;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
-                                 BlockHitResult ray) {
+    @SuppressWarnings("deprecation")
+    public @NotNull InteractionResult use(@NotNull BlockState state, Level world, @NotNull BlockPos pos, Player player,
+                                          @NotNull InteractionHand hand, @NotNull BlockHitResult ray) {
         ItemStack heldItem = player.getItemInHand(hand);
         boolean onClient = world.isClientSide;
 
         if (heldItem.isEmpty())
+            return InteractionResult.PASS;
+        if (!player.isCreative())
             return InteractionResult.PASS;
 
         FluidHelper.FluidExchange exchange = null;
@@ -187,7 +186,6 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         FluidStack fluidInTank = TransferUtil.firstOrEmpty(fluidTank);
 
         if (exchange == FluidHelper.FluidExchange.ITEM_TO_TANK) {
-
             Fluid fluid = fluidInTank.getFluid();
             fluidState = fluid.defaultFluidState()
                     .createLegacyBlock();
@@ -211,32 +209,30 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         }
 
         if (!fluidInTank.isFluidEqual(prevFluidInTank)) {
-            if (be instanceof FuelTankBlockEntity) {
-                FuelTankBlockEntity controllerBE = be.getControllerBE();
-                if (controllerBE != null) {
-                    if (fluidState != null && onClient) {
-                        BlockParticleOption blockParticleData =
-                                new BlockParticleOption(ParticleTypes.BLOCK, fluidState);
-                        float level = (float) fluidInTank.getAmount() / TransferUtil.firstCapacity(fluidTank);
+            FuelTankBlockEntity controllerBE = be.getControllerBE();
+            if (controllerBE != null) {
+                if (onClient) {
+                    BlockParticleOption blockParticleData =
+                            new BlockParticleOption(ParticleTypes.BLOCK, fluidState);
+                    float level = (float) fluidInTank.getAmount() / TransferUtil.firstCapacity(fluidTank);
 
-                        boolean reversed = FluidVariantAttributes.isLighterThanAir(fluidInTank.getType());
-                        if (reversed)
-                            level = 1 - level;
+                    boolean reversed = FluidVariantAttributes.isLighterThanAir(fluidInTank.getType());
+                    if (reversed)
+                        level = 1 - level;
 
-                        Vec3 vec = ray.getLocation();
-                        vec = new Vec3(vec.x, controllerBE.getBlockPos()
-                                .getY() + level * (controllerBE.height - .5f) + .25f, vec.z);
-                        Vec3 motion = player.position()
-                                .subtract(vec)
-                                .scale(1 / 20f);
-                        vec = vec.add(motion);
-                        world.addParticle(blockParticleData, vec.x, vec.y, vec.z, motion.x, motion.y, motion.z);
-                        return InteractionResult.SUCCESS;
-                    }
-
-                    controllerBE.sendDataImmediately();
-                    controllerBE.setChanged();
+                    Vec3 vec = ray.getLocation();
+                    vec = new Vec3(vec.x, controllerBE.getBlockPos()
+                            .getY() + level * (controllerBE.height - .5f) + .25f, vec.z);
+                    Vec3 motion = player.position()
+                            .subtract(vec)
+                            .scale(1 / 20f);
+                    vec = vec.add(motion);
+                    world.addParticle(blockParticleData, vec.x, vec.y, vec.z, motion.x, motion.y, motion.z);
+                    return InteractionResult.SUCCESS;
                 }
+
+                controllerBE.sendDataImmediately();
+                controllerBE.setChanged();
             }
         }
 
@@ -244,12 +240,13 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    @SuppressWarnings("deprecation")
+    public void onRemove(BlockState state, @NotNull Level world, @NotNull BlockPos pos,
+                         @NotNull BlockState newState, boolean isMoving) {
         if (state.hasBlockEntity() && (state.getBlock() != newState.getBlock() || !newState.hasBlockEntity())) {
             BlockEntity be = world.getBlockEntity(pos);
-            if (!(be instanceof FuelTankBlockEntity))
+            if (!(be instanceof FuelTankBlockEntity tankBE))
                 return;
-            FuelTankBlockEntity tankBE = (FuelTankBlockEntity) be;
             world.removeBlockEntity(pos);
             ConnectivityHandler.splitMulti(tankBE);
         }
@@ -266,51 +263,43 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     }
 
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
+    @SuppressWarnings("deprecation")
+    public @NotNull BlockState mirror(@NotNull BlockState state, @NotNull Mirror mirror) {
         if (mirror == Mirror.NONE)
             return state;
         boolean x = mirror == Mirror.FRONT_BACK;
-        switch (state.getValue(SHAPE)) {
-            case WINDOW_NE:
-                return state.setValue(SHAPE, x ? FuelTankBlock.Shape.WINDOW_NW : FuelTankBlock.Shape.WINDOW_SE);
-            case WINDOW_NW:
-                return state.setValue(SHAPE, x ? FuelTankBlock.Shape.WINDOW_NE : FuelTankBlock.Shape.WINDOW_SW);
-            case WINDOW_SE:
-                return state.setValue(SHAPE, x ? FuelTankBlock.Shape.WINDOW_SW : FuelTankBlock.Shape.WINDOW_NE);
-            case WINDOW_SW:
-                return state.setValue(SHAPE, x ? FuelTankBlock.Shape.WINDOW_SE : FuelTankBlock.Shape.WINDOW_NW);
-            default:
-                return state;
-        }
+        return switch (state.getValue(SHAPE)) {
+            case WINDOW_NE -> state.setValue(SHAPE, x ? Shape.WINDOW_NW : Shape.WINDOW_SE);
+            case WINDOW_NW -> state.setValue(SHAPE, x ? Shape.WINDOW_NE : Shape.WINDOW_SW);
+            case WINDOW_SE -> state.setValue(SHAPE, x ? Shape.WINDOW_SW : Shape.WINDOW_NE);
+            case WINDOW_SW -> state.setValue(SHAPE, x ? Shape.WINDOW_SE : Shape.WINDOW_NW);
+            default -> state;
+        };
     }
 
     @Override
-    public BlockState rotate(BlockState state, Rotation rotation) {
+    @SuppressWarnings("deprecation")
+    public @NotNull BlockState rotate(@NotNull BlockState state, Rotation rotation) {
         for (int i = 0; i < rotation.ordinal(); i++)
             state = rotateOnce(state);
         return state;
     }
 
     private BlockState rotateOnce(BlockState state) {
-        switch (state.getValue(SHAPE)) {
-            case WINDOW_NE:
-                return state.setValue(SHAPE, FuelTankBlock.Shape.WINDOW_SE);
-            case WINDOW_NW:
-                return state.setValue(SHAPE, FuelTankBlock.Shape.WINDOW_NE);
-            case WINDOW_SE:
-                return state.setValue(SHAPE, FuelTankBlock.Shape.WINDOW_SW);
-            case WINDOW_SW:
-                return state.setValue(SHAPE, FuelTankBlock.Shape.WINDOW_NW);
-            default:
-                return state;
-        }
+        return switch (state.getValue(SHAPE)) {
+            case WINDOW_NE -> state.setValue(SHAPE, Shape.WINDOW_SE);
+            case WINDOW_NW -> state.setValue(SHAPE, Shape.WINDOW_NE);
+            case WINDOW_SE -> state.setValue(SHAPE, Shape.WINDOW_SW);
+            case WINDOW_SW -> state.setValue(SHAPE, Shape.WINDOW_NW);
+            default -> state;
+        };
     }
 
     public enum Shape implements StringRepresentable {
         PLAIN, WINDOW, WINDOW_NW, WINDOW_SW, WINDOW_NE, WINDOW_SE;
 
         @Override
-        public String getSerializedName() {
+        public @NotNull String getSerializedName() {
             return Lang.asId(name());
         }
     }
@@ -324,19 +313,21 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     public SoundType getSoundType(BlockState state, LevelReader world, BlockPos pos, Entity entity) {
         SoundType soundType = getSoundType(state);
         //fixme
-//        if (entity != null && entity.getCustomData()
+//        if (entity != null && entity.getExtraCustomData()
 //                .method_10545("SilenceTankSound"))
 //            return SILENCED_METAL;
         return soundType;
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
+    @SuppressWarnings("deprecation")
+    public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+    @SuppressWarnings("deprecation")
+    public int getAnalogOutputSignal(@NotNull BlockState blockState, @NotNull Level worldIn, @NotNull BlockPos pos) {
         return getBlockEntityOptional(worldIn, pos).map(FuelTankBlockEntity::getControllerBE)
                 .map(be -> ComparatorUtil.fractionToRedstoneLevel(be.getFillState()))
                 .orElse(0);

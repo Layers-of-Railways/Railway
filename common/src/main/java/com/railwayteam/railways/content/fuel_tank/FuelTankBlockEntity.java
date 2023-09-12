@@ -32,14 +32,14 @@ import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.abs;
 
 public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IMultiBlockEntityContainer.Fluid, CustomRenderBoundingBoxBlockEntity, SidedStorageBlockEntity {
-
     private static final int MAX_SIZE = 3;
 
-    protected boolean forceFuelLevelUpdate;
+    protected boolean forceFluidLevelUpdate;
     protected SmartFluidTank tankInventory;
     protected FluidTank exposedTank;
     protected BlockPos controller;
@@ -55,12 +55,12 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     protected boolean queuedSync;
 
     // For rendering purposes only
-    private LerpedFloat fuelLevel;
+    private LerpedFloat fluidLevel;
 
     public FuelTankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         tankInventory = createInventory();
-        forceFuelLevelUpdate = true;
+        forceFluidLevelUpdate = true;
         updateConnectivity = false;
         window = true;
         height = 1;
@@ -74,7 +74,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
     protected void updateConnectivity() {
         updateConnectivity = false;
-        if (level.isClientSide)
+        if (level != null && level.isClientSide)
             return;
         if (!isController())
             return;
@@ -92,15 +92,15 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
         if (lastKnownPos == null)
             lastKnownPos = getBlockPos();
-        else if (!lastKnownPos.equals(worldPosition) && worldPosition != null) {
+        else if (!lastKnownPos.equals(worldPosition)) {
             onPositionChanged();
             return;
         }
 
         if (updateConnectivity)
             updateConnectivity();
-        if (fuelLevel != null)
-            fuelLevel.tickChaser();
+        if (fluidLevel != null)
+            fluidLevel.tickChaser();
     }
 
     @Override
@@ -118,7 +118,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     public void initialize() {
         super.initialize();
         sendData();
-        if (level.isClientSide)
+        if (level != null && level.isClientSide)
             invalidateRenderBoundingBox();
     }
 
@@ -156,21 +156,21 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             }
         }
 
-        if (!level.isClientSide) {
+        if (level != null && !level.isClientSide) {
             setChanged();
             sendData();
         }
 
         if (isVirtual()) {
-            if (fuelLevel == null)
-                fuelLevel = LerpedFloat.linear()
+            if (fluidLevel == null)
+                fluidLevel = LerpedFloat.linear()
                         .startWithValue(getFillState());
-            fuelLevel.chase(getFillState(), .5f, LerpedFloat.Chaser.EXP);
+            fluidLevel.chase(getFillState(), .5f, LerpedFloat.Chaser.EXP);
         }
     }
 
     protected void setLuminosity(int luminosity) {
-        if (level.isClientSide)
+        if (level != null && level.isClientSide)
             return;
         if (this.luminosity == luminosity)
             return;
@@ -179,7 +179,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     protected void updateStateLuminosity() {
-        if (level.isClientSide)
+        if (level != null && level.isClientSide)
             return;
         int actualLuminosity = luminosity;
         FuelTankBlockEntity controllerBE = getControllerBE();
@@ -197,26 +197,28 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     public FuelTankBlockEntity getControllerBE() {
         if (isController())
             return this;
+        if (level == null)
+            return null;
         BlockEntity blockEntity = level.getBlockEntity(controller);
         if (blockEntity instanceof FuelTankBlockEntity)
             return (FuelTankBlockEntity) blockEntity;
         return null;
     }
 
-    public void applyFuelTankSize(int blocks) {
+    public void applyFluidTankSize(int blocks) {
         tankInventory.setCapacity(blocks * getCapacityMultiplier());
         long overflow = tankInventory.getFluidAmount() - tankInventory.getCapacity();
         if (overflow > 0)
             TransferUtil.extract(tankInventory, tankInventory.variant, overflow);
-        forceFuelLevelUpdate = true;
+        forceFluidLevelUpdate = true;
     }
 
     public void removeController(boolean keepFluids) {
-        if (level.isClientSide)
+        if (level != null && level.isClientSide)
             return;
         updateConnectivity = true;
         if (!keepFluids)
-            applyFuelTankSize(1);
+            applyFluidTankSize(1);
         controller = null;
         width = 1;
         height = 1;
@@ -227,7 +229,8 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             state = state.setValue(FuelTankBlock.BOTTOM, true);
             state = state.setValue(FuelTankBlock.TOP, true);
             state = state.setValue(FuelTankBlock.SHAPE, window ? FuelTankBlock.Shape.WINDOW : FuelTankBlock.Shape.PLAIN);
-            getLevel().setBlock(worldPosition, state, 23);
+            if (getLevel() != null)
+                getLevel().setBlock(worldPosition, state, 23);
         }
 
         refreshCapability();
@@ -266,6 +269,8 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
                 for (int zOffset = 0; zOffset < width; zOffset++) {
 
                     BlockPos pos = this.worldPosition.offset(xOffset, yOffset, zOffset);
+                    if (level == null)
+                        return;
                     BlockState blockState = level.getBlockState(pos);
                     if (!FuelTankBlock.isTank(blockState))
                         continue;
@@ -298,7 +303,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
     @Override
     public void setController(BlockPos controller) {
-        if (level.isClientSide && !isVirtual())
+        if (level != null && level.isClientSide && !isVirtual())
             return;
         if (controller.equals(this.controller))
             return;
@@ -313,7 +318,8 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     private FluidTank handlerForCapability() {
-        return new FluidTank(0);
+        return isController() ? tankInventory :
+                getControllerBE() != null ? getControllerBE().handlerForCapability() : new FluidTank(0);
     }
 
     @Override
@@ -330,7 +336,9 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     @Nullable
-    public FuelTankBlockEntity getOtherFuelTankBlockEntity(Direction direction) {
+    public FuelTankBlockEntity getOtherFluidTankBlockEntity(Direction direction) {
+        if (level == null)
+            return null;
         BlockEntity otherBE = level.getBlockEntity(worldPosition.relative(direction));
         if (otherBE instanceof FuelTankBlockEntity)
             return (FuelTankBlockEntity) otherBE;
@@ -379,17 +387,17 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             }
         }
 
-        if (compound.contains("ForceFuelLevel") || fuelLevel == null)
-            fuelLevel = LerpedFloat.linear()
+        if (compound.contains("ForceFluidLevel") || fluidLevel == null)
+            fluidLevel = LerpedFloat.linear()
                     .startWithValue(getFillState());
 
         if (!clientPacket)
             return;
 
         boolean changeOfController =
-                controllerBefore == null ? controller != null : !controllerBefore.equals(controller);
+                !Objects.equals(controllerBefore, controller);
         if (changeOfController || prevSize != width || prevHeight != height) {
-            if (hasLevel())
+            if (level != null && hasLevel())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
             if (isController())
                 tankInventory.setCapacity(getCapacityMultiplier() * getTotalTankSize());
@@ -397,18 +405,18 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         }
         if (isController()) {
             float fillState = getFillState();
-            if (compound.contains("ForceFuelLevel") || fuelLevel == null)
-                fuelLevel = LerpedFloat.linear()
+            if (compound.contains("ForceFluidLevel") || fluidLevel == null)
+                fluidLevel = LerpedFloat.linear()
                         .startWithValue(fillState);
-            fuelLevel.chase(fillState, 0.5f, LerpedFloat.Chaser.EXP);
+            fluidLevel.chase(fillState, 0.5f, LerpedFloat.Chaser.EXP);
         }
-        if (luminosity != prevLum && hasLevel())
+        if (luminosity != prevLum && level != null && hasLevel())
             level.getChunkSource()
                     .getLightEngine()
                     .checkBlock(worldPosition);
 
         if (compound.contains("LazySync"))
-            fuelLevel.chase(fuelLevel.getChaseTarget(), 0.125f, LerpedFloat.Chaser.EXP);
+            fluidLevel.chase(fluidLevel.getChaseTarget(), 0.125f, LerpedFloat.Chaser.EXP);
     }
 
     public float getFillState() {
@@ -434,11 +442,11 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
         if (!clientPacket)
             return;
-        if (forceFuelLevelUpdate)
-            compound.putBoolean("ForceFuelLevel", true);
+        if (forceFluidLevelUpdate)
+            compound.putBoolean("ForceFluidLevel", true);
         if (queuedSync)
             compound.putBoolean("LazySync", true);
-        forceFuelLevelUpdate = false;
+        forceFluidLevelUpdate = false;
     }
 
     @Override
@@ -471,12 +479,12 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         return AllConfigs.server().fluids.fluidTankMaxHeight.get();
     }
 
-    public LerpedFloat getFuelLevel() {
-        return fuelLevel;
+    public LerpedFloat getFluidLevel() {
+        return fluidLevel;
     }
 
-    public void setFuelLevel(LerpedFloat fuelLevel) {
-        this.fuelLevel = fuelLevel;
+    public void setFluidLevel(LerpedFloat fluidLevel) {
+        this.fluidLevel = fluidLevel;
     }
 
     @Override
@@ -484,7 +492,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         updateConnectivity = false;
     }
 
-    // fabric: see comment in FluidTankItem
+    // fabric: see comment in FuelTankItem
     public void queueConnectivityUpdate() {
         updateConnectivity = true;
     }
@@ -573,7 +581,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
     @Override
     public void setTankSize(int tank, int blocks) {
-        applyFuelTankSize(blocks);
+        applyFluidTankSize(blocks);
     }
 
     @Override

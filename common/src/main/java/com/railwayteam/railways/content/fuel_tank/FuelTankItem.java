@@ -3,9 +3,6 @@ package com.railwayteam.railways.content.fuel_tank;
 import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
-import com.simibubi.create.content.fluids.tank.FluidTankBlock;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.content.fluids.tank.FluidTankItem;
 import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 public class FuelTankItem extends BlockItem {
     // fabric: (#690) because of ordering differences, we need to delay connection by a tick when placing multiblocks with NBT.
@@ -36,8 +34,8 @@ public class FuelTankItem extends BlockItem {
     }
 
     @Override
-    public InteractionResult place(BlockPlaceContext ctx) {
-        IS_PLACING_NBT = FluidTankItem.checkPlacingNbt(ctx);
+    public @NotNull InteractionResult place(@NotNull BlockPlaceContext ctx) {
+        IS_PLACING_NBT = FuelTankItem.checkPlacingNbt(ctx);
         InteractionResult initialResult = super.place(ctx);
         IS_PLACING_NBT = false;
         if (!initialResult.consumesAction())
@@ -47,8 +45,8 @@ public class FuelTankItem extends BlockItem {
     }
 
     @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos blockPos, Level level, Player player,
-                                                 ItemStack itemStack, BlockState blockState) {
+    protected boolean updateCustomBlockEntityTag(@NotNull BlockPos blockPos, Level level, Player player,
+                                                 @NotNull ItemStack itemStack, @NotNull BlockState blockState) {
         MinecraftServer minecraftserver = level.getServer();
         if (minecraftserver == null)
             return false;
@@ -86,7 +84,7 @@ public class FuelTankItem extends BlockItem {
         BlockPos placedOnPos = pos.relative(face.getOpposite());
         BlockState placedOnState = world.getBlockState(placedOnPos);
 
-        if (!FluidTankBlock.isTank(placedOnState))
+        if (!FuelTankBlock.isTank(placedOnState))
             return;
         boolean creative = getBlock().equals(AllBlocks.CREATIVE_FLUID_TANK.get());
         FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(
@@ -115,7 +113,7 @@ public class FuelTankItem extends BlockItem {
             for (int zOffset = 0; zOffset < width; zOffset++) {
                 BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
                 BlockState blockState = world.getBlockState(offsetPos);
-                if (FluidTankBlock.isTank(blockState))
+                if (FuelTankBlock.isTank(blockState))
                     continue;
                 if (!blockState.getMaterial()
                         .isReplaceable())
@@ -131,7 +129,7 @@ public class FuelTankItem extends BlockItem {
             for (int zOffset = 0; zOffset < width; zOffset++) {
                 BlockPos offsetPos = startPos.offset(xOffset, 0, zOffset);
                 BlockState blockState = world.getBlockState(offsetPos);
-                if (FluidTankBlock.isTank(blockState))
+                if (FuelTankBlock.isTank(blockState))
                     continue;
                 BlockPlaceContext context = BlockPlaceContext.at(ctx, offsetPos, face);
                 //fixme

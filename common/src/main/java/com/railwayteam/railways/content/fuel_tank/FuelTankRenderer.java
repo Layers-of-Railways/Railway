@@ -23,8 +23,8 @@ public class FuelTankRenderer extends SafeBlockEntityRenderer<FuelTankBlockEntit
             return;
         }
 
-        LerpedFloat fuelLevel = be.getFuelLevel();
-        if (fuelLevel == null)
+        LerpedFloat fluidLevel = be.getFluidLevel();
+        if (fluidLevel == null)
             return;
 
         float capHeight = 1 / 4f;
@@ -32,7 +32,7 @@ public class FuelTankRenderer extends SafeBlockEntityRenderer<FuelTankBlockEntit
         float minPuddleHeight = 1 / 16f;
         float totalHeight = be.height - 2 * capHeight - minPuddleHeight;
 
-        float level = fuelLevel.getValue(partialTicks);
+        float level = fluidLevel.getValue(partialTicks);
         if (level < 1 / (512f * totalHeight))
             return;
         float clampedLevel = Mth.clamp(level * totalHeight, 0, totalHeight);

@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.fuel_tank;
 
-import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -24,9 +23,9 @@ public class FuelTankGenerator extends SpecialBlockStateGen {
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov,
                                                 BlockState state) {
-        Boolean top = state.getValue(FluidTankBlock.TOP);
-        Boolean bottom = state.getValue(FluidTankBlock.BOTTOM);
-        FluidTankBlock.Shape shape = state.getValue(FluidTankBlock.SHAPE);
+        Boolean top = state.getValue(FuelTankBlock.TOP);
+        Boolean bottom = state.getValue(FuelTankBlock.BOTTOM);
+        FuelTankBlock.Shape shape = state.getValue(FuelTankBlock.SHAPE);
 
         String shapeName = "middle";
         if (top && bottom)
@@ -36,7 +35,7 @@ public class FuelTankGenerator extends SpecialBlockStateGen {
         else if (bottom)
             shapeName = "bottom";
 
-        String modelName = shapeName + (shape == FluidTankBlock.Shape.PLAIN ? "" : "_" + shape.getSerializedName());
+        String modelName = shapeName + (shape == FuelTankBlock.Shape.PLAIN ? "" : "_" + shape.getSerializedName());
 
         return AssetLookup.partialBaseModel(ctx, prov, modelName);
     }
