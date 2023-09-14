@@ -49,7 +49,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -127,17 +126,6 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         return InteractionResult.SUCCESS;
     }
 
-    static final VoxelShape CAMPFIRE_SMOKE_CLIP = Block.box(0, 4, 0, 16, 16, 16);
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState pState, @NotNull BlockGetter pLevel,
-                                                 @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
-        if (pContext == CollisionContext.empty())
-            return CAMPFIRE_SMOKE_CLIP;
-        return pState.getShape(pLevel, pPos);
-    }
-
     @Override
     @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState pState, @NotNull BlockGetter pReader,
@@ -156,6 +144,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
             return InteractionResult.PASS;
         if (!player.isCreative())
             return InteractionResult.PASS;
+
 
         FluidHelper.FluidExchange exchange = null;
         FuelTankBlockEntity be = ConnectivityHandler.partAt(getBlockEntityType(), world, pos);
@@ -314,7 +303,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         SoundType soundType = getSoundType(state);
         //fixme
 //        if (entity != null && entity.getExtraCustomData()
-//                .method_10545("SilenceTankSound"))
+//                .getBoolean("SilenceTankSound"))
 //            return SILENCED_METAL;
         return soundType;
     }

@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.fuel_tank;
 
+import com.railwayteam.railways.util.FluidUtils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -20,6 +21,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,6 +35,7 @@ import net.minecraft.world.phys.AABB;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static java.lang.Math.abs;
 
@@ -40,7 +43,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     private static final int MAX_SIZE = 3;
 
     protected boolean forceFluidLevelUpdate;
-    protected SmartFluidTank tankInventory;
+    protected FuelFluidHandler tankInventory;
     protected FluidTank exposedTank;
     protected BlockPos controller;
     protected BlockPos lastKnownPos;
@@ -68,8 +71,8 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 //		refreshCapability(); // fabric: lazy init to prevent access too early
     }
 
-    protected SmartFluidTank createInventory() {
-        return new SmartFluidTank(getCapacityMultiplier(), this::onFluidStackChanged);
+    protected FuelFluidHandler createInventory() {
+        return new FuelFluidHandler(getCapacityMultiplier(), this::onFluidStackChanged);
     }
 
     protected void updateConnectivity() {
@@ -601,5 +604,23 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         if (exposedTank == null)
             refreshCapability();
         return exposedTank;
+    }
+
+    public static class FuelFluidHandler extends SmartFluidTank {
+
+        public FuelFluidHandler(long capacity, Consumer<FluidStack> updateCallback) {
+            super(capacity, updateCallback);
+        }
+
+        public boolean isFluidValid(FluidVariant stack) {
+            return FluidUtils.isFuel(stack.getFluid());
+        }
+
+        @Override
+        public long insert(FluidVariant insertedVariant, long maxAmount, TransactionContext transaction) {
+            if (!isFluidValid(insertedVariant))
+                return 0;
+            return super.insert(insertedVariant, maxAmount, transaction);
+        }
     }
 }
