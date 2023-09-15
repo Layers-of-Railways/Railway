@@ -1,6 +1,6 @@
-package com.railwayteam.railways.content.fuel_tank;
+package com.railwayteam.railways.content.fuel.tank;
 
-import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
@@ -85,7 +85,7 @@ public class FuelTankItem extends BlockItem {
 
         if (!FuelTankBlock.isTank(placedOnState))
             return;
-        FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(CRBlockEntities.FUEL_TANK.get(), world, placedOnPos);
+        FuelTankBlockEntity tankAt = ConnectivityHandler.partAt(CRBlockEntitiesImpl.FUEL_TANK.get(), world, placedOnPos);
         if (tankAt == null)
             return;
         FuelTankBlockEntity controllerBE = tankAt.getControllerBE();
@@ -128,15 +128,13 @@ public class FuelTankItem extends BlockItem {
                 if (FuelTankBlock.isTank(blockState))
                     continue;
                 BlockPlaceContext context = BlockPlaceContext.at(ctx, offsetPos, face);
-                //fixme
-//                player.getExtraCustomData()
-//                        .method_10556("SilenceTankSound", true);
+                player.getExtraCustomData()
+                        .putBoolean("SilenceTankSound", true);
                 IS_PLACING_NBT = checkPlacingNbt(context);
                 super.place(context);
                 IS_PLACING_NBT = false;
-                //fixme
-//                player.getExtraCustomData()
-//                        .method_10551("SilenceTankSound");
+                player.getExtraCustomData()
+                        .getBoolean("SilenceTankSound");
             }
         }
     }

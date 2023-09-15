@@ -1,7 +1,8 @@
-package com.railwayteam.railways.content.fuel_tank;
+package com.railwayteam.railways.content.fuel.tank;
 
 import com.railwayteam.railways.registry.CRSpriteShifts;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.content.fluids.tank.FluidTankCTBehaviour;
 import com.simibubi.create.foundation.block.connected.CTModel;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -25,12 +26,12 @@ public class FuelTankModel extends CTModel {
 
     private FuelTankModel(BakedModel originalModel, CTSpriteShiftEntry side, CTSpriteShiftEntry top,
                            CTSpriteShiftEntry inner) {
-        super(originalModel, new FuelTankCTBehaviour(side, top, inner));
+        super(originalModel, new FluidTankCTBehaviour(side, top, inner));
     }
 
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        FuelTankModel.CullData cullData = new FuelTankModel.CullData();
+        CullData cullData = new CullData();
         for (Direction d : Iterate.horizontalDirections)
             cullData.setCulled(d, ConnectivityHandler.isConnected(blockView, pos, pos.relative(d)));
 

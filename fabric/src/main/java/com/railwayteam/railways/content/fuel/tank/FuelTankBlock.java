@@ -1,6 +1,6 @@
-package com.railwayteam.railways.content.fuel_tank;
+package com.railwayteam.railways.content.fuel.tank;
 
-import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
@@ -59,7 +59,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
 
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
-    public static final EnumProperty<FuelTankBlock.Shape> SHAPE = EnumProperty.create("shape", FuelTankBlock.Shape.class);
+    public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level", 0, 15);
 
     public static FuelTankBlock regular(Properties properties) {
@@ -77,7 +77,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         super(setLightFunction(properties));
         registerDefaultState(defaultBlockState().setValue(TOP, true)
                 .setValue(BOTTOM, true)
-                .setValue(SHAPE, FuelTankBlock.Shape.WINDOW)
+                .setValue(SHAPE, Shape.WINDOW)
                 .setValue(LIGHT_LEVEL, 0));
     }
 
@@ -248,7 +248,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
 
     @Override
     public BlockEntityType<? extends FuelTankBlockEntity> getBlockEntityType() {
-        return CRBlockEntities.FUEL_TANK.get();
+        return CRBlockEntitiesImpl.FUEL_TANK.get();
     }
 
     @Override
@@ -301,10 +301,9 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     @Override
     public SoundType getSoundType(BlockState state, LevelReader world, BlockPos pos, Entity entity) {
         SoundType soundType = getSoundType(state);
-        //fixme
-//        if (entity != null && entity.getExtraCustomData()
-//                .getBoolean("SilenceTankSound"))
-//            return SILENCED_METAL;
+        if (entity != null && entity.getExtraCustomData()
+                .getBoolean("SilenceTankSound"))
+            return SILENCED_METAL;
         return soundType;
     }
 

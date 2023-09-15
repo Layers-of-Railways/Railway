@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.fuel_tank;
+package com.railwayteam.railways.content.fuel.tank;
 
 import com.railwayteam.railways.util.FluidUtils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;

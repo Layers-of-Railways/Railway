@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.fuel_tank;
+package com.railwayteam.railways.content.fuel.tank;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;

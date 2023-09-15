@@ -1,5 +1,6 @@
 package com.railwayteam.railways.fabric.mixin;
 
+import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
@@ -30,7 +31,7 @@ public class TrainMixin {
         for (int index = 0; index < carriageCount; index++) {
             int i = iterateFromBack ? carriageCount - 1 - index : index;
             Carriage carriage = carriages.get(i);
-            CombinedTankWrapper fuelFluids = carriage.storage.getFluids();
+            CombinedTankWrapper fuelFluids = ((IFuelInventory) carriage.storage).snr$getFuelFluids();
             if (fuelFluids == null)
                 continue;
 

@@ -26,10 +26,6 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStat
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
-import com.railwayteam.railways.content.fuel_tank.FuelTankBlock;
-import com.railwayteam.railways.content.fuel_tank.FuelTankGenerator;
-import com.railwayteam.railways.content.fuel_tank.FuelTankItem;
-import com.railwayteam.railways.content.fuel_tank.FuelTankModel;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.*;
@@ -57,6 +53,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -499,20 +496,25 @@ public class CRBlocks {
             .transform(customItemModel("copycat_vent"))
             .register();
 
-    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
-            .initialProperties(SharedProperties::copperMetal)
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))
-            .transform(pickaxeOnly())
-            .blockstate(new FuelTankGenerator()::generate)
-            .onRegister(CreateRegistrate.blockModel(() -> FuelTankModel::standard))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .item(FuelTankItem::new)
-            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
-            .build()
-            .register();
+//    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
+//            .initialProperties(SharedProperties::copperMetal)
+//            .properties(BlockBehaviour.Properties::noOcclusion)
+//            .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))
+//            .transform(pickaxeOnly())
+//            .blockstate(new FuelTankGenerator()::generate)
+//            .onRegister(CreateRegistrate.blockModel(() -> FuelTankModel::standard))
+//            .addLayer(() -> RenderType::cutoutMipped)
+//            .item(FuelTankItem::new)
+//            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
+//            .build()
+//            .register();
 
-    @SuppressWarnings("EmptyMethod")
+    @ExpectPlatform
+    public static void platformBasedRegistration() {
+        throw new AssertionError();
+    }
+
     public static void register() {
+        platformBasedRegistration();
     }
 }
