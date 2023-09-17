@@ -23,7 +23,7 @@ import java.util.Map;
 public class MountedStorageManagerMixin {
     @Inject(method = "read", at = @At("RETURN"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
-        ((IFuelInventory) this).snr$setFuelFluids(((AccessorMountedStorageManager) ((IFuelInventory) this).snr$getFuelFluids()).wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+        ((IFuelInventory) this).snr$setFuelFluids(((AccessorMountedStorageManager) ((IFuelInventory) this).snr$getFuelFluids()).snr$wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
                 .map(tank -> (Storage<FluidVariant>) tank)
