@@ -12,5 +12,5 @@ import java.util.Collection;
 @Mixin(MountedStorageManager.class)
 public interface AccessorMountedStorageManager {
     @Invoker("wrapFluids")
-    CombinedTankWrapper snr$wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+    CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
 }
