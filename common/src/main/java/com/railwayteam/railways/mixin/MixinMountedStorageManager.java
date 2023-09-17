@@ -7,8 +7,6 @@ import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -73,6 +71,7 @@ public class MixinMountedStorageManager implements IFuelInventory {
         nbt.put("FluidFuelStorage", fluidFuelStorageNBT);
     }
 
+    //fixme
 //    @Inject(method = "removeStorageFromWorld", at = @At("RETURN"))
 //    public void removeStorageFromWorld(CallbackInfo ci) {
 //        snr$fluidFuelStorage.values()
@@ -86,18 +85,6 @@ public class MixinMountedStorageManager implements IFuelInventory {
             if (mountedStorage.isValid())
                 mountedStorage.addStorageToWorld(blockEntity);
         }
-    }
-
-    @Inject(method = "clear", at = @At("RETURN"))
-    private void clear(CallbackInfo ci) {
-        TransferUtil.clearStorage(snr$fluidFuelInventory);
-    }
-
-    @Inject(method = "updateContainedFluid", at = @At("RETURN"))
-    private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
-        MountedFluidStorage mountedFuelFluidStorage = snr$fluidFuelStorage.get(localPos);
-        if (mountedFuelFluidStorage != null)
-            mountedFuelFluidStorage.updateFluid(containedFluid);
     }
 
     @Override
