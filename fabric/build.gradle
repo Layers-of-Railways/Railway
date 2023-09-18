@@ -158,8 +158,6 @@ dependencies {
 }
 
 processResources {
-    exclude("**/*.bbmodel", "**/*.lnk", "**/*.txt")
-
     // include packs
     from(rootProject.file("common/src/main/resources")) {
         include("resourcepacks/")
