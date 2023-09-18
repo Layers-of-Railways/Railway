@@ -42,9 +42,12 @@ public class TrainMixin {
                     Integer burnTime = FuelRegistry.INSTANCE.get(held.getFluid().getBucket());
                     if (burnTime == null || burnTime <= 0)
                         continue;
-                    if (view.extract(held, 81000, t) != 81000)
+                    // Extract 100 Mb worth of fluid (1/10th of a bucket)
+                    if (view.extract(held, 8100, t) != 8100)
                         continue;
-                    fuelTicks += burnTime / 4;
+                    // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
+                    // so it isn't so strong
+                    fuelTicks += (burnTime / 100) / 4;
                     t.commit();
                     return;
                 }

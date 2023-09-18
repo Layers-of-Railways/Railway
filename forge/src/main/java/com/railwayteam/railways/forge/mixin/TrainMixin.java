@@ -32,12 +32,14 @@ public class TrainMixin {
                 continue;
 
             for (int tanks = 0; tanks < fuelItems.getTanks(); tanks++) {
-                FluidStack fluidStack = fuelItems.drain(1000, IFluidHandler.FluidAction.EXECUTE);
+                // Extract 100 Mb worth of fluid (1/10th of a bucket)
+                FluidStack fluidStack = fuelItems.drain(100, IFluidHandler.FluidAction.EXECUTE);
                 int burnTime = ForgeHooks.getBurnTime(fluidStack.getFluid().getBucket().getDefaultInstance(), null);
                 if (burnTime <= 0)
                     continue;
-
-                fuelTicks += burnTime / 4;
+                // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
+                // so it isn't so strong
+                fuelTicks += (burnTime / 100) / 4;
                 return;
             }
         }

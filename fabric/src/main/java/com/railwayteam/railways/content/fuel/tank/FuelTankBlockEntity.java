@@ -71,8 +71,8 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 //		refreshCapability(); // fabric: lazy init to prevent access too early
     }
 
-    protected FuelFluidHandler createInventory() {
-        return new FuelFluidHandler(getCapacityMultiplier(), this::onFluidStackChanged);
+    protected FuelTankBlockEntity.FuelFluidHandler createInventory() {
+        return new FuelTankBlockEntity.FuelFluidHandler(getCapacityMultiplier(), this::onFluidStackChanged);
     }
 
     protected void updateConnectivity() {
@@ -458,9 +458,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        registerAwardables(behaviours, AllAdvancements.STEAM_ENGINE_MAXED, AllAdvancements.PIPE_ORGAN);
-    }
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 
     public FluidTank getTankInventory() {
         return tankInventory;

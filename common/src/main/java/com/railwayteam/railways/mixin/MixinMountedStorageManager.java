@@ -5,8 +5,12 @@ import com.railwayteam.railways.util.FluidUtils;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.NBTHelper;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -15,17 +19,23 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
-public class MixinMountedStorageManager implements IFuelInventory {
+public abstract class MixinMountedStorageManager implements IFuelInventory {
+    @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+
+
+    @Shadow protected Map<BlockPos, MountedFluidStorage> fluidStorage;
     @Unique private CombinedTankWrapper snr$fluidFuelInventory;
     @Unique private Map<BlockPos, MountedFluidStorage> snr$fluidFuelStorage = new HashMap<>();
 
@@ -36,17 +46,25 @@ public class MixinMountedStorageManager implements IFuelInventory {
 
     @Inject(method = "createHandlers", at = @At("RETURN"))
     private void createHandler(CallbackInfo ci) {
-        snr$fluidFuelInventory = ((AccessorMountedStorageManager) this).snr$wrapFluids(snr$fluidFuelStorage.values()
+        snr$fluidFuelInventory = wrapFluids(snr$fluidFuelStorage.values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
                 .collect(Collectors.toList()));
     }
 
-    @Inject(method = "addBlock", at = @At("RETURN"))
+    @SuppressWarnings("all")
+    @Inject(method = "addBlock", at = @At(target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+            value = "INVOKE", shift = At.Shift.AFTER), cancellable = true)
     private void addBlock(BlockPos localPos, BlockEntity be, CallbackInfo ci) {
-        if (FluidUtils.canUseAsFuelStorage(be))
+        if (be != null && snr$isValid(be))
+            fluidStorage.put(localPos, new MountedFluidStorage(be));
+        if (be != null && FluidUtils.canUseAsFuelStorage(be)) {
             snr$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
+            ci.cancel();
+        }
     }
+
+
 
     @Inject(method = "read", at = @At("HEAD"))
     private void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
@@ -71,12 +89,11 @@ public class MixinMountedStorageManager implements IFuelInventory {
         nbt.put("FluidFuelStorage", fluidFuelStorageNBT);
     }
 
-    //fixme
-//    @Inject(method = "removeStorageFromWorld", at = @At("RETURN"))
-//    public void removeStorageFromWorld(CallbackInfo ci) {
-//        snr$fluidFuelStorage.values()
-//                .forEach(MountedFluidStorage::removeStorageFromWorld);
-//    }
+    @Inject(method = "removeStorageFromWorld", at = @At("RETURN"))
+    public void removeStorageFromWorld(CallbackInfo ci) {
+        snr$fluidFuelStorage.values()
+                .forEach(MountedFluidStorage::removeStorageFromWorld);
+    }
 
     @Inject(method = "addStorageToWorld", at = @At("RETURN"))
     private void addStorageToWorld(StructureTemplate.StructureBlockInfo block, BlockEntity blockEntity, CallbackInfo ci) {
@@ -85,6 +102,13 @@ public class MixinMountedStorageManager implements IFuelInventory {
             if (mountedStorage.isValid())
                 mountedStorage.addStorageToWorld(blockEntity);
         }
+    }
+
+    @Inject(method = "updateContainedFluid", at = @At("RETURN"))
+    private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
+        MountedFluidStorage mountedFuelFluidStorage = snr$fluidFuelStorage.get(localPos);
+        if (mountedFuelFluidStorage != null)
+            mountedFuelFluidStorage.updateFluid(containedFluid);
     }
 
     @Override
@@ -105,5 +129,12 @@ public class MixinMountedStorageManager implements IFuelInventory {
     @Override
     public Map<BlockPos, MountedFluidStorage> snr$getFluidFuelStorage() {
         return snr$fluidFuelStorage;
+    }
+
+    @Unique
+    private static boolean snr$isValid(BlockEntity be) {
+        if (be instanceof FluidTankBlockEntity fluidTankBlockEntity)
+            return fluidTankBlockEntity.isController();
+        return false;
     }
 }

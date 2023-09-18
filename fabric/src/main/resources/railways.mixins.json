@@ -12,6 +12,7 @@
   "mixins": [
     "DetectorRailBlockMixin",
     "EnderManMixin",
+    "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "TrainMixin"
   ],

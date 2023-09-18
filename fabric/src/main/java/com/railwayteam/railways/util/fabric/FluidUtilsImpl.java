@@ -5,8 +5,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class FluidUtilsImpl {
     public static boolean canUseAsFuelStorage(BlockEntity be) {
-        if (be instanceof FuelTankBlockEntity)
-            return ((FuelTankBlockEntity) be).isController();
+        if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
+            return fuelTankBlockEntity.isController();
         return false;
     }
 }
