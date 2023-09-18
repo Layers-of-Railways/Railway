@@ -40,7 +40,7 @@ public class MountedStorageManagerMixin {
                 return;
             FluidTank tankInventory = tank.getTankInventory();
             if (tankInventory != null)
-                tankInventory.setFluid(((AccessorMountedFluidStorage) mfs).getTank().getFluid());
+                tankInventory.setFluid(mfs.getFluidHandler().getFluid());
             tank.getFluidLevel()
                     .startWithValue(tank.getFillState());
             mfs.assignBlockEntity(tank);
