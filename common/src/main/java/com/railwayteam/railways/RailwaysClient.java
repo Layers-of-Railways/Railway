@@ -31,6 +31,7 @@ public class RailwaysClient {
 
     CRPackets.PACKETS.registerS2CListener();
 
+    // Register Ponders
     PonderIndex.addPlugin(new CRPonderPlugin());
 
     CRBlockPartials.init();
