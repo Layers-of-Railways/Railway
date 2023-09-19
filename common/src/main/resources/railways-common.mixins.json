@@ -87,6 +87,7 @@
     "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
     "client.AccessorTrackBlockOutline",
+    "client.AccessorWarningScreen",
     "client.HotbarStorageMixin",
     "client.MixinBezierConnectionClient",
     "client.MixinBlockElement_Deserializer",

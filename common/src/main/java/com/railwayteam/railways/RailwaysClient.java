@@ -3,6 +3,7 @@ package com.railwayteam.railways;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
+import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.ponder.CRPonderPlugin;
@@ -19,8 +20,9 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RailwaysClient {
-
   public static void init() {
+    IncompatibleModsCheck.run();
+
     registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
 

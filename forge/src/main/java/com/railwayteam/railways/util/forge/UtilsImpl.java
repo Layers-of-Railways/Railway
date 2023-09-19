@@ -52,4 +52,8 @@ public class UtilsImpl {
 			MinecraftForge.EVENT_BUS.post(new ChunkEvent.Unload(chunk));
 		}
     }
+
+    public static Path modsDir() {
+		return FMLPaths.MODSDIR.get();
+    }
 }

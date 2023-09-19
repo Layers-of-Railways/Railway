@@ -50,4 +50,8 @@ public class UtilsImpl {
 			ClientChunkEvents.CHUNK_UNLOAD.invoker().onChunkUnload(Minecraft.getInstance().level, chunk);
 		}
     }
+
+    public static Path modsDir() {
+		return FabricLoader.getInstance().getGameDir().resolve("mods");
+    }
 }
