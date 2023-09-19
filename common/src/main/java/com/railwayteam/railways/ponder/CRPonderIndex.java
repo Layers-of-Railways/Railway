@@ -6,6 +6,7 @@ import com.railwayteam.railways.ponder.scenes.TrainScenes;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.AllBlocks;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
@@ -20,11 +21,10 @@ public class CRPonderIndex {
                 .addStoryBoard("semaphore", TrainScenes::signaling);
         HELPER.forComponents(CRBlocks.TRACK_COUPLER)
                 .addStoryBoard("coupler", TrainScenes::coupling);
-        //fixme
-//        HELPER.forComponents(CRItems.ITEM_CONDUCTOR_CAP.values().iterator())
-//            .addStoryBoard("conductor", ConductorScenes::constructing)
-//            .addStoryBoard("conductor_redstone", ConductorScenes::redstoning)
-//            .addStoryBoard("conductor", ConductorScenes::toolboxing);
+        HELPER.forComponents(CRItems.ITEM_CONDUCTOR_CAP.values().toArray(ItemEntry[]::new))
+            .addStoryBoard("conductor", ConductorScenes::constructing)
+            .addStoryBoard("conductor_redstone", ConductorScenes::redstoning)
+            .addStoryBoard("conductor", ConductorScenes::toolboxing);
         HELPER.forComponents(
             AllBlocks.ANDESITE_DOOR,
             AllBlocks.BRASS_DOOR,
