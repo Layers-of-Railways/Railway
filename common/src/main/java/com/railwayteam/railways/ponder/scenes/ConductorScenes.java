@@ -1,16 +1,16 @@
-package com.railwayteam.railways.ponder;
+package com.railwayteam.railways.ponder.scenes;
 
 import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
-import com.railwayteam.railways.ponder.temp.CreateSceneBuilder;
+import com.railwayteam.railways.ponder.scenes.temp.CreateSceneBuilder;
 import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.AllBlocks;
 import net.createmod.catnip.utility.Pointing;
+import net.createmod.ponder.api.scene.SceneBuilder;
+import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.ElementLink;
 import net.createmod.ponder.foundation.PonderPalette;
-import net.createmod.ponder.foundation.SceneBuilder;
-import net.createmod.ponder.foundation.SceneBuildingUtil;
 import net.createmod.ponder.foundation.element.EntityElement;
 import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -39,13 +39,13 @@ public class ConductorScenes {
     /*try {
       Minecraft.getInstance().getSkinManager().registerSkins(gameprofile, null, false);
     } catch (NullPointerException ignored) {}*/
-    SkullBlockEntity.updateGameprofile(gameprofile, (p_151177_) -> {
+    SkullBlockEntity.updateGameprofile(gameprofile, (profile) -> {
       CompoundTag itemTag = playerHead.getOrCreateTag();
-      itemTag.put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), p_151177_));
+      itemTag.put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), profile));
       playerHead.setTag(itemTag);
     });
 
-    ElementLink<EntityElement> player = scene.world.createEntity(w -> {
+    ElementLink<EntityElement> player = scene.world().createEntity(w -> {
       ArmorStand entity = EntityType.ARMOR_STAND.create(w);
       entity.setPos(pos.x, pos.y, pos.z);
       entity.xo = pos.x;
@@ -60,7 +60,7 @@ public class ConductorScenes {
       return entity;
     });
 
-    scene.world.modifyEntity(player, entity -> {
+    scene.world().modifyEntity(player, entity -> {
       entity.setItemSlot(EquipmentSlot.HEAD, playerHead);
       CompoundTag leatherTag = new CompoundTag();
       {
@@ -82,7 +82,7 @@ public class ConductorScenes {
   }
 
   public static ElementLink<EntityElement> makeConductor(SceneBuilder scene, DyeColor color, Vec3 pos) {
-    return scene.world.createEntity(w -> {
+    return scene.world().createEntity(w -> {
       ConductorEntity entity = CREntities.CONDUCTOR.create(w);
       entity.setColor(color);
       entity.setItemSlot(EquipmentSlot.HEAD, CRItems.ITEM_CONDUCTOR_CAP.get(color).asStack());
@@ -108,41 +108,41 @@ public class ConductorScenes {
     scene.rotateCameraY(85);
 
     scene.idle(10);
-    BlockPos casing = util.grid.at(1, 1, 1);
-    BlockPos deployer = util.grid.at(1, 3, 1);
-    BlockPos cog = util.grid.at(1, 3, 2);
+    BlockPos casing = util.grid().at(1, 1, 1);
+    BlockPos deployer = util.grid().at(1, 3, 1);
+    BlockPos cog = util.grid().at(1, 3, 2);
 
-    scene.world.showSection(util.select.position(casing), Direction.DOWN);
+    scene.world().showSection(util.select().position(casing), Direction.DOWN);
 
-    scene.overlay.showText(60)
-        .pointAt(util.vector.topOf(casing))
+    scene.overlay().showText(60)
+        .pointAt(util.vector().topOf(casing))
         .attachKeyFrame()
         .placeNearTarget()
         .text("Conductors are constructed with an andesite casing.");
 
     scene.idle(20);
 
-    scene.overlay.showControls(new InputWindowElement(util.vector.blockSurface(casing, Direction.UP), Pointing.DOWN)
+    scene.overlay().showControls(new InputWindowElement(util.vector().blockSurface(casing, Direction.UP), Pointing.DOWN)
         .rightClick()
         .withItem(CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED).asStack()), 40);
 
     scene.idle(50);
-    scene.world.showSection(util.select.position(deployer), Direction.DOWN);
-    scene.world.showSection(util.select.position(cog), Direction.NORTH);
-    scene.world.setKineticSpeed(util.select.position(cog), 16);
+    scene.world().showSection(util.select().position(deployer), Direction.DOWN);
+    scene.world().showSection(util.select().position(cog), Direction.NORTH);
+    scene.world().setKineticSpeed(util.select().position(cog), 16);
 
     scene.idle(5);
-    scene.world.moveDeployer(deployer, 1, 25);
+    scene.world().moveDeployer(deployer, 1, 25);
     scene.idle(26);
 
-    scene.world.destroyBlock(casing);
+    scene.world().destroyBlock(casing);
     ElementLink<EntityElement> conductor = makeConductor(scene, DyeColor.RED, Vec3.atBottomCenterOf(casing));
 
-    scene.world.moveDeployer(deployer, -1, 25);
+    scene.world().moveDeployer(deployer, -1, 25);
     scene.idle(30);
 
-    scene.world.hideSection(util.select.position(cog), Direction.SOUTH);
-    scene.world.hideSection(util.select.position(deployer), Direction.UP);
+    scene.world().hideSection(util.select().position(cog), Direction.SOUTH);
+    scene.world().hideSection(util.select().position(deployer), Direction.UP);
   }
 
   public static void redstoning(SceneBuilder scene, SceneBuildingUtil util) {
@@ -153,35 +153,35 @@ public class ConductorScenes {
     scene.rotateCameraY(85);
 
     scene.idle(10);
-    BlockPos button = util.grid.at(3, 1, 0);
-    BlockPos corner = util.grid.at(5, 1, 0);
-    BlockPos lamp = util.grid.at(5, 1, 5);
-    BlockPos buttonConductorPos = util.grid.at(4, 1, 1);
+    BlockPos button = util.grid().at(3, 1, 0);
+    BlockPos corner = util.grid().at(5, 1, 0);
+    BlockPos lamp = util.grid().at(5, 1, 5);
+    BlockPos buttonConductorPos = util.grid().at(4, 1, 1);
 
     ElementLink<EntityElement> buttonConductor = makeConductor(scene, DyeColor.RED, Vec3.atBottomCenterOf(buttonConductorPos));
-    scene.world.modifyEntity(buttonConductor, entity -> {
+    scene.world().modifyEntity(buttonConductor, entity -> {
       entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(button));
     });
 
     for (int x = 3; x <= 5; x++) { //button to corner
-      scene.world.showSection(util.select.position(util.grid.at(x, 1, 0)), Direction.DOWN);
+      scene.world().showSection(util.select().position(util.grid().at(x, 1, 0)), Direction.DOWN);
       scene.idle(2);
     }
     for (int z = 1; z <= 5; z++) { //corner to lamp
-      scene.world.showSection(util.select.position(util.grid.at(5, 1, z)), Direction.DOWN);
+      scene.world().showSection(util.select().position(util.grid().at(5, 1, z)), Direction.DOWN);
       scene.idle(2);
     }
 
-    scene.overlay.showText(50)
-        .pointAt(util.vector.topOf(buttonConductorPos))
+    scene.overlay().showText(50)
+        .pointAt(util.vector().topOf(buttonConductorPos))
         .attachKeyFrame()
         .placeNearTarget()
         .text("Conductors can press buttons when a player looks at them.");
 
     scene.idle(20);
-    ElementLink<EntityElement> player = makePlayerStand(scene, "Slimeist", 0x00FF00, Vec3.atBottomCenterOf(util.grid.at(2, 1, 2)));
+    ElementLink<EntityElement> player = makePlayerStand(scene, "Slimeist", 0x00FF00, Vec3.atBottomCenterOf(util.grid().at(2, 1, 2)));
 
-    scene.world.modifyEntity(player, entity -> {
+    scene.world().modifyEntity(player, entity -> {
       entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(buttonConductorPos.below(2)));
     });
 
@@ -189,7 +189,7 @@ public class ConductorScenes {
 
     for (int i = 0; i <= 20; i++) {
       int finalI = i; //lambda requires this for some reason
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(finalI, 0, 0));
       });
@@ -198,57 +198,57 @@ public class ConductorScenes {
 
     scene.idle(20);
 
-    scene.overlay.showBigLine(PonderPalette.RED, util.vector.centerOf(util.grid.at(2, 2, 2)), util.vector.topOf(buttonConductorPos), 40);
-    scene.world.toggleRedstonePower(util.select.fromTo(button, corner));
-    scene.world.toggleRedstonePower(util.select.fromTo(corner.south(), lamp));
-    scene.effects.indicateRedstone(button);
+    scene.overlay().showBigLine(PonderPalette.RED, util.vector().centerOf(util.grid().at(2, 2, 2)), util.vector().topOf(buttonConductorPos), 40);
+    scene.world().toggleRedstonePower(util.select().fromTo(button, corner));
+    scene.world().toggleRedstonePower(util.select().fromTo(corner.south(), lamp));
+    scene.effects().indicateRedstone(button);
 
     scene.idle(30);
 
     for (int i = 20; i > 0; i--) {
       int finalI = i; //lambda requires this for some reason
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(finalI, 0, 0));
       });
       scene.idle(1);
       if (i == 10) {
-        scene.world.toggleRedstonePower(util.select.fromTo(button, corner));
-        scene.world.toggleRedstonePower(util.select.fromTo(corner.south(), lamp.north()));
+        scene.world().toggleRedstonePower(util.select().fromTo(button, corner));
+        scene.world().toggleRedstonePower(util.select().fromTo(corner.south(), lamp.north()));
       }
       if (i == 6) {
-        scene.world.toggleRedstonePower(util.select.position(lamp));
+        scene.world().toggleRedstonePower(util.select().position(lamp));
       }
     }
     scene.rotateCameraY(-85);
 
     scene.idle(30);
 
-    BlockPos piston = util.grid.at(0, 1, 5);
-    BlockPos lever = util.grid.at(1, 1, 5);
+    BlockPos piston = util.grid().at(0, 1, 5);
+    BlockPos lever = util.grid().at(1, 1, 5);
 
-    scene.world.showSection(util.select.position(piston), Direction.DOWN);
+    scene.world().showSection(util.select().position(piston), Direction.DOWN);
     scene.idle(30);
-    scene.world.showSection(util.select.position(lever), Direction.WEST);
+    scene.world().showSection(util.select().position(lever), Direction.WEST);
 
-    BlockPos leverConductorPos = util.grid.at(3, 1, 5);
+    BlockPos leverConductorPos = util.grid().at(3, 1, 5);
 
     scene.idle(10);
 
     ElementLink<EntityElement> leverConductor = makeConductor(scene, DyeColor.BLUE, Vec3.atBottomCenterOf(leverConductorPos));
-    scene.world.modifyEntity(leverConductor, entity -> {
+    scene.world().modifyEntity(leverConductor, entity -> {
       entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(lever));
     });
 
-    scene.overlay.showText(30)
-        .pointAt(util.vector.topOf(leverConductorPos))
+    scene.overlay().showText(30)
+        .pointAt(util.vector().topOf(leverConductorPos))
         .attachKeyFrame()
         .placeNearTarget()
         .text("Conductors also toggle levers when a player looks at them.");
 
     scene.idle(35);
 
-    scene.world.modifyEntity(player, entity -> {
+    scene.world().modifyEntity(player, entity -> {
       entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(leverConductorPos));
       ArmorStand stand = (ArmorStand) entity;
       stand.setHeadPose(new Rotations(entity.getXRot(), 0, 0));
@@ -256,18 +256,18 @@ public class ConductorScenes {
 
     scene.idle(2);
 
-    scene.overlay.showBigLine(PonderPalette.BLUE, util.vector.centerOf(util.grid.at(2, 2, 2)), util.vector.topOf(leverConductorPos), 40);
-    scene.world.toggleRedstonePower(util.select.position(lever));
-    scene.effects.indicateRedstone(lever);
-    scene.world.modifyBlock(piston, (state) -> state.setValue(PistonBaseBlock.EXTENDED, true), false);
-    scene.world.showSection(util.select.position(util.grid.at(0, 2, 5)), Direction.UP);
-    scene.world.setBlock(piston.above(), Blocks.PISTON_HEAD.defaultBlockState().setValue(PistonHeadBlock.FACING, Direction.UP), false);
+    scene.overlay().showBigLine(PonderPalette.BLUE, util.vector().centerOf(util.grid().at(2, 2, 2)), util.vector().topOf(leverConductorPos), 40);
+    scene.world().toggleRedstonePower(util.select().position(lever));
+    scene.effects().indicateRedstone(lever);
+    scene.world().modifyBlock(piston, (state) -> state.setValue(PistonBaseBlock.EXTENDED, true), false);
+    scene.world().showSection(util.select().position(util.grid().at(0, 2, 5)), Direction.UP);
+    scene.world().setBlock(piston.above(), Blocks.PISTON_HEAD.defaultBlockState().setValue(PistonHeadBlock.FACING, Direction.UP), false);
 
     scene.idle(30);
 
     for (int i = 0; i <= 10; i++) {
       int finalI = i;
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(entity.getXRot(), finalI*3.5f, 0));
       });
@@ -276,12 +276,12 @@ public class ConductorScenes {
 
     scene.idle(10);
 
-    scene.world.modifyEntity(player, entity -> {
+    scene.world().modifyEntity(player, entity -> {
       entity.setItemSlot(EquipmentSlot.HEAD, CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED).asStack());
     });
 
-    scene.overlay.showText(30)
-        .pointAt(util.vector.topOf(util.grid.at(2, 1, 2)))
+    scene.overlay().showText(30)
+        .pointAt(util.vector().topOf(util.grid().at(2, 1, 2)))
         .attachKeyFrame()
         .placeNearTarget()
         .text("Conductors do not activate redstone if a player is wearing a different-colored cap from them.");
@@ -290,21 +290,21 @@ public class ConductorScenes {
 
     for (int i = 10; i > 0; i--) {
       int finalI = i;
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(entity.getXRot(), finalI*3.5f, 0));
       });
       scene.idle(1);
     }
-    Vec3 playerPoint = util.vector.centerOf(util.grid.at(2, 2, 2));
-    Vec3 conductorPoint = util.vector.topOf(leverConductorPos);
+    Vec3 playerPoint = util.vector().centerOf(util.grid().at(2, 2, 2));
+    Vec3 conductorPoint = util.vector().topOf(leverConductorPos);
     Vec3 middlePoint = playerPoint.add(conductorPoint).scale(0.5f);
-    scene.overlay.showLine(PonderPalette.RED, playerPoint, middlePoint, 40);
-    scene.overlay.showLine(PonderPalette.BLUE, conductorPoint, middlePoint, 40);
+    scene.overlay().showLine(PonderPalette.RED, playerPoint, middlePoint, 40);
+    scene.overlay().showLine(PonderPalette.BLUE, conductorPoint, middlePoint, 40);
 
     scene.idle(45); //end
 
-    scene.world.modifyEntity(player, entity -> {
+    scene.world().modifyEntity(player, entity -> {
       entity.lookAt(EntityAnchorArgument.Anchor.EYES, Vec3.atCenterOf(buttonConductorPos.below(2)));
       ((ArmorStand) entity).setHeadPose(new Rotations(0, 0, 0));
     });
@@ -313,7 +313,7 @@ public class ConductorScenes {
 
     for (int i = 0; i <= 20; i++) {
       int finalI = i; //lambda requires this for some reason
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(finalI, 0, 0));
       });
@@ -322,26 +322,26 @@ public class ConductorScenes {
 
     scene.idle(20);
 
-    scene.overlay.showBigLine(PonderPalette.RED, util.vector.centerOf(util.grid.at(2, 2, 2)), util.vector.topOf(buttonConductorPos), 40);
-    scene.world.toggleRedstonePower(util.select.fromTo(button, corner));
-    scene.world.toggleRedstonePower(util.select.fromTo(corner.south(), lamp));
-    scene.effects.indicateRedstone(button);
+    scene.overlay().showBigLine(PonderPalette.RED, util.vector().centerOf(util.grid().at(2, 2, 2)), util.vector().topOf(buttonConductorPos), 40);
+    scene.world().toggleRedstonePower(util.select().fromTo(button, corner));
+    scene.world().toggleRedstonePower(util.select().fromTo(corner.south(), lamp));
+    scene.effects().indicateRedstone(button);
 
     scene.idle(30);
 
     for (int i = 20; i > 0; i--) {
       int finalI = i; //lambda requires this for some reason
-      scene.world.modifyEntity(player, entity -> {
+      scene.world().modifyEntity(player, entity -> {
         ArmorStand stand = (ArmorStand) entity;
         stand.setHeadPose(new Rotations(finalI, 0, 0));
       });
       scene.idle(1);
       if (i == 10) {
-        scene.world.toggleRedstonePower(util.select.fromTo(button, corner));
-        scene.world.toggleRedstonePower(util.select.fromTo(corner.south(), lamp.north()));
+        scene.world().toggleRedstonePower(util.select().fromTo(button, corner));
+        scene.world().toggleRedstonePower(util.select().fromTo(corner.south(), lamp.north()));
       }
       if (i == 6) {
-        scene.world.toggleRedstonePower(util.select.position(lamp));
+        scene.world().toggleRedstonePower(util.select().position(lamp));
       }
     }
   }
@@ -354,12 +354,12 @@ public class ConductorScenes {
     scene.rotateCameraY(85);
 
     scene.idle(10);
-    BlockPos conductorPos = util.grid.at(1, 1, 1);
+    BlockPos conductorPos = util.grid().at(1, 1, 1);
 
     ElementLink<EntityElement> buttonConductor = makeConductor(scene, DyeColor.RED, Vec3.atBottomCenterOf(conductorPos));
 
-    scene.overlay.showText(40)
-        .pointAt(util.vector.topOf(conductorPos))
+    scene.overlay().showText(40)
+        .pointAt(util.vector().topOf(conductorPos))
         .attachKeyFrame()
         .placeNearTarget()
         .text("Toolboxes function normally when equipped on Conductors.");
@@ -368,17 +368,17 @@ public class ConductorScenes {
 
     ItemStack toolboxStack = AllBlocks.TOOLBOXES.get(DyeColor.LIME).asStack();
 
-    scene.overlay.showControls(new InputWindowElement(util.vector.topOf(conductorPos), Pointing.DOWN).rightClick().withItem(toolboxStack), 40);
+    scene.overlay().showControls(new InputWindowElement(util.vector().topOf(conductorPos), Pointing.DOWN).rightClick().withItem(toolboxStack), 40);
 
     scene.idle(35);
 
-    scene.world.modifyEntity(buttonConductor, entity -> {
+    scene.world().modifyEntity(buttonConductor, entity -> {
       ((ConductorEntity) entity).equipToolbox(toolboxStack);
     });
 
     for (int i = 0; i <= 72; i++) {
       int finalI = i;
-      scene.world.modifyEntity(buttonConductor, entity -> {
+      scene.world().modifyEntity(buttonConductor, entity -> {
         entity.setYRot((finalI * 5f) + 210);
         entity.setYBodyRot((finalI * 5f) + 210);
         entity.setYHeadRot((finalI * 5f) + 210);
@@ -387,13 +387,13 @@ public class ConductorScenes {
       scene.idle(1);
     }
 
-    scene.overlay.showControls(new InputWindowElement(util.vector.topOf(conductorPos), Pointing.DOWN).rightClick().whileSneaking(), 20);
+    scene.overlay().showControls(new InputWindowElement(util.vector().topOf(conductorPos), Pointing.DOWN).rightClick().whileSneaking(), 20);
 
     scene.idle(15);
 
-    scene.world.modifyEntity(buttonConductor, entity -> {
+    scene.world().modifyEntity(buttonConductor, entity -> {
       ((ConductorEntity) entity).unequipToolbox();
     });
-    scene.world.createItemEntity(util.vector.of(1.0, 1.0, 1.0), Vec3.ZERO, toolboxStack);
+    scene.world().createItemEntity(util.vector().of(1.0, 1.0, 1.0), Vec3.ZERO, toolboxStack);
   }
 }

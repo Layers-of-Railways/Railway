@@ -1,4 +1,4 @@
-package com.railwayteam.railways.ponder.temp;
+package com.railwayteam.railways.ponder.scenes.temp;
 
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 

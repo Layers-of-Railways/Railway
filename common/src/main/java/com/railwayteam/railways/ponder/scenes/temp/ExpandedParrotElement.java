@@ -1,4 +1,4 @@
-package com.railwayteam.railways.ponder.temp;
+package com.railwayteam.railways.ponder.scenes.temp;
 
 import java.util.function.Supplier;
 
