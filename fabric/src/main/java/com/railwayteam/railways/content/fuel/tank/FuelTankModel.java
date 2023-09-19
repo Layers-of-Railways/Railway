@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class FuelTankModel extends CTModel {
-
     public static FuelTankModel standard(BakedModel originalModel) {
         return new FuelTankModel(originalModel, CRSpriteShifts.FUEL_TANK, CRSpriteShifts.FUEL_TANK_TOP,
                 CRSpriteShifts.FUEL_TANK_INNER);
@@ -31,7 +30,7 @@ public class FuelTankModel extends CTModel {
 
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        CullData cullData = new CullData();
+        FuelTankModel.CullData cullData = new FuelTankModel.CullData();
         for (Direction d : Iterate.horizontalDirections)
             cullData.setCulled(d, ConnectivityHandler.isConnected(blockView, pos, pos.relative(d)));
 
@@ -71,4 +70,3 @@ public class FuelTankModel extends CTModel {
     }
 
 }
-

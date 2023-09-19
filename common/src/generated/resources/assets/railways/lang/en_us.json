@@ -14,6 +14,7 @@
 	"block.railways.narrow_double_scotch_bogey": "Narrow Gauge Double Scotch Yoke Bogey",
 	"block.railways.narrow_scotch_bogey": "Narrow Gauge Scotch Yoke Bogey",
 	"block.railways.narrow_small_bogey": "Narrow Gauge Small Bogey",
+	"block.railways.portable_fuel_interface": "Portable Fuel Interface",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.singleaxle_bogey": "Single Axle Bogey",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
@@ -671,6 +672,14 @@
 	"create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
 	"sounds.railways.conductor_whistle": "Conductor Whistles",
+
+	"header.railways.optifine": "Warning: Optifine present on game client",
+
+	"message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disabled in Steam 'n' Rails client sided configs however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check PrismLauncher's Optifine Alternatives list:",
+
+	"label.railways.open_mods_folder": "Open Mods Folder",
+	"label.railways.optifine_alternatives": "Optifine Alternatives",
+	"label.railways.proceed": "Proceed Anyway",
 
 	"block.create.track_station.tooltip": "TRAIN STATION",
 	"block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",

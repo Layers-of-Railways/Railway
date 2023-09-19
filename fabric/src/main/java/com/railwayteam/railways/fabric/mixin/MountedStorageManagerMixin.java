@@ -7,6 +7,7 @@ import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import io.github.fabricators_of_create.porting_lib.transfer.fluid.FluidTank;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
@@ -20,10 +21,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MountedStorageManagerMixin {
     @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+
+    @Inject(method = "createHandlers", at = @At("RETURN"))
+    private void createHandler(CallbackInfo ci) {
+        CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+                .stream()
+                .map(MountedFluidStorage::getFluidHandler)
+                .collect(Collectors.toList()));
+
+        ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
+    }
 
     @Inject(method = "read", at = @At("RETURN"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
@@ -54,5 +66,12 @@ public abstract class MountedStorageManagerMixin {
     @Inject(method = "clear", at = @At("RETURN"))
     private void clear(CallbackInfo ci) {
         TransferUtil.clearStorage(((IFuelInventory) this).snr$getFuelFluids());
+    }
+
+    @Inject(method = "updateContainedFluid", at = @At("RETURN"))
+    private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
+        MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).snr$getFluidFuelStorage().get(localPos);
+        if (mountedFuelFluidStorage != null)
+            mountedFuelFluidStorage.updateFluid(containedFluid);
     }
 }

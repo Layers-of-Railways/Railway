@@ -12,6 +12,10 @@
   "mixins": [
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "ContraptionMixin",
+    "MountedFluidStorageAccessor",
+    "MountedFluidStorageMixin",
+    "MountedStorageManagerMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin",
     "TrainMixin"

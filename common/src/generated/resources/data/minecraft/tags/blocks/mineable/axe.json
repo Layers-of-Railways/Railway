@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "railways:semaphore",
-    "railways:conductor_vent"
+    "railways:conductor_vent",
+    "railways:portable_fuel_interface"
   ]
 }

@@ -10,8 +10,10 @@
     "TrainHUDMixin"
   ],
   "mixins": [
+    "ContraptionMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
+    "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "TrainMixin"

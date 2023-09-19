@@ -62,10 +62,6 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     public static final EnumProperty<Shape> SHAPE = EnumProperty.create("shape", Shape.class);
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level", 0, 15);
 
-    public static FuelTankBlock regular(Properties properties) {
-        return new FuelTankBlock(properties);
-    }
-
     @Override
     public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState, LivingEntity pPlacer,
                             @NotNull ItemStack pStack) {
@@ -73,7 +69,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
         AdvancementBehaviour.setPlacedBy(pLevel, pPos, pPlacer);
     }
 
-    protected FuelTankBlock(Properties properties) {
+    public FuelTankBlock(Properties properties) {
         super(setLightFunction(properties));
         registerDefaultState(defaultBlockState().setValue(TOP, true)
                 .setValue(BOTTOM, true)
@@ -104,8 +100,8 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
-        p_206840_1_.add(TOP, BOTTOM, SHAPE, LIGHT_LEVEL);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(TOP, BOTTOM, SHAPE, LIGHT_LEVEL);
     }
 
     // Handled via LIGHT_LEVEL state property

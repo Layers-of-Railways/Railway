@@ -338,16 +338,6 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             return super.createRenderBoundingBox();
     }
 
-    @Nullable
-    public FuelTankBlockEntity getOtherFluidTankBlockEntity(Direction direction) {
-        if (level == null)
-            return null;
-        BlockEntity otherBE = level.getBlockEntity(worldPosition.relative(direction));
-        if (otherBE instanceof FuelTankBlockEntity)
-            return (FuelTankBlockEntity) otherBE;
-        return null;
-    }
-
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         FuelTankBlockEntity controllerBE = getControllerBE();
@@ -605,7 +595,6 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     }
 
     public static class FuelFluidHandler extends SmartFluidTank {
-
         public FuelFluidHandler(long capacity, Consumer<FluidStack> updateCallback) {
             super(capacity, updateCallback);
         }
