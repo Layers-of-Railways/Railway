@@ -16,8 +16,9 @@ public class FluidUtils {
      * All isFuel checks for anything else should go through this.
      * @return true if it is a valid fuel item, false if it isn't
      */
+    @ExpectPlatform
     public static boolean isFuel(Item item) {
-        return FuelRegistry.INSTANCE.get(item) != null;
+        throw new AssertionError();
     }
 
     @ExpectPlatform

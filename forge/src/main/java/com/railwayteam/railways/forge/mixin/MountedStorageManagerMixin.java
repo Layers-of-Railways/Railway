@@ -1,18 +1,17 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
-import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
-import io.github.fabricators_of_create.porting_lib.transfer.fluid.FluidTank;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,14 +23,13 @@ import java.util.Map;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MountedStorageManagerMixin {
-    @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+    @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<IFluidHandler> list);
 
     @Inject(method = "read", at = @At("RETURN"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
         CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
-                .map(tank -> (Storage<FluidVariant>) tank)
                 .toList());
 
         ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
@@ -43,9 +41,9 @@ public abstract class MountedStorageManagerMixin {
             BlockEntity blockEntity = presentBlockEntities.get(pos);
             if (!(blockEntity instanceof FuelTankBlockEntity tank))
                 return;
-            FluidTank tankInventory = tank.getTankInventory();
-            if (tankInventory != null)
-                tankInventory.setFluid(mfs.getFluidHandler().getFluid());
+            IFluidTank tankInventory = tank.getTankInventory();
+            if (tankInventory instanceof FluidTank)
+                ((FluidTank) tankInventory).setFluid(((MountedFluidStorageAccessor) mfs).getTank().getFluid());
             tank.getFluidLevel()
                     .startWithValue(tank.getFillState());
             mfs.assignBlockEntity(tank);
@@ -54,7 +52,10 @@ public abstract class MountedStorageManagerMixin {
 
     @Inject(method = "clear", at = @At("RETURN"))
     private void clear(CallbackInfo ci) {
-        TransferUtil.clearStorage(((IFuelInventory) this).snr$getFuelFluids());
+        CombinedTankWrapper fuelFluidInventory = ((IFuelInventory) this).snr$getFuelFluids();
+
+        for (int i = 0; i < fuelFluidInventory.getTanks(); i++)
+            fuelFluidInventory.drain(fuelFluidInventory.getFluidInTank(i), IFluidHandler.FluidAction.EXECUTE);
     }
 
     @Inject(method = "updateContainedFluid", at = @At("RETURN"))

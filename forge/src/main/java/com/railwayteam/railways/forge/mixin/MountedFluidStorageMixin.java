@@ -1,19 +1,21 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fluids.FluidStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MountedFluidStorage.class)
+@Mixin(value = MountedFluidStorage.class, remap = false)
 public abstract class MountedFluidStorageMixin {
-    @Shadow protected abstract void onFluidStackChanged(FluidStack fs);
+    @Shadow
+    protected abstract void onFluidStackChanged(FluidStack fs);
 
     @Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
     private static void canUseAsStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
@@ -22,9 +24,9 @@ public abstract class MountedFluidStorageMixin {
     }
 
     @Inject(method = "createMountedTank", at = @At("HEAD"), cancellable = true)
-    private void createMountedTank(BlockEntity be, CallbackInfoReturnable<FuelTankBlockEntity.FuelFluidHandler> cir) {
+    private void createMountedTank(BlockEntity be, CallbackInfoReturnable<SmartFluidTank> cir) {
         if (be instanceof FuelTankBlockEntity)
-            cir.setReturnValue(new FuelTankBlockEntity.FuelFluidHandler(
+            cir.setReturnValue(new SmartFluidTank(
                     ((FuelTankBlockEntity) be).getTotalTankSize() * FuelTankBlockEntity.getCapacityMultiplier(),
                     this::onFluidStackChanged));
     }

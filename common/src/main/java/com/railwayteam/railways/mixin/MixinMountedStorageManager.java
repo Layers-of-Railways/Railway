@@ -8,7 +8,6 @@ import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.minecraft.core.BlockPos;
@@ -34,8 +33,6 @@ import java.util.stream.Collectors;
 public abstract class MixinMountedStorageManager implements IFuelInventory {
     @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
 
-
-    @Shadow protected Map<BlockPos, MountedFluidStorage> fluidStorage;
     @Unique private CombinedTankWrapper snr$fluidFuelInventory;
     @Unique private Map<BlockPos, MountedFluidStorage> snr$fluidFuelStorage = new HashMap<>();
 
@@ -52,12 +49,10 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
                 .collect(Collectors.toList()));
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings({"ConstantConditions"})
     @Inject(method = "addBlock", at = @At(target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
             value = "INVOKE", shift = At.Shift.AFTER), cancellable = true)
     private void addBlock(BlockPos localPos, BlockEntity be, CallbackInfo ci) {
-        if (be != null && snr$isValid(be))
-            fluidStorage.put(localPos, new MountedFluidStorage(be));
         if (be != null && FluidUtils.canUseAsFuelStorage(be)) {
             snr$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
             ci.cancel();
@@ -102,13 +97,6 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
             if (mountedStorage.isValid())
                 mountedStorage.addStorageToWorld(blockEntity);
         }
-    }
-
-    @Inject(method = "updateContainedFluid", at = @At("RETURN"))
-    private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
-        MountedFluidStorage mountedFuelFluidStorage = snr$fluidFuelStorage.get(localPos);
-        if (mountedFuelFluidStorage != null)
-            mountedFuelFluidStorage.updateFluid(containedFluid);
     }
 
     @Override
