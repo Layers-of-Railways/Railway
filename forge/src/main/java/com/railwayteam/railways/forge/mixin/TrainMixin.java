@@ -1,5 +1,6 @@
 package com.railwayteam.railways.forge.mixin;
 
+import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import net.minecraftforge.common.ForgeHooks;
@@ -27,7 +28,7 @@ public class TrainMixin {
         for (int index = 0; index < carriageCount; index++) {
             int i = iterateFromBack ? carriageCount - 1 - index : index;
             Carriage carriage = carriages.get(i);
-            IFluidHandler fuelItems = carriage.storage.getFluids();
+            IFluidHandler fuelItems = ((IFuelInventory) carriage.storage).snr$getFuelFluids();
             if (fuelItems == null)
                 continue;
 

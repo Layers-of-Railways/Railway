@@ -21,10 +21,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MountedStorageManagerMixin {
     @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+
+    @Inject(method = "createHandlers", at = @At("RETURN"))
+    private void createHandler(CallbackInfo ci) {
+        CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+                .stream()
+                .map(MountedFluidStorage::getFluidHandler)
+                .collect(Collectors.toList()));
+
+        ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
+    }
 
     @Inject(method = "read", at = @At("RETURN"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
