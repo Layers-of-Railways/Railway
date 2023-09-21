@@ -1,17 +1,26 @@
 package com.railwayteam.railways.registry.fabric;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.fuel.psi.PortableFuelInterfaceBlock;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlock;
 import com.railwayteam.railways.content.fuel.tank.FuelTankGenerator;
 import com.railwayteam.railways.content.fuel.tank.FuelTankItem;
 import com.railwayteam.railways.content.fuel.tank.FuelTankModel;
+import com.simibubi.create.AllTags;
+import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlock;
+import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceMovement;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MaterialColor;
 
+import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
+import static com.simibubi.create.Create.REGISTRATE;
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class CRBlocksImpl {
@@ -28,7 +37,19 @@ public class CRBlocksImpl {
             .item(FuelTankItem::new)
             .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
             .build()
-            .register();;
+            .register();
+
+    public static final BlockEntry<PortableFuelInterfaceBlock> PORTABLE_FUEL_INTERFACE =
+            REGISTRATE.block("portable_fuel_interface", PortableFuelInterfaceBlock::new)
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(p -> p.color(MaterialColor.TERRACOTTA_LIGHT_GRAY))
+                    .transform(axeOrPickaxe())
+                    .blockstate((c, p) -> p.directionalBlock(c.get(), AssetLookup.partialBaseModel(c, p)))
+                    .onRegister(movementBehaviour(new PortableStorageInterfaceMovement()))
+                    .item()
+                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
+                    .transform(customItemModel())
+                    .register();
 
     public static void platformBasedRegistration() {}
 }

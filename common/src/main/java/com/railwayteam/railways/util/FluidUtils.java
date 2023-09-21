@@ -1,10 +1,12 @@
 package com.railwayteam.railways.util;
 
 import com.simibubi.create.foundation.fluid.FluidHelper;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 
 public class FluidUtils {
@@ -23,6 +25,11 @@ public class FluidUtils {
 
     @ExpectPlatform
     public static boolean canUseAsFuelStorage(BlockEntity be) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean portableFuelBlockHasState(BlockState state) {
         throw new AssertionError();
     }
 }

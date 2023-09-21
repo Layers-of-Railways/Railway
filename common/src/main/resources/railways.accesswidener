@@ -14,3 +14,4 @@ accessible class net/minecraft/server/level/ChunkMap$TrackedEntity
 accessible field net/minecraft/server/level/ServerPlayer camera Lnet/minecraft/world/entity/Entity;
 accessible field net/minecraft/client/player/LocalPlayer xRotLast F
 accessible field net/minecraft/client/player/LocalPlayer yRotLast F
+accessible method com/simibubi/create/content/contraptions/actors/psi/PortableStorageInterfaceBlockEntity isConnected ()Z

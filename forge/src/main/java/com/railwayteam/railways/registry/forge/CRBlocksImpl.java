@@ -28,7 +28,7 @@ public class CRBlocksImpl {
             .item(FuelTankItem::new)
             .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
             .build()
-            .register();;
+            .register();
 
     public static void platformBasedRegistration() {}
 }

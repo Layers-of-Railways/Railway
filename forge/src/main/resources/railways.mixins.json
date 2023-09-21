@@ -10,9 +10,10 @@
     "TrainHUDMixin"
   ],
   "mixins": [
-    "MountedFluidStorageAccessor",
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "ContraptionMixin",
+    "MountedFluidStorageAccessor",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "RollingModeMixin",

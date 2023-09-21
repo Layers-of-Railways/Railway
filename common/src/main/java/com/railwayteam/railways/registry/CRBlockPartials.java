@@ -445,6 +445,12 @@ public class CRBlockPartials {
         NARROW_DOUBLE_SCOTCH_PISTONS = block("bogey/narrow/double_scotch/pistons")
     ;
 
+    public static final PartialModel
+            PORTABLE_FUEL_INTERFACE_MIDDLE = block("portable_fuel_interface/block_middle"),
+            PORTABLE_FUEL_INTERFACE_MIDDLE_POWERED = block("portable_fuel_interface/block_middle_powered"),
+            PORTABLE_FUEL_INTERFACE_TOP = block("portable_fuel_interface/block_top")
+    ;
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 
