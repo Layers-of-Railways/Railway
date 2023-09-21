@@ -31,8 +31,7 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
-        //capability.setWrapped(((IContraptionFuel) contraption).snr$getSharedFuelTanks());
-        capability.setWrapped(contraption.getSharedFluidTanks());
+        capability.setWrapped(((IContraptionFuel) contraption).snr$getSharedFuelTanks());
         super.startTransferringTo(contraption, distance);
     }
 
