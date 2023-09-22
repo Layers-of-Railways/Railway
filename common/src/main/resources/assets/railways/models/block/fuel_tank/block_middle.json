@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"1": "railways:block/fuel_tank/fuel_tank",
-		"particle": "railways:block/fuel_tank/fuel_tank"
+		"1": "railways:block/fuel_tank",
+		"particle": "railways:block/fuel_tank"
 	},
 	"elements": [
 		{

@@ -9,6 +9,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 public class FuelTankGenerator extends SpecialBlockStateGen {
+
+    private String prefix;
+
+    public FuelTankGenerator() {
+        this("");
+    }
+
+    public FuelTankGenerator(String prefix) {
+        this.prefix = prefix;
+    }
+
     @Override
     protected int getXRotation(BlockState state) {
         return 0;
@@ -36,8 +47,16 @@ public class FuelTankGenerator extends SpecialBlockStateGen {
 
         String modelName = shapeName + (shape == FuelTankBlock.Shape.PLAIN ? "" : "_" + shape.getSerializedName());
 
+        if (!prefix.isEmpty())
+            return prov.models()
+                    .withExistingParent(prefix + modelName, prov.modLoc("block/fuel_tank/block_" + modelName))
+                    .texture("0", prov.modLoc("block/" + prefix + "casing"))
+                    .texture("1", prov.modLoc("block/" + prefix + "fuel_tank"))
+                    .texture("3", prov.modLoc("block/" + prefix + "fuel_tank_window"))
+                    .texture("4", prov.modLoc("block/" + prefix + "casing"))
+                    .texture("5", prov.modLoc("block/" + prefix + "fuel_tank_window_single"))
+                    .texture("particle", prov.modLoc("block/" + prefix + "fuel_tank"));
+
         return AssetLookup.partialBaseModel(ctx, prov, modelName);
     }
-
 }
-

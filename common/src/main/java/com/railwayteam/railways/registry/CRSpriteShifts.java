@@ -1,6 +1,6 @@
 package com.railwayteam.railways.registry;
 
-import com.simibubi.create.Create;
+import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
@@ -30,12 +30,12 @@ public class CRSpriteShifts {
     //
 
     private static SpriteShiftEntry get(String originalLocation, String targetLocation) {
-        return SpriteShifter.get(Create.asResource(originalLocation), Create.asResource(targetLocation));
+        return SpriteShifter.get(Railways.asResource(originalLocation), Railways.asResource(targetLocation));
     }
 
     private static CTSpriteShiftEntry getCT(CTType type, String blockTextureName, String connectedTextureName) {
-        return CTSpriteShifter.getCT(type, Create.asResource("block/" + blockTextureName),
-                Create.asResource("block/" + connectedTextureName + "_connected"));
+        return CTSpriteShifter.getCT(type, Railways.asResource("block/" + blockTextureName),
+                Railways.asResource("block/" + connectedTextureName + "_connected"));
     }
 
     private static CTSpriteShiftEntry getCT(CTType type, String blockTextureName) {

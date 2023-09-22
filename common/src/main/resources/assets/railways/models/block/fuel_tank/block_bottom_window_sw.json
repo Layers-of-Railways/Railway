@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "railways:block/fuel_tank/fuel_tank_top",
-		"1": "railways:block/fuel_tank/fuel_tank",
-		"3": "railways:block/fuel_tank/fuel_tank_window",
-		"4": "railways:block/fuel_tank/fuel_tank_inner",
-		"particle": "railways:block/fuel_tank/fuel_tank"
+		"0": "railways:block/fuel_tank_top",
+		"1": "railways:block/fuel_tank",
+		"3": "railways:block/fuel_tank_window",
+		"4": "railways:block/fuel_tank_inner",
+		"particle": "railways:block/fuel_tank"
 	},
 	"elements": [
 		{
