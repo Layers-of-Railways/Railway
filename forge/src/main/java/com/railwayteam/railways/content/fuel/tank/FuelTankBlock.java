@@ -61,17 +61,13 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     // This isn't actually needed on forge however due to data-gen being run on fabric we need this otherwise models will not load
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level", 0, 15);
 
-    public static FuelTankBlock regular(Properties properties) {
-        return new FuelTankBlock(properties);
-    }
-
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
         AdvancementBehaviour.setPlacedBy(pLevel, pPos, pPlacer);
     }
 
-    protected FuelTankBlock(Properties properties) {
+    public FuelTankBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(TOP, true)
                 .setValue(BOTTOM, true)

@@ -17,7 +17,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 public class CRBlocksImpl {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
+    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))

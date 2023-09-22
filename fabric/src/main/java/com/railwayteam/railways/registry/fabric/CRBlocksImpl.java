@@ -7,7 +7,6 @@ import com.railwayteam.railways.content.fuel.tank.FuelTankGenerator;
 import com.railwayteam.railways.content.fuel.tank.FuelTankItem;
 import com.railwayteam.railways.content.fuel.tank.FuelTankModel;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlock;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceMovement;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MaterialColor;
 
 import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
-import static com.simibubi.create.Create.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -26,7 +24,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 public class CRBlocksImpl {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
+    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::new)
             .initialProperties(SharedProperties::copperMetal)
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))

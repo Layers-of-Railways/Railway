@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class FuelTankModel extends CTModel {
-
     public static FuelTankModel standard(BakedModel originalModel) {
         return new FuelTankModel(originalModel, CRSpriteShifts.FUEL_TANK, CRSpriteShifts.FUEL_TANK_TOP,
                 CRSpriteShifts.FUEL_TANK_INNER);

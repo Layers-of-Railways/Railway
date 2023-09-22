@@ -22,8 +22,7 @@ public class CRBlockEntitiesImpl {
             .renderer(() -> FuelTankRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<PortableFuelInterfaceBlockEntity> PORTABLE_FUEL_INTERFACE =
-            REGISTRATE
+    public static final BlockEntityEntry<PortableFuelInterfaceBlockEntity> PORTABLE_FUEL_INTERFACE = REGISTRATE
                     .blockEntity("portable_fuel_interface", PortableFuelInterfaceBlockEntity::new)
                     .instance(() -> PSIInstance::new)
                     .validBlocks(CRBlocksImpl.PORTABLE_FUEL_INTERFACE)
