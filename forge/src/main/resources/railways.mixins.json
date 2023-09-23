@@ -13,7 +13,7 @@
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
     "ContraptionMixin",
-    "MountedFluidStorageAccessor",
+    "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "RollingModeMixin",

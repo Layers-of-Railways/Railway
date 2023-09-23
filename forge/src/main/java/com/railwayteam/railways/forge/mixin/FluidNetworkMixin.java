@@ -1,4 +1,4 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.content.fuel.psi.PortableFuelInterfaceBlockEntity.InterfaceFluidHandler;
 import com.simibubi.create.content.contraptions.actors.psi.PortableFluidInterfaceBlockEntity;
@@ -6,8 +6,8 @@ import com.simibubi.create.content.fluids.FluidNetwork;
 import com.simibubi.create.content.fluids.PipeConnection;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.Pair;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,11 +19,11 @@ import java.util.Set;
 @Mixin(value = FluidNetwork.class, remap = false)
 public class FluidNetworkMixin {
     @Shadow Set<Pair<BlockFace, PipeConnection>> frontier;
-    @Shadow Storage<FluidVariant> source;
+    @Shadow LazyOptional<IFluidHandler> source;
 
     @Inject(method = "keepPortableFluidInterfaceEngaged", at = @At("HEAD"))
     private void keepPortableFluidInterfaceEngaged(CallbackInfo ci) {
-        Storage<FluidVariant> handler = source;
+        IFluidHandler handler = source.orElse(null);
         if (!(handler instanceof InterfaceFluidHandler || handler instanceof PortableFluidInterfaceBlockEntity.InterfaceFluidHandler))
             return;
         if (frontier.isEmpty())

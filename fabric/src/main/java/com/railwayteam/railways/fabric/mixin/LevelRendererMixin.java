@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = LevelRenderer.class, priority = 1050)
 public class LevelRendererMixin {
-
     @Shadow @Final private Minecraft minecraft;
 
     @Redirect(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getEntity()Lnet/minecraft/world/entity/Entity;", ordinal = 3), require = 0)

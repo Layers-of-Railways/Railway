@@ -37,8 +37,7 @@ public class CRBlocksImpl {
             .build()
             .register();
 
-    public static final BlockEntry<PortableFuelInterfaceBlock> PORTABLE_FUEL_INTERFACE =
-            REGISTRATE.block("portable_fuel_interface", PortableFuelInterfaceBlock::new)
+    public static final BlockEntry<PortableFuelInterfaceBlock> PORTABLE_FUEL_INTERFACE = REGISTRATE.block("portable_fuel_interface", PortableFuelInterfaceBlock::new)
                     .initialProperties(SharedProperties::copperMetal)
                     .properties(p -> p.color(MaterialColor.TERRACOTTA_LIGHT_GRAY))
                     .transform(axeOrPickaxe())

@@ -34,13 +34,10 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    @Inject(method = "addBlock", at = @At(target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
-            value = "INVOKE", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method = "addBlock", at = @At("HEAD"))
     private void addBlock(BlockPos localPos, BlockEntity be, CallbackInfo ci) {
-        if (be != null && FluidUtils.canUseAsFuelStorage(be)) {
+        if (be != null && FluidUtils.canUseAsFuelStorage(be))
             snr$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
-            ci.cancel();
-        }
     }
 
     @Inject(method = "read", at = @At("HEAD"))

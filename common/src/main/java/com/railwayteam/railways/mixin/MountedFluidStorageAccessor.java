@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge.mixin;
+package com.railwayteam.railways.mixin;
 
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;

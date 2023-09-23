@@ -18,12 +18,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MountedFluidStorage.class)
+@Mixin(value = MountedFluidStorage.class, remap = false)
 public abstract class MountedFluidStorageMixin {
     @Shadow protected abstract void onFluidStackChanged(FluidStack fs);
-
     @Shadow SmartFluidTank tank;
-
     @Shadow private BlockEntity blockEntity;
 
     @Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
@@ -40,14 +38,13 @@ public abstract class MountedFluidStorageMixin {
                     this::onFluidStackChanged));
     }
 
-    @Debug(export = true)
     @Inject(method = "tick", at = @At(value = "CONSTANT", args = "classValue=com/simibubi/create/content/fluids/tank/FluidTankBlockEntity"))
     public void tick(Entity entity, BlockPos pos, boolean isRemote, CallbackInfo ci) {
         if (blockEntity instanceof FuelTankBlockEntity tank)
             tank.getFluidLevel().tickChaser();
     }
 
-    @Inject(method = "updateFluid", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "updateFluid", at = @At("HEAD"), cancellable = true)
     public void updateFluid(FluidStack fluid, CallbackInfo ci) {
         tank.setFluid(fluid);
         if (blockEntity instanceof FluidTankBlockEntity) {

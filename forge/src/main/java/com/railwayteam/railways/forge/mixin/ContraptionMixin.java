@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Contraption.class)
+@Mixin(value = Contraption.class, remap = false)
 public abstract class ContraptionMixin {
     @Shadow protected abstract BlockPos toLocalPos(BlockPos globalPos);
 

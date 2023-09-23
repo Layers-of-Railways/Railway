@@ -73,6 +73,7 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTravellingPoint",
+    "MountedFluidStorageAccessor",
     "NbtUtilsMixin",
     "PlayerEntityMixin",
     "StructureMixin",

@@ -1,6 +1,7 @@
 package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
+import com.railwayteam.railways.mixin.MountedFluidStorageAccessor;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;

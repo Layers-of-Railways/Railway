@@ -1,7 +1,8 @@
 package com.railwayteam.railways.content.fuel.psi;
 
 import com.railwayteam.railways.mixin.AccessorPortableStorageInterfaceBlockEntity;
-import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
+import com.railwayteam.railways.registry.forge.CRBlockEntitiesImpl;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
 import com.simibubi.create.foundation.block.IBE;
@@ -30,7 +31,7 @@ public class PortableFuelInterfaceBlock extends WrenchableDirectionalBlock imple
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos blockPos,
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos,
                                 boolean isMoving) {
         withBlockEntityDo(world, pos, PortableFuelInterfaceBlockEntity::neighbourChanged);
     }
