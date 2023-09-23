@@ -41,10 +41,7 @@ public abstract class MountedFluidStorageMixin {
     }
 
     @Debug(export = true)
-    @Inject(method = "tick", at = @At(value = "CONSTANT", args = {
-            "classValue=Lcom/simibubi/create/content/fluid/tank/FluidTankBlockEntity",
-            "log=true"
-    }))
+    @Inject(method = "tick", at = @At(value = "CONSTANT", args = "classValue=com/simibubi/create/content/fluids/tank/FluidTankBlockEntity"))
     public void tick(Entity entity, BlockPos pos, boolean isRemote, CallbackInfo ci) {
         if (blockEntity instanceof FuelTankBlockEntity tank)
             tank.getFluidLevel().tickChaser();
