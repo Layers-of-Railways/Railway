@@ -1,8 +1,13 @@
 package com.railwayteam.railways.content.fuel.psi;
 
+import com.railwayteam.railways.mixin.AccessorCarriageContraption;
 import com.railwayteam.railways.mixin_interfaces.IContraptionFuel;
+import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.contraptions.Contraption;
+import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlockEntity;
+import com.simibubi.create.content.trains.entity.CarriageContraption;
+import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.fabric.ListeningStorageView;
 import com.simibubi.create.foundation.utility.fabric.ProcessingIterator;
 import io.github.fabricators_of_create.porting_lib.transfer.WrappedStorage;
@@ -31,7 +36,12 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
-        capability.setWrapped(((IContraptionFuel) contraption).snr$getSharedFuelTanks());
+        CombinedTankWrapper ctw = ((IContraptionFuel) contraption).snr$getSharedFuelTanks();
+        if (contraption instanceof CarriageContraption carriageContraption) {
+            MountedStorageManager storageProxy = ((AccessorCarriageContraption) carriageContraption).getStorageProxy();
+            ctw = ((IFuelInventory) storageProxy).snr$getFuelFluids();
+        }
+        capability.setWrapped(ctw);
         super.startTransferringTo(contraption, distance);
     }
 
