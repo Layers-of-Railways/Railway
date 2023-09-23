@@ -70,6 +70,7 @@ body:
         label: Create Mod Version
         description: The version of **Create Mod** you were using when the bug occurred
         options:
+          - "0.5.1e"
           - "0.5.1d"
           - "0.5.1c"
           - "0.5.1b"
