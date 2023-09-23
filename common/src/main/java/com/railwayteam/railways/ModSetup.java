@@ -9,6 +9,7 @@ public class ModSetup {
     CRTrackMaterials.register();
     CRBogeyStyles.register();
     CRItems.register();
+    CRSpriteShifts.register();
     CRBlockEntities.register();
     CRBlocks.register();
     CRContainerTypes.register();
