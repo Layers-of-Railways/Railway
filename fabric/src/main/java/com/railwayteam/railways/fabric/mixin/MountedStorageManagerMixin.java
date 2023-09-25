@@ -27,17 +27,17 @@ import java.util.stream.Collectors;
 public abstract class MountedStorageManagerMixin {
     @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
 
-    @Inject(method = "createHandlers", at = @At("RETURN"))
+    @Inject(method = "createHandlers", at = @At("TAIL"))
     private void createHandler(CallbackInfo ci) {
-        CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+        CombinedTankWrapper ctw = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
                 .collect(Collectors.toList()));
 
-        ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
+        ((IFuelInventory) this).snr$setFuelFluids(ctw);
     }
 
-    @Inject(method = "read", at = @At("RETURN"))
+    @Inject(method = "read", at = @At("TAIL"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
         CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
                 .stream()
@@ -48,7 +48,7 @@ public abstract class MountedStorageManagerMixin {
         ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
     }
 
-    @Inject(method = "bindTanks", at = @At("RETURN"))
+    @Inject(method = "bindTanks", at = @At("TAIL"))
     public void bindTanks(Map<BlockPos, BlockEntity> presentBlockEntities, CallbackInfo ci) {
         ((IFuelInventory) this).snr$getFluidFuelStorage().forEach((pos, mfs) -> {
             BlockEntity blockEntity = presentBlockEntities.get(pos);
@@ -63,12 +63,12 @@ public abstract class MountedStorageManagerMixin {
         });
     }
 
-    @Inject(method = "clear", at = @At("RETURN"))
+    @Inject(method = "clear", at = @At("TAIL"))
     private void clear(CallbackInfo ci) {
         TransferUtil.clearStorage(((IFuelInventory) this).snr$getFuelFluids());
     }
 
-    @Inject(method = "updateContainedFluid", at = @At("RETURN"))
+    @Inject(method = "updateContainedFluid", at = @At("TAIL"))
     private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
         MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).snr$getFluidFuelStorage().get(localPos);
         if (mountedFuelFluidStorage != null)
