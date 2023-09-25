@@ -165,7 +165,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                    .pattern("   ")
             );
 
-    GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getFluidTankBlockEntry())
+    GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getPortableFuelInterfaceBlockEntry())
             .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
             .viaShapeless(b -> b
                     .requires(Ingredients.railwayCasing())
