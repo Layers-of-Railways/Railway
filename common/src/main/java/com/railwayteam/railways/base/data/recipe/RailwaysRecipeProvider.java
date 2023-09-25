@@ -28,8 +28,8 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     super(pGenerator);
   }
 
-  public void registerRecipes(@NotNull Consumer<FinishedRecipe> p_200404_1_) {
-    all.forEach(c -> c.register(p_200404_1_));
+  public void registerRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
+    all.forEach(c -> c.register(finishedRecipeConsumer));
     Railways.LOGGER.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
   }
 
@@ -137,6 +137,14 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static TagKey<Item> brassSheet() {
       return CommonTags.BRASS_PLATES.tag;
+    }
+
+    public static ItemLike sturdySheet() {
+      return AllItems.STURDY_SHEET.get();
+    }
+
+    public static ItemLike chute() {
+      return AllBlocks.CHUTE.get();
     }
   }
 }
