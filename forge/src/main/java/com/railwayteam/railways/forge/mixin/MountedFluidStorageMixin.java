@@ -2,7 +2,6 @@ package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
@@ -24,12 +23,12 @@ public abstract class MountedFluidStorageMixin {
 
     @Shadow private BlockEntity blockEntity;
 
-    @Shadow private SmartFluidTank tank;
+    @Shadow SmartFluidTank tank;
 
     @Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
     private static void canUseAsStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue((be instanceof FluidTankBlockEntity && ((FluidTankBlockEntity) be).isController()) ||
-                (be instanceof FuelTankBlockEntity && ((FuelTankBlockEntity) be).isController()));
+        if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
+            cir.setReturnValue(fuelTankBlockEntity.isController());
     }
 
     @Inject(method = "createMountedTank", at = @At("HEAD"), cancellable = true)
@@ -40,41 +39,33 @@ public abstract class MountedFluidStorageMixin {
                     this::onFluidStackChanged));
     }
 
-    @Inject(method = "tick", at = @At(value = "CONSTANT", args = "classValue=com/simibubi/create/content/fluids/tank/FluidTankBlockEntity"))
+    @Inject(method = "tick", at = @At(
+            value = "CONSTANT",
+            args = "classValue=com/simibubi/create/content/fluids/tank/FluidTankBlockEntity",
+            ordinal = 0)
+    )
     public void tick(Entity entity, BlockPos pos, boolean isRemote, CallbackInfo ci) {
-        if (blockEntity instanceof FuelTankBlockEntity tank)
-            tank.getFluidLevel().tickChaser();
+        if (blockEntity instanceof FuelTankBlockEntity be)
+            be.getFluidLevel().tickChaser();
     }
 
-    @Inject(method = "updateFluid", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "updateFluid", at = @At(
+            value = "INVOKE",
+            target = "Lcom/simibubi/create/foundation/fluid/SmartFluidTank;setFluid(Lnet/minecraftforge/fluids/FluidStack;)V",
+            ordinal = 0,
+            shift = At.Shift.AFTER
+    ), cancellable = true)
     public void updateFluid(FluidStack fluid, CallbackInfo ci) {
-        tank.setFluid(fluid);
-        if (blockEntity instanceof FluidTankBlockEntity) {
+        if (blockEntity instanceof FuelTankBlockEntity tankBE) {
             float fillState = tank.getFluidAmount() / (float) tank.getCapacity();
-            FluidTankBlockEntity tank = (FluidTankBlockEntity) blockEntity;
-            if (tank.getFluidLevel() == null)
-                tank.setFluidLevel(LerpedFloat.linear()
-                        .startWithValue(fillState));
-            tank.getFluidLevel()
-                    .chase(fillState, 0.5, LerpedFloat.Chaser.EXP);
-            IFluidTank tankInventory = tank.getTankInventory();
-            if (tankInventory instanceof SmartFluidTank)
-                ((SmartFluidTank) tankInventory).setFluid(fluid);
-        } else if (blockEntity instanceof FuelTankBlockEntity) {
-            float fillState = tank.getFluidAmount() / (float) tank.getCapacity();
-            FuelTankBlockEntity tank = (FuelTankBlockEntity) blockEntity;
-            if (tank.getFluidLevel() == null)
-                tank.setFluidLevel(LerpedFloat.linear()
-                        .startWithValue(fillState));
-            tank.getFluidLevel()
-                    .chase(fillState, 0.5, LerpedFloat.Chaser.EXP);
-            IFluidTank tankInventory = tank.getTankInventory();
-            if (tankInventory instanceof SmartFluidTank)
-                ((SmartFluidTank) tankInventory).setFluid(fluid);
-        } else {
-            return;
-        }
+            if (tankBE.getFluidLevel() == null)
+                tankBE.setFluidLevel(LerpedFloat.linear().startWithValue(fillState));
+            tankBE.getFluidLevel().chase(fillState, 0.5, LerpedFloat.Chaser.EXP);
+            IFluidTank tankInventory = tankBE.getTankInventory();
+            if (tankInventory instanceof SmartFluidTank smartFT)
+                smartFT.setFluid(fluid);
 
-        ci.cancel();
+            ci.cancel();
+        }
     }
 }
