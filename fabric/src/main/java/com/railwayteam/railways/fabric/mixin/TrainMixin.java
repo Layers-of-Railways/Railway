@@ -1,5 +1,6 @@
 package com.railwayteam.railways.fabric.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
@@ -19,15 +20,11 @@ import java.util.List;
 
 @Mixin(value = Train.class, remap = false)
 public class TrainMixin {
-    @Shadow public double speed;
     @Shadow public List<Carriage> carriages;
     @Shadow public int fuelTicks;
 
     @Inject(method = "burnFuel", at = @At("TAIL"))
-    private void burnFuel(CallbackInfo ci) {
-        boolean iterateFromBack = speed < 0;
-        int carriageCount = carriages.size();
-
+    private void burnFuel(CallbackInfo ci, @Local boolean iterateFromBack, @Local int carriageCount) {
         for (int index = 0; index < carriageCount; index++) {
             int i = iterateFromBack ? carriageCount - 1 - index : index;
             Carriage carriage = carriages.get(i);
