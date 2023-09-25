@@ -155,16 +155,6 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                     .pattern("S")
             );
 
-    GeneratedRecipe FUEL_TANK_ALT = create(AbstractionUtils.getFluidTankBlockEntry())
-            .unlockedBy(AllBlocks.FLUID_TANK)
-            .viaShaped(b -> b
-                   .define('S', Ingredients.sturdySheet())
-                   .define('F', AllBlocks.FLUID_TANK.get())
-                   .pattern("   ")
-                   .pattern("SFS")
-                   .pattern("   ")
-            );
-
     GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getPortableFuelInterfaceBlockEntry())
             .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
             .viaShapeless(b -> b
