@@ -7,6 +7,7 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class AbstractionUtilsImpl {
     public static BlockEntry<?> getFluidTankBlockEntry() {
@@ -15,5 +16,9 @@ public class AbstractionUtilsImpl {
 
     public static BlockEntry<?> getPortableFuelInterfaceBlockEntry() {
         return CRBlocksImpl.PORTABLE_FUEL_INTERFACE;
+    }
+
+    public static boolean portableFuelInterfaceBlockHasState(BlockState state) {
+        return CRBlocksImpl.PORTABLE_FUEL_INTERFACE.has(state);
     }
 }

@@ -28,13 +28,13 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
     @Unique private CombinedTankWrapper snr$fluidFuelInventory;
     @Unique private Map<BlockPos, MountedFluidStorage> snr$fluidFuelStorage = new HashMap<>();
 
-    @Inject(method = "entityTick", at = @At("RETURN"))
+    @Inject(method = "entityTick", at = @At("TAIL"))
     private void entityTick(AbstractContraptionEntity entity, CallbackInfo ci) {
         snr$fluidFuelStorage.forEach((pos, mfs) -> mfs.tick(entity, pos, entity.level.isClientSide));
     }
 
     @SuppressWarnings({"ConstantConditions"})
-    @Inject(method = "addBlock", at = @At("HEAD"))
+    @Inject(method = "addBlock", at = @At("TAIL"))
     private void addBlock(BlockPos localPos, BlockEntity be, CallbackInfo ci) {
         if (be != null && FluidUtils.canUseAsFuelStorage(be))
             snr$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
@@ -47,7 +47,7 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
                 .put(NbtUtils.readBlockPos(c.getCompound("Pos")), MountedFluidStorage.deserialize(c.getCompound("Data"))));
     }
 
-    @Inject(method = "write", at = @At("RETURN"))
+    @Inject(method = "write", at = @At("TAIL"))
     private void write(CompoundTag nbt, boolean clientPacket, CallbackInfo ci) {
         ListTag fluidFuelStorageNBT = new ListTag();
         for (BlockPos pos : snr$fluidFuelStorage.keySet()) {
@@ -63,13 +63,13 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
         nbt.put("FluidFuelStorage", fluidFuelStorageNBT);
     }
 
-    @Inject(method = "removeStorageFromWorld", at = @At("RETURN"))
+    @Inject(method = "removeStorageFromWorld", at = @At("TAIL"))
     public void removeStorageFromWorld(CallbackInfo ci) {
         snr$fluidFuelStorage.values()
                 .forEach(MountedFluidStorage::removeStorageFromWorld);
     }
 
-    @Inject(method = "addStorageToWorld", at = @At("RETURN"))
+    @Inject(method = "addStorageToWorld", at = @At("TAIL"))
     private void addStorageToWorld(StructureTemplate.StructureBlockInfo block, BlockEntity blockEntity, CallbackInfo ci) {
         if (snr$fluidFuelStorage.containsKey(block.pos)) {
             MountedFluidStorage mountedStorage = snr$fluidFuelStorage.get(block.pos);

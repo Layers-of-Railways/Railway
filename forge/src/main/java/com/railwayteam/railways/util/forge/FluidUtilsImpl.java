@@ -17,8 +17,4 @@ public class FluidUtilsImpl {
     public static boolean isFuel(Item item) {
         return ForgeHooks.getBurnTime(item.getDefaultInstance(), null) > 0;
     }
-
-    public static boolean portableFuelBlockHasState(BlockState state) {
-        return CRBlocksImpl.PORTABLE_FUEL_INTERFACE.has(state);
-    }
 }

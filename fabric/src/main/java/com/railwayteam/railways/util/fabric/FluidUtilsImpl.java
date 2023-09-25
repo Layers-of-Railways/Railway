@@ -17,8 +17,4 @@ public class FluidUtilsImpl {
     public static boolean isFuel(Item item) {
         return FuelRegistry.INSTANCE.get(item) != null;
     }
-
-    public static boolean portableFuelBlockHasState(BlockState state) {
-        return CRBlocksImpl.PORTABLE_FUEL_INTERFACE.has(state);
-    }
 }

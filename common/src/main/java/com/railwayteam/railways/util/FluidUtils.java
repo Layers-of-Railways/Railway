@@ -27,9 +27,4 @@ public class FluidUtils {
     public static boolean canUseAsFuelStorage(BlockEntity be) {
         throw new AssertionError();
     }
-
-    @ExpectPlatform
-    public static boolean portableFuelBlockHasState(BlockState state) {
-        throw new AssertionError();
-    }
 }
