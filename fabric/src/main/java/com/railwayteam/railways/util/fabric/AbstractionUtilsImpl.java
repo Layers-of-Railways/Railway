@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util.fabric;
 
+import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
 import com.railwayteam.railways.registry.fabric.CRBlocksImpl;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
@@ -20,5 +21,9 @@ public class AbstractionUtilsImpl {
 
     public static boolean portableFuelInterfaceBlockHasState(BlockState state) {
         return CRBlocksImpl.PORTABLE_FUEL_INTERFACE.has(state);
+    }
+
+    public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
+        return blockEntity instanceof FuelTankBlockEntity;
     }
 }

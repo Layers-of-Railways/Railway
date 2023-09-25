@@ -10,7 +10,6 @@
     "TrainHUDMixin"
   ],
   "mixins": [
-    "ContraptionMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "FluidNetworkMixin",

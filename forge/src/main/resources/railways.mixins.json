@@ -12,7 +12,6 @@
   "mixins": [
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
-    "ContraptionMixin",
     "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",

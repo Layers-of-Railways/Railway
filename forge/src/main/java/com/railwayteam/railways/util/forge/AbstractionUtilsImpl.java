@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util.forge;
 
+import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.registry.forge.CRBlocksImpl;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.Block;
@@ -17,5 +18,9 @@ public class AbstractionUtilsImpl {
 
     public static boolean portableFuelInterfaceBlockHasState(BlockState state) {
         return CRBlocksImpl.PORTABLE_FUEL_INTERFACE.has(state);
+    }
+
+    public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
+        return blockEntity instanceof FuelTankBlockEntity;
     }
 }

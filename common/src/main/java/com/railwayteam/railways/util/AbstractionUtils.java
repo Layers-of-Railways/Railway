@@ -3,6 +3,7 @@ package com.railwayteam.railways.util;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -12,6 +13,11 @@ import net.minecraft.world.level.block.state.BlockState;
 public class AbstractionUtils {
     @ExpectPlatform
     public static BlockEntry<?> getFluidTankBlockEntry() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
         throw new AssertionError();
     }
 
