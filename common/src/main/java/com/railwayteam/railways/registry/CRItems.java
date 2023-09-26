@@ -37,9 +37,16 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  public static final CreativeModeTab tracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_tracks") {
+  public static final CreativeModeTab tracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID + "_tracks") {
     @Override
     @Nonnull
+    public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
+  };
+
+  public static final CreativeModeTab palettesCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID + "_palettes") {
+    @Override
+    @Nonnull
+    //fixme
     public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
   };
 
@@ -58,7 +65,7 @@ public class CRItems {
     .model((ctx,prov)-> prov.withExistingParent(name, prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/" + name)));
   }
 
-  public static Item woolByColor (DyeColor color) {
+  public static Item woolByColor(DyeColor color) {
     return switch (color) {
       case WHITE -> Items.WHITE_WOOL;
       case ORANGE -> Items.ORANGE_WOOL;
@@ -108,7 +115,7 @@ public class CRItems {
               .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
               .lang("Incomplete " + colorName + " Conductor's Cap")
           .register());
-      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p-> ConductorCapItem.create(p, color))
+      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p -> ConductorCapItem.create(p, color))
         .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
             .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
         .lang(colorName + " Conductor's Cap")

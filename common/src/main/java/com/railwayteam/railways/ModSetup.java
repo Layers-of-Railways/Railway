@@ -11,6 +11,7 @@ public class ModSetup {
     CRItems.register();
     CRBlockEntities.register();
     CRBlocks.register();
+    CRPalettes.register();
     CRContainerTypes.register();
     CREntities.register();
     CRSounds.register();
