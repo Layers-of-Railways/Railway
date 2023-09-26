@@ -7,13 +7,12 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.EnumMap;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate().creativeModeTab(
-            () -> CRItems.palettesCreativeTab, "Steam 'n' Rails Palettes"
+            () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
     );
 
     public static final EnumMap<DyeColor, BlockEntry<Block>> SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class);
@@ -42,6 +41,8 @@ public class CRPalettes {
                                     .color(ColorUtils.materialColorFromDye(color))
                                     .sound(SoundType.NETHERITE_BLOCK)
                             )
+                            .item()
+                            .build()
                             .register()
             );
         }

@@ -47,7 +47,7 @@ public class CRItems {
     @Override
     @Nonnull
     //fixme
-    public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
+    public ItemStack makeIcon() { return CRPalettes.SLASHED_LOCOMETAL.get(DyeColor.RED).asStack(); }
   };
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
