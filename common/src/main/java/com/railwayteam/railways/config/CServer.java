@@ -15,6 +15,7 @@ public class CServer extends ConfigBase {
     public final CConductors conductors = nested(0, CConductors::new, Comments.conductors);
     public final CJourneymap journeymap = nested(0, CJourneymap::new, Comments.journeymap);
     public final COptimization optimization = nested(0, COptimization::new, Comments.optimization);
+    public final CRealism realism = nested(0, CRealism::new, Comments.realism);
 
     @Override
     public String getName() {
@@ -32,5 +33,7 @@ public class CServer extends ConfigBase {
         static String conductors = "Conductor settings";
         static String journeymap = "Journeymap compat settings";
         static String optimization = "Optimization settings (may be experimental)";
+
+        static String realism = "Realism Settings";
     }
 }

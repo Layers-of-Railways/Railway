@@ -19,6 +19,7 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
@@ -38,13 +39,10 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
     @Shadow public TrackGraph graph;
 
     @Shadow public Navigation navigation;
-    @Shadow public double speed;
 
     @Shadow public abstract void arriveAt(GlobalStation station);
 
-    @Shadow public abstract void leaveStation();
 
-    @Shadow public ScheduleRuntime runtime;
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
     public Set<UUID> occupiedCouplers;
@@ -172,5 +170,23 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule 
     private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
         if (CRConfigs.server().optimization.disableTrainCollision.get())
             ci.cancel();
+    }
+
+    @Inject(method = "maxSpeed", at = @At("HEAD"), cancellable = true)
+    public void maxSpeed(CallbackInfoReturnable<Float> cir) {
+        if (CRConfigs.server().realism.realisticTrains.get())
+            cir.setReturnValue(AllConfigs.server().trains.poweredTrainTopSpeed.getF() / 20);
+    }
+
+    @Inject(method = "maxTurnSpeed", at = @At("HEAD"), cancellable = true)
+    public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
+        if (CRConfigs.server().realism.realisticTrains.get())
+            cir.setReturnValue(AllConfigs.server().trains.poweredTrainTurningTopSpeed.getF() / 20);
+    }
+
+    @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
+    public void acceleration(CallbackInfoReturnable<Float> cir) {
+        if (CRConfigs.server().realism.realisticTrains.get())
+            cir.setReturnValue(AllConfigs.server().trains.poweredTrainAcceleration.getF() / 400);
     }
 }

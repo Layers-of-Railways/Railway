@@ -1,11 +1,10 @@
 package com.railwayteam.railways.util.fabric;
 
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
-import com.railwayteam.railways.registry.fabric.CRBlocksImpl;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class FluidUtilsImpl {
     public static boolean canUseAsFuelStorage(BlockEntity be) {
@@ -15,6 +14,10 @@ public class FluidUtilsImpl {
     }
 
     public static boolean isFuel(Item item) {
-        return FuelRegistry.INSTANCE.get(item) != null;
+        // If realistic fuel tanks is enabled check if the fluid/item is valid fuel
+        if (CRConfigs.server().realism.realisticFuelTanks.get())
+            return FuelRegistry.INSTANCE.get(item) != null;
+        // else just return true
+        return true;
     }
 }
