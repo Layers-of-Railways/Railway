@@ -8,8 +8,14 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
 import com.simibubi.create.foundation.block.connected.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
+import net.minecraft.world.item.DyeColor;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class CRSpriteShifts {
+    //public static final Map<DyeColor, SpriteShiftEntry> DYED_BELTS = new EnumMap<>(DyeColor.class);
+
 //    public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
 //            FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
 //            FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
