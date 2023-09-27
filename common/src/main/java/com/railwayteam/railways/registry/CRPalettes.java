@@ -15,20 +15,21 @@ public class CRPalettes {
             () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
     );
 
-    public static final EnumMap<DyeColor, BlockEntry<Block>> SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> LOCOMETAL_PILLAR = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> LOCOMETAL_SMOKEBOX = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> PLATED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> FLAT_SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> FLAT_RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> BRASS_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class);
-    public static final EnumMap<DyeColor, BlockEntry<Block>> IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
+    public static final EnumMap<DyeColor, BlockEntry<Block>>
+            SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            LOCOMETAL_PILLAR = new EnumMap<>(DyeColor.class),
+            LOCOMETAL_SMOKEBOX = new EnumMap<>(DyeColor.class),
+            PLATED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            FLAT_SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            FLAT_RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
+            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            BRASS_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
+            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
+            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
