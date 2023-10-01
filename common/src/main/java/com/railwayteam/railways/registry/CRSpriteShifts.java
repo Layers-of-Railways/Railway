@@ -14,11 +14,14 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class CRSpriteShifts {
-    //public static final Map<DyeColor, SpriteShiftEntry> DYED_BELTS = new EnumMap<>(DyeColor.class);
+    public static final Map<DyeColor, SpriteShiftEntry> SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class);
 
-//    public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
-//            FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
-//            FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            SLASHED_LOCOMETAL.put(color, omni())
+        }
+    }
+
 
     //
 

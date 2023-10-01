@@ -15,6 +15,22 @@
 	"block.railways.narrow_small_bogey": "Narrow Gauge Small Bogey",
 	"block.railways.semaphore": "Semaphore",
 	"block.railways.singleaxle_bogey": "Single Axle Bogey",
+	"block.railways.slashed_black_locometal": "Slashed BlackLocometal",
+	"block.railways.slashed_blue_locometal": "Slashed BlueLocometal",
+	"block.railways.slashed_brown_locometal": "Slashed BrownLocometal",
+	"block.railways.slashed_cyan_locometal": "Slashed CyanLocometal",
+	"block.railways.slashed_gray_locometal": "Slashed GrayLocometal",
+	"block.railways.slashed_green_locometal": "Slashed GreenLocometal",
+	"block.railways.slashed_light_blue_locometal": "Slashed Light_blueLocometal",
+	"block.railways.slashed_light_gray_locometal": "Slashed Light_grayLocometal",
+	"block.railways.slashed_lime_locometal": "Slashed LimeLocometal",
+	"block.railways.slashed_magenta_locometal": "Slashed MagentaLocometal",
+	"block.railways.slashed_orange_locometal": "Slashed OrangeLocometal",
+	"block.railways.slashed_pink_locometal": "Slashed PinkLocometal",
+	"block.railways.slashed_purple_locometal": "Slashed PurpleLocometal",
+	"block.railways.slashed_red_locometal": "Slashed RedLocometal",
+	"block.railways.slashed_white_locometal": "Slashed WhiteLocometal",
+	"block.railways.slashed_yellow_locometal": "Slashed YellowLocometal",
 	"block.railways.smokestack_caboosestyle": "Caboose Smokestack",
 	"block.railways.smokestack_coalburner": "Coalburner Smokestack",
 	"block.railways.smokestack_diesel": "Radiator Fan",
@@ -487,6 +503,8 @@
 	"item.railways.yellow_incomplete_conductor_cap": "Incomplete Yellow Conductor's Cap",
 
 	"itemGroup.railways": "Create Steam 'n' Rails",
+
+	"itemGroup.railways_palettes": "Create Steam 'n' Rails: Palettes",
 
 	"itemGroup.railways_tracks": "Create Steam 'n' Rails: Tracks",
 

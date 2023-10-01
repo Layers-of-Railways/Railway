@@ -42,6 +42,11 @@ public class CRPalettes {
                                     .color(ColorUtils.materialColorFromDye(color))
                                     .sound(SoundType.NETHERITE_BLOCK)
                             )
+                            .blockstate((ctx, prov) -> prov.simpleBlock(
+                                        ctx.get(), prov.models().cubeAll(ctx.getName(), Railways.asResource("block/palettes/" + colorString + "/slashed"))
+                                    )
+                            )
+                            .lang("Slashed " + capsName + " Locometal")
                             .item()
                             .build()
                             .register()
