@@ -73,12 +73,40 @@ public class CRPalettes {
             );
 
             // Locometal SmokeBox
-            // LOCOMETAL_SMOKEBOX.put
-
-            PLATED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_plated_locometal", RotatedPillarBlock::new)
+            LOCOMETAL_SMOKEBOX.put(color,
+                    REGISTRATE.block(colorString + "locometal_smokebox", RotatedPillarBlock::new)
                             .transform(BuilderTransformers.locoMetalSmokeBox(color))
-                            .lang(colorName + " Plated Locometal")
+                            .lang(colorName + " Locometal Smokebox")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Plated Locometal
+            PLATED_LOCOMETAL.put(color,
+                    REGISTRATE.block(colorString + "_plated_locometal", Block::new)
+                            .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
+                            .lang("Plated " + colorName + " Locometal")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Flat Slashed Locometal
+            FLAT_SLASHED_LOCOMETAL.put(color,
+                    REGISTRATE.block(colorString + "_flat_slashed_locometal", Block::new)
+                            .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
+                            .lang("Flat " + colorName + " Slashed Locometal")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Flat Riveted Locometal
+            FLAT_RIVETED_LOCOMETAL.put(color,
+                    REGISTRATE.block(colorString + "_flat_riveted_locometal", Block::new)
+                            .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
+                            .lang("Flat " + colorName + " Riveted Locometal")
                             .item()
                             .build()
                             .register()

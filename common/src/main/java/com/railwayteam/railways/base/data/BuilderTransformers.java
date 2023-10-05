@@ -13,10 +13,12 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -94,8 +96,8 @@ public class BuilderTransformers {
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
                 .blockstate((c, p) -> p.axisBlock(c.get(),
-                      p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
-                      p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
                 ));
     }
 
@@ -103,8 +105,8 @@ public class BuilderTransformers {
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
                 .blockstate((c, p) -> p.axisBlock(c.get(),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/tank_side"),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/smokebox_tank_top")
                 ));
     }
 }

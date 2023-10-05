@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "railways:block/greenlocometal_smokebox_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "railways:block/greenlocometal_smokebox"
+    },
+    "axis=z": {
+      "model": "railways:block/greenlocometal_smokebox_horizontal",
+      "x": 90
+    }
+  }
+}

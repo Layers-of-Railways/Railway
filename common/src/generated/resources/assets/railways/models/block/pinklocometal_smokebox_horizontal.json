@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "railways:block/palettes/pink/smokebox_tank_top",
+    "side": "railways:block/palettes/pink/tank_side"
+  }
+}
