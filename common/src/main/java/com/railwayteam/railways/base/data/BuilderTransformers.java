@@ -98,4 +98,13 @@ public class BuilderTransformers {
                       p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
                 ));
     }
+
+    // not done
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(DyeColor color) {
+        return b -> b.transform(locoMetalBase(color, null))
+                .blockstate((c, p) -> p.axisBlock(c.get(),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
+                ));
+    }
 }

@@ -38,13 +38,14 @@ public class CRPalettes {
     static {
         for (DyeColor color : DyeColor.values()) {
             String colorString = color.name().toLowerCase();
+            String colorName = ColorUtils.coloredName(colorString);
 
             // Slashed Locometal
             SLASHED_LOCOMETAL.put(color,
-                    REGISTRATE.block("slashed_" + colorString + "_locometal", Block::new)
+                    REGISTRATE.block(colorString + "_slashed_locometal", Block::new)
                             .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
                             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
-                            .lang("Slashed " + ColorUtils.coloredName(colorString) + " Locometal")
+                            .lang(colorName + " Slashed Locometal")
                             .item()
                             .build()
                             .register()
@@ -52,10 +53,10 @@ public class CRPalettes {
 
             // Riveted Locometal
             RIVETED_LOCOMETAL.put(color,
-                    REGISTRATE.block("riveted_" + colorString + "_locometal", Block::new)
+                    REGISTRATE.block(colorString + "_riveted_locometal", Block::new)
                             .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
                             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
-                            .lang("Riveted " + ColorUtils.coloredName(colorString) + " Locometal")
+                            .lang(colorName + " Riveted Locometal")
                             .item()
                             .build()
                             .register()
@@ -65,7 +66,19 @@ public class CRPalettes {
             LOCOMETAL_PILLAR.put(color,
                     REGISTRATE.block(colorString + "_locometal_pillar", RotatedPillarBlock::new)
                             .transform(BuilderTransformers.locoMetalPillar(color))
-                            .lang(ColorUtils.coloredName(colorString) + "Locometal Pillar")
+                            .lang(colorName + " Locometal Pillar")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Locometal SmokeBox
+            // LOCOMETAL_SMOKEBOX.put
+
+            PLATED_LOCOMETAL.put(color,
+                    REGISTRATE.block(colorString + "_plated_locometal", RotatedPillarBlock::new)
+                            .transform(BuilderTransformers.locoMetalSmokeBox(color))
+                            .lang(colorName + " Plated Locometal")
                             .item()
                             .build()
                             .register()
