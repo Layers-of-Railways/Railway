@@ -1,16 +1,21 @@
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -71,5 +76,26 @@ public class BuilderTransformers {
         return b -> b.transform(sharedBogey())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/narrow/top"))));
+    }
+
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(DyeColor color, String type) {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+                .properties(p -> p
+                        .color(ColorUtils.materialColorFromDye(color))
+                        .sound(SoundType.NETHERITE_BLOCK)
+                )
+                .transform(pickaxeOnly())
+                .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
+                                c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase() + "/" + type)
+                        )
+                ));
+    }
+
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(DyeColor color) {
+        return b -> b.transform(locoMetalBase(color, null))
+                .blockstate((c, p) -> p.axisBlock(c.get(),
+                      p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
+                      p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
+                ));
     }
 }

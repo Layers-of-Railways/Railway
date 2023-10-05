@@ -1,21 +1,25 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.util.ColorUtils;
+import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 
 import java.util.EnumMap;
+
+import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate().creativeModeTab(
             () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
     );
 
-    public static final EnumMap<DyeColor, BlockEntry<Block>>
+    public static final EnumMap<DyeColor, BlockEntry<?>>
             SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             LOCOMETAL_PILLAR = new EnumMap<>(DyeColor.class),
@@ -33,20 +37,35 @@ public class CRPalettes {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            String colorString = color.toString();
-            String capsName = colorString.substring(0, 1).toUpperCase() + colorString.substring(1);
-            // Slashed Loco-metal
+            String colorString = color.name().toLowerCase();
+
+            // Slashed Locometal
             SLASHED_LOCOMETAL.put(color,
                     REGISTRATE.block("slashed_" + colorString + "_locometal", Block::new)
-                            .properties(p -> p
-                                    .color(ColorUtils.materialColorFromDye(color))
-                                    .sound(SoundType.NETHERITE_BLOCK)
-                            )
-                            .blockstate((ctx, prov) -> prov.simpleBlock(
-                                        ctx.get(), prov.models().cubeAll(ctx.getName(), Railways.asResource("block/palettes/" + colorString + "/slashed"))
-                                    )
-                            )
-                            .lang("Slashed " + capsName + " Locometal")
+                            .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
+                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
+                            .lang("Slashed " + ColorUtils.coloredName(colorString) + " Locometal")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Riveted Locometal
+            RIVETED_LOCOMETAL.put(color,
+                    REGISTRATE.block("riveted_" + colorString + "_locometal", Block::new)
+                            .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
+                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
+                            .lang("Riveted " + ColorUtils.coloredName(colorString) + " Locometal")
+                            .item()
+                            .build()
+                            .register()
+            );
+
+            // Locometal Pillar
+            LOCOMETAL_PILLAR.put(color,
+                    REGISTRATE.block(colorString + "_locometal_pillar", RotatedPillarBlock::new)
+                            .transform(BuilderTransformers.locoMetalPillar(color))
+                            .lang(ColorUtils.coloredName(colorString) + "Locometal Pillar")
                             .item()
                             .build()
                             .register()

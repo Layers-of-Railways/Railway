@@ -24,4 +24,26 @@ public class ColorUtils {
             case BLACK -> MaterialColor.COLOR_BLACK;
         };
     }
+
+    public static String coloredName(String string) {
+        return switch (string) {
+            case "white" -> "White";
+            case "orange" -> "Orange";
+            case "magenta" -> "Magenta";
+            case "light_blue" -> "Light Blue";
+            case "yellow" -> "Yellow";
+            case "lime" -> "Lime";
+            case "pink" -> "Pink";
+            case "gray" -> "Gray";
+            case "light_gray" -> "Light Gray";
+            case "cyan" -> "Cyan";
+            case "purple" -> "Purple";
+            case "blue" -> "Blue";
+            case "brown" -> "Brown";
+            case "green" -> "Green";
+            case "red" -> "Red";
+            case "black" -> "Black";
+            default -> "Unknown Color";
+        };
+    }
 }

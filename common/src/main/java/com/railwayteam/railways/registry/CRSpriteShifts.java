@@ -14,16 +14,22 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class CRSpriteShifts {
-    public static final Map<DyeColor, SpriteShiftEntry> SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class);
+    public static final Map<DyeColor, CTSpriteShiftEntry>
+            SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            SLASHED_LOCOMETAL.put(color, omni())
+            SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
+            RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
         }
     }
 
 
     //
+    private static CTSpriteShiftEntry locometal(DyeColor color, String name) {
+        return omni("palettes/" + color.getName().toLowerCase() + "/" + name);
+    }
 
     private static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
