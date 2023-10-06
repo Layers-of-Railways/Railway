@@ -16,12 +16,14 @@ import java.util.Map;
 public class CRSpriteShifts {
     public static final Map<DyeColor, CTSpriteShiftEntry>
             SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class);
+            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
             SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
             RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
+            BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
         }
     }
 
