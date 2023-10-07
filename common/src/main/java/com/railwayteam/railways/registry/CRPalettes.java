@@ -116,7 +116,7 @@ public class CRPalettes {
             BRASS_WRAPPED_LOCOMETAL.put(color,
                     REGISTRATE.block(colorString + "_brass_wrapped_locometal", Block::new)
                             .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
-                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
+                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
                             .lang(colorName + " Brass Wrapped Locometal")
                             .item()
                             .build()
