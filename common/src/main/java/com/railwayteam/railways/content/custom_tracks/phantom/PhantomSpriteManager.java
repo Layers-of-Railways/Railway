@@ -48,7 +48,7 @@ public abstract class PhantomSpriteManager {
         }
     }
 
-    public static void renderTick(Minecraft mc) {
+    public static void renderTick() {
         if (hasChanged) {
             hasChanged = false;
             for (WeakReference<SpriteContents> ref : map.values()) {

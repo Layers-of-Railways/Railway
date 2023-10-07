@@ -19,8 +19,7 @@ public abstract class MixinTextureAtlas {
     @Inject(method = "cycleAnimationFrames", at = @At("RETURN"))
     private void railways$cycleAnimationFrames(CallbackInfo ci) {
         if (this.location == InventoryMenu.BLOCK_ATLAS || this.location.equals(InventoryMenu.BLOCK_ATLAS)) {
-            Minecraft mc = Minecraft.getInstance();
-            PhantomSpriteManager.renderTick(mc);
+            PhantomSpriteManager.renderTick();
         }
     }
 }
