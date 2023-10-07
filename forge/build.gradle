@@ -235,7 +235,7 @@ components.java {
 publishMods {
     file = remapJar.archiveFile
     version = "$mod_version-forge-mc$minecraft_version"
-    changelog = getChangelogText("Forge", true)
+    changelog = getChangelogText()
     type = STABLE
     displayName = "Steam 'n' Rails $mod_version Forge $minecraft_version"
     modLoaders.add("forge")

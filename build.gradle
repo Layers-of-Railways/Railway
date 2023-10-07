@@ -1,8 +1,11 @@
+import dev.ithundxr.silk.ChangelogText
+
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.3.+" apply false
     id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
     id "me.modmuss50.mod-publish-plugin" version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
+    id "dev.ithundxr.silk" version "0.11.15" // https://github.com/IThundxr/silk
 }
 
 architectury {
@@ -77,6 +80,7 @@ subprojects {
 }
 
 allprojects {
+
     apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
@@ -115,36 +119,6 @@ allprojects {
     }
 }
 
-// 'borrowed' from Create
-String getChangelogText(String loader, boolean recent) {
-    def changelogFile = file(recent ? 'recent_changelog.txt' : 'changelog.txt')
-    String str = ''
-    int lineCount = 0
-    boolean done = false
-    changelogFile.eachLine {
-        if (done || it == null) {
-            return
-        }
-        if (it.size() > 1) {
-            def temp = it
-            if (lineCount == 0) {
-                temp = "Steam 'n' Rails ${version}"
-                temp = "<span style=\"font-size: 18px; color: #333399;\">Steam 'n' Rails v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft $loader ${minecraft_version}</em><br/>"
-            } else if (it.startsWith('-')) {
-                temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
-                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
-                temp = temp.replaceAll("#([0-9]+)\\b(?!</a>)", "<a href=\"https://github.com/Layers-of-Railways/Railway/issues/\$1\">\$0</a>");
-            } else {
-                temp = "<h4>$temp</h4>"
-            }
-            str += temp
-            lineCount++
-        } else {
-            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/Layers-of-Railways/Railway/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
-            done = true
-        }
-    }
-    return str
+String getChangelogText() {
+    return ChangelogText.getChangelogText(project)
 }
-new File("changelog.html").write getChangelogText("Fabric", false)
-new File("recent_changelog.html").write getChangelogText("Fabric", true)

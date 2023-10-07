@@ -252,7 +252,7 @@ components.java {
 publishMods {
     file = remapJar.archiveFile
     version = "$mod_version-fabric-mc$minecraft_version"
-    changelog = getChangelogText("Fabric", true)
+    changelog = getChangelogText()
     type = STABLE
     displayName = "Steam 'n' Rails $mod_version Fabric $minecraft_version"
     modLoaders.add("fabric")

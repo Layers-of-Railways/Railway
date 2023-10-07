@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(value = TrackPlacement.class, remap = false)
+@Mixin(value = TrackPlacement.class, priority = 1001, remap = false)
 public class MixinTrackPlacement {
     // minimum curve length for wide gauge
     @SuppressWarnings("unused")
