@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "railways:item/track/track_stripped_bamboo"
+  }
+}

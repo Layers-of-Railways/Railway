@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "railways:track_cherry"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_cherry_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        },
+        {
+          "item": "minecraft:cherry_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_cherry_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_cherry_wide"
+  }
+}

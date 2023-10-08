@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "railways:track_bamboo"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_bamboo_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        },
+        {
+          "item": "minecraft:bamboo"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_bamboo_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_bamboo_wide"
+  }
+}
