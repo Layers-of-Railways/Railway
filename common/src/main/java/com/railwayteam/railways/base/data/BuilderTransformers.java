@@ -87,6 +87,7 @@ public class BuilderTransformers {
                         .sound(SoundType.NETHERITE_BLOCK)
                 )
                 .transform(pickaxeOnly())
+                .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
                 .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
                                 c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase() + "/" + type)
                         )
