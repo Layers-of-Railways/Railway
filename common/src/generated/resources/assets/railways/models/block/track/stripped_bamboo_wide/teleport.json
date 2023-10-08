@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "railways:block/track/stripped_bamboo/portal_track_stripped_bamboo",
+    "2": "railways:block/track/stripped_bamboo/portal_track_mip_stripped_bamboo",
+    "3": "railways:block/track/stripped_bamboo/standard_track_stripped_bamboo",
+    "particle": "minecraft:block/bamboo_planks"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag_2",
+  "textures": {
+    "1": "railways:block/track/cherry/standard_track_cherry",
+    "2": "railways:block/track/cherry/standard_track_mip_cherry",
+    "3": "railways:block/track/cherry/standard_track_crossing_cherry",
+    "particle": "minecraft:block/cherry_planks"
+  }
+}

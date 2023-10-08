@@ -12,6 +12,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -97,6 +98,27 @@ public class CRTrackMaterials {
             .block(() -> CRBlocks.MANGROVE_TRACK)
             .particle(new ResourceLocation("block/mangrove_planks"))
             .sleeper(Blocks.MANGROVE_SLAB)
+            .standardModels()
+            .build(),
+        CHERRY = make(Railways.asResource("cherry"))
+            .lang("Cherry")
+            .block(() -> CRBlocks.CHERRY_TRACK)
+            .particle(new ResourceLocation("block/cherry_planks"))
+            .sleeper(Blocks.CHERRY_SLAB)
+            .standardModels()
+            .build(),
+        BAMBOO = make(Railways.asResource("bamboo"))
+            .lang("Bamboo")
+            .block(() -> CRBlocks.BAMBOO_TRACK)
+            .particle(new ResourceLocation("block/bamboo_block"))
+            .sleeper(Items.BAMBOO)
+            .standardModels()
+            .build(),
+        STRIPPED_BAMBOO = make(Railways.asResource("stripped_bamboo"))
+            .lang("Stripped Bamboo")
+            .block(() -> CRBlocks.STRIPPED_BAMBOO_TRACK)
+            .particle(new ResourceLocation("block/bamboo_planks"))
+            .sleeper(Blocks.BAMBOO_SLAB)
             .standardModels()
             .build(),
         MONORAIL = make(Railways.asResource("monorail"))
