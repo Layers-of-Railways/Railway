@@ -29,11 +29,12 @@ public class CRPalettes {
             FLAT_RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
             BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
-            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
-            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
+            BRASS_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
+    // no textures for these yet
+//            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+//            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
+//            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+//            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
