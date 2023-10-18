@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "style=gullet": {
+      "model": "railways:block/green_locometal_boiler"
+    },
+    "style=smokebox": {
+      "model": "railways:block/green_locometal_boiler"
+    }
+  }
+}

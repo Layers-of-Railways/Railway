@@ -6,7 +6,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.palettes.Boiler;
+import com.railwayteam.railways.content.palettes.boiler.Boiler;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
@@ -14,12 +14,10 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -118,11 +116,11 @@ public class BuilderTransformers {
                         .color(ColorUtils.materialColorFromDye(color))
                         .sound(SoundType.NETHERITE_BLOCK)
                 )
-                .transform(pickaxeOnly())
-                .blockstate((c, p) -> p.models().withExistingParent(
-                            c.getName(), Railways.asResource("block/palettes/boiler/block")
-                        )
-                        .texture("0", Railways.asResource("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"))
-                );
+                .transform(pickaxeOnly());
+//                .blockstate((c, p) -> p.models().withExistingParent(
+//                            c.getName(), Railways.asResource("block/palettes/boiler/block")
+//                        )
+//                        .texture("0", Railways.asResource("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"))
+//                );
     }
 }

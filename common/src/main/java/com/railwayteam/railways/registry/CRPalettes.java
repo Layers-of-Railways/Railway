@@ -2,7 +2,8 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
-import com.railwayteam.railways.content.palettes.Boiler;
+import com.railwayteam.railways.content.palettes.boiler.Boiler;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -129,6 +130,7 @@ public class CRPalettes {
             LOCOMETAL_BOILER.put(color,
                     REGISTRATE.block(colorString + "_locometal_boiler", Boiler::new)
                             .transform(BuilderTransformers.locoMetalBoiler(color))
+                            .blockstate(new BoilerGenerator()::generate)
                             .lang(colorName + "Locometal Boiler")
                             .item()
                             .build()

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes;
+package com.railwayteam.railways.content.palettes.boiler;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class Boiler extends WrenchableDirectionalBlock {
+public class Boiler extends Block implements IWrenchable {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
 
     public Boiler(Properties properties) {
