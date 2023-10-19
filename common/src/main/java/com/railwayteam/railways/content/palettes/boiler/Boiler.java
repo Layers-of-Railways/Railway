@@ -1,7 +1,6 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;

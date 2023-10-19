@@ -1,3 +1,6 @@
 {
-  "parent": "railways:block/palettes/boiler/block"
+  "parent": "railways:block/palettes/boiler/block",
+  "textures": {
+    "0": "railways:block/palettes/black/boiler_gullet"
+  }
 }

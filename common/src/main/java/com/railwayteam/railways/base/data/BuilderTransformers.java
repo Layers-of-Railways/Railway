@@ -1,12 +1,12 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.palettes.boiler.Boiler;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
@@ -18,6 +18,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -25,7 +26,7 @@ public class BuilderTransformers {
     public static <B extends MonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monobogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/monorail/top" + (s.getValue(AbstractMonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
@@ -35,7 +36,7 @@ public class BuilderTransformers {
     public static <B extends InvisibleBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/invisible/top"))))
@@ -45,7 +46,7 @@ public class BuilderTransformers {
     public static <B extends InvisibleMonoBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleMonoBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/invisible_monorail/top" + (s.getValue(AbstractMonoBogeyBlock.UPSIDE_DOWN) ? "_upside_down" : "")))))
@@ -55,7 +56,7 @@ public class BuilderTransformers {
     private static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> sharedBogey() {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .transform(pickaxeOnly())
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
@@ -116,11 +117,7 @@ public class BuilderTransformers {
                         .color(ColorUtils.materialColorFromDye(color))
                         .sound(SoundType.NETHERITE_BLOCK)
                 )
-                .transform(pickaxeOnly());
-//                .blockstate((c, p) -> p.models().withExistingParent(
-//                            c.getName(), Railways.asResource("block/palettes/boiler/block")
-//                        )
-//                        .texture("0", Railways.asResource("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"))
-//                );
+                .transform(pickaxeOnly())
+                .blockstate(new BoilerGenerator(color)::generate);
     }
 }

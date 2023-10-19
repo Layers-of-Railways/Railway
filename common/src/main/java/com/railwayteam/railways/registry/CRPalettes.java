@@ -130,8 +130,7 @@ public class CRPalettes {
             LOCOMETAL_BOILER.put(color,
                     REGISTRATE.block(colorString + "_locometal_boiler", Boiler::new)
                             .transform(BuilderTransformers.locoMetalBoiler(color))
-                            .blockstate(new BoilerGenerator()::generate)
-                            .lang(colorName + "Locometal Boiler")
+                            .lang(colorName + " Locometal Boiler")
                             .item()
                             .build()
                             .register()

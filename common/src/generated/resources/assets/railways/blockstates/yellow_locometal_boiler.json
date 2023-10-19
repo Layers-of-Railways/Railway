@@ -1,9 +1,6 @@
 {
   "variants": {
-    "style=gullet": {
-      "model": "railways:block/yellow_locometal_boiler"
-    },
-    "style=smokebox": {
+    "": {
       "model": "railways:block/yellow_locometal_boiler"
     }
   }
