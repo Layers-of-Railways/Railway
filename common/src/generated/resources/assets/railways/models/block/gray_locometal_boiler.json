@@ -1,5 +1,8 @@
 {
-  "parent": "railways:block/palettes/boiler/block",
+  "parent": "minecraft:block/block",
+  "flip_v": true,
+  "loader": "forge:obj",
+  "model": "railways:models/block/palettes/boiler/boiler.obj",
   "textures": {
     "0": "railways:block/palettes/gray/boiler_gullet"
   }
