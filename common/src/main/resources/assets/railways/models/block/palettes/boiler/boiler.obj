@@ -1,6 +1,6 @@
 # Blender 3.6.4
 # www.blender.org
-mtllib boiler.mtl
+mtllib bowiler.mtl
 o Boiler
 v -0.500000 0.414214 -1.000000
 v 0.500000 0.414214 -1.000000
