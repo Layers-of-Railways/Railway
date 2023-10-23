@@ -127,14 +127,14 @@ public class CRPalettes {
             );
 
             // Locometal Boiler
-            LOCOMETAL_BOILER.put(color,
-                    REGISTRATE.block(colorString + "_locometal_boiler", Boiler::new)
-                            .transform(BuilderTransformers.locoMetalBoiler(color))
-                            .lang(colorName + " Locometal Boiler")
-                            .item()
-                            .build()
-                            .register()
-            );
+//            LOCOMETAL_BOILER.put(color,
+//                    REGISTRATE.block(colorString + "_locometal_boiler", Boiler::new)
+//                            .transform(BuilderTransformers.locoMetalBoiler(color))
+//                            .lang(colorName + " Locometal Boiler")
+//                            .item()
+//                            .build()
+//                            .register()
+//            );
         }
     }
 
