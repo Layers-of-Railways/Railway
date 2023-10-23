@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 
 import java.util.EnumMap;
+import java.util.Locale;
 
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 
@@ -39,7 +40,7 @@ public class CRPalettes {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            String colorString = color.name().toLowerCase();
+            String colorString = color.name().toLowerCase(Locale.ROOT);
             String colorName = ColorUtils.coloredName(colorString);
 
             // Slashed Locometal

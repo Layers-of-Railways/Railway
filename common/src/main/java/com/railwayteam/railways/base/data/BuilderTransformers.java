@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
+import java.util.Locale;
+
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class BuilderTransformers {
@@ -89,7 +91,7 @@ public class BuilderTransformers {
                 .transform(pickaxeOnly())
                 .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
                 .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
-                                c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase() + "/" + type)
+                                c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/" + type)
                         )
                 ));
     }
@@ -97,8 +99,8 @@ public class BuilderTransformers {
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
                 .blockstate((c, p) -> p.axisBlock(c.get(),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_side"),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/riveted_pillar_top")
+                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_side"),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_top")
                 ));
     }
 
@@ -106,8 +108,8 @@ public class BuilderTransformers {
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
                 .blockstate((c, p) -> p.axisBlock(c.get(),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/tank_side"),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase() + "/smokebox_tank_top")
+                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/tank_side"),
+                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/smokebox_tank_top")
                 ));
     }
 

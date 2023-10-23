@@ -14,6 +14,8 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.Locale;
+
 public class BoilerGenerator extends SpecialBlockStateGen {
     private final DyeColor color;
 
@@ -38,6 +40,6 @@ public class BoilerGenerator extends SpecialBlockStateGen {
                 .flipV(true)
                 .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler.obj"))
                 .end()
-                .texture("0", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"));
+                .texture("0", prov.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/boiler_gullet"));
     }
 }

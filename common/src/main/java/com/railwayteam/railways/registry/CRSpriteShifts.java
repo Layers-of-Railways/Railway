@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.block.render.SpriteShifter;
 import net.minecraft.world.item.DyeColor;
 
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CRSpriteShifts {
@@ -30,7 +31,7 @@ public class CRSpriteShifts {
 
     //
     private static CTSpriteShiftEntry locometal(DyeColor color, String name) {
-        return omni("palettes/" + color.getName().toLowerCase() + "/" + name);
+        return omni("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
     }
 
     private static CTSpriteShiftEntry omni(String name) {
