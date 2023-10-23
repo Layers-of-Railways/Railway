@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.network.chat.MutableComponent;
 
+import java.util.Locale;
 import java.util.Optional;
 
 public class SignalDisplaySource extends SingleLineDisplaySource {
@@ -23,7 +24,7 @@ public class SignalDisplaySource extends SingleLineDisplaySource {
         if (isSignalTarget(context)) {
             return Components.literal(state.name());
         }
-        return Components.translatable("railways.display_source.signal." + state.name().toLowerCase());
+        return Components.translatable("railways.display_source.signal." + state.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
