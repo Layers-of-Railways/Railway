@@ -24,7 +24,6 @@ public class BlueSkiesTrackCompat extends GenericTrackCompat {
         Railways.LOGGER.info("Registering tracks for Blue Skies");
         new BlueSkiesTrackCompat().register(
             "bluebright",
-            "cherry",
             "dusk",
             "frostbright",
             "lunar",
