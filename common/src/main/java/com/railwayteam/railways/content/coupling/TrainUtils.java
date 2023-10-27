@@ -9,14 +9,24 @@ import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
 import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.entity.*;
+import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +80,13 @@ public class TrainUtils {
             return train;
         }
         train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
-        newTrain.name = Components.literal("Split off from: "+train.name.getString());
+        if(!train.name.getString().contains("Split off from: ")){
+            newTrain.name = Components.literal("Split off from: "+train.name.getString());
+        }
+        else newTrain.name = Components.literal(train.name.getString());
+
+
+
 //        lastCarriage.setTrain(newTrain);
 //        lastCarriage.storage = null; //since storage is per-carriage, not per-train, this should be fine
         for (int i = 0; i < lastCarriages.length; i++) {
@@ -121,6 +137,18 @@ public class TrainUtils {
         if (train.carriages.size() == 0) {
             Create.RAILWAYS.removeTrain(train.id);
         }
+
+
+
+//         Goal: when a train is decoupled it should attempt to park at any stations it's mostly aligned with already
+
+//        newTrain.carriages.get(0).getLeadingPoint().travel(newTrain.graph, 0.1, (TravellingPoint.ITrackSelector) newTrain.carriages.get(0).getLeadingPoint(), (Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> pair) -> {
+//            // if the edge point is a station, and it's the first one we've encountered, store it (MutableObject<?> is your friend here)
+//            MutableObject<?>
+//            return false;
+//        }, 0.1, 0.1);
+
+
 
         return newTrain;
     }
