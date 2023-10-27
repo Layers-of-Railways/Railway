@@ -1,13 +1,9 @@
-name: Build Forge Release
-
-on: [workflow_dispatch]
+name: Build Pull Request
+on: [pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      RELEASE_BUILD: true
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -25,9 +21,14 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build & Release
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-        run: ./gradlew :forge:build :forge:publish :forge:publishMods
+      - name: Build
+        run: ./gradlew build
+
+      - name: Collect built jars
+        run: ./gradlew moveBuiltJars
+
+      - name: Capture build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifacts
+          path: jars

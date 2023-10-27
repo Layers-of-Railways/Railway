@@ -53,7 +53,7 @@ architectury {
 }
 
 processResources {
-    exclude("resourcepacks/") // must be part of primary mod to be findable
+    exclude("resourcepacks/", "**/*.bbmodel", "**/*.lnk", "**/*.txt") // must be part of primary mod to be findable, dont add development or to-do files into built jar
 }
 
 sourceSets.main {
