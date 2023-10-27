@@ -120,6 +120,6 @@ public class BuilderTransformers {
                         .sound(SoundType.NETHERITE_BLOCK)
                 )
                 .transform(pickaxeOnly())
-                .blockstate(new BoilerGenerator()::generate);
+                .blockstate(new BoilerGenerator(color)::generate);
     }
 }

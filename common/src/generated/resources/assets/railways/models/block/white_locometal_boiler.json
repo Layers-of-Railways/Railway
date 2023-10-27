@@ -2,5 +2,9 @@
   "parent": "minecraft:block/block",
   "flip_v": true,
   "loader": "forge:obj",
-  "model": "railways:models/block/palettes/boiler/boiler.obj"
+  "model": "railways:models/block/palettes/boiler/boiler.obj",
+  "textures": {
+    "front": "railways:block/palettes/white/boiler_gullet",
+    "sides": "railways:block/palettes/white/connected_boiler_side"
+  }
 }

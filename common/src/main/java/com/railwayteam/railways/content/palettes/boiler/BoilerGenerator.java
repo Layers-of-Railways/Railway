@@ -3,12 +3,19 @@ package com.railwayteam.railways.content.palettes.boiler;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
 public class BoilerGenerator extends SpecialBlockStateGen {
+    private final DyeColor color;
+
+    public BoilerGenerator(DyeColor color) {
+        this.color = color;
+    }
+
     @Override
     protected int getXRotation(BlockState state) {
         return 0;
@@ -25,6 +32,8 @@ public class BoilerGenerator extends SpecialBlockStateGen {
                 .customLoader(ObjModelBuilder::begin)
                 .flipV(true)
                 .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler.obj"))
-                .end();
+                .end()
+                .texture("front", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"))
+                .texture("sides", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/connected_boiler_side"));
     }
 }
