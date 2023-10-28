@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "natures_spirit:block/track/ghaf/standard_track_ghaf",
+    "1": "natures_spirit:block/track/ghaf/standard_track_mip_ghaf",
+    "2": "natures_spirit:block/track/ghaf/standard_track_crossing_ghaf",
+    "particle": "natures_spirit:block/track/ghaf/standard_track_crossing_ghaf"
+  }
+}

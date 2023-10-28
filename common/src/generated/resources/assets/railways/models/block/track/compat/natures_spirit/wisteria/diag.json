@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag",
+  "textures": {
+    "0": "natures_spirit:block/track/wisteria/standard_track_wisteria",
+    "1": "natures_spirit:block/track/wisteria/standard_track_mip_wisteria",
+    "2": "natures_spirit:block/track/wisteria/standard_track_crossing_wisteria",
+    "particle": "natures_spirit:block/track/wisteria/standard_track_crossing_wisteria"
+  }
+}

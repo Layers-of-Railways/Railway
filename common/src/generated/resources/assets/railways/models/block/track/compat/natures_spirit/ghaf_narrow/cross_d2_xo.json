@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "natures_spirit:block/track/ghaf/standard_track_ghaf",
+    "2": "natures_spirit:block/track/ghaf/standard_track_mip_ghaf",
+    "3": "natures_spirit:block/track/ghaf/standard_track_crossing_ghaf",
+    "particle": "natures_spirit:block/track/ghaf/standard_track_crossing_ghaf"
+  }
+}

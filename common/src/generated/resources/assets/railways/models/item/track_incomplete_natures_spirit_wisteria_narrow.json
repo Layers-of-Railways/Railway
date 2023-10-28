@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "natures_spirit:item/track_incomplete/track_incomplete_wisteria_narrow"
+  }
+}

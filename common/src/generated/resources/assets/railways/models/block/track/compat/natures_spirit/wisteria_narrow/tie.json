@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "natures_spirit:block/track/wisteria/standard_track_wisteria",
+    "1": "natures_spirit:block/track/wisteria/standard_track_mip_wisteria",
+    "particle": "natures_spirit:block/track/wisteria/standard_track_crossing_wisteria"
+  }
+}

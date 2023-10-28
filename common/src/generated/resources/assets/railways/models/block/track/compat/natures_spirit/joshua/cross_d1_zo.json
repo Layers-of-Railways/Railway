@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_zo",
+  "textures": {
+    "0": "natures_spirit:block/track/joshua/standard_track_joshua",
+    "1": "natures_spirit:block/track/joshua/standard_track_mip_joshua",
+    "2": "natures_spirit:block/track/joshua/standard_track_crossing_joshua",
+    "particle": "natures_spirit:block/track/joshua/standard_track_crossing_joshua"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag",
+  "textures": {
+    "0": "natures_spirit:block/track/fir/standard_track_fir",
+    "1": "natures_spirit:block/track/fir/standard_track_mip_fir",
+    "2": "natures_spirit:block/track/fir/standard_track_crossing_fir",
+    "particle": "natures_spirit:block/track/fir/standard_track_crossing_fir"
+  }
+}

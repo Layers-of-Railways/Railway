@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/ascending",
+  "textures": {
+    "0": "natures_spirit:block/track/aspen/standard_track_aspen",
+    "1": "natures_spirit:block/track/aspen/standard_track_mip_aspen",
+    "particle": "natures_spirit:block/track/aspen/standard_track_crossing_aspen"
+  }
+}

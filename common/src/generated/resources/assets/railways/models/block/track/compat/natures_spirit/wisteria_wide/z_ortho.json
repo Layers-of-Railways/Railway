@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/z_ortho",
+  "textures": {
+    "1": "natures_spirit:block/track/wisteria/standard_track_wisteria",
+    "2": "natures_spirit:block/track/wisteria/standard_track_mip_wisteria",
+    "3": "natures_spirit:block/track/wisteria/standard_track_crossing_wisteria",
+    "particle": "natures_spirit:block/track/wisteria/standard_track_crossing_wisteria"
+  }
+}
