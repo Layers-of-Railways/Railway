@@ -426,6 +426,7 @@ public class CRBlocks {
             .transform(BuilderTransformers.handcar())
             .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
             .item(HandcarItem::new)
+            .properties(p -> p.stacksTo(1))
             .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
             .build()
             .lang("Handcar")

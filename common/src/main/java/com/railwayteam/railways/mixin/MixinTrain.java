@@ -191,4 +191,16 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         if (CRConfigs.server().optimization.disableTrainCollision.get())
             ci.cancel();
     }
+
+    @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
+    private void slowDownHandcars(CallbackInfoReturnable<Float> cir) {
+        if (snr$isHandcar)
+            cir.setReturnValue(cir.getReturnValue() * 0.5f);
+    }
+
+    @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
+    private void slowDownHandcarsOnTurns(CallbackInfoReturnable<Float> cir) {
+        if (snr$isHandcar)
+            cir.setReturnValue(cir.getReturnValue() * 0.75f);
+    }
 }
