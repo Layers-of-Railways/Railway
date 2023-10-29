@@ -4,6 +4,7 @@
   "package": "com.railwayteam.railways.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AccessorAbstractContraptionEntity",
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
     "AccessorCarriage",
@@ -11,6 +12,7 @@
     "AccessorCarriageContraptionEntity",
     "AccessorIngredient_TagValue",
     "AccessorNavigation",
+    "AccessorOrientedContraptionEntity",
     "AccessorScheduleRuntime",
     "AccessorToolboxBlockEntity",
     "AccessorToolboxInventory",

@@ -9,7 +9,10 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.*;
+import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -23,6 +26,9 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStat
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
+import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.content.handcar.HandcarControlsInteractionBehaviour;
+import com.railwayteam.railways.content.handcar.HandcarItem;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.*;
@@ -72,6 +78,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
+import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -411,6 +418,17 @@ public class CRBlocks {
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.narrowBogey())
             .lang("Narrow Gauge Double Scotch Yoke Bogey")
+            .register();
+
+    public static final BlockEntry<HandcarBlock> HANDCAR =
+        REGISTRATE.block("handcar", HandcarBlock::new)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.handcar())
+            .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
+            .item(HandcarItem::new)
+            .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
+            .build()
+            .lang("Handcar")
             .register();
 
 

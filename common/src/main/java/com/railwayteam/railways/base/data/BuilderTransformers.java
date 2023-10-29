@@ -5,6 +5,8 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -71,5 +73,16 @@ public class BuilderTransformers {
         return b -> b.transform(sharedBogey())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/narrow/top"))));
+    }
+
+    public static <B extends HandcarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> handcar() {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+            .properties(p -> p
+                .sound(SoundType.NETHERITE_BLOCK)
+                .noOcclusion())
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.mcLoc("air"))))
+            .loot((p, l) -> p.dropOther(l, CRBlocks.HANDCAR.get()));
     }
 }

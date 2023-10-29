@@ -1,9 +1,13 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBogeyStyles;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -27,11 +31,13 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.UUID;
 
 @Mixin(value = StationBlockEntity.class, remap = false)
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
@@ -98,5 +104,12 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
             train = dropScheduleTrain;
         dropScheduleTrain = null;
         return train;
+    }
+
+    @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", ordinal = 0), require = 0)
+    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
+        if (typeOfFirstBogey instanceof HandcarBlock) {
+            atLeastOneForwardControls.set(true);
+        }
     }
 }

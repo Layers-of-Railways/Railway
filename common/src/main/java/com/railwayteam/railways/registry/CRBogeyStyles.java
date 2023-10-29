@@ -193,6 +193,11 @@ public class CRBogeyStyles {
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
             .build();
 
+    // Handcar
+    public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
+        .size(BogeySizes.SMALL, () -> CRBogeyRenderer.HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
+        .build();
+
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {
         return create(Railways.asResource(name), Railways.asResource(cycleGroup))
