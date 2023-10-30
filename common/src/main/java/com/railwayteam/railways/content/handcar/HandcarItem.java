@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -13,6 +14,7 @@ import com.simibubi.create.content.trains.entity.TravellingPoint.SteerDirection;
 import com.simibubi.create.content.trains.graph.*;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem.OverlapResult;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
@@ -63,6 +65,9 @@ public class HandcarItem extends BlockItem {
             return InteractionResult.FAIL;
 
         if (state.getBlock() instanceof ITrackBlock track) {
+            TrackType trackType = track.getMaterial().trackType;
+            if (!(trackType == TrackType.STANDARD || trackType == CRTrackType.UNIVERSAL))
+                return InteractionResult.FAIL;
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
 
