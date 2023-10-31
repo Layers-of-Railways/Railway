@@ -143,10 +143,11 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         BlockState state = level.getBlockState(pos);
         Player player = pContext.getPlayer();
         CompoundTag stackTag = stack.getTag();
+        if(stackTag == null) return InteractionResult.FAIL;
         UUID trainId = stackTag.getUUID("SelectedTrain");
         Train train = Create.RAILWAYS.trains.get(trainId);
 
-        if (player == null)
+        if (player == null || train == null)
             return InteractionResult.FAIL;
 
         if (player instanceof DeployerFakePlayer && state.getBlock() instanceof AirBlock && train.runtime.isAutoSchedule) {train.runtime.discardSchedule();}
