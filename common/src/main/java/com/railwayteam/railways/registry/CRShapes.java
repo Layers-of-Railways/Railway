@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
+import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.world.level.block.Block;
@@ -134,6 +135,9 @@ public class CRShapes {
         BLOCK = Shapes.block(),
         BOTTOM_SLAB = shape(0, 0, 0, 16, 8, 16).build(),
         TOP_SLAB = shape(0, 8, 0, 16, 16, 16).build();
+
+    public static final VoxelShape HANDCAR = shape(AllShapes.SEAT_COLLISION)
+        .add(-16, 0, 0, 16, 4, 16).build();
 
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);

@@ -31,7 +31,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -46,6 +45,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         super(type, world);
     }
 
+    @Unique
     private boolean snr$fakePlayer = false;
 
     @Inject(method = "control", at = @At("HEAD"))
@@ -113,21 +113,25 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             cleanUpApproachSwitchMessage(player);
     }
 
-    boolean switchMessage = false;
+    @Unique
+    boolean snr$switchMessage = false;
 
+    @Unique
     private void displayApproachSwitchMessage(Player player, TrackSwitch sw, boolean isWrong) {
         sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong, sw.isLocked());
-        switchMessage = true;
+        snr$switchMessage = true;
     }
 
+    @Unique
     private void cleanUpApproachSwitchMessage(Player player) {
-        if (!switchMessage)
+        if (!snr$switchMessage)
             return;
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, SwitchDataUpdatePacket.clear());
-        switchMessage = false;
+        snr$switchMessage = false;
     }
 
+    @Unique
     private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong, boolean isLocked) {
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong, isLocked));

@@ -10,6 +10,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
@@ -67,7 +68,7 @@ public class CRBlockEntities {
             .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,
                 CRBlocks.TRIPLEAXLE_BOGEY, CRBlocks.WIDE_DOUBLEAXLE_BOGEY, CRBlocks.WIDE_SCOTCH_BOGEY,
                 CRBlocks.WIDE_COMICALLY_LARGE_BOGEY, CRBlocks.NARROW_SMALL_BOGEY, CRBlocks.NARROW_SCOTCH_BOGEY,
-                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
+                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY, CRBlocks.HANDCAR)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)
@@ -83,6 +84,11 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<CasingCollisionBlockEntity> CASING_COLLISION = REGISTRATE
         .blockEntity("casing_collision", CasingCollisionBlockEntity::new)
         .validBlocks(CRBlocks.CASING_COLLISION)
+        .register();
+
+    public static final BlockEntityEntry<GenericCrossingBlockEntity> GENERIC_CROSSING = REGISTRATE
+        .blockEntity("generic_crossing", GenericCrossingBlockEntity::new)
+        .validBlocks(CRBlocks.GENERIC_CROSSING)
         .register();
 
 

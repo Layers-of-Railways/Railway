@@ -10,12 +10,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class PhantomSpriteManager {
-    private static final Map<ResourceLocation, WeakReference<TextureAtlasSprite>> map = new HashMap<>();
+    private static final Map<ResourceLocation, WeakReference<TextureAtlasSprite>> map = new ConcurrentHashMap<>();
     private static boolean lastVisible = false;
     public static boolean firstRun = true;
     public static boolean hasChanged = false;

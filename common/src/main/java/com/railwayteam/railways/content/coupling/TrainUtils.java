@@ -1,7 +1,10 @@
 package com.railwayteam.railways.content.coupling;
 
+import com.railwayteam.railways.mixin.AccessorAbstractContraptionEntity;
+import com.railwayteam.railways.mixin.AccessorOrientedContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrain;
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
@@ -9,6 +12,8 @@ import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
 import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.contraptions.ContraptionDisassemblyPacket;
+import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.TrackNode;
@@ -41,6 +46,7 @@ public class TrainUtils {
      * @return The new train.
      */
     public static Train splitTrain(Train train, int numberOffEnd) {
+        if (((IHandcarTrain) train).snr$isHandcar()) return train;
         if (numberOffEnd == 0)
             return train;
         if (train.carriages.size() <= numberOffEnd)
@@ -122,9 +128,9 @@ public class TrainUtils {
         );
         CRPackets.PACKETS.sendTo(allPlayers, new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
-        if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).getIndex() >= train.carriages.size()) {
-            int newIndex = ((IIndexedSchedule) train).getIndex() - train.carriages.size();
-            ((IIndexedSchedule) newTrain).setIndex(newIndex);
+        if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).snr$getIndex() >= train.carriages.size()) {
+            int newIndex = ((IIndexedSchedule) train).snr$getIndex() - train.carriages.size();
+            ((IIndexedSchedule) newTrain).snr$setIndex(newIndex);
 
             newTrain.runtime.read(train.runtime.write());
             if (train.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
@@ -161,6 +167,9 @@ public class TrainUtils {
      * Adds the carriages of backTrain onto the end of frontTrain.
      */
     public static Train combineTrains(Train frontTrain, Train backTrain, Vec3 itemDropPos, Level itemDropLevel, int carriageSpacing) {
+        if (((IHandcarTrain) frontTrain).snr$isHandcar() || ((IHandcarTrain) backTrain).snr$isHandcar()) {
+            return frontTrain;
+        }
         if (frontTrain.derailed || backTrain.derailed) {
             return frontTrain;
         }
@@ -204,7 +213,7 @@ public class TrainUtils {
         ));
 //        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(CarriageContraptionEntity::syncCarriage));
         if (frontTrain.runtime.getSchedule() == null && backTrain.runtime.getSchedule() != null) {
-            ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
+            ((IIndexedSchedule) frontTrain).snr$setIndex(((IIndexedSchedule) backTrain).snr$getIndex() + frontTrainSize);
             frontTrain.runtime.read(backTrain.runtime.write());
             if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
                 frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
@@ -214,7 +223,7 @@ public class TrainUtils {
             if (frontTrain.runtime.completed) {
                 ItemStack stack = frontTrain.runtime.returnSchedule();
                 Containers.dropItemStack(itemDropLevel, itemDropPos.x, itemDropPos.y, itemDropPos.z, stack);
-                ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
+                ((IIndexedSchedule) frontTrain).snr$setIndex(((IIndexedSchedule) backTrain).snr$getIndex() + frontTrainSize);
                 frontTrain.runtime.read(backTrain.runtime.write());
                 if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
                     frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
@@ -235,5 +244,24 @@ public class TrainUtils {
             }
         }
         return true;
+    }
+
+    public static void discardTrain(Train train) {
+        for (Carriage carriage : train.carriages) {
+            CarriageContraptionEntity entity = carriage.anyAvailableEntity();
+            if (entity == null) continue;
+
+            StructureTransform transform = ((AccessorOrientedContraptionEntity) entity).snr_makeStructureTransform();
+
+            CRPackets.PACKETS.sendTo(PlayerSelection.tracking(entity), new ContraptionDisassemblyPacket(entity.getId(), transform));
+            entity.getContraption().addPassengersToWorld(entity.level, transform, entity.getPassengers());
+            ((AccessorAbstractContraptionEntity) entity).snr_setSkipActorStop(true);
+            entity.discard();
+            entity.ejectPassengers();
+            ((AccessorAbstractContraptionEntity) entity).snr_moveCollidedEntitiesOnDisassembly(transform);
+
+            Create.RAILWAYS.removeTrain(train.id);
+            CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, false));
+        }
     }
 }
