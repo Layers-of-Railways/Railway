@@ -14,7 +14,6 @@ import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.ContraptionDisassemblyPacket;
 import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
@@ -24,13 +23,10 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.ArrayList;
@@ -145,18 +141,44 @@ public class TrainUtils {
         }
 
 
-
-//         Goal: when a train is decoupled it should attempt to park at any stations it's mostly aligned with already
-
-//        newTrain.carriages.get(0).getLeadingPoint().travel(newTrain.graph, 0.1, (TravellingPoint.ITrackSelector) newTrain.carriages.get(0).getLeadingPoint(), (Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> pair) -> {
-//            // if the edge point is a station, and it's the first one we've encountered, store it (MutableObject<?> is your friend here)
-//            MutableObject<?>
-//            return false;
-//        }, 0.1, 0.1);
+        // park at nearby stations
+        tryToParkNearby(newTrain, 0.75);
 
 
 
         return newTrain;
+    }
+
+    public static void tryToParkNearby(Train train, double maxDistance) {
+        {
+            Carriage leadingCarriage = train.carriages.get(0);
+            TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
+            MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
+            double distance = discoveryPoint.travel(train.graph, maxDistance, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
+                if (couple.getFirst() instanceof GlobalStation station && station.canApproachFrom(couple.getSecond().getSecond())
+                    && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
+                    targetStation.setValue(station);
+                    return true;
+                }
+                return false;
+            });
+
+            if (targetStation.getValue() != null) {
+                Navigation oldNavigation = train.navigation;
+                train.navigation = new Navigation(train);
+                train.navigation.destination = targetStation.getValue();
+                leadingCarriage.travel(null, train.graph, Math.max(0.1, distance), discoveryPoint, null, 0);
+                targetStation.getValue().reserveFor(train);
+                train.navigation.train = null; // prevent reference cycle
+                train.navigation = oldNavigation;
+            }
+        }
+    }
+
+    private static TravellingPoint copy(TravellingPoint original) {
+        TravellingPoint copy = new TravellingPoint(original.node1, original.node2, original.edge, original.position, original.upsideDown);
+        copy.blocked = original.blocked;
+        return copy;
     }
 
     public static Train combineTrains(Train frontTrain, Train backTrain, BlockPos itemDropPos, Level itemDropLevel, int carriageSpacing) {
