@@ -6,6 +6,7 @@ Additions
 - Bamboo Tracks (1.20.1)
 - Stripped Bamboo Tracks (1.20.1)
 - Handcar: wrench to pick up
+- Generic Crossing Tracks - any two tracks can now cross at a junction
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
