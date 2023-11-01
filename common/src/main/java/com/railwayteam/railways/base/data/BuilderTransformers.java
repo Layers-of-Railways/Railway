@@ -5,6 +5,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
@@ -13,6 +14,7 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.SoundType;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -84,5 +86,10 @@ public class BuilderTransformers {
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.mcLoc("air"))))
             .loot((p, l) -> p.dropOther(l, CRBlocks.HANDCAR.get()));
+    }
+
+    @ExpectPlatform
+    public static <B extends GenericCrossingBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> genericCrossing() {
+        throw new AssertionError();
     }
 }

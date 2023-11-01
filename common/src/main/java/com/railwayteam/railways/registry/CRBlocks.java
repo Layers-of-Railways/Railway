@@ -22,6 +22,7 @@ import com.railwayteam.railways.content.custom_bogeys.wide_gauge.WideGaugeBogeyB
 import com.railwayteam.railways.content.custom_bogeys.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
@@ -510,6 +511,24 @@ public class CRBlocks {
             .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
             .item()
             .transform(customItemModel("copycat_vent"))
+            .register();
+
+    public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
+        REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
+            .transform(BuilderTransformers.genericCrossing())
+            .initialProperties(Material.STONE)
+            .properties(p -> p
+                .color(MaterialColor.METAL)
+                .strength(0.8F)
+                .sound(SoundType.METAL)
+                .noOcclusion().noLootTable())
+            .tag(AllTags.AllBlockTags.TRACKS.tag)
+            .tag(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+                .withExistingParent(c.getName(), p.modLoc("block/invisible"))))
+            .lang("Generic Crossing")
             .register();
 
     @SuppressWarnings("EmptyMethod")
