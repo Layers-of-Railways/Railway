@@ -1,8 +1,7 @@
 package com.railwayteam.railways.forge.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
-import com.railwayteam.railways.mixin.MountedFluidStorageAccessor;
+import com.railwayteam.railways.mixin.AccessorMountedFluidStorage;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
@@ -56,7 +55,7 @@ public abstract class MountedStorageManagerMixin {
                 return;
             IFluidTank tankInventory = tank.getTankInventory();
             if (tankInventory instanceof FluidTank)
-                ((FluidTank) tankInventory).setFluid(((MountedFluidStorageAccessor) mfs).getTank().getFluid());
+                ((FluidTank) tankInventory).setFluid(((AccessorMountedFluidStorage) mfs).getTank().getFluid());
             tank.getFluidLevel()
                     .startWithValue(tank.getFillState());
             mfs.assignBlockEntity(tank);

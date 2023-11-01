@@ -6,6 +6,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(MountedFluidStorage.class)
-public interface MountedFluidStorageAccessor {
+public interface AccessorMountedFluidStorage {
     @Accessor SmartFluidTank getTank();
 }
