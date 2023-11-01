@@ -9,6 +9,7 @@ Additions
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
+- Config option to use old-style smoke (campfire particles) for smokestacks
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
