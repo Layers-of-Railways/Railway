@@ -9,6 +9,7 @@ Additions
 - A deployer using a whistle on air will clear the schedule of the bound train
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
 - Decoupled trains' names will now stop at one "Split off from: ..."
+- Fix Farmers delight fabric crash (small hacky fix)
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------

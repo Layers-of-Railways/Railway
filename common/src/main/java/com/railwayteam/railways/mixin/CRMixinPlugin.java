@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.multiloader.Loader;
+import com.railwayteam.railways.util.Utils;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -22,6 +23,10 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetName, String mixinName) {
         if (mixinName.contains("compat.voicechat") && Loader.FABRIC.isCurrent()) {
             return Mods.VOICECHAT.isLoaded;
+        }
+        // Fix null issue between create & farmers delight
+        if (mixinName.contains("compat.farmersdelight_fabric") && Loader.FABRIC.isCurrent()) {
+            return Mods.FARMERSDELIGHT.isLoaded;
         }
         return true;
     }
