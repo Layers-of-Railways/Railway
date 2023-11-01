@@ -118,7 +118,15 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 	}
 
 	@Override
-	public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
+	public void render(@NotNull VertexConsumer buffer, @NotNull Camera renderInfo, float partialTicks) {
+		render(buffer, renderInfo, partialTicks, 0.0f, 1.0f, 1.0f);
+		if (CRConfigs.client().thickerSmoke.get()) {
+			render(buffer, renderInfo, partialTicks, 0.3f, 0.5f, 0.75f);
+			render(buffer, renderInfo, partialTicks, -0.3f, 0.5f, 0.75f);
+		}
+	}
+
+	private void render(VertexConsumer buffer, Camera renderInfo, float partialTicks, float offsetDepth, float size, float alphaFactor) {
 		Vec3 vec3 = renderInfo.getPosition();
 		float f = (float)(Mth.lerp((double)partialTicks, this.xo, this.x) - vec3.x());
 		float g = (float)(Mth.lerp((double)partialTicks, this.yo, this.y) - vec3.y());
@@ -136,9 +144,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		quaternion.mul(Vector3f.YP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
 		quaternion.mul(Vector3f.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
 
-		Vector3f vector3f = new Vector3f(-1.0F, -1.0F, 0.0F);
-		vector3f.transform(quaternion);
-		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
+		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-size, -size, offsetDepth), new Vector3f(-size, size, offsetDepth), new Vector3f(size, size, offsetDepth), new Vector3f(size, -size, offsetDepth)};
 		float j = this.getQuadSize(partialTicks);
 
 		for(int k = 0; k < 4; ++k) {
@@ -153,10 +159,10 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		float n = this.getV0();
 		float o = this.getV1();
 		int p = this.getLightColor(partialTicks);
-		buffer.vertex((double)vector3fs[0].x(), (double)vector3fs[0].y(), (double)vector3fs[0].z()).uv(m, o).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[1].x(), (double)vector3fs[1].y(), (double)vector3fs[1].z()).uv(m, n).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[2].x(), (double)vector3fs[2].y(), (double)vector3fs[2].z()).uv(l, n).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[3].x(), (double)vector3fs[3].y(), (double)vector3fs[3].z()).uv(l, o).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(p).endVertex();
+		buffer.vertex((double)vector3fs[0].x(), (double)vector3fs[0].y(), (double)vector3fs[0].z()).uv(m, o).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
+		buffer.vertex((double)vector3fs[1].x(), (double)vector3fs[1].y(), (double)vector3fs[1].z()).uv(m, n).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
+		buffer.vertex((double)vector3fs[2].x(), (double)vector3fs[2].y(), (double)vector3fs[2].z()).uv(l, n).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
+		buffer.vertex((double)vector3fs[3].x(), (double)vector3fs[3].y(), (double)vector3fs[3].z()).uv(l, o).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
 	}
 
     /*	@Override

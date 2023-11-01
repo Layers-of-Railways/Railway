@@ -4,5 +4,5 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface IOccupiedCouplers {
-    Set<UUID> getOccupiedCouplers();
+    Set<UUID> snr$getOccupiedCouplers();
 }

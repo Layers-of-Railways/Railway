@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
@@ -38,6 +39,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.*;
 
@@ -50,7 +52,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     @Shadow public int ticksWaitingForSignal;
 
     @Override
-    public boolean isWaypointMode() {
+    public boolean snr$isWaypointMode() {
         try {
             return !train.manualTick && !train.runtime.paused && !train.runtime.completed && train.runtime.getSchedule() != null && train.runtime.currentEntry < train.runtime.getSchedule().entries.size() &&
                 train.runtime.getSchedule().entries.get(train.runtime.currentEntry).instruction instanceof WaypointDestinationInstruction;
@@ -62,14 +64,14 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Redirect(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"))
     private double fixWaypointDistanceInTick(Navigation instance) {
-        if (((IWaypointableNavigation) instance).isWaypointMode())
+        if (((IWaypointableNavigation) instance).snr$isWaypointMode())
             return 1000;
         return instance.distanceToDestination;
     }
 
     @Redirect(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/graph/TrackNode;)Z"))
     private boolean keepScoutingAtWaypoints(GlobalStation instance, TrackNode side) {
-        return instance.canApproachFrom(side) && !isWaypointMode();
+        return instance.canApproachFrom(side) && !snr$isWaypointMode();
     }
 
     @Redirect(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
@@ -78,13 +80,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
     ))
     private Pair<UUID, Boolean> brakeProperlyAtWaypoints(Navigation instance) {
-        return isWaypointMode() ? null : instance.waitingForSignal;
+        return snr$isWaypointMode() ? null : instance.waitingForSignal;
     }
 
     @Redirect(method = "currentSignalResolved", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"), slice =
     @Slice(to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;getPoint(Lcom/simibubi/create/content/trains/graph/EdgePointType;Ljava/util/UUID;)Lcom/simibubi/create/content/trains/signal/TrackEdgePoint;")))
     private double preventSignalClearWithWaypoint(Navigation instance) {
-        if (((IWaypointableNavigation) instance).isWaypointMode())
+        if (((IWaypointableNavigation) instance).snr$isWaypointMode())
             return 10;
         return instance.distanceToDestination;
     }
@@ -344,5 +346,11 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, Navigation.StationTest stationTest, CallbackInfo ci) {
         if (Railways.navigationCallDepth > 0)
             Railways.navigationCallDepth -= 1;
+    }
+
+    @Inject(method = "findNearestApproachable", at = @At("HEAD"), cancellable = true)
+    private void handcarsCannotApproachStations(boolean forward, CallbackInfoReturnable<GlobalStation> cir) {
+        if (((IHandcarTrain) this.train).snr$isHandcar())
+            cir.setReturnValue(null);
     }
 }

@@ -1,7 +1,10 @@
 package com.railwayteam.railways.content.coupling;
 
+import com.railwayteam.railways.mixin.AccessorAbstractContraptionEntity;
+import com.railwayteam.railways.mixin.AccessorOrientedContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrain;
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
@@ -9,7 +12,8 @@ import com.railwayteam.railways.util.packet.AddTrainEndPacket;
 import com.railwayteam.railways.util.packet.CarriageContraptionEntityUpdatePacket;
 import com.railwayteam.railways.util.packet.ChopTrainEndPacket;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
+import com.simibubi.create.content.contraptions.ContraptionDisassemblyPacket;
+import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
@@ -19,13 +23,10 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class TrainUtils {
      * @return The new train.
      */
     public static Train splitTrain(Train train, int numberOffEnd) {
+        if (((IHandcarTrain) train).snr$isHandcar()) return train;
         if (numberOffEnd == 0)
             return train;
         if (train.carriages.size() <= numberOffEnd)
@@ -122,9 +124,9 @@ public class TrainUtils {
         );
         CRPackets.PACKETS.sendTo(allPlayers, new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
-        if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).getIndex() >= train.carriages.size()) {
-            int newIndex = ((IIndexedSchedule) train).getIndex() - train.carriages.size();
-            ((IIndexedSchedule) newTrain).setIndex(newIndex);
+        if (train.runtime.getSchedule() != null && ((IIndexedSchedule) train).snr$getIndex() >= train.carriages.size()) {
+            int newIndex = ((IIndexedSchedule) train).snr$getIndex() - train.carriages.size();
+            ((IIndexedSchedule) newTrain).snr$setIndex(newIndex);
 
             newTrain.runtime.read(train.runtime.write());
             if (train.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
@@ -139,18 +141,44 @@ public class TrainUtils {
         }
 
 
-
-//         Goal: when a train is decoupled it should attempt to park at any stations it's mostly aligned with already
-
-//        newTrain.carriages.get(0).getLeadingPoint().travel(newTrain.graph, 0.1, (TravellingPoint.ITrackSelector) newTrain.carriages.get(0).getLeadingPoint(), (Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> pair) -> {
-//            // if the edge point is a station, and it's the first one we've encountered, store it (MutableObject<?> is your friend here)
-//            MutableObject<?>
-//            return false;
-//        }, 0.1, 0.1);
+        // park at nearby stations
+        tryToParkNearby(newTrain, 0.75);
 
 
 
         return newTrain;
+    }
+
+    public static void tryToParkNearby(Train train, double maxDistance) {
+        {
+            Carriage leadingCarriage = train.carriages.get(0);
+            TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
+            MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
+            double distance = discoveryPoint.travel(train.graph, maxDistance, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
+                if (couple.getFirst() instanceof GlobalStation station && station.canApproachFrom(couple.getSecond().getSecond())
+                    && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
+                    targetStation.setValue(station);
+                    return true;
+                }
+                return false;
+            });
+
+            if (targetStation.getValue() != null) {
+                Navigation oldNavigation = train.navigation;
+                train.navigation = new Navigation(train);
+                train.navigation.destination = targetStation.getValue();
+                leadingCarriage.travel(null, train.graph, Math.max(0.1, distance), discoveryPoint, null, 0);
+                targetStation.getValue().reserveFor(train);
+                train.navigation.train = null; // prevent reference cycle
+                train.navigation = oldNavigation;
+            }
+        }
+    }
+
+    private static TravellingPoint copy(TravellingPoint original) {
+        TravellingPoint copy = new TravellingPoint(original.node1, original.node2, original.edge, original.position, original.upsideDown);
+        copy.blocked = original.blocked;
+        return copy;
     }
 
     public static Train combineTrains(Train frontTrain, Train backTrain, BlockPos itemDropPos, Level itemDropLevel, int carriageSpacing) {
@@ -161,6 +189,9 @@ public class TrainUtils {
      * Adds the carriages of backTrain onto the end of frontTrain.
      */
     public static Train combineTrains(Train frontTrain, Train backTrain, Vec3 itemDropPos, Level itemDropLevel, int carriageSpacing) {
+        if (((IHandcarTrain) frontTrain).snr$isHandcar() || ((IHandcarTrain) backTrain).snr$isHandcar()) {
+            return frontTrain;
+        }
         if (frontTrain.derailed || backTrain.derailed) {
             return frontTrain;
         }
@@ -204,7 +235,7 @@ public class TrainUtils {
         ));
 //        frontTrain.carriages.forEach(carriage -> carriage.forEachPresentEntity(CarriageContraptionEntity::syncCarriage));
         if (frontTrain.runtime.getSchedule() == null && backTrain.runtime.getSchedule() != null) {
-            ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
+            ((IIndexedSchedule) frontTrain).snr$setIndex(((IIndexedSchedule) backTrain).snr$getIndex() + frontTrainSize);
             frontTrain.runtime.read(backTrain.runtime.write());
             if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
                 frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
@@ -214,7 +245,7 @@ public class TrainUtils {
             if (frontTrain.runtime.completed) {
                 ItemStack stack = frontTrain.runtime.returnSchedule();
                 Containers.dropItemStack(itemDropLevel, itemDropPos.x, itemDropPos.y, itemDropPos.z, stack);
-                ((IIndexedSchedule) frontTrain).setIndex(((IIndexedSchedule) backTrain).getIndex() + frontTrainSize);
+                ((IIndexedSchedule) frontTrain).snr$setIndex(((IIndexedSchedule) backTrain).snr$getIndex() + frontTrainSize);
                 frontTrain.runtime.read(backTrain.runtime.write());
                 if (backTrain.runtime.state == ScheduleRuntime.State.IN_TRANSIT) {
                     frontTrain.runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
@@ -235,5 +266,24 @@ public class TrainUtils {
             }
         }
         return true;
+    }
+
+    public static void discardTrain(Train train) {
+        for (Carriage carriage : train.carriages) {
+            CarriageContraptionEntity entity = carriage.anyAvailableEntity();
+            if (entity == null) continue;
+
+            StructureTransform transform = ((AccessorOrientedContraptionEntity) entity).snr_makeStructureTransform();
+
+            CRPackets.PACKETS.sendTo(PlayerSelection.tracking(entity), new ContraptionDisassemblyPacket(entity.getId(), transform));
+            entity.getContraption().addPassengersToWorld(entity.level, transform, entity.getPassengers());
+            ((AccessorAbstractContraptionEntity) entity).snr_setSkipActorStop(true);
+            entity.discard();
+            entity.ejectPassengers();
+            ((AccessorAbstractContraptionEntity) entity).snr_moveCollidedEntitiesOnDisassembly(transform);
+
+            Create.RAILWAYS.removeTrain(train.id);
+            CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, false));
+        }
     }
 }
