@@ -7,6 +7,10 @@ Additions
 - Stripped Bamboo Tracks (1.20.1)
 - Handcar: wrench to pick up
 - Generic Crossing Tracks - any two tracks can now cross at a junction
+- Players can now click a station with a whistle to summon a train directly to that station
+- A deployer using a whistle on air will clear the schedule of the bound train
+- You can now whistle a dual-headed train while in motion and have it slow and reverse
+- Decoupled trains' names will now stop at one "Split off from: ..."
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
