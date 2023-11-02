@@ -16,6 +16,8 @@ Changes
 - Decoupled trains' names will now stop at one "Split off from: ..."
 - Trains will now approach nearby stations when they are the rear train in a decoupled set
 - Trains relocated by a wrench will now try to approach nearby stations after relocation
+- Decoupled trains will now move back and forth a little bit to prevent signal overruns
+- Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Fix Farmers delight fabric crash (small hacky fix)
 ------------------------------------------------------
 Version 1.5.1

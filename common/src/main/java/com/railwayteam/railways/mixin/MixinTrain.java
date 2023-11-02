@@ -2,11 +2,9 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
-import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
-import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
-import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
-import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
+import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Navigation;
 import com.simibubi.create.content.trains.entity.Train;
@@ -15,6 +13,8 @@ import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
+import com.simibubi.create.content.trains.signal.SignalBoundary;
+import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Couple;
@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.*;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain {
     @Shadow public TrackGraph graph;
 
     @Shadow public Navigation navigation;
@@ -55,6 +55,13 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     protected int snr$index = 0;
     @Unique
     protected boolean snr$isHandcar = false;
+    @Unique
+    protected boolean snr$isStrictSignalTrain = false;
+
+    @Override
+    public void snr$setStrictSignals(boolean strictSignals) {
+        snr$isStrictSignalTrain = strictSignals;
+    }
 
     @Override
     public boolean snr$isHandcar() {
@@ -122,6 +129,15 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
                 arriveAt(navigation.destination);
                 navigation.destination = null;
                 return true;
+            }
+
+            if (snr$isStrictSignalTrain && couple.getFirst() instanceof SignalBoundary signal) {
+                UUID groupId = signal.getGroup(couple.getSecond()
+                    .getSecond());
+                SignalEdgeGroup signalEdgeGroup = Create.RAILWAYS.signalEdgeGroups.get(groupId);
+                if (signalEdgeGroup != null && signalEdgeGroup.isOccupiedUnless((Train)(Object)this)) {
+                    return true;
+                }
             }
 
             return originalListener.test(distance, couple);
