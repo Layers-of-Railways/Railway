@@ -163,7 +163,9 @@ public class TrainUtils {
 
     public static void tryToParkNearby(Train train, double maxDistance) {
         {
+            final double offsetDist = 0.05;
             Carriage leadingCarriage = train.carriages.get(0);
+            leadingCarriage.travel(null, train.graph, -offsetDist, null, null, 0);
             TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
             MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
             double distance = discoveryPoint.travel(train.graph, maxDistance, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
@@ -183,6 +185,7 @@ public class TrainUtils {
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
                 train.navigation = oldNavigation;
+                leadingCarriage.travel(null, train.graph, offsetDist, null, null, 0);
             }
         }
     }
