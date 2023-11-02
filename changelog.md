@@ -18,8 +18,12 @@ Changes
 - Trains relocated by a wrench will now try to approach nearby stations after relocation
 - Decoupled trains will now move back and forth a little bit to prevent signal overruns
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
-- Fix Farmers delight fabric crash (small hacky fix)
 - Reduce comparator output checking frequency for Track Coupler
+- Force Locale.ROOT for .toLowercase & .toUppercase hopefully preventing any resource location issues in the future
+
+Fixes
+- Mixin conflict with VS2
+- Fix Farmers delight fabric crash (small hacky fix)
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
