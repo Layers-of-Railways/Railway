@@ -19,6 +19,7 @@ Changes
 - Decoupled trains will now move back and forth a little bit to prevent signal overruns
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Fix Farmers delight fabric crash (small hacky fix)
+- Reduce comparator output checking frequency for Track Coupler
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
