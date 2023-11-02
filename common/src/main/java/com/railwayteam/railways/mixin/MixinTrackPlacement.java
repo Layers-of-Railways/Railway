@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.simibubi.create.content.trains.track.TrackBlock.SHAPE;
 
-@Mixin(value = TrackPlacement.class, priority = 1001)
+@Mixin(value = TrackPlacement.class, remap = false)
 public class MixinTrackPlacement {
     // minimum curve length for wide gauge
     @SuppressWarnings("unused")
