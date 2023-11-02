@@ -127,9 +127,12 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
             notifyUpdate();
         });
 
-        if (getTargetAnalogOutput() != lastAnalogOutput) {
-            lastAnalogOutput = getTargetAnalogOutput();
-            level.updateNeighbourForOutputSignal(getBlockPos(), getBlockState().getBlock());
+        if (lazyTickCounter % 5 == 0) {
+            int targetAnalogOutput = getTargetAnalogOutput();
+            if (targetAnalogOutput != lastAnalogOutput) {
+                lastAnalogOutput = targetAnalogOutput;
+                level.updateNeighbourForOutputSignal(getBlockPos(), getBlockState().getBlock());
+            }
         }
 //        DisplayLinkBlock.notifyGatherers(level, worldPosition);
     }

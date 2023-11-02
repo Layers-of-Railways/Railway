@@ -38,6 +38,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -336,6 +337,23 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
+    }
+
+    @Override
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
+        if (isSelected && level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 10 == 0) {
+            CompoundTag tag = stack.getTag();
+            if (tag != null && tag.hasUUID("SelectedTrain") && tag.hasUUID("SelectedConductor")) {
+                UUID trainId = tag.getUUID("SelectedTrain");
+                UUID conductorId = tag.getUUID("SelectedConductor");
+
+                if (serverLevel.getEntity(conductorId) instanceof ConductorEntity conductor) {
+                    if (conductor.getVehicle() instanceof CarriageContraptionEntity cce && !trainId.equals(cce.trainId)) {
+                        tag.putUUID("SelectedTrain", cce.trainId);
+                    }
+                }
+            }
+        }
     }
 }
 

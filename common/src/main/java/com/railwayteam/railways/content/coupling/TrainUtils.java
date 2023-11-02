@@ -6,6 +6,7 @@ import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin.AccessorTrain;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
+import com.railwayteam.railways.mixin_interfaces.IStrictSignalTrain;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.AddTrainEndPacket;
@@ -102,8 +103,20 @@ public class TrainUtils {
                 cce.syncCarriage();
             });
         }
-        newTrain.collectInitiallyOccupiedSignalBlocks();
+
+        // move new train back and forth a little bit to prevent signal overruns
+        {
+            final double bufferDist = 0.1;
+            Carriage leadingCarriage = newTrain.carriages.get(0);
+            TravellingPoint returnPoint = copy(leadingCarriage.getLeadingPoint());
+            leadingCarriage.travel(null, newTrain.graph, -bufferDist, null, null, 0);
+            newTrain.collectInitiallyOccupiedSignalBlocks();
+            ((IStrictSignalTrain) newTrain).snr$setStrictSignals(true);
+            leadingCarriage.travel(null, newTrain.graph, bufferDist, returnPoint, null, 0);
+            ((IStrictSignalTrain) newTrain).snr$setStrictSignals(false);
+        }
         train.updateSignalBlocks = true;
+
         Create.RAILWAYS.addTrain(newTrain);
         CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(newTrain, true));
 //        CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, true));
@@ -139,7 +152,6 @@ public class TrainUtils {
         if (train.carriages.size() == 0) {
             Create.RAILWAYS.removeTrain(train.id);
         }
-
 
         // park at nearby stations
         tryToParkNearby(newTrain, 0.75);
