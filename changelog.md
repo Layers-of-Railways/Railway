@@ -19,6 +19,7 @@ Changes
 - Decoupled trains will now move back and forth a little bit to prevent signal overruns
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Force Locale.ROOT for .toLowercase & .toUppercase hopefully preventing any resource location issues in the future
+- Couplers validate placement less frequently, improving performance
 
 Fixes
 - Mixin conflict with VS2
