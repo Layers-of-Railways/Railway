@@ -24,6 +24,7 @@ Changes
 Fixes
 - Mixin conflict with VS2
 - Fix Farmers delight fabric crash (small hacky fix)
+- Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
