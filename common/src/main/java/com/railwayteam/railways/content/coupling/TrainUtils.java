@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.coupling;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin.AccessorAbstractContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorOrientedContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
@@ -114,6 +115,7 @@ public class TrainUtils {
             ((IStrictSignalTrain) newTrain).snr$setStrictSignals(true);
             leadingCarriage.travel(null, newTrain.graph, bufferDist, returnPoint, null, 0);
             ((IStrictSignalTrain) newTrain).snr$setStrictSignals(false);
+            newTrain.collectInitiallyOccupiedSignalBlocks();
         }
         train.updateSignalBlocks = true;
 
@@ -147,6 +149,8 @@ public class TrainUtils {
                 ((AccessorScheduleRuntime) newTrain.runtime).setCooldown(0);
             }
             train.runtime.discardSchedule();
+            // fixme tmp debugging
+            Railways.LOGGER.warn("[DISCARD_SCHEDULE] on train {} called in TrainUtils.splitTrain because it was transferred to a decoupled rear train because the train's schedule index {} was greater than the carriage count {}", train.name.getString(), ((IIndexedSchedule) train).snr$getIndex(), train.carriages.size());
         }
 
         if (train.carriages.size() == 0) {
@@ -155,8 +159,7 @@ public class TrainUtils {
 
         // park at nearby stations
         tryToParkNearby(newTrain, 0.75);
-
-
+        newTrain.collectInitiallyOccupiedSignalBlocks();
 
         return newTrain;
     }

@@ -1,6 +1,8 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.Schedule;
 import com.simibubi.create.content.trains.schedule.ScheduleEntry;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
@@ -28,6 +30,8 @@ public abstract class MixinScheduleRuntime {
 
     @Shadow public abstract void discardSchedule();
 
+    @Shadow private Train train;
+
     @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
     private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
         ScheduleEntry entry = schedule.entries.get(currentEntry);
@@ -50,6 +54,8 @@ public abstract class MixinScheduleRuntime {
     @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void discardAutoSchedule(Level level, CallbackInfo ci) {
         if (isAutoSchedule) {
+            // fixme tmp debugging
+            Railways.LOGGER.warn("[DISCARD_SCHEDULE] on train {} called in MixinScheduleRuntime#discardAutoSchedule because a non-looping auto schedule was completed", this.train.name.getString());
             discardSchedule();
         }
     }
