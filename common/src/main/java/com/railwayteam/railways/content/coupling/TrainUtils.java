@@ -179,11 +179,14 @@ public class TrainUtils {
 
             if (targetStation.getValue() != null) {
                 Navigation oldNavigation = train.navigation;
+                ScheduleRuntime oldRuntime = train.runtime;
                 train.navigation = new Navigation(train);
+                train.runtime = new ScheduleRuntime(train);
                 train.navigation.destination = targetStation.getValue();
                 leadingCarriage.travel(null, train.graph, Math.max(0.01, distance), discoveryPoint, null, 0);
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
+                train.runtime = oldRuntime;
                 train.navigation = oldNavigation;
             } else {
                 leadingCarriage.travel(null, train.graph, offsetDist, null, null, 0);
