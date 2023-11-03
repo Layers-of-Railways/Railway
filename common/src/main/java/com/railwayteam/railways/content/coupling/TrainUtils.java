@@ -168,7 +168,7 @@ public class TrainUtils {
             leadingCarriage.travel(null, train.graph, -offsetDist, null, null, 0);
             TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
             MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
-            double distance = discoveryPoint.travel(train.graph, maxDistance, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
+            double distance = discoveryPoint.travel(train.graph, maxDistance+offsetDist, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
                 if (couple.getFirst() instanceof GlobalStation station && station.canApproachFrom(couple.getSecond().getSecond())
                     && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
                     targetStation.setValue(station);
@@ -181,10 +181,11 @@ public class TrainUtils {
                 Navigation oldNavigation = train.navigation;
                 train.navigation = new Navigation(train);
                 train.navigation.destination = targetStation.getValue();
-                leadingCarriage.travel(null, train.graph, Math.max(0.1, distance), discoveryPoint, null, 0);
+                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance), discoveryPoint, null, 0);
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
                 train.navigation = oldNavigation;
+            } else {
                 leadingCarriage.travel(null, train.graph, offsetDist, null, null, 0);
             }
         }
