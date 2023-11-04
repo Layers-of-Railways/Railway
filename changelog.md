@@ -19,7 +19,6 @@ Changes
 - Decoupled trains will now move back and forth a little bit to prevent signal overruns
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Reduce comparator output checking frequency for Track Coupler
-- Force Locale.ROOT for .toLowercase & .toUppercase hopefully preventing any resource location issues in the future
 
 Fixes
 - Mixin conflict with VS2
