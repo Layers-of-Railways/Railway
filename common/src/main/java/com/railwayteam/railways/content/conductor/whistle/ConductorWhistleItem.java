@@ -341,7 +341,8 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
     @Override
     public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
-        if (isSelected && level instanceof ServerLevel serverLevel && serverLevel.getGameTime() % 10 == 0) {
+        if (isSelected && level instanceof ServerLevel serverLevel
+            && (serverLevel.getGameTime() + entity.hashCode() + slotId) % CRConfigs.server().conductors.whistleRebindRate.get() == 0) {
             CompoundTag tag = stack.getTag();
             if (tag != null && tag.hasUUID("SelectedTrain") && tag.hasUUID("SelectedConductor")) {
                 UUID trainId = tag.getUUID("SelectedTrain");
@@ -356,6 +357,3 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         }
     }
 }
-
-
-

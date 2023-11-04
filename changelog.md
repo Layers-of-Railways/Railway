@@ -19,10 +19,12 @@ Changes
 - Decoupled trains will now move back and forth a little bit to prevent signal overruns
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Reduce comparator output checking frequency for Track Coupler
+- Couplers validate placement less frequently, improving performance
 
 Fixes
 - Mixin conflict with VS2
 - Fix Farmers delight fabric crash (small hacky fix)
+- Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------

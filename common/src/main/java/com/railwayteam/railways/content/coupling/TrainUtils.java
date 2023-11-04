@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.coupling;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin.AccessorAbstractContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorOrientedContraptionEntity;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
@@ -114,6 +115,7 @@ public class TrainUtils {
             ((IStrictSignalTrain) newTrain).snr$setStrictSignals(true);
             leadingCarriage.travel(null, newTrain.graph, bufferDist, returnPoint, null, 0);
             ((IStrictSignalTrain) newTrain).snr$setStrictSignals(false);
+            newTrain.collectInitiallyOccupiedSignalBlocks();
         }
         train.updateSignalBlocks = true;
 
@@ -147,6 +149,7 @@ public class TrainUtils {
                 ((AccessorScheduleRuntime) newTrain.runtime).setCooldown(0);
             }
             train.runtime.discardSchedule();
+            Railways.LOGGER.info("[DISCARD_SCHEDULE] on train {} called in TrainUtils.splitTrain because it was transferred to a decoupled rear train because the train's schedule index {} was at least the carriage count {}", train.name.getString(), ((IIndexedSchedule) train).snr$getIndex(), train.carriages.size());
         }
 
         if (train.carriages.size() == 0) {
@@ -155,8 +158,7 @@ public class TrainUtils {
 
         // park at nearby stations
         tryToParkNearby(newTrain, 0.75);
-
-
+        newTrain.collectInitiallyOccupiedSignalBlocks();
 
         return newTrain;
     }
@@ -168,7 +170,7 @@ public class TrainUtils {
             leadingCarriage.travel(null, train.graph, -offsetDist, null, null, 0);
             TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
             MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
-            double distance = discoveryPoint.travel(train.graph, maxDistance, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
+            double distance = discoveryPoint.travel(train.graph, maxDistance+offsetDist, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
                 if (couple.getFirst() instanceof GlobalStation station && station.canApproachFrom(couple.getSecond().getSecond())
                     && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
                     targetStation.setValue(station);
@@ -179,13 +181,19 @@ public class TrainUtils {
 
             if (targetStation.getValue() != null) {
                 Navigation oldNavigation = train.navigation;
+                ScheduleRuntime oldRuntime = train.runtime;
                 train.navigation = new Navigation(train);
+                train.runtime = new ScheduleRuntime(train);
                 train.navigation.destination = targetStation.getValue();
-                leadingCarriage.travel(null, train.graph, Math.max(0.1, distance), discoveryPoint, null, 0);
+                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance)+offsetDist, discoveryPoint, null, 0);
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
+                train.runtime = oldRuntime;
                 train.navigation = oldNavigation;
+            } else {
+                ((IStrictSignalTrain) train).snr$setStrictSignals(true);
                 leadingCarriage.travel(null, train.graph, offsetDist, null, null, 0);
+                ((IStrictSignalTrain) train).snr$setStrictSignals(false);
             }
         }
     }

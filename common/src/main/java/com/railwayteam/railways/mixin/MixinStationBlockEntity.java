@@ -2,15 +2,19 @@ package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
+import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
@@ -42,6 +46,8 @@ import java.util.UUID;
 @Mixin(value = StationBlockEntity.class, remap = false)
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     @Shadow @Nullable public abstract GlobalStation getStation();
+
+    @Shadow private UUID imminentTrain;
 
     private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -110,6 +116,21 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
         if (typeOfFirstBogey instanceof HandcarBlock) {
             atLeastOneForwardControls.set(true);
+        }
+    }
+
+    @Inject(method = "applyAutoSchedule", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/schedule/Schedule;Z)V"))
+    private void setScheduleIndexOnAutoSchedule(CallbackInfo ci, @Local Train imminentTrain) {
+        int idx = 0;
+        ((IIndexedSchedule) imminentTrain).snr$setIndex(0); // backup
+        for (Carriage carriage : imminentTrain.carriages) {
+            if (carriage.presentConductors.either(b -> b)) {
+                ((IIndexedSchedule) imminentTrain).snr$setIndex(idx);
+                if (Utils.isDevEnv())
+                    Railways.LOGGER.info("[SET_INDEX {}] on train {} called in MixinStationBlockEntity#setScheduleIndexOnAutoSchedule", idx, imminentTrain.name.getString());
+                break;
+            }
+            idx++;
         }
     }
 }
