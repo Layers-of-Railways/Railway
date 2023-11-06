@@ -5,6 +5,6 @@
   "model": "railways:models/block/palettes/boiler/boiler.obj",
   "textures": {
     "front": "railways:block/palettes/yellow/boiler_gullet",
-    "sides": "railways:block/palettes/yellow/connected_boiler_side"
+    "sides": "railways:block/palettes/yellow/boiler_side"
   }
 }

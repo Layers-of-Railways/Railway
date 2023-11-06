@@ -1,7 +1,6 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.Create;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
@@ -18,13 +17,15 @@ public class CRSpriteShifts {
     public static final Map<DyeColor, CTSpriteShiftEntry>
             SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class);
+            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
+            BOILER_SIDE = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
             SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
             RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
             BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
+            BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
         }
     }
 
@@ -32,6 +33,10 @@ public class CRSpriteShifts {
     //
     private static CTSpriteShiftEntry locometal(DyeColor color, String name) {
         return omni("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
+    }
+
+    private static CTSpriteShiftEntry locometalBoiler(DyeColor color, String name) {
+        return horizontal("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
     }
 
     private static CTSpriteShiftEntry omni(String name) {

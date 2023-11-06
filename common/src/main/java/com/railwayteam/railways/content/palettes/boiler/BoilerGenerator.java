@@ -34,6 +34,6 @@ public class BoilerGenerator extends SpecialBlockStateGen {
                 .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler.obj"))
                 .end()
                 .texture("front", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/boiler_gullet"))
-                .texture("sides", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/connected_boiler_side"));
+                .texture("sides", prov.modLoc("block/palettes/" + color.name().toLowerCase() + "/boiler_side"));
     }
 }

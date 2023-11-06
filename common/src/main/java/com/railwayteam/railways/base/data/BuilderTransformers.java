@@ -5,7 +5,7 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.palettes.boiler.Boiler;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
@@ -113,7 +113,7 @@ public class BuilderTransformers {
                 ));
     }
 
-    public static <B extends Boiler, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(DyeColor color) {
+    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(DyeColor color) {
         return b -> b.initialProperties(SharedProperties::softMetal)
                 .properties(p -> p
                         .color(ColorUtils.materialColorFromDye(color))
