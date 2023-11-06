@@ -23,18 +23,17 @@ public class NaturesSpiritTrackCompat extends GenericTrackCompat {
         registered = true;
         Railways.LOGGER.info("Registering tracks for Nature's Spirit");
         new NaturesSpiritTrackCompat().register(
-            "palo_verde",
-                "ghaf",
-                "joshua",
-                "olive",
-                "cypress",
-                "maple",
-                "aspen",
-                "willow",
-                "fir",
+                "redwood",
                 "wisteria",
-                "sugi",
-                "redwood"
+                "fir",
+                "willow",
+                "aspen",
+                "maple",
+                "cypress",
+                "olive",
+                "joshua",
+                "ghaf",
+                "palo_verde"
         );
     }
 }
