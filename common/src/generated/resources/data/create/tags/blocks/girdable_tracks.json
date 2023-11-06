@@ -17,38 +17,38 @@
     "railways:track_cherry",
     "railways:track_bamboo",
     "railways:track_stripped_bamboo",
-    "railways:track_ender_wide",
     "railways:track_crimson_wide",
-    "railways:track_stripped_bamboo_wide",
-    "railways:track_mangrove_wide",
     "railways:track_dark_oak_wide",
-    "railways:track_birch_wide",
-    "railways:track_bamboo_wide",
-    "railways:track_cherry_wide",
-    "railways:track_create_andesite_wide",
-    "railways:track_spruce_wide",
-    "railways:track_oak_wide",
-    "railways:track_tieless_wide",
+    "railways:track_stripped_bamboo_wide",
+    "railways:track_warped_wide",
     "railways:track_acacia_wide",
     "railways:track_jungle_wide",
+    "railways:track_mangrove_wide",
+    "railways:track_birch_wide",
+    "railways:track_tieless_wide",
+    "railways:track_bamboo_wide",
+    "railways:track_create_andesite_wide",
+    "railways:track_oak_wide",
+    "railways:track_ender_wide",
+    "railways:track_spruce_wide",
+    "railways:track_cherry_wide",
     "railways:track_blackstone_wide",
-    "railways:track_warped_wide",
-    "railways:track_ender_narrow",
     "railways:track_crimson_narrow",
-    "railways:track_stripped_bamboo_narrow",
-    "railways:track_mangrove_narrow",
     "railways:track_dark_oak_narrow",
-    "railways:track_birch_narrow",
-    "railways:track_bamboo_narrow",
-    "railways:track_cherry_narrow",
-    "railways:track_create_andesite_narrow",
-    "railways:track_spruce_narrow",
-    "railways:track_oak_narrow",
-    "railways:track_tieless_narrow",
+    "railways:track_stripped_bamboo_narrow",
+    "railways:track_warped_narrow",
     "railways:track_acacia_narrow",
     "railways:track_jungle_narrow",
+    "railways:track_mangrove_narrow",
+    "railways:track_birch_narrow",
+    "railways:track_tieless_narrow",
+    "railways:track_bamboo_narrow",
+    "railways:track_create_andesite_narrow",
+    "railways:track_oak_narrow",
+    "railways:track_ender_narrow",
+    "railways:track_spruce_narrow",
+    "railways:track_cherry_narrow",
     "railways:track_blackstone_narrow",
-    "railways:track_warped_narrow",
     {
       "id": "railways:track_hexcasting_edified",
       "required": false
@@ -722,111 +722,15 @@
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_palo_verde",
+      "id": "railways:track_natures_spirit_redwood",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_palo_verde_wide",
+      "id": "railways:track_natures_spirit_redwood_wide",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_palo_verde_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_ghaf",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_ghaf_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_ghaf_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_joshua",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_joshua_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_joshua_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_olive",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_olive_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_olive_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_cypress",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_cypress_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_cypress_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_maple",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_maple_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_maple_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_aspen",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_aspen_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_aspen_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_willow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_willow_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_willow_narrow",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_fir",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_fir_wide",
-      "required": false
-    },
-    {
-      "id": "railways:track_natures_spirit_fir_narrow",
+      "id": "railways:track_natures_spirit_redwood_narrow",
       "required": false
     },
     {
@@ -842,27 +746,111 @@
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_sugi",
+      "id": "railways:track_natures_spirit_fir",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_sugi_wide",
+      "id": "railways:track_natures_spirit_fir_wide",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_sugi_narrow",
+      "id": "railways:track_natures_spirit_fir_narrow",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_redwood",
+      "id": "railways:track_natures_spirit_willow",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_redwood_wide",
+      "id": "railways:track_natures_spirit_willow_wide",
       "required": false
     },
     {
-      "id": "railways:track_natures_spirit_redwood_narrow",
+      "id": "railways:track_natures_spirit_willow_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_aspen",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_aspen_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_aspen_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_maple_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_maple_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_cypress",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_cypress_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_cypress_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_olive",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_olive_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_olive_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_joshua",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_joshua_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_joshua_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_ghaf",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_ghaf_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_ghaf_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_palo_verde",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_palo_verde_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_natures_spirit_palo_verde_narrow",
       "required": false
     }
   ]

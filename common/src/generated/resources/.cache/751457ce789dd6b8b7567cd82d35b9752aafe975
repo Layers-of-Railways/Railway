@@ -1,4 +1,4 @@
-// 1.20.1	2023-10-28T17:53:20.866772529	Create: Steam 'n' Rails/Registrate Provider for railways [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2023-11-05T19:53:54.485879615	Create: Steam 'n' Rails/Registrate Provider for railways [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 8e9499e234a98acbd98eafe0f09ce96366b8e9bf assets/railways/models/block/track/crimson_wide/cross_d2_xo.json
 4c7c2f8bad1fe7a10bafd9c9d85be414dda58f31 assets/railways/models/block/track/compat/biomesoplenty/cherry_narrow/tie.json
 35d96694dbdd1c7ba40e078b097067c0a1baa0ae assets/railways/models/block/track/compat/byg/green_enchanted_narrow/cross_d1_zo.json
@@ -74,7 +74,6 @@ c850e84012d72c967733c9e10bf719f6c31bba3d assets/railways/models/block/track/comp
 cba4e067a230d3d8e79a5b3f09fb1adb38188bbe assets/railways/models/block/track/compat/byg/aspen/diag.json
 902edb03cfc0e0a31f324fa85d459c1ea8eab069 assets/railways/models/block/track/cherry_narrow/cross_diag.json
 873fcb07bc95d69194891b3946b494f69ab38091 assets/railways/models/item/track_incomplete_byg_aspen_wide.json
-cb4661afe8b2d3dd3065271119a7e04239b68f82 assets/railways/blockstates/track_natures_spirit_sugi_wide.json
 1cb4730e62625deb23fadba1c84f96b8d332e5bb assets/railways/blockstates/track_byg_witch_hazel_narrow.json
 f28d6e56a755e82891ed5b2bdfd0ae4c3921a7c6 data/railways/loot_tables/blocks/track_byg_nightshade_wide.json
 ea26eee39536b23d7bc4e8c7b5e7ff49d9e86131 assets/railways/models/block/track/compat/byg/baobab/cross_d1_xo.json
@@ -171,7 +170,6 @@ ab6ddf62dd55f6c49da6fcab206c378e14b3fce3 assets/railways/models/block/track/comp
 dbb3c2a67943229fcaecfc879954072e960acb99 assets/railways/models/block/track/compat/twilightforest/twilight_oak/cross_diag.json
 fac474b5d737730d831faf269af5b6978d062dfe assets/railways/models/block/track/dark_oak_wide/cross_diag.json
 565929a7854c63848e30a0c80f07ee432232ecfe assets/railways/models/block/track/compat/natures_spirit/redwood_wide/cross_d2_zo.json
-4c25b95c8bff0d8d69ea87cafdde4c4321fd7963 assets/railways/models/item/track_incomplete_natures_spirit_sugi.json
 dc68c7e350415afee06695864da46745b04994be assets/railways/models/block/track/compat/natures_spirit/aspen/cross_diag.json
 49216b4d350b80b36ad9108f3d4aa7399374dde6 assets/railways/models/block/track/compat/blue_skies/frostbright_narrow/cross_d1_zo.json
 7e72b329d6e4b9c295cd5104408461d4aec91c74 assets/railways/models/block/track/compat/byg/blue_enchanted/cross_diag.json
@@ -289,7 +287,7 @@ be409d0bdeaec52685e95f24c4e42bb6eea70478 assets/railways/models/block/track/comp
 185f4947cb61b6cfdd9defaabe4a5a99963c6344 assets/railways/blockstates/track_biomesoplenty_dead.json
 e7ca253fb518c35e651b9c4fe1f76db471d3642d assets/railways/models/block/track/dark_oak_wide/tie.json
 52072deb4808123d7b7d53bd1cc0951e9d5cea2d assets/railways/models/block/track/cherry/cross_diag.json
-5aaf0fe62005b3ca9e04e5baec6fd7d05313c7b5 data/c/tags/blocks/relocation_not_supported.json
+384203eeea31a147f58316454b644e3e9301e788 data/c/tags/blocks/relocation_not_supported.json
 0a7b5a113926c44f2574518b3b76c00d4d12231d assets/railways/models/block/track/dark_oak/cross_d1_xo.json
 4218fe88c1bb1a7d7b9cb12c92458d1712ede48a assets/railways/models/block/track/compat/byg/maple/ascending.json
 89f33a60c79c2c2c2de0b6b5f704f20a5f4458da assets/railways/models/block/track/compat/twilightforest/canopy/cross_d2_xo.json
@@ -329,7 +327,6 @@ b25e290c307c5afb6288252440dfde97cfc17201 assets/railways/models/block/track/comp
 407edb0c49de37c0cc7466a65ae24a294a266b43 assets/railways/models/block/track/compat/byg/nightshade_narrow/diag_2.json
 bed31b6e3a28db598cba16b4f520b3fc6107affe assets/railways/models/block/track/compat/biomesoplenty/mahogany_narrow/cross_ortho.json
 a4e463a4f25bd2869068fe32320c43f471749c17 assets/railways/models/block/track/stripped_bamboo_wide/diag_2.json
-771cc2ca0616bb53a79bbd49783fd80ebe5915ad assets/railways/models/block/track/compat/natures_spirit/sugi/segment_left.json
 b959a10cd6bbd24177cf165ebb0fa996d68354e7 assets/railways/models/block/track/compat/natures_spirit/wisteria/segment_left.json
 511ba0b4afd82903d2686b7ae553dc001380324f assets/railways/models/block/track/compat/byg/ebony/teleport.json
 bc7e114a6352b1049163b77009b238c2d5496603 assets/railways/models/block/track/compat/byg/pine/cross_d2_zo.json
@@ -353,7 +350,6 @@ e8fb5f766c526b84c6600d699742434a68bf75e9 assets/railways/models/block/track/comp
 6573381c674137cb708f496a3fb59a854b442d73 assets/railways/models/block/track/compat/twilightforest/minewood_narrow/cross_ortho.json
 b002fbc6b900760415e0df007a247c8973c0d85c assets/railways/models/block/track/compat/blue_skies/starlit/diag_2.json
 502f5a9e8faed718e24473f8aef28cbc7071116e assets/railways/models/block/track/compat/byg/skyris/diag_2.json
-326cb3089995c01bfea60a2da8439da0009506e6 data/railways/loot_tables/blocks/track_natures_spirit_sugi.json
 375ca7cd9e414308ad84e9ac797bfd658b70e6e8 assets/railways/models/block/track/compat/byg/palm_wide/x_ortho.json
 6418ef4a47b9e63a628540d7b8d100b78e749829 assets/railways/models/block/track/stripped_bamboo_wide/cross_d2_zo.json
 a398728b9709e9dbda2e523a5e8dda396a14bf35 assets/railways/models/block/track/compat/natures_spirit/ghaf_narrow/segment_right.json
@@ -383,8 +379,8 @@ ab84b125009346a5e5a6eee3b6b1e560f195b82c assets/railways/models/block/track/comp
 3e39a99bab8cf58e6392b2eea18301d3a25b4c73 assets/railways/models/block/track/blackstone_wide/cross_d1_zo.json
 a962d2d73ce51e4949b1064540e89b2ea7d7437a assets/railways/models/block/track/compat/byg/zelkova/diag_2.json
 8666ce53adc93f530940b29caea61917a194f901 assets/railways/models/block/track/compat/biomesoplenty/mahogany_wide/cross_d1_zo.json
-c76c54521a58c2c3962f43e1b416919cbca7c6cd assets/railways/models/block/track/compat/byg/sythian_wide/cross_d1_xo.json
 4d238e7baaada44034764b82ddec409069926ba4 assets/railways/models/block/track/compat/twilightforest/darkwood_narrow/segment_right.json
+c76c54521a58c2c3962f43e1b416919cbca7c6cd assets/railways/models/block/track/compat/byg/sythian_wide/cross_d1_xo.json
 a9ddc202eb0de70f3abde35df737780edd38edf3 assets/railways/models/block/track/compat/byg/bulbis_narrow/cross_d2_xo.json
 2a8d1abb52b6a2f7283c106ed571220081112b43 assets/railways/blockstates/track_blackstone.json
 dc2f605750b5da227596cbcc109bec39c1df258e assets/railways/models/block/track/compat/biomesoplenty/umbran_narrow/diag_2.json
@@ -627,7 +623,6 @@ da19ea3a7329538ab073b90e342ecdcb1cadc65f assets/railways/models/block/track/comp
 677508e3716106add43b8479f6681322fa638408 assets/railways/models/block/track/tieless_narrow/cross_ortho.json
 9c4ad5633737caa38c4015091240524a3b6236ab assets/railways/models/block/track/compat/byg/nightshade_narrow/cross_diag.json
 d7276c2a9b3e589d33ace10820c98a3e306ab253 assets/railways/models/block/track/compat/byg/lament_wide/cross_d2_xo.json
-9268f50f511a707b6080d7b6fdf6badf0c22ed9c assets/railways/models/block/track/compat/natures_spirit/sugi_wide/tie.json
 aa0bb29b7e7b7c13a3d84bd79065bc3b3020c39e assets/railways/models/block/track/compat/byg/cherry_wide/diag.json
 13b05d90b96507f27d6c6188975e1e49b2f92a45 assets/railways/models/block/track/compat/byg/imparius_narrow/teleport.json
 e0c89d0639932248aada949ea729471c479c29a0 assets/railways/models/block/track/compat/byg/ether_wide/segment_right.json
@@ -704,7 +699,6 @@ e3c2311dc6e0ad091471ea1e0f6e582963e42fe9 assets/railways/models/block/track/comp
 25073d33ab618cee55da29f37400caaa02ff3818 data/railways/loot_tables/blocks/track_monorail.json
 3bd779523b76724c31763065f6979f56caf97189 assets/railways/models/block/track/crimson/cross_d2_xo.json
 4dec17c72fc7a6ecfaaedcf3344c9a856914392c assets/railways/models/block/track/crimson_narrow/z_ortho.json
-eb2ab8b121f98cd55962e7c53885dc4e19ef9c12 assets/railways/models/block/track/compat/natures_spirit/sugi/cross_d2_zo.json
 f9c37a66159ffb62fda5df02e07957b219e08a4e assets/railways/models/block/track/compat/byg/nightshade_narrow/z_ortho.json
 04b46d6fd0fd2f3d8b8ab731ae4dea9902a7616d assets/railways/models/item/gray_conductor_cap.json
 28055cc42e63da41232a0ef8ae6f380a416382a5 assets/railways/models/block/track/jungle_narrow/segment_right.json
@@ -845,7 +839,6 @@ d0037a80720841e31542348403e6aea3ab435c31 assets/railways/models/block/track/comp
 8f2af68dbb9a11d149dd76cae30afcf9822469e7 assets/railways/models/block/track/oak/teleport.json
 9e2d7d4354d7934b233474c6bccc85c03dcd2ddb assets/railways/models/block/track/compat/twilightforest/mangrove_wide/cross_d2_xo.json
 e457d3b0ef41a9abe6421d5e6807b0061e477967 data/railways/loot_tables/blocks/track_natures_spirit_maple.json
-64deecda00e0f509b461db9dfce2aa3d5d1c99d7 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_diag.json
 a8fc33d7002d2702435357d43a4fab46cd9a0d28 assets/railways/models/block/track/stripped_bamboo/x_ortho.json
 8a615b66d94b1e008bd99ac892e14cdbbd674b53 assets/railways/models/block/track/compat/biomesoplenty/fir/tie.json
 b61d7a3c209fa9220c626ee62c455c974bcc8c62 assets/railways/models/block/track/compat/natures_spirit/cypress_wide/cross_d1_xo.json
@@ -919,7 +912,6 @@ b5d85f172aaa0aabbbe83bbbf4a613f32c0739f9 assets/railways/models/block/track/comp
 bf622d03749efab85fd2f0d77dc28de9084ca06d assets/railways/models/item/track_incomplete_byg_blue_enchanted.json
 d877614f0e1db27e30f107e5b4a1e7383faa80dc assets/railways/models/item/track_incomplete_biomesoplenty_palm_wide.json
 a8b17c0fd92168308848b59f59edfc7b7f3d65ac assets/railways/models/block/track/stripped_bamboo_narrow/cross_d2_zo.json
-a9d2ddd937ccecd9825899ec27cdcf92362f59de assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_ortho.json
 44d04510782f95ed1fccd89e88feed763c46fa8e assets/railways/models/block/track/compat/twilightforest/canopy_narrow/cross_d2_xo.json
 7a25428ffc13ca965e30865980f61cf5512c7e52 assets/railways/models/block/track/compat/natures_spirit/maple_narrow/diag.json
 ee79736117bf45462ccae520638f0eab63a06595 assets/railways/models/block/track/compat/natures_spirit/cypress_narrow/segment_left.json
@@ -964,7 +956,6 @@ d18eab7ed6b5b7bb971d6d8be2f131bbd18d2ba3 assets/railways/models/block/track/mang
 4f73652ec2cd751ab0be7dda2f2108612ecdb163 assets/railways/models/block/track/compat/blue_skies/lunar_narrow/diag.json
 14c94abf34b8f96723b6aeee7bbdd10c2a2951cb assets/railways/models/block/track/compat/blue_skies/maple_wide/diag.json
 a37bd4ae27f372704c76feb2c3d71cdc94ceb3b7 assets/railways/models/block/track/compat/natures_spirit/cypress/z_ortho.json
-584f90a7a5854dac8136949aa5c2813306d7889e assets/railways/models/block/track/compat/natures_spirit/sugi/cross_d1_zo.json
 acb84cfd5dd36e4956f50579068333d2086bb02f assets/railways/models/block/track/compat/natures_spirit/redwood_wide/tie.json
 fb43febbb886ce8098eb1a7805be3bf87105a6fd data/railways/loot_tables/blocks/track_ender.json
 89fa343903136f08e3a34928b89e6961a757abfc assets/railways/models/block/track/compat/byg/skyris_wide/cross_d1_xo.json
@@ -973,7 +964,6 @@ ae3f0523c87942009a4b30077ff236bbcdb6639a assets/railways/models/block/track/comp
 882e6714db30585cba4160714321321d9041dcf0 assets/railways/models/block/track/compat/byg/white_mangrove/cross_d2_xo.json
 1e1745e9a85df6574c8cb21a20330e2c4a0be6ea assets/railways/models/block/track/compat/biomesoplenty/cherry/z_ortho.json
 c10a4968fba419d271fd24948e27d03abfc6ef1f assets/railways/models/block/track/cherry/tie.json
-850c029704705c78875f6a2fc819ed5c1a2adc99 assets/railways/models/block/track/compat/natures_spirit/sugi/teleport.json
 9a55ee573456ea306278d1cc474eb5ed6c8d446f assets/railways/models/block/track/compat/biomesoplenty/hellbark_narrow/cross_d1_xo.json
 b44c519ea33b04169e24649af0f0f204d016752e assets/railways/models/item/track_incomplete_twilightforest_minewood.json
 1d59dea57c01afe1766dbeccf20fa93a601a7d1b data/railways/loot_tables/blocks/track_byg_cherry_wide.json
@@ -1039,7 +1029,6 @@ fff3c62bb9d46c0084b17988265de6adaa5419eb assets/railways/blockstates/track_twili
 3b09c8b8499996c09e1511a5cf66dca716799601 assets/railways/blockstates/track_byg_mahogany_narrow.json
 9e7b6415e82d914542dc8f3891623fe13487c3b3 assets/railways/models/item/track_natures_spirit_palo_verde_wide.json
 2260d4448bc537c6f6251eb35446737feee3f694 assets/railways/models/block/track/compat/byg/palm_wide/segment_right.json
-2761d20584fa920b234b3489d0e84656a6048dd7 assets/railways/blockstates/track_natures_spirit_sugi.json
 d1d0b44b5247b91f671afda293d7aefd53ae68ce assets/railways/models/block/track/compat/twilightforest/timewood/tie.json
 67b6eed50ff3e61e804de7114f13dd83ef721a51 assets/railways/models/block/track/compat/natures_spirit/joshua/ascending.json
 cfe2f610c991f291eed23af5dbba164039c3f7f6 assets/railways/blockstates/track_byg_nightshade_narrow.json
@@ -1135,7 +1124,7 @@ bf29f86db2eec7bdba4dcaa97660dcca40a7011a assets/railways/models/block/track/comp
 483f368bbad8ac4bc04103c69f8c72a022ebb3fd assets/railways/models/block/track/compat/twilightforest/canopy/ascending.json
 06b9123b7a365734e4a54d3f89c29b583da85f68 assets/railways/models/block/track/compat/byg/mahogany_wide/ascending.json
 c61e1f592876641f112b8c3cfef4b01c8dcfc182 assets/railways/models/block/track/compat/byg/nightshade/cross_d2_zo.json
-5aaf0fe62005b3ca9e04e5baec6fd7d05313c7b5 data/create/tags/blocks/tracks.json
+384203eeea31a147f58316454b644e3e9301e788 data/create/tags/blocks/tracks.json
 90224c53882369f87f194c20b9d97539a1f323a4 assets/railways/models/block/track/compat/natures_spirit/willow_wide/z_ortho.json
 ea11ebd1efcd9486b40b10c38b626226799f6706 assets/railways/models/block/track/compat/blue_skies/cherry/x_ortho.json
 a0902fa3d7fff60a815510a1224182afb370e631 assets/railways/blockstates/track_byg_ebony_narrow.json
@@ -1183,7 +1172,6 @@ a15117dc1a94632e548f31d109f9a56fb3e85b8b assets/railways/models/block/track/comp
 b7bf5ba60abedef310fe62c6acc19ef0299cbe05 assets/railways/models/block/track/oak_wide/diag_2.json
 0bb6c0e3fd3d0d1efe01a338390c153e6d2ef6c1 assets/railways/models/block/track/compat/biomesoplenty/jacaranda_narrow/diag.json
 599db8e6088a6406afcc8bfa8b3904b5bc5d5f2f data/minecraft/tags/blocks/mineable/axe.json
-08fd9de58947b9bab98fd1015249f3598bdd07f7 assets/railways/models/block/track/compat/natures_spirit/sugi/cross_ortho.json
 441c3efc25938a21fbd11d6e59c2a4cddc9f17aa assets/railways/models/block/track/compat/byg/white_mangrove_wide/cross_ortho.json
 1403e73f3aa2e2b9871f77b7734da499d194a986 assets/railways/models/item/track_biomesoplenty_willow_narrow.json
 7dd445a46958598850fa596c546833d1e3d93ab2 assets/railways/models/block/track/compat/biomesoplenty/palm/diag_2.json
@@ -1228,7 +1216,6 @@ d5a6b9b99d586bff81faa2cc30170f1985aeb07e assets/railways/blockstates/track_biome
 1b518582e2795d928b4e71c98f4b2123688da5ca data/railways/loot_tables/blocks/track_twilightforest_timewood_narrow.json
 fd674e673a2bf33603e3f770f2ada1b7a17f276a assets/railways/models/block/track/compat/byg/lament/teleport.json
 201a349efe8cf2e5ede12a5c734da3522945c9dd assets/railways/models/block/track/compat/blue_skies/frostbright/cross_diag.json
-88e9a3327acfea826823c3f2fb4deca08aeba2a0 data/railways/loot_tables/blocks/track_natures_spirit_sugi_wide.json
 39b63286a86f59a11d4975cb4e73cdca32053ab8 assets/railways/models/block/track/compat/natures_spirit/ghaf/z_ortho.json
 38f281782e110308a316dcaf616c7b69c45b5a6b assets/railways/models/block/track/compat/twilightforest/twilight_oak/diag_2.json
 d68ede5788bd924479e206b178c053c4d9467393 assets/railways/models/block/track/oak_wide/ascending.json
@@ -1255,7 +1242,6 @@ d48f837c5f2995942894ec86de00b6dd2e1c99e8 assets/railways/models/block/track/comp
 b9045e572008b7d75683b90f81c78445ed92c7d9 assets/railways/models/item/track_biomesoplenty_jacaranda_wide.json
 1f90826a88d0b5abc18f8456c6c2117cfb5bd580 assets/railways/models/block/track/compat/byg/fir_narrow/x_ortho.json
 a6f721c1753024cec78d87c41606cf29ca6a7593 assets/railways/models/block/track/compat/biomesoplenty/mahogany/diag.json
-790f4ab3161c3bab9f8f17b870430c55195a059f assets/railways/models/block/track/compat/natures_spirit/sugi/tie.json
 dd41bf366539618d1b60c3ccc849d273049c1da0 assets/railways/models/block/track/spruce_wide/cross_d2_xo.json
 dbb17ccb6307fb2f4a623d205188482da9015ac6 assets/railways/models/block/track/compat/byg/pine_wide/diag.json
 56c276274cb578d1c6557d404508e737642f42bd assets/railways/models/block/track/compat/twilightforest/minewood_wide/tie.json
@@ -1268,7 +1254,6 @@ dbb17ccb6307fb2f4a623d205188482da9015ac6 assets/railways/models/block/track/comp
 59ae191154b0120f380f4d9fe6484cda93614071 assets/railways/models/block/track/compat/twilightforest/timewood/x_ortho.json
 31a7d9058d4f64c67f8da25e85ffe30736bb9594 assets/railways/models/item/track_natures_spirit_wisteria_narrow.json
 b2f239beefe9af19f0cfd6e05796c97f20e9c408 assets/railways/models/block/track/compat/biomesoplenty/hellbark_narrow/diag.json
-2015cea509bd62f39389484836329a827d28e5ad assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_d2_zo.json
 9d3df3d8f76b58d9ff022e24afee66613c624fe3 assets/railways/models/block/track/compat/blue_skies/starlit_wide/cross_ortho.json
 e168e14d341f7cfd44dc11c378ff0376bf51267d assets/railways/models/block/track/bamboo_wide/segment_left.json
 bd09b2349efa3f6cf4f6f72e5cecbe52617653ad assets/railways/models/block/track/compat/byg/pine/diag.json
@@ -1277,7 +1262,6 @@ bd09b2349efa3f6cf4f6f72e5cecbe52617653ad assets/railways/models/block/track/comp
 2e574d279f2e04017b07a6d63b75f3486fcd8282 assets/railways/blockstates/track_spruce_wide.json
 550495e5de1dce1a9719c642f6e5441c3b50e35e assets/railways/models/block/track/cherry_narrow/segment_right.json
 0f9d093f55a68441d04f46a16c93bf18dd05ecd5 assets/railways/models/block/track/compat/byg/cherry_wide/cross_diag.json
-3bb402ed046b00a3157d8bd60b37f1254fa537c1 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/segment_left.json
 6477ea1f06a0dd9604d0c900c711980346faa386 assets/railways/models/block/track/compat/byg/zelkova/z_ortho.json
 ad5720e78ce7879bf8fc76017cae07604982ac0c assets/railways/models/block/track/mangrove/teleport.json
 1ddaccd1c2291c0932582539ea4977b31a210d74 data/railways/loot_tables/blocks/track_byg_cherry.json
@@ -1304,7 +1288,6 @@ e1de1c0029eb1a63b44e3051570c4883184139dd data/railways/loot_tables/blocks/track_
 e8a40a4305bc983f847fa887d8c66237784680f1 data/railways/loot_tables/blocks/track_natures_spirit_joshua_narrow.json
 177e1b0bf4190529c3ceced89adf4f527a02e5f2 assets/railways/models/block/track/compat/byg/nightshade_narrow/x_ortho.json
 502aef900d1121299243365bd5ab8b296056ddcf assets/railways/models/block/track/compat/byg/maple_wide/cross_d1_xo.json
-c4c2812d3af7e474bc8298722effe18ec0ccc08e assets/railways/models/item/track_incomplete_natures_spirit_sugi_wide.json
 ea5db98708082b1b79be400c22abfb22631eeb8b assets/railways/models/item/track_incomplete_blue_skies_lunar_wide.json
 a43286bacfcb94414f762285c0d5cca261860f73 assets/railways/models/block/track/compat/biomesoplenty/hellbark/cross_d1_xo.json
 97931eb971dd8f9bd738c053a09f5824b0e0bbc3 assets/railways/models/block/track/create_andesite_wide/cross_d1_xo.json
@@ -1367,7 +1350,6 @@ e42ccd2fa62df875f265dd2d01212365f1071e31 assets/railways/models/block/track/comp
 c754d50e1566d1eed098b0a677050b974e802d70 assets/railways/models/block/track/blackstone/teleport.json
 95dfbf0bee68cbedf80a416eaf58a0fa7033321b assets/railways/models/block/track/compat/byg/imparius_narrow/segment_right.json
 299b6c57f8ccc27e2bb4c2dd4997d3200c61f569 assets/railways/models/block/track/compat/biomesoplenty/fir_narrow/cross_d1_xo.json
-94081fa579805326f2c7a00aa67ac0ec2aa9e3ce data/railways/loot_tables/blocks/track_natures_spirit_sugi_narrow.json
 13e1739e26be511107ef175cede3c072543a7568 assets/railways/models/block/track/compat/byg/baobab/cross_d2_zo.json
 211f95f0e1f007990c3561cf02645ab0b7a83582 assets/railways/models/block/track/dark_oak/cross_ortho.json
 26019e6f5c2825ccfde38b23355783262b81c882 assets/railways/models/block/track/compat/biomesoplenty/magic_narrow/teleport.json
@@ -1407,7 +1389,6 @@ bffea91dea4847ce3809b684f3f6d886e9ee3c8b assets/railways/models/block/track/comp
 46333d6a96b9e8dcfa7052e045a60108ca8a46f9 assets/railways/models/block/track/mangrove_wide/ascending.json
 61533882a07817919c559d8adbf6e35886e8c7f0 assets/railways/models/block/track/compat/twilightforest/transwood_narrow/ascending.json
 3a82745e73b8e6adfc657eeae921b9d4df864140 assets/railways/models/block/track/compat/twilightforest/transwood_wide/teleport.json
-7f07e3c29cbd75994e60769c1a5b12509e8132e0 assets/railways/models/block/track/compat/natures_spirit/sugi/diag.json
 3dab8865f27abf2d1cc46705f00736330cd08835 assets/railways/models/block/track/compat/twilightforest/timewood_wide/teleport.json
 e93e32ad084902121d4d67700e1be0c1fbed943a assets/railways/models/block/track/blackstone_wide/z_ortho.json
 00931d44ae6f54b5f432f100a3f5eb0e5b8d0636 assets/railways/models/block/track/compat/biomesoplenty/jacaranda_wide/cross_diag.json
@@ -1454,7 +1435,6 @@ d2bd98f91027a9f891347b97fcb3a6100eeb42ff assets/railways/models/block/track/comp
 7f19148243b589db5939221d5ec3ddf4c00c8f1f assets/railways/models/item/light_gray_conductor_cap.json
 76ee77c7ca4784ffc1ed470d96f887e898d3bc3c assets/railways/models/item/track_incomplete_byg_cika.json
 b80cdf16ed4a2400a78f97f4d0eb6b0c18a057a1 assets/railways/models/item/pink_incomplete_conductor_cap.json
-cce362dc90b933c20ed80879d568ea0cd4e59863 assets/railways/models/item/track_natures_spirit_sugi_narrow.json
 6337f2d90d553a3dc6c69b2b6566b0375a9567db assets/railways/models/block/track/compat/byg/sythian_wide/teleport.json
 5bee9d8fdfec92fcffa111bd57b132385a3a0936 assets/railways/models/block/track/cherry_wide/cross_d1_zo.json
 9e55a794ffae993310649813b701e7e2319bddf1 assets/railways/models/block/track/compat/blue_skies/maple/cross_d2_xo.json
@@ -1510,7 +1490,6 @@ bf40e933b1f0181197526a5ee4168236b8936dba assets/railways/models/item/track_incom
 3cd54ebc8cd3aa8f8b025a4cc914c13c1fa30a23 assets/railways/models/block/track/compat/natures_spirit/cypress_wide/x_ortho.json
 2e04e3832912f5d62aa32874d8780bee2867617f assets/railways/models/item/track_incomplete_natures_spirit_palo_verde_narrow.json
 50672bd7734373d2aa47b6715e59ffb2576d4b3f assets/railways/models/block/track/compat/byg/cherry_narrow/ascending.json
-d7ea1310a90eef82b662945ceb0fba23a1b186ba assets/railways/models/block/track/compat/natures_spirit/sugi_wide/ascending.json
 b5d1676260d7fecffd5b830efe2ee36276386e01 assets/railways/models/block/track/compat/biomesoplenty/palm_narrow/cross_d1_zo.json
 46568c19596c6a80c44ea9a3ba8e32c5bd24cc04 assets/railways/models/block/track/compat/blue_skies/starlit/cross_d1_zo.json
 a3d1e681fe37e269723afd2229e7839120c88bbf assets/railways/models/block/track/compat/biomesoplenty/cherry_narrow/ascending.json
@@ -1569,7 +1548,6 @@ c7b98beb5bb4b721af6e46bcfef70806d93b2232 assets/railways/models/block/track/comp
 02b2786a37b760168b014e585a4e23b161d347d8 assets/railways/models/block/track/blackstone/diag_2.json
 a80a474397fb3a5dfcb4518e8895acfab272ffce assets/railways/models/block/track/compat/natures_spirit/cypress_wide/ascending.json
 d1641aa7bc9d83bf46307d6a0760b07f57d2fa24 assets/railways/models/block/track/compat/twilightforest/sortingwood_narrow/cross_d2_xo.json
-62122888bfa70544fc87bfe0166b64d0216788e8 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/z_ortho.json
 d314186bef0989904b118ff16f0e87dea26a2ad9 assets/railways/models/block/track/compat/twilightforest/darkwood/cross_ortho.json
 a593eb759896bbb1b3bb9407fef12e576f8c3a80 assets/railways/models/block/track/compat/twilightforest/minewood_wide/segment_left.json
 4be141ab6e118904b7b1e676a49fa1553c0133d0 assets/railways/models/block/track/compat/twilightforest/mangrove_wide/cross_d2_zo.json
@@ -1588,7 +1566,6 @@ bbde4245a7c4564009fc5f850b6a296047fd9c82 assets/railways/models/block/track/comp
 e3ce01238c60fa8a16d019082677e39ed98763c1 assets/railways/models/block/track/compat/byg/redwood_narrow/x_ortho.json
 d0e191e871b0e1768a33be4f875c2130ee4d793e assets/railways/models/block/track/compat/byg/mahogany_narrow/segment_left.json
 7df874d8fa8400a0e105fd386091232f223433b6 data/railways/loot_tables/blocks/track_byg_redwood.json
-420c7cafc80376d2278c17fe6180a4b364a7b6d7 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/x_ortho.json
 f3f43a8bbc9ab055193ca923068fb9da70d4f338 assets/railways/models/block/track/compat/byg/zelkova_wide/x_ortho.json
 85598b8ea41a29762a77c5200551a491d381f0fd assets/railways/models/block/track/oak_wide/cross_d1_zo.json
 ba7861e4d29ab294bcfbcf056d1615a7415fa926 assets/railways/models/item/track_incomplete_blackstone_wide.json
@@ -1657,7 +1634,6 @@ c234a8656db0957fa433388fd742024017c0ba8f assets/railways/models/block/track/comp
 3241360683c0e1516ef2412bba4b5210e328237b data/railways/loot_tables/blocks/track_tieless.json
 340a5f510dad424665a776dcca82f3eb1722400a assets/railways/models/block/track/compat/byg/maple_narrow/z_ortho.json
 a49932ce717eda2e7bfdaecec3c16853d48bcf74 assets/railways/models/block/track/oak_wide/teleport.json
-279794ae2adc20292dcd062642d73e521d55c588 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_d1_xo.json
 a6446c2396ececc69c6231ac361e92f1e20a85e6 assets/railways/models/block/track/compat/byg/cypress_wide/cross_d1_zo.json
 0a1b1332bb69c7fa5b595ddc7820c51d4e0cf0fe assets/railways/models/block/track/compat/byg/witch_hazel_wide/ascending.json
 2eed46193a33f68ceaab8cc817350e838ced57e5 assets/railways/models/block/track/compat/blue_skies/maple_narrow/segment_right.json
@@ -1778,7 +1754,6 @@ a480edf54a4d539977f48083bea0f66a100689c3 assets/railways/blockstates/track_blue_
 7b30b64e2517d49fa61508c74535566063cc5462 assets/railways/models/item/track_incomplete_byg_redwood.json
 465ea73e5f0e719c4235dcd3db0d5352e8894808 assets/railways/models/block/track/ender_wide/ascending.json
 0fca167c8205a622c4e57f9339186883f4fde5c1 assets/railways/models/block/track/compat/byg/sythian_narrow/cross_ortho.json
-ae9f2e6b4f6267f08981bfe2e3663b3593182579 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/segment_left.json
 3ed406b0667d8c23ce3738322e802067636411c8 assets/railways/models/block/track/compat/byg/mahogany/ascending.json
 dd9e0e699a962822f6127acd4a76e24301f5eb72 assets/railways/models/block/track/compat/byg/embur/segment_left.json
 b26abac908199d91457c903abed0cf9937387902 assets/railways/models/block/track/oak_wide/segment_right.json
@@ -1786,7 +1761,6 @@ c4fabd16b81a24f49761f6353e143f3fbb1cc7af assets/railways/models/block/track/comp
 2a588921c2c4c9b99ca171712dfb71717a00266c assets/railways/models/item/track_byg_skyris.json
 ee3ba18d1c8858e1663cc312231bab9e1ebe3b35 assets/railways/models/block/track/compat/natures_spirit/palo_verde_narrow/cross_d1_zo.json
 d049ce01ceaa17f041c7a89131bdf453a3f44f3c assets/railways/models/block/track/compat/blue_skies/starlit/segment_left.json
-d7507fae9bb881cc2838a2eaec372220c79d4cd4 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_d1_zo.json
 b4d91b84b953d2c9688d6255c773441e7ed2c680 assets/railways/models/block/track/compat/byg/embur/tie.json
 835738b9da4675aa99283fc2d4d4ad3e1c9e4967 assets/railways/models/block/track/compat/byg/sythian_wide/z_ortho.json
 b2d9dc9b5543ce6411452208609674b2c577108a assets/railways/models/item/track_incomplete_blue_skies_starlit.json
@@ -1802,7 +1776,6 @@ c732487cbce70a1a81f268ed582cf09a4c9171a2 assets/railways/models/block/track/comp
 59bb3bee752a6a3b9c4cb3a3571facdabf95d694 assets/railways/models/block/track/compat/byg/imparius/segment_right.json
 b1991edf2779f25ef5f4d8231fef170e846e5e43 assets/railways/models/block/track/compat/biomesoplenty/dead_wide/cross_ortho.json
 346aa051ec457fae531e8944ae03a4d9cf586c47 assets/railways/models/block/track/compat/twilightforest/transwood_narrow/x_ortho.json
-a3aa079c8a0644547f7d3162a97178adad3e9188 assets/railways/models/block/track/compat/natures_spirit/sugi/z_ortho.json
 b7cf270da6b0e0ebb803bd50e92e70a6026016e3 assets/railways/models/block/track/compat/byg/cypress/ascending.json
 42c9c8913efcd75447184b6718e40895dd8d5fa4 assets/railways/models/block/track/compat/blue_skies/starlit_wide/ascending.json
 9a684e0723e18572a8f342ec3c44e2fe1f79a55b assets/railways/models/block/track/compat/biomesoplenty/willow_wide/x_ortho.json
@@ -1895,7 +1868,6 @@ fac652bc94d6fc66d2b0906153048f5829e6c045 assets/railways/models/block/track/comp
 827d2150bc310f29f78d42627f09180ac0a85b5f assets/railways/models/block/track/compat/biomesoplenty/magic/cross_diag.json
 62b342c15edc062e46bafb7855e2eeeb319798e4 data/railways/loot_tables/blocks/track_twilightforest_sortingwood.json
 29dd3faf398efd427d9492605c3abf3078776635 assets/railways/models/block/track/compat/biomesoplenty/magic_narrow/segment_left.json
-e5da263f85b7c9acb980a98ed0d8a6db1c0d11a8 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/x_ortho.json
 dd658ed36725d25189a71f0eb61a54c469d278ec assets/railways/models/block/track/compat/blue_skies/frostbright/cross_d1_xo.json
 b0acc04a9a56f0cfa7680ad2c84ddfb28c536946 assets/railways/models/item/track_incomplete_biomesoplenty_mahogany.json
 c8e1ae4e776cc88499843df327632498b5667aa6 assets/railways/models/item/track_incomplete_byg_ether_narrow.json
@@ -1916,7 +1888,6 @@ c5350e579bfd6c64eebddcdeb51888b1f74accf5 assets/railways/models/block/track/comp
 bc040ffe9e78e79ad78e44ffaf685f0b3da16445 assets/railways/blockstates/track_twilightforest_sortingwood.json
 b1ae5d20f2c16a0179e3bc970c034ad66d87ad14 assets/railways/models/block/track/bamboo_wide/teleport.json
 3e8c897e3edf26ce8d8921a0602abd21d3ade021 assets/railways/models/block/track/crimson_wide/ascending.json
-debf2e2bb75ba69aed2e032237b1726bb2367d2f assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_d2_zo.json
 15433bc63e1cb4323611ab3bc4cd31a38a9fd4ae assets/railways/blockstates/track_dark_oak_narrow.json
 e7aa0bfa8e32e4363299ab69961b1c57bea0c76f assets/railways/models/item/track_incomplete_twilightforest_mangrove_narrow.json
 15f5418d0371c18a417bfb1ee14ee4ba36decc08 assets/railways/models/item/track_incomplete_byg_bulbis_wide.json
@@ -1947,7 +1918,6 @@ a89af918d6bdffc2b4e89c98eb91443128e4d02d assets/railways/models/block/track/comp
 b8cffb4737a7c792dc7ee9c393bcbfa0399d3d29 assets/railways/models/block/track/compat/blue_skies/maple_wide/cross_d1_zo.json
 0cb5238d7b24e0b40317793a5644ff9f2d36d30d data/railways/loot_tables/blocks/track_twilightforest_transwood.json
 325d8c9bf96bb60a8e60618d685550717add25be assets/railways/models/block/track/compat/byg/holly/cross_d1_zo.json
-18a50651507b93cecc92900733aca4aab300baec assets/railways/models/block/track/compat/natures_spirit/sugi/x_ortho.json
 3e81e2f47f99d3dde4fa77a798912cbcace1c186 assets/railways/models/block/track/compat/blue_skies/frostbright_narrow/cross_d2_zo.json
 1893ebad3dac53827d2ea27017d3e8117530002a assets/railways/models/block/track/compat/byg/green_enchanted/z_ortho.json
 bcb7cfe4f7d1846d40e5d73bd482a2b7c7c1ce90 assets/railways/models/block/track/compat/natures_spirit/olive_wide/tie.json
@@ -1979,7 +1949,6 @@ d76aad8af1ba0d3c461c96ccae74775eed58313a assets/railways/models/block/track/comp
 71f607d43be947890d5449326452eb24adf19d01 assets/railways/models/block/track/blackstone_narrow/segment_left.json
 ae03d95e3aa305514ef0f4ca5eb378f900f6a70b assets/railways/models/block/track/dark_oak_narrow/cross_d2_zo.json
 1fe858ce26a857befaefb56bca88560c49902dda assets/railways/models/block/track/compat/byg/willow_narrow/x_ortho.json
-fce7366f9de8343948ce65ab3f76da40f199b380 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_d1_xo.json
 9e44dd0fc8cf72b5913f63072d83deaacb657cfd assets/railways/models/block/track/compat/byg/imparius/cross_diag.json
 5cdd4d3762f66f51ab6a05bf214f150fb3e5795b assets/railways/models/block/track/compat/byg/baobab_wide/ascending.json
 1b4f6776bf8eaf023d927ddcd9b7b5258046954a assets/railways/models/block/track/compat/twilightforest/mangrove/cross_diag.json
@@ -2068,7 +2037,7 @@ d0ac1f7905b2d2c0367cf168116a0e91ea956714 assets/railways/blockstates/track_byg_c
 a6a297e2979df4d809fbd7105d3c8d03ffd06ab6 assets/railways/models/block/track/compat/byg/lament_narrow/teleport.json
 1aafcfcdec9326fafc25493124242d5c1b90ac60 assets/railways/models/block/track/compat/byg/green_enchanted_wide/x_ortho.json
 90f03a527c823cadde2774c79654b22df20606dd assets/railways/models/block/track/compat/byg/white_mangrove/tie.json
-5aaf0fe62005b3ca9e04e5baec6fd7d05313c7b5 data/forge/tags/blocks/relocation_not_supported.json
+384203eeea31a147f58316454b644e3e9301e788 data/forge/tags/blocks/relocation_not_supported.json
 ab0326015adfd0ff8795bf068c0f51c9f780044a assets/railways/models/block/track/compat/byg/sythian_narrow/cross_d1_xo.json
 b59243d349905fd0f82185140b0fbb79deb8a5ec assets/railways/models/block/track/compat/byg/jacaranda_wide/cross_d1_zo.json
 33d8b191c883ddd0cfe653c5be2f8c9762a24185 assets/railways/models/item/track_stripped_bamboo_wide.json
@@ -2348,7 +2317,6 @@ c0d8dfc7dc306e33b42f4c25168ae94ef0ef0d62 assets/railways/models/block/track/comp
 1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/doubleaxle_bogey.json
 f830a780add576430b7c14627301c1afa25f3f5a assets/railways/models/item/track_incomplete_twilightforest_timewood_narrow.json
 a488675d3b20d20fe35c1fc297387743009694de assets/railways/models/block/track/compat/byg/imparius_wide/cross_d1_xo.json
-7d82e493d3cb1c33ebb611caf33c962a229364ad assets/railways/models/block/track/compat/natures_spirit/sugi/ascending.json
 a58bbe805ee93075d99cf64833ab219113c1a4d7 data/railways/loot_tables/blocks/track_natures_spirit_palo_verde.json
 d7359a2f5be1c24459e5edbca7c4588c510c1b3a assets/railways/models/item/track_incomplete_natures_spirit_maple_wide.json
 58630d9ef66deb9725d46023b889695151e27dcb assets/railways/models/block/track/compat/twilightforest/transwood_narrow/segment_left.json
@@ -2362,7 +2330,7 @@ cf2876e52c2493e04e11a9dfcfce54f61c922a66 assets/railways/blockstates/track_byg_i
 5c99a75e9c50c0bcd06e0807e78505402fac5e86 assets/railways/models/block/track/compat/blue_skies/bluebright/segment_right.json
 c1ecdeff7f7208d85647755f6038b0831b26728a assets/railways/models/block/track/compat/byg/fir_narrow/cross_d2_zo.json
 e315a093cc6d1d679c7cf7bc7221a2fd53b599ba assets/railways/models/block/track/compat/byg/witch_hazel_wide/segment_right.json
-0c2adad042e26b22fbd7c66a9ae090dcd57940a1 assets/railways/lang/en_ud.json
+545b8e3090ee7e8e1a34a085f832109babb2eb42 assets/railways/lang/en_ud.json
 4a6ca666740b098929798ad132260f288cc228c0 data/railways/tags/items/internal/ingots/copper_ingots.json
 acdd5a80781e5b14b175ab4636676be559c9a130 assets/railways/models/block/track/oak_narrow/diag.json
 c64793b111ef61a2cd2cb5a19130de28d4fbb9fd assets/railways/models/block/track/compat/byg/jacaranda_wide/cross_d2_xo.json
@@ -2385,7 +2353,6 @@ d773f94b593a2940cd35b54fba75d82323b6e4e8 assets/railways/models/block/track/comp
 3f6668732acc0e3e16b3d76f265a84d44f020478 assets/railways/models/block/track/compat/byg/baobab/z_ortho.json
 b703a57b03c7f912bcc0bafc3020b65b1bf6dcf6 assets/railways/models/block/track/compat/byg/cika/diag.json
 8a702659037583708f3ff51100b08aaf6f87c087 assets/railways/models/block/track/oak/z_ortho.json
-721d45915e87dc5d6555fa01186efa2d87145f0e assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_d2_xo.json
 4558a5fcabfcbf111932b32f810205c7237d5338 assets/railways/models/block/track/compat/blue_skies/starlit_wide/cross_diag.json
 252f43661d3303e9cccda94cf453be7406d7ff92 assets/railways/models/block/track/bamboo/cross_d2_xo.json
 2e973bded6c1e37b08c0ee028d5d9749b7ee6623 assets/railways/models/block/track/compat/byg/jacaranda_wide/segment_left.json
@@ -2442,7 +2409,6 @@ bef9772d75b2f5df380aac4e31ebb8118d61fc6d assets/railways/models/block/track/comp
 f5270a859b819102711b5ce014d1bcf46367afe3 assets/railways/blockstates/narrow_scotch_bogey.json
 595f3158cf5e50eb57a1e6c7b0589635823ede2c assets/railways/models/block/track/compat/twilightforest/canopy/diag.json
 a15864b5f90fa1e0e30ca0c83bdf0e708433e572 assets/railways/models/block/track/compat/natures_spirit/palo_verde_narrow/ascending.json
-5f9823f4e11ea5d4028e6f323db0109d8385b19a assets/railways/models/block/track/compat/natures_spirit/sugi/diag_2.json
 033c3883c7ad889a537d2e6d19564e82c2e5f1ff data/railways/loot_tables/blocks/track_natures_spirit_redwood.json
 5503740bdbe065f36dc3ff47eeb39a3528fe4f26 assets/railways/models/block/track/compat/byg/cika_narrow/z_ortho.json
 7fd76d63fffb88857a43ad0dff7fe008911661fc assets/railways/models/block/track/dark_oak_narrow/z_ortho.json
@@ -2497,7 +2463,6 @@ decfe77d21d66832c38df46c83f394b9b0f8f2e8 assets/railways/models/block/track/comp
 c08218fef9798c9b44a523cab063779bd197b496 assets/railways/models/block/track/compat/byg/fir/tie.json
 d2c28c4c8da6c9b87bd0361f704702a03a161a49 assets/railways/models/block/track/dark_oak_wide/x_ortho.json
 f075b3356d656988399778ff3ce0c0cea2f28faf assets/railways/models/block/track/warped_wide/cross_d2_zo.json
-ca4e50257ff130316b117d9619d5773c5ecb0e7f assets/railways/models/block/track/compat/natures_spirit/sugi/cross_d2_xo.json
 9fa90602804a03a593aba730c24f6e7306b7023c assets/railways/models/block/track/compat/byg/white_mangrove/cross_d1_zo.json
 5fc1c6354b98e625a262215cb405206c80f681bf assets/railways/models/item/track_incomplete_twilightforest_timewood.json
 104c393c476032195a196d4701fe12fe7dc3ca1f assets/railways/models/item/track_incomplete_stripped_bamboo_narrow.json
@@ -2543,11 +2508,10 @@ fcdf04ea605ee5558e72cb0649de7ff381d5c2dc assets/railways/models/block/track/comp
 8f11031a5fd4dc8f73e097cfeb6075acd5f5b630 assets/railways/models/block/track/compat/natures_spirit/willow/cross_d2_zo.json
 4e028069a6dfe67cb910dc1af3b41ae1dcdcf2d7 assets/railways/models/block/track/compat/byg/embur_narrow/tie.json
 48710c4f3aba263b8890e0539bae615c1ce95bc3 assets/railways/models/block/track/create_andesite_wide/tie.json
-097fa7c4a168bad67ecd8e2f24565c6aa61f2ee2 data/minecraft/tags/blocks/mineable/pickaxe.json
+bc4c0ed08d4a29f1d7c155f1ca17930cfc927043 data/minecraft/tags/blocks/mineable/pickaxe.json
 d1da8c638d5ec660d7c05e6b1f883e69edc1b7f2 assets/railways/models/block/track/stripped_bamboo/cross_ortho.json
 46f09518937331271927e86cca34eda7ba40dbcf data/railways/loot_tables/blocks/track_natures_spirit_redwood_narrow.json
 e01b691312749a72d5f70762b17fbc66ce177c08 assets/railways/models/item/track_byg_ebony.json
-4eb025c53eb1a20d804d816126b3ee94069e8e27 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/tie.json
 851d60a14b047d14108fa666262ce0b580e1c540 assets/railways/models/block/track/compat/byg/mahogany_narrow/teleport.json
 8c5549f2751415df9aa0ec1e4f709886e955ae6c assets/railways/models/block/track/compat/byg/green_enchanted/segment_left.json
 c77d28473643c65fbe1b0702cf7bb7a42cac7450 assets/railways/models/block/track/compat/byg/zelkova/teleport.json
@@ -2647,7 +2611,6 @@ b2bcae4b74de68d512334af747a6dcb6e8ab7447 assets/railways/models/block/track/dark
 8d990640c3b6b81cbe51d287c580328a865abbd8 assets/railways/blockstates/track_byg_baobab_wide.json
 d3a6c1223140255cec6222fefcefb95e273597d0 assets/railways/models/block/track/compat/twilightforest/mangrove/cross_d1_xo.json
 4c8d15180055345e0e06f25f648bd97760b8e3a0 assets/railways/models/block/track/compat/biomesoplenty/jacaranda/cross_d2_zo.json
-6305492424676eef35b5ad14d274eb8f9b5fba46 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/diag.json
 5dac91190312e3bfe4465268ba8da3ff3c306006 assets/railways/models/block/track/compat/biomesoplenty/fir/ascending.json
 9f7f750afea48804a793c83c6e590da40f33cd3b assets/railways/models/block/track/compat/twilightforest/minewood_narrow/teleport.json
 607f9de220e51cb71cd95451502ca2d792c4b0e6 assets/railways/models/block/track/compat/byg/sythian_wide/cross_d1_zo.json
@@ -2686,9 +2649,7 @@ ce405a2daed2a5848f04cc18a1eaeba866d82112 assets/railways/models/block/track/comp
 baf59313e7a736eba0630914d21a4a671e7102c1 assets/railways/models/block/track/compat/natures_spirit/ghaf/teleport.json
 5d35ba3d564e0029f311b815bd7658b032e31f6e assets/railways/models/item/track_incomplete_byg_pine.json
 a59839fa932a493103416f3ea7444584c8eba536 assets/railways/models/block/track/compat/byg/redwood_wide/cross_d2_xo.json
-9150ffe06ffda3e379182488d1d68f2c87d474c6 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_d1_zo.json
 d956410548ed3f32b316e90933bc45652f198c66 assets/railways/models/block/track/compat/biomesoplenty/umbran/ascending.json
-c761c58aefc80ebbf9c6737894c421560e989ac5 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/cross_ortho.json
 53c016f6c873886a49cb99c4792e8b94e90b83d5 assets/railways/models/block/track/compat/natures_spirit/maple_wide/cross_diag.json
 776eb6ad37f3fc59438739bf0abf6c8e41b66487 assets/railways/models/block/track/compat/byg/pine_narrow/diag_2.json
 0450cd84e22e4407272f2584f2ad2aa7cb1cb89d assets/railways/models/block/track/dark_oak_narrow/cross_ortho.json
@@ -2731,8 +2692,7 @@ a0596fd228aea4c54d2d28207ffb51eadea13118 assets/railways/models/block/track/comp
 79e87a7c98733a9a57d231b6fc4c2c4e9a8c6b36 assets/railways/models/item/track_byg_mahogany.json
 4218a16c7eebf44bfa3bf9cdfc9281f0b54ad338 assets/railways/models/block/track/warped/diag_2.json
 6b27d1c1a3eda40c2e0989180753604c6c5281ec assets/railways/models/block/track/compat/natures_spirit/aspen_narrow/diag.json
-35e4b498372d9ff2a80d13260d54acad4c50139a assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_diag.json
-196f8e8be146c4f479c14188284990a594e667c3 assets/railways/lang/en_us.json
+6460ac60b4f7566e10433980d1ac1482d7fd6b16 assets/railways/lang/en_us.json
 e6f8a8b36fbc4eeb32882788453853a7a03bedd8 data/railways/loot_tables/blocks/track_biomesoplenty_mahogany_narrow.json
 2dd6dfeefc5fb867b10863c7ae43b51f3ca2c001 assets/railways/models/block/track/compat/blue_skies/starlit/cross_d2_zo.json
 458bdb029980ead2aad8b58f1def0ebed9bbab42 assets/railways/models/block/track/compat/byg/nightshade_wide/diag.json
@@ -2945,7 +2905,6 @@ c4e06daf372196e9d57e84c41d7249505b59ca5c assets/railways/models/block/track/oak_
 8a47c01898564babc05fc7c452aa038b4b9fbd1e data/railways/loot_tables/blocks/track_byg_zelkova.json
 3d3d6b35d04ab6605eecf2bc835f4d2823b6af28 assets/railways/models/block/track/blackstone_wide/cross_d1_xo.json
 646a829b8ad3e8ee962e2d8d3c127e29e10a5b6f assets/railways/models/block/track/compat/biomesoplenty/hellbark/ascending.json
-398592fb576ff83a38db12726c5831f553713d45 assets/railways/blockstates/track_natures_spirit_sugi_narrow.json
 87643a73b3d1dc92cc33c3835b463da7a86c3259 assets/railways/models/block/track/compat/biomesoplenty/mahogany/cross_d1_zo.json
 44a6dad3a2286803a93e9d6f7bfdf1ef1144d32b assets/railways/models/block/track/compat/natures_spirit/olive_wide/x_ortho.json
 e375a07171a54b47103a33636af0ceec7d7573ee assets/railways/models/block/track/compat/byg/imparius_wide/x_ortho.json
@@ -3000,7 +2959,6 @@ c40f1d2a437cb573a43d3a089d3c3113bddfbde5 assets/railways/models/block/track/comp
 480452f6fbe590be31f5c57c42740d43fe73eb9f assets/railways/models/block/track/compat/byg/white_mangrove_narrow/cross_d1_xo.json
 f2ad1d300e62f2849639fd0dd7fa3981ebce94d7 assets/railways/models/item/track_byg_blue_enchanted_narrow.json
 ac585bc0f051c00201882f165c0bac1c12c94569 assets/railways/models/block/track/jungle_wide/x_ortho.json
-e3b0206a9d9b1a72d79501c587b96870d90637db assets/railways/models/block/track/compat/natures_spirit/sugi_wide/diag_2.json
 0556ee29071126ef4138f51e29d4ff72064c1e3c assets/railways/blockstates/track_twilightforest_minewood_narrow.json
 b34bb1a58bb7a52eff7c79cfc2be8cad25a9465c assets/railways/blockstates/track_hexcasting_edified.json
 9b2b17f933e1a4550198ebf3cab400f938b90e98 assets/railways/models/block/track/compat/byg/redwood/x_ortho.json
@@ -3087,7 +3045,6 @@ c99615967faa9a5880e38cd135457cbadec10612 assets/railways/models/block/track/comp
 4257547fe34c8d4466fcf6428ec51f70f0dbbf61 assets/railways/models/item/track_incomplete_byg_white_mangrove.json
 435fa3a2bbf09e2f7fe8a2df6503d6d3d84186b7 assets/railways/models/item/track_hexcasting_edified.json
 93afdae27c5cae662197a474d0afdc84ec3ed542 assets/railways/models/block/track/compat/byg/nightshade_narrow/cross_d2_xo.json
-0af710edb8a7f2abbb3b7e03b5b4eaf93ae9b328 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/segment_right.json
 38bb51ad302133694753cd9e67b30e4c0a07091f assets/railways/models/block/track/compat/byg/embur_narrow/ascending.json
 6762d650a6e32c64dad80d4e20f0a87b72ac6328 assets/railways/models/block/track/compat/blue_skies/dusk/segment_right.json
 8bf61aaf1de06b58d160cec1a5d7cfe97171e144 assets/railways/models/block/track/compat/byg/pine_wide/segment_left.json
@@ -3118,7 +3075,6 @@ a7056e1cc36be30aaac0ff2b0f7b310a159f9687 assets/railways/models/block/track/comp
 c09c7d809c57b81256934af4e976ef9082c03e5c data/railways/loot_tables/blocks/track_natures_spirit_maple_narrow.json
 60386825894302bf06bcadd8c0ab4fab6563ba70 assets/railways/models/block/track/compat/byg/redwood/cross_diag.json
 2fbb7ee9299deb52fffad286b21953185274a374 assets/railways/models/item/track_byg_witch_hazel_wide.json
-2047e555d6bde8ecb616fb74a682354e35c7a6c3 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/z_ortho.json
 3f6d2c298f884a7f4c507bcffdfb134753cf989d data/railways/loot_tables/blocks/track_byg_maple_narrow.json
 1e726951ab480101b1f04e1da284091eca006533 assets/railways/models/block/track/compat/blue_skies/cherry/cross_d2_xo.json
 6b96d9aeec63a95c1f19b7715bd32de8739af04f assets/railways/models/block/track/compat/byg/redwood_narrow/z_ortho.json
@@ -3147,7 +3103,6 @@ f4885740a43b34eeca44ef75ae019bc26447c4ff assets/railways/models/item/track_incom
 3579c503fea8928099333480864cd57361330775 assets/railways/models/block/track/oak_wide/cross_d2_zo.json
 5438c9b279ee314df96a92c3f8b817c30e15d70c data/railways/loot_tables/blocks/track_dark_oak_wide.json
 5405704fa21d13a54f9c2a7877ddbae8ef1593a7 assets/railways/models/block/track/compat/biomesoplenty/willow_wide/cross_d1_zo.json
-84d5133b4b099c6306fff70b4c553e8cf4ab147a assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/ascending.json
 b636d0eecc4916fd249e78c834a5bf59a7d28efb assets/railways/models/block/track/compat/natures_spirit/ghaf/cross_d2_xo.json
 b42d74ba892e24e406c17020039d0f2a3859c797 assets/railways/models/block/track/blackstone_wide/cross_d2_xo.json
 8da62492efaa9e1b4cf601590564e4ec1c80cea6 assets/railways/models/block/track/compat/byg/lament_narrow/tie.json
@@ -3319,7 +3274,6 @@ e40ceac1e041e5d5f6a91b90ccd4d5b1a973b71d assets/railways/models/item/track_incom
 4ffc89a835e7c806c0edf0d2395a904850cb7afd assets/railways/models/block/track/compat/twilightforest/canopy_narrow/cross_d1_xo.json
 480afb8b2e22e7f6b57c5838d3bbb1c4a84392bd assets/railways/models/block/track/cherry/z_ortho.json
 fa7b33aa3ec412a5fae9d7ceaa1ff8bf9ca4328d assets/railways/models/block/track/compat/byg/fir_narrow/cross_diag.json
-a680cfd6e4eaa8bd53c347d720568012bb60157e assets/railways/models/item/track_natures_spirit_sugi_wide.json
 c4656b22146592dfbd9b2ca3a344eff791167d95 assets/railways/models/block/track/compat/byg/green_enchanted_wide/cross_diag.json
 1189dd5410319949e26ba4af12a42bc742f7a93a assets/railways/blockstates/track_twilightforest_transwood.json
 8efbf1bfe54e4f0fff3ed197eb04b43c53a15461 assets/railways/models/item/track_incomplete_stripped_bamboo.json
@@ -3377,7 +3331,6 @@ b45bee7ae054cc1203c7dcc17410646e44aa31b0 assets/railways/models/block/track/comp
 ee5e2c47e8f326775a35ac54a10f382252faab70 assets/railways/models/block/track/warped_wide/ascending.json
 e2939326051f4fd5a675f3a18fd10857374d46f5 assets/railways/models/item/track_byg_willow.json
 5b7d134aa0459878b5fb5cd028b592185f83d0ae assets/railways/models/block/track/compat/byg/palm/cross_d2_zo.json
-0070bae22acd3638d631978829761005bd438e60 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/diag.json
 21b6ee8302421b5459a2e4605429f8b49842be9a assets/railways/models/block/track/compat/byg/green_enchanted/diag.json
 c51fd19d898a90426bb1f78d0dc8e12d94013a79 assets/railways/models/block/track/compat/biomesoplenty/magic_wide/cross_diag.json
 46e269476d9e8dbec268c5718e2e832f55b11624 assets/railways/models/block/track/compat/twilightforest/transwood_wide/cross_ortho.json
@@ -3386,7 +3339,6 @@ c51fd19d898a90426bb1f78d0dc8e12d94013a79 assets/railways/models/block/track/comp
 37fff2d83787094fcdd6dd79ea8ec957f52f35f8 data/railways/loot_tables/blocks/track_tieless_wide.json
 e324cadce75a0a5f304ca5bd28cb947e3d5c2c14 assets/railways/models/block/track/compat/byg/willow/diag.json
 28b6e48d67d859cfe1902b724b1ded863d690481 assets/railways/models/block/track/compat/natures_spirit/redwood_wide/cross_d2_xo.json
-c4046f3b6b1cee34b1bbd84af20171d780864e78 assets/railways/models/block/track/compat/natures_spirit/sugi/segment_right.json
 896e70b27c51d06f698765da594e744278ff0a27 assets/railways/models/block/track/compat/twilightforest/darkwood_wide/segment_right.json
 099c4b2324b734ec5ab46aea438f07f3bec2f856 assets/railways/models/block/track/compat/biomesoplenty/fir_wide/segment_right.json
 2905464188dc6b0f5762fd5c1a09b6c4fcdec650 assets/railways/models/block/track/compat/biomesoplenty/fir/cross_d1_zo.json
@@ -3427,7 +3379,6 @@ a841ea6f4992beabcdbc92090c1b18039bffa532 assets/railways/models/block/track/comp
 fd056477e7c7385bff52d28b513ce6667ef92a7a assets/railways/models/item/track_incomplete_natures_spirit_palo_verde_wide.json
 d180605a066439fd1be9a1a243b0fb16cd262ada assets/railways/models/block/track/compat/byg/lament_narrow/z_ortho.json
 00157ab0708a1e7a128308b562cbd60b428e3319 assets/railways/models/block/track/compat/biomesoplenty/umbran_narrow/cross_d1_xo.json
-29840256d3e3b8afa3afdba6f0f70c7393e03a2d assets/railways/models/block/track/compat/natures_spirit/sugi_wide/teleport.json
 aca8756431de4f760e0930b65ed77a4c24b399d0 assets/railways/blockstates/track_byg_ether_narrow.json
 4dfc0dfa40a760605132aa09b1b9516723c563d9 assets/railways/models/block/track/compat/blue_skies/starlit_narrow/x_ortho.json
 b9828b6add1a5e7b02c9d826cf3f260679519fba assets/railways/models/block/track/compat/byg/lament_wide/cross_d1_zo.json
@@ -3557,7 +3508,6 @@ ef1f4fd71c03d2344002194fcbbf6ac25eb37814 assets/railways/models/item/track_incom
 b11f3894d137a2c6d6ec425ed2e4bf57e364d827 assets/railways/models/block/track/compat/blue_skies/dusk_wide/x_ortho.json
 1859fa772d5de1372d37724e734bf780add6d621 assets/railways/models/block/track/compat/blue_skies/frostbright_wide/cross_diag.json
 5fd979bfb41f6284978b8ed500f67e1668a587d0 assets/railways/models/block/track/compat/byg/maple_narrow/cross_d1_xo.json
-5c9e6238f54966b3c2f7be124a9bea68d1e97b82 assets/railways/models/block/track/compat/natures_spirit/sugi/cross_d1_xo.json
 63a73515b2d20f2bf7827d7e006936b975846319 assets/railways/models/block/track/compat/byg/jacaranda_wide/x_ortho.json
 bdebfa408d77eeac489447c1816a46033b4447c6 assets/railways/models/block/track/compat/natures_spirit/palo_verde_narrow/cross_d2_zo.json
 a53e09edb1668f5e2078f7a526c1c47dab1c078e assets/railways/models/block/track/compat/biomesoplenty/fir_narrow/cross_diag.json
@@ -3596,7 +3546,6 @@ fba0868b88492b2b2cf8b0c666890349e01ccec2 assets/railways/models/block/track/comp
 69e8cc2a8c60bee822578d938b3e1d88ad07e517 assets/railways/blockstates/track_blue_skies_starlit_narrow.json
 81ebd65ef5225b8669558c697cc318f657ebce3d assets/railways/models/item/track_twilightforest_minewood_narrow.json
 e8418ccab99dc3ddf9990b40cf213de1f957c8a2 assets/railways/models/block/track/spruce_wide/cross_d2_zo.json
-44d755b7c1598f1ee393f488b9591db3d0050d0f assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/cross_d2_xo.json
 800433ee6036e9e75d80164c75d41a549a03c4ff assets/railways/models/block/track/spruce_wide/cross_diag.json
 ad912fc1d175ded63ed27295b48da72ea2b365a6 assets/railways/models/block/track/compat/natures_spirit/redwood_wide/cross_diag.json
 0de1d59e7fa5535ad4a2341dcfb2c6b25b11b599 assets/railways/models/block/track/compat/biomesoplenty/palm_narrow/segment_right.json
@@ -3606,14 +3555,13 @@ ac0d565c53e989bd758cc543417dfd2df24fcc94 assets/railways/models/block/track/comp
 3a000dc59a10fa25281d7d6b7575dc6baa9137ce assets/railways/models/block/track/compat/natures_spirit/palo_verde_wide/cross_d2_zo.json
 6a2f6835efa8d3e9d3a38b7d1ba655659e5d94fb assets/railways/models/block/track/compat/twilightforest/minewood_wide/segment_right.json
 e6689bbb524703a63db8a2db60cb049b4a6d46dd assets/railways/models/block/track/acacia_narrow/segment_right.json
-adfaae5031a4e69181c5e7fe365f9e18c7571583 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/diag_2.json
 35c05a5e3f7895a2378524c7a5ab9357c102dea0 assets/railways/models/block/track/compat/natures_spirit/aspen_narrow/cross_d2_xo.json
 23e3e2b47792dc6d3117dea0b944d5f1dc64451a assets/railways/blockstates/track_blue_skies_lunar_wide.json
 355cefcab2deebcdb99c14c765a224800b7d36c5 assets/railways/models/block/track/compat/biomesoplenty/palm_wide/segment_left.json
 54a8a8bba5fb27d8fb7404c0b67113d959755646 assets/railways/models/block/track/compat/biomesoplenty/willow_wide/cross_ortho.json
 77055c7732ce76b707c0d1c3135fcff96ce90491 assets/railways/models/block/track/compat/byg/willow_narrow/ascending.json
-283e7512e58e791c20a45462a13e4cb807055572 assets/railways/models/block/track/blackstone/diag.json
 f0facbe2aa5c0524aa663f16f3d5f0b3e8e2ba32 assets/railways/models/block/track/compat/natures_spirit/willow/tie.json
+283e7512e58e791c20a45462a13e4cb807055572 assets/railways/models/block/track/blackstone/diag.json
 c67c127c19a0ef4524be1e632fa2cf2d29e9efe2 assets/railways/models/block/track/compat/natures_spirit/fir_wide/segment_right.json
 a7b17d2bb6e59a9b4d8abcf4127d20804d0dbe86 assets/railways/models/block/track/compat/blue_skies/dusk_wide/segment_left.json
 b5780df0f11c61a0506a8314ef07379a09b9ebe8 data/railways/loot_tables/blocks/track_biomesoplenty_willow.json
@@ -3805,7 +3753,6 @@ b26d2f8636f139eefa1c0938a7d9b241079bc83c assets/railways/models/block/track/comp
 dcfe3c683889c29c2bf02553b0f849b9a63a5f7f assets/railways/models/block/track/compat/twilightforest/darkwood_wide/cross_diag.json
 af5e6a29ed56b0639bd9cc678690c19851d87b16 assets/railways/models/block/track/compat/byg/bulbis_narrow/diag.json
 90ac19c538ea521ecd071ab96ac5a595220aeed8 assets/railways/models/block/track/compat/byg/willow/cross_d1_zo.json
-57c953707db4c4834db02f6c174fd2bfd791a894 assets/railways/models/block/track/compat/natures_spirit/sugi/cross_diag.json
 9dd6ab64a933b107ef8c95be31287ba684c105e3 assets/railways/models/block/track/compat/natures_spirit/fir_wide/z_ortho.json
 0560a94b9246b7798bd7bff6d370d170497811fa assets/railways/models/block/track/cherry/teleport.json
 c60d8f86b1648ce0568dfaa2a2ba7b9dae9bee8f assets/railways/models/block/track/create_andesite_narrow/segment_right.json
@@ -4314,7 +4261,7 @@ c2e8a5bced1e2c54c820383ce95b82918cfe3b7d assets/railways/models/block/track/comp
 9599a70daa10b67fb284f74c373776d2b6a9992a assets/railways/models/block/track/compat/biomesoplenty/dead_wide/segment_left.json
 72d19a3f3a12589474516d5c781dc7c054821839 assets/railways/models/block/track/compat/twilightforest/mangrove/diag_2.json
 7c6231e8dba952ff5de466ef87bd6c8dec46ffb6 assets/railways/models/block/track/compat/byg/sythian/z_ortho.json
-cb77f183fade04a36aed358e1632f71ad8cc3fd2 data/create/tags/blocks/girdable_tracks.json
+839d8b4144d99139a28c8ede55f6b9600327a706 data/create/tags/blocks/girdable_tracks.json
 6c7ba507a6e5bc7da7508b5fe2ff3257010a8886 assets/railways/models/block/track/compat/blue_skies/bluebright/diag_2.json
 5f06a10ecda0f109d749dee7a38f6e113e129513 assets/railways/models/block/track/compat/byg/aspen/tie.json
 c3222d53f9acbc6cb78912216c1ffe84ae4a6a65 assets/railways/models/block/track/compat/twilightforest/sortingwood_narrow/ascending.json
@@ -4547,7 +4494,6 @@ bb1961167534d4b75d59d638729df7fe89dd7fce assets/railways/models/block/track/comp
 f9563d5d4f6d89067865b9d22373eb24f24980a1 assets/railways/models/item/track_byg_lament.json
 6ba7293d052edef44c9f431c95d5a2f00d7f56f2 assets/railways/models/block/track/compat/twilightforest/darkwood_narrow/cross_d2_xo.json
 caa3f1541cad4d12e41bcaa2377229d05529dfef assets/railways/models/block/track/compat/byg/lament_wide/diag.json
-a27ea3e5a07b91b634d42dce803ad5790d264f46 assets/railways/models/item/track_natures_spirit_sugi.json
 5f805a0fafe237231d48588cc70a108db172e733 assets/railways/models/block/track/acacia_narrow/cross_d2_xo.json
 22f0b3d19af5809640913c72e7c859b8f6f1acae assets/railways/blockstates/track_byg_skyris_wide.json
 a0401d39f0e03762a7053c475f5b3e4172d96d93 assets/railways/models/block/track/compat/byg/bulbis/tie.json
@@ -4658,7 +4604,6 @@ cc3a29cf77e604fd2ef9b4089beeb58db3f35ef9 assets/railways/models/block/track/comp
 02eecb31a0b6117b9eb70b9f0af444ddfaada905 assets/railways/models/item/track_incomplete_byg_blue_enchanted_wide.json
 57388b585df8331aaaa40eab1ea58619b684f077 assets/railways/models/block/track/compat/byg/witch_hazel/cross_d1_zo.json
 a77bef07c6a03c0b1fbf23271634eed3ef5a1a14 assets/railways/models/block/track/compat/byg/nightshade_narrow/segment_left.json
-c32a8a9cb2bcedb1b6e092953be5efb6f80f60c6 assets/railways/models/block/track/compat/natures_spirit/sugi_narrow/teleport.json
 459c1b205def571d9b3b759c3ad481a9627efde6 assets/railways/models/block/track/compat/byg/lament/cross_d1_xo.json
 64d340c0324a437ff86e844cdbc05858f19b9ca7 assets/railways/models/block/track/compat/twilightforest/twilight_oak_narrow/cross_diag.json
 50be4d20a6e3fc227002b52a94fe6233dea649f1 assets/railways/models/block/track/crimson/z_ortho.json
@@ -4964,7 +4909,5 @@ a0daba603d9db5cf81fe797076b4fe3b204ac5ea assets/railways/models/block/track/comp
 f3159a852d8d03860892dec63f22a3d0b5c19899 assets/railways/models/block/track/compat/byg/jacaranda_wide/diag_2.json
 38026774c574d790c3aafd1fd200ca0a9ab24bbe assets/railways/models/block/track/compat/biomesoplenty/willow_narrow/cross_d1_xo.json
 7d83830fce68e816e202b65d478767c883c0a0b8 assets/railways/models/item/track_incomplete_byg_redwood_narrow.json
-8699eb1ea5daa2d6b5a35736dc76d3804261d612 assets/railways/models/item/track_incomplete_natures_spirit_sugi_narrow.json
-3f23eb92616208a4582f0ffcde9cb729f41e7798 assets/railways/models/block/track/compat/natures_spirit/sugi_wide/segment_right.json
 780613dae45c9ea5fbb1ca0252d67c05e8b0bfdf assets/railways/models/block/track/compat/natures_spirit/maple_narrow/teleport.json
 65e4b68e38bd15838ea933faaaad55748115697e assets/railways/models/block/track/compat/biomesoplenty/fir_wide/cross_d2_xo.json
