@@ -24,6 +24,7 @@ public class NaturesSpiritTrackCompat extends GenericTrackCompat {
         Railways.LOGGER.info("Registering tracks for Nature's Spirit");
         new NaturesSpiritTrackCompat().register(
                 "redwood",
+                "sugi",
                 "wisteria",
                 "fir",
                 "willow",
