@@ -86,6 +86,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
+@SuppressWarnings("unused")
 public class CRBlocks {
 
     private static final CreateRegistrate REGISTRATE = Railways.registrate();

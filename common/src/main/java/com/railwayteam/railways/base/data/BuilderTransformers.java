@@ -5,14 +5,26 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
+import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.Locale;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
