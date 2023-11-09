@@ -2,7 +2,6 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.multiloader.Loader;
-import com.railwayteam.railways.util.Utils;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;

@@ -2,7 +2,6 @@ package com.railwayteam.railways.compat.incompatible_mods.optifine;
 
 import com.railwayteam.railways.mixin.client.AccessorWarningScreen;
 import com.railwayteam.railways.util.Utils;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -12,8 +11,6 @@ import net.minecraft.client.gui.components.MultiLineLabel;
 import net.minecraft.client.gui.screens.multiplayer.WarningScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-
-import java.io.File;
 
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
