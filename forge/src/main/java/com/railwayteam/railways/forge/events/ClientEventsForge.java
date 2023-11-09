@@ -1,12 +1,8 @@
 package com.railwayteam.railways.forge.events;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
-import com.railwayteam.railways.compat.incompatible_mods.optifine.OptifineWarningScreen;
 import com.railwayteam.railways.events.ClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;

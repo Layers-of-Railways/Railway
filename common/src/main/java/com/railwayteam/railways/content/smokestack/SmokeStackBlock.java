@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.smokestack;
 
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.util.BlockStateUtils;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -155,19 +157,28 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, BlockState underState) {
         RandomSource random = level.getRandom();
-        ParticleOptions particleType;
-        if (underState.is(BlockTags.WOOL)) {
-            DyeColor color = BlockStateUtils.getWoolColor(underState.getBlock());//state.getMapColor(level, underPos).col;
-            float[] c = color.getTextureDiffuseColors();
-            particleType = new SmokeParticleData(stationary, c[0], c[1], c[2]);
+        if (CRConfigs.client().oldSmoke.get()) {
+            SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
+            level.addAlwaysVisibleParticle(particleType, true,
+                (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
+                (double)pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y,
+                (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (double)(random.nextBoolean() ? 1 : -1),
+                0.0D, 0.07D*speedMultiplier / (stationary ? 1. : 25.), 0.0D);
         } else {
-            particleType = new SmokeParticleData(stationary);
+            ParticleOptions particleType;
+            if (underState.is(BlockTags.WOOL)) {
+                DyeColor color = BlockStateUtils.getWoolColor(underState.getBlock());//state.getMapColor(level, underPos).col;
+                float[] c = color.getTextureDiffuseColors();
+                particleType = new SmokeParticleData(stationary, c[0], c[1], c[2]);
+            } else {
+                particleType = new SmokeParticleData(stationary);
+            }
+            level.addAlwaysVisibleParticle(particleType, true,
+                (double) pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+                (double) pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+                (double) pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+                0.0D, 0.07D * speedMultiplier * (stationary ? 25 : 1), 0.0D);
         }
-        level.addAlwaysVisibleParticle(particleType, true,
-            (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
-            (double)pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
-            (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
-            0.0D, 0.07D*speedMultiplier * (stationary ? 25 : 1), 0.0D);
         if (spawnExtraSmoke) {
             level.addParticle(ParticleTypes.SMOKE,
                 (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double)(random.nextBoolean() ? 1 : -1),

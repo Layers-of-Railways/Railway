@@ -199,6 +199,9 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         error2 = null;
     }
 
+    private final int lazierTickRate = 6;
+    private int lazierTickCounter = 0;
+
     @Override
     public void lazyTick() {
         super.lazyTick();
@@ -220,7 +223,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                     if (location != null && location.graph != null) {
                         location.graph.removePoint(CREdgePointTypes.COUPLER, point.id);
                         Create.RAILWAYS.trains.forEach((uuid, train) -> {
-                            ((IOccupiedCouplers) train).getOccupiedCouplers().remove(point.id);
+                            ((IOccupiedCouplers) train).snr$getOccupiedCouplers().remove(point.id);
                             if (uuid == point.getCurrentTrain() || train.graph == location.graph) {
                                 train.updateSignalBlocks = true;
                             }
@@ -234,10 +237,13 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                 sendData();
             }
         }
-        updateOK();
+        if (lazierTickCounter-- <= 0) {
+            lazierTickCounter = lazierTickRate;
+            clearError2();
+            updateOK();
+        }
         clientInfo = new ClientInfo(this);
         clearErrors();
-        clearError2();
         if (level instanceof ServerLevel serverLevel) {
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(serverLevel, getBlockPos()), new TrackCouplerClientInfoPacket(this));
         }
@@ -261,21 +267,23 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
             return;
         }
 
-        if (edgePoint.determineGraphLocation() == null || secondEdgePoint.determineGraphLocation() == null) {
+        TrackGraphLocation loc1 = edgePoint.determineGraphLocation();
+        TrackGraphLocation loc2 = secondEdgePoint.determineGraphLocation();
+        if (loc1 == null || loc2 == null) {
             setError2(Components.literal("Edge point(s) missing graph location"));
             edgePointsOk = false;
             return;
         }
 
-        if (edgePoint.determineGraphLocation().graph != secondEdgePoint.determineGraphLocation().graph) {
+        if (loc1.graph != loc2.graph) {
             setError2(Components.literal("Edge points not on same graph"));
             edgePointsOk = false;
             return;
         }
 
         //check that edgePoint and secondEdgePoint are on the same or adjacent TrackEdge
-        Couple<TrackNodeLocation> edgePointLocations = edgePoint.determineGraphLocation().edge;
-        Couple<TrackNodeLocation> secondEdgePointLocations = secondEdgePoint.determineGraphLocation().edge;
+        Couple<TrackNodeLocation> edgePointLocations = loc1.edge;
+        Couple<TrackNodeLocation> secondEdgePointLocations = loc2.edge;
         if (edgePointLocations == null || secondEdgePointLocations == null) {
             setError2(Components.literal("Edge point(s) missing edge location"));
             edgePointsOk = false;
