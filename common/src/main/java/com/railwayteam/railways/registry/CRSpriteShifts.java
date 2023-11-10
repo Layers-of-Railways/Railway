@@ -8,37 +8,45 @@ import com.simibubi.create.foundation.block.connected.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import net.minecraft.world.item.DyeColor;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class CRSpriteShifts {
-    public static final Map<DyeColor, CTSpriteShiftEntry>
-            SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BOILER_SIDE = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_BOILER_SIDE = new EnumMap<>(DyeColor.class);
+    public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
+            SLASHED_LOCOMETAL = new HashMap<>(17, 2),
+            RIVETED_LOCOMETAL = new HashMap<>(17, 2),
+            BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+            BOILER_SIDE = new HashMap<>(17, 2),
+            BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
+    
+    private static void initLocometal(@Nullable DyeColor color) {
+        SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
+        RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
+        BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
+        BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
+        BRASS_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "wrapped_boiler_side"));
+    }
 
     static {
+        initLocometal(null);
         for (DyeColor color : DyeColor.values()) {
-            SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
-            RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
-            BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
-            BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
-            BRASS_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "wrapped_boiler_side"));
+            initLocometal(color);
         }
     }
 
 
     //
-    private static CTSpriteShiftEntry locometal(DyeColor color, String name) {
-        return omni("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
+    private static CTSpriteShiftEntry locometal(@Nullable DyeColor color, String name) {
+        String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+        return omni("palettes/" + colorName + "/" + name);
     }
 
-    private static CTSpriteShiftEntry locometalBoiler(DyeColor color, String name) {
-        return horizontalKryppers("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
+    private static CTSpriteShiftEntry locometalBoiler(@Nullable DyeColor color, String name) {
+        String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+        return horizontalKryppers("palettes/" + colorName + "/" + name);
     }
 
     private static CTSpriteShiftEntry omni(String name) {

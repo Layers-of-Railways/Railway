@@ -11,146 +11,171 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import static com.railwayteam.railways.util.TextUtils.joinSpace;
+import static com.railwayteam.railways.util.TextUtils.joinUnderscore;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate().creativeModeTab(
-            () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
+        () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
     );
 
-    public static final EnumMap<DyeColor, BlockEntry<?>>
-            SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            LOCOMETAL_PILLAR = new EnumMap<>(DyeColor.class),
-            LOCOMETAL_SMOKEBOX = new EnumMap<>(DyeColor.class),
-            PLATED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            FLAT_SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            FLAT_RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BRASS_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
+    public static void register() { // registration order is important for a clean inventory layout
+        for (Styles style : Styles.values())
+            style.register(null);
+
+        for (DyeColor dyeColor : DyeColor.values()) {
+            for (Styles style : Styles.values())
+                style.register(dyeColor);
+        }
+    }
+
+    public enum Styles {
+        SLASHED(CRPalettes::slashedLocometal),
+        RIVETED(CRPalettes::rivetedLocometal),
+        PILLAR(CRPalettes::locometalPillar),
+        SMOKEBOX(CRPalettes::locometalSmokebox),
+        PLATED(CRPalettes::platedLocometal),
+        FLAT_SLASHED(CRPalettes::flatSlashedLocometal),
+        FLAT_RIVETED(CRPalettes::flatRivetedLocometal),
+        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal),
+        BOILER(CRPalettes::locometalBoiler),
+        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler)
+        ;
+
+        private final Map<@Nullable DyeColor, BlockEntry<?>> blocks = new HashMap<>(17, 2);
+        private final PaletteBlockRegistrar registrar;
+
+        Styles(PaletteBlockRegistrar registrar) {
+            this.registrar = registrar;
+        }
+        private void register(@Nullable DyeColor dyeColor) {
+            blocks.put(dyeColor, registrar.register(dyeColor));
+        }
+
+        public BlockEntry<?> get(@Nullable DyeColor color) {
+            return blocks.get(color);
+        }
+    }
+
+    @FunctionalInterface
+    private interface PaletteBlockRegistrar {
+        @ApiStatus.NonExtendable
+        default BlockEntry<?> register(@Nullable DyeColor color) {
+            String colorString = color == null ? "" : color.name().toLowerCase(Locale.ROOT);
+            return register(color, colorString, color == null ? "" : ColorUtils.coloredName(colorString));
+        }
+
+        @ApiStatus.OverrideOnly
+        BlockEntry<?> register(@Nullable DyeColor color, String colorString, String colorName);
+    }
+
     // no textures for these yet
 //            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
 //            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
 //            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
 //            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
 
-    static {
-        for (DyeColor color : DyeColor.values()) {
-            String colorString = color.name().toLowerCase(Locale.ROOT);
-            String colorName = ColorUtils.coloredName(colorString);
-
-            // Slashed Locometal
-            SLASHED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_slashed_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
-                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
-                    .lang(colorName + " Slashed Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Riveted Locometal
-            RIVETED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_riveted_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
-                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
-                    .lang(colorName + " Riveted Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Locometal Pillar
-            LOCOMETAL_PILLAR.put(color,
-                REGISTRATE.block(colorString + "_locometal_pillar", RotatedPillarBlock::new)
-                    .transform(BuilderTransformers.locoMetalPillar(color))
-                    .lang(colorName + " Locometal Pillar")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Locometal SmokeBox
-            LOCOMETAL_SMOKEBOX.put(color,
-                REGISTRATE.block(colorString + "locometal_smokebox", RotatedPillarBlock::new)
-                    .transform(BuilderTransformers.locoMetalSmokeBox(color))
-                    .lang(colorName + " Locometal Smokebox")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Plated Locometal
-            PLATED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_plated_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
-                    .lang("Plated " + colorName + " Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Flat Slashed Locometal
-            FLAT_SLASHED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_flat_slashed_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
-                    .lang("Flat " + colorName + " Slashed Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Flat Riveted Locometal
-            FLAT_RIVETED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_flat_riveted_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
-                    .lang("Flat " + colorName + " Riveted Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Brass Wrapped Locometal
-            BRASS_WRAPPED_LOCOMETAL.put(color,
-                REGISTRATE.block(colorString + "_brass_wrapped_locometal", Block::new)
-                    .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
-                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
-                    .lang(colorName + " Brass Wrapped Locometal")
-                    .item()
-                    .build()
-                    .register()
-            );
-
-            // Locometal Boiler
-            LOCOMETAL_BOILER.put(color,
-                REGISTRATE.block(colorString + "_locometal_boiler", BoilerBlock::new)
-                    .transform(BuilderTransformers.locoMetalBoiler(color))
-                    .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
-                    .lang(colorName + " Locometal Boiler")
-                    .item()
-                    .transform(customItemModel(color.name().toLowerCase(Locale.ROOT) + "_locometal_boiler_gullet_x"))
-                    .register()
-            );
-
-            // Brass Wrapped Locometal Boiler
-            BRASS_WRAPPED_LOCOMETAL_BOILER.put(color,
-                REGISTRATE.block(colorString + "_brass_wrapped_locometal_boiler", BoilerBlock::new)
-                    .transform(BuilderTransformers.locoMetalBoiler(color))
-                    .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_BOILER_SIDE.get(color))))
-                    .lang(colorName + " Brass Wrapped Locometal Boiler")
-                    .item()
-                    .transform(customItemModel(color.name().toLowerCase(Locale.ROOT) + "_brass_wrapped_locometal_boiler_gullet_x"))
-                    .register()
-            );
-        }
+    private static BlockEntry<?> slashedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "slashed_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
+            .lang(joinSpace(colorName, "Slashed Locometal"))
+            .item()
+            .build()
+            .register();
     }
 
-    public static void register() {}
+    private static BlockEntry<?> rivetedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "riveted_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
+            .lang(joinSpace(colorName, "Riveted Locometal"))
+            .item()
+            .build()
+            .register();
+    }
+
+    private static BlockEntry<?> locometalPillar(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_pillar"), RotatedPillarBlock::new)
+            .transform(BuilderTransformers.locoMetalPillar(color))
+            .lang(joinSpace(colorName, "Locometal Pillar"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> locometalSmokebox(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), RotatedPillarBlock::new)
+            .transform(BuilderTransformers.locoMetalSmokeBox(color))
+            .lang(joinSpace(colorName, "Locometal Smokebox"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> platedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "plated_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
+            .lang(joinSpace("Plated", colorName, "Locometal"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> flatSlashedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "flat_slashed_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
+            .lang(joinSpace("Flat", colorName, "Slashed Locometal"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> flatRivetedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "flat_riveted_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
+            .lang(joinSpace("Flat", colorName, "Riveted Locometal"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> brassWrappedLocometal(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "brass_wrapped_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
+            .lang(joinSpace(colorName, "Brass Wrapped Locometal"))
+            .item()
+            .build()
+            .register();
+    }
+
+    public static BlockEntry<?> locometalBoiler(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_boiler"), BoilerBlock::new)
+            .transform(BuilderTransformers.locoMetalBoiler(color))
+            .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
+            .lang(joinSpace(colorName, "Locometal Boiler"))
+            .item()
+            .transform(customItemModel(joinUnderscore(colorString, "locometal_boiler_gullet_x")))
+            .register();
+    }
+
+    public static BlockEntry<?> brassWrappedLocometalBoiler(@Nullable DyeColor color, String colorString, String colorName) {
+        return REGISTRATE.block(joinUnderscore(colorString, "brass_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(BuilderTransformers.locoMetalBoiler(color))
+            .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_BOILER_SIDE.get(color))))
+            .lang(joinSpace(colorName, "Brass Wrapped Locometal Boiler"))
+            .item()
+            .transform(customItemModel(joinUnderscore(colorString, "brass_wrapped_locometal_boiler_gullet_x")))
+            .register();
+    }
 }

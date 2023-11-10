@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.lang;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
@@ -14,6 +15,7 @@ public class CRLangGen {
 
         provideDefaultLang("interface", langConsumer);
         provideDefaultLang("tooltips", langConsumer);
+        CRTags.provideLangEntries(langConsumer);
     }
 
     private static void provideDefaultLang(String fileName, BiConsumer<String, String> consumer) {

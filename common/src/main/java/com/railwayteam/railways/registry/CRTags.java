@@ -1,7 +1,5 @@
 package com.railwayteam.railways.registry;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.foundation.utility.Lang;
@@ -13,6 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.function.BiConsumer;
 
 import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
 
@@ -145,20 +145,18 @@ public class CRTags {
     AllItemTags.register();
   }
 
-  public static JsonElement provideLangEntries() {
-    JsonObject object = new JsonObject();
+  public static void provideLangEntries(BiConsumer<String, String> consumer) {
     for (AllBlockTags blockTag : AllBlockTags.values()) {
       ResourceLocation loc = blockTag.tag.location();
-      object.addProperty("tag.block." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+      consumer.accept("tag.block." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
           TextUtils.titleCaseConversion(blockTag.name()).replace('_', ' '));
     }
 
     for (AllItemTags itemTag : AllItemTags.values()) {
       ResourceLocation loc = itemTag.tag.location();
-      object.addProperty("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+      consumer.accept("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
           TextUtils.titleCaseConversion(itemTag.name()).replace('_', ' '));
     }
-    object.addProperty("tag.item.forge.string", "String");
-    return object;
+    consumer.accept("tag.item.forge.string", "String");
   }
 }

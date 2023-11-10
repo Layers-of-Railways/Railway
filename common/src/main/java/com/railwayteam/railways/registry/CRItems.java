@@ -45,8 +45,7 @@ public class CRItems {
   public static final CreativeModeTab palettesCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID + "_palettes") {
     @Override
     @Nonnull
-    //fixme
-    public ItemStack makeIcon() { return CRPalettes.SLASHED_LOCOMETAL.get(DyeColor.RED).asStack(); }
+    public ItemStack makeIcon() { return CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack(); }
   };
 
   public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");

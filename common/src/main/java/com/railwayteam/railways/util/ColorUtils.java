@@ -2,9 +2,17 @@ package com.railwayteam.railways.util;
 
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.material.MaterialColor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ColorUtils {
-    public static MaterialColor materialColorFromDye(DyeColor dyeColor) {
+    public static MaterialColor materialColorFromDye(@Nullable DyeColor dyeColor, @NotNull MaterialColor defaultColor) {
+        if (dyeColor == null)
+            return defaultColor;
+        return materialColorFromDye(dyeColor);
+    }
+
+    public static MaterialColor materialColorFromDye(@NotNull DyeColor dyeColor) {
         return switch (dyeColor) {
             case WHITE -> MaterialColor.TERRACOTTA_WHITE;
             case ORANGE -> MaterialColor.COLOR_ORANGE;
