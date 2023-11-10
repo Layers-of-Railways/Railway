@@ -10,6 +10,7 @@ Additions
 - A deployer using a whistle on air will clear the schedule of the bound train
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
 - Config option to use old-style smoke (campfire particles) for smokestacks
+- Locometal block series
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction

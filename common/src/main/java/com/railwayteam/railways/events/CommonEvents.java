@@ -1,6 +1,7 @@
 package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRExtraRegistration;
@@ -51,5 +52,9 @@ public class CommonEvents {
     // the signal source by the time we join a world, we have a last chance here
     public static void backupDisplayRegister() {
         CRExtraRegistration.register();
+    }
+
+    public static void onTagsUpdated() {
+        TagCycleHandlerServer.onTagsUpdated();
     }
 }

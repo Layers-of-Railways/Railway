@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
+import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRIcons;
@@ -512,6 +513,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 }
                 onClose();
                 BogeyCategoryHandlerClient.COOLDOWN = 2;
+                TagCycleHandlerClient.COOLDOWN = 2;
                 AccessorToolboxHandlerClient.setCOOLDOWN(2);
                 return true;
             }

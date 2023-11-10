@@ -6,6 +6,7 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
+import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.ConfigureDevCapeC2SPacket;
@@ -47,6 +48,7 @@ public class ClientEvents {
 
         if (isGameActive()) {
             BogeyCategoryHandlerClient.clientTick();
+            TagCycleHandlerClient.clientTick();
             ConductorPossessionController.onClientTick(mc, true);
         }
     }
@@ -71,5 +73,12 @@ public class ClientEvents {
         if (Minecraft.getInstance().screen != null)
             return;
         BogeyCategoryHandlerClient.onKeyInput(key, pressed);
+        if (Minecraft.getInstance().screen != null)
+            return;
+        TagCycleHandlerClient.onKeyInput(key, pressed);
+    }
+
+    public static void onTagsUpdated() {
+        TagCycleHandlerClient.onTagsUpdated();
     }
 }
