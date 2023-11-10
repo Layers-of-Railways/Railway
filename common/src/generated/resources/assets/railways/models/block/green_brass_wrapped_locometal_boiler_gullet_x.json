@@ -6,6 +6,6 @@
   "textures": {
     "front": "railways:block/palettes/green/boiler_gullet",
     "particle": "railways:block/palettes/green/riveted_pillar_top",
-    "sides": "railways:block/palettes/green/boiler_side"
+    "sides": "railways:block/palettes/green/wrapped_boiler_side"
   }
 }

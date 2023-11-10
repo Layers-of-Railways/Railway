@@ -1,11 +1,11 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
-import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -121,7 +121,7 @@ public class CRItems {
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
             .requires(CONDUCTOR_CAPS)
-            .requires(CommonTags.DYES.get(color).tag)
+            .requires(Ingredients.dye(color))
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
             .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());

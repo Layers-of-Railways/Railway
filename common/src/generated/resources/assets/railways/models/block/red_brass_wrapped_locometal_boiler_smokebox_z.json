@@ -6,6 +6,6 @@
   "textures": {
     "front": "railways:block/palettes/red/smokebox_door",
     "particle": "railways:block/palettes/red/riveted_pillar_top",
-    "sides": "railways:block/palettes/red/boiler_side"
+    "sides": "railways:block/palettes/red/wrapped_boiler_side"
   }
 }

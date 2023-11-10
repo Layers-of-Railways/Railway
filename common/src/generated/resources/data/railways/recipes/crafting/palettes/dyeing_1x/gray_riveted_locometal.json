@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/riveted"
+    },
+    {
+      "tag": "railways:internal/dyes/gray_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:gray_riveted_locometal"
+  }
+}

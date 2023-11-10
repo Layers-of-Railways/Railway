@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock.Style;
+import com.railwayteam.railways.registry.CRPalettes;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -45,7 +46,7 @@ public class BoilerGenerator extends SpecialBlockStateGen {
             .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_"+axis.getName()+".obj"))
             .end()
             .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
-            .texture("sides", prov.modLoc("block/palettes/" + colorName + "/boiler_side"))
+            .texture("sides", prov.modLoc("block/palettes/" + colorName + (CRPalettes.Styles.BRASS_WRAPPED_BOILER.contains(ctx.get()) ? "/wrapped_boiler_side" : "/boiler_side")))
             .texture("particle", prov.modLoc("block/palettes/" + colorName + "/riveted_pillar_top"));
     }
 }

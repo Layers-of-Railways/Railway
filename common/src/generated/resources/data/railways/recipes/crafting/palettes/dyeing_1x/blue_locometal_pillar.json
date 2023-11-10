@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/pillar"
+    },
+    {
+      "tag": "railways:internal/dyes/blue_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:blue_locometal_pillar"
+  }
+}

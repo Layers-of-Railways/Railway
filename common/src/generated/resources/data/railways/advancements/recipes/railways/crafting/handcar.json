@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///handcar"
+        "recipe": "railways:crafting/handcar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///handcar"
+      "railways:crafting/handcar"
     ]
   }
 }

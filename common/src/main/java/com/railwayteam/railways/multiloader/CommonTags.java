@@ -23,6 +23,7 @@ public class CommonTags {
 			IRON_PLATES = item("plates/iron_plates", "iron_plates", "plates/iron"),
 			BRASS_PLATES = item("plates/brass_plates", "brass_plates", "plates/brass"),
 			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper"),
+			BRASS_INGOTS = item("ingots/brass_ingots", "brass_ingots", "ingots/brass"),
 			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron");
 
 	public static final Map<DyeColor, CommonTag<Item>> DYES = Util.make(new EnumMap<>(DyeColor.class), dyes -> {
