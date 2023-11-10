@@ -2,6 +2,7 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
+import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
 import com.railwayteam.railways.base.data.lang.CRLangPartials;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
@@ -106,6 +107,7 @@ public class Railways {
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n' Rails", CRLangPartials.values()));
+    gen.addProvider(true, new EmiExcludedTagGen(gen));
   }
 
   public static CreateRegistrate registrate() {

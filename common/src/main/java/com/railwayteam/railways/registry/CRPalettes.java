@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -15,6 +16,7 @@ import java.util.EnumMap;
 import java.util.Locale;
 
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate().creativeModeTab(
@@ -45,96 +47,107 @@ public class CRPalettes {
 
             // Slashed Locometal
             SLASHED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_slashed_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
-                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
-                            .lang(colorName + " Slashed Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_slashed_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
+                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
+                    .lang(colorName + " Slashed Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Riveted Locometal
             RIVETED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_riveted_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
-                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
-                            .lang(colorName + " Riveted Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_riveted_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
+                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
+                    .lang(colorName + " Riveted Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Locometal Pillar
             LOCOMETAL_PILLAR.put(color,
-                    REGISTRATE.block(colorString + "_locometal_pillar", RotatedPillarBlock::new)
-                            .transform(BuilderTransformers.locoMetalPillar(color))
-                            .lang(colorName + " Locometal Pillar")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_locometal_pillar", RotatedPillarBlock::new)
+                    .transform(BuilderTransformers.locoMetalPillar(color))
+                    .lang(colorName + " Locometal Pillar")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Locometal SmokeBox
             LOCOMETAL_SMOKEBOX.put(color,
-                    REGISTRATE.block(colorString + "locometal_smokebox", RotatedPillarBlock::new)
-                            .transform(BuilderTransformers.locoMetalSmokeBox(color))
-                            .lang(colorName + " Locometal Smokebox")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "locometal_smokebox", RotatedPillarBlock::new)
+                    .transform(BuilderTransformers.locoMetalSmokeBox(color))
+                    .lang(colorName + " Locometal Smokebox")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Plated Locometal
             PLATED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_plated_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
-                            .lang("Plated " + colorName + " Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_plated_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
+                    .lang("Plated " + colorName + " Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Flat Slashed Locometal
             FLAT_SLASHED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_flat_slashed_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
-                            .lang("Flat " + colorName + " Slashed Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_flat_slashed_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
+                    .lang("Flat " + colorName + " Slashed Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Flat Riveted Locometal
             FLAT_RIVETED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_flat_riveted_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
-                            .lang("Flat " + colorName + " Riveted Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_flat_riveted_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
+                    .lang("Flat " + colorName + " Riveted Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Brass Wrapped Locometal
             BRASS_WRAPPED_LOCOMETAL.put(color,
-                    REGISTRATE.block(colorString + "_brass_wrapped_locometal", Block::new)
-                            .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
-                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
-                            .lang(colorName + " Brass Wrapped Locometal")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_brass_wrapped_locometal", Block::new)
+                    .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
+                    .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
+                    .lang(colorName + " Brass Wrapped Locometal")
+                    .item()
+                    .build()
+                    .register()
             );
 
             // Locometal Boiler
             LOCOMETAL_BOILER.put(color,
-                    REGISTRATE.block(colorString + "_locometal_boiler", BoilerBlock::new)
-                            .transform(BuilderTransformers.locoMetalBoiler(color))
-                            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
-                            .lang(colorName + " Locometal Boiler")
-                            .item()
-                            .build()
-                            .register()
+                REGISTRATE.block(colorString + "_locometal_boiler", BoilerBlock::new)
+                    .transform(BuilderTransformers.locoMetalBoiler(color))
+                    .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
+                    .lang(colorName + " Locometal Boiler")
+                    .item()
+                    .transform(customItemModel(color.name().toLowerCase(Locale.ROOT) + "_locometal_boiler_gullet_x"))
+                    .register()
+            );
+
+            // Brass Wrapped Locometal Boiler
+            BRASS_WRAPPED_LOCOMETAL_BOILER.put(color,
+                REGISTRATE.block(colorString + "_brass_wrapped_locometal_boiler", BoilerBlock::new)
+                    .transform(BuilderTransformers.locoMetalBoiler(color))
+                    .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_BOILER_SIDE.get(color))))
+                    .lang(colorName + " Brass Wrapped Locometal Boiler")
+                    .item()
+                    .transform(customItemModel(color.name().toLowerCase(Locale.ROOT) + "_brass_wrapped_locometal_boiler_gullet_x"))
+                    .register()
             );
         }
     }

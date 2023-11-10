@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.lang;
 
 import com.google.gson.JsonElement;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.foundation.data.LangPartial;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.simibubi.create.foundation.utility.Lang;
@@ -11,7 +12,7 @@ import java.util.function.Supplier;
 public enum CRLangPartials implements LangPartial {
 	INTERFACE("UI & Messages"),
 	TOOLTIPS("Item Descriptions"),
-
+	TAGS("Tags", CRTags::provideLangEntries)
 	;
 
 	private final String display;

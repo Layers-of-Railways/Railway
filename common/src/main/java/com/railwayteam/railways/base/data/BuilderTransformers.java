@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
@@ -84,42 +85,46 @@ public class BuilderTransformers {
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(DyeColor color, String type) {
         return b -> b.initialProperties(SharedProperties::softMetal)
-                .properties(p -> p
-                        .color(ColorUtils.materialColorFromDye(color))
-                        .sound(SoundType.NETHERITE_BLOCK)
+            .properties(p -> p
+                .color(ColorUtils.materialColorFromDye(color))
+                .sound(SoundType.NETHERITE_BLOCK)
+            )
+            .transform(pickaxeOnly())
+            .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+            .tag(CRTags.AllBlockTags.LOCOMETAL.tag)
+            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
+                    c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/" + type)
                 )
-                .transform(pickaxeOnly())
-                .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-                .blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
-                                c.getName(), p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/" + type)
-                        )
-                ));
+            ));
     }
 
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-                .blockstate((c, p) -> p.axisBlock(c.get(),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_side"),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_top")
-                ));
+            .blockstate((c, p) -> p.axisBlock(c.get(),
+                p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_side"),
+                p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/riveted_pillar_top")
+            ));
     }
 
     // not done
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-                .blockstate((c, p) -> p.axisBlock(c.get(),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/tank_side"),
-                        p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/smokebox_tank_top")
-                ));
+            .blockstate((c, p) -> p.axisBlock(c.get(),
+                p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/tank_side"),
+                p.modLoc("block/palettes/" + color.name().toLowerCase(Locale.ROOT) + "/smokebox_tank_top")
+            ));
     }
 
     public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(DyeColor color) {
         return b -> b.initialProperties(SharedProperties::softMetal)
-                .properties(p -> p
-                        .color(ColorUtils.materialColorFromDye(color))
-                        .sound(SoundType.NETHERITE_BLOCK)
-                )
-                .transform(pickaxeOnly())
-                .blockstate(new BoilerGenerator(color)::generate);
+            .properties(p -> p
+                .color(ColorUtils.materialColorFromDye(color))
+                .sound(SoundType.NETHERITE_BLOCK)
+                .noOcclusion()
+            )
+            .tag(CRTags.AllBlockTags.LOCOMETAL.tag)
+            .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
+            .transform(pickaxeOnly())
+            .blockstate(new BoilerGenerator(color)::generate);
     }
 }

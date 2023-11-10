@@ -18,7 +18,8 @@ public class CRSpriteShifts {
             SLASHED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             RIVETED_LOCOMETAL = new EnumMap<>(DyeColor.class),
             BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-            BOILER_SIDE = new EnumMap<>(DyeColor.class);
+            BOILER_SIDE = new EnumMap<>(DyeColor.class),
+            BRASS_WRAPPED_BOILER_SIDE = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
@@ -26,6 +27,7 @@ public class CRSpriteShifts {
             RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
             BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
             BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
+            BRASS_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "wrapped_boiler_side"));
         }
     }
 
@@ -36,7 +38,7 @@ public class CRSpriteShifts {
     }
 
     private static CTSpriteShiftEntry locometalBoiler(DyeColor color, String name) {
-        return horizontal("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
+        return horizontalKryppers("palettes/" + color.getName().toLowerCase(Locale.ROOT) + "/" + name);
     }
 
     private static CTSpriteShiftEntry omni(String name) {
@@ -45,6 +47,10 @@ public class CRSpriteShifts {
 
     private static CTSpriteShiftEntry horizontal(String name) {
         return getCT(AllCTTypes.HORIZONTAL, name);
+    }
+
+    private static CTSpriteShiftEntry horizontalKryppers(String name) {
+        return getCT(AllCTTypes.HORIZONTAL_KRYPPERS, name);
     }
 
     private static CTSpriteShiftEntry vertical(String name) {

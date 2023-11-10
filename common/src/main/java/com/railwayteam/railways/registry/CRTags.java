@@ -1,6 +1,9 @@
 package com.railwayteam.railways.registry;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +44,9 @@ public class CRTags {
   public enum AllBlockTags {
     SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
     TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
-    CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false) // so other mods / datapacks can make more blocks usable for conductor spies
+    CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false), // so other mods / datapacks can make more blocks usable for conductor spies
+    LOCOMETAL,
+    LOCOMETAL_BOILERS
     ;
 
     public final TagKey<Block> tag;
@@ -138,5 +143,22 @@ public class CRTags {
   public static void register() {
     AllBlockTags.register();
     AllItemTags.register();
+  }
+
+  public static JsonElement provideLangEntries() {
+    JsonObject object = new JsonObject();
+    for (AllBlockTags blockTag : AllBlockTags.values()) {
+      ResourceLocation loc = blockTag.tag.location();
+      object.addProperty("tag.block." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+          TextUtils.titleCaseConversion(blockTag.name()).replace('_', ' '));
+    }
+
+    for (AllItemTags itemTag : AllItemTags.values()) {
+      ResourceLocation loc = itemTag.tag.location();
+      object.addProperty("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+          TextUtils.titleCaseConversion(itemTag.name()).replace('_', ' '));
+    }
+    object.addProperty("tag.item.forge.string", "String");
+    return object;
   }
 }

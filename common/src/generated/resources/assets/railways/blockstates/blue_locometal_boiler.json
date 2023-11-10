@@ -1,10 +1,16 @@
 {
   "variants": {
-    "style=gullet": {
-      "model": "railways:block/blue_locometal_boiler"
+    "axis=x,style=gullet": {
+      "model": "railways:block/blue_locometal_boiler_gullet_x"
     },
-    "style=smokebox": {
-      "model": "railways:block/blue_locometal_boiler"
+    "axis=x,style=smokebox": {
+      "model": "railways:block/blue_locometal_boiler_smokebox_x"
+    },
+    "axis=z,style=gullet": {
+      "model": "railways:block/blue_locometal_boiler_gullet_z"
+    },
+    "axis=z,style=smokebox": {
+      "model": "railways:block/blue_locometal_boiler_smokebox_z"
     }
   }
 }
