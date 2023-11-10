@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
@@ -129,5 +130,10 @@ public abstract class MixinCarriage implements ICarriageConductors {
         if (CarriageBogeyUtils.getType(bogey).getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
         return original;
+    }
+
+    @Inject(method = "manageEntities", at = @At("HEAD"), cancellable = true)
+    private void allowTravellingWithoutLevel(Level level, CallbackInfo ci) {
+        if (level == null) ci.cancel();
     }
 }

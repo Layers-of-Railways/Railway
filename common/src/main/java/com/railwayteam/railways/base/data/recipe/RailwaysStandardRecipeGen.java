@@ -143,6 +143,20 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .pattern("P")
       );
 
+    GeneratedRecipe HANDCAR = create(CRBlocks.HANDCAR)
+        .unlockedBy(Ingredients::contraptionControls)
+        .viaShaped(b -> b
+            .define('/', Ingredients.stick())
+            .define('%', Ingredients.andesiteAlloy())
+            .define('_', Ingredients.woodenSlab())
+            .define('C', Ingredients.contraptionControls())
+            .define('#', Ingredients.andesiteCasing())
+            .define('*', Ingredients.smallCog())
+            .pattern("/%/")
+            .pattern("_C_")
+            .pattern("#*#")
+        );
+
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);
     }

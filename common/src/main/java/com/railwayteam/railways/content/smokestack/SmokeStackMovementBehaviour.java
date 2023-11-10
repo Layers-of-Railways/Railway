@@ -107,18 +107,11 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         speedMultiplierChaser.tickChaser();
         if (random.nextFloat() < type.particleSpawnChance * chanceModifier * CRConfigs.client().smokePercentage.get()) {
             for(int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
-                /*context.world.addAlwaysVisibleParticle(
-                    context.state.getValue(CampfireBlock.SIGNAL_FIRE) ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE
-                        : ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                    true, context.position.x() + random.nextDouble() / (random.nextBoolean() ? 3D : -3D),
-                    context.position.y() + random.nextDouble() + random.nextDouble(),
-                    context.position.z() + random.nextDouble() / (random.nextBoolean() ? 3D : -3D), 0.0D, 0.07D,
-                    0.0D);*/
                 BlockState underState = Blocks.AIR.defaultBlockState();
                 StructureTemplate.StructureBlockInfo info;
                 if ((info = context.contraption.getBlocks().get(context.localPos.below())) != null)
                     underState = info.state;
-                SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5, (random.nextDouble()-0.5)*0.5), random.nextBoolean(), true,
+                SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,
                     type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, underState);
             }
         }
