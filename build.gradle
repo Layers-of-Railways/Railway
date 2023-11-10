@@ -6,6 +6,7 @@ plugins {
     id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
     id "me.modmuss50.mod-publish-plugin" version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id "dev.ithundxr.silk" version "0.11.15" // https://github.com/IThundxr/silk
+    id 'com.matyrobbrt.pngoptimiser' version "0.2.0"
 }
 
 architectury {
