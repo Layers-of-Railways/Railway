@@ -1,5 +1,6 @@
 package com.railwayteam.railways.base.datafixers;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFix;
 import com.mojang.datafixers.TypeRewriteRule;
@@ -18,17 +19,17 @@ public class CompatCherryTrackFix extends DataFix {
     /*
      * List of modded cherry tracks that need to be fixed
      */
-    public static List<String> standardCherryOld = List.of(
+    public static final ImmutableList<String> standardCherryOld = ImmutableList.of(
             "railways:track_biomesoplenty_cherry",
             "railways:track_byg_cherry",
             "railways:track_blue_skies_cherry"
     );
-    public static List<String> wideCherryOld = List.of(
+    public static final ImmutableList<String> wideCherryOld = ImmutableList.of(
             "railways:track_biomesoplenty_cherry_wide",
             "railways:track_byg_cherry_wide",
             "railways:track_blue_skies_cherry_wide"
     );
-    public static List<String> narrowCherryOld = List.of(
+    public static final ImmutableList<String> narrowCherryOld = ImmutableList.of(
             "railways:track_biomesoplenty_cherry_narrow",
             "railways:track_byg_cherry_narrow",
             "railways:track_blue_skies_cherry_narrow"
