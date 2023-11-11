@@ -21,14 +21,18 @@ public class MixinTrackMaterial {
      */
     @Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
     private static void snr$updateCherryCompatTracks(String serializedName, CallbackInfoReturnable<TrackMaterial> cir) {
-        List<String> cherryList = List.of("biomesoplenty:cherry", "byg:cherry", "blue_skies:cherry");
-
-        if (cherryList.contains(serializedName))
-            cir.setReturnValue(CRTrackMaterials.CHERRY);
+        switch (serializedName) {
+            case "biomesoplenty:cherry", "byg:cherry", "blue_skies:cherry"
+                    -> cir.setReturnValue(CRTrackMaterials.CHERRY);
+            case "biomesoplenty:cherry_wide", "byg:cherry_wide", "blue_skies:cherry_wide"
+                    -> cir.setReturnValue(CRTrackMaterials.WIDE_GAUGE.get(CRTrackMaterials.CHERRY));
+            case "biomesoplenty:cherry_narrow", "byg:cherry_narrow", "blue_skies:cherry_narrow"
+                    -> cir.setReturnValue(CRTrackMaterials.NARROW_GAUGE.get(CRTrackMaterials.CHERRY));
+        }
     }
 
     /*
-    Properly deserialize pre-resourcelocation tracks
+     * Properly deserialize pre-resourcelocation tracks
      */
     @Redirect(method = "deserialize", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/ResourceLocation;tryParse(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;", remap = true))
     private static ResourceLocation snr$deserializeLegacyTracks(String location) {
