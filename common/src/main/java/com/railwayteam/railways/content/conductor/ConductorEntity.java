@@ -733,6 +733,11 @@ public class ConductorEntity extends AbstractGolem {
     sneakListener = new FrequencyListener("sneak");
   }
 
+  public int getForwardSignalStrength() {
+    if (forwardListener == null) return 0;
+    return forwardListener.receivedStrength;
+  }
+
   private List<ItemStack> getHeldSchedules() {
     if (heldSchedules == null) {
       heldSchedules = new ArrayList<>();
@@ -1014,7 +1019,7 @@ public class ConductorEntity extends AbstractGolem {
       ventCooldown--;
     if (level instanceof ServerLevel serverLevel) {
       if (fakePlayer == null) {
-        fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel);
+        fakePlayer = EntityUtils.createConductorFakePlayer(serverLevel, this);
       }
       if ((Object) currentlyViewing.get() instanceof ServerPlayer player) {
         SectionPos chunkPos = SectionPos.of(blockPosition());

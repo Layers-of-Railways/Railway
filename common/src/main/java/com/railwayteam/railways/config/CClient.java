@@ -1,6 +1,7 @@
 package com.railwayteam.railways.config;
 
-import com.railwayteam.railways.content.smokestack.SmokeParticle.SmokeQuality;
+import com.railwayteam.railways.content.smokestack.SmokeType;
+import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticle.SmokeQuality;
 import com.simibubi.create.foundation.config.ConfigBase;
 
 @SuppressWarnings("unused")
@@ -18,11 +19,12 @@ public class CClient extends ConfigBase {
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
+    public final ConfigEnum<SmokeType> smokeType = e(SmokeType.OLD, "smokeType", Comments.smokeType);
+    public final ConfigGroup oldSmoke = group(2, "old", Comments.oldSmoke);
     public final ConfigInt smokeLifetime = i(500, 20, 1000, "smokeLifetime", Comments.inTicks, Comments.smokeLifetime);
     public final ConfigFloat smokePercentage = f(0.75f, 0.0f, 10.0f, "smokePercentage", Comments.smokePercentage);
     public final ConfigEnum<SmokeQuality> smokeQuality = e(SmokeQuality.HIGH, "smokeQuality", Comments.smokeQuality);
     public final ConfigBool thickerSmoke = b(true, "thickerSmoke", Comments.thickerSmoke);
-    public final ConfigBool oldSmoke = b(false, "oldSmoke", Comments.oldSmoke);
 
     // journeymap
     public final ConfigGroup journeymap = group(1, "journeymap", Comments.journeymap);
@@ -49,11 +51,12 @@ public class CClient extends ConfigBase {
         static String useDevCape2 = "This setting may require a relog to take effect";
 
         static String smoke = "Smoke Settings";
+        static String oldSmoke = "Old-style Smoke Settings";
         static String smokeLifetime = "Lifetime of smoke particles emitted by contraptions";
         static String smokePercentage = "Smoke emission rate on contraptions";
         static String smokeQuality = "Smoke texture quality";
         static String thickerSmoke = "Thicker smoke (renders 2 extra layers per particle)";
-        static String oldSmoke = "Revert smokestacks to using vanilla smoke particles";
+        static String smokeType = "Smoke particle style";
 
         static String journeymap = "Journeymap Settings";
         static String journeymapUpdateTicks = "Journeymap train overlay update time";

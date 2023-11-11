@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.smokestack;
+package com.railwayteam.railways.content.smokestack.particles.legacy;
 
 import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;

@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
@@ -15,6 +16,7 @@ import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlo
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Navigation;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -61,6 +63,14 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             return true;
         }
         return instance.closerThan(pos, distance);
+    }
+
+    @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))
+    private double conductorSpeedControl(Train instance, Operation<Double> original, BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player) {
+        if (player instanceof IConductorHoldingFakePlayer conductorHolder && conductorHolder.getConductor() != null) {
+            return conductorHolder.getConductor().getForwardSignalStrength() / 15.0d;
+        }
+        return original.call(instance);
     }
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;maxSpeed()F"))
