@@ -1,5 +1,4 @@
 {
-  "_": "¡sןıɐᴚ ,u, ɯɐǝʇS buıʇɐןsuɐɹʇ ɹoɟ noʎ ʞuɐɥ⟘",
   "block.create.railway_casing.tooltip": "⅁NISⱯƆ NIⱯᴚ⟘",
   "block.create.railway_casing.tooltip.summary": "˙ǝɔɐןd oʇ ‾ǝןʎʇs ʎǝboq‾ ǝɥʇ ʇɔǝןǝs oʇ )‾⟘ꞀⱯ‾ ʇןnɐɟǝp( ʎǝʞ ‾ʎɐןɹǝʌO ɔıʇɐɯǝɥɔS snɔoℲ‾ ǝɥʇ pןoɥ puɐ ssǝɹԀ",
   "block.create.track_station.tooltip": "NOI⟘Ɐ⟘S NIⱯᴚ⟘",
@@ -434,6 +433,7 @@
   "entity.railways.benchcart": "ɥɔuǝqʞɹoM ɥʇıʍ ʇɹɐɔǝuıW",
   "entity.railways.conductor": "ɹoʇɔnpuoƆ",
   "entity.railways.jukeboxcart": "xoqǝʞnſ ɥʇıʍ ʇɹɐɔǝuıW",
+  "header.railways.optifine": "ʇuǝıןɔ ǝɯɐb uo ʇuǝsǝɹd ǝuıɟıʇdO :buıuɹɐM",
   "item.railways.benchcart": "ɥɔuǝqʞɹoM ɥʇıʍ ʇɹɐɔǝuıW",
   "item.railways.black_conductor_cap": "dɐƆ s,ɹoʇɔnpuoƆ ʞɔɐןᗺ",
   "item.railways.black_incomplete_conductor_cap": "dɐƆ s,ɹoʇɔnpuoƆ ʞɔɐןᗺ ǝʇǝןdɯoɔuI",
@@ -680,6 +680,9 @@
   "itemGroup.railways": "sןıɐᴚ ,u, ɯɐǝʇS ǝʇɐǝɹƆ",
   "itemGroup.railways_palettes": "sǝʇʇǝןɐԀ :sןıɐᴚ ,u, ɯɐǝʇS ǝʇɐǝɹƆ",
   "itemGroup.railways_tracks": "sʞɔɐɹ⟘ :sןıɐᴚ ,u, ɯɐǝʇS ǝʇɐǝɹƆ",
+  "label.railways.open_mods_folder": "ɹǝpןoℲ spoW uǝdO",
+  "label.railways.optifine_alternatives": "sǝʌıʇɐuɹǝʇןⱯ ǝuıɟıʇdO",
+  "message.railways.optifine": ":ʇsıן sǝʌıʇɐuɹǝʇןⱯ ǝuıɟıʇdO s,ɹǝɥɔunɐꞀɯsıɹԀ ʞɔǝɥɔ 'ɹǝɥʇouɐ ɹo uosɐǝɹ ǝuo ɹoɟ ǝuıɟıʇdO pǝpǝǝu noʎ ɟI ˙ɹǝʇunoɔuǝ noʎ sǝnssı ɹo sbnq ʎuɐ ɹoɟ ʎʇıןıqısuodsǝɹ ʇdǝɔɔɐ noʎ ɹǝʌǝʍoɥ sbıɟuoɔ pǝpıs ʇuǝıןɔ sןıɐᴚ ,u, ɯɐǝʇS uı pǝןqɐsıp ǝq uɐɔ buıuɹɐʍ sıɥ⟘ ˙ǝɹoɯ puɐ sǝnssı ǝsǝɥʇ pıoʌɐ oʇ poɯ ǝɥʇ ǝʌoɯǝɹ oʇ pǝpuǝɯɯoɔǝɹ s,ʇI ˙sǝɥsɐɹɔ ǝɯɐb oʇ sʇɔɐɟıʇɹɐ ןɐnsıʌ ɹouıɯ ɯoɹɟ buıbuɐɹ 'ǝuıɟıʇdO ɥʇıʍ ǝןqıʇɐdɯoɔuı sı sןıɐᴚ ,u, ɯɐǝʇS :buıuɹɐM",
   "railways.bogeys.styles.archbar": "ɹɐqɥɔɹⱯ",
   "railways.bogeys.styles.blomberg": "bɹǝqɯoןᗺ",
   "railways.bogeys.styles.coilspring": "buıɹdsןıoƆ",

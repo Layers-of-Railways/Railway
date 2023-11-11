@@ -1,5 +1,4 @@
 {
-  "_": "Thank you for translating Steam 'n' Rails!",
   "block.create.railway_casing.tooltip": "TRAIN CASING",
   "block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place.",
   "block.create.track_station.tooltip": "TRAIN STATION",
@@ -434,6 +433,7 @@
   "entity.railways.benchcart": "Minecart with Workbench",
   "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",
+  "header.railways.optifine": "Warning: Optifine present on game client",
   "item.railways.benchcart": "Minecart with Workbench",
   "item.railways.black_conductor_cap": "Black Conductor's Cap",
   "item.railways.black_incomplete_conductor_cap": "Incomplete Black Conductor's Cap",
@@ -680,6 +680,9 @@
   "itemGroup.railways": "Create Steam 'n' Rails",
   "itemGroup.railways_palettes": "Create Steam 'n' Rails: Palettes",
   "itemGroup.railways_tracks": "Create Steam 'n' Rails: Tracks",
+  "label.railways.open_mods_folder": "Open Mods Folder",
+  "label.railways.optifine_alternatives": "Optifine Alternatives",
+  "message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disabled in Steam 'n' Rails client sided configs however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check PrismLauncher's Optifine Alternatives list:",
   "railways.bogeys.styles.archbar": "Archbar",
   "railways.bogeys.styles.blomberg": "Blomberg",
   "railways.bogeys.styles.coilspring": "Coilspring",
