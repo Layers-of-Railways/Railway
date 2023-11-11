@@ -5,11 +5,35 @@ import com.mojang.datafixers.DataFix;
 import com.mojang.datafixers.TypeRewriteRule;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
+import com.railwayteam.railways.mixin.MixinTrackMaterial;
 import net.minecraft.util.datafix.fixes.References;
 
+import java.util.List;
 import java.util.Optional;
 
+/**
+ * Also see snr$updateCherryCompatTracks inside {@link MixinTrackMaterial}
+ */
 public class CompatCherryTrackFix extends DataFix {
+    /*
+     * List of modded cherry tracks that need to be fixed
+     */
+    public static List<String> standardCherryOld = List.of(
+            "railways:track_biomesoplenty_cherry",
+            "railways:track_byg_cherry",
+            "railways:track_blue_skies_cherry"
+    );
+    public static List<String> wideCherryOld = List.of(
+            "railways:track_biomesoplenty_cherry_wide",
+            "railways:track_byg_cherry_wide",
+            "railways:track_blue_skies_cherry_wide"
+    );
+    public static List<String> narrowCherryOld = List.of(
+            "railways:track_biomesoplenty_cherry_narrow",
+            "railways:track_byg_cherry_narrow",
+            "railways:track_blue_skies_cherry_narrow"
+    );
+
     private final String name;
 
     public CompatCherryTrackFix(Schema outputSchema, String name) {
@@ -21,27 +45,14 @@ public class CompatCherryTrackFix extends DataFix {
     protected TypeRewriteRule makeRule() {
         return this.fixTypeEverywhereTyped(this.name + " for block_state", this.getInputSchema().getType(References.BLOCK_STATE), typed -> typed.update(DSL.remainderFinder(), dynamic -> {
             Optional<String> optional = dynamic.get("Name").asString().result();
+
             if (optional.isPresent()) {
-                if (optional.get().equals("railways:track_biomesoplenty_cherry") || optional.get().equals("railways:track_blue_skies_cherry")) {
-                    dynamic = dynamic.set("Name", dynamic.createString("railways:track_cherry"));
-
-                    dynamic = fixProperties(dynamic);
-
-                    return dynamic;
-                }
-                if (optional.get().equals("railways:track_biomesoplenty_cherry_wide") || optional.get().equals("railways:track_blue_skies_cherry_wide")) {
-                    dynamic = dynamic.set("Name", dynamic.createString("railways:track_cherry_wide"));
-
-                    dynamic = fixProperties(dynamic);
-
-                    return dynamic;
-                }
-                if (optional.get().equals("railways:track_biomesoplenty_cherry_narrow") || optional.get().equals("railways:track_blue_skies_cherry_narrow")) {
-                    dynamic = dynamic.set("Name", dynamic.createString("railways:track_cherry_narrow"));
-
-                    dynamic = fixProperties(dynamic);
-
-                    return dynamic;
+                if (standardCherryOld.contains(optional.get())) {
+                    return fixCherryData(dynamic, "railways:track_cherry");
+                } else if (wideCherryOld.contains(optional.get())) {
+                    return fixCherryData(dynamic, "railways:track_cherry_wide");
+                } else if (narrowCherryOld.contains(optional.get())) {
+                    return fixCherryData(dynamic, "railways:track_cherry_narrow");
                 }
             }
 
@@ -49,10 +60,8 @@ public class CompatCherryTrackFix extends DataFix {
         }));
     }
 
-    private static Dynamic<?> fixProperties(Dynamic<?> dynamic) {
-        Dynamic<?> properties = dynamic.get("Properties").orElseEmptyMap();
-        Dynamic<?> connections = properties.get("Connections").orElseEmptyMap();
-        dynamic = dynamic.set("Properties", properties).set("Connections", connections).set("Material", dynamic.createString("railways:cherry"));
-        return dynamic;
+    private static Dynamic<?> fixCherryData(Dynamic<?> dynamic, String name) {
+        dynamic = dynamic.set("Name", dynamic.createString(name));
+        return dynamic.set("Properties", dynamic.get("Properties").orElseEmptyMap());
     }
 }
