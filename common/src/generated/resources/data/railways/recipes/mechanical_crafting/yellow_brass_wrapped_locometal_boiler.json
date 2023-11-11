@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "#": {
+      "item": "railways:yellow_brass_wrapped_locometal"
+    },
+    "/": {
+      "item": "minecraft:blaze_rod"
+    },
+    "u": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "pattern": [
+    "  #  ",
+    " #u# ",
+    "#///#",
+    " #/# ",
+    "  #  "
+  ],
+  "result": {
+    "count": 4,
+    "item": "railways:yellow_brass_wrapped_locometal_boiler"
+  }
+}

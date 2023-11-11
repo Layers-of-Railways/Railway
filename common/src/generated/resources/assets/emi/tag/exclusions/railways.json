@@ -1,0 +1,32 @@
+{
+  "item": [
+    "railways:internal/string",
+    "railways:internal/nuggets/iron_nuggets",
+    "railways:internal/nuggets/zinc_nuggets",
+    "railways:internal/nuggets/brass_nuggets",
+    "railways:internal/plates/iron_plates",
+    "railways:internal/plates/brass_plates",
+    "railways:internal/ingots/copper_ingots",
+    "railways:internal/ingots/brass_ingots",
+    "railways:internal/ingots/iron_ingots",
+    "railways:internal/dyes/white_dyes",
+    "railways:internal/dyes/orange_dyes",
+    "railways:internal/dyes/magenta_dyes",
+    "railways:internal/dyes/light_blue_dyes",
+    "railways:internal/dyes/yellow_dyes",
+    "railways:internal/dyes/lime_dyes",
+    "railways:internal/dyes/pink_dyes",
+    "railways:internal/dyes/gray_dyes",
+    "railways:internal/dyes/light_gray_dyes",
+    "railways:internal/dyes/cyan_dyes",
+    "railways:internal/dyes/purple_dyes",
+    "railways:internal/dyes/blue_dyes",
+    "railways:internal/dyes/brown_dyes",
+    "railways:internal/dyes/green_dyes",
+    "railways:internal/dyes/red_dyes",
+    "railways:internal/dyes/black_dyes"
+  ],
+  "block": [
+    "railways:internal/relocation_not_supported"
+  ]
+}

@@ -37,7 +37,7 @@ configurations {
 
 repositories {
     // mavens for Fabric-exclusives
-    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
+    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu, EMI
     maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://cursemaven.com" } // Forge Config API Port
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
@@ -97,7 +97,7 @@ dependencies {
     switch (fabric_recipe_viewer.toLowerCase(Locale.ROOT)) {
         case "jei": modLocalRuntime("mezz.jei:jei-${minecraft_version}-fabric:${jei_fabric_version}"); break
         case "rei": modLocalRuntime("me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"); break
-        case "emi": modLocalRuntime("dev.emi:emi:${emi_version}"); break
+        case "emi": modLocalRuntime("dev.emi:emi-fabric:${emi_version}"); break
         case "disabled": break
         default: println("Unknown recipe viewer specified: ${fabric_recipe_viewer}. Must be JEI, REI, EMI, or disabled.")
     }

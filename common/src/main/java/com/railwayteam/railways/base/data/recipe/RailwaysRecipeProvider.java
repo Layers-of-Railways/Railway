@@ -11,6 +11,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -158,6 +159,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static ItemLike smallCog() {
       return AllBlocks.COGWHEEL.get();
+    }
+
+    public static ItemLike ironBlock() {
+      return Blocks.IRON_BLOCK;
+    }
+
+    public static TagKey<Item> dye(@NotNull DyeColor color) {
+      return CommonTags.DYES.get(color).tag;
+    }
+
+    public static TagKey<Item> brassIngot() {
+      return CommonTags.BRASS_INGOTS.tag;
     }
   }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/blue_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:blue_flat_slashed_locometal"
+  }
+}

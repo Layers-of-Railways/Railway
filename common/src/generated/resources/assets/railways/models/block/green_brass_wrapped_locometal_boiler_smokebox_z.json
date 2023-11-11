@@ -1,0 +1,11 @@
+{
+  "parent": "railways:block/palettes/boiler/boiler",
+  "flip_v": true,
+  "loader": "forge:obj",
+  "model": "railways:models/block/palettes/boiler/boiler_z.obj",
+  "textures": {
+    "front": "railways:block/palettes/green/smokebox_door",
+    "particle": "railways:block/palettes/green/riveted_pillar_top",
+    "sides": "railways:block/palettes/green/wrapped_boiler_side"
+  }
+}

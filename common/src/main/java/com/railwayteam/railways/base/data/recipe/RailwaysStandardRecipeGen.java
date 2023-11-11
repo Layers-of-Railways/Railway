@@ -1,8 +1,14 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
+import com.railwayteam.railways.base.data.recipe.DyedRecipeList.NullableDyedRecipeList;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
+import com.railwayteam.railways.registry.CRPalettes;
+import com.railwayteam.railways.registry.CRPalettes.CyclingStyleList;
+import com.railwayteam.railways.registry.CRPalettes.StyledList;
+import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -10,10 +16,7 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -157,6 +160,58 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#*#")
         );
 
+    GeneratedRecipe RIVETED_LOCOMETAL = create(Styles.RIVETED.get(null))
+        .returns(8)
+        .setEmiDefault()
+        .viaStonecutting(Ingredients::ironBlock)
+        .create();
+
+    // dye a style
+    StyledList<DyedRecipeList> LOCOMETAL_DYEING_8x = new StyledList<>(style -> new DyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/dyeing_8x", style.get(color))
+            .unlockedByTag(() -> style.dyeGroupTag)
+            .returns(8)
+            .setEmiDefault()
+            .viaShaped(b -> b
+                .define('#', style.dyeGroupTag)
+                .define('d', Ingredients.dye(color))
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    ));
+
+    StyledList<DyedRecipeList> LOCOMETAL_DYEING_1x = new StyledList<>(style -> new DyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/dyeing_1x", style.get(color))
+            .unlockedByTag(() -> style.dyeGroupTag)
+            .viaShapeless(b -> b
+                .requires(style.dyeGroupTag)
+                .requires(Ingredients.dye(color))
+            )
+    ));
+
+    DyedRecipeList LOCOMETAL_WRAPPING_BRASS = new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/wrapping", Styles.BRASS_WRAPPED_SLASHED.get(color))
+            .unlockedBy(() -> Styles.SLASHED.get(color).get())
+            .returns(8)
+            .setEmiDefault(color == null)
+            .viaShaped(b -> b
+                .define('#', Styles.SLASHED.get(color).get())
+                .define('d', Ingredients.brassIngot())
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    );
+
+    // cut a color to other blocks in the cycle
+    CyclingStyleList<DyedRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
+            .setEmiDefault(color == null && style != Styles.RIVETED)
+            .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
+            .create()
+    ));
+
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);
     }
@@ -192,6 +247,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         private Supplier<ItemPredicate> unlockedBy;
         private int amount;
+        private boolean addToEmiDefaults;
 
         private GeneratedRecipeBuilder(String path) {
             this.path = path;
@@ -233,6 +289,15 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             return this;
         }
 
+        GeneratedRecipeBuilder setEmiDefault() {
+            return setEmiDefault(true);
+        }
+
+        GeneratedRecipeBuilder setEmiDefault(boolean addToEmiDefaults) {
+            this.addToEmiDefaults = addToEmiDefaults;
+            return this;
+        }
+
         GeneratedRecipe viaShaped(UnaryOperator<ShapedRecipeBuilder> builder) {
             return register(consumer -> {
                 ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(result.get(), amount));
@@ -251,12 +316,27 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             });
         }
 
+        private static ResourceLocation clean(ResourceLocation loc) {
+            String path = loc.getPath();
+            while (path.contains("//"))
+                path = path.replaceAll("//", "/");
+            return new ResourceLocation(loc.getNamespace(), path);
+        }
+
         private ResourceLocation createSimpleLocation(String recipeType) {
-            return Railways.asResource(recipeType + "/" + getRegistryName().getPath() + suffix);
+            ResourceLocation loc = clean(Railways.asResource(recipeType + "/" + getRegistryName().getPath() + suffix));
+            if (addToEmiDefaults) {
+                EmiRecipeDefaultsGen.DEFAULT_RECIPES.add(loc);
+            }
+            return loc;
         }
 
         private ResourceLocation createLocation(String recipeType) {
-            return Railways.asResource(recipeType + "/" + path + "/" + getRegistryName().getPath() + suffix);
+            ResourceLocation loc = clean(Railways.asResource(recipeType + "/" + path + "/" + getRegistryName().getPath() + suffix));
+            if (addToEmiDefaults) {
+                EmiRecipeDefaultsGen.DEFAULT_RECIPES.add(loc);
+            }
+            return loc;
         }
 
         private ResourceLocation getRegistryName() {
@@ -274,6 +354,40 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         GeneratedRecipeBuilder.GeneratedCookingRecipeBuilder viaCookingIngredient(Supplier<Ingredient> ingredient) {
             return new GeneratedRecipeBuilder.GeneratedCookingRecipeBuilder(ingredient);
+        }
+
+        GeneratedStonecuttingRecipeBuilder viaStonecutting(Supplier<? extends ItemLike> item) {
+            return unlockedBy(item).viaStonecuttingIngrdient(() -> Ingredient.of(item.get()));
+        }
+
+        GeneratedStonecuttingRecipeBuilder viaStonecuttingTag(Supplier<TagKey<Item>> tag) {
+            return unlockedByTag(tag).viaStonecuttingIngrdient(() -> Ingredient.of(tag.get()));
+        }
+
+        GeneratedStonecuttingRecipeBuilder viaStonecuttingIngrdient(Supplier<Ingredient> ingredient) {
+            return new GeneratedStonecuttingRecipeBuilder(ingredient);
+        }
+
+        class GeneratedStonecuttingRecipeBuilder {
+
+            private final Supplier<Ingredient> ingredient;
+
+            GeneratedStonecuttingRecipeBuilder(Supplier<Ingredient> ingredient) {
+                this.ingredient = ingredient;
+            }
+
+            private GeneratedRecipe create(UnaryOperator<SingleItemRecipeBuilder> builder) {
+                return register(consumer -> {
+                    SingleItemRecipeBuilder b = builder.apply(SingleItemRecipeBuilder.stonecutting(ingredient.get(), result.get(), amount));
+                    if (unlockedBy != null)
+                        b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
+                    b.save(consumer, createLocation("stonecutting"));
+                });
+            }
+
+            private GeneratedRecipe create() {
+                return create(b -> b);
+            }
         }
 
         class GeneratedCookingRecipeBuilder {
