@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/flat_riveted"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/brown_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:brown_flat_riveted_locometal"
+  }
+}

@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
@@ -54,6 +57,13 @@ architectury {
 
 processResources {
     exclude("resourcepacks/", "**/*.bbmodel", "**/*.lnk", "**/*.txt") // must be part of primary mod to be findable, dont add development or to-do files into built jar
+
+    // Minify all .json files in built jars
+    doLast {
+        fileTree(dir: processResources.outputs.files.asPath, include: '**/*.json').each {
+            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+        }
+    }
 }
 
 sourceSets.main {

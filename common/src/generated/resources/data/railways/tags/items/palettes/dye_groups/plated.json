@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "railways:plated_locometal",
+    "railways:white_plated_locometal",
+    "railways:orange_plated_locometal",
+    "railways:magenta_plated_locometal",
+    "railways:light_blue_plated_locometal",
+    "railways:yellow_plated_locometal",
+    "railways:lime_plated_locometal",
+    "railways:pink_plated_locometal",
+    "railways:gray_plated_locometal",
+    "railways:light_gray_plated_locometal",
+    "railways:cyan_plated_locometal",
+    "railways:purple_plated_locometal",
+    "railways:blue_plated_locometal",
+    "railways:brown_plated_locometal",
+    "railways:green_plated_locometal",
+    "railways:red_plated_locometal",
+    "railways:black_plated_locometal"
+  ]
+}
