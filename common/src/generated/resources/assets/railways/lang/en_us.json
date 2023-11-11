@@ -595,6 +595,7 @@
 	"create.sliding_door.mode.manual": "Manual",
 	"create.sliding_door.mode.normal": "Normal (Default)",
 	"create.sliding_door.mode.special": "Special",
+	"create.sliding_door.mode.special_inverted": "Special Inverted",
 
 	"railways.station.open_left": "Open Left Doors",
 	"railways.station.open_right": "Open Right Doors",

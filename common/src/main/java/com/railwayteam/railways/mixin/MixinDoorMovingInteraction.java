@@ -30,7 +30,7 @@ public class MixinDoorMovingInteraction {
         if (!(currentState.getBlock() instanceof SlidingDoorBlock)) return;
         boolean lower = currentState.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;
         StructureTemplate.StructureBlockInfo info = contraption.getBlocks().get(lower ? pos : pos.below());
-        if (info != null && SlidingDoorMode.fromNbt(info.nbt) == SlidingDoorMode.SPECIAL && !player.isShiftKeyDown())
+        if (info != null && !SlidingDoorMode.fromNbt(info.nbt).canOpenManually() && !player.isShiftKeyDown())
             cir.setReturnValue(currentState);
     }
 }
