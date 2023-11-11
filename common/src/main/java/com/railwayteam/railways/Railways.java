@@ -40,7 +40,7 @@ public class Railways {
   public static final String MODID = "railways";
   public static final Logger LOGGER = LogManager.getLogger(MODID);
   public static final String VERSION = findVersion();
-  // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
+  // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
