@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
-import com.railwayteam.railways.mixin_ducks.AnimatedTextureDuck;
+import com.railwayteam.railways.mixin_interfaces.AnimatedTextureDuck;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleSpriteContents;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
