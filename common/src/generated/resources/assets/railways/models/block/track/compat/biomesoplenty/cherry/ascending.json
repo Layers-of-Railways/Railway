@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/track/ascending",
-  "textures": {
-    "0": "biomesoplenty:block/track/cherry/standard_track_cherry",
-    "1": "biomesoplenty:block/track/cherry/standard_track_mip_cherry",
-    "particle": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry"
-  }
-}

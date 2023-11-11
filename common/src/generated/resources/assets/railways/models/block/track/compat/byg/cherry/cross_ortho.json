@@ -1,9 +1,0 @@
-{
-  "parent": "create:block/track/cross_ortho",
-  "textures": {
-    "1": "byg:block/track/cherry/standard_track_cherry",
-    "2": "byg:block/track/cherry/standard_track_mip_cherry",
-    "3": "byg:block/track/cherry/standard_track_crossing_cherry",
-    "particle": "byg:block/track/cherry/standard_track_crossing_cherry"
-  }
-}

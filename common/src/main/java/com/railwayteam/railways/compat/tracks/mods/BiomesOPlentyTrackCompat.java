@@ -23,7 +23,6 @@ public class BiomesOPlentyTrackCompat extends GenericTrackCompat {
         registered = true;
         Railways.LOGGER.info("Registering tracks for Biomes O' Plenty");
         new BiomesOPlentyTrackCompat().register(
-            "cherry",
             "dead",
             "fir",
             "hellbark",

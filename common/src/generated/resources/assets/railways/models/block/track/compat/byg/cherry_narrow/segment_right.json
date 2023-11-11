@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/narrow_gauge_base/segment_right",
-  "textures": {
-    "0": "byg:block/track/cherry/standard_track_cherry",
-    "1": "byg:block/track/cherry/standard_track_mip_cherry",
-    "particle": "byg:block/track/cherry/standard_track_crossing_cherry"
-  }
-}

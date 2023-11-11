@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/wide_gauge_base/diag_2",
-  "textures": {
-    "1": "biomesoplenty:block/track/cherry/standard_track_cherry",
-    "2": "biomesoplenty:block/track/cherry/standard_track_mip_cherry",
-    "3": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry",
-    "particle": "biomesoplenty:block/track/cherry/standard_track_crossing_cherry"
-  }
-}
