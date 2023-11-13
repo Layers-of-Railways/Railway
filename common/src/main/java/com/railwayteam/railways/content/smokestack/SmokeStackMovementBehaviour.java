@@ -1,18 +1,38 @@
 package com.railwayteam.railways.content.smokestack;
 
 
+import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticle;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticleData;
+import com.railwayteam.railways.mixin.client.AccessorLevelRenderer;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
-import net.minecraft.core.particles.ParticleOptions;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
@@ -37,6 +57,40 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
 
         public long getMovementTicks(MovementContext context) {
             return context.world.getGameTime() - movementStartTick;
+        }
+
+        @Environment(EnvType.CLIENT)
+        private List<ChimneyPushParticle> pushParticles;
+
+        @Environment(EnvType.CLIENT)
+        void moveParticles(MovementContext context) {
+            if (pushParticles == null) return;
+
+            SmokeStackBlock.SmokeStackType type = ((SmokeStackBlock) context.state.getBlock()).type;
+            Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(type.getParticleSpawnOffset());
+
+            Iterator<ChimneyPushParticle> iterator = pushParticles.iterator();
+            while (iterator.hasNext()) {
+                ChimneyPushParticle particle = iterator.next();
+                particle.setPos(pos.x, pos.y, pos.z);
+                particle.setOldPos();
+                if (!particle.isAlive())
+                    iterator.remove(); //tp -6.417 2.7 33.5
+            }
+        }
+
+        @Environment(EnvType.CLIENT)
+        List<ChimneyPushParticle> getPushParticles() {
+            return pushParticles == null ? Collections.emptyList() : pushParticles;
+        }
+
+        @Environment(EnvType.CLIENT)
+        @SuppressWarnings("SameParameterValue")
+        void addAndTrackParticle(ChimneyPushParticleData<?> particleType, boolean force, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            if (pushParticles == null) pushParticles = new ArrayList<>();
+            Particle added = ((AccessorLevelRenderer) Minecraft.getInstance().levelRenderer).callAddParticleInternal(particleType, force, true, x, y, z, xSpeed, ySpeed, zSpeed);
+            if (added instanceof ChimneyPushParticle chimneyPushParticle)
+                pushParticles.add(chimneyPushParticle);
         }
     }
 
@@ -80,6 +134,36 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
     }
 
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
+        if (!(context.temporaryData instanceof TemporaryData temporaryData)) {
+            return;
+        }
+        temporaryData.moveParticles(context);
+        if (true) {
+            return;
+        }
+        ShaderInstance oldShader = RenderSystem.getShader();
+        float[] oldShaderColor = RenderSystem.getShaderColor();
+        {
+            ParticleRenderType renderType = ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+            RenderSystem.setShader(GameRenderer::getParticleShader);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            Tesselator tesselator = Tesselator.getInstance();
+            BufferBuilder bufferBuilder = tesselator.getBuilder();
+            renderType.begin(bufferBuilder, Minecraft.getInstance().getTextureManager());
+
+            for (ChimneyPushParticle particle : temporaryData.getPushParticles()) {
+                particle.render(bufferBuilder, Minecraft.getInstance().gameRenderer.getMainCamera(), AnimationTickHolder.getPartialTicks(renderWorld));
+            }
+
+            renderType.end(tesselator);
+        }
+        RenderSystem.setShader(() -> oldShader);
+        RenderSystem.setShaderColor(oldShaderColor[0], oldShaderColor[1], oldShaderColor[2], oldShaderColor[3]);
+    }
+
     @Override
     public void tick(MovementContext context) {
         if (context.world == null || !context.world.isClientSide || context.position == null
@@ -93,6 +177,8 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             data = new TemporaryData(context);
             context.temporaryData = data;
         }
+
+        data.moveParticles(context);
 
         LerpedFloat chanceChaser = data.chanceChaser;
         LerpedFloat speedMultiplierChaser = data.speedMultiplierChaser;
@@ -161,7 +247,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         // chimney push
         if (CRConfigs.client().smokeType.get() == SmokeType.CARTOON) {
             if (movementTicks == 0) {
-                ParticleOptions particleType;
+                ChimneyPushParticleData<?> particleType;
                 if (color != null) {
                     float[] c = color.getTextureDiffuseColors();
                     particleType = ChimneyPushParticleData.create(random.nextBoolean(), false, c[0], c[1], c[2]);
@@ -170,7 +256,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                 }
 
                 Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(type.getParticleSpawnOffset());
-                context.world.addAlwaysVisibleParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
+                data.addAndTrackParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
             } else if (movementTicks == 8) {
                 for (int i = 0; i < 3; i++) {
                     SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,

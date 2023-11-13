@@ -23,17 +23,17 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     protected final boolean stationarySource;
     protected final RandomSource random;
     protected final boolean small;
-    protected ChimneyPushParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource, boolean small, double xd, double yd, double zd) {
+    protected ChimneyPushParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource, boolean small) {
         super(level, x, y, z, 0.0, 0, 0.0);
         this.small = small;
-        this.xd = xd;
-        this.yd = yd;
-        this.zd = zd;
+        this.xd = 0;
+        this.yd = 0;
+        this.zd = 0;
         this.quadSize = 1.0f;
         this.friction = 0.99f;
         this.random = random;
         this.stationarySource = stationarySource;
-        setLifetime(12);
+        setLifetime(random.nextIntBetweenInclusive(15, 25));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     }
 
     @Override
-    public void render(@NotNull VertexConsumer buffer, Camera renderInfo, float partialTicks) {
+    public void render(@NotNull VertexConsumer buffer, @NotNull Camera renderInfo, float partialTicks) {
         Vec3 vec3 = renderInfo.getPosition();
         float quadSize = this.getQuadSize(partialTicks);
         float x = (float)(Mth.lerp(partialTicks, this.xo, this.x) - vec3.x());
@@ -106,6 +106,20 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
             .endVertex();
     }
 
+    public void setOldPos() {
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+    }
+
+    @Override
+    public void tick() {
+        setOldPos();
+        if (this.age++ >= this.lifetime) {
+            this.remove();
+        }
+    }
+
     @Override
     public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
@@ -121,7 +135,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(@NotNull T type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            ChimneyPushParticle particle = new ChimneyPushParticle(level, x, y, z, level.getRandom(), type.stationary, type instanceof ChimneyPushParticleData.Small, xSpeed, ySpeed, zSpeed);
+            ChimneyPushParticle particle = new ChimneyPushParticle(level, x, y, z, level.getRandom(), type.stationary, type instanceof ChimneyPushParticleData.Small);
             int textureCount = 2;
             int idx = 0;
             if (Mth.equal(type.red, -1) && Mth.equal(type.green, -1) && Mth.equal(type.blue, -1)) {
