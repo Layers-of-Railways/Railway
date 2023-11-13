@@ -20,10 +20,10 @@ import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
-    protected final boolean stationarySource;
+    protected final boolean leadOnly;
     protected final RandomSource random;
     protected final boolean small;
-    protected ChimneyPushParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource, boolean small) {
+    protected ChimneyPushParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean leadOnly, boolean small) {
         super(level, x, y, z, 0.0, 0, 0.0);
         this.small = small;
         this.xd = 0;
@@ -32,8 +32,12 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         this.quadSize = 1.0f;
         this.friction = 0.99f;
         this.random = random;
-        this.stationarySource = stationarySource;
-        setLifetime(random.nextIntBetweenInclusive(15, 25));
+        this.leadOnly = leadOnly;
+        setLifetime((int) (random.nextIntBetweenInclusive(15, 25) * Math.min(getAnimationFactor()*3, 1.0)));
+    }
+
+    protected double getAnimationFactor() {
+        return leadOnly ? (small ? 3/9. : 3/13.) : 1;
     }
 
     @Override
@@ -45,9 +49,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     protected double getAnimationProgress() {
         int age = Math.min(this.age, this.lifetime - 1);
         double lifeFactor = age / (double) this.lifetime;
-        double f = 0.1;
-        //lifeFactor = this.stationarySource ? lifeFactor * lifeFactor : Math.max(0, ((lifeFactor - f) * (lifeFactor - f)) - (f * f));
-        return lifeFactor;
+        return Mth.clamp(lifeFactor, 0, 1) * getAnimationFactor();
     }
 
     @Override
@@ -135,7 +137,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(@NotNull T type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            ChimneyPushParticle particle = new ChimneyPushParticle(level, x, y, z, level.getRandom(), type.stationary, type instanceof ChimneyPushParticleData.Small);
+            ChimneyPushParticle particle = new ChimneyPushParticle(level, x, y, z, level.getRandom(), type.leadOnly, type instanceof ChimneyPushParticleData.Small);
             int textureCount = 2;
             int idx = 0;
             if (Mth.equal(type.red, -1) && Mth.equal(type.green, -1) && Mth.equal(type.blue, -1)) {

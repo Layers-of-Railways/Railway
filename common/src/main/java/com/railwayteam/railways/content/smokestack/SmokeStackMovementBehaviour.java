@@ -9,9 +9,11 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticle;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticleData;
 import com.railwayteam.railways.mixin.client.AccessorLevelRenderer;
+import com.simibubi.create.content.contraptions.TranslatingContraption;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
+import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import net.fabricmc.api.EnvType;
@@ -43,6 +45,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         final LerpedFloat speedMultiplierChaser;
         long movementStartTick;
         boolean wasStopped = true;
+        int nextSmallPuffOffset = 0;
 
         public TemporaryData(MovementContext context) {
             chanceChaser = LerpedFloat.linear();
@@ -220,7 +223,8 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             maxModifier++;
         }
 
-        if (CRConfigs.client().smokeType.get() == SmokeType.CARTOON) {
+        SmokeType smokeType = CRConfigs.client().smokeType.get();
+        if (smokeType == SmokeType.CARTOON) {
             maxModifier += 2;
         } else {
             minModifier += 5;
@@ -245,7 +249,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
 
         // chimney push
-        if (CRConfigs.client().smokeType.get() == SmokeType.CARTOON) {
+        if (smokeType == SmokeType.CARTOON && color != DyeColor.WHITE) {
             if (movementTicks == 0) {
                 ChimneyPushParticleData<?> particleType;
                 if (color != null) {
@@ -270,21 +274,71 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
 
         // normal smoke
-        if (random.nextFloat() < type.particleSpawnChance * chanceModifier * CRConfigs.client().smokePercentage.get()) {
-            //if (movementTicks < 40)
-            //    color = DyeColor.BLUE;
-            for(int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
-                boolean small = movementTicks < 50;
-                if (!small) {
-                    double smallChance = 0.33;
-                    if (movementTicks < 100) {
-                        smallChance = Mth.lerp((movementTicks - 50) / 50.0f, 1.0, 0.33);
+        if (smokeType != SmokeType.CARTOON || color != DyeColor.WHITE) {
+            if (random.nextFloat() < type.particleSpawnChance * chanceModifier * CRConfigs.client().smokePercentage.get()) {
+                for (int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
+                    boolean small = movementTicks < 50;
+                    if (!small) {
+                        double smallChance = 0.33;
+                        if (movementTicks < 100) {
+                            smallChance = Mth.lerp((movementTicks - 50) / 50.0f, 1.0, 0.33);
+                        }
+                        double speedFactor = 0.3 + (0.7 * Math.max(0, Math.min(chanceModifier / 2, 1)));
+                        small = random.nextDouble() * speedFactor < smallChance;
                     }
-                    double speedFactor = 0.3 + (0.7 * Math.max(0, Math.min(chanceModifier / 2, 1)));
-                    small = random.nextDouble() * speedFactor < smallChance;
+                    SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,
+                        type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, color, small, isSoul);
                 }
-                SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,
-                    type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, color, small, isSoul);
+            }
+        }
+
+        if (smokeType != SmokeType.CARTOON) return;
+        // only real                                              and fake trains should emit steam & extra smoke puffs
+        if (!(context.contraption instanceof CarriageContraption) && !(context.contraption instanceof TranslatingContraption)) return;
+
+        // little smoke go vroom
+        if (chanceModifier >= 0.25 && CRConfigs.client().spawnFasterPuffs.get()) {
+            //                                        0.25 * 85
+            int littleSmokeInterval = (int) Mth.clamp(21.25/chanceModifier, 15, 85);
+            long time = context.world.getGameTime()-data.nextSmallPuffOffset;
+            if (time % littleSmokeInterval >= 0 && time % littleSmokeInterval <= 2) {
+                //if (movementTicks < 40)
+                //    color = DyeColor.BLUE;
+                for (int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
+                    boolean small = true;
+                    SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,
+                        type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), -1, false, color, small, isSoul);
+                }
+            }
+            if (time % littleSmokeInterval == 3)
+                data.nextSmallPuffOffset = random.nextIntBetweenInclusive(0, littleSmokeInterval/2);
+        }
+
+        // normal steam
+        int steamInterval = (int) Mth.clamp(6.25/chanceModifier, 13, 50);
+        if (CRConfigs.client().spawnSteam.get() || color == DyeColor.WHITE) {
+            if (context.world.getGameTime() % steamInterval >= 0 && context.world.getGameTime() % steamInterval <= 3) {
+                color = isSoul ? DyeColor.RED : DyeColor.WHITE;
+                if (data.getPushParticles().isEmpty()) {
+                    float[] c = color.getTextureDiffuseColors();
+                    ChimneyPushParticleData<?> particleType = ChimneyPushParticleData.create(false, false, c[0], c[1], c[2]);
+
+                    Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(type.getParticleSpawnOffset());
+                    data.addAndTrackParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
+                }
+                for (int i = 0; i < random.nextInt((type.maxParticles + maxModifier - (type.minParticles + minModifier))) + type.minParticles + minModifier; ++i) {
+                    boolean small = movementTicks < 50;
+                    if (!small) {
+                        double smallChance = 0.33;
+                        if (movementTicks < 100) {
+                            smallChance = Mth.lerp((movementTicks - 50) / 50.0f, 1.0, 0.33);
+                        }
+                        double speedFactor = 0.3 + (0.7 * Math.max(0, Math.min(chanceModifier / 2, 1)));
+                        small = random.nextDouble() * speedFactor < smallChance;
+                    }
+                    SmokeStackBlock.makeParticles(context.world, context.position.subtract(0.5, 0, 0.5).subtract((random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5, (random.nextDouble() - 0.5) * 0.5), random.nextBoolean(), true,
+                        type.getParticleSpawnOffset(), type.getParticleSpawnDelta(), speedMultiplierChaser.getValue(), false, color, small, false);
+                }
             }
         }
     }

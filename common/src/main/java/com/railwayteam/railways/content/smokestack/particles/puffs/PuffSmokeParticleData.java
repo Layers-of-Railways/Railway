@@ -73,7 +73,7 @@ public abstract class PuffSmokeParticleData<T extends PuffSmokeParticleData<T>> 
 	}
 
 	protected PuffSmokeParticleData(boolean stationary) {
-		this(stationary, -1);//stationary ? 0.3f : 0.1f);
+		this(stationary, -1);
 	}
 
 	protected PuffSmokeParticleData(boolean stationary, float brightness) {

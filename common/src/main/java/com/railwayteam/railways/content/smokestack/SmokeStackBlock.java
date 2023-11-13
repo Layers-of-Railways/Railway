@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.smokestack;
 
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
+import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticle;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.util.ShapeWrapper;
@@ -11,6 +12,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -140,7 +142,7 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
                     pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
                     pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
                     pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
-                    0.0D, 0.07D * speedMultiplier * (stationary ? 25 : 1), 0.0D);
+                    0.0D, Mth.equal(speedMultiplier, -1) ? PuffSmokeParticle.DOUBLE_SPEED_SENTINEL : 2.1, 0.0D);
             }
         }
         if (spawnExtraSmoke && smokeType != SmokeType.CARTOON) {

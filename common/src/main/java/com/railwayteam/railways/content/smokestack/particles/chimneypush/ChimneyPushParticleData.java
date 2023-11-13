@@ -25,8 +25,8 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 
 	protected static <T extends ChimneyPushParticleData<T>> Codec<T> makeCodec(Constructor<T> constructor) {
 		return RecordCodecBuilder.create(i -> i
-			.group(Codec.BOOL.fieldOf("stationary")
-					.forGetter(p -> p.stationary),
+			.group(Codec.BOOL.fieldOf("leadOnly")
+					.forGetter(p -> p.leadOnly),
 				Codec.FLOAT.fieldOf("red") // -1, -1, -1 indicates un-dyed
 					.forGetter(p -> p.red),
 				Codec.FLOAT.fieldOf("green")
@@ -59,7 +59,7 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
         };
 	}
 	
-	boolean stationary;
+	boolean leadOnly;
 	float red;
 	float green;
 	float blue;
@@ -72,16 +72,16 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 		this(false, red, green, blue);
 	}
 
-	protected ChimneyPushParticleData(boolean stationary) {
-		this(stationary, -1);//stationary ? 0.3f : 0.1f);
+	protected ChimneyPushParticleData(boolean leadOnly) {
+		this(leadOnly, -1);
 	}
 
-	protected ChimneyPushParticleData(boolean stationary, float brightness) {
-		this(stationary, brightness, brightness, brightness);
+	protected ChimneyPushParticleData(boolean leadOnly, float brightness) {
+		this(leadOnly, brightness, brightness, brightness);
 	}
 
-	protected ChimneyPushParticleData(boolean stationary, float red, float green, float blue) {
-		this.stationary = stationary;
+	protected ChimneyPushParticleData(boolean leadOnly, float red, float green, float blue) {
+		this.leadOnly = leadOnly;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
@@ -96,7 +96,7 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 
 	@Override
 	public void writeToNetwork(FriendlyByteBuf buffer) {
-		buffer.writeBoolean(stationary);
+		buffer.writeBoolean(leadOnly);
 		buffer.writeFloat(red);
 		buffer.writeFloat(green);
 		buffer.writeFloat(blue);
@@ -104,7 +104,7 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 
 	@Override
 	public @NotNull String writeToString() {
-		return String.format(Locale.ROOT, "%s %b %f %f %f", getParticleType().parameter(), stationary, red, green, blue);
+		return String.format(Locale.ROOT, "%s %b %f %f %f", getParticleType().parameter(), leadOnly, red, green, blue);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -119,19 +119,19 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 
 	public abstract float getQuadSize();
 
-	public static ChimneyPushParticleData<?> create(boolean small, boolean stationary, float red, float green, float blue) {
+	public static ChimneyPushParticleData<?> create(boolean small, boolean leadOnly, float red, float green, float blue) {
 		if (small) {
-			return new Small(stationary, red, green, blue);
+			return new Small(leadOnly, red, green, blue);
 		} else {
-			return new Medium(stationary, red, green, blue);
+			return new Medium(leadOnly, red, green, blue);
 		}
 	}
 
-	public static ChimneyPushParticleData<?> create(boolean small, boolean stationary) {
+	public static ChimneyPushParticleData<?> create(boolean small, boolean leadOnly) {
 		if (small) {
-			return new Small(stationary);
+			return new Small(leadOnly);
 		} else {
-			return new Medium(stationary);
+			return new Medium(leadOnly);
 		}
 	}
 
@@ -147,16 +147,16 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 			super(red, green, blue);
 		}
 
-		public Small(boolean stationary) {
-			super(stationary);
+		public Small(boolean leadOnly) {
+			super(leadOnly);
 		}
 
-		public Small(boolean stationary, float brightness) {
-			super(stationary, brightness);
+		public Small(boolean leadOnly, float brightness) {
+			super(leadOnly, brightness);
 		}
 
-		public Small(boolean stationary, float red, float green, float blue) {
-			super(stationary, red, green, blue);
+		public Small(boolean leadOnly, float red, float green, float blue) {
+			super(leadOnly, red, green, blue);
 		}
 
 		@Override
@@ -198,16 +198,16 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 			super(red, green, blue);
 		}
 
-		public Medium(boolean stationary) {
-			super(stationary);
+		public Medium(boolean leadOnly) {
+			super(leadOnly);
 		}
 
-		public Medium(boolean stationary, float brightness) {
-			super(stationary, brightness);
+		public Medium(boolean leadOnly, float brightness) {
+			super(leadOnly, brightness);
 		}
 
-		public Medium(boolean stationary, float red, float green, float blue) {
-			super(stationary, red, green, blue);
+		public Medium(boolean leadOnly, float red, float green, float blue) {
+			super(leadOnly, red, green, blue);
 		}
 
 		@Override

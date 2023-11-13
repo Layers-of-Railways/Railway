@@ -12,10 +12,14 @@ import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
+    public static final int DOUBLE_SPEED_SENTINEL = 42;
     protected final boolean stationarySource;
     protected final RandomSource random;
-    protected PuffSmokeParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource) {
-        super(level, x, y, z, 0.0, 2.1, 0.0);
+    protected PuffSmokeParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource, double ySpeed) {
+        super(level, x, y, z, 0.0, ySpeed, 0.0);
+        if (Mth.equal(DOUBLE_SPEED_SENTINEL, ySpeed)) {
+            this.yd *= 1.5;
+        }
         this.quadSize = 1.0f;
         this.friction = 0.99f;
         this.random = random;
@@ -61,7 +65,7 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
         @Nullable
         @Override
         public Particle createParticle(@NotNull T type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            PuffSmokeParticle particle = new PuffSmokeParticle(level, x, y, z, level.getRandom(), type.stationary);
+            PuffSmokeParticle particle = new PuffSmokeParticle(level, x, y, z, level.getRandom(), type.stationary, ySpeed);
             int textureCount = 3;
             int idx = 0;
             if (Mth.equal(type.red, -1) && Mth.equal(type.green, -1) && Mth.equal(type.blue, -1)) {
