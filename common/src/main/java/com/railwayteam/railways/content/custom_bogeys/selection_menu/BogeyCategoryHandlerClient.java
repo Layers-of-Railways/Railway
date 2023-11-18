@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.custom_bogeys.selection_menu;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.RadialBogeyCategoryMenu.State;
+import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.Utils;
@@ -25,7 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,6 +66,20 @@ public class BogeyCategoryHandlerClient {
         return getStylesInCategory(getCategoryId(i));
     }
 
+    private static Map<ResourceLocation, BogeyStyle> filterHidden(Map<ResourceLocation, BogeyStyle> orig, boolean copyFirst) {
+        if (orig.isEmpty())
+            return orig;
+        Map<ResourceLocation, BogeyStyle> map;
+        if (copyFirst) {
+            map = new HashMap<>(orig);
+        } else {
+            map = orig;
+        }
+
+        map.entrySet().removeIf(entry -> CRBogeyStyles.hideInSelectionMenu(entry.getValue()));
+        return map;
+    }
+
     public static Map<ResourceLocation, BogeyStyle> getStylesInCategory(ResourceLocation id) {
         if (id == MANAGE_FAVORITES_CATEGORY || id == FAVORITES_CATEGORY) {
             Map<ResourceLocation, BogeyStyle> map = new HashMap<>();
@@ -76,19 +91,22 @@ public class BogeyCategoryHandlerClient {
         if(Mods.EXTENDEDBOGEYS.isLoaded){
             if(id.equals(Railways.asResource("extendedbogeys"))) {
                 Map<ResourceLocation, BogeyStyle> EB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
-                EB.remove(Create.asResource("standard"));
-                EB.remove(Railways.asResource("invisible"));
-                return EB;
+                EB.remove(AllBogeyStyles.STANDARD.name);
+                EB.remove(CRBogeyStyles.INVISIBLE.name);
+                EB.remove(CRBogeyStyles.WIDE_DEFAULT.name);
+                EB.remove(CRBogeyStyles.NARROW_DEFAULT.name);
+                EB.remove(CRBogeyStyles.NARROW_DOUBLE_SCOTCH.name);
+                return filterHidden(EB, false);
             }
             if(id.equals(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP))){
                 Map<ResourceLocation, BogeyStyle> noEB = new HashMap<>(AllBogeyStyles.CYCLE_GROUPS.get(Create.asResource(AllBogeyStyles.STANDARD_CYCLE_GROUP)));
                 noEB.remove(new ResourceLocation("extendedbogeys", "single_axle"));
                 noEB.remove(new ResourceLocation("extendedbogeys", "double_axle"));
                 noEB.remove(new ResourceLocation("extendedbogeys", "triple_axle"));
-                return noEB;
+                return filterHidden(noEB, false);
             }
         }
-        return AllBogeyStyles.CYCLE_GROUPS.getOrDefault(id, new HashMap<>());
+        return filterHidden(AllBogeyStyles.CYCLE_GROUPS.getOrDefault(id, new HashMap<>()), true);
     }
 
     public static ResourceLocation getStyleId(ResourceLocation categoryId, int styleIdx) {
@@ -172,7 +190,8 @@ public class BogeyCategoryHandlerClient {
         STYLE_CATEGORY_ORDER.add(id);
     }
 
-    static int COOLDOWN = 0;
+    @ApiStatus.Internal
+    public static int COOLDOWN = 0;
 
     public static @Nullable BogeyStyle getSelectedStyle() {
         return selectedStyle;
@@ -285,7 +304,6 @@ public class BogeyCategoryHandlerClient {
         LocalPlayer player = mc.player;
         if (player == null)
             return;
-        Level level = player.level;
 
         if (!EntityUtils.isHolding(player, AllBlocks.RAILWAY_CASING::isIn))
             return;
@@ -326,11 +344,13 @@ public class BogeyCategoryHandlerClient {
 
     static {
         for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+            if (CRBogeyStyles.hideInSelectionMenu(style))
+                continue;
             if (style.name.getNamespace().equals(Railways.MODID))
                 addIcon(style, style.name.getPath());
             else if (Mods.EXTENDEDBOGEYS.isLoaded && style.name.getNamespace().equals("extendedbogeys"))
                 addIcon(style, "eb_" + style.name.getPath());
-            addIcon(AllBogeyStyles.STANDARD, "default");
         }
+        addIcon(AllBogeyStyles.STANDARD, "default");
     }
 }

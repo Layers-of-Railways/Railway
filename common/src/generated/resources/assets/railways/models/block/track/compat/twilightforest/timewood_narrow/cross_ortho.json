@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_ortho",
+  "textures": {
+    "1": "twilightforest:block/track/timewood/standard_track_timewood",
+    "2": "twilightforest:block/track/timewood/standard_track_mip_timewood",
+    "3": "twilightforest:block/track/timewood/standard_track_crossing_timewood",
+    "particle": "twilightforest:block/track/timewood/standard_track_crossing_timewood"
+  }
+}

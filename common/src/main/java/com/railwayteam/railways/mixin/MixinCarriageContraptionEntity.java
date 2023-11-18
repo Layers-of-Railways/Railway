@@ -1,7 +1,9 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Config;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
@@ -26,9 +28,9 @@ import net.minecraft.world.phys.Vec3;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -43,6 +45,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         super(type, world);
     }
 
+    @Unique
     private boolean snr$fakePlayer = false;
 
     @Inject(method = "control", at = @At("HEAD"))
@@ -51,8 +54,8 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             snr$fakePlayer = true;
     }
 
-    @Redirect(method = "control", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z", remap = true))
-    private boolean snr$closerThan(Vec3 instance, Position pos, double distance) {
+    @WrapOperation(method = "control", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z", remap = true))
+    private boolean snr$closerThan(Vec3 instance, Position pos, double distance, Operation<Boolean> original) {
         if (snr$fakePlayer) {
             snr$fakePlayer = false;
             return true;
@@ -88,7 +91,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
         Railways.temporarilySkipSwitches = true;
         boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
-        Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).findNearestApproachableSwitch(forward);
+        Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).snr$findNearestApproachableSwitch(forward);
         Railways.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData == null ? null : lookAheadData.getFirst();
         boolean headOn = lookAheadData != null && lookAheadData.getSecond().getFirst();
@@ -96,7 +99,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
         if (lookAhead != null) {
             // try to reserve switch
-            if (Config.FLIP_DISTANT_SWITCHES.get() && spaceDown && lookAhead.isAutomatic()
+            if (CRConfigs.server().flipDistantSwitches.get() && spaceDown && lookAhead.isAutomatic()
                     && !lookAhead.isLocked() && !carriage.train.navigation.isActive()) {
                 if (headOn) {
                     lookAhead.trySetSwitchState(SwitchState.fromSteerDirection(carriage.train.manualSteer, forward));
@@ -110,21 +113,25 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             cleanUpApproachSwitchMessage(player);
     }
 
-    boolean switchMessage = false;
+    @Unique
+    boolean snr$switchMessage = false;
 
+    @Unique
     private void displayApproachSwitchMessage(Player player, TrackSwitch sw, boolean isWrong) {
         sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong, sw.isLocked());
-        switchMessage = true;
+        snr$switchMessage = true;
     }
 
+    @Unique
     private void cleanUpApproachSwitchMessage(Player player) {
-        if (!switchMessage)
+        if (!snr$switchMessage)
             return;
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, SwitchDataUpdatePacket.clear());
-        switchMessage = false;
+        snr$switchMessage = false;
     }
 
+    @Unique
     private void sendSwitchInfo(Player player, SwitchState state, boolean automatic, boolean isWrong, boolean isLocked) {
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, new SwitchDataUpdatePacket(state, automatic, isWrong, isLocked));
@@ -132,7 +139,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "updateTrackGraph", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;graph:Lcom/simibubi/create/content/trains/graph/TrackGraph;", opcode = Opcodes.H_PUTFIELD, ordinal = 0), cancellable = true)
     private void cancelDerailing(CallbackInfo ci) {
-        if (Config.SKIP_CLIENT_DERAILING.get())
+        if (CRConfigs.client().skipClientDerailing.get())
             ci.cancel();
     }
 }

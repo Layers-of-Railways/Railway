@@ -9,20 +9,25 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
+import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
+import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRIcons;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
+import com.simibubi.create.foundation.gui.widget.Indicator;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -39,6 +44,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY;
@@ -56,13 +65,11 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     private ResourceLocation selectedCategory;
 
     @Nullable
-    private Integer favoriteSlot; // should be index to store in
-
-    private static final int CENTER = -5;
+    private Integer favoriteSlot; // should be the index to store in
 
     private static final int MANAGE_FAVORITES = -7;
 
-    public RadialBogeyCategoryMenu(State state) {
+    RadialBogeyCategoryMenu(State state) {
         this.state = state;
         hoveredSlot = -1;
     }
@@ -88,6 +95,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
         try {
+            //noinspection deprecation
             RenderSystem.runAsFancy(() -> render.accept(new RenderInfo(ms, bufferSource, 0xF000F0)));
         } catch (Exception e) {
             if (Utils.isDevEnv())
@@ -100,6 +108,11 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         Lighting.setupFor3DItems();
     }
 
+    private static final Map<BogeyStyle, List<Pair<BogeyStyle, BogeySize>>> CACHED_RENDER_CYCLES = new HashMap<>();
+    private static final Map<BogeyStyle, boolean[]> CACHED_COMPATS = new HashMap<>();
+    private static final Map<ResourceLocation, Indicator.State[]> CACHED_CATEGORY_COMPATS = new HashMap<>();
+
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     protected void renderWindow(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
         float fade = Mth.clamp((ticksOpen + AnimationTickHolder.getPartialTicks()) / 10f, 1 / 512f, 1);
@@ -114,11 +127,8 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             hoveredSlot =
                     (Mth.floor((AngleHelper.deg(Mth.atan2(hoveredY, hoveredX)) + 360 + 180 - 22.5f)) % 360)
                             / 45;
-        boolean renderCenterSlot = false;//state == State.PICK_STYLE;
         if (scrollMode && distance > 150)
             scrollMode = false;
-        if (renderCenterSlot && distance <= 150)
-            hoveredSlot = CENTER;
 
         ms.pushPose();
         ms.translate(width / 2, height / 2, 0);
@@ -161,6 +171,8 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                     )).withStyle(ChatFormatting.GOLD);
         }
 
+        boolean selectedAny = false;
+
         for (int slot = 0; slot < 8; slot++) {
             ms.pushPose();
             double radius = -40 + (10 * (1 - fade) * (1 - fade));
@@ -176,6 +188,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
             if (state == State.PICK_CATEGORY) {
                 if (slot < BogeyCategoryHandlerClient.categoryCount()) {
+                    selectedAny |= selected;
                     ResourceLocation id = BogeyCategoryHandlerClient.getCategoryId(slot);
                     ItemLike icon = BogeyCategoryHandlerClient.getCategoryIcon(id).get();
 
@@ -195,6 +208,53 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                             AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
                             tip = Components.translatable("railways.style_select.category." + id.getNamespace() + "." + id.getPath())
                                     .withStyle(ChatFormatting.GOLD);
+
+                            if (id != MANAGE_FAVORITES_CATEGORY) {
+                                if (id == BogeyCategoryHandlerClient.FAVORITES_CATEGORY)
+                                    CACHED_CATEGORY_COMPATS.remove(BogeyCategoryHandlerClient.FAVORITES_CATEGORY);
+                                Indicator.State[] compats = CACHED_CATEGORY_COMPATS.computeIfAbsent(id, (k) -> {
+                                    boolean[] anyOk = new boolean[] {false, false, false};
+                                    boolean[] allOk = new boolean[] {true, true, true};
+                                    boolean hasContents = false;
+                                    for (BogeyStyle style : BogeyCategoryHandlerClient.getStylesInCategory(id).values()) {
+                                        if (CRBogeyStyles.hideInSelectionMenu(style))
+                                            continue;
+                                        hasContents = true;
+                                        boolean[] c = new boolean[3];
+                                        c[0] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.NARROW_GAUGE);
+                                        c[1] = CRBogeyStyles.styleFitsTrack(style, TrackType.STANDARD);
+                                        c[2] = CRBogeyStyles.styleFitsTrack(style, CRTrackType.WIDE_GAUGE);
+
+                                        for (BogeyStyle subStyle : CRBogeyStyles.getSubStyles(style)) {
+                                            c[0] |= CRBogeyStyles.styleFitsTrack(subStyle, CRTrackType.NARROW_GAUGE);
+                                            c[1] |= CRBogeyStyles.styleFitsTrack(subStyle, TrackType.STANDARD);
+                                            c[2] |= CRBogeyStyles.styleFitsTrack(subStyle, CRTrackType.WIDE_GAUGE);
+                                        }
+
+                                        for (int i = 0; i < 3; i++) {
+                                            anyOk[i] |= c[i];
+                                            allOk[i] &= c[i];
+                                        }
+                                    }
+                                    Indicator.State[] states = new Indicator.State[3];
+                                    for (int i = 0; i < 3; i++) {
+                                        if (!hasContents) {
+                                            states[i] = Indicator.State.OFF;
+                                        } else if (allOk[i]) {
+                                            states[i] = Indicator.State.GREEN;
+                                        } else if (anyOk[i]) {
+                                            states[i] = Indicator.State.YELLOW;
+                                        } else {
+                                            states[i] = Indicator.State.RED;
+                                        }
+                                    }
+                                    return states;
+                                });
+
+                                PoseStack ms2 = new PoseStack();
+                                ms2.translate(width / 2, height / 2, 0);
+                                renderCompatLabels(ms2, compats[0], compats[1], compats[2]);
+                            }
                         }
                     }
                 } else {
@@ -202,16 +262,40 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 }
             } else if (state == State.PICK_STYLE) {
                 if (slot < BogeyCategoryHandlerClient.styleCount(selectedCategory)) {
+                    selectedAny |= selected;
                     /* render bogey */
                     BogeyStyle style = BogeyCategoryHandlerClient.getStyle(selectedCategory, slot);
-                    int sizeIdx = ticksOpen / 40;
-                    BogeySize size = BogeyCategoryHandlerClient.getSize(selectedCategory, slot);
-                    if (size == null)
-                        size = style.validSizes().toArray(BogeySize[]::new)[sizeIdx % style.validSizes().size()];
+
+                    int finalSlot = slot;
+                    List<Pair<BogeyStyle, BogeySize>> renderCycle = CACHED_RENDER_CYCLES.computeIfAbsent(style, (s) -> {
+                        List<Pair<BogeyStyle, BogeySize>> cycle = new ArrayList<>();
+                        {
+                            BogeySize size = BogeyCategoryHandlerClient.getSize(selectedCategory, finalSlot);
+                            if (size == null) {
+                                for (BogeySize size1 : style.validSizes()) {
+                                    cycle.add(Pair.of(style, size1));
+                                }
+                            } else {
+                                cycle.add(Pair.of(style, size));
+                            }
+                        }
+
+                        for (BogeyStyle subStyle : CRBogeyStyles.getSubStyles(style)) {
+                            for (BogeySize size1 : subStyle.validSizes()) {
+                                cycle.add(Pair.of(subStyle, size1));
+                            }
+                        }
+                        return cycle;
+                    });
+
+                    int cycleIdx = ticksOpen / 40;
+                    Pair<BogeyStyle, BogeySize> renderPair = renderCycle.get(cycleIdx % renderCycle.size());
+                    BogeyStyle renderStyle = renderPair.getFirst();
+                    BogeySize renderSize = renderPair.getSecond();
 
                     //BogeyRenderer renderer = style.getInWorldRenderInstance(size);
-                    Block block = style.getBlockOfSize(size);
-                    if (block instanceof AbstractBogeyBlock<?> bogeyBlock && minecraft != null) {
+                    Block renderBlock = style.getBlockOfSize(renderSize);
+                    if (renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock && minecraft != null) {
 
                         double bogeyX = Math.cos(angleRad) * radius;
                         double bogeyY = Math.sin(angleRad) * radius;
@@ -220,25 +304,39 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                             PoseStack ms2 = info.ms;
                             ms2.pushPose();
                             //ms2.translate(-0.5, -0.5, -0.5);
-                            BlockState bogeyState = block.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
+                            BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
                             minecraft.getBlockRenderer().renderSingleBlock(
                                     bogeyState, ms2,
                                     info.buffers, info.packedLight, OverlayTexture.NO_OVERLAY
                             );
                             ms2.popPose();
-                            bogeyBlock.render(bogeyState, 0.0f, ms2, partialTicks, info.buffers,
-                                    info.packedLight, OverlayTexture.NO_OVERLAY, style, new CompoundTag());
+                            bogeyBlock.render(bogeyState, -3 * AnimationTickHolder.getRenderTime(minecraft.level), ms2, partialTicks, info.buffers,
+                                    info.packedLight, OverlayTexture.NO_OVERLAY, renderStyle, new CompoundTag());
                         };
 
                         if (selected) {
                             renderInInventory(guiLeft - 130, guiTop, 30, render);
                             tip = Components.empty().append(style.displayName)//style.displayName
                                     .withStyle(ChatFormatting.GOLD);
+
+                            boolean[] compats = CACHED_COMPATS.computeIfAbsent(style, (k) -> {
+                                boolean[] c = new boolean[] {false, false, false};
+                                for (Pair<BogeyStyle, BogeySize> pair : renderCycle) {
+                                    c[0] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.NARROW_GAUGE);
+                                    c[1] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), TrackType.STANDARD);
+                                    c[2] |= CRBogeyStyles.styleFitsTrack(pair.getFirst(), CRTrackType.WIDE_GAUGE);
+                                }
+                                return c;
+                            });
+
+                            PoseStack ms2 = new PoseStack();
+                            ms2.translate(width / 2, height / 2, 0);
+                            renderCompatLabels(ms2, compats[0], compats[1], compats[2]);
                         }
 
-                        if (BogeyCategoryHandlerClient.hasIcon(style, size)) {
+                        if (BogeyCategoryHandlerClient.hasIcon(style, renderSize)) {
                             AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
-                            renderIcon(BogeyCategoryHandlerClient.getIcon(style, size), ms);
+                            renderIcon(BogeyCategoryHandlerClient.getIcon(style, renderSize), ms);
                             if (selected) {
                                 AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
                             }
@@ -258,17 +356,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             ms.popPose();
         }
 
-        if (renderCenterSlot) {
-            ms.pushPose();
-            AllGuiTextures.TOOLBELT_SLOT.render(ms, -12, -12, this);
-            AllIcons.I_CONFIG_BACK.render(ms, -9, -9, this);
-            if (!scrollMode && CENTER == hoveredSlot) {
-                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -13, -13, this);
-                tip = Components.translatable("railways.style_select.back_to_groups")
-                        .withStyle(ChatFormatting.GOLD);
-            }
-            ms.popPose();
+        if ((state == State.PICK_STYLE || state == State.PICK_CATEGORY) && !selectedAny) {
+            renderCompatLabels(ms);
         }
+
         /*
         end core rendering
          */
@@ -281,14 +372,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             if (i1 > 8) {
                 ms.pushPose();
                 ms.translate(0, -80, 0.0F);
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                int k1 = 16777215;
-                int k = i1 << 24 & -16777216;
-                int l = font.width(title);
-                font.draw(ms, title, (float) (-l / 2), -4.0F, k1 | k);
-                RenderSystem.disableBlend();
-                ms.popPose();
+                drawComponent(ms, title, i1);
             }
         }
 
@@ -303,16 +387,66 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             if (i1 > 8) {
                 ms.pushPose();
                 ms.translate((float) (width / 2), (float) (height - 68), 0.0F);
+                drawComponent(ms, tip, i1);
+            }
+        }
+    }
+
+    private void drawComponent(PoseStack ms, Component title, int i1) {
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        int k1 = 16777215;
+        int k = i1 << 24 & -16777216;
+        int l = font.width(title);
+        font.draw(ms, title, (float) (-l / 2), -4.0F, k1 | k);
+        RenderSystem.disableBlend();
+        ms.popPose();
+    }
+
+    private void renderCompatLabels(PoseStack ms) {
+        renderCompatLabels(ms, Indicator.State.OFF, Indicator.State.OFF, Indicator.State.OFF);
+    }
+
+    private void renderCompatLabels(PoseStack ms, boolean narrowCompat, boolean standardCompat, boolean wideCompat) {
+        renderCompatLabels(ms,
+            narrowCompat ? Indicator.State.GREEN : Indicator.State.RED,
+            standardCompat ? Indicator.State.GREEN : Indicator.State.RED,
+            wideCompat ? Indicator.State.GREEN : Indicator.State.RED);
+    }
+
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+    private void renderCompatLabels(PoseStack ms, Indicator.State narrowState, Indicator.State standardState, Indicator.State wideState) {
+        ms.pushPose();
+        ms.translate(-27, (height/2) - 55, 0);
+        String[] labels = new String[] {"N", "S", "W"};
+        Indicator.State[] states = new Indicator.State[] {narrowState, standardState, wideState};
+        for (int i = 0; i < 3; i++) {
+            ms.pushPose();
+            ms.translate(i * 18., 0, 0);
+            Indicator.State state = states[i];
+            AllGuiTextures toDraw = switch (state) {
+                case ON -> AllGuiTextures.INDICATOR_WHITE;
+                case OFF -> AllGuiTextures.INDICATOR;
+                case RED -> AllGuiTextures.INDICATOR_RED;
+                case YELLOW -> AllGuiTextures.INDICATOR_YELLOW;
+                case GREEN -> AllGuiTextures.INDICATOR_GREEN;
+            };
+            toDraw.render(ms, 0, 0);
+            {
+                ms.pushPose();
+                ms.translate(9, 9, 0);
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
-                int k1 = 16777215;
-                int k = i1 << 24 & -16777216;
-                int l = font.width(tip);
-                font.draw(ms, tip, (float) (-l / 2), -4.0F, k1 | k);
+                Component label = Components.literal(labels[i]);
+                int l = font.width(label);
+                font.drawShadow(ms, label, (float) (-l / 2), 0, 0xFFFFFFFF);
                 RenderSystem.disableBlend();
                 ms.popPose();
             }
+
+            ms.popPose();
         }
+        ms.popPose();
     }
 
     private void renderIcon(CategoryIcon categoryIcon, PoseStack ms) {
@@ -379,28 +513,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 }
                 onClose();
                 BogeyCategoryHandlerClient.COOLDOWN = 2;
+                TagCycleHandlerClient.COOLDOWN = 2;
                 AccessorToolboxHandlerClient.setCOOLDOWN(2);
                 return true;
             }
-            /*if (selected == DEPOSIT) {
-                onClose();
-                ToolboxHandlerClient.COOLDOWN = 2;
-                return true;
-            }
-
-            if (state == RadialToolboxMenu.State.SELECT_BOX && selected >= 0 && selected < toolboxes.size()) {
-                state = RadialToolboxMenu.State.SELECT_ITEM;
-                selectedBox = toolboxes.get(selected);
-                return true;
-            }
-
-            if (state == RadialToolboxMenu.State.DETACH || state == RadialToolboxMenu.State.SELECT_ITEM || state == RadialToolboxMenu.State.SELECT_ITEM_UNEQUIP) {
-                if (selected == UNEQUIP || selected >= 0) {
-                    onClose();
-                    ToolboxHandlerClient.COOLDOWN = 2;
-                    return true;
-                }
-            }*/
         }
 
         if (button == 1) { // right click to go back
@@ -413,6 +529,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         return super.mouseClicked(x, y, button);
     }
 
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         Window window = Minecraft.getInstance().getWindow();

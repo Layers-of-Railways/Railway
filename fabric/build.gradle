@@ -1,8 +1,6 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
+    id "me.modmuss50.mod-publish-plugin"
 }
 
 architectury {
@@ -39,7 +37,7 @@ configurations {
 
 repositories {
     // mavens for Fabric-exclusives
-    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
+    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu, EMI
     maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://cursemaven.com" } // Forge Config API Port
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
@@ -58,7 +56,7 @@ repositories {
     } // JEI, Hex Casting
     maven {
         name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        url = 'https://maven.ladysnake.org/releases'
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
@@ -99,7 +97,7 @@ dependencies {
     switch (fabric_recipe_viewer.toLowerCase(Locale.ROOT)) {
         case "jei": modLocalRuntime("mezz.jei:jei-${minecraft_version}-fabric:${jei_fabric_version}"); break
         case "rei": modLocalRuntime("me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}"); break
-        case "emi": modLocalRuntime("dev.emi:emi:${emi_version}"); break
+        case "emi": modLocalRuntime("dev.emi:emi-fabric:${emi_version}"); break
         case "disabled": break
         default: println("Unknown recipe viewer specified: ${fabric_recipe_viewer}. Must be JEI, REI, EMI, or disabled.")
     }
@@ -115,6 +113,12 @@ dependencies {
 
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT") // for some reason this is needed explicitly
 
+    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+
+    if (enable_simple_voice_chat.toBoolean()) {
+        modLocalRuntime "maven.modrinth:simple-voice-chat:fabric-${voicechat_version}"
+    }
+
     // because create fabric is a bit broken I think
     modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
 
@@ -126,8 +130,10 @@ dependencies {
     }
 
     if (enable_byg.toBoolean()) {
-        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_fabric}")
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version}-fabric")
         modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_fabric}")
+        modLocalRuntime("maven.modrinth:geckolib:${geckolib_version_fabric}")
+        modLocalRuntime("maven.modrinth:corgilib:${corgilib_version_fabric}")
     }
 
     if (enable_tweakeroo.toBoolean()) {
@@ -146,35 +152,9 @@ dependencies {
     if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
     }
-}
 
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = findProperty('CURSEFORGETOKEN')
-    var projectId = "688231"
-
-    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar"))
-    mainFile.changelog = getChangelogText("Fabric", true)
-    mainFile.changelogType = "html"
-    mainFile.displayName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
-    mainFile.addRequirement("create-fabric")
-    mainFile.addModLoader("Fabric")
-    mainFile.addJavaVersion("Java 17")
-    mainFile.releaseType = "release"
-}
-
-modrinth {
-    token = findProperty('MODRINTHTOKEN')
-    projectId = "ZzjhlDgM"
-    changelog = getChangelogText("Fabric", true)
-    versionName = "Steam 'n Rails ${mod_version} Fabric ${minecraft_version}"
-    versionNumber = "${mod_version}-fabric-${minecraft_version}"
-    versionType = "release"
-    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+fabric-mc${minecraft_version}.jar")
-    gameVersions = [minecraft_version]
-    loaders = ["fabric", "quilt"]
-    dependencies {
-        required.version "Xbc0uyRg", (System.getenv("CREATE_FABRIC_VER") != null ? System.getenv("CREATE_FABRIC_VER") : "null")
-    }
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}"))
+    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}")
 }
 
 processResources {
@@ -185,11 +165,12 @@ processResources {
 
     // set up properties for filling into metadata
     Map<String, String> properties = Map.of(
-            "version", version,
+            "version", version as String,
             "fabric_loader_version", fabric_loader_version,
             "fabric_api_version", fabric_api_version,
             "minecraft_version", minecraft_version,
-            "create_version", create_fabric_version // on fabric, use the entire version, unlike forge
+            "create_version", create_fabric_version, // on fabric, use the entire version, unlike forge
+            "voicechat_api_version", voicechat_api_version
     )
     properties.forEach((k, v) -> inputs.property(k, v))
 
@@ -198,28 +179,65 @@ processResources {
     }
 }
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def hasUnstaged = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'status', '--porcelain'
+        standardOutput = stdout
+    }
+    def result = stdout.toString().replaceAll("M gradlew", "").trim()
+    if (!result.isEmpty())
+        println("Found stageable results:\n${result}\n")
+    return !result.isEmpty()
+}
+
 shadowJar {
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     injectAccessWidener = true
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier = null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 components.java {
@@ -228,24 +246,63 @@ components.java {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
+publishMods {
+    file = remapJar.archiveFile
+    version = "$mod_version-fabric-mc$minecraft_version"
+    changelog = getChangelogText()
+    type = STABLE
+    displayName = "Steam 'n' Rails $mod_version Fabric $minecraft_version"
+    modLoaders.add("fabric")
+    modLoaders.add("quilt")
+
+    curseforge {
+        projectId = curseforge_id
+        accessToken = System.getenv("CURSEFORGE_TOKEN")
+        minecraftVersions.add(minecraft_version)
+
+        requires {
+            slug = "create-fabric"
         }
     }
+
+    modrinth {
+        projectId = modrinth_id
+        accessToken = System.getenv("MODRINTH_TOKEN")
+        minecraftVersions.add(minecraft_version)
+
+        requires {
+            slug = "create-fabric"
+        }
+    }
+}
+
+publishing {
     publications {
-        mavenFabric(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
+        mavenCommon(MavenPublication) {
+            artifactId = "${archives_base_name}-${project.name}-${minecraft_version}"
             from components.java
+        }
+    }
+
+    repositories {
+        if (System.getenv("MAVEN_TOKEN")) {
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            }
         }
     }
 }

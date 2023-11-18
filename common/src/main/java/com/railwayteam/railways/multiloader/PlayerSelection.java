@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import java.util.function.Predicate;
+
 /**
  * Find players to send S2C packets to.
  */
@@ -21,12 +23,22 @@ public abstract class PlayerSelection {
 	}
 
 	@ExpectPlatform
+	public static PlayerSelection allWith(Predicate<ServerPlayer> condition) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
 	public static PlayerSelection of(ServerPlayer player) {
 		throw new AssertionError();
 	}
 
 	@ExpectPlatform
 	public static PlayerSelection tracking(Entity entity) {
+		throw new AssertionError();
+	}
+
+	@ExpectPlatform
+	public static PlayerSelection trackingWith(Entity entity, Predicate<ServerPlayer> condition) {
 		throw new AssertionError();
 	}
 

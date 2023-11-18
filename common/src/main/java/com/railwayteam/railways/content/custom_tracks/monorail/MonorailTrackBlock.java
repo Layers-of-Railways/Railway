@@ -3,10 +3,15 @@ package com.railwayteam.railways.content.custom_tracks.monorail;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraphHelper;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
@@ -17,6 +22,8 @@ import com.simibubi.create.content.trains.track.TrackPropagator;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Pair;
+import com.tterrag.registrate.util.entry.BlockEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -45,7 +52,13 @@ public class MonorailTrackBlock extends TrackBlock {
 
     @Override
     public BlockState getBogeyAnchor(BlockGetter world, BlockPos pos, BlockState state) {
-        return CRBlocks.MONO_BOGEY.getDefaultState()
+        BlockEntry<? extends AbstractMonoBogeyBlock<?>> block = CRBlocks.MONO_BOGEY;
+        if (BogeyCategoryHandlerServer.currentPlayer != null) {
+            Pair<BogeyStyle, BogeySizes.BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(BogeyCategoryHandlerServer.currentPlayer);
+            if (styleData.getFirst() == CRBogeyStyles.INVISIBLE || styleData.getFirst() == CRBogeyStyles.INVISIBLE_MONOBOGEY)
+                block = CRBlocks.INVISIBLE_MONO_BOGEY;
+        }
+        return block.getDefaultState()
             .setValue(BlockStateProperties.HORIZONTAL_AXIS, state.getValue(SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z);
     }
 

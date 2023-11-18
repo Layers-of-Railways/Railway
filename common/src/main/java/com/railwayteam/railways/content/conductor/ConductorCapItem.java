@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
@@ -64,12 +65,12 @@ public abstract class ConductorCapItem extends ArmorItem {
 
   static class ConductorArmorMaterial implements ArmorMaterial {
     @Override
-    public int getDurabilityForSlot (EquipmentSlot slot) {
+    public int getDurabilityForSlot (@NotNull EquipmentSlot slot) {
       return 0;
     }
 
     @Override
-    public int getDefenseForSlot (EquipmentSlot slot) {
+    public int getDefenseForSlot (@NotNull EquipmentSlot slot) {
       return 0;
     }
 
@@ -79,17 +80,17 @@ public abstract class ConductorCapItem extends ArmorItem {
     }
 
     @Override
-    public SoundEvent getEquipSound () {
+    public @NotNull SoundEvent getEquipSound() {
       return SoundEvents.ARMOR_EQUIP_LEATHER;
     }
 
     @Override
-    public Ingredient getRepairIngredient () {
-      return null;
+    public @NotNull Ingredient getRepairIngredient() {
+      return Ingredient.EMPTY;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
       return "conductor_cap";
     }
 

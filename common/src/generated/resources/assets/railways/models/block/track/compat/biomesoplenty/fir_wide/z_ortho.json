@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/z_ortho",
+  "textures": {
+    "1": "biomesoplenty:block/track/fir/standard_track_fir",
+    "2": "biomesoplenty:block/track/fir/standard_track_mip_fir",
+    "3": "biomesoplenty:block/track/fir/standard_track_crossing_fir",
+    "particle": "biomesoplenty:block/track/fir/standard_track_crossing_fir"
+  }
+}

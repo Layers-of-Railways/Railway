@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/segment_left",
+  "textures": {
+    "0": "railways:block/track/jungle/standard_track_jungle",
+    "1": "railways:block/track/jungle/standard_track_mip_jungle",
+    "particle": "minecraft:block/jungle_planks"
+  }
+}

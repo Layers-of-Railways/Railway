@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/ascending",
+  "textures": {
+    "0": "byg:block/track/cika/standard_track_cika",
+    "1": "byg:block/track/cika/standard_track_mip_cika",
+    "particle": "byg:block/track/cika/standard_track_crossing_cika"
+  }
+}

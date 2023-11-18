@@ -1,8 +1,6 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "com.modrinth.minotaur" version "2.+" // https://github.com/modrinth/minotaur
+    id "me.modmuss50.mod-publish-plugin"
 }
 
 loom {
@@ -49,7 +47,7 @@ repositories {
     } // JEI, Hex Casting
     maven {
         name = 'Ladysnake Mods'
-        url = 'https://ladysnake.jfrog.io/artifactory/mods'
+        url = 'https://maven.ladysnake.org/releases'
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
@@ -76,12 +74,6 @@ repositories {
             includeGroup "curse.maven"
         }
     } // Biomes O' Plenty
-
-    // according to https://github.com/Talia-12/Hexal/blob/main/addon_guide.md, this is needed for hex casting (you should download the mod into here)
-    // VERSION USED: hexcasting-forge-1.18.2-0.9.6-pre-6.jar (https://maven.blamejared.com/at/petra-k/hexcasting/hexcasting-forge-1.18.2/0.9.6-pre-6/)
-    flatDir {
-        dir 'libs'
-    }
 }
 
 dependencies {
@@ -104,13 +96,20 @@ dependencies {
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-SNAPSHOT") // for some reason this is needed explicitly
 
+    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+
+    if (enable_simple_voice_chat.toBoolean()) {
+        modLocalRuntime "maven.modrinth:simple-voice-chat:forge-${voicechat_version}"
+    }
+
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
         modLocalRuntime("at.petra-k.paucal:paucal-forge-${minecraft_version}:${paucal_version}")
-        modLocalRuntime("railways:hexcasting-forge-${minecraft_version}:${hexcasting_version}") {
+        modLocalRuntime("at.petra-k.hexcasting:hexcasting-forge-${minecraft_version}:${hexcasting_version}") {
             exclude group: "com.github.Virtuoel", module: "Pehkui"
             exclude group: "net.minecraftforge", module: "forge"
             exclude group: "top.theillusivec4.curios", module: "curios-forge"
+            exclude group: "mezz.jei", module: "jei-1.19.2-forge"
         }
         //modApi("com.github.Virtuoel:Pehkui:${pehkui_version}-${minecraft_version}-forge") // probably not needed
         modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
@@ -118,7 +117,7 @@ dependencies {
     }
 
     if (enable_byg.toBoolean()) {
-        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version_forge}")
+        modLocalRuntime("maven.modrinth:biomesyougo:${byg_version}-forge")
     }
     if (enable_byg.toBoolean() || enable_bop.toBoolean()) {
         modLocalRuntime("maven.modrinth:terrablender:${terrablender_version_forge}")
@@ -128,7 +127,7 @@ dependencies {
     }
 
     if (enable_sodium_rubidium.toBoolean()) {
-        modLocalRuntime("curse.maven:rubidium-574856:${rubidium_version}")
+        modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")
     }
 
     if (enable_eb.toBoolean())
@@ -137,35 +136,9 @@ dependencies {
     if (enable_sc.toBoolean()) {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
     }
-}
 
-tasks.register('publishCurseForge', TaskPublishCurseForge) {
-    apiToken = findProperty('CURSEFORGETOKEN')
-    var projectId = "688231"
-
-    def mainFile = upload(projectId, file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar"))
-    mainFile.changelog = getChangelogText("Forge", true)
-    mainFile.changelogType = "html"
-    mainFile.displayName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    mainFile.addRequirement("create")
-    mainFile.addModLoader("Forge")
-    mainFile.addJavaVersion("Java 17")
-    mainFile.releaseType = "release"
-}
-
-modrinth {
-    token = findProperty('MODRINTHTOKEN')
-    projectId = "ZzjhlDgM"
-    changelog = getChangelogText("Forge", true)
-    versionName = "Steam 'n Rails ${mod_version} Forge ${minecraft_version}"
-    versionNumber = "${mod_version}-forge-${minecraft_version}"
-    versionType = "release"
-    uploadFile = file("build/libs/${archives_base_name}-${mod_version}+forge-mc${minecraft_version}.jar")
-    gameVersions = [minecraft_version]
-    loaders = ["forge"]
-    dependencies {
-        required.version "LNytGWDc", (System.getenv("CREATE_FORGE_VER") != null ? System.getenv("CREATE_FORGE_VER") : "null")
-    }
+    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}"))
+    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}"))
 }
 
 processResources {
@@ -176,10 +149,11 @@ processResources {
 
     // set up properties for filling into metadata
     Map<String, String> properties = Map.of(
-            "version", version,
+            "version", version as String,
             "forge_version", forge_version.split("\\.")[0], // only specify major version of forge
             "minecraft_version", minecraft_version,
-            "create_version", create_forge_version.split("-")[0] // cut off build number
+            "create_version", create_forge_version.split("-")[0], // cut off build number
+            "voicechat_api_version", voicechat_api_version
     )
     properties.forEach((k, v) -> inputs.property(k, v))
 
@@ -188,28 +162,65 @@ processResources {
     }
 }
 
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def hasUnstaged = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'status', '--porcelain'
+        standardOutput = stdout
+    }
+    def result = stdout.toString().replaceAll("M gradlew", "").trim()
+    if (!result.isEmpty())
+        println("Found stageable results:\n${result}\n")
+    return !result.isEmpty()
+}
+
 shadowJar {
     exclude "fabric.mod.json"
     exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
+    archiveClassifier = null
 }
 
 jar {
-    classifier "dev"
+    archiveClassifier = "dev"
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    String gitHash =  "\"${getGitHash()}" + (hasUnstaged() ? "-modified" : "") + "\""
+
+    manifest {
+        attributes([
+                "Git-Hash": gitHash
+        ])
+    }
 }
 
 components.java {
@@ -218,24 +229,63 @@ components.java {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
+publishMods {
+    file = remapJar.archiveFile
+    version = "$mod_version-forge-mc$minecraft_version"
+    changelog = getChangelogText()
+    type = STABLE
+    displayName = "Steam 'n' Rails $mod_version Forge $minecraft_version"
+    modLoaders.add("forge")
+    modLoaders.add("neoforge")
+
+    curseforge {
+        projectId = curseforge_id
+        accessToken = System.getenv("CURSEFORGE_TOKEN")
+        minecraftVersions.add(minecraft_version)
+
+        requires {
+            slug = "create"
         }
     }
+
+    modrinth {
+        projectId = modrinth_id
+        accessToken = System.getenv("MODRINTH_TOKEN")
+        minecraftVersions.add(minecraft_version)
+
+        requires {
+            slug = "create"
+        }
+    }
+}
+
+publishing {
     publications {
-        mavenForge(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
+        mavenCommon(MavenPublication) {
+            artifactId = "${archives_base_name}-${project.name}-${minecraft_version}"
             from components.java
+        }
+    }
+
+    repositories {
+        if (System.getenv("MAVEN_TOKEN")) {
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            }
         }
     }
 }

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/z_ortho",
+  "textures": {
+    "1": "byg:block/track/bulbis/standard_track_bulbis",
+    "2": "byg:block/track/bulbis/standard_track_mip_bulbis",
+    "3": "byg:block/track/bulbis/standard_track_crossing_bulbis",
+    "particle": "byg:block/track/bulbis/standard_track_crossing_bulbis"
+  }
+}

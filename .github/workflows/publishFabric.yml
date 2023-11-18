@@ -1,46 +1,33 @@
 name: Build Fabric Release
 
-on:
-  workflow_dispatch:
-    inputs:
-      create_fabric_version:
-        description: Create fabric dependency version
-        required: true
+on: [workflow_dispatch]
 
 jobs:
   build:
-    strategy:
-      matrix:
-        java: [ 17 ]
     runs-on: ubuntu-latest
     env:
-      ITHUNDXRMAVENUSERNAME: ${{ secrets.ITHUNDXRMAVENUSERNAME }}
-      ITHUNDXRMAVENPASSWORD: ${{ secrets.ITHUNDXRMAVENPASSWORD }}
-      CREATE_FABRIC_VER: ${{ github.event.inputs.create_fabric_version }}
       RELEASE_BUILD: true
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Setup JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
+      - name: Setup JDK 17
+        uses: actions/setup-java@v2
         with:
-          java-version: ${{ matrix.java }}
+          java-version: '17'
+          distribution: temurin
+          cache: gradle
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          cache-read-only: false
+      - name: Validate Gradle Wrapper Integrity
+        uses: gradle/wrapper-validation-action@v1
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build Fabric
-        run: ./gradlew :fabric:build
-
-      - name: Upload Mod to Modrinth
-        run: ./gradlew :fabric:modrinth
-
-      - name: Upload Mod to Curseforge
-        run: ./gradlew :fabric:publishCurseForge
+      - name: Build & Release
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+        run: ./gradlew :fabric:build :fabric:publish :fabric:publishMods

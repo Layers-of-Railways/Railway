@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/baobab/portal_track_baobab",
+    "2": "byg:block/track/baobab/portal_track_mip_baobab",
+    "3": "byg:block/track/baobab/standard_track_baobab",
+    "particle": "byg:block/track/baobab/standard_track_crossing_baobab"
+  }
+}

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "railways",
   "version": "${version}",
-  "name": "Create: Steam 'n Rails",
+  "name": "Create: Steam 'n' Rails",
   "description": "Customization and extension of Create rail systems and steam system",
   "authors": [
     "The Railways Team"
@@ -28,6 +28,9 @@
     ],
     "mm:early_risers": [
       "com.railwayteam.railways.fabric.EarlyRiser"
+    ],
+    "preLaunch": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ]
   },
   "mixins": [
@@ -45,6 +48,19 @@
     "mm": ">=2.3"
   },
   "suggests": {
-    "hexcasting": "*"
+    "hexcasting": "*",
+    "voicechat": ">=${minecraft_version}-${voicechat_api_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "parent": {
+        "id": "create"
+      },
+      "links": {
+        "Modrinth": "https://modrinth.com/mod/create-steam-n-rails",
+        "CurseForge": "https://curseforge.com/minecraft/mc-mods/create-steam-n-rails",
+        "Discord": "https://discord.gg/md78MGbEfK"
+      }
+    }
   }
 }

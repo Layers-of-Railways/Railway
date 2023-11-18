@@ -1,0 +1,10 @@
+# Blender 3.3.2 MTL File: 'boiler.blend'
+# www.blender.org
+
+newmtl front
+map_Kd #front
+
+newmtl sides
+map_Kd #sides
+
+newmtl none

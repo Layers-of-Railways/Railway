@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:blackstone_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_blackstone_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        },
+        {
+          "item": "minecraft:gold_nugget"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_blackstone_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_blackstone_narrow"
+  }
+}

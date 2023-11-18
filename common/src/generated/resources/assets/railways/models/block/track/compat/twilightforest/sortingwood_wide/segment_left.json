@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/segment_left",
+  "textures": {
+    "0": "twilightforest:block/track/sortingwood/standard_track_sortingwood",
+    "1": "twilightforest:block/track/sortingwood/standard_track_mip_sortingwood",
+    "particle": "twilightforest:block/track/sortingwood/standard_track_crossing_sortingwood"
+  }
+}

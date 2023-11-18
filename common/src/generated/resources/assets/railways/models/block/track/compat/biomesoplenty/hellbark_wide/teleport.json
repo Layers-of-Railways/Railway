@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "biomesoplenty:block/track/hellbark/portal_track_hellbark",
+    "2": "biomesoplenty:block/track/hellbark/portal_track_mip_hellbark",
+    "3": "biomesoplenty:block/track/hellbark/standard_track_hellbark",
+    "particle": "biomesoplenty:block/track/hellbark/standard_track_crossing_hellbark"
+  }
+}

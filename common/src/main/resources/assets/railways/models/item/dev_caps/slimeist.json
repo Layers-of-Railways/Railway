@@ -2,8 +2,7 @@
 	"credit": "By Slimeist",
 	"texture_size": [64, 32],
 	"textures": {
-		"2": "entity/slime/slime",
-		"particle": "entity/slime/slime"
+		"2": "entity/slime/slime"
 	},
 	"elements": [
 		{
@@ -137,8 +136,6 @@
 			"name": "slime",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"nbt": "{}",
-			"armAnimationEnabled": false,
 			"children": [0, 1, 2, 3, 4, 5, 6]
 		}
 	]

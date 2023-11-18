@@ -34,6 +34,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -519,5 +520,11 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
             case REVERSE_LEFT -> 1;
             case REVERSE_RIGHT -> 2;
         };
+    }
+
+    @Override
+    protected AABB createRenderBoundingBox() {
+        return new AABB(worldPosition, edgePoint.getGlobalPosition())
+            .inflate(2);
     }
 }

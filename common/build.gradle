@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
@@ -31,6 +34,9 @@ dependencies {
     // JourneyMap compat
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-fabric-SNAPSHOT")
 
+    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+    modCompileOnly "maven.modrinth:simple-voice-chat:fabric-${voicechat_version}"
+
     // mod compat for tracks
 
     // Hex Casting
@@ -40,6 +46,9 @@ dependencies {
 
     if (enable_eb.toBoolean())
         modImplementation("com.rabbitminers:extendedbogeys-common:${EB_verison}+common-patch-")
+
+    implementation("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}")
+    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}")
 }
 
 architectury {
@@ -47,34 +56,51 @@ architectury {
 }
 
 processResources {
-    exclude("resourcepacks/") // must be part of primary mod to be findable
+    exclude("resourcepacks/", "**/*.bbmodel", "**/*.lnk", "**/*.txt") // must be part of primary mod to be findable, dont add development or to-do files into built jar
+
+    // Minify all .json files in built jars
+    doLast {
+        fileTree(dir: processResources.outputs.files.asPath, include: '**/*.json').each {
+            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+        }
+    }
 }
 
 sourceSets.main {
     resources { // include generated resources in resources
         srcDir("src/generated/resources")
-        exclude("src/generated/resources/.cache")
+        exclude(".cache/**")
+        exclude("assets/create/**")
     }
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "IThundxrMaven"
-            url = "https://maven.ithundxr.dev/releases"
-            credentials(PasswordCredentials) {
-                username = findProperty("ithundxr_maven_username") != null ? findProperty("ithundxr_maven_username") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("ithundxr_maven_password") != null ? findProperty("ithundxr_maven_password") : System.getenv("ITHUNDXRMAVENPASSWORD")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
     publications {
         mavenCommon(MavenPublication) {
-            artifactId = archivesBaseName + "-" + project.name
+            artifactId = "${archives_base_name}-${project.name}-${minecraft_version}"
             from components.java
+        }
+    }
+
+    repositories {
+        if (System.getenv("MAVEN_TOKEN")) {
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            }
         }
     }
 }

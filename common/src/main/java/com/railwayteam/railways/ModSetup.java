@@ -1,7 +1,7 @@
 package com.railwayteam.railways;
 
-import com.railwayteam.railways.compat.tracks.TrackCompatUtils;
 import com.railwayteam.railways.compat.tracks.mods.*;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
@@ -9,8 +9,10 @@ public class ModSetup {
     CRTrackMaterials.register();
     CRBogeyStyles.register();
     CRItems.register();
+    CRSpriteShifts.register();
     CRBlockEntities.register();
     CRBlocks.register();
+    CRPalettes.register();
     CRContainerTypes.register();
     CREntities.register();
     CRSounds.register();
@@ -19,10 +21,9 @@ public class ModSetup {
     CRSchedule.register();
     CRDataFixers.register();
     CRExtraRegistration.register();
+    CasingCollisionUtils.register();
 
     // Compat
-    if (TrackCompatUtils.anyLoaded())
-      Railways.registrate().creativeModeTab(() -> CRItems.compatTracksCreativeTab, "Create Steam 'n Rails: Compat Tracks");
     HexCastingTrackCompat.register();
     BygTrackCompat.register();
     BlueSkiesTrackCompat.register();

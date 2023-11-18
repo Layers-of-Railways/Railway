@@ -1,6 +1,6 @@
 /*
  * Copyright 2022 QuiltMC
- * Modified by the Steam 'n Rails (Railways) team
+ * Modified by the Steam 'n' Rails (Railways) team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.railwayteam.railways.base.datafixerapi;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
@@ -66,10 +65,7 @@ public abstract class DataFixesInternals {
                 Railways.LOGGER.warn("[Railways DFU] Using no-op implementation.");
                 instance = new NoOpDataFixesInternals();
             } else {
-                if (Config.DISABLE_DATAFIXER.get())
-                    instance = new NoOpDataFixesInternals();
-                else
-                    instance = new DataFixesInternalsImpl(latestVanillaSchema);
+                instance = new DataFixesInternalsImpl(latestVanillaSchema);
             }
         }
 

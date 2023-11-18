@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/x_ortho",
+  "textures": {
+    "1": "twilightforest:block/track/canopy/standard_track_canopy",
+    "2": "twilightforest:block/track/canopy/standard_track_mip_canopy",
+    "3": "twilightforest:block/track/canopy/standard_track_crossing_canopy",
+    "particle": "twilightforest:block/track/canopy/standard_track_crossing_canopy"
+  }
+}

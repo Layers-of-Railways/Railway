@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "biomesoplenty:block/track/mahogany/portal_track_mahogany",
+    "2": "biomesoplenty:block/track/mahogany/portal_track_mip_mahogany",
+    "3": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
+    "particle": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany"
+  }
+}

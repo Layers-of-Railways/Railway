@@ -1,8 +1,11 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
@@ -15,9 +18,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
@@ -25,9 +30,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Mixin(value = Carriage.class, remap = false)
-public class MixinCarriage implements ICarriageConductors {
+public abstract class MixinCarriage implements ICarriageConductors {
 
     @Shadow public Train train;
+
+    @Shadow public abstract CarriageBogey leadingBogey();
+
+    @Shadow public abstract CarriageBogey trailingBogey();
+
+    @Shadow public abstract TravellingPoint getLeadingPoint();
+
+    @Shadow public abstract TravellingPoint getTrailingPoint();
+
     private final List<UUID> controllingConductors = new ArrayList<>();
 
     @Override
@@ -93,5 +107,33 @@ public class MixinCarriage implements ICarriageConductors {
     private void markTravelEnd(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
         Railways.trackEdgeCarriageTravelling = false;
+    }
+
+    @SuppressWarnings("unused")
+    @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 0))
+    private boolean allowUniversalTrackLeading(boolean original) {
+        return snr$isIncompatible(original, true);
+    }
+
+    @SuppressWarnings("unused")
+    @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 1))
+    private boolean allowUniversalTrackTrailing(boolean original) {
+        return snr$isIncompatible(original, false);
+    }
+
+    @Unique
+    private boolean snr$isIncompatible(boolean original, boolean leading) {
+        CarriageBogey bogey = leading ? leadingBogey() : trailingBogey();
+        TravellingPoint point = leading ? getLeadingPoint() : getTrailingPoint();
+        if (point.edge.getTrackMaterial().trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
+            return false;
+        if (CarriageBogeyUtils.getType(bogey).getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)
+            return false;
+        return original;
+    }
+
+    @Inject(method = "manageEntities", at = @At("HEAD"), cancellable = true)
+    private void allowTravellingWithoutLevel(Level level, CallbackInfo ci) {
+        if (level == null) ci.cancel();
     }
 }

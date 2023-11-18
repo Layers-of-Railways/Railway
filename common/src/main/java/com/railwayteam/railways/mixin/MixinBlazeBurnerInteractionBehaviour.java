@@ -22,7 +22,7 @@ public abstract class MixinBlazeBurnerInteractionBehaviour {
         if (contraptionEntity instanceof CarriageContraptionEntity cce) {
             Carriage carriage = cce.getCarriage();
             Train train = carriage.train;
-            ((IIndexedSchedule) train).setIndex(train.carriages.indexOf(carriage));
+            ((IIndexedSchedule) train).snr$setIndex(train.carriages.indexOf(carriage));
         }
     }
 }

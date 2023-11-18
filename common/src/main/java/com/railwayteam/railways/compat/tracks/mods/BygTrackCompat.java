@@ -3,7 +3,6 @@ package com.railwayteam.railways.compat.tracks.mods;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
-import net.minecraft.resources.ResourceLocation;
 
 public class BygTrackCompat extends GenericTrackCompat {
     BygTrackCompat() {
@@ -13,12 +12,6 @@ public class BygTrackCompat extends GenericTrackCompat {
     @Override
     protected boolean registerTracksAnyway() {
         return super.registerTracksAnyway() || Mods.BYG.isLoaded;
-    }
-
-    @Override
-    protected ResourceLocation getSlabLocation(String name) {
-        if (name.equals("white_mangrove")) name = "mangrove";
-        return super.getSlabLocation(name);
     }
 
     private static boolean registered = false;

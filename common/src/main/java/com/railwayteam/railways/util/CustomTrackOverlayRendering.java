@@ -5,6 +5,7 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
+import com.railwayteam.railways.registry.CRBlockPartials.TrackCasingSpec;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.graph.EdgePointType;
@@ -12,6 +13,7 @@ import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.ponder.PonderWorld;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import net.fabricmc.api.EnvType;
@@ -137,13 +139,18 @@ public class CustomTrackOverlayRendering {
         //Shift for casings and monorails
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
-        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
+        } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (casingTE.getTrackCasing() != null) {
-                CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
+                TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
+                TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
-                    msr.translate(spec.getXShift(), (spec.getTopSurfacePixelHeight(casingTE.isAlternate()) - 2)/16f, spec.getZShift());
+                    msr.translate(
+                        spec.getXShift(trackType),
+                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2) / 16f,
+                        spec.getZShift(trackType)
+                    );
             }
         }
 

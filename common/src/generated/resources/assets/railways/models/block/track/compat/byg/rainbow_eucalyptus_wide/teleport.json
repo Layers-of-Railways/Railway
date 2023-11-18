@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/rainbow_eucalyptus/portal_track_rainbow_eucalyptus",
+    "2": "byg:block/track/rainbow_eucalyptus/portal_track_mip_rainbow_eucalyptus",
+    "3": "byg:block/track/rainbow_eucalyptus/standard_track_rainbow_eucalyptus",
+    "particle": "byg:block/track/rainbow_eucalyptus/standard_track_crossing_rainbow_eucalyptus"
+  }
+}

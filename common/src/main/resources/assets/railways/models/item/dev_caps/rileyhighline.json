@@ -61,7 +61,7 @@
 		},
 		"gui": {
 			"rotation": [30, 225, 0],
-			"translation": [0, 3.75, 0],
+			"translation": [0, 5.25, 0],
 			"scale": [0.8, 0.8, 0.8]
 		},
 		"head": {
@@ -77,8 +77,6 @@
 			"name": "Hat",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"nbt": "{}",
-			"armAnimationEnabled": false,
 			"children": [0, 1]
 		}
 	]

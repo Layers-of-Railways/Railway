@@ -1,0 +1,6 @@
+{
+	"parent": "railways:block/bogey/wide/scotch_yoke/textures",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "railways:models/block/bogey/wide/scotch_yoke/pins.obj"
+}

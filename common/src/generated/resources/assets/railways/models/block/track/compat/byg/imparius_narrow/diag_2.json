@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag_2",
+  "textures": {
+    "1": "byg:block/track/imparius/standard_track_imparius",
+    "2": "byg:block/track/imparius/standard_track_mip_imparius",
+    "3": "byg:block/track/imparius/standard_track_crossing_imparius",
+    "particle": "byg:block/track/imparius/standard_track_crossing_imparius"
+  }
+}

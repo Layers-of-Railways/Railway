@@ -1,0 +1,10 @@
+{
+	"parent": "block/block",
+	"loader": "forge:obj",
+	"ambientocclusion": false,
+	"flip_v": true,
+	"model": "railways:models/block/bogey/narrow/scotch_wheels.obj",
+	"textures": {
+		"0": "railways:block/bogeys/narrow/scotch_axle"
+	}
+}

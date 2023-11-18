@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "byg:block/track/witch_hazel/standard_track_witch_hazel",
+    "1": "byg:block/track/witch_hazel/standard_track_mip_witch_hazel",
+    "particle": "byg:block/track/witch_hazel/standard_track_crossing_witch_hazel"
+  }
+}

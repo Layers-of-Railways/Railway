@@ -58,7 +58,9 @@
   "railways.whistle.tool.bound": "Bound to:",
   "railways.whistle.tool.conductor_id": "Conductor: §6%s§r",
   "railways.whistle.tool.train_id": "Train: §e%1$s§r (§6%2$s§r)",
-  "railways.whistle.tool.bound_usage": "Use on a track to summon the bound train!",
+  "railways.whistle.tool.bound_usage": "Use on a track or station to summon the bound train!",
+  "railways.whistle.tool.bound_auto_usage": "Deployers can use whistles on stations to summon trains",
+  "railways.whistle.tool.bound_auto_clear": "Or on air to dismiss the auto schedule of the bound train",
   "railways.whistle.tool.not_bound": "Not bound, use on a conductor riding a train to bind.",
 
   "railways.whistle.set": "Bound whistle.",
@@ -99,6 +101,8 @@
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
   "railways.bogeys.styles.invisible": "Invisible",
+  "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
+  "railways.bogeys.styles.monobogey": "Monobogey",
 
   "railways.bogeys.styles.singleaxle": "Singleaxle",
   "railways.bogeys.styles.leafspring": "Leafspring",
@@ -111,6 +115,10 @@
   "railways.bogeys.styles.y25": "Y25",
   "railways.bogeys.styles.heavyweight": "Heavyweight",
   "railways.bogeys.styles.radial": "Radial",
+  "railways.bogeys.styles.wide_default": "Wide",
+  "railways.bogeys.styles.wide_comically_large": "Comically Large",
+  "railways.bogeys.styles.narrow_default": "Narrow",
+  "railways.bogeys.styles.narrow_double_scotch": "Narrow Double Scotch Yoke",
 
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",
@@ -125,5 +133,13 @@
 
   "railways.style_select.category.railways.extendedbogeys": "Extended Bogeys",
 
-  "create.contraptions.roller_mode.track_replace": "Replace Tracks"
+  "create.contraptions.roller_mode.track_replace": "Replace Tracks",
+
+  "sounds.railways.conductor_whistle": "Conductor Whistles",
+
+  "header.railways.optifine": "Warning: Optifine present on game client",
+  "message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disabled in Steam 'n' Rails client sided configs however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check PrismLauncher's Optifine Alternatives list:",
+
+  "label.railways.open_mods_folder": "Open Mods Folder",
+  "label.railways.optifine_alternatives": "Optifine Alternatives"
 }

@@ -6,6 +6,7 @@
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
     "LevelRendererMixin",
+    "TrackBlockOutlineMixin",
     "TrainHUDMixin"
   ],
   "mixins": [
@@ -14,5 +15,6 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.fabric.mixin.CRMixinPlugin"
 }

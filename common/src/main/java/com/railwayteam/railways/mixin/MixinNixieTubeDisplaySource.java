@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import static com.railwayteam.railways.content.distant_signals.SignalDisplaySource.isSignalTarget;
@@ -45,7 +46,6 @@ public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySourc
             cir.setReturnValue(Components.literal(state.name()));
             return;
         }
-        cir.setReturnValue(Components.translatable("railways.display_source.signal." + state.name().toLowerCase()));
-        return;
+        cir.setReturnValue(Components.translatable("railways.display_source.signal." + state.name().toLowerCase(Locale.ROOT)));
     }
 }

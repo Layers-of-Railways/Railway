@@ -1,0 +1,12 @@
+# Made in Blockbench 4.6.1
+newmtl m_piston
+map_Kd #piston
+newmtl m_frame
+map_Kd #frame
+newmtl m_wheel
+map_Kd #wheel
+newmtl m_broad_piston
+map_Kd #broad_piston
+newmtl m_broad_connector
+map_Kd #broad_connector
+newmtl none

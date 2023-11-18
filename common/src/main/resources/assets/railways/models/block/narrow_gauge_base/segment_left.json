@@ -1,0 +1,6 @@
+{
+	"parent": "railways:block/narrow_gauge_base/obj_track",
+	"loader": "forge:obj",
+	"flip_v": true,
+	"model": "railways:models/block/narrow_gauge_base/segment_left.obj"
+}

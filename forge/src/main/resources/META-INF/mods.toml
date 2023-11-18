@@ -6,7 +6,7 @@ license = "MIT"
 [[mods]]
 modId = "railways"
 version = "${version}"
-displayName = "Create: Steam 'n Rails"
+displayName = "Create: Steam 'n' Rails"
 authors = "The Railways Team"
 description = '''Customization and extension of Create rail systems and steam system
     Features include:
@@ -40,5 +40,12 @@ side="BOTH"
 modId="hexcasting"
 mandatory=false
 versionRange="," # Any version
-ordering="AFTER" # Steam 'n Rails should load after hexcasting
+ordering="AFTER" # Steam 'n' Rails should load after hexcasting
+side="BOTH"
+
+[[dependencies.railways]]
+modId="voicechat"
+mandatory=false
+versionRange="[${minecraft_version}-${voicechat_api_version},)"
+ordering="AFTER"
 side="BOTH"

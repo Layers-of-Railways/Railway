@@ -1,0 +1,125 @@
+name: Bug Report
+description: Create a bug report to help us improve Steam 'n' Rails
+labels: [ "type: bug" ]
+body:
+  -   type: textarea
+      attributes:
+        label: Describe the Bug
+        description: A clear and concise description of what the bug is
+      validations:
+        required: true
+  -   type: textarea
+      attributes:
+        label: Reproduction Steps
+        description: Tell us about the steps to reproduce the bug.
+        value: |
+          1.
+          2.
+          3.
+          ...
+      validations:
+        required: true
+  -   type: textarea
+      attributes:
+        label: Expected Result
+        description: A clear and concise description of what you expected to happen
+      validations:
+        required: true
+  -   type: textarea
+      attributes:
+        label: Screenshots and Videos
+        description: If applicable, add screenshots or videos to help explain your problem.
+      validations:
+        required: false
+  -   type: input
+      attributes:
+        label: Crash Report or Log
+        description: If applicable, please add a **link** to the crash report or log that was created when this issue occurred. You can upload the crash report to a site like [mclogs](https://mclo.gs) or [Pastebin](https://pastebin.com). Please **do not** paste the whole crash report in this issue.
+      validations:
+        required: false
+  -   type: input
+      attributes:
+        label: Operating System
+        description: The operating system you were using when the bug occurred
+        placeholder: Windows 11
+      validations:
+        required: true
+  -   type: dropdown
+      attributes:
+        label: Mod Version
+        description: The version of the mod you were using when the bug occurred
+        options:
+          - "1.5.3"
+          - "1.5.2"
+          - "1.5.1"
+          - "1.5.0"
+          - "1.4.5"
+          - "1.4.4"
+          - "1.4.3"
+          - "1.4.2"
+          - "1.4.1"
+          - "1.4.0"
+          - "1.3.5"
+          - "1.3.4"
+          - "1.3.3"
+          - "1.3.2"
+          - "1.3.1"
+          - "1.3.0"
+          - "1.2.6"
+      validations:
+        required: true
+  -   type: dropdown
+      attributes:
+        label: Create Mod Version
+        description: The version of **Create Mod** you were using when the bug occurred
+        options:
+          - "0.5.1f"
+          - "0.5.1e"
+          - "0.5.1d"
+          - "0.5.1c"
+          - "0.5.1b"
+          - "0.5.1a"
+          - "0.5.0i"
+          - "0.5.0h"
+          - "0.5.0g"
+          - "0.5.0f"
+          - "0.5.0e"
+          - "0.5.0d"
+          - "0.5.0c"
+          - "0.5.0b"
+          - "0.5.0a"
+          - "0.5.0"
+      validations:
+        required: true
+  -   type: dropdown
+      attributes:
+        label: Minecraft Version
+        description: The version of Minecraft you were using when the bug occurred
+        options:
+          - "1.20.1"
+          - "1.19.2"
+          - "1.18.2"
+      validations:
+        required: true
+  -   type: input
+      attributes:
+        label: ModLoader and Version
+        description: The **modloader** and **version** of the modloader using when the bug occurred
+        placeholder: Fabric 0.14.21
+      validations:
+        required: true
+  -   type: textarea
+      attributes:
+        label: Other Mods
+        description: Please list any other mods that were running when the crash happened.
+      validations:
+        required: false
+  -   type: textarea
+      attributes:
+        label: Additional Context
+        description: Add any extra context about the bug here
+      validations:
+        required: false
+  -   type: markdown
+      attributes:
+        value: "Thank you for taking the time to make this bug report and helping improve Steam 'n' Rails!"

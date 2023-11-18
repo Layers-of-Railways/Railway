@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -49,9 +50,16 @@ public class MixinTrackRenderer {
                             .rotateZ(angle);
                     }
                 }
+
+                TrackMaterial.TrackType trackType = null;
+                if (te.getBlockState().getBlock() instanceof TrackBlock trackBlock)
+                    trackType = trackBlock.getMaterial().trackType;
+
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 if (((IHasTrackCasing) te).isAlternate())
-                    spec = spec.getAltSpec();
+                    spec = spec.getNonNullAltSpec(trackType);
+                else
+                    spec = spec.getFor(trackType);
                 CRBlockPartials.ModelTransform transform = spec.transform;
 
                 PartialModel texturedPartial = reTexture(spec.model, casingBlock);
@@ -89,14 +97,15 @@ public class MixinTrackRenderer {
         cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
+            snr$renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
             ms.popPose(); // clean up pose, since cancelled
             ci.cancel(); // Don't do normal rendering
         }
     }
 
-    private static void renderActualMonorail(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb,
-                                             BlockPos tePosition) {
+    @Unique
+    private static void snr$renderActualMonorail(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb,
+                                                 BlockPos tePosition) {
 
         BlockState air = Blocks.AIR.defaultBlockState();
         MonorailAngles[] monorails = ((IMonorailBezier) bc).getBakedMonorails();

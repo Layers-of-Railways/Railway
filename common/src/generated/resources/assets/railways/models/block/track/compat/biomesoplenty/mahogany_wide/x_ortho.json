@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/x_ortho",
+  "textures": {
+    "1": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
+    "2": "biomesoplenty:block/track/mahogany/standard_track_mip_mahogany",
+    "3": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany",
+    "particle": "biomesoplenty:block/track/mahogany/standard_track_crossing_mahogany"
+  }
+}

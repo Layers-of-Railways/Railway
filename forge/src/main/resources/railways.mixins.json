@@ -6,12 +6,17 @@
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
     "ClientPacketListenerMixin",
+    "TrackBlockOutlineMixin",
     "TrainHUDMixin"
   ],
   "mixins": [
+    "ChunkMapAccessor",
+    "ChunkMapAccessor$TrackedEntityAccessor",
+    "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.railwayteam.railways.forge.mixin.CRMixinPlugin"
 }

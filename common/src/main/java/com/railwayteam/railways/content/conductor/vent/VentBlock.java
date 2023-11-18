@@ -1,7 +1,8 @@
 package com.railwayteam.railways.content.conductor.vent;
 
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -73,7 +74,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         Set<BlockPos> visited = new HashSet<>();
         BlockPos.MutableBlockPos end = start.mutable();
 
-        int panic = Config.MAX_CONDUCTOR_VENT_LENGTH.get();
+        int panic = CRConfigs.server().conductors.maxVentLength.get();
         Outer: while (true) {
             if (panic-- < 0) {
                 return Optional.empty();
@@ -185,7 +186,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     public void teleportConductor(@NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity, @Nullable Direction direction) {
         if (level.isClientSide)
             return;
-        if (entity instanceof ConductorEntity conductor && conductor.isPossessed()) {
+        if (entity instanceof ConductorEntity conductor) {// && conductor.isPossessed()) {
             if (direction != null || conductor.ventCooldown <= 0)
                 teleportConductorInternal(level, pos, conductor, direction);
             conductor.ventCooldown = 20;
@@ -193,7 +194,7 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     }
 
     public static final VoxelShape COLLISION_SHAPE = Block.box(1.0, 1.0, 1.0, 15.0, 15.0, 15.0);
-    public static final VoxelShape OUTLINE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+    public static final VoxelShape OUTLINE_SHAPE = CRShapes.BLOCK;
 
     @Override
     @SuppressWarnings("deprecation")

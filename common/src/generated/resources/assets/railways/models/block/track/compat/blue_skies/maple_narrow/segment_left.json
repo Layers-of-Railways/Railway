@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "blue_skies:block/track/maple/standard_track_maple",
+    "1": "blue_skies:block/track/maple/standard_track_mip_maple",
+    "particle": "blue_skies:block/track/maple/standard_track_crossing_maple"
+  }
+}

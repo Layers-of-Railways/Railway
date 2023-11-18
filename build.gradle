@@ -1,17 +1,20 @@
+import dev.ithundxr.silk.ChangelogText
+
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.1.+" apply false
-    id "io.github.juuxel.loom-quiltflower" version "1.+" apply false // Quiltflower, a better decompiler
-    id 'net.darkhax.curseforgegradle' version '1.0.11' // https://github.com/Darkhax/CurseForgeGradle
+    id "dev.architectury.loom" version "1.3.+" apply false
+    id "io.github.juuxel.loom-vineflower" version "1.+" apply false // Vineflower, a better decompiler
+    id "me.modmuss50.mod-publish-plugin" version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
+    id "dev.ithundxr.silk" version "0.11.15" // https://github.com/IThundxr/silk
 }
 
 architectury {
-    minecraft = rootProject.minecraft_version
+    minecraft = minecraft_version
 }
 
 subprojects {
     apply plugin: "dev.architectury.loom"
-    apply plugin: "io.github.juuxel.loom-quiltflower"
+    apply plugin: "io.github.juuxel.loom-vineflower"
 
     loom {
         silentMojangMappingsLicense()
@@ -39,17 +42,18 @@ subprojects {
         }
         maven { // Extended Bogeys
             url = "https://maven.ithundxr.dev/private"
-            content {
-                includeGroup("com.rabbitminers")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-            credentials(PasswordCredentials) {
-                username = findProperty("IThundxrMavenUsername") != null ? findProperty("IThundxrMavenUsername") : System.getenv("ITHUNDXRMAVENUSERNAME")
-                password = findProperty("IThundxrMavenPassword") != null ? findProperty("IThundxrMavenPassword") : System.getenv("ITHUNDXRMAVENPASSWORD")
+            content { includeGroup("com.rabbitminers") }
+            credentials {
+                if (System.getenv("GITHUB_RUN_NUMBER")) {
+                    username = "railways-github"
+                    password = System.getenv("MAVEN_TOKEN")
+                } else {
+                    username = findProperty("IThundxrMavenUsername")
+                    password = findProperty("IThundxrMavenPassword")
+                }
             }
         }
+        maven { url = 'https://maven.maxhenkel.de/repository/public' } // Simple Voice Chat
     }
 
     dependencies {
@@ -65,24 +69,24 @@ subprojects {
     }
 
     tasks.register("moveBuiltJars", Copy) {
-        if (project.name == "common")
-            return
+            if (project.path != ":common") {
+                def remapJar = project.tasks.named('remapJar')
+                dependsOn remapJar
+                from remapJar
+            }
 
-        String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-        version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
-
-        from file("build/libs/${archivesBaseName}-${version}.jar")
-        into rootProject.file("jars")
+        into(rootProject.file("jars"))
     }
 }
 
 allprojects {
+
     apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
-    group = rootProject.maven_group
+    archivesBaseName = archives_base_name
+    group = maven_group
 
     if (System.getenv("RELEASE_BUILD")) {
         version = "${mod_version}+${project.name}-mc${minecraft_version}"
@@ -114,36 +118,6 @@ allprojects {
     }
 }
 
-// 'borrowed' from Create
-String getChangelogText(String loader, boolean recent) {
-    def changelogFile = file(recent ? 'recent_changelog.txt' : 'changelog.txt')
-    String str = ''
-    int lineCount = 0
-    boolean done = false
-    changelogFile.eachLine {
-        if (done || it == null) {
-            return
-        }
-        if (it.size() > 1) {
-            def temp = it
-            if (lineCount == 0) {
-                temp = "Steam 'n Rails ${version}"
-                temp = "<span style=\"font-size: 18px; color: #333399;\">Steam 'n Rails v${mod_version}</span>&nbsp;&nbsp;<em>for Minecraft $loader ${minecraft_version}</em><br/>"
-            } else if (it.startsWith('-')) {
-                temp = "&nbsp;&nbsp;&nbsp;$temp<br/>"
-                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
-                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/Layers-of-Railways/Railway/issues/\$1\">\$0</a>");
-            } else {
-                temp = "<h4>$temp</h4>"
-            }
-            str += temp
-            lineCount++
-        } else {
-            str += "<p>Please submit any Issues you come across on the&nbsp;<a href=\"https://github.com/Layers-of-Railways/Railway/issues\" rel=\"nofollow\">Issue Tracker</a>.</p>"
-            done = true
-        }
-    }
-    return str
+String getChangelogText() {
+    return ChangelogText.getChangelogText(project)
 }
-new File("changelog.html").write getChangelogText("Fabric", false)
-new File("recent_changelog.html").write getChangelogText("Fabric", true)

@@ -21,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.Random;
-
 public class EntityUtilsImpl {
 	public static CompoundTag getPersistentData(Entity entity) {
 		return entity.getExtraCustomData();

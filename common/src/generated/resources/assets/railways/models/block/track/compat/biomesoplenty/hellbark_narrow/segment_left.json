@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "biomesoplenty:block/track/hellbark/standard_track_hellbark",
+    "1": "biomesoplenty:block/track/hellbark/standard_track_mip_hellbark",
+    "particle": "biomesoplenty:block/track/hellbark/standard_track_crossing_hellbark"
+  }
+}

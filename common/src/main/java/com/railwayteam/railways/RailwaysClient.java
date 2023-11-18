@@ -2,11 +2,13 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.*;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
+import com.railwayteam.railways.util.DevCapeUtils;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -16,13 +18,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RailwaysClient {
-
   public static void init() {
+    IncompatibleModsCheck.run();
+
     registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
 
-    registerBuiltinPack("legacy_semaphore", "Steam 'n Rails Legacy Semaphores");
-    registerBuiltinPack("green_signals", "Steam 'n Rails Green Signals");
+    registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
+    registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
 
     registerClientCommands(CRCommandsClient::register);
 
@@ -39,6 +42,8 @@ public class RailwaysClient {
 
     CRDevCaps.register();
     CRBogeyStyles.registerClient();
+
+    DevCapeUtils.INSTANCE.init();
   }
 
   @ExpectPlatform

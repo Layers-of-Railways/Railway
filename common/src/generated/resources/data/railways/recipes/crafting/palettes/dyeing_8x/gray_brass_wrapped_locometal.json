@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/brass_wrapped_slashed"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/gray_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:gray_brass_wrapped_locometal"
+  }
+}

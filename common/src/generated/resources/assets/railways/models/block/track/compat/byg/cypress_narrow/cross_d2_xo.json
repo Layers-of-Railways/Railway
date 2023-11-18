@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d2_xo",
+  "textures": {
+    "1": "byg:block/track/cypress/standard_track_cypress",
+    "2": "byg:block/track/cypress/standard_track_mip_cypress",
+    "3": "byg:block/track/cypress/standard_track_crossing_cypress",
+    "particle": "byg:block/track/cypress/standard_track_crossing_cypress"
+  }
+}

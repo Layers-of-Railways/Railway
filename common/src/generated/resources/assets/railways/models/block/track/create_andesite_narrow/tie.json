@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "create:block/standard_track",
+    "1": "create:block/standard_track_mip",
+    "particle": "create:block/palettes/stone_types/polished/andesite_cut_polished"
+  }
+}

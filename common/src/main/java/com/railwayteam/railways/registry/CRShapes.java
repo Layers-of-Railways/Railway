@@ -1,9 +1,12 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
+import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static net.minecraft.core.Direction.*;
@@ -47,6 +50,59 @@ public class CRShapes {
         MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST)).build(),
         MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
 
+    private static VoxelShape narrowAscending() {
+        VoxelShape shape = Block.box(-7, 0, 0, 16 + 7, 4, 4);
+        VoxelShape[] shapes = new VoxelShape[6];
+        for (int i = 0; i < 6; i++) {
+            int off = (i + 1) * 2;
+            shapes[i] = Block.box(-7, off, off, 16 + 7, 4 + off, 4 + off);
+        }
+        return Shapes.or(shape, shapes);
+    }
+
+    @SuppressWarnings("ConstantValue")
+    public static VoxelShape narrowDiagonal() {
+        VoxelShape shape = Block.box(0, 0, 0, 16, 4, 16);
+        VoxelShape[] shapes = new VoxelShape[6];
+        int off = 0;
+
+        for (int i = 0; i < 3; i++) {
+            off = (i + 1) * 2;
+            shapes[i * 2] = Block.box(off, 0, off, 16 + off, 4, 16 + off);
+            shapes[i * 2 + 1] = Block.box(-off, 0, -off, 16 - off, 4, 16 - off);
+        }
+
+        shape = Shapes.or(shape, shapes);
+
+        off = 16;
+        shape = Shapes.join(shape, Block.box(off, 0, off, 16 + off, 4, 16 + off), BooleanOp.ONLY_FIRST);
+        shape = Shapes.join(shape, Block.box(-off, 0, -off, 16 - off, 4, 16 - off), BooleanOp.ONLY_FIRST);
+
+        off = 4;
+        shape = Shapes.or(shape, Block.box(off, 0, off, 16 + off, 4, 16 + off));
+        shape = Shapes.or(shape, Block.box(-off, 0, -off, 16 - off, 4, 16 - off));
+
+        return shape.optimize();
+    }
+
+    public static final VoxelShaper
+        NARROW_TRACK_ORTHO = shape(-7, 0, 0, 16 + 7, 4, 16).forHorizontal(NORTH),
+        NARROW_TRACK_ASC = shape(narrowAscending()).forHorizontal(SOUTH),
+        NARROW_TRACK_DIAG = shape(narrowDiagonal()).forHorizontal(SOUTH),
+        NARROW_TRACK_ORTHO_LONG = shape(-7, 0, 0, 16 + 7, 4, 24).forHorizontal(SOUTH),
+        NARROW_TRACK_CROSS_ORTHO_DIAG = shape(NARROW_TRACK_DIAG.get(SOUTH)).add(NARROW_TRACK_ORTHO.get(EAST))
+            .forHorizontal(SOUTH),
+        NARROW_TRACK_CROSS_DIAG_ORTHO =
+            shape(NARROW_TRACK_DIAG.get(SOUTH)).add(NARROW_TRACK_ORTHO.get(SOUTH))
+                .forHorizontal(SOUTH);
+
+    public static final VoxelShape
+        NARROW_TRACK_CROSS = shape(NARROW_TRACK_ORTHO.get(SOUTH)).add(NARROW_TRACK_ORTHO.get(EAST))
+            .build(),
+        NARROW_TRACK_CROSS_DIAG = shape(NARROW_TRACK_DIAG.get(SOUTH)).add(NARROW_TRACK_DIAG.get(EAST))
+            .build()
+        ;
+
     public static final VoxelShape INVISIBLE_BOGEY = shape(0, 7, 0, 16, 16, 16).build();
 
 
@@ -75,11 +131,19 @@ public class CRShapes {
         LONG_STACK = shape(1, 0, 3, 15, 4, 13)
         .forHorizontalAxis();
 
+    public static final VoxelShape
+        BLOCK = Shapes.block(),
+        BOTTOM_SLAB = shape(0, 0, 0, 16, 8, 16).build(),
+        TOP_SLAB = shape(0, 8, 0, 16, 16, 16).build();
+
+    public static final VoxelShape HANDCAR = shape(AllShapes.SEAT_COLLISION)
+        .add(-16, 0, 0, 16, 4, 16).build();
+
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);
     }
 
-    private static Builder shape(double x1, double y1, double z1, double x2, double y2, double z2) {
+    public static Builder shape(double x1, double y1, double z1, double x2, double y2, double z2) {
         return shape(cuboid(x1, y1, z1, x2, y2, z2));
     }
 

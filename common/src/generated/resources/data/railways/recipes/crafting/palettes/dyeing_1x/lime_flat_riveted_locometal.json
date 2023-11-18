@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_riveted"
+    },
+    {
+      "tag": "railways:internal/dyes/lime_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:lime_flat_riveted_locometal"
+  }
+}

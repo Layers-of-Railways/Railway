@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
-import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.mixin.AccessorTrackTargetingBehavior;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
@@ -99,7 +99,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
-        edgeSpacingScroll.between(3, 10);
+        edgeSpacingScroll.between(3, 15);
         edgeSpacingScroll.withFormatter(i -> String.valueOf(Components.translatable("railways.coupler.edge_spacing.meters")));
         edgeSpacingScroll.withFormatter(i -> i + "m");
         edgeSpacingScroll.withCallback(i -> this.edgeSpacing = i);
@@ -140,20 +140,20 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
 //        this.getSecondaryCoupler().blockEntityAdded(this, false); //FIX_ME remove this
         OperationInfo info = getOperationInfo();
         switch (info.mode) {
-            case DECOUPLING:
+            case DECOUPLING -> {
                 Train train = info.frontCarriage.train;
                 int numberOffEnd = train.carriages.size() - train.carriages.indexOf(info.backCarriage); // all carriages after and including the back carriage
                 TrainUtils.splitTrain(train, numberOffEnd);
-                break;
-            case COUPLING:
+            }
+            case COUPLING -> {
                 Train frontTrain = info.frontCarriage.train;
                 Train backTrain = info.backCarriage.train;
                 if (frontTrain == backTrain)
                     break;
                 TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing());
-                break;
-            case NONE:
-                break;
+            }
+            case NONE -> {
+            }
         }
     }
 
@@ -199,6 +199,9 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
         error2 = null;
     }
 
+    private final int lazierTickRate = 6;
+    private int lazierTickCounter = 0;
+
     @Override
     public void lazyTick() {
         super.lazyTick();
@@ -220,7 +223,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                     if (location != null && location.graph != null) {
                         location.graph.removePoint(CREdgePointTypes.COUPLER, point.id);
                         Create.RAILWAYS.trains.forEach((uuid, train) -> {
-                            ((IOccupiedCouplers) train).getOccupiedCouplers().remove(point.id);
+                            ((IOccupiedCouplers) train).snr$getOccupiedCouplers().remove(point.id);
                             if (uuid == point.getCurrentTrain() || train.graph == location.graph) {
                                 train.updateSignalBlocks = true;
                             }
@@ -234,10 +237,13 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                 sendData();
             }
         }
-        updateOK();
+        if (lazierTickCounter-- <= 0) {
+            lazierTickCounter = lazierTickRate;
+            clearError2();
+            updateOK();
+        }
         clientInfo = new ClientInfo(this);
         clearErrors();
-        clearError2();
         if (level instanceof ServerLevel serverLevel) {
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(serverLevel, getBlockPos()), new TrackCouplerClientInfoPacket(this));
         }
@@ -261,27 +267,29 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
             return;
         }
 
-        if (edgePoint.determineGraphLocation() == null || secondEdgePoint.determineGraphLocation() == null) {
+        TrackGraphLocation loc1 = edgePoint.determineGraphLocation();
+        TrackGraphLocation loc2 = secondEdgePoint.determineGraphLocation();
+        if (loc1 == null || loc2 == null) {
             setError2(Components.literal("Edge point(s) missing graph location"));
             edgePointsOk = false;
             return;
         }
 
-        if (edgePoint.determineGraphLocation().graph != secondEdgePoint.determineGraphLocation().graph) {
+        if (loc1.graph != loc2.graph) {
             setError2(Components.literal("Edge points not on same graph"));
             edgePointsOk = false;
             return;
         }
 
         //check that edgePoint and secondEdgePoint are on the same or adjacent TrackEdge
-        Couple<TrackNodeLocation> edgePointLocations = edgePoint.determineGraphLocation().edge;
-        Couple<TrackNodeLocation> secondEdgePointLocations = secondEdgePoint.determineGraphLocation().edge;
+        Couple<TrackNodeLocation> edgePointLocations = loc1.edge;
+        Couple<TrackNodeLocation> secondEdgePointLocations = loc2.edge;
         if (edgePointLocations == null || secondEdgePointLocations == null) {
             setError2(Components.literal("Edge point(s) missing edge location"));
             edgePointsOk = false;
             return;
         }
-        if (Config.STRICT_COUPLER.get()) {
+        if (CRConfigs.server().strictCoupler.get()) {
             edgePointsOk = edgePointLocations.getFirst().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getFirst().equals(secondEdgePointLocations.getSecond()) ||
                     edgePointLocations.getSecond().equals(secondEdgePointLocations.getFirst()) || edgePointLocations.getSecond().equals(secondEdgePointLocations.getSecond());
             if (!edgePointsOk)
@@ -382,9 +390,20 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                 Carriage primaryCarriage = getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, true);
                 Carriage secondaryCarriage = getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, false);
                 if (primaryCarriage != null && secondaryCarriage != null && primaryTrain.carriages.indexOf(primaryCarriage) == 0 &&
-                        secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1)
-                    return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
-                else {
+                        secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1) {
+                    // ensure correct order when only one bogey (if 'outer' points are closer together than 'inner' points, then something is off
+                    double outerLength = secondaryCarriage.getLeadingPoint().getPosition(secondaryTrain.graph)
+                        .subtract(primaryCarriage.getTrailingPoint().getPosition(primaryTrain.graph))
+                        .lengthSqr();
+                    double innerLength = secondaryCarriage.getTrailingPoint().getPosition(secondaryTrain.graph)
+                        .subtract(primaryCarriage.getLeadingPoint().getPosition(primaryTrain.graph))
+                        .lengthSqr();
+                    if (outerLength < innerLength) {
+                        return OperationInfo.NONE;
+                    } else {
+                        return new OperationInfo(OperationMode.COUPLING, secondaryCarriage, primaryCarriage);
+                    }
+                } else {
                     if (primaryCarriage != null && getCarriageOnPoint(secondaryTrain, coupler2, edgePoint2, true) != null) {
                         setError(Components.translatable("railways.tooltip.coupler.error.carriage_orientation"));
                     } else if (secondaryCarriage != null && getCarriageOnPoint(primaryTrain, coupler1, edgePoint1, false) != null) {
@@ -597,7 +616,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                         .style(ChatFormatting.DARK_RED)
                         .forGoggles(tooltip);
             }
-            if (clientInfo.error2 != null && Config.EXTENDED_COUPLER_DEBUG.get()) {
+            if (clientInfo.error2 != null && CRConfigs.client().showExtendedCouplerDebug.get()) {
                 b().add(clientInfo.error2)
                         .style(ChatFormatting.DARK_PURPLE)
                         .forGoggles(tooltip);

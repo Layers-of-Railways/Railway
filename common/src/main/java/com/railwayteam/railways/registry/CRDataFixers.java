@@ -5,6 +5,7 @@ import com.mojang.datafixers.schemas.Schema;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
 import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
+import com.railwayteam.railways.config.CRConfigs;
 import net.minecraft.Util;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
@@ -18,6 +19,10 @@ public class CRDataFixers {
     private static final BiFunction<Integer, Schema, Schema> SAME_NAMESPACED = NamespacedSchema::new;
     public static void register() {
         Railways.LOGGER.info("Registering data fixers");
+        if (CRConfigs.getDisableDatafixer()) {
+            Railways.LOGGER.warn("SKIPPING DATAFIXER REGISTRATION DUE TO CONFIG");
+            return;
+        }
         DataFixesInternals api = DataFixesInternals.get();
 
         DataFixerBuilder builder = new DataFixerBuilder(Railways.DATA_FIXER_VERSION);

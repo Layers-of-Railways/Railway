@@ -11,6 +11,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -22,7 +23,7 @@ public class TextUtils {
         }
 
         if (StringUtils.length(inputString) == 1) {
-            return inputString.toUpperCase();
+            return inputString.toUpperCase(Locale.ROOT);
         }
 
         StringBuffer resultPlaceHolder = new StringBuffer(inputString.length());
@@ -31,11 +32,11 @@ public class TextUtils {
         {
             if (stringPart.length() > 1)
                 resultPlaceHolder.append(stringPart.substring(0, 1)
-                        .toUpperCase())
+                        .toUpperCase(Locale.ROOT))
                     .append(stringPart.substring(1)
-                        .toLowerCase());
+                        .toLowerCase(Locale.ROOT));
             else
-                resultPlaceHolder.append(stringPart.toUpperCase());
+                resultPlaceHolder.append(stringPart.toUpperCase(Locale.ROOT));
 
             resultPlaceHolder.append(" ");
         });
@@ -79,5 +80,23 @@ public class TextUtils {
             return Optional.empty();
         }, Style.EMPTY);
         return Components.literal(partsStringBuilder.toString());
+    }
+
+    public static String joinSpace(String... strings) {
+        return join(" ", strings);
+    }
+
+    public static String joinUnderscore(String... strings) {
+        return join("_", strings);
+    }
+
+    public static String join(String separator, final String... strings) {
+        String[] filtered = Stream.of(strings).filter(s -> !s.isEmpty()).toArray(String[]::new);
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < filtered.length; i++) {
+            out.append(filtered[i]);
+            if (i < filtered.length - 1) out.append(separator);
+        }
+        return out.toString();
     }
 }

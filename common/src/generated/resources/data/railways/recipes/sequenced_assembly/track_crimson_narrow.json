@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "minecraft:crimson_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_crimson_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        },
+        {
+          "item": "minecraft:gold_nugget"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_crimson_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_crimson_narrow"
+  }
+}

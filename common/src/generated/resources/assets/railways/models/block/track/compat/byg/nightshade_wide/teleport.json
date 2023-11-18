@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "byg:block/track/nightshade/portal_track_nightshade",
+    "2": "byg:block/track/nightshade/portal_track_mip_nightshade",
+    "3": "byg:block/track/nightshade/standard_track_nightshade",
+    "particle": "byg:block/track/nightshade/standard_track_crossing_nightshade"
+  }
+}

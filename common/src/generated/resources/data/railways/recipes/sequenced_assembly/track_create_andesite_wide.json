@@ -1,0 +1,59 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "create:track"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_create_andesite_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        },
+        {
+          "tag": "create:sleepers"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_andesite_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_create_andesite_wide"
+  }
+}

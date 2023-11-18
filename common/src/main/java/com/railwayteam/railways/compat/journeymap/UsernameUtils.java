@@ -35,7 +35,7 @@ public enum UsernameUtils {
                         .GET()
                         .build();
                     try {
-                        String body = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+                        String body = client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).join().body();
                         uuidNameMap.put(uuid, JsonParser.parseString(body).getAsJsonObject().get("name").getAsString());
                     } catch (Exception e) {
                         //e.printStackTrace();

@@ -360,7 +360,7 @@ public class TrainScenes {
     public static void trackSwitch(SceneBuilder scene, SceneBuildingUtil util) {
         scene.title("train_switch", "Using Track Switches");
         scene.configureBasePlate(0, 0, 15);
-        scene.scaleSceneView(.85f);
+        scene.scaleSceneView(.45f);
         scene.setSceneOffsetY(-1);
         scene.showBasePlate();
 //        scene.rotateCameraY(85);

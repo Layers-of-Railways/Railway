@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.conductor_possession;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.railwayteam.railways.Config;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ClientHandler;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import net.minecraft.client.Minecraft;
@@ -42,7 +42,7 @@ public abstract class MixinGameRenderer {
 
     @Inject(method = "checkEntityPostEffect", at = @At("RETURN"))
     private void snr$checkEntityPostEffect(Entity entity, CallbackInfo ci) {
-        if (entity instanceof ConductorEntity && Config.CONDUCTOR_SPY_SHADER.get()) {
+        if (entity instanceof ConductorEntity && CRConfigs.client().useConductorSpyShader.get()) {
             loadEffect(new ResourceLocation("shaders/post/scan_pincushion.json"));
         }
     }

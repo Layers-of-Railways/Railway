@@ -9,14 +9,16 @@ import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.buffer.TrackBufferRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
-import com.railwayteam.railways.content.tender.TenderBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -24,7 +26,6 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 public class CRBlockEntities {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    public static final BlockEntityEntry<TenderBlockEntity> TENDER_BE = null;
     public static final BlockEntityEntry<SemaphoreBlockEntity> SEMAPHORE = REGISTRATE.blockEntity("semaphore", SemaphoreBlockEntity::new)
         .validBlocks(CRBlocks.SEMAPHORE)
         .renderer(() -> SemaphoreRenderer::new)
@@ -62,11 +63,19 @@ public class CRBlockEntities {
             .validBlocks(CRBlocks.INVISIBLE_BOGEY)
             .register();
 
+    public static final BlockEntityEntry<InvisibleMonoBogeyBlockEntity> INVISIBLE_MONO_BOGEY = REGISTRATE
+        .blockEntity("invisible_mono_bogey", InvisibleMonoBogeyBlockEntity::new)
+        .renderer(() -> BogeyBlockEntityRenderer::new)
+        .validBlocks(CRBlocks.INVISIBLE_MONO_BOGEY)
+        .register();
+
     public static final BlockEntityEntry<CRBogeyBlockEntity> BOGEY = REGISTRATE
             .blockEntity("bogey", CRBogeyBlockEntity::new)
             .renderer(() -> BogeyBlockEntityRenderer::new)
-            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY,
-                    CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY, CRBlocks.TRIPLEAXLE_BOGEY)
+            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,
+                CRBlocks.TRIPLEAXLE_BOGEY, CRBlocks.WIDE_DOUBLEAXLE_BOGEY, CRBlocks.WIDE_SCOTCH_BOGEY,
+                CRBlocks.WIDE_COMICALLY_LARGE_BOGEY, CRBlocks.NARROW_SMALL_BOGEY, CRBlocks.NARROW_SCOTCH_BOGEY,
+                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY, CRBlocks.HANDCAR)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)
@@ -77,6 +86,16 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)
         .validBlocks(CRBlocks.DIESEL_STACK)
         .renderer(() -> DieselSmokeStackRenderer::new)
+        .register();
+
+    public static final BlockEntityEntry<CasingCollisionBlockEntity> CASING_COLLISION = REGISTRATE
+        .blockEntity("casing_collision", CasingCollisionBlockEntity::new)
+        .validBlocks(CRBlocks.CASING_COLLISION)
+        .register();
+
+    public static final BlockEntityEntry<GenericCrossingBlockEntity> GENERIC_CROSSING = REGISTRATE
+        .blockEntity("generic_crossing", GenericCrossingBlockEntity::new)
+        .validBlocks(CRBlocks.GENERIC_CROSSING)
         .register();
 
 
