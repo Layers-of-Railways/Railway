@@ -53,11 +53,11 @@ public abstract class MixinAbstractBogeyBlock {
             level.setBlock(pos, targetState, 3);
 
             BlockEntity newBlockEntity = level.getBlockEntity(pos);
-            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity newTileEntity)) {
+            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity newBlockEntity)) {
                 cir.setReturnValue(InteractionResult.FAIL);
                 return;
             }
-            newTileEntity.setBogeyData(oldData);
+            newBlockEntity.setBogeyData(oldData);
         }
     }
 

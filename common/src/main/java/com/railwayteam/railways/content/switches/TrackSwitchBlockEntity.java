@@ -47,7 +47,7 @@ import static java.util.stream.Collectors.toSet;
 import static net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING;
 
 
-public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
+public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
     private SwitchState state;
     private int lastAnalogOutput = 0;
@@ -111,7 +111,7 @@ public class TrackSwitchTileEntity extends SmartBlockEntity implements ITransfor
 
     final LerpedFloat lerpedAngle = LerpedFloat.angular().chase(0.0, 0.3, LerpedFloat.Chaser.EXP);
 
-    public TrackSwitchTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public TrackSwitchBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
