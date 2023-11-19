@@ -36,6 +36,7 @@
     "MixinDoorBlock",
     "MixinDoorMovingInteraction",
     "MixinEdgeData",
+    "MixinExplosionDamageCalculator",
     "MixinGlobalStation",
     "MixinIOWorker",
     "MixinLootTables",
