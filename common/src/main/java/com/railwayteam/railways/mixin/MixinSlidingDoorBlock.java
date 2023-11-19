@@ -48,7 +48,7 @@ public abstract class MixinSlidingDoorBlock {
             cir.setReturnValue(InteractionResult.FAIL);
     }
 
-    @Inject(method = "setOpen", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setOpen", at = @At("HEAD"), cancellable = true, remap = true)
     private void preventSpecialDoorEntityOpen(@Nullable Entity entity, Level level, BlockState state, BlockPos pos, boolean _open, CallbackInfo ci) {
         if (entity != null) {
             boolean lower = state.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;
