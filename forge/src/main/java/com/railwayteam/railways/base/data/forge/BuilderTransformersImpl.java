@@ -1,7 +1,7 @@
 package com.railwayteam.railways.base.data.forge;
 
-import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlock;
-import com.railwayteam.railways.content.buffer.forge.WoodenBufferModel;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.forge.BufferModel;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.forge.GenericCrossingModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -13,7 +13,7 @@ public class BuilderTransformersImpl {
         return b -> b.onRegister(CreateRegistrate.blockModel(() -> GenericCrossingModel::new));
     }
 
-    public static <B extends WoodVariantTrackBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> woodVariantBuffer() {
-        return b -> b.onRegister(CreateRegistrate.blockModel(() -> WoodenBufferModel::new));
+    public static <B extends TrackBufferBlock<?>, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {
+        return b -> b.onRegister(CreateRegistrate.blockModel(() -> BufferModel::new));
     }
 }

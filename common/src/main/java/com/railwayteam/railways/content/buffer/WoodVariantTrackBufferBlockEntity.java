@@ -44,15 +44,6 @@ public class WoodVariantTrackBufferBlockEntity extends TrackBufferBlockEntity {
         return InteractionResult.SUCCESS;
     }
 
-    private void redraw() {
-        if (hasLevel()) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
-            level.getChunkSource()
-                .getLightEngine()
-                .checkBlock(worldPosition);
-        }
-    }
-
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);

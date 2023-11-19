@@ -1,12 +1,16 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.util.AdventureUtils;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -18,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -94,5 +99,14 @@ public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extend
 	@Override
 	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
 		return Shapes.empty();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+								 BlockHitResult pHit) {
+		if (AdventureUtils.isAdventure(pPlayer))
+			return InteractionResult.PASS;
+		return onBlockEntityUse(pLevel, pPos, be -> be.applyDyeIfValid(pPlayer.getItemInHand(pHand)));
 	}
 }

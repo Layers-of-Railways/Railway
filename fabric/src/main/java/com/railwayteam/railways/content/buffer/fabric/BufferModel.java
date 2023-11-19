@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.buffer.fabric;
 
+import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import net.fabricmc.api.EnvType;
@@ -24,13 +25,14 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-import static com.railwayteam.railways.content.buffer.WoodenBufferUtils.getSwapper;
+import static com.railwayteam.railways.content.buffer.BufferModelUtils.combineSwappers;
+import static com.railwayteam.railways.content.buffer.BufferModelUtils.getSwapper;
 
 @Environment(EnvType.CLIENT)
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class WoodenBufferModel extends ForwardingBakedModel {
-    public WoodenBufferModel(BakedModel wrapped) {
+public class BufferModel extends ForwardingBakedModel {
+    public BufferModel(BakedModel wrapped) {
         this.wrapped = wrapped;
     }
 
@@ -41,8 +43,19 @@ public class WoodenBufferModel extends ForwardingBakedModel {
 
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
+        UnaryOperator<TextureAtlasSprite> materialSwapper = null;
+        UnaryOperator<TextureAtlasSprite> colorSwapper = null;
+
+        if (blockView.getBlockEntity(pos) instanceof TrackBufferBlockEntity be) {
+            colorSwapper = getSwapper(be.getColor());
+        }
+
         if (blockView.getBlockEntity(pos) instanceof WoodVariantTrackBufferBlockEntity be) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(getSwapper(be.getMaterial())), state);
+            materialSwapper = getSwapper(be.getMaterial());
+        }
+
+        if (materialSwapper != null || colorSwapper != null) {
+            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)), state);
         } else {
             super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
         }

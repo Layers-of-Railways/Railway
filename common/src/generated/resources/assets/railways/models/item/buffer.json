@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "railways:item/buffer/buffer"
-  }
+  "parent": "railways:block/buffer/item"
 }

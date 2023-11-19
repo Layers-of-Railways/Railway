@@ -1,6 +1,6 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
@@ -159,7 +159,7 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static <B extends WoodVariantTrackBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> woodVariantBuffer() {
+    public static <B extends TrackBufferBlock<?>, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {
         throw new AssertionError();
     }
 }

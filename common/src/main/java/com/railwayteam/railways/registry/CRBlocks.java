@@ -530,11 +530,10 @@ public class CRBlocks {
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
-        .transform(BuilderTransformers.woodVariantBuffer())
+        .transform(BuilderTransformers.variantBuffer())
         .lang("Track Buffer")
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
-        .model((c, p) -> p.generated(c, Railways.asResource("item/buffer/" + c.getName())))
-        .build()
+        .transform(customItemModel())
         .register();
 
     public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
@@ -552,7 +551,7 @@ public class CRBlocks {
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
-        .transform(BuilderTransformers.woodVariantBuffer())
+        .transform(BuilderTransformers.variantBuffer())
         .lang("Narrow Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
         .register();
@@ -576,7 +575,7 @@ public class CRBlocks {
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
-        .transform(BuilderTransformers.woodVariantBuffer())
+        .transform(BuilderTransformers.variantBuffer())
         .lang("Monorail Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
         .register();
@@ -596,6 +595,7 @@ public class CRBlocks {
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
         .lang("Wide Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
         .register();

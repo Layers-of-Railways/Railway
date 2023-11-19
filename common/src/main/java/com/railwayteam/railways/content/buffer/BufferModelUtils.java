@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.jozufozu.flywheel.core.StitchedSprite;
+import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,17 +12,30 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
 @Environment(EnvType.CLIENT)
-public class WoodenBufferUtils {
+public class BufferModelUtils {
     public static final StitchedSprite SPRUCE_PLANKS_TEMPLATE = new StitchedSprite(new ResourceLocation("block/spruce_planks"));
+    public static final StitchedSprite SMALL_BUFFER_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/small_buffer"));
+    public static final StitchedSprite SMALL_BUFFER_MONORAIL_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/small_buffer_monorail"));
+    public static final EnumMap<DyeColor, StitchedSprite> SMALL_BUFFER_COLORS = new EnumMap<>(DyeColor.class);
 
-    public static UnaryOperator<TextureAtlasSprite> getSwapper(BlockState planksState) {
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            SMALL_BUFFER_COLORS.put(color, new StitchedSprite(Railways.asResource("block/buffer/small_buffer/small_buffer_" + color.getName())));
+        }
+    }
+
+    public static UnaryOperator<TextureAtlasSprite> getSwapper(@Nullable BlockState planksState) {
+        if (planksState == null) return sprite -> null;
         Block planksBlock = planksState.getBlock();
         ResourceLocation id = RegisteredObjects.getKeyOrThrow(planksBlock);
         String path = id.getPath();
@@ -36,6 +50,30 @@ public class WoodenBufferUtils {
         } else {
             return sprite -> null;
         }
+    }
+
+    @SafeVarargs
+    public static UnaryOperator<TextureAtlasSprite> combineSwappers(@Nullable UnaryOperator<TextureAtlasSprite>... swappers) {
+        return sprite -> {
+            for (UnaryOperator<TextureAtlasSprite> swapper : swappers) {
+                if (swapper == null) continue;
+                TextureAtlasSprite newSprite = swapper.apply(sprite);
+                if (newSprite != null) {
+                    return newSprite;
+                }
+            }
+            return null;
+        };
+    }
+
+    public static UnaryOperator<TextureAtlasSprite> getSwapper(@Nullable DyeColor color) {
+        if (color == null) return sprite -> null;
+        return sprite -> {
+            if (sprite == SMALL_BUFFER_TEMPLATE.get() || sprite == SMALL_BUFFER_MONORAIL_TEMPLATE.get()) {
+                return SMALL_BUFFER_COLORS.get(color).get();
+            }
+            return null;
+        };
     }
 
     private static TextureAtlasSprite getSpriteOnSide(BlockState state, Direction side) {
@@ -63,6 +101,6 @@ public class WoodenBufferUtils {
         return model.getParticleIcon();
     }
 
-    // ensure that sprite gets loaded
+    // ensure that sprites get loaded
     public static void register() {}
 }
