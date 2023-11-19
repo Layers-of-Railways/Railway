@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"ambient_occlusion": false,
 	"texture_size": [32, 32],
 	"textures": {
 		"3": "railways:block/buffer/big_buffer",

@@ -15,7 +15,7 @@ import java.util.Locale;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class StandardTrackBufferBlock extends TrackBufferBlock {
+public class StandardTrackBufferBlock extends WoodVariantTrackBufferBlock {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public StandardTrackBufferBlock(Properties pProperties) {
         super(pProperties);

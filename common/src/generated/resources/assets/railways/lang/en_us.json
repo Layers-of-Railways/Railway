@@ -36,6 +36,7 @@
   "block.railways.brown_riveted_locometal": "Brown Riveted Locometal",
   "block.railways.brown_slashed_locometal": "Brown Slashed Locometal",
   "block.railways.buffer": "Track Buffer",
+  "block.railways.buffer_mono": "Monorail Track Buffer",
   "block.railways.buffer_narrow": "Narrow Track Buffer",
   "block.railways.buffer_wide": "Wide Track Buffer",
   "block.railways.casing_collision": "Track Casing Collision Block",

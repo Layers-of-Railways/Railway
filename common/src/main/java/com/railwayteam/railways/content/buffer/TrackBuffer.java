@@ -33,8 +33,8 @@ public class TrackBuffer extends SingleBlockEntityEdgePoint {
                 ? bufferDistanceTracker.snr$getTrailingDistance()
                 : bufferDistanceTracker.snr$getLeadingDistance();
             if (distance != null)
-                return distance + 2;
+                return distance + 1;
         }
-        return 2;
+        return 1;
     }
 }

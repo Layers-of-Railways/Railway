@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.buffer;
 
-import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
@@ -19,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,21 +27,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public abstract class TrackBufferBlock extends HorizontalDirectionalBlock implements IBE<TrackBufferBlockEntity>, IWrenchable, ProperWaterloggedBlock {
+public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extends HorizontalDirectionalBlock implements IBE<BE>, IWrenchable, ProperWaterloggedBlock {
 	protected TrackBufferBlock(Properties pProperties) {
 		super(pProperties);
 		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	public Class<TrackBufferBlockEntity> getBlockEntityClass() {
-		return TrackBufferBlockEntity.class;
-	}
+	public abstract Class<BE> getBlockEntityClass();
 
 	@Override
-	public BlockEntityType<? extends TrackBufferBlockEntity> getBlockEntityType() {
-		return CRBlockEntities.TRACK_BUFFER.get();
-	}
+	public abstract BlockEntityType<? extends BE> getBlockEntityType();
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -91,5 +88,11 @@ public abstract class TrackBufferBlock extends HorizontalDirectionalBlock implem
 	@Override
 	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 		return CRBlocks.TRACK_BUFFER.asStack();
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+		return Shapes.empty();
 	}
 }

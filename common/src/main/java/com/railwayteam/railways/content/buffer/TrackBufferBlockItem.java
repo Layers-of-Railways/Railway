@@ -91,17 +91,26 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
             teTag.putBoolean("TargetDirection", front);
 
             BlockPos placedPos = pos.above();
+            Direction placeDirection = Direction.UP;
 
-            teTag.put("TargetTrack", NbtUtils.writeBlockPos(pos.subtract(placedPos)));
-            stackTag.put("BlockEntityTag", teTag);
-
-            TrackBufferBlock overrideBlock = null;
+            TrackBufferBlock<?> overrideBlock = null;
             if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE) {
                 overrideBlock = CRBlocks.TRACK_BUFFER_NARROW.get();
             } else if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {
                 overrideBlock = CRBlocks.TRACK_BUFFER_WIDE.get();
+            } else if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
+                overrideBlock = CRBlocks.TRACK_BUFFER_MONO.get();
+                placedPos = context.getClickedFace() == Direction.DOWN ? pos.below() : pos.above();
+                placeDirection = context.getClickedFace();
             }
-            InteractionResult useOn = place(new BufferBlockPlaceContext(context, Direction.fromAxisAndDirection(axis, nearestTrackAxis.getSecond()), overrideBlock));
+
+            teTag.put("TargetTrack", NbtUtils.writeBlockPos(pos.subtract(placedPos)));
+            stackTag.put("BlockEntityTag", teTag);
+
+            InteractionResult useOn = place(BufferBlockPlaceContext.at(
+                new BlockPlaceContext(context), placedPos, placeDirection,
+                Direction.fromAxisAndDirection(axis, nearestTrackAxis.getSecond()), overrideBlock
+            ));
 
             ItemStack itemInHand = player.getItemInHand(context.getHand());
             if (!itemInHand.isEmpty())

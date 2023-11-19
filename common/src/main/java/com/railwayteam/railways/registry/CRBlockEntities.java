@@ -2,6 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
@@ -36,8 +37,12 @@ public class CRBlockEntities {
         .register();
 
     public static final BlockEntityEntry<TrackBufferBlockEntity> TRACK_BUFFER = REGISTRATE.blockEntity("track_buffer", TrackBufferBlockEntity::new)
-            .validBlocks(CRBlocks.TRACK_BUFFER, CRBlocks.TRACK_BUFFER_NARROW, CRBlocks.TRACK_BUFFER_WIDE)
-            .register();
+        .validBlocks(CRBlocks.TRACK_BUFFER_WIDE)
+        .register();
+
+    public static final BlockEntityEntry<WoodVariantTrackBufferBlockEntity> TRACK_BUFFER_WOOD_VARIANT = REGISTRATE.blockEntity("track_buffer_wood_variant", WoodVariantTrackBufferBlockEntity::new)
+        .validBlocks(CRBlocks.TRACK_BUFFER, CRBlocks.TRACK_BUFFER_NARROW, CRBlocks.TRACK_BUFFER_MONO)
+        .register();
 
     public static final BlockEntityEntry<TrackSwitchTileEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchTileEntity::new)
       .validBlocks(CRBlocks.ANDESITE_SWITCH)

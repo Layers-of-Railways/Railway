@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
+import com.railwayteam.railways.content.buffer.WoodenBufferUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.registry.*;
@@ -42,6 +43,7 @@ public class RailwaysClient {
 
     CRDevCaps.register();
     CRBogeyStyles.registerClient();
+    WoodenBufferUtils.register();
 
     DevCapeUtils.INSTANCE.init();
   }

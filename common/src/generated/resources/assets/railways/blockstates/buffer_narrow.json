@@ -1,62 +1,32 @@
 {
   "variants": {
-    "facing=east,style=mono,waterlogged=false": {
+    "facing=east,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 90
     },
-    "facing=east,style=mono,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_mono_buffer_stop",
-      "y": 90
-    },
-    "facing=east,style=standard,waterlogged=false": {
+    "facing=east,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 90
     },
-    "facing=east,style=standard,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_buffer_stop",
-      "y": 90
-    },
-    "facing=north,style=mono,waterlogged=false": {
+    "facing=north,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop"
     },
-    "facing=north,style=mono,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_mono_buffer_stop"
-    },
-    "facing=north,style=standard,waterlogged=false": {
+    "facing=north,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop"
     },
-    "facing=north,style=standard,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_buffer_stop"
-    },
-    "facing=south,style=mono,waterlogged=false": {
+    "facing=south,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 180
     },
-    "facing=south,style=mono,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_mono_buffer_stop",
-      "y": 180
-    },
-    "facing=south,style=standard,waterlogged=false": {
+    "facing=south,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 180
     },
-    "facing=south,style=standard,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_buffer_stop",
-      "y": 180
-    },
-    "facing=west,style=mono,waterlogged=false": {
+    "facing=west,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 270
     },
-    "facing=west,style=mono,waterlogged=true": {
-      "model": "railways:block/buffer/narrow_mono_buffer_stop",
-      "y": 270
-    },
-    "facing=west,style=standard,waterlogged=false": {
-      "model": "railways:block/buffer/narrow_buffer_stop",
-      "y": 270
-    },
-    "facing=west,style=standard,waterlogged=true": {
+    "facing=west,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 270
     }

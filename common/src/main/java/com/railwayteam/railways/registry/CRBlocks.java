@@ -2,10 +2,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
-import com.railwayteam.railways.content.buffer.NarrowTrackBufferBlock;
-import com.railwayteam.railways.content.buffer.StandardTrackBufferBlock;
-import com.railwayteam.railways.content.buffer.TrackBufferBlockItem;
-import com.railwayteam.railways.content.buffer.WideTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.*;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -525,14 +522,15 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-                .forAllStates(state -> ConfiguredModel.builder()
+                .forAllStatesExcept(state -> ConfiguredModel.builder()
                         .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
                         .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                        .build()
+                        .build(), StandardTrackBufferBlock.WATERLOGGED
                 )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
+        .transform(BuilderTransformers.woodVariantBuffer())
         .lang("Track Buffer")
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
         .model((c, p) -> p.generated(c, Railways.asResource("item/buffer/" + c.getName())))
@@ -546,15 +544,40 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStates(state -> ConfiguredModel.builder()
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
                 .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build()
+                .build(), NarrowTrackBufferBlock.WATERLOGGED
             )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
+        .transform(BuilderTransformers.woodVariantBuffer())
         .lang("Narrow Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<MonoTrackBufferBlock> TRACK_BUFFER_MONO = REGISTRATE.block("buffer_mono", MonoTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> {
+                boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
+                return ConfiguredModel.builder()
+                    .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
+                    .rotationX(hanging ? 180 : 0)
+                    .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
+                    .build();
+                }, MonoTrackBufferBlock.WATERLOGGED
+            )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.woodVariantBuffer())
+        .lang("Monorail Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
         .register();
 
@@ -565,10 +588,10 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStates(state -> ConfiguredModel.builder()
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
                 .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build()
+                .build(), WideTrackBufferBlock.WATERLOGGED
             )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
