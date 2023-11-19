@@ -1,8 +1,10 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.DyeableBlockEntity;
 import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
@@ -99,6 +101,16 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<GenericCrossingBlockEntity> GENERIC_CROSSING = REGISTRATE
         .blockEntity("generic_crossing", GenericCrossingBlockEntity::new)
         .validBlocks(CRBlocks.GENERIC_CROSSING)
+        .register();
+
+    public static final BlockEntityEntry<DyeableBlockEntity> DYEABLE = REGISTRATE
+        .blockEntity("dyeable", DyeableBlockEntity::new)
+        .validBlocks(CRBlocks.LINK_AND_PIN)
+        .register();
+
+    public static final BlockEntityEntry<HeadstockBlockEntity> HEADSTOCK = REGISTRATE
+        .blockEntity("headstock", HeadstockBlockEntity::new)
+        .validBlocks(CRBlocks.HEADSTOCK)
         .register();
 
 

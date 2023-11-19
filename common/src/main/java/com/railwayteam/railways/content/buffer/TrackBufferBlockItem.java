@@ -20,6 +20,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -87,7 +88,17 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
             CompoundTag stackTag = stack.getOrCreateTag();
             stack.setTag(stackTag);
 
+            CompoundTag oldTeTag = stackTag.getCompound("BlockEntityTag");
+
             CompoundTag teTag = new CompoundTag();
+            if (oldTeTag != null) {
+                if (oldTeTag.contains("Material", Tag.TAG_COMPOUND))
+                    //noinspection DataFlowIssue
+                    teTag.put("Material", oldTeTag.get("Material"));
+                if (oldTeTag.contains("Color", Tag.TAG_INT))
+                    //noinspection DataFlowIssue
+                    teTag.put("Color", oldTeTag.get("Color"));
+            }
             teTag.putBoolean("TargetDirection", front);
 
             BlockPos placedPos = pos.above();
@@ -112,9 +123,8 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
                 Direction.fromAxisAndDirection(axis, nearestTrackAxis.getSecond()), overrideBlock
             ));
 
-            ItemStack itemInHand = player.getItemInHand(context.getHand());
-            if (!itemInHand.isEmpty())
-                itemInHand.setTag(null);
+            teTag.remove("TargetTrack");
+            teTag.remove("TargetDirection");
 
             return useOn;
         }

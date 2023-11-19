@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class WoodVariantTrackBufferBlockEntity extends TrackBufferBlockEntity {
+public class WoodVariantTrackBufferBlockEntity extends TrackBufferBlockEntity implements IMaterialAdaptingBuffer {
 
     protected BlockState material;
 

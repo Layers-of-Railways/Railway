@@ -24,12 +24,15 @@ import java.util.function.UnaryOperator;
 @Environment(EnvType.CLIENT)
 public class BufferModelUtils {
     public static final StitchedSprite SPRUCE_PLANKS_TEMPLATE = new StitchedSprite(new ResourceLocation("block/spruce_planks"));
+    public static final StitchedSprite BIG_BUFFER_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/big_buffer"));
     public static final StitchedSprite SMALL_BUFFER_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/small_buffer"));
     public static final StitchedSprite SMALL_BUFFER_MONORAIL_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/small_buffer_monorail"));
+    public static final EnumMap<DyeColor, StitchedSprite> BIG_BUFFER_COLORS = new EnumMap<>(DyeColor.class);
     public static final EnumMap<DyeColor, StitchedSprite> SMALL_BUFFER_COLORS = new EnumMap<>(DyeColor.class);
 
     static {
         for (DyeColor color : DyeColor.values()) {
+            BIG_BUFFER_COLORS.put(color, new StitchedSprite(Railways.asResource("block/buffer/big_buffer/big_buffer_" + color.getName())));
             SMALL_BUFFER_COLORS.put(color, new StitchedSprite(Railways.asResource("block/buffer/small_buffer/small_buffer_" + color.getName())));
         }
     }
@@ -71,6 +74,9 @@ public class BufferModelUtils {
         return sprite -> {
             if (sprite == SMALL_BUFFER_TEMPLATE.get() || sprite == SMALL_BUFFER_MONORAIL_TEMPLATE.get()) {
                 return SMALL_BUFFER_COLORS.get(color).get();
+            }
+            if (sprite == BIG_BUFFER_TEMPLATE.get()) {
+                return BIG_BUFFER_COLORS.get(color).get();
             }
             return null;
         };

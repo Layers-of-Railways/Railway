@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOp
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,25 +16,26 @@ import java.util.List;
 
 @Mixin(value = SlidingDoorBlockEntity.class, remap = false)
 public class MixinSlidingDoorBlockEntity implements SlidingDoorMode.IHasDoorMode {
-    private ScrollOptionBehaviour<SlidingDoorMode> doorModeScroll;
+    @Unique
+    private ScrollOptionBehaviour<SlidingDoorMode> snr$doorModeScroll;
 
     @Inject(method = "addBehaviours", at = @At("RETURN"))
     private void addScrollBehaviour(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         SlidingDoorBlockEntity this_ = (SlidingDoorBlockEntity) (Object) this;
-        doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
+        snr$doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
             @Override
             public void read(CompoundTag nbt, boolean clientPacket) {
                 super.read(nbt, clientPacket);
                 setValue(value); // ensure that it is properly bounded
             }
         };
-        doorModeScroll.requiresWrench();
+        snr$doorModeScroll.requiresWrench();
 //        doorModeScroll.value = doorModeScroll.scrollableValue = 1;
-        behaviours.add(doorModeScroll);
+        behaviours.add(snr$doorModeScroll);
     }
 
     @Override
-    public SlidingDoorMode getSlidingDoorMode() {
-        return doorModeScroll == null ? SlidingDoorMode.NORMAL : doorModeScroll.get();
+    public SlidingDoorMode snr$getSlidingDoorMode() {
+        return snr$doorModeScroll == null ? SlidingDoorMode.NORMAL : snr$doorModeScroll.get();
     }
 }

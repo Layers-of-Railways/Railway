@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -533,6 +534,7 @@ public class CRBlocks {
         .transform(BuilderTransformers.variantBuffer())
         .lang("Track Buffer")
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
+        .transform(BuilderTransformers.variantBufferItem())
         .transform(customItemModel())
         .register();
 
@@ -598,6 +600,44 @@ public class CRBlocks {
         .transform(BuilderTransformers.variantBuffer())
         .lang("Wide Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .build(), LinkPinBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Link 'n Pin")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/link_and_pin")))
+        .build()
+        .register();
+
+    public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
+                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
+                .build(), HeadstockBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Headstock")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/wooden_headstock_buffer")))
+        .build()
         .register();
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =

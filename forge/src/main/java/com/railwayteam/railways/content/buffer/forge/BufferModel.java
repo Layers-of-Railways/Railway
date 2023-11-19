@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.buffer.forge;
 
-import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
-import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.IDyedBuffer;
+import com.railwayteam.railways.content.buffer.IMaterialAdaptingBuffer;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
@@ -43,11 +43,11 @@ public class BufferModel implements BakedModel {
         BlockState material = null;
         DyeColor color = null;
 
-        if (level.getBlockEntity(pos) instanceof TrackBufferBlockEntity be) {
+        if (level.getBlockEntity(pos) instanceof IDyedBuffer be) {
             color = be.getColor();
         }
 
-        if (level.getBlockEntity(pos) instanceof WoodVariantTrackBufferBlockEntity be) {
+        if (level.getBlockEntity(pos) instanceof IMaterialAdaptingBuffer be) {
             material = be.getMaterial();
         }
 

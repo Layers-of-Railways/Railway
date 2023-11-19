@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.buffer.fabric;
 
-import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
-import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.IDyedBuffer;
+import com.railwayteam.railways.content.buffer.IMaterialAdaptingBuffer;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +15,12 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -46,11 +51,11 @@ public class BufferModel extends ForwardingBakedModel {
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;
         UnaryOperator<TextureAtlasSprite> colorSwapper = null;
 
-        if (blockView.getBlockEntity(pos) instanceof TrackBufferBlockEntity be) {
+        if (blockView.getBlockEntity(pos) instanceof IDyedBuffer be) {
             colorSwapper = getSwapper(be.getColor());
         }
 
-        if (blockView.getBlockEntity(pos) instanceof WoodVariantTrackBufferBlockEntity be) {
+        if (blockView.getBlockEntity(pos) instanceof IMaterialAdaptingBuffer be) {
             materialSwapper = getSwapper(be.getMaterial());
         }
 
@@ -58,6 +63,30 @@ public class BufferModel extends ForwardingBakedModel {
             context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)), state);
         } else {
             super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
+        }
+    }
+
+    @Override
+    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
+        UnaryOperator<TextureAtlasSprite> materialSwapper = null;
+        UnaryOperator<TextureAtlasSprite> colorSwapper = null;
+
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            if (tag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+                CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
+                if (blockEntityTag.contains("Material", Tag.TAG_COMPOUND)) {
+                    materialSwapper = getSwapper(NbtUtils.readBlockState(blockEntityTag.getCompound("Material")));
+                }
+                if (blockEntityTag.contains("Color", Tag.TAG_INT)) {
+                    colorSwapper = getSwapper(DyeColor.byId(blockEntityTag.getInt("Color")));
+                }
+            }
+        }
+        if (materialSwapper != null || colorSwapper != null) {
+            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)));
+        } else {
+            super.emitItemQuads(stack, randomSupplier, context);
         }
     }
 
