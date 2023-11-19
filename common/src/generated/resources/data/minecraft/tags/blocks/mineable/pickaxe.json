@@ -17,13 +17,47 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_mangrove",
+    "railways:track_create_andesite_wide",
+    "railways:track_jungle_wide",
+    "railways:track_spruce_wide",
+    "railways:track_warped_wide",
+    "railways:track_dark_oak_wide",
+    "railways:track_mangrove_wide",
+    "railways:track_crimson_wide",
+    "railways:track_acacia_wide",
+    "railways:track_blackstone_wide",
+    "railways:track_oak_wide",
+    "railways:track_birch_wide",
+    "railways:track_tieless_wide",
+    "railways:track_ender_wide",
+    "railways:track_create_andesite_narrow",
+    "railways:track_jungle_narrow",
+    "railways:track_spruce_narrow",
+    "railways:track_warped_narrow",
+    "railways:track_dark_oak_narrow",
+    "railways:track_mangrove_narrow",
+    "railways:track_crimson_narrow",
+    "railways:track_acacia_narrow",
+    "railways:track_blackstone_narrow",
+    "railways:track_oak_narrow",
+    "railways:track_birch_narrow",
+    "railways:track_tieless_narrow",
+    "railways:track_ender_narrow",
     "railways:track_monorail",
     "railways:mono_bogey",
     "railways:invisible_bogey",
+    "railways:invisible_mono_bogey",
     "railways:singleaxle_bogey",
     "railways:doubleaxle_bogey",
     "railways:large_platform_doubleaxle_bogey",
     "railways:tripleaxle_bogey",
+    "railways:wide_doubleaxle_bogey",
+    "railways:wide_scotch_bogey",
+    "railways:wide_comically_large_bogey",
+    "railways:narrow_small_bogey",
+    "railways:narrow_scotch_bogey",
+    "railways:narrow_double_scotch_bogey",
+    "railways:handcar",
     "railways:smokestack_caboosestyle",
     "railways:smokestack_long",
     "railways:smokestack_coalburner",
@@ -33,8 +67,189 @@
     "railways:smokestack_diesel",
     "railways:conductor_vent",
     "railways:buffer",
+    "railways:buffer_narrow",
+    "railways:buffer_wide",
+    "railways:generic_crossing",
+    "railways:slashed_locometal",
+    "railways:riveted_locometal",
+    "railways:locometal_pillar",
+    "railways:locometal_smokebox",
+    "railways:plated_locometal",
+    "railways:flat_slashed_locometal",
+    "railways:flat_riveted_locometal",
+    "railways:brass_wrapped_locometal",
+    "railways:locometal_boiler",
+    "railways:brass_wrapped_locometal_boiler",
+    "railways:white_slashed_locometal",
+    "railways:white_riveted_locometal",
+    "railways:white_locometal_pillar",
+    "railways:white_locometal_smokebox",
+    "railways:white_plated_locometal",
+    "railways:white_flat_slashed_locometal",
+    "railways:white_flat_riveted_locometal",
+    "railways:white_brass_wrapped_locometal",
+    "railways:white_locometal_boiler",
+    "railways:white_brass_wrapped_locometal_boiler",
+    "railways:orange_slashed_locometal",
+    "railways:orange_riveted_locometal",
+    "railways:orange_locometal_pillar",
+    "railways:orange_locometal_smokebox",
+    "railways:orange_plated_locometal",
+    "railways:orange_flat_slashed_locometal",
+    "railways:orange_flat_riveted_locometal",
+    "railways:orange_brass_wrapped_locometal",
+    "railways:orange_locometal_boiler",
+    "railways:orange_brass_wrapped_locometal_boiler",
+    "railways:magenta_slashed_locometal",
+    "railways:magenta_riveted_locometal",
+    "railways:magenta_locometal_pillar",
+    "railways:magenta_locometal_smokebox",
+    "railways:magenta_plated_locometal",
+    "railways:magenta_flat_slashed_locometal",
+    "railways:magenta_flat_riveted_locometal",
+    "railways:magenta_brass_wrapped_locometal",
+    "railways:magenta_locometal_boiler",
+    "railways:magenta_brass_wrapped_locometal_boiler",
+    "railways:light_blue_slashed_locometal",
+    "railways:light_blue_riveted_locometal",
+    "railways:light_blue_locometal_pillar",
+    "railways:light_blue_locometal_smokebox",
+    "railways:light_blue_plated_locometal",
+    "railways:light_blue_flat_slashed_locometal",
+    "railways:light_blue_flat_riveted_locometal",
+    "railways:light_blue_brass_wrapped_locometal",
+    "railways:light_blue_locometal_boiler",
+    "railways:light_blue_brass_wrapped_locometal_boiler",
+    "railways:yellow_slashed_locometal",
+    "railways:yellow_riveted_locometal",
+    "railways:yellow_locometal_pillar",
+    "railways:yellow_locometal_smokebox",
+    "railways:yellow_plated_locometal",
+    "railways:yellow_flat_slashed_locometal",
+    "railways:yellow_flat_riveted_locometal",
+    "railways:yellow_brass_wrapped_locometal",
+    "railways:yellow_locometal_boiler",
+    "railways:yellow_brass_wrapped_locometal_boiler",
+    "railways:lime_slashed_locometal",
+    "railways:lime_riveted_locometal",
+    "railways:lime_locometal_pillar",
+    "railways:lime_locometal_smokebox",
+    "railways:lime_plated_locometal",
+    "railways:lime_flat_slashed_locometal",
+    "railways:lime_flat_riveted_locometal",
+    "railways:lime_brass_wrapped_locometal",
+    "railways:lime_locometal_boiler",
+    "railways:lime_brass_wrapped_locometal_boiler",
+    "railways:pink_slashed_locometal",
+    "railways:pink_riveted_locometal",
+    "railways:pink_locometal_pillar",
+    "railways:pink_locometal_smokebox",
+    "railways:pink_plated_locometal",
+    "railways:pink_flat_slashed_locometal",
+    "railways:pink_flat_riveted_locometal",
+    "railways:pink_brass_wrapped_locometal",
+    "railways:pink_locometal_boiler",
+    "railways:pink_brass_wrapped_locometal_boiler",
+    "railways:gray_slashed_locometal",
+    "railways:gray_riveted_locometal",
+    "railways:gray_locometal_pillar",
+    "railways:gray_locometal_smokebox",
+    "railways:gray_plated_locometal",
+    "railways:gray_flat_slashed_locometal",
+    "railways:gray_flat_riveted_locometal",
+    "railways:gray_brass_wrapped_locometal",
+    "railways:gray_locometal_boiler",
+    "railways:gray_brass_wrapped_locometal_boiler",
+    "railways:light_gray_slashed_locometal",
+    "railways:light_gray_riveted_locometal",
+    "railways:light_gray_locometal_pillar",
+    "railways:light_gray_locometal_smokebox",
+    "railways:light_gray_plated_locometal",
+    "railways:light_gray_flat_slashed_locometal",
+    "railways:light_gray_flat_riveted_locometal",
+    "railways:light_gray_brass_wrapped_locometal",
+    "railways:light_gray_locometal_boiler",
+    "railways:light_gray_brass_wrapped_locometal_boiler",
+    "railways:cyan_slashed_locometal",
+    "railways:cyan_riveted_locometal",
+    "railways:cyan_locometal_pillar",
+    "railways:cyan_locometal_smokebox",
+    "railways:cyan_plated_locometal",
+    "railways:cyan_flat_slashed_locometal",
+    "railways:cyan_flat_riveted_locometal",
+    "railways:cyan_brass_wrapped_locometal",
+    "railways:cyan_locometal_boiler",
+    "railways:cyan_brass_wrapped_locometal_boiler",
+    "railways:purple_slashed_locometal",
+    "railways:purple_riveted_locometal",
+    "railways:purple_locometal_pillar",
+    "railways:purple_locometal_smokebox",
+    "railways:purple_plated_locometal",
+    "railways:purple_flat_slashed_locometal",
+    "railways:purple_flat_riveted_locometal",
+    "railways:purple_brass_wrapped_locometal",
+    "railways:purple_locometal_boiler",
+    "railways:purple_brass_wrapped_locometal_boiler",
+    "railways:blue_slashed_locometal",
+    "railways:blue_riveted_locometal",
+    "railways:blue_locometal_pillar",
+    "railways:blue_locometal_smokebox",
+    "railways:blue_plated_locometal",
+    "railways:blue_flat_slashed_locometal",
+    "railways:blue_flat_riveted_locometal",
+    "railways:blue_brass_wrapped_locometal",
+    "railways:blue_locometal_boiler",
+    "railways:blue_brass_wrapped_locometal_boiler",
+    "railways:brown_slashed_locometal",
+    "railways:brown_riveted_locometal",
+    "railways:brown_locometal_pillar",
+    "railways:brown_locometal_smokebox",
+    "railways:brown_plated_locometal",
+    "railways:brown_flat_slashed_locometal",
+    "railways:brown_flat_riveted_locometal",
+    "railways:brown_brass_wrapped_locometal",
+    "railways:brown_locometal_boiler",
+    "railways:brown_brass_wrapped_locometal_boiler",
+    "railways:green_slashed_locometal",
+    "railways:green_riveted_locometal",
+    "railways:green_locometal_pillar",
+    "railways:green_locometal_smokebox",
+    "railways:green_plated_locometal",
+    "railways:green_flat_slashed_locometal",
+    "railways:green_flat_riveted_locometal",
+    "railways:green_brass_wrapped_locometal",
+    "railways:green_locometal_boiler",
+    "railways:green_brass_wrapped_locometal_boiler",
+    "railways:red_slashed_locometal",
+    "railways:red_riveted_locometal",
+    "railways:red_locometal_pillar",
+    "railways:red_locometal_smokebox",
+    "railways:red_plated_locometal",
+    "railways:red_flat_slashed_locometal",
+    "railways:red_flat_riveted_locometal",
+    "railways:red_brass_wrapped_locometal",
+    "railways:red_locometal_boiler",
+    "railways:red_brass_wrapped_locometal_boiler",
+    "railways:black_slashed_locometal",
+    "railways:black_riveted_locometal",
+    "railways:black_locometal_pillar",
+    "railways:black_locometal_smokebox",
+    "railways:black_plated_locometal",
+    "railways:black_flat_slashed_locometal",
+    "railways:black_flat_riveted_locometal",
+    "railways:black_brass_wrapped_locometal",
+    "railways:black_locometal_boiler",
+    "railways:black_brass_wrapped_locometal_boiler",
     {
       "id": "railways:track_hexcasting_edified",
+      "required": false
+    },
+    {
+      "id": "railways:track_hexcasting_edified_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_hexcasting_edified_narrow",
       "required": false
     },
     {
@@ -42,7 +257,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_aspen_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_aspen_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_baobab",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_baobab_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_baobab_narrow",
       "required": false
     },
     {
@@ -50,7 +281,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_blue_enchanted_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_blue_enchanted_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_bulbis",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_bulbis_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_bulbis_narrow",
       "required": false
     },
     {
@@ -58,7 +305,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_cherry_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cherry_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_cika",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cika_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cika_narrow",
       "required": false
     },
     {
@@ -66,7 +329,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_cypress_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_cypress_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_ebony",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ebony_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ebony_narrow",
       "required": false
     },
     {
@@ -74,7 +353,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_embur_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_embur_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_ether",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ether_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_ether_narrow",
       "required": false
     },
     {
@@ -82,7 +377,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_fir_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_fir_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_green_enchanted",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_green_enchanted_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_green_enchanted_narrow",
       "required": false
     },
     {
@@ -90,7 +401,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_holly_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_holly_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_imparius",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_imparius_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_imparius_narrow",
       "required": false
     },
     {
@@ -98,7 +425,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_jacaranda_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_jacaranda_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_lament",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_lament_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_lament_narrow",
       "required": false
     },
     {
@@ -106,7 +449,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_mahogany_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_mahogany_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_maple_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_maple_narrow",
       "required": false
     },
     {
@@ -114,7 +473,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_nightshade_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_nightshade_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_palm_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_palm_narrow",
       "required": false
     },
     {
@@ -122,7 +497,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_pine_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_pine_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_rainbow_eucalyptus",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_rainbow_eucalyptus_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_rainbow_eucalyptus_narrow",
       "required": false
     },
     {
@@ -130,7 +521,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_redwood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_redwood_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_skyris",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_skyris_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_skyris_narrow",
       "required": false
     },
     {
@@ -138,7 +545,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_sythian_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_sythian_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_white_mangrove",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_white_mangrove_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_white_mangrove_narrow",
       "required": false
     },
     {
@@ -146,7 +569,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_willow_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_willow_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_byg_witch_hazel",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_witch_hazel_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_witch_hazel_narrow",
       "required": false
     },
     {
@@ -154,7 +593,23 @@
       "required": false
     },
     {
+      "id": "railways:track_byg_zelkova_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_byg_zelkova_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_blue_skies_bluebright",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_bluebright_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_bluebright_narrow",
       "required": false
     },
     {
@@ -162,7 +617,23 @@
       "required": false
     },
     {
+      "id": "railways:track_blue_skies_cherry_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_cherry_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_blue_skies_dusk",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_dusk_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_dusk_narrow",
       "required": false
     },
     {
@@ -170,7 +641,23 @@
       "required": false
     },
     {
+      "id": "railways:track_blue_skies_frostbright_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_frostbright_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_blue_skies_lunar",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_lunar_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_lunar_narrow",
       "required": false
     },
     {
@@ -178,7 +665,23 @@
       "required": false
     },
     {
+      "id": "railways:track_blue_skies_maple_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_maple_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_blue_skies_starlit",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_starlit_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_blue_skies_starlit_narrow",
       "required": false
     },
     {
@@ -186,7 +689,23 @@
       "required": false
     },
     {
+      "id": "railways:track_twilightforest_canopy_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_canopy_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_twilightforest_darkwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_darkwood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_darkwood_narrow",
       "required": false
     },
     {
@@ -194,7 +713,23 @@
       "required": false
     },
     {
+      "id": "railways:track_twilightforest_mangrove_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_mangrove_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_twilightforest_minewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_minewood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_minewood_narrow",
       "required": false
     },
     {
@@ -202,7 +737,23 @@
       "required": false
     },
     {
+      "id": "railways:track_twilightforest_sortingwood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_sortingwood_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_twilightforest_timewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_timewood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_timewood_narrow",
       "required": false
     },
     {
@@ -210,7 +761,23 @@
       "required": false
     },
     {
+      "id": "railways:track_twilightforest_transwood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_transwood_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_twilightforest_twilight_oak",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_twilight_oak_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_twilightforest_twilight_oak_narrow",
       "required": false
     },
     {
@@ -218,7 +785,23 @@
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_cherry_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_cherry_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_dead",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_dead_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_dead_narrow",
       "required": false
     },
     {
@@ -226,7 +809,23 @@
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_fir_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_fir_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_hellbark",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_hellbark_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_hellbark_narrow",
       "required": false
     },
     {
@@ -234,7 +833,23 @@
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_jacaranda_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_jacaranda_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_magic",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_magic_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_magic_narrow",
       "required": false
     },
     {
@@ -242,7 +857,23 @@
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_mahogany_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_mahogany_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_palm_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_palm_narrow",
       "required": false
     },
     {
@@ -250,11 +881,35 @@
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_redwood_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_redwood_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_umbran",
       "required": false
     },
     {
+      "id": "railways:track_biomesoplenty_umbran_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_umbran_narrow",
+      "required": false
+    },
+    {
       "id": "railways:track_biomesoplenty_willow",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_willow_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_biomesoplenty_willow_narrow",
       "required": false
     }
   ]

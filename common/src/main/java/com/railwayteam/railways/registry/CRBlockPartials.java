@@ -453,9 +453,6 @@ public class CRBlockPartials {
         HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
     ;
 
-    public static final PartialModel
-        BUFFER = block("buffer/buffer");
-
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 

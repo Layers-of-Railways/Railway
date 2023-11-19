@@ -2,8 +2,10 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
-import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.NarrowTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.StandardTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlockItem;
+import com.railwayteam.railways.content.buffer.WideTrackBufferBlock;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -516,25 +518,64 @@ public class CRBlocks {
             .transform(customItemModel("copycat_vent"))
             .register();
 
-    public static final BlockEntry<TrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", TrackBufferBlock::create)
-            .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-                    .forAllStates(state -> ConfiguredModel.builder()
-                            .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/buffer")))
-                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                            .build()
-                    )
+    public static final BlockEntry<StandardTrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", StandardTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                .forAllStates(state -> ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
+                        .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                        .build()
+                )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .lang("Track Buffer")
+        .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
+        .model((c, p) -> p.generated(c, Railways.asResource("item/buffer/" + c.getName())))
+        .build()
+        .register();
+
+    public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
+                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .build()
             )
-            .transform(pickaxeOnly())
-            //.onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
-            .lang("Buffer Controller")
-            .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
-            .model((c, p) -> p.generated(c, Railways.asResource("item/buffer/" + c.getName())))
-            .build()
-            .register();
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .lang("Narrow Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<WideTrackBufferBlock> TRACK_BUFFER_WIDE = REGISTRATE.block("buffer_wide", WideTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
+                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .build()
+            )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .lang("Wide Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
         REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
