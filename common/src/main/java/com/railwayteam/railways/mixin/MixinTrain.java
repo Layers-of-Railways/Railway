@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -22,6 +23,7 @@ import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +38,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.*;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain {
     @Shadow public TrackGraph graph;
 
     @Shadow public Navigation navigation;
@@ -57,6 +59,28 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     protected boolean snr$isHandcar = false;
     @Unique
     protected boolean snr$isStrictSignalTrain = false;
+    @Unique
+    protected int snr$controlBlockedTicks = -1;
+    @Unique
+    protected int snr$controlBlockedSign = 0;
+
+    @Override
+    public boolean snr$isControlBlocked() {
+        return snr$controlBlockedTicks > 0;
+    }
+
+    @Override
+    public void snr$setControlBlocked(boolean controlBlocked) {
+        snr$controlBlockedTicks = controlBlocked ? 3 : -1;
+        if (controlBlocked && Mth.sign(speed) != 0) {
+            snr$controlBlockedSign = Mth.sign(speed);
+        }
+    }
+
+    @Override
+    public int snr$getBlockedSign() {
+        return snr$isControlBlocked() ? snr$controlBlockedSign : 0;
+    }
 
     @Override
     public void snr$setStrictSignals(boolean strictSignals) {
@@ -97,6 +121,9 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     private void killEmptyTrains(Level level, CallbackInfo ci) { // hopefully help deal with empty trains
         if (carriages.size() == 0)
             invalid = true;
+
+        if (snr$controlBlockedTicks > 0)
+            snr$controlBlockedTicks--;
     }
 
     @Inject(method = "earlyTick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;addToSignalGroups(Ljava/util/Collection;)V", ordinal = 2))
@@ -117,6 +144,12 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
             if (couple.getFirst() instanceof TrackCoupler trackCoupler) {
                 snr$occupiedCouplers.add(trackCoupler.getId());
                 return false;
+            }
+
+            if (couple.getFirst() instanceof TrackBuffer) {
+                // prevent actual overrun
+                speed = 0;
+                return true;
             }
 
             if (((IWaypointableNavigation) navigation).snr$isWaypointMode() && couple.getFirst()instanceof GlobalStation station) {

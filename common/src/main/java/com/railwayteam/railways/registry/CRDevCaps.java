@@ -1,8 +1,5 @@
 package com.railwayteam.railways.registry;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.railwayteam.railways.Railways;
-
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class CRDevCaps {
