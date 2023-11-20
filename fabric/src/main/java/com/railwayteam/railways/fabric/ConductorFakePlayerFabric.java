@@ -2,6 +2,7 @@ package com.railwayteam.railways.fabric;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.simibubi.create.foundation.utility.Components;
 import io.github.fabricators_of_create.porting_lib.fake_players.FakePlayer;
 import net.minecraft.network.chat.Component;
@@ -12,14 +13,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.util.OptionalInt;
 
 // NOTICE: changes must be replicated in ConductorFakePlayerForge.
 // annoying that we can't merge them any further.
-public class ConductorFakePlayerFabric extends FakePlayer {
-	public ConductorFakePlayerFabric(ServerLevel world) {
+public class ConductorFakePlayerFabric extends FakePlayer implements IConductorHoldingFakePlayer {
+	private final WeakReference<ConductorEntity> conductor;
+	public ConductorFakePlayerFabric(ServerLevel world, ConductorEntity conductor) {
 		super(world, ConductorEntity.FAKE_PLAYER_PROFILE);
+		this.conductor = new WeakReference<>(conductor);
 	}
 
 	@Override
@@ -59,5 +64,10 @@ public class ConductorFakePlayerFabric extends FakePlayer {
 	public ItemStack eat(@NotNull Level world, ItemStack stack) {
 		stack.shrink(1);
 		return stack;
+	}
+
+	@Override
+	public @Nullable ConductorEntity getConductor() {
+		return conductor.get();
 	}
 }

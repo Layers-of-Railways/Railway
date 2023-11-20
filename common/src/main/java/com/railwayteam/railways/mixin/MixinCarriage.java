@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
+import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.entity.*;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Mixin(value = Carriage.class, remap = false)
-public abstract class MixinCarriage implements ICarriageConductors {
+public abstract class MixinCarriage implements ICarriageConductors, ICarriageBufferDistanceTracker {
 
     @Shadow public Train train;
 
@@ -47,6 +49,31 @@ public abstract class MixinCarriage implements ICarriageConductors {
     @Override
     public List<UUID> getControllingConductors() {
         return controllingConductors;
+    }
+
+    @Unique
+    private @Nullable Integer snr$leadingBufferDistance = null;
+    @Unique
+    private @Nullable Integer snr$trailingBufferDistance = null;
+
+    @Override
+    public @Nullable Integer snr$getLeadingDistance() {
+        return snr$leadingBufferDistance;
+    }
+
+    @Override
+    public @Nullable Integer snr$getTrailingDistance() {
+        return snr$trailingBufferDistance;
+    }
+
+    @Override
+    public void snr$setLeadingDistance(int distance) {
+        snr$leadingBufferDistance = distance;
+    }
+
+    @Override
+    public void snr$setTrailingDistance(int distance) {
+        snr$trailingBufferDistance = distance;
     }
 
     @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
@@ -79,6 +106,11 @@ public abstract class MixinCarriage implements ICarriageConductors {
             listTag.add(uuidTag);
         }
         tag.put("ControllingConductors", listTag);
+
+        if (snr$leadingBufferDistance != null)
+            tag.putInt("LeadingBufferDistance", snr$leadingBufferDistance);
+        if (snr$trailingBufferDistance != null)
+            tag.putInt("TrailingBufferDistance", snr$trailingBufferDistance);
     }
 
     @Inject(method = "read", at = @At("RETURN"))
@@ -94,6 +126,12 @@ public abstract class MixinCarriage implements ICarriageConductors {
                 }
             }
         }
+
+        if (tag.contains("LeadingBufferDistance", Tag.TAG_INT))
+            ((ICarriageBufferDistanceTracker) carriage).snr$setLeadingDistance(tag.getInt("LeadingBufferDistance"));
+
+        if (tag.contains("TrailingBufferDistance", Tag.TAG_INT))
+            ((ICarriageBufferDistanceTracker) carriage).snr$setTrailingDistance(tag.getInt("TrailingBufferDistance"));
     }
 
     @Inject(method = "travel", at = @At("HEAD"))

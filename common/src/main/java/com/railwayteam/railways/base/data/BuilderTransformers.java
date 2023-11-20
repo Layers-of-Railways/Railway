@@ -17,9 +17,11 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -155,5 +157,15 @@ public class BuilderTransformers {
 
     private static String colorName(@Nullable DyeColor color) {
         return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    }
+
+    @ExpectPlatform
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
+        throw new AssertionError();
     }
 }

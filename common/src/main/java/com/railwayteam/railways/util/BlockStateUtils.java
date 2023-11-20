@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.simibubi.create.content.trains.track.TrackBlock.HAS_BE;
@@ -58,7 +59,18 @@ public class BlockStateUtils {
           Blocks.WHITE_WOOL, DyeColor.WHITE))
       .build();
 
+  private static final Map<DyeColor, Block> WOOL_MAP_REVERSE = new HashMap<>();
+  static {
+    for (Map.Entry<Block, DyeColor> entry : WOOL_MAP.entrySet()) {
+      WOOL_MAP_REVERSE.put(entry.getValue(), entry.getKey());
+    }
+  }
+
   public static DyeColor getWoolColor(Block block) {
     return WOOL_MAP.getOrDefault(block, DyeColor.WHITE);
+  }
+
+  public static Block getWoolBlock(DyeColor color) {
+    return WOOL_MAP_REVERSE.getOrDefault(color, Blocks.WHITE_WOOL);
   }
 }

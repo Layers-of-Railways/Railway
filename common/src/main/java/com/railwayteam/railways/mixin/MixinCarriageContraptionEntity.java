@@ -2,28 +2,38 @@ package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
+import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
+import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.BlockPosUtils;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Navigation;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
 import net.minecraft.world.phys.Vec3;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +45,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
+
+import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
 public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity {
@@ -63,12 +76,20 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         return instance.closerThan(pos, distance);
     }
 
+    @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))
+    private double conductorSpeedControl(Train instance, Operation<Double> original, BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player) {
+        if (player instanceof IConductorHoldingFakePlayer conductorHolder && conductorHolder.getConductor() != null) {
+            return conductorHolder.getConductor().getForwardSignalStrength() / 15.0d;
+        }
+        return original.call(instance);
+    }
+
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;maxSpeed()F"))
     private void showSwitchOverlay(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
                                    CallbackInfoReturnable<Boolean> cir) {
         Navigation nav = carriage.train.navigation;
 
-        StructureTemplate.StructureBlockInfo info = contraption.getBlocks()
+        StructureBlockInfo info = contraption.getBlocks()
                 .get(controlsLocalPos);
         Direction initialOrientation = getInitialOrientation().getCounterClockWise();
         boolean inverted = false;
@@ -141,5 +162,59 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     private void cancelDerailing(CallbackInfo ci) {
         if (CRConfigs.client().skipClientDerailing.get())
             ci.cancel();
+    }
+
+    @Inject(method = "tickContraption", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;tickActors()V"))
+    private void setupBufferDistanceData(CallbackInfo ci) {
+        ICarriageBufferDistanceTracker distanceTracker = (ICarriageBufferDistanceTracker) carriage;
+        if (level.isClientSide) return;
+
+        if (distanceTracker.snr$getLeadingDistance() != null && distanceTracker.snr$getTrailingDistance() != null) return;
+
+        BlockPos leadingBogeyPos = null;
+        BlockPos trailingBogeyPos = null;
+
+        CarriageContraption cc = (CarriageContraption) contraption;
+
+        BlockPos maxPos = new BlockPos(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE);
+        BlockPos minPos = new BlockPos(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+        for (Map.Entry<BlockPos, StructureBlockInfo> info : contraption.getBlocks().entrySet()) {
+            minPos = BlockPosUtils.min(minPos, info.getKey());
+            maxPos = BlockPosUtils.max(maxPos, info.getKey());
+            if (info.getValue().state.getBlock() instanceof AbstractBogeyBlock<?>) {
+                if (leadingBogeyPos == null) {
+                    leadingBogeyPos = info.getKey();
+                } else if (trailingBogeyPos == null) {
+                    if (normalize(info.getKey().subtract(leadingBogeyPos)).equals(cc.getAssemblyDirection().getNormal())) {
+                        trailingBogeyPos = info.getKey();
+                    } else {
+                        trailingBogeyPos = leadingBogeyPos;
+                        leadingBogeyPos = info.getKey();
+                    }
+                }
+            }
+        }
+
+        Direction.Axis axis = cc.getAssemblyDirection().getAxis();
+        boolean forward = cc.getAssemblyDirection().getAxisDirection() == Direction.AxisDirection.POSITIVE;
+
+        int leadingBounds = (int) (forward ? minPos.get(axis) : maxPos.get(axis));
+        int trailingBounds = (int) (forward ? maxPos.get(axis) : minPos.get(axis));
+
+        int leadingDistance = leadingBogeyPos == null ? 0 : Math.abs(leadingBounds - leadingBogeyPos.get(axis));
+        if (trailingBogeyPos == null)
+            trailingBogeyPos = leadingBogeyPos;
+        int trailingDistance = trailingBogeyPos == null ? 0 : Math.abs(trailingBounds - trailingBogeyPos.get(axis));
+        distanceTracker.snr$setLeadingDistance(leadingDistance);
+        distanceTracker.snr$setTrailingDistance(trailingDistance);
+    }
+
+    @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
+    private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
+                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeed) {
+        if (((IBufferBlockedTrain) carriage.train).snr$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).snr$getBlockedSign() == Mth.sign(targetSpeed.get())) {
+            targetSpeed.set(0);
+        }
     }
 }
