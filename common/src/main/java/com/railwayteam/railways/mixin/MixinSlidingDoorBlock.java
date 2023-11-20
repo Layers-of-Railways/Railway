@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -33,8 +34,18 @@ public abstract class MixinSlidingDoorBlock {
                                                        boolean lower, boolean isPowered, SlidingDoorBlockEntity be) {
         if (be == null)
             return;
-        if (((SlidingDoorMode.IHasDoorMode) be).snr$getSlidingDoorMode() == SlidingDoorMode.MANUAL) {
+        if (!((SlidingDoorMode.IHasDoorMode) be).snr$getSlidingDoorMode().canOpenSpecially()) {
             ci.cancel();
+        }
+    }
+    @Inject(method = "isDoorPowered",
+        at = @At("RETURN"), cancellable = true)
+    private static void snr$invertPoweredState(Level pLevel, BlockPos pPos, BlockState pState, CallbackInfoReturnable<Boolean> cir) {
+        BlockEntity be = pLevel.getBlockEntity(pState.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER ? pPos : pPos.below());
+        if (be instanceof SlidingDoorBlockEntity) {
+            if (((SlidingDoorMode.IHasDoorMode) be).getSlidingDoorMode() == SlidingDoorMode.SPECIAL_INVERTED) {
+                cir.setReturnValue(!cir.getReturnValueZ());
+            }
         }
     }
 
@@ -44,7 +55,7 @@ public abstract class MixinSlidingDoorBlock {
                                                   CallbackInfoReturnable<InteractionResult> cir) {
         boolean lower = pState.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;
         BlockEntity be = pLevel.getBlockEntity(lower ? pPos : pPos.below());
-        if (be instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.snr$getSlidingDoorMode() == SlidingDoorMode.SPECIAL)
+        if (be instanceof SlidingDoorMode.IHasDoorMode doorMode && !doorMode.snr$getSlidingDoorMode().canOpenManually())
             cir.setReturnValue(InteractionResult.FAIL);
     }
 
@@ -53,7 +64,7 @@ public abstract class MixinSlidingDoorBlock {
         if (entity != null) {
             boolean lower = state.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;
             BlockEntity be = level.getBlockEntity(lower ? pos : pos.below());
-            if (be instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.snr$getSlidingDoorMode() == SlidingDoorMode.SPECIAL)
+            if (be instanceof SlidingDoorMode.IHasDoorMode doorMode && !doorMode.snr$getSlidingDoorMode().canOpenManually())
                 ci.cancel();
         }
     }
