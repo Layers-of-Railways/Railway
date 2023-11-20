@@ -20,7 +20,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
-import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -46,12 +46,12 @@ public class CRBlockEntities {
         .validBlocks(CRBlocks.TRACK_BUFFER, CRBlocks.TRACK_BUFFER_NARROW, CRBlocks.TRACK_BUFFER_MONO)
         .register();
 
-    public static final BlockEntityEntry<TrackSwitchTileEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchTileEntity::new)
+    public static final BlockEntityEntry<TrackSwitchBlockEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchBlockEntity::new)
       .validBlocks(CRBlocks.ANDESITE_SWITCH)
       .renderer(() -> TrackSwitchRenderer::new)
       .register();
 
-    public static final BlockEntityEntry<TrackSwitchTileEntity> BRASS_SWITCH = REGISTRATE.blockEntity("track_switch_brass", TrackSwitchTileEntity::new)
+    public static final BlockEntityEntry<TrackSwitchBlockEntity> BRASS_SWITCH = REGISTRATE.blockEntity("track_switch_brass", TrackSwitchBlockEntity::new)
       .validBlocks(CRBlocks.BRASS_SWITCH)
       .renderer(() -> TrackSwitchRenderer::new)
       .register();

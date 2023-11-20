@@ -3,7 +3,7 @@ package com.railwayteam.railways.content.switches;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
-import com.railwayteam.railways.content.switches.TrackSwitchTileEntity.PonderData;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity.PonderData;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.track.ITrackBlock;
@@ -26,13 +26,13 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 
-public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTileEntity> {
+public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlockEntity> {
   public TrackSwitchRenderer(Context ctx) {
     super(ctx);
   }
 
   @Override
-  protected void renderSafe(TrackSwitchTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+  protected void renderSafe(TrackSwitchBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
     super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
     renderFlagState(te, partialTicks, ms, buffer, light);
     renderTrackOverlay(te, ms, buffer, light, overlay, te.edgePoint);
@@ -60,7 +60,7 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
     ms.popPose();
   }
 
-  private void renderFlagState(TrackSwitchTileEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+  private void renderFlagState(TrackSwitchBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                                int light) {
     BlockState state = te.getBlockState();
     ms.pushPose();
@@ -84,11 +84,9 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
 
       // Rotate just enough to touch the front or back edge
       if (te.isReverseLeft() || (te.isNormal() && te.exitCount == 2 && te.hasExit(SwitchState.REVERSE_RIGHT))) {
-//        buf = buf.rotate(Direction.NORTH, -1.1f);
-        te.lerpedAngle.updateChaseTarget(-1.1f);
+        te.lerpedAngle.updateChaseTarget(-0.40f);
       } else if (te.isReverseRight() || (te.isNormal() && te.exitCount == 2 && te.hasExit(SwitchState.REVERSE_LEFT))) {
-//        buf = buf.rotate(Direction.NORTH, 1.1f);
-        te.lerpedAngle.updateChaseTarget(1.1f);
+        te.lerpedAngle.updateChaseTarget(0.40f);
       } else {
         te.lerpedAngle.updateChaseTarget(0.0f);
       }
@@ -124,7 +122,7 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchTil
     ms.popPose();
   }
 
-  private void renderTrackOverlay(TrackSwitchTileEntity te, PoseStack ms, MultiBufferSource buffer,
+  private void renderTrackOverlay(TrackSwitchBlockEntity te, PoseStack ms, MultiBufferSource buffer,
                                   int light, int overlay, TrackTargetingBehaviour<TrackSwitch> target) {
     BlockPos pos = te.getBlockPos();
     boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);

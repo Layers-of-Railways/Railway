@@ -36,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchTileEntity>, IWrenchable {
+public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implements IBE<TrackSwitchBlockEntity>, IWrenchable {
   boolean isAutomatic;
 //  public static final Property<SwitchState> STATE = EnumProperty.create("state", SwitchState.class);
   public static final BooleanProperty LOCKED = BlockStateProperties.LOCKED;
@@ -183,12 +183,12 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   }
 
   @Override
-  public Class<TrackSwitchTileEntity> getBlockEntityClass() {
-    return TrackSwitchTileEntity.class;
+  public Class<TrackSwitchBlockEntity> getBlockEntityClass() {
+    return TrackSwitchBlockEntity.class;
   }
 
   @Override
-  public BlockEntityType<? extends TrackSwitchTileEntity> getBlockEntityType() {
+  public BlockEntityType<? extends TrackSwitchBlockEntity> getBlockEntityType() {
     return isAutomatic ?
       CRBlockEntities.BRASS_SWITCH.get() :
       CRBlockEntities.ANDESITE_SWITCH.get();
@@ -234,7 +234,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
       return InteractionResult.SUCCESS;
     }
 
-    TrackSwitchTileEntity te = getBlockEntity(level, pos);
+    TrackSwitchBlockEntity te = getBlockEntity(level, pos);
     if (te != null) {
       if (player.getGameProfile() == ConductorEntity.FAKE_PLAYER_PROFILE) {
         return te.onProjectileHit() ? InteractionResult.CONSUME : InteractionResult.SUCCESS;
@@ -250,7 +250,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
     super.onProjectileHit(level, state, hit, projectile);
 
-    TrackSwitchTileEntity te = getBlockEntity(level, hit.getBlockPos());
+    TrackSwitchBlockEntity te = getBlockEntity(level, hit.getBlockPos());
     if (te != null) {
       te.onProjectileHit();
     }
@@ -263,7 +263,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
   public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
     super.neighborChanged(state, level, pos, block, fromPos, isMoving);
 
-    TrackSwitchTileEntity te = getBlockEntity(level, pos);
+    TrackSwitchBlockEntity te = getBlockEntity(level, pos);
     if (te != null) {
       te.checkRedstoneInputs();
     }
@@ -286,7 +286,7 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
    */
   @Override
   public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
-    if (level.getBlockEntity(pos) instanceof TrackSwitchTileEntity te)
+    if (level.getBlockEntity(pos) instanceof TrackSwitchBlockEntity te)
       return te.getTargetAnalogOutput();
     return 0;
   }
