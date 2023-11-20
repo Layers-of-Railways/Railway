@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///track_coupler"
+        "recipe": "railways:crafting/track_coupler"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///track_coupler"
+      "railways:crafting/track_coupler"
     ]
   }
 }

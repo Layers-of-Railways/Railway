@@ -4,6 +4,7 @@ import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxe
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -49,6 +50,40 @@ public class CRShapes {
         MONORAIL_TRACK_CROSS = shape(MONORAIL_TRACK_ORTHO.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST)).build(),
         MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST)).build(),
         MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
+
+    public static final VoxelShaper LINK_PIN =
+        shape(3, 5, 0, 13, 11, 1)
+            .add(5, 5, 1, 11, 11, 4)
+            .add(6, 6, 4, 10, 10, 6)
+            .add(5, 6, 6, 11, 10, 9)
+            .add(4, 5, 9, 12, 11, 10)
+            .forHorizontal(Direction.SOUTH);
+
+    public static VoxelShaper headstockLinkPin() {
+        final int offset = 3;
+        return shape(3, 5, 3, 13, 11, 4)
+            .add(5, 5, 4, 11, 11, 7)
+            .add(6, 6, 7, 10, 10, 9)
+            .add(5, 6, 9, 11, 10, 12)
+            .add(4, 5, 12, 12, 11, 13)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH);
+    }
+
+    public static VoxelShaper headstockBuffer() {
+        int offset = 3;
+        return shape(3, 5, 0+offset, 13, 11, 1+offset)
+            .add(5, 5, 1+offset, 11, 11, 5+offset)
+            .add(6, 6, 5+offset, 10, 10, 9+offset)
+            .add(4, 4, 9+offset, 12, 12, 10+offset)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH);
+    }
+
+    public static VoxelShaper headstockPlain() {
+        return shape(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH);
+    }
 
     private static VoxelShape narrowAscending() {
         VoxelShape shape = Block.box(-7, 0, 0, 16 + 7, 4, 4);

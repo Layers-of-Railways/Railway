@@ -258,6 +258,7 @@ publishMods {
         }
     }
 }
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {
@@ -268,11 +269,21 @@ publishing {
 
     repositories {
         if (System.getenv("MAVEN_TOKEN")) {
-            maven {
-                url "https://maven.ithundxr.dev/releases"
-                credentials {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
                 }
             }
         }

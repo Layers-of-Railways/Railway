@@ -2,7 +2,10 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
+import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
+import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.lang.CRLangGen;
+import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
@@ -102,7 +105,10 @@ public class Railways {
     REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
     gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
+    gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
+    gen.addProvider(true, new EmiExcludedTagGen(gen));
+    gen.addProvider(true, new EmiRecipeDefaultsGen(gen));
   }
 
   public static CreateRegistrate registrate() {

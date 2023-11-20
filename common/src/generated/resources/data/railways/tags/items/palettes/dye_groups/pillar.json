@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "railways:locometal_pillar",
+    "railways:white_locometal_pillar",
+    "railways:orange_locometal_pillar",
+    "railways:magenta_locometal_pillar",
+    "railways:light_blue_locometal_pillar",
+    "railways:yellow_locometal_pillar",
+    "railways:lime_locometal_pillar",
+    "railways:pink_locometal_pillar",
+    "railways:gray_locometal_pillar",
+    "railways:light_gray_locometal_pillar",
+    "railways:cyan_locometal_pillar",
+    "railways:purple_locometal_pillar",
+    "railways:blue_locometal_pillar",
+    "railways:brown_locometal_pillar",
+    "railways:green_locometal_pillar",
+    "railways:red_locometal_pillar",
+    "railways:black_locometal_pillar"
+  ]
+}

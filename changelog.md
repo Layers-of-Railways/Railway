@@ -10,6 +10,7 @@ Additions
 - A deployer using a whistle on air will clear the schedule of the bound train
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
 - Config option to use old-style smoke (campfire particles) for smokestacks
+- Locometal block series
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
@@ -20,6 +21,8 @@ Changes
 - Held conductor whistles will attempt to rebind after a conductor has moved to a new train (such as after coupling/decoupling)
 - Reduce comparator output checking frequency for Track Coupler
 - Couplers validate placement less frequently, improving performance
+- Remote Conductor-controlled trains adjust speed based on signal strength
+- Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 
 Fixes
 - Mixin conflict with VS2

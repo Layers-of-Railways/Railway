@@ -89,7 +89,7 @@ public abstract class MixinTrackBlockOutline {
         return CustomTrackBlockOutline.convert(o, railway$walkingMaterial);
     }
 
-    @WrapOperation(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"))
+    @WrapOperation(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true))
     private static Block genericCrossingsAreCustom(BlockState instance, Operation<Block> originalOperation) {
         Block original = originalOperation.call(instance);
         if (original instanceof GenericCrossingBlock)

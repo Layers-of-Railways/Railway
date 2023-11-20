@@ -1,6 +1,8 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.Schedule;
@@ -57,5 +59,14 @@ public abstract class MixinScheduleRuntime {
             Railways.LOGGER.info("[DISCARD_SCHEDULE] on train {} called in MixinScheduleRuntime#discardAutoSchedule because a non-looping auto schedule was completed", this.train.name.getString());
             discardSchedule();
         }
+    }
+
+    // waypoint instructions have no conditions, and so are handled as 'invalid' by the vanilla code (https://github.com/Layers-of-Railways/Railway/issues/329)
+    @Inject(method = "estimateStayDuration",
+        at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;get(I)Ljava/lang/Object;", shift = At.Shift.BY, by=2),
+        cancellable = true)
+    private void waypointsAreValid(int index, CallbackInfoReturnable<Integer> cir, @Local(name = "scheduleEntry") ScheduleEntry scheduleEntry) {
+        if (scheduleEntry.instruction instanceof WaypointDestinationInstruction)
+            cir.setReturnValue(0);
     }
 }

@@ -1,6 +1,10 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.DyeableBlockEntity;
+import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
@@ -15,8 +19,9 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
+import com.railwayteam.railways.content.smokestack.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
-import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -34,12 +39,20 @@ public class CRBlockEntities {
         .renderer(() -> TrackCouplerRenderer::new)
         .register();
 
-    public static final BlockEntityEntry<TrackSwitchTileEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchTileEntity::new)
+    public static final BlockEntityEntry<TrackBufferBlockEntity> TRACK_BUFFER = REGISTRATE.blockEntity("track_buffer", TrackBufferBlockEntity::new)
+        .validBlocks(CRBlocks.TRACK_BUFFER_WIDE)
+        .register();
+
+    public static final BlockEntityEntry<WoodVariantTrackBufferBlockEntity> TRACK_BUFFER_WOOD_VARIANT = REGISTRATE.blockEntity("track_buffer_wood_variant", WoodVariantTrackBufferBlockEntity::new)
+        .validBlocks(CRBlocks.TRACK_BUFFER, CRBlocks.TRACK_BUFFER_NARROW, CRBlocks.TRACK_BUFFER_MONO)
+        .register();
+
+    public static final BlockEntityEntry<TrackSwitchBlockEntity> ANDESITE_SWITCH = REGISTRATE.blockEntity("track_switch_andesite", TrackSwitchBlockEntity::new)
       .validBlocks(CRBlocks.ANDESITE_SWITCH)
       .renderer(() -> TrackSwitchRenderer::new)
       .register();
 
-    public static final BlockEntityEntry<TrackSwitchTileEntity> BRASS_SWITCH = REGISTRATE.blockEntity("track_switch_brass", TrackSwitchTileEntity::new)
+    public static final BlockEntityEntry<TrackSwitchBlockEntity> BRASS_SWITCH = REGISTRATE.blockEntity("track_switch_brass", TrackSwitchBlockEntity::new)
       .validBlocks(CRBlocks.BRASS_SWITCH)
       .renderer(() -> TrackSwitchRenderer::new)
       .register();
@@ -76,6 +89,10 @@ public class CRBlockEntities {
         .renderer(() -> ConductorWhistleFlagRenderer::new)
         .register();
 
+    public static final BlockEntityEntry<SmokeStackBlockEntity> SMOKE_STACK = REGISTRATE.blockEntity("smokestack", SmokeStackBlockEntity::new)
+        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACK, CRBlocks.COALBURNER_STACK, CRBlocks.OILBURNER_STACK, CRBlocks.STREAMLINED_STACK, CRBlocks.WOODBURNER_STACK)
+        .register();
+
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)
         .validBlocks(CRBlocks.DIESEL_STACK)
         .renderer(() -> DieselSmokeStackRenderer::new)
@@ -89,6 +106,16 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<GenericCrossingBlockEntity> GENERIC_CROSSING = REGISTRATE
         .blockEntity("generic_crossing", GenericCrossingBlockEntity::new)
         .validBlocks(CRBlocks.GENERIC_CROSSING)
+        .register();
+
+    public static final BlockEntityEntry<DyeableBlockEntity> DYEABLE = REGISTRATE
+        .blockEntity("dyeable", DyeableBlockEntity::new)
+        .validBlocks(CRBlocks.LINK_AND_PIN)
+        .register();
+
+    public static final BlockEntityEntry<HeadstockBlockEntity> HEADSTOCK = REGISTRATE
+        .blockEntity("headstock", HeadstockBlockEntity::new)
+        .validBlocks(CRBlocks.HEADSTOCK)
         .register();
 
 
