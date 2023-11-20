@@ -11,6 +11,7 @@ Additions
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
+- Buffer blocks
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
@@ -23,11 +24,15 @@ Changes
 - Couplers validate placement less frequently, improving performance
 - Remote Conductor-controlled trains adjust speed based on signal strength
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
+- Train status messages now include coordinates
 
 Fixes
 - Mixin conflict with VS2
 - Fix Farmers delight fabric crash (small hacky fix)
 - Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
+- Fix waypoint schedule items not showing up in the Station Summary (#329)
+- Fix villagers opening sliding doors in the 'special' mode (#317)
+- Fix normal nixie tube relays (#311)
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
