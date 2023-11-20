@@ -43,7 +43,7 @@ public abstract class MixinSlidingDoorBlock {
     private static void snr$invertPoweredState(Level pLevel, BlockPos pPos, BlockState pState, CallbackInfoReturnable<Boolean> cir) {
         BlockEntity be = pLevel.getBlockEntity(pState.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER ? pPos : pPos.below());
         if (be instanceof SlidingDoorBlockEntity) {
-            if (((SlidingDoorMode.IHasDoorMode) be).getSlidingDoorMode() == SlidingDoorMode.SPECIAL_INVERTED) {
+            if (((SlidingDoorMode.IHasDoorMode) be).snr$getSlidingDoorMode() == SlidingDoorMode.SPECIAL_INVERTED) {
                 cir.setReturnValue(!cir.getReturnValueZ());
             }
         }
