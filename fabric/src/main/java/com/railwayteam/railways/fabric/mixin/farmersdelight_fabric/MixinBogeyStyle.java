@@ -1,4 +1,4 @@
-package com.railwayteam.railways.mixin.compat.farmersdelight_fabric;
+package com.railwayteam.railways.fabric.mixin.farmersdelight_fabric;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

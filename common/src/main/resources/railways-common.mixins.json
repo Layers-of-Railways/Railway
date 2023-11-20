@@ -79,7 +79,6 @@
     "NbtUtilsMixin",
     "PlayerEntityMixin",
     "StructureMixin",
-    "compat.farmersdelight_fabric.MixinBogeyStyle",
     "compat.voicechat.EntityAudioChannelImplMixin",
     "compat.voicechat.ServerMixin",
     "compat.voicechat.ServerWorldUtilsMixin",

@@ -26,6 +26,9 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
         if (mixinName.contains("compat.voicechat")) {
             return Mods.VOICECHAT.isLoaded;
         }
+        if (mixinName.contains("compat.farmersdelight_fabric")) {
+            return Mods.VOICECHAT.isLoaded;
+        }
         return true;
     }
 
