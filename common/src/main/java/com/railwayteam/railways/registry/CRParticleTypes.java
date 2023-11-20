@@ -1,6 +1,8 @@
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.content.smokestack.SmokeParticleData;
+import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticleData;
+import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
+import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
 import com.simibubi.create.foundation.particle.ICustomParticleData;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -15,7 +17,11 @@ import java.util.function.Supplier;
 
 public enum CRParticleTypes {
 
-	SMOKE(SmokeParticleData::new)
+	SMOKE(SmokeParticleData::new),
+	SMOKE_PUFF_SMALL(PuffSmokeParticleData.Small::new),
+	SMOKE_PUFF_MEDIUM(PuffSmokeParticleData.Medium::new),
+	CHIMNEYPUSH_SMALL(ChimneyPushParticleData.Small::new),
+	CHIMNEYPUSH_MEDIUM(ChimneyPushParticleData.Medium::new),
 	;
 
 	private final ParticleEntry<?> entry;

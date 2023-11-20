@@ -95,6 +95,7 @@
     "client.AccessorInstance",
     "client.AccessorLivingEntityRenderer",
     "client.AccessorPartialModel",
+    "client.AccessorLevelRenderer",
     "client.AccessorToolboxHandlerClient",
     "client.AccessorTrackBlockOutline",
     "client.AccessorWarningScreen",

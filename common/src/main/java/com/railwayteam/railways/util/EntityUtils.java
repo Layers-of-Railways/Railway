@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +30,7 @@ public class EntityUtils {
 	}
 
 	@ExpectPlatform
-	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
+	public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
 		throw new AssertionError();
 	}
 

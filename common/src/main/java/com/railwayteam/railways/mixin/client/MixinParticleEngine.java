@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.google.common.collect.ImmutableList;
-import com.railwayteam.railways.content.smokestack.SmokeParticle;
+import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleRenderType;
 import org.spongepowered.asm.mixin.Final;

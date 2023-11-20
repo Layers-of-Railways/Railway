@@ -19,6 +19,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
+import com.railwayteam.railways.content.smokestack.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
@@ -86,6 +87,10 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)
         .validBlocks(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
         .renderer(() -> ConductorWhistleFlagRenderer::new)
+        .register();
+
+    public static final BlockEntityEntry<SmokeStackBlockEntity> SMOKE_STACK = REGISTRATE.blockEntity("smokestack", SmokeStackBlockEntity::new)
+        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACK, CRBlocks.COALBURNER_STACK, CRBlocks.OILBURNER_STACK, CRBlocks.STREAMLINED_STACK, CRBlocks.WOODBURNER_STACK)
         .register();
 
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)
