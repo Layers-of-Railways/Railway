@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.Registry;
@@ -171,6 +172,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static TagKey<Item> brassIngot() {
       return CommonTags.BRASS_INGOTS.tag;
+    }
+
+    public static ItemLike shaft() {
+      return AllBlocks.SHAFT.get();
+    }
+
+    public static ItemLike linkPin() {
+      return CRBlocks.LINK_AND_PIN.get();
+    }
+
+    public static ItemLike headstock() {
+      return CRBlocks.HEADSTOCK.get();
     }
   }
 }

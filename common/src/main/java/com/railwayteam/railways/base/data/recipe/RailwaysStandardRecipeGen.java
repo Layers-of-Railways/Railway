@@ -160,6 +160,40 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#*#")
         );
 
+    GeneratedRecipe LINK_AND_PIN = create(CRBlocks.LINK_AND_PIN)
+        .unlockedBy(Ingredients::industrialIron)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.shaft())
+            .define(',', Ingredients.ironNugget())
+            .pattern("__ ")
+            .pattern("#I,")
+            .pattern("__ ")
+        );
+
+    GeneratedRecipe HEADSTOCK = create(CRBlocks.HEADSTOCK)
+        .unlockedBy(Ingredients::linkPin)
+        .viaShaped(b -> b
+            .define('#', Ingredients.linkPin())
+            .define('_', Ingredients.woodenSlab())
+            .pattern(" # ")
+            .pattern("___")
+        );
+
+    GeneratedRecipe BUFFER = create(CRBlocks.TRACK_BUFFER)
+        .unlockedBy(Ingredients::headstock)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.woodenSlab())
+            .define('>', Ingredients.headstock())
+            .define('=', Ingredients.girder())
+            .pattern(">_>")
+            .pattern("===")
+            .pattern("# #")
+        );
+
     GeneratedRecipe RIVETED_LOCOMETAL = create(Styles.RIVETED.get(null))
         .returns(8)
         .setEmiDefault()

@@ -2,14 +2,13 @@ package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalDoubleRef;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
-import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
-import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
-import com.railwayteam.railways.mixin_interfaces.ILimitedGlobalStation;
-import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
+import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -30,14 +29,14 @@ import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -50,6 +49,14 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     public Train train;
 
     @Shadow public int ticksWaitingForSignal;
+
+    @Shadow public GlobalStation destination;
+
+    @Shadow private TravellingPoint signalScout;
+
+    @Shadow public double distanceToDestination;
+
+    @Shadow public abstract TravellingPoint.ITrackSelector controlSignalScout();
 
     @Override
     public boolean snr$isWaypointMode() {
@@ -352,5 +359,116 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     private void handcarsCannotApproachStations(boolean forward, CallbackInfoReturnable<GlobalStation> cir) {
         if (((IHandcarTrain) this.train).snr$isHandcar())
             cir.setReturnValue(null);
+    }
+
+    // can't use @Share across methods (lambda$tick$0 and tick count as separate methods)
+    @Unique
+    private final ThreadLocal<Double> snr$bufferDistance = ThreadLocal.withInitial(() -> Double.MAX_VALUE);
+
+    @Inject(method = "tick", at = @At(value = "HEAD"))
+    private void resetBufferDistance(Level level, CallbackInfo ci) {
+        snr$bufferDistance.set(Double.MAX_VALUE);
+    }
+
+    @Inject(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Pair;getFirst()Ljava/lang/Object;"))
+    private void storeBufferSlowdown(MutableObject<Pair<UUID, Boolean>> trackingCrossSignal, double scanDistance,
+                                     MutableDouble crossSignalDistanceTracker, double brakingDistanceNoFlicker,
+                                     Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple,
+                                     CallbackInfoReturnable<Boolean> cir) {
+        if (couple.getFirst() instanceof TrackBuffer trackBuffer) {
+            // don't stop *right* on the buffer block, stop a little bit before
+            double bufferedDistance = Math.max(0, distance - TrackBuffer.getBufferRoom(this.train));
+            snr$bufferDistance.set(Math.min(snr$bufferDistance.get(), bufferedDistance));
+        }
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;burnFuel()V"))
+    private void applyBufferSlowdown(Level level, CallbackInfo ci,
+                                     @Local(name = "targetDistance") LocalDoubleRef targetDistance) {
+        if (snr$bufferDistance.get() < targetDistance.get())
+            targetDistance.set(snr$bufferDistance.get());
+        // reset buffer distance for next time
+        snr$bufferDistance.set(Double.MAX_VALUE);
+    }
+
+    @ModifyVariable(method = "tick", at = @At(value = "NEW", target = "(D)Lorg/apache/commons/lang3/mutable/MutableDouble;", ordinal = 0), name = "brakingDistance")
+    private double ensureSufficientBufferDistance(double brakingDistance) {
+        return brakingDistance + TrackBuffer.getBufferRoom(train);
+    }
+
+    @ModifyVariable(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D"), name = "brakingDistance")
+    private double resetSufficientBufferDistance(double brakingDistance) {
+        return brakingDistance - TrackBuffer.getBufferRoom(train);
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void respectBuffersWithoutSchedule(Level level, CallbackInfo ci) {
+        ((IBufferBlockedTrain) train).snr$setControlBlocked(false);
+        if (destination == null) {
+            double acceleration = train.acceleration();
+            double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
+            boolean currentlyBackwards = train.speed < 0;
+            double speedMod = currentlyBackwards ? -1 : 1;
+            double preDepartureLookAhead = train.getCurrentStation() != null ? 4.5 : 0;
+            double distanceToNextCurve = -1;
+
+            if (train.graph == null) return;
+
+            TravellingPoint leadingPoint = !currentlyBackwards ? train.carriages.get(0).getLeadingPoint()
+                : train.carriages.get(train.carriages.size() - 1).getTrailingPoint();
+
+            signalScout.node1 = leadingPoint.node1;
+            signalScout.node2 = leadingPoint.node2;
+            signalScout.edge = leadingPoint.edge;
+            signalScout.position = leadingPoint.position;
+
+            double brakingDistance2 = brakingDistance + TrackBuffer.getBufferRoom(train);
+            double brakingDistanceNoFlicker = brakingDistance2 + 3 - (brakingDistance2 % 3);
+
+            double scanDistance = Mth.clamp(brakingDistanceNoFlicker, preDepartureLookAhead, 500);
+
+            MutableDouble bufferDistance = new MutableDouble(Double.MAX_VALUE);
+
+            signalScout.travel(train.graph, (scanDistance + 50) * speedMod, controlSignalScout(),
+                (distance, couple) -> {
+                    if (distance > scanDistance) return true;
+
+                    if (couple.getFirst() instanceof TrackBuffer trackBuffer) {
+                        // don't stop *right* on the buffer block, stop a little bit before
+                        double bufferedDistance = Math.max(0, distance - TrackBuffer.getBufferRoom(this.train, currentlyBackwards));
+                        bufferDistance.setValue(Math.min(bufferDistance.getValue(), bufferedDistance));
+                        return true;
+                    }
+
+                    return false;
+                }, (distance, edge) -> {});
+
+            if (bufferDistance.getValue() >= Double.MAX_VALUE)
+                return;
+
+            double targetDistance = bufferDistance.getValue();
+            targetDistance += 0.25;
+
+            /*if (targetDistance - Math.abs(train.speed) < 1 / 32f) {
+                train.speed = Math.max(targetDistance, 1 / 32f) * speedMod;
+                return;
+            }*/
+
+            if (targetDistance < 3)
+                ((IBufferBlockedTrain) train).snr$setControlBlocked(true);
+
+            if (targetDistance < 10) {
+                double target = train.maxSpeed() * ((targetDistance) / 10);
+                if (target < Math.abs(train.speed)) {
+                    train.speed += (target - Math.abs(train.speed)) * .5f * speedMod;
+                    return;
+                }
+            }
+
+            if (targetDistance <= brakingDistance) {
+                train.targetSpeed = 0;
+                train.approachTargetSpeed(1);
+            }
+        }
     }
 }

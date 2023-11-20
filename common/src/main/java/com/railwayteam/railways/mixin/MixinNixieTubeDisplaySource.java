@@ -32,7 +32,7 @@ public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySourc
         // if this is an overridden signal, provide the proper output
         SignalBlockEntity.SignalState state;
         if (context.getSourceBlockEntity() instanceof IOverridableSignal signalBE) {
-            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.getOverriddenState();
+            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.snr$getOverriddenState();
             if (optionalState.isPresent()) {
                 state = optionalState.get();
             } else {

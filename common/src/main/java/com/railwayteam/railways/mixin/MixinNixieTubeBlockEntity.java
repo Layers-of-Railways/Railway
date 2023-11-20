@@ -36,8 +36,8 @@ public abstract class MixinNixieTubeBlockEntity extends SmartBlockEntity impleme
     /*
     Inject right before signalState is set to null
      */
-    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/redstone/nixieTube/NixieTubeBlockEntity;signalState:Lcom/simibubi/create/content/trains/signal/SignalBlockEntity$SignalState;", ordinal = 0), cancellable = true)
-    private void snr$handleOverride(CallbackInfo ci) {
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void snr$handleOverride(CallbackInfo ci) { // needs to decrement override lasting on server and client
         if (overrideLastingTicks > 0) {
             overrideLastingTicks--;
             ci.cancel();
@@ -53,7 +53,7 @@ public abstract class MixinNixieTubeBlockEntity extends SmartBlockEntity impleme
     }
 
     @Override
-    public void refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal) {
+    public void snr$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal) {
         if (level == null) return;
         cachedSignalTE = new WeakReference<>(signalBE);
         signalState = state;
@@ -66,7 +66,7 @@ public abstract class MixinNixieTubeBlockEntity extends SmartBlockEntity impleme
     }
 
     @Override
-    public Optional<SignalBlockEntity.SignalState> getOverriddenState() {
+    public Optional<SignalBlockEntity.SignalState> snr$getOverriddenState() {
         if (overrideLastingTicks > 0 && signalState != null)
             return Optional.of(signalState);
         return Optional.empty();

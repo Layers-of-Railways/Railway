@@ -2,6 +2,8 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
+import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -104,8 +106,8 @@ public class CRBlocks {
         return makeTrack(material, blockstateGen, onRegister, (p) -> p);
     }
 
-    private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
-        return makeTrack(material, blockstateGen, (t) -> {
+    private static BlockEntry<TrackBlock> makeTrack(NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
+        return makeTrack(CRTrackMaterials.MONORAIL, blockstateGen, (t) -> {
         }, collectProperties);
     }
 
@@ -182,7 +184,7 @@ public class CRBlocks {
             .blockstate(blockStateProvider::accept)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
             .onRegister(AllMovementBehaviours.movementBehaviour(movementBehaviour))
@@ -226,13 +228,11 @@ public class CRBlocks {
         REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
             .initialProperties(SharedProperties::softMetal)
             .properties(p -> p.color(MaterialColor.PODZOL))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .blockstate((c, p) -> {
-                p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
-                    .modelFile(AssetLookup.partialBaseModel(c, p, state.getValue(TrackCouplerBlock.MODE).getSerializedName()))
-                    .build(), TrackCouplerBlock.POWERED);
-            })
+            .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(AssetLookup.partialBaseModel(c, p, state.getValue(TrackCouplerBlock.MODE).getSerializedName()))
+                            .build(), TrackCouplerBlock.POWERED))
             .transform(pickaxeOnly())
             .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
             .lang("Train Coupler")
@@ -252,7 +252,7 @@ public class CRBlocks {
                     TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
                 ))
             .properties(p -> p.color(MaterialColor.PODZOL))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
             .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
@@ -271,7 +271,7 @@ public class CRBlocks {
                     .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
                     .build(), TrackSwitchBlock.LOCKED))
             .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
-            .properties(p -> p.noOcclusion())
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
             .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
@@ -321,7 +321,7 @@ public class CRBlocks {
         }
     }
 
-    public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(CRTrackMaterials.MONORAIL,
+    public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(
         new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 
     static {
@@ -489,7 +489,7 @@ public class CRBlocks {
                 .build()))
         .properties(p -> p.color(MaterialColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .properties(p -> p.noOcclusion())
+        .properties(BlockBehaviour.Properties::noOcclusion)
         .addLayer(() -> RenderType::cutoutMipped)
         .transform(pickaxeOnly())
         .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
@@ -515,6 +515,130 @@ public class CRBlocks {
             .item()
             .transform(customItemModel("copycat_vent"))
             .register();
+
+    public static final BlockEntry<StandardTrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", StandardTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                .forAllStatesExcept(state -> ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
+                        .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                        .build(), StandardTrackBufferBlock.WATERLOGGED
+                )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Track Buffer")
+        .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
+        .transform(BuilderTransformers.variantBufferItem())
+        .transform(customItemModel())
+        .register();
+
+    public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
+                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .build(), NarrowTrackBufferBlock.WATERLOGGED
+            )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Narrow Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<MonoTrackBufferBlock> TRACK_BUFFER_MONO = REGISTRATE.block("buffer_mono", MonoTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> {
+                boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
+                return ConfiguredModel.builder()
+                    .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
+                    .rotationX(hanging ? 180 : 0)
+                    .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
+                    .build();
+                }, MonoTrackBufferBlock.WATERLOGGED
+            )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Monorail Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<WideTrackBufferBlock> TRACK_BUFFER_WIDE = REGISTRATE.block("buffer_wide", WideTrackBufferBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.color(MaterialColor.PODZOL))
+        .properties(BlockBehaviour.Properties::noOcclusion)
+        .properties(BlockBehaviour.Properties::noCollission)
+        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
+                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .build(), WideTrackBufferBlock.WATERLOGGED
+            )
+        )
+        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Wide Track Buffer")
+        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+        .register();
+
+    public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .build(), LinkPinBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Link 'n Pin")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/link_and_pin")))
+        .build()
+        .register();
+
+    public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
+                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
+                .build(), HeadstockBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Headstock")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/wooden_headstock_buffer")))
+        .build()
+        .register();
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
         REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
