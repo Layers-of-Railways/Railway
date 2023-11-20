@@ -21,7 +21,7 @@ public class CClient extends ConfigBase {
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
-    public final ConfigEnum<SmokeType> smokeType = e(SmokeType.OLD, "smokeType", Comments.smokeType);
+    public final ConfigEnum<SmokeType> smokeType = e(SmokeType.CARTOON, "smokeType", Comments.smokeType);
 
     public final ConfigGroup oldSmoke = group(2, "old", Comments.oldSmoke);
     public final ConfigInt smokeLifetime = i(500, 20, 1000, "smokeLifetime", Comments.inTicks, Comments.smokeLifetime);
@@ -31,7 +31,7 @@ public class CClient extends ConfigBase {
 
     public final ConfigGroup cartoonSmoke = group(2, "cartoon", Comments.cartoonSmoke);
     public final ConfigBool spawnFasterPuffs = b(true, "spawnFasterPuffs", Comments.spawnFasterPuffs);
-    public final ConfigBool spawnSteam = b(true, "spawnSteam", Comments.spawnSteam);
+    public final ConfigBool spawnSteam = b(false, "spawnSteam", Comments.spawnSteam);
 
 
     // journeymap
