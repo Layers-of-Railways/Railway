@@ -3,17 +3,23 @@ package com.railwayteam.railways.registry;
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.content.custom_bogeys.CRBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowDoubleScotchYokeBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowScotchYokeBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowSmallBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.HandcarBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.double_axle.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.LeafspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.SingleaxleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.triple_axle.HeavyweightBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.triple_axle.RadialBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideComicallyLargeScotchYokeBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDefaultBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.Create;
@@ -179,29 +185,29 @@ public class CRBogeyStyles {
     public static final BogeyStyle
         WIDE_DEFAULT = create("wide_default", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.wide_default"))
-            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
-            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.WideScotchYokeBogeyRenderer::new, CRBlocks.WIDE_SCOTCH_BOGEY)
+            .size(BogeySizes.SMALL, () -> WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.LARGE, () -> WideScotchYokeBogeyRenderer::new, CRBlocks.WIDE_SCOTCH_BOGEY)
             .build(),
         WIDE_COMICALLY_LARGE = create("wide_comically_large", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.wide_comically_large"))
-            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.WideComicallyLargeScotchYokeBogeyRenderer::new, CRBlocks.WIDE_COMICALLY_LARGE_BOGEY)
+            .size(BogeySizes.LARGE, () -> WideComicallyLargeScotchYokeBogeyRenderer::new, CRBlocks.WIDE_COMICALLY_LARGE_BOGEY)
             .build();
 
     // Narrow Bogeys
     public static final BogeyStyle
         NARROW_DEFAULT = create("narrow_default", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.narrow_default"))
-            .size(BogeySizes.SMALL, () -> CRBogeyRenderer.NarrowSmallBogeyRenderer::new, CRBlocks.NARROW_SMALL_BOGEY)
-            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowScotchYokeBogeyRenderer::new, CRBlocks.NARROW_SCOTCH_BOGEY)
+            .size(BogeySizes.SMALL, () -> NarrowSmallBogeyRenderer::new, CRBlocks.NARROW_SMALL_BOGEY)
+            .size(BogeySizes.LARGE, () -> NarrowScotchYokeBogeyRenderer::new, CRBlocks.NARROW_SCOTCH_BOGEY)
             .build(),
         NARROW_DOUBLE_SCOTCH = create("narrow_double_scotch", Create.asResource(STANDARD_CYCLE_GROUP))
             .displayName(Components.translatable("railways.bogeys.styles.narrow_double_scotch"))
-            .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
+            .size(BogeySizes.LARGE, () -> NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
             .build();
 
     // Handcar
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
-        .size(BogeySizes.SMALL, () -> CRBogeyRenderer.HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
+        .size(BogeySizes.SMALL, () -> HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
         .build();
 
 
