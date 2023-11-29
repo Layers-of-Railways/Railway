@@ -5,6 +5,7 @@ Additions
 - Cherry Tracks (1.20.1)
 - Bamboo Tracks (1.20.1)
 - Stripped Bamboo Tracks (1.20.1)
+- Natures Spirit compat Tracks (1.20.1)
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
