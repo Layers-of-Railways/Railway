@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/segment_left",
+  "textures": {
+    "0": "create_dd:block/track/rubber/standard_track_rubber",
+    "1": "create_dd:block/track/rubber/standard_track_mip_rubber",
+    "particle": "create_dd:block/track/rubber/standard_track_crossing_rubber"
+  }
+}

@@ -20,7 +20,8 @@ public enum Mods {
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
-	FARMERSDELIGHT("farmersdelight")
+	FARMERSDELIGHT("farmersdelight"),
+	DREAMSANDDESIRES("create_dd")
 	;
 
 	public final boolean isLoaded;
