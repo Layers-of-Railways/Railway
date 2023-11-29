@@ -1,9 +1,12 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
+import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.*;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -24,7 +27,9 @@ import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -235,8 +240,27 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         ((IHandcarTrain) train).snr$setHandcar(tag.getBoolean("IsHandcar"));
     }
 
+    @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
+    private void snr$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local Train train, @Local(name = "v", ordinal = 0) Vec3 v) {
+        // Self Train / Train that collided with the other one
+        // DO NOT REMOVE THIS CAST!!!! (its needed otherwise your game will crash when you crash a train)
+        if (((IHandcarTrain) (Train) (Object) this).snr$isHandcar()) {
+            TrainUtils.discardTrain((Train) (Object) this);
+            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            ci.cancel();
+        }
+
+        // Other Train / Train that got collided with
+        if (((IHandcarTrain) train).snr$isHandcar()) {
+            TrainUtils.discardTrain(train);
+            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            ci.cancel();
+        }
+    }
+
     @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
     private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
+
         if (CRConfigs.server().optimization.disableTrainCollision.get())
             ci.cancel();
     }
