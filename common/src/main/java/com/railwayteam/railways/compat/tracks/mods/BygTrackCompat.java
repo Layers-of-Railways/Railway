@@ -28,7 +28,6 @@ public class BygTrackCompat extends GenericTrackCompat {
             "baobab",
             "blue_enchanted",
             "bulbis",
-            "cherry",
             "cika",
             "cypress",
             "ebony",

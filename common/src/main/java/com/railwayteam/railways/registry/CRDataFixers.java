@@ -5,6 +5,7 @@ import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
+import com.railwayteam.railways.base.datafixers.CompatCherryTrackFix;
 import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
 import com.railwayteam.railways.config.CRConfigs;
 import net.minecraft.SharedConstants;
@@ -43,5 +44,9 @@ public class CRDataFixers {
         // For v1, need to upgrade railways:mono_bogey_upside_down to railways:mono_bogey[upside_down=true]
         Schema schemaV1 = builder.addSchema(1, SAME_NAMESPACED);
         builder.addFixer(new UpsideDownMonoBogeyFix(schemaV1, "Merge railways:mono_bogey_upside_down into railways:mono_bogey[upside_down=true]"));
+        // For v2, need to upgrade BOP & Blueskies cherry compat tracks to railways:track_cherry[_narrow||_wide]
+        Schema schemaV2 = builder.addSchema(2, SAME_NAMESPACED);
+        builder.addFixer(new CompatCherryTrackFix(schemaV2, "Convert Compat Cherry Tracks to Default Cherry Tracks"));
+
     }
 }
