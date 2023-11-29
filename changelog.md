@@ -12,6 +12,7 @@ Additions
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
 - Buffer blocks
+- Create: Dreams and Desires compat tracks
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
