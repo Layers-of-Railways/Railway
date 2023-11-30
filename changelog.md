@@ -25,7 +25,7 @@ Changes
 - Remote Conductor-controlled trains adjust speed based on signal strength
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 - Train status messages now include coordinates
-- - Make optifine warning screen easier to skip
+- Make optifine warning screen easier to skip
 
 Fixes
 - Mixin conflict with VS2
