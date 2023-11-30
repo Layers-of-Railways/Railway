@@ -1,7 +1,6 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.multiloader.Loader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -21,7 +20,7 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetName, String mixinName) {
         if (mixinName.contains("compat.voicechat")) {
-            return Mods.VOICECHAT.isLoaded && Loader.FABRIC.isCurrent();
+            return Mods.VOICECHAT.isLoaded;
         }
         return true;
     }

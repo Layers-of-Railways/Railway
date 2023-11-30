@@ -1,8 +1,6 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -18,12 +16,10 @@ import com.simibubi.create.content.trains.track.TrackPlacement;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -94,10 +90,5 @@ public class MixinTrackPlacement {
             genericCrossingBE.initFrom(crossingData);
         }
         crossingDataRef.set(null);
-    }
-
-    @WrapOperation(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/Material;isReplaceable()Z"))
-    private static boolean replaceFlowers(Material instance, Operation<Boolean> original, @Local(name="stateAtPos") BlockState stateAtPos) {
-        return original.call(instance) || stateAtPos.is(BlockTags.FLOWERS);
     }
 }
