@@ -145,6 +145,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "plugin": "com.railwayteam.railways.mixin.CRMixinPlugin"
+  }
 }

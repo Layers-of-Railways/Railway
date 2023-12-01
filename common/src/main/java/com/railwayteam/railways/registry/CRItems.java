@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -48,11 +49,7 @@ public class CRItems {
     public ItemStack makeIcon() { return CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack(); }
   };
 
-  public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
-
-  public static TagKey<Item> makeForgeItemTag(String path) {
-    return makeItemTag("forge", path);
-  }
+  public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;
 
   public static TagKey<Item> makeItemTag(String mod, String path) {
     return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(mod, path));
@@ -85,7 +82,7 @@ public class CRItems {
   }
 
   public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", MinecartWorkbench.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(CommonTags.WORKBENCH.tag)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();

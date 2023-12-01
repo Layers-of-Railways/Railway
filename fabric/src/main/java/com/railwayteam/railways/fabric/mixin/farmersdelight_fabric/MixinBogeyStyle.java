@@ -2,7 +2,6 @@ package com.railwayteam.railways.fabric.mixin.farmersdelight_fabric;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.railwayteam.railways.mixin.CRMixinPlugin;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -11,9 +10,9 @@ import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-/**
+/*
  * Hacky fix since the farmers delight fabric dev doesn't want to fix it on their side.
- * Checks if Farmers delight is loaded inside of {@link CRMixinPlugin#shouldApplyMixin}
+ * Checks if Farmers delight is loaded inside CRMixinPlugin#shouldApplyMixin
  */
 @Mixin(BogeyStyle.class)
 public class MixinBogeyStyle {
