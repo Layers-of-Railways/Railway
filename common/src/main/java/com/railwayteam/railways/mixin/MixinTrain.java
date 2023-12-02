@@ -16,7 +16,6 @@ import com.simibubi.create.content.trains.entity.TravellingPoint;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackNode;
-import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
@@ -51,9 +50,6 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Shadow public abstract void arriveAt(GlobalStation station);
 
-    @Shadow public abstract void leaveStation();
-
-    @Shadow public ScheduleRuntime runtime;
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
     @Unique
@@ -243,8 +239,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
     private void snr$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local Train train, @Local(name = "v", ordinal = 0) Vec3 v) {
         // Self Train / Train that collided with the other one
-        // DO NOT REMOVE THIS CAST!!!! (its needed otherwise your game will crash when you crash a train)
-        if (((IHandcarTrain) (Train) (Object) this).snr$isHandcar()) {
+        if (((IHandcarTrain) this).snr$isHandcar()) {
             TrainUtils.discardTrain((Train) (Object) this);
             Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
             ci.cancel();
@@ -260,7 +255,6 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
     private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
-
         if (CRConfigs.server().optimization.disableTrainCollision.get())
             ci.cancel();
     }
