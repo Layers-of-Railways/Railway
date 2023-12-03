@@ -2,7 +2,9 @@
 Version 1.6.0
 ------------------------------------------------------
 Additions
-- Cherry, Bamboo and Stripped Bamboo Track variants (1.20.1)
+- Cherry Tracks (1.20.1)
+- Bamboo Tracks (1.20.1)
+- Stripped Bamboo Tracks (1.20.1)
 - Handcar: wrench to pick up
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train
