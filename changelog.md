@@ -2,9 +2,7 @@
 Version 1.6.0
 ------------------------------------------------------
 Additions
-- Cherry Tracks (1.20.1)
-- Bamboo Tracks (1.20.1)
-- Stripped Bamboo Tracks (1.20.1)
+- Cherry, Bamboo and Stripped Bamboo Track variants (1.20.1)
 - Handcar: wrench to pick up
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train
@@ -26,7 +24,7 @@ Changes
 - Remote Conductor-controlled trains adjust speed based on signal strength
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 - Train status messages now include coordinates
-- Placing tracks will destroy flowers
+- Make optifine warning screen easier to skip
 
 Fixes
 - Mixin conflict with VS2
