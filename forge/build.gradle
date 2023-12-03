@@ -125,6 +125,9 @@ dependencies {
     if (enable_bop.toBoolean()) {
         modLocalRuntime("curse.maven:biomesoplenty-220318:${bop_version}")
     }
+    if (enable_dnd.toBoolean()) {
+        modLocalRuntime("maven.modrinth:create-dreams-and-desires:${dnd_version}")
+    }
 
     if (enable_sodium_rubidium.toBoolean()) {
         modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")

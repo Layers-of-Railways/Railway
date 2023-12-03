@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/ascending",
+  "textures": {
+    "0": "create_dd:block/track/rose/standard_track_rose",
+    "1": "create_dd:block/track/rose/standard_track_mip_rose",
+    "particle": "create_dd:block/track/rose/standard_track_crossing_rose"
+  }
+}
