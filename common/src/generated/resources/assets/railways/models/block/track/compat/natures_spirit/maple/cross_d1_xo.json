@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "natures_spirit:block/track/maple/standard_track_maple",
+    "1": "natures_spirit:block/track/maple/standard_track_mip_maple",
+    "2": "natures_spirit:block/track/maple/standard_track_crossing_maple",
+    "particle": "natures_spirit:block/track/maple/standard_track_crossing_maple"
+  }
+}

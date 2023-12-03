@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/segment_left",
+  "textures": {
+    "0": "natures_spirit:block/track/olive/standard_track_olive",
+    "1": "natures_spirit:block/track/olive/standard_track_mip_olive",
+    "particle": "natures_spirit:block/track/olive/standard_track_crossing_olive"
+  }
+}

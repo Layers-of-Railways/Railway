@@ -20,7 +20,8 @@ public enum Mods {
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
-	FIGURA("figura")
+	FIGURA("figura"),
+	NATURES_SPIRIT("natures_spirit")
 	;
 
 	public final boolean isLoaded;

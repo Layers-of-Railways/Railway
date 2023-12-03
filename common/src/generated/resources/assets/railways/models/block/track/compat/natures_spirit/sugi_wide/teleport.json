@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "natures_spirit:block/track/sugi/portal_track_sugi",
+    "2": "natures_spirit:block/track/sugi/portal_track_mip_sugi",
+    "3": "natures_spirit:block/track/sugi/standard_track_sugi",
+    "particle": "natures_spirit:block/track/sugi/standard_track_crossing_sugi"
+  }
+}

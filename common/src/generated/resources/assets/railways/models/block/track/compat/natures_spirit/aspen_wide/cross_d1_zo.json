@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "natures_spirit:block/track/aspen/standard_track_aspen",
+    "2": "natures_spirit:block/track/aspen/standard_track_mip_aspen",
+    "3": "natures_spirit:block/track/aspen/standard_track_crossing_aspen",
+    "particle": "natures_spirit:block/track/aspen/standard_track_crossing_aspen"
+  }
+}

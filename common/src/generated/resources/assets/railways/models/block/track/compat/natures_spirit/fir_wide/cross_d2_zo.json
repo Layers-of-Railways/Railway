@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "natures_spirit:block/track/fir/standard_track_fir",
+    "2": "natures_spirit:block/track/fir/standard_track_mip_fir",
+    "3": "natures_spirit:block/track/fir/standard_track_crossing_fir",
+    "particle": "natures_spirit:block/track/fir/standard_track_crossing_fir"
+  }
+}

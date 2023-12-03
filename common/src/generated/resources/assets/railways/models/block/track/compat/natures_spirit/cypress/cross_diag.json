@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_diag",
+  "textures": {
+    "0": "natures_spirit:block/track/cypress/standard_track_cypress",
+    "1": "natures_spirit:block/track/cypress/standard_track_mip_cypress",
+    "2": "natures_spirit:block/track/cypress/standard_track_crossing_cypress",
+    "particle": "natures_spirit:block/track/cypress/standard_track_crossing_cypress"
+  }
+}

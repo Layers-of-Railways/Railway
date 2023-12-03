@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/wide_gauge_base/segment_left",
+  "textures": {
+    "0": "natures_spirit:block/track/sugi/standard_track_sugi",
+    "1": "natures_spirit:block/track/sugi/standard_track_mip_sugi",
+    "particle": "natures_spirit:block/track/sugi/standard_track_crossing_sugi"
+  }
+}

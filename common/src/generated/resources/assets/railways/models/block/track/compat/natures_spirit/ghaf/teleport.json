@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "natures_spirit:block/track/ghaf/portal_track_ghaf",
+    "2": "natures_spirit:block/track/ghaf/portal_track_mip_ghaf",
+    "3": "natures_spirit:block/track/ghaf/standard_track_ghaf",
+    "particle": "natures_spirit:block/track/ghaf/standard_track_crossing_ghaf"
+  }
+}

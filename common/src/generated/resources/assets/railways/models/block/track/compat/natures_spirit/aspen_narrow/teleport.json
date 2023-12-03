@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "natures_spirit:block/track/aspen/portal_track_aspen",
+    "2": "natures_spirit:block/track/aspen/portal_track_mip_aspen",
+    "3": "natures_spirit:block/track/aspen/standard_track_aspen",
+    "particle": "natures_spirit:block/track/aspen/standard_track_crossing_aspen"
+  }
+}

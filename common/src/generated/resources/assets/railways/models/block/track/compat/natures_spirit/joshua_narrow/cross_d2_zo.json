@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "natures_spirit:block/track/joshua/standard_track_joshua",
+    "2": "natures_spirit:block/track/joshua/standard_track_mip_joshua",
+    "3": "natures_spirit:block/track/joshua/standard_track_crossing_joshua",
+    "particle": "natures_spirit:block/track/joshua/standard_track_crossing_joshua"
+  }
+}

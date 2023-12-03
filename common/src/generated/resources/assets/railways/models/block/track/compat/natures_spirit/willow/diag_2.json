@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag_2",
+  "textures": {
+    "0": "natures_spirit:block/track/willow/standard_track_willow",
+    "1": "natures_spirit:block/track/willow/standard_track_mip_willow",
+    "2": "natures_spirit:block/track/willow/standard_track_crossing_willow",
+    "particle": "natures_spirit:block/track/willow/standard_track_crossing_willow"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_ortho",
+  "textures": {
+    "1": "natures_spirit:block/track/redwood/standard_track_redwood",
+    "2": "natures_spirit:block/track/redwood/standard_track_mip_redwood",
+    "3": "natures_spirit:block/track/redwood/standard_track_crossing_redwood",
+    "particle": "natures_spirit:block/track/redwood/standard_track_crossing_redwood"
+  }
+}
