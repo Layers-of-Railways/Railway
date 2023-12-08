@@ -52,11 +52,15 @@ dependencies {
 }
 
 architectury {
-    common(rootProject.enabled_platforms.split(","))
+    common(enabled_platforms.split(","))
 }
 
 processResources {
-    exclude("resourcepacks/", "**/*.bbmodel", "**/*.lnk", "**/*.txt") // must be part of primary mod to be findable, dont add development or to-do files into built jar
+    // must be part of primary mod to be findable
+    exclude("resourcepacks/")
+
+    // dont add development or to-do files into built jar
+    exclude("**/*.bbmodel", "**/*.lnk", "**/*.txt", "**/*.blend", "**/*.blend1")
 
     // Minify all .json files in built jars
     doLast {
