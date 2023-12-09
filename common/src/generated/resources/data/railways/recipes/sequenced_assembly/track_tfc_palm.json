@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "tfc:wood/planks/palm_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_palm"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_palm"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_tfc_palm"
+    }
+  ],
+  "loops": 1
+}

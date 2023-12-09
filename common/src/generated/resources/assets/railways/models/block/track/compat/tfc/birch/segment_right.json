@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/segment_right",
+  "textures": {
+    "0": "tfc:block/track/birch/standard_track_birch",
+    "1": "tfc:block/track/birch/standard_track_mip_birch",
+    "particle": "tfc:block/track/birch/standard_track_crossing_birch"
+  }
+}

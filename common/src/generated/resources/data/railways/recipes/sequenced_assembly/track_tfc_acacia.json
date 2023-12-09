@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "tfc:wood/planks/acacia_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_acacia"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_acacia"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_tfc_acacia"
+    }
+  ],
+  "loops": 1
+}

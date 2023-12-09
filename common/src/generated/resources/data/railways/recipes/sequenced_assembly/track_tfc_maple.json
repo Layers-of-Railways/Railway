@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "tfc:wood/planks/maple_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_maple"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_maple"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_tfc_maple"
+    }
+  ],
+  "loops": 1
+}

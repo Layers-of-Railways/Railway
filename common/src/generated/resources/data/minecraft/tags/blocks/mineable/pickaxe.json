@@ -254,6 +254,82 @@
     {
       "id": "railways:track_biomesoplenty_willow",
       "required": false
+    },
+    {
+      "id": "railways:track_tfc_acacia",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_ash",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_aspen",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_birch",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_blackwood",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_chestnut",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_douglas_fir",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_hickory",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_kapok",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_maple",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_oak",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_palm",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_pine",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_rosewood",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_sequoia",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_spruce",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_sycamore",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_white_cedar",
+      "required": false
+    },
+    {
+      "id": "railways:track_tfc_willow",
+      "required": false
     }
   ]
 }

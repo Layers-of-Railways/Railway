@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "tfc:wood/planks/pine_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_pine"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_pine"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_tfc_pine"
+    }
+  ],
+  "loops": 1
+}

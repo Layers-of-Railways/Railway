@@ -1,0 +1,72 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "tfc:wood/planks/blackwood_slab"
+  },
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_blackwood"
+  },
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        },
+        [
+          {
+            "item": "tfc:metal/rod/wrought_iron"
+          },
+          {
+            "item": "tfc:metal/rod/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_blackwood"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:track_tfc_blackwood"
+    }
+  ],
+  "loops": 1
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/ascending",
+  "textures": {
+    "particle": "tfc:block/track/sycamore/standard_track_crossing_sycamore",
+    "0": "tfc:block/track/sycamore/standard_track_sycamore",
+    "1": "tfc:block/track/sycamore/standard_track_mip_sycamore"
+  }
+}
