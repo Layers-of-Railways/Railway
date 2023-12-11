@@ -73,7 +73,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             snr$fakePlayer = false;
             return true;
         }
-        return instance.closerThan(pos, distance);
+        return original.call(instance, pos, distance);
     }
 
     @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))
