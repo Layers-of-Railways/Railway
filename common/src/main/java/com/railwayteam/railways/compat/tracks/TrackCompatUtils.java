@@ -39,7 +39,8 @@ public abstract class TrackCompatUtils {
         "byg", // Oh The Biomes You'll Go,
         "blue_skies",
         "twilightforest",
-        "biomesoplenty"
+        "biomesoplenty",
+        "create_dd" // Dreams 'n' Desires
     );
 
     public static boolean anyLoaded() {
