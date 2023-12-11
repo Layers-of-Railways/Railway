@@ -140,8 +140,7 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
     }
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}"))
-    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}"))
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")))
 }
 
 processResources {
