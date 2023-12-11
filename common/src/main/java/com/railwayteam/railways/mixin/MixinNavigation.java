@@ -1,8 +1,6 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalDoubleRef;
 import com.railwayteam.railways.Railways;
@@ -56,6 +54,8 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Shadow private TravellingPoint signalScout;
 
+    @Shadow public double distanceToDestination;
+
     @Shadow public abstract TravellingPoint.ITrackSelector controlSignalScout();
 
     @Override
@@ -69,38 +69,38 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         }
     }
 
-    @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"))
-    private double fixWaypointDistanceInTick(Navigation instance, Operation<Double> original) {
+    @Redirect(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"))
+    private double fixWaypointDistanceInTick(Navigation instance) {
         if (((IWaypointableNavigation) instance).snr$isWaypointMode())
             return 1000;
-        return original.call(instance);
+        return instance.distanceToDestination;
     }
 
-    @WrapOperation(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/graph/TrackNode;)Z"))
-    private boolean keepScoutingAtWaypoints(GlobalStation instance, TrackNode side, Operation<Boolean> original) {
-        return original.call(instance, side) && !snr$isWaypointMode();
+    @Redirect(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/graph/TrackNode;)Z"))
+    private boolean keepScoutingAtWaypoints(GlobalStation instance, TrackNode side) {
+        return instance.canApproachFrom(side) && !snr$isWaypointMode();
     }
 
-    @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
+    @Redirect(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
     slice = @Slice(
         from = @At(value = "CONSTANT", args = {"doubleValue=0.25d"}),
         to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
     ))
-    private Pair<UUID, Boolean> brakeProperlyAtWaypoints(Navigation instance, Operation<Pair<UUID, Boolean>> original) {
-        return snr$isWaypointMode() ? null : original.call(instance);
+    private Pair<UUID, Boolean> brakeProperlyAtWaypoints(Navigation instance) {
+        return snr$isWaypointMode() ? null : instance.waitingForSignal;
     }
 
-    @WrapOperation(method = "currentSignalResolved", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"), slice =
+    @Redirect(method = "currentSignalResolved", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"), slice =
     @Slice(to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;getPoint(Lcom/simibubi/create/content/trains/graph/EdgePointType;Ljava/util/UUID;)Lcom/simibubi/create/content/trains/signal/TrackEdgePoint;")))
-    private double preventSignalClearWithWaypoint(Navigation instance, Operation<Double> original) {
+    private double preventSignalClearWithWaypoint(Navigation instance) {
         if (((IWaypointableNavigation) instance).snr$isWaypointMode())
             return 10;
-        return original.call(instance);
+        return instance.distanceToDestination;
     }
 
-    @WrapOperation(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
-    private Train replacePresentTrain(GlobalStation instance, Operation<Train> original) {
-        return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);
+    @Redirect(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
+    private Train replacePresentTrain(GlobalStation instance) {
+        return ((ILimitedGlobalStation) instance).orDisablingTrain(instance.getPresentTrain(), train);
     }
 
     @SuppressWarnings("unused")
