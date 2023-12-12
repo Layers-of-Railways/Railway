@@ -11,8 +11,7 @@
   ],
   "mixins": [
     "DetectorRailBlockMixin",
-    "EnderManMixin",
-    "farmersdelight_fabric.MixinBogeyStyle"
+    "EnderManMixin"
   ],
   "injectors": {
     "defaultRequire": 1

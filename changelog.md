@@ -30,7 +30,6 @@ Changes
 
 Fixes
 - Mixin conflict with VS2
-- Fix Farmers delight fabric crash (small hacky fix)
 - Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
 - Fix waypoint schedule items not showing up in the Station Summary (#329)
 - Fix villagers opening sliding doors in the 'special' mode (#317)
