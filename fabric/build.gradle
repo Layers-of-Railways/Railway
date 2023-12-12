@@ -112,7 +112,7 @@ dependencies {
     }
 
     // because create fabric is a bit broken I think
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
+    modImplementation("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
