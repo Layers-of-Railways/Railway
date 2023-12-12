@@ -34,6 +34,7 @@ Fixes
 - Fix waypoint schedule items not showing up in the Station Summary (#329)
 - Fix villagers opening sliding doors in the 'special' mode (#317)
 - Fix normal nixie tube relays (#311)
+- Fix signal debug line rendering for monorail tracks, the line renders higher now so its able to be viewed
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
