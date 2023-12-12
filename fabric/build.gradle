@@ -63,14 +63,6 @@ repositories {
     } // Cardinal Components (Hex Casting dependency)
 }
 
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        if (requested.module.name == "fabric-loader") {
-            useVersion(fabric_loader_version)
-        }
-    }
-}
-
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     common(project(path: ":common", configuration: "namedElements")) { transitive = false }
