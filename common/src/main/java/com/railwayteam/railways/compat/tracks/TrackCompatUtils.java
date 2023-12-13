@@ -38,7 +38,8 @@ public abstract class TrackCompatUtils {
         "byg", // Oh The Biomes You'll Go,
         "blue_skies",
         "twilightforest",
-        "biomesoplenty"
+        "biomesoplenty",
+        "tfc" // TerraFirmaCraft
     );
 
     public static boolean anyLoaded() {

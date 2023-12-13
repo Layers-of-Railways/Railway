@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/ascending",
+  "textures": {
+    "particle": "tfc:block/track/rosewood/standard_track_crossing_rosewood",
+    "0": "tfc:block/track/rosewood/standard_track_rosewood",
+    "1": "tfc:block/track/rosewood/standard_track_mip_rosewood"
+  }
+}
