@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made with Blockbench by StarFluxie",
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
@@ -170,7 +170,7 @@
 				"north": {"uv": [0, 0, 16, 8], "texture": "#3"},
 				"south": {"uv": [16, 8, 0, 16], "texture": "#3"},
 				"up": {"uv": [16, 8, 0, 11], "texture": "#3"},
-				"down": {"uv": [0, 0, 16, 3], "texture": "#3"}
+				"down": {"uv": [16, 0, 0, 3], "texture": "#3"}
 			}
 		},
 		{
@@ -191,7 +191,7 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, -16, 0]},
 			"faces": {
 				"north": {"uv": [2, 0, 16, 8], "texture": "#3"},
-				"east": {"uv": [5, 8, 8, 16], "texture": "#3"},
+				"east": {"uv": [12, 8, 15, 16], "texture": "#3"},
 				"south": {"uv": [16, 8, 2, 16], "texture": "#3"},
 				"up": {"uv": [16, 8, 2, 11], "texture": "#3"},
 				"down": {"uv": [16, 0, 2, 3], "texture": "#3"}
