@@ -396,7 +396,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return brakingDistance + TrackBuffer.getBufferRoom(train);
     }
 
-    @ModifyVariable(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D"), name = "brakingDistance")
+    @ModifyVariable(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;clamp(DDD)D", remap = true), name = "brakingDistance")
     private double resetSufficientBufferDistance(double brakingDistance) {
         return brakingDistance - TrackBuffer.getBufferRoom(train);
     }
