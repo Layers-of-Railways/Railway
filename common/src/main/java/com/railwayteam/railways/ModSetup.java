@@ -30,5 +30,6 @@ public class ModSetup {
     TwilightForestTrackCompat.register();
     BiomesOPlentyTrackCompat.register();
     DreamsAndDesiresTrackCompat.register();
+    QuarkTrackCompat.register();
   }
 }

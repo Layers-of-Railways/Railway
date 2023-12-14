@@ -21,7 +21,8 @@ public enum Mods {
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
 	FARMERSDELIGHT("farmersdelight"),
-	DREAMSANDDESIRES("create_dd")
+	DREAMSANDDESIRES("create_dd"),
+	QUARK("quark")
 	;
 
 	public final boolean isLoaded;

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "quark:block/track/blossom/portal_track_blossom",
+    "2": "quark:block/track/blossom/portal_track_mip_blossom",
+    "3": "quark:block/track/blossom/standard_track_blossom",
+    "particle": "quark:block/track/blossom/standard_track_crossing_blossom"
+  }
+}

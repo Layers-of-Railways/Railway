@@ -6,6 +6,7 @@ Additions
 - Natures Spirit compat Tracks (1.20.1)
 - TerraFirmaCraft compat Tracks (1.20.1)
 - Create: Dreams and Desires compat Tracks
+- Quark compat tracks
 - Handcar: wrench to pick up
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train

@@ -128,13 +128,18 @@ dependencies {
     if (enable_dnd.toBoolean()) {
         modLocalRuntime("maven.modrinth:create-dreams-and-desires:${dnd_version}")
     }
+    if (enable_quark.toBoolean()) {
+        modLocalRuntime("maven.modrinth:quark:${minecraft_version}-${quark_version}")
+        modLocalRuntime("vazkii.autoreglib:AutoRegLib:${arl_version}")
+    }
 
     if (enable_sodium_rubidium.toBoolean()) {
         modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")
     }
 
-    if (enable_eb.toBoolean())
+    if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-forge:${EB_verison}+forge-patch-")
+    }
 
     if (enable_sc.toBoolean()) {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
