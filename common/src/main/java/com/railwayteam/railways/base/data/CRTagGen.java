@@ -52,7 +52,9 @@ public class CRTagGen {
 			.generateBoth(tags, tag -> tag.add(Items.STRING));
 		CommonTags.IRON_PLATES.generateCommon(tags);
 		CommonTags.BRASS_PLATES.generateCommon(tags);
-//			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));
+		CommonTags.TFC_IRON_ROD.generateCommon(tags);
+		CommonTags.TFC_ZINC_ROD.generateCommon(tags);
+
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

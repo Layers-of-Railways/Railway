@@ -2,6 +2,8 @@ package com.railwayteam.railways.compat.tracks;
 
 import com.railwayteam.railways.Config;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.TextUtils;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.railwayteam.railways.Railways.registrate;
 import static com.railwayteam.railways.compat.tracks.TrackCompatUtils.buildCompatModels;
@@ -63,6 +66,7 @@ public class GenericTrackCompat {
                 .block(() -> BLOCKS.get(name))
                 .particle(asResource("block/track/"+name+"/standard_track_crossing_"+name))
                 .sleeper(baseBlock.map(Ingredient::of).orElseGet(() -> SoftIngredient.of(getSlabLocation(name))))
+                .rails(getIngredientForRail())
             );
             MATERIALS.put(name, material);
 
@@ -86,5 +90,12 @@ public class GenericTrackCompat {
 
     protected ResourceLocation getSlabLocation(String name) {
         return asResource(name+"_slab");
+    }
+
+    protected Ingredient getIngredientForRail() {
+        return Ingredient.fromValues(Stream.of(
+                AccessorIngredient_TagValue.railway$create(CommonTags.IRON_NUGGETS.tag),
+                AccessorIngredient_TagValue.railway$create(CommonTags.ZINC_NUGGETS.tag)
+        ));
     }
 }
