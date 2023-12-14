@@ -10,6 +10,7 @@
     "AccessorCarriage",
     "AccessorCarriageBogey",
     "AccessorCarriageContraptionEntity",
+    "AccessorIngredient_TagValue",
     "AccessorNavigation",
     "AccessorOrientedContraptionEntity",
     "AccessorScheduleRuntime",
