@@ -169,8 +169,9 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         ClientPacketListener connection = Minecraft.getInstance().getConnection();
         if (connection != null) {
             PlayerInfo info = connection.getPlayerInfo(uuid);
-            if (info != null)
+            if (info != null) {
                 return info.getProfile().getName();
+            }
         }
         return "Unknown Player";
     }
