@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "tfc:block/track/mangrove/standard_track_mangrove",
+    "2": "tfc:block/track/mangrove/standard_track_mip_mangrove",
+    "3": "tfc:block/track/mangrove/standard_track_crossing_mangrove",
+    "particle": "tfc:block/track/mangrove/standard_track_crossing_mangrove"
+  }
+}

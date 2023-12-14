@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d2_xo",
+  "textures": {
+    "0": "tfc:block/track/aspen/standard_track_aspen",
+    "1": "tfc:block/track/aspen/standard_track_mip_aspen",
+    "2": "tfc:block/track/aspen/standard_track_crossing_aspen",
+    "particle": "tfc:block/track/aspen/standard_track_crossing_aspen"
+  }
+}

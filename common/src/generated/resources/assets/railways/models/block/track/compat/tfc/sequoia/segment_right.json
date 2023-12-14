@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/segment_right",
+  "textures": {
+    "0": "tfc:block/track/sequoia/standard_track_sequoia",
+    "1": "tfc:block/track/sequoia/standard_track_mip_sequoia",
+    "particle": "tfc:block/track/sequoia/standard_track_crossing_sequoia"
+  }
+}

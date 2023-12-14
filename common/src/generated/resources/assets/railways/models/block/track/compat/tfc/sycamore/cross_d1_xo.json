@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "tfc:block/track/sycamore/standard_track_sycamore",
+    "1": "tfc:block/track/sycamore/standard_track_mip_sycamore",
+    "2": "tfc:block/track/sycamore/standard_track_crossing_sycamore",
+    "particle": "tfc:block/track/sycamore/standard_track_crossing_sycamore"
+  }
+}

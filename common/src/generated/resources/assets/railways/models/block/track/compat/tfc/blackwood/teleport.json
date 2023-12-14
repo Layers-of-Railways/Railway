@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "tfc:block/track/blackwood/portal_track_blackwood",
+    "2": "tfc:block/track/blackwood/portal_track_mip_blackwood",
+    "3": "tfc:block/track/blackwood/standard_track_blackwood",
+    "particle": "tfc:block/track/blackwood/standard_track_crossing_blackwood"
+  }
+}

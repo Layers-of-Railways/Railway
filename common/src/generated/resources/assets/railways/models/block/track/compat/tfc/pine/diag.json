@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag",
+  "textures": {
+    "0": "tfc:block/track/pine/standard_track_pine",
+    "1": "tfc:block/track/pine/standard_track_mip_pine",
+    "2": "tfc:block/track/pine/standard_track_crossing_pine",
+    "particle": "tfc:block/track/pine/standard_track_crossing_pine"
+  }
+}

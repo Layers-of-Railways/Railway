@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/x_ortho",
+  "textures": {
+    "1": "tfc:block/track/palm/standard_track_palm",
+    "2": "tfc:block/track/palm/standard_track_mip_palm",
+    "3": "tfc:block/track/palm/standard_track_crossing_palm",
+    "particle": "tfc:block/track/palm/standard_track_crossing_palm"
+  }
+}

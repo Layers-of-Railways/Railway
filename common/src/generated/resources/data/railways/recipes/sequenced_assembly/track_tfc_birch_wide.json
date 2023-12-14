@@ -1,0 +1,73 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "tfc"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tfc"
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_tfc_birch"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_tfc_birch_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        },
+        {
+          "item": "tfc:wood/planks/birch_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_birch_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_birch_wide"
+  }
+}

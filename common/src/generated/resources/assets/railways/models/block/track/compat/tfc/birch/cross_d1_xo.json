@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "tfc:block/track/birch/standard_track_birch",
+    "1": "tfc:block/track/birch/standard_track_mip_birch",
+    "2": "tfc:block/track/birch/standard_track_crossing_birch",
+    "particle": "tfc:block/track/birch/standard_track_crossing_birch"
+  }
+}

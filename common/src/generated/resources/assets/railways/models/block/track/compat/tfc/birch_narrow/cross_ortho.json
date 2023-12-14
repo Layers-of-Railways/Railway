@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_ortho",
+  "textures": {
+    "1": "tfc:block/track/birch/standard_track_birch",
+    "2": "tfc:block/track/birch/standard_track_mip_birch",
+    "3": "tfc:block/track/birch/standard_track_crossing_birch",
+    "particle": "tfc:block/track/birch/standard_track_crossing_birch"
+  }
+}
