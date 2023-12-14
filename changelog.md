@@ -2,9 +2,10 @@
 Version 1.6.0
 ------------------------------------------------------
 Additions
-- Cherry Tracks (1.20.1)
-- Bamboo Tracks (1.20.1)
-- Stripped Bamboo Tracks (1.20.1)
+- Cherry, Bamboo & Stripped Bamboo Tracks (1.20.1)
+- Natures Spirit compat Tracks (1.20.1)
+- TerraFirmaCraft compat Tracks (1.20.1)
+- Create: Dreams and Desires compat Tracks
 - Handcar: wrench to pick up
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train
@@ -12,7 +13,6 @@ Additions
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
 - Buffer blocks
-- Create: Dreams and Desires compat Tracks
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
