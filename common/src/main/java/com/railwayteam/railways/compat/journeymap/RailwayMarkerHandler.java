@@ -6,6 +6,8 @@ import journeymap.client.api.display.MarkerOverlay;
 import journeymap.client.api.model.MapImage;
 import journeymap.client.api.model.TextProperties;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
@@ -110,8 +112,8 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         marker.setLabel(data.name());
         String info = "";
         info += data.name();
-        info += "\n > Carriage count: "+data.carriageCount();
-        info += "\n > Owner: "+ UsernameUtils.INSTANCE.getName(data.owner());
+        info += "\n > Carriage count: " + data.carriageCount();
+        info += "\n > Owner: " + getNameFromUUID(data.owner());
 //        info += "\n > Destination: "+data.destination(); //Gets out of sync
 
         marker.setTitle(info);
@@ -161,5 +163,15 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         trainData.clear();
         needingUpdates.clear();
         removeObsolete();
+    }
+
+    public static String getNameFromUUID(UUID uuid) {
+        ClientPacketListener connection = Minecraft.getInstance().getConnection();
+        if (connection != null) {
+            PlayerInfo info = connection.getPlayerInfo(uuid);
+            if (info != null)
+                return info.getProfile().getName();
+        }
+        return "Unknown Player";
     }
 }
