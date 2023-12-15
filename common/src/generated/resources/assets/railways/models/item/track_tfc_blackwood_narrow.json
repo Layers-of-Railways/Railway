@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tfc:item/track/track_blackwood_narrow"
+  }
+}

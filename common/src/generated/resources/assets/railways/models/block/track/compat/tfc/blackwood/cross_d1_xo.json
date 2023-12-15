@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "tfc:block/track/blackwood/standard_track_blackwood",
+    "1": "tfc:block/track/blackwood/standard_track_mip_blackwood",
+    "2": "tfc:block/track/blackwood/standard_track_crossing_blackwood",
+    "particle": "tfc:block/track/blackwood/standard_track_crossing_blackwood"
+  }
+}

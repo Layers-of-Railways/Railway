@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag",
+  "textures": {
+    "1": "tfc:block/track/willow/standard_track_willow",
+    "2": "tfc:block/track/willow/standard_track_mip_willow",
+    "3": "tfc:block/track/willow/standard_track_crossing_willow",
+    "particle": "tfc:block/track/willow/standard_track_crossing_willow"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "tfc:block/track/sycamore/standard_track_sycamore",
+    "1": "tfc:block/track/sycamore/standard_track_mip_sycamore",
+    "particle": "tfc:block/track/sycamore/standard_track_crossing_sycamore"
+  }
+}

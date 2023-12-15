@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "tfc:block/track/willow/portal_track_willow",
+    "2": "tfc:block/track/willow/portal_track_mip_willow",
+    "3": "tfc:block/track/willow/standard_track_willow",
+    "particle": "tfc:block/track/willow/standard_track_crossing_willow"
+  }
+}

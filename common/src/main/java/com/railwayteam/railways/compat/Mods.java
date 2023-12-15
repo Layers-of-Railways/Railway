@@ -23,7 +23,8 @@ public enum Mods {
 	FIGURA("figura"),
 	NATURES_SPIRIT("natures_spirit"),
 	DREAMSANDDESIRES("create_dd"),
-	QUARK("quark")
+	QUARK("quark"),
+	TFC("tfc")
 	;
 
 	public final boolean isLoaded;

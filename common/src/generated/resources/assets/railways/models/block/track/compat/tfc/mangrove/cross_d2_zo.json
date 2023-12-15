@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d2_zo",
+  "textures": {
+    "0": "tfc:block/track/mangrove/standard_track_mangrove",
+    "1": "tfc:block/track/mangrove/standard_track_mip_mangrove",
+    "2": "tfc:block/track/mangrove/standard_track_crossing_mangrove",
+    "particle": "tfc:block/track/mangrove/standard_track_crossing_mangrove"
+  }
+}

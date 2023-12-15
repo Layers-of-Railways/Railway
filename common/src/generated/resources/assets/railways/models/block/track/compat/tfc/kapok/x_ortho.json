@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/x_ortho",
+  "textures": {
+    "1": "tfc:block/track/kapok/standard_track_kapok",
+    "2": "tfc:block/track/kapok/standard_track_mip_kapok",
+    "3": "tfc:block/track/kapok/standard_track_crossing_kapok",
+    "particle": "tfc:block/track/kapok/standard_track_crossing_kapok"
+  }
+}

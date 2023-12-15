@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "tfc:block/track/spruce/standard_track_spruce",
+    "1": "tfc:block/track/spruce/standard_track_mip_spruce",
+    "particle": "tfc:block/track/spruce/standard_track_crossing_spruce"
+  }
+}

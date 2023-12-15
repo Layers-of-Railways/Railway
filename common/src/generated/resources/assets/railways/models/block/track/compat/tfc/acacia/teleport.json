@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "tfc:block/track/acacia/portal_track_acacia",
+    "2": "tfc:block/track/acacia/portal_track_mip_acacia",
+    "3": "tfc:block/track/acacia/standard_track_acacia",
+    "particle": "tfc:block/track/acacia/standard_track_crossing_acacia"
+  }
+}

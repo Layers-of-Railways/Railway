@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag",
+  "textures": {
+    "0": "tfc:block/track/rosewood/standard_track_rosewood",
+    "1": "tfc:block/track/rosewood/standard_track_mip_rosewood",
+    "2": "tfc:block/track/rosewood/standard_track_crossing_rosewood",
+    "particle": "tfc:block/track/rosewood/standard_track_crossing_rosewood"
+  }
+}

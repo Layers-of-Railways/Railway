@@ -52,5 +52,6 @@ public class ModSetup {
     NaturesSpiritTrackCompat.register();
     DreamsAndDesiresTrackCompat.register();
     QuarkTrackCompat.register();
+    TFCTrackCompat.register();
   }
 }

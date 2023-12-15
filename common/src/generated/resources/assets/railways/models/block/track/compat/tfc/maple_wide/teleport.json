@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "tfc:block/track/maple/portal_track_maple",
+    "2": "tfc:block/track/maple/portal_track_mip_maple",
+    "3": "tfc:block/track/maple/standard_track_maple",
+    "particle": "tfc:block/track/maple/standard_track_crossing_maple"
+  }
+}

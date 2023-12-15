@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_diag",
+  "textures": {
+    "0": "tfc:block/track/chestnut/standard_track_chestnut",
+    "1": "tfc:block/track/chestnut/standard_track_mip_chestnut",
+    "2": "tfc:block/track/chestnut/standard_track_crossing_chestnut",
+    "particle": "tfc:block/track/chestnut/standard_track_crossing_chestnut"
+  }
+}

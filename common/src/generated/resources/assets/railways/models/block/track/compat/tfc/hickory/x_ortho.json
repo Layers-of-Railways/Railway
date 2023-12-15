@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/x_ortho",
+  "textures": {
+    "1": "tfc:block/track/hickory/standard_track_hickory",
+    "2": "tfc:block/track/hickory/standard_track_mip_hickory",
+    "3": "tfc:block/track/hickory/standard_track_crossing_hickory",
+    "particle": "tfc:block/track/hickory/standard_track_crossing_hickory"
+  }
+}

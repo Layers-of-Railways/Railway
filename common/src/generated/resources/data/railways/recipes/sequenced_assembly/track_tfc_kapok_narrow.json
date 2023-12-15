@@ -1,0 +1,78 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "tfc"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tfc"
+    }
+  ],
+  "ingredient": {
+    "item": "tfc:wood/planks/kapok_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_tfc_kapok_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        },
+        [
+          {
+            "tag": "railways:internal/rods/wrought_iron"
+          },
+          {
+            "tag": "railways:internal/rods/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_kapok_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_kapok_narrow"
+  }
+}

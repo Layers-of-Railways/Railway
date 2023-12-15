@@ -1,0 +1,86 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "tfc"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "tfc"
+    }
+  ],
+  "ingredient": {
+    "item": "tfc:wood/planks/hickory_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_tfc_hickory"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        },
+        [
+          {
+            "tag": "railways:internal/rods/wrought_iron"
+          },
+          {
+            "tag": "railways:internal/rods/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        },
+        [
+          {
+            "tag": "railways:internal/rods/wrought_iron"
+          },
+          {
+            "tag": "railways:internal/rods/zinc"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_tfc_hickory"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_tfc_hickory"
+  }
+}

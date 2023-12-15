@@ -43,7 +43,8 @@ public abstract class TrackCompatUtils {
             "biomesoplenty",
             "natures_spirit",
             "create_dd", // Dreams 'n' Desires
-            "quark"
+            "quark",
+            "tfc" // TerraFirmaCraft
     );
 
     public static boolean anyLoaded() {

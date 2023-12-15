@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/x_ortho",
+  "textures": {
+    "1": "tfc:block/track/aspen/standard_track_aspen",
+    "2": "tfc:block/track/aspen/standard_track_mip_aspen",
+    "3": "tfc:block/track/aspen/standard_track_crossing_aspen",
+    "particle": "tfc:block/track/aspen/standard_track_crossing_aspen"
+  }
+}
