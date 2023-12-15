@@ -32,10 +32,10 @@
         },
         [
           {
-            "item": "tfc:metal/rod/wrought_iron"
+            "tag": "railways:internal/rods/wrought_iron"
           },
           {
-            "item": "tfc:metal/rod/zinc"
+            "tag": "railways:internal/rods/zinc"
           }
         ]
       ],
@@ -53,10 +53,10 @@
         },
         [
           {
-            "item": "tfc:metal/rod/wrought_iron"
+            "tag": "railways:internal/rods/wrought_iron"
           },
           {
-            "item": "tfc:metal/rod/zinc"
+            "tag": "railways:internal/rods/zinc"
           }
         ]
       ],

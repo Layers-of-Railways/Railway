@@ -128,6 +128,10 @@ dependencies {
     if (enable_bop.toBoolean()) {
         modLocalRuntime("curse.maven:biomesoplenty-220318:${bop_version}")
     }
+    if (enable_tfc.toBoolean()) {
+        modLocalRuntime("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
+        modLocalRuntime("maven.modrinth:terrafirmacraft:${tfc_version}")
+    }
 
     if (enable_sodium_rubidium.toBoolean()) {
         modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")
