@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///track_switch_andesite"
+        "recipe": "railways:crafting/track_switch_andesite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///track_switch_andesite"
+      "railways:crafting/track_switch_andesite"
     ]
   },
   "sends_telemetry_event": false

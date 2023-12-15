@@ -21,7 +21,9 @@ public enum Mods {
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
 	FIGURA("figura"),
-	NATURES_SPIRIT("natures_spirit")
+	NATURES_SPIRIT("natures_spirit"),
+	DREAMSANDDESIRES("create_dd"),
+	QUARK("quark")
 	;
 
 	public final boolean isLoaded;

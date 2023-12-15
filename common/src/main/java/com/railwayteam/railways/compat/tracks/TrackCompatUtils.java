@@ -41,7 +41,9 @@ public abstract class TrackCompatUtils {
             "blue_skies",
             "twilightforest",
             "biomesoplenty",
-            "natures_spirit"
+            "natures_spirit",
+            "create_dd", // Dreams 'n' Desires
+            "quark"
     );
 
     public static boolean anyLoaded() {

@@ -128,20 +128,27 @@ dependencies {
     if (enable_bop.toBoolean()) {
         modLocalRuntime("curse.maven:biomesoplenty-220318:${bop_version}")
     }
+    if (enable_dnd.toBoolean()) {
+        modLocalRuntime("maven.modrinth:create-dreams-and-desires:${dnd_version}")
+    }
+    if (enable_quark.toBoolean()) {
+        modLocalRuntime("maven.modrinth:quark:${minecraft_version}-${quark_version}")
+        modLocalRuntime("vazkii.autoreglib:AutoRegLib:${arl_version}")
+    }
 
     if (enable_sodium_rubidium.toBoolean()) {
         modLocalRuntime("maven.modrinth:rubidium:${rubidium_version}")
     }
 
-    if (enable_eb.toBoolean())
+    if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-forge:${EB_verison}+forge-patch-")
+    }
 
     if (enable_sc.toBoolean()) {
         modLocalRuntime("curse.maven:securitycraft-64760:${sc_version}")
     }
 
-    implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}"))
-    implementation(include("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras_version}"))
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")))
 }
 
 processResources {
@@ -261,6 +268,7 @@ publishMods {
         }
     }
 }
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {
@@ -271,11 +279,21 @@ publishing {
 
     repositories {
         if (System.getenv("MAVEN_TOKEN")) {
-            maven {
-                url "https://maven.ithundxr.dev/releases"
-                credentials {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
                 }
             }
         }

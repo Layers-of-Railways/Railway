@@ -1,137 +1,72 @@
 package com.railwayteam.railways.content.smokestack;
 
-import com.railwayteam.railways.util.BlockStateUtils;
+import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
+import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticle;
+import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
+import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.AllTags;
-import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IWrenchable {
-
-    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEntity> {
 
     public final SmokeStackType type;
-    protected final ShapeWrapper shape;
     public boolean createsStationarySmoke;
 
     public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
-        super(properties);
+        super(properties, shape);
         this.registerDefaultState(this.makeDefaultState());
         this.type = type;
-        this.shape = shape;
         this.createsStationarySmoke = createsStationarySmoke;
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return shape.get();
-    }
-
-    protected BlockState makeDefaultState() {
-        return this.defaultBlockState()
-            .setValue(ENABLED, true)
-            .setValue(POWERED, false)
-            .setValue(WATERLOGGED, false);
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(ENABLED).add(POWERED).add(WATERLOGGED);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public @NotNull FluidState getFluidState(BlockState state) {
-        return fluidState(state);
-    }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState blockstate = this.defaultBlockState();
-        FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-
-        if (context.getLevel().hasNeighborSignal(context.getClickedPos())) {
-            blockstate = blockstate.setValue(ENABLED, false).setValue(POWERED, true);
-        }
-
-        return blockstate.setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-        updateWater(level, state, currentPos);
-        return state;
-    }
-
-    @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
-                                 BlockHitResult pHit) {
-        if (AllTags.AllItemTags.WRENCH.matches(pPlayer.getItemInHand(pHand))) {
-            return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
-        }
-        pState = pState.cycle(ENABLED);
-        pLevel.setBlock(pPos, pState, 2);
-        if (pState.getValue(WATERLOGGED))
-            pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
-        return InteractionResult.sidedSuccess(pLevel.isClientSide);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
-        if (!level.isClientSide) {
-            boolean powered = level.hasNeighborSignal(pos);
-            boolean shouldBeEnabled = !powered;
-            if (powered != state.getValue(POWERED)) {
-                if (state.getValue(ENABLED) != shouldBeEnabled) {
-                    state = state.setValue(ENABLED, shouldBeEnabled);
-                }
-
-                level.setBlock(pos, state.setValue(POWERED, powered), 2);
-                if (state.getValue(WATERLOGGED)) {
-                    level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
-                }
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (pPlayer.getItemInHand(pHand).getItem() instanceof DyeItem dyeItem) {
+            DyeColor color = dyeItem.getDyeColor();
+            withBlockEntityDo(pLevel, pPos, te -> te.setColor(color));
+            if (!pPlayer.isCreative()) {
+                pPlayer.getItemInHand(pHand).shrink(1);
             }
+            return InteractionResult.sidedSuccess(pLevel.isClientSide);
         }
+        if (pPlayer.getItemInHand(pHand).is(ItemTags.SOUL_FIRE_BASE_BLOCKS)) {
+            withBlockEntityDo(pLevel, pPos, te -> te.setSoul(true));
+            if (!pPlayer.isCreative()) {
+                pPlayer.getItemInHand(pHand).shrink(1);
+            }
+            return InteractionResult.sidedSuccess(pLevel.isClientSide);
+        }
+        if (pPlayer.isShiftKeyDown()) {
+            withBlockEntityDo(pLevel, pPos, te -> {
+                te.setSoul(false);
+                te.setColor(null);
+            });
+            return InteractionResult.sidedSuccess(pLevel.isClientSide);
+        }
+        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 
     public static void makeParticlesStationary(Level level, BlockPos pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta) {
@@ -148,31 +83,73 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
     }
 
     public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary) {
-        BlockPos underPos = BlockPos.containing(pos.x, pos.y-1, pos.z);
-        BlockState underState = level.getBlockState(underPos);
-        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, underState);
+        DyeColor color = null;
+        boolean isSoul = false;
+        if (level.getBlockEntity(BlockPos.containing(pos)) instanceof SmokeStackBlockEntity be) {
+            isSoul = be.isSoul();
+            color = be.getColor();
+        }
+        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, color, null, isSoul);
     }
 
-    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, BlockState underState) {
+    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, @Nullable DyeColor color) {
+        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, color, null);
+    }
+
+    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, @Nullable DyeColor color, @Nullable Boolean small) {
+        makeParticles(level, pos, isSignalFire, spawnExtraSmoke, spawnOffset, spawnDelta, speedMultiplier, stationary, color, small, false);
+    }
+
+    public static void makeParticles(Level level, Vec3 pos, boolean isSignalFire, boolean spawnExtraSmoke, Vec3 spawnOffset, Vec3 spawnDelta, double speedMultiplier, boolean stationary, @Nullable DyeColor color, @Nullable Boolean small, boolean isSoul) {
         RandomSource random = level.getRandom();
-        ParticleOptions particleType;
-        if (underState.is(BlockTags.WOOL)) {
-            DyeColor color = BlockStateUtils.getWoolColor(underState.getBlock());//state.getMapColor(level, underPos).col;
-            float[] c = color.getTextureDiffuseColors();
-            particleType = new SmokeParticleData(stationary, c[0], c[1], c[2]);
-        } else {
-            particleType = new SmokeParticleData(stationary);
+        SmokeType smokeType = CRConfigs.client().smokeType.get();
+        if (small == null)
+            small = random.nextDouble() < 0.33;
+        switch (smokeType) {
+            case VANILLA -> {
+                SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
+                level.addAlwaysVisibleParticle(particleType, true,
+                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
+                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y,
+                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (double)(random.nextBoolean() ? 1 : -1),
+                    0.0D, 0.07D*speedMultiplier / (stationary ? 1. : 25.), 0.0D);
+            }
+            case OLD -> {
+                ParticleOptions particleType;
+                if (color != null) {
+                    float[] c = color.getTextureDiffuseColors();
+                    particleType = new SmokeParticleData(stationary, c[0], c[1], c[2]);
+                } else {
+                    particleType = new SmokeParticleData(stationary);
+                }
+                level.addAlwaysVisibleParticle(particleType, true,
+                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+                    0.0D, 0.07D * speedMultiplier * (stationary ? 25 : 1), 0.0D);
+            }
+            case CARTOON -> {
+                ParticleOptions particleType;
+                if (isSoul) {
+                    particleType = PuffSmokeParticleData.create(small, stationary, -2, -2, -2);
+                } else if (color != null) {
+                    float[] c = color.getTextureDiffuseColors();
+                    particleType = PuffSmokeParticleData.create(small, stationary, c[0], c[1], c[2]);
+                } else {
+                    particleType = PuffSmokeParticleData.create(small, stationary);
+                }
+                level.addAlwaysVisibleParticle(particleType, true,
+                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+                    0.0D, Mth.equal(speedMultiplier, -1) ? PuffSmokeParticle.DOUBLE_SPEED_SENTINEL : 2.1, 0.0D);
+            }
         }
-        level.addAlwaysVisibleParticle(particleType, true,
-            (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
-            (double)pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
-            (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
-            0.0D, 0.07D*speedMultiplier * (stationary ? 25 : 1), 0.0D);
-        if (spawnExtraSmoke) {
+        if (spawnExtraSmoke && smokeType != SmokeType.CARTOON) {
             level.addParticle(ParticleTypes.SMOKE,
-                (double)pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
-                (double)pos.y() + spawnOffset.y - 0.1d,
-                (double)pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
+                pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
+                pos.y() + spawnOffset.y - 0.1d,
+                pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
                 0.0D, 0.005D*speedMultiplier, 0.0D);
         }
 
@@ -191,6 +168,16 @@ public class SmokeStackBlock extends Block implements ProperWaterloggedBlock, IW
             }
 
         }
+    }
+
+    @Override
+    public Class<SmokeStackBlockEntity> getBlockEntityClass() {
+        return SmokeStackBlockEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends SmokeStackBlockEntity> getBlockEntityType() {
+        return CRBlockEntities.SMOKE_STACK.get();
     }
 
     public static class SmokeStackType {

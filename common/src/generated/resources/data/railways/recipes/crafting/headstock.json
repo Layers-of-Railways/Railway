@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "railways:link_and_pin"
+    },
+    "_": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    " # ",
+    "___"
+  ],
+  "result": {
+    "item": "railways:headstock"
+  }
+}

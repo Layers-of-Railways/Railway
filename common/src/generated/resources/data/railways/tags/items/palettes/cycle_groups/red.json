@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "railways:red_slashed_locometal",
+    "railways:red_riveted_locometal",
+    "railways:red_locometal_pillar",
+    "railways:red_locometal_smokebox",
+    "railways:red_plated_locometal",
+    "railways:red_flat_slashed_locometal",
+    "railways:red_flat_riveted_locometal"
+  ]
+}

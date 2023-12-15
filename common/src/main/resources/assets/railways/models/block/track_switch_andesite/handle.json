@@ -9,8 +9,8 @@
 	"elements": [
 		{
 			"name": "grip",
-			"from": [7, 8.5, 12],
-			"to": [9, 18.5, 13],
+			"from": [7.01, 8.5, 12],
+			"to": [8.99, 18.5, 13],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 16, 14]},
 			"faces": {
 				"north": {"uv": [7, 0, 9, 10], "texture": "#0"},

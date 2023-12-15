@@ -19,9 +19,8 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetName, String mixinName) {
-        if (mixinName.contains("compat.voicechat")) {
+        if (mixinName.contains("compat.voicechat"))
             return Mods.VOICECHAT.isLoaded;
-        }
         return true;
     }
 

@@ -51,6 +51,7 @@
   "create.sliding_door.mode.manual": "Manual",
   "create.sliding_door.mode.normal": "Normal (Default)",
   "create.sliding_door.mode.special": "Special",
+  "create.sliding_door.mode.special_inverted": "Special Inverted",
 
   "railways.station.open_left": "Open Left Doors",
   "railways.station.open_right": "Open Right Doors",
@@ -58,7 +59,9 @@
   "railways.whistle.tool.bound": "Bound to:",
   "railways.whistle.tool.conductor_id": "Conductor: §6%s§r",
   "railways.whistle.tool.train_id": "Train: §e%1$s§r (§6%2$s§r)",
-  "railways.whistle.tool.bound_usage": "Use on a track to summon the bound train!",
+  "railways.whistle.tool.bound_usage": "Use on a track or station to summon the bound train!",
+  "railways.whistle.tool.bound_auto_usage": "Deployers can use whistles on stations to summon trains",
+  "railways.whistle.tool.bound_auto_clear": "Or on air to dismiss the auto schedule of the bound train",
   "railways.whistle.tool.not_bound": "Not bound, use on a conductor riding a train to bind.",
 
   "railways.whistle.set": "Bound whistle.",
@@ -136,12 +139,14 @@
   "itemGroup.railways": "Steam 'n' Rails",
   "itemGroup.railways_tracks": "Steam 'n' Rails: Tracks",
   "itemGroup.railways_caps": "Steam 'n' Rails: Conductor Caps",
+  "itemGroup.railways_palettes": "Steam 'n' Rails: Palettes",
 
   "sounds.railways.conductor_whistle": "Conductor Whistles",
 
   "header.railways.optifine": "Warning: Optifine present on game client",
-  "message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disabled in Steam 'n' Rails client sided configs however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check PrismLauncher's Optifine Alternatives list:",
+  "message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disable by clicking proceed anyway however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check LambdAurora's Optifine Alternatives list:",
 
   "label.railways.open_mods_folder": "Open Mods Folder",
-  "label.railways.optifine_alternatives": "Optifine Alternatives"
+  "label.railways.optifine_alternatives": "Optifine Alternatives",
+  "label.railways.proceed_anyway": "Proceed Anyway"
 }

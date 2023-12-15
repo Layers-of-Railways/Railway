@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/light_gray_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:light_gray_slashed_locometal"
+  }
+}

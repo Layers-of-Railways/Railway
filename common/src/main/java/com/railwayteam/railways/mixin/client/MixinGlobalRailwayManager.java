@@ -2,7 +2,9 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchDebugVisualizer;
+import com.railwayteam.railways.content.train_debug.TravellingPointVisualizer;
 import com.railwayteam.railways.registry.CREdgePointTypes;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.kinetics.KineticDebugger;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Train;
@@ -20,12 +22,12 @@ import java.util.UUID;
 public abstract class MixinGlobalRailwayManager {
     @Shadow public Map<UUID, Train> trains;
 
-/*    @Inject(method = "clientTick", at = @At("HEAD"))
+    @Inject(method = "clientTick", at = @At("HEAD"))
     private void showTrainDebug(CallbackInfo ci) {
-        if (KineticDebugger.isActive())
+        if (KineticDebugger.isActive() && Utils.isDevEnv())
             for (Train train : trains.values())
                 TravellingPointVisualizer.debugTrain(train);
-    }*/
+    }
 
     @Shadow public Map<UUID, TrackGraph> trackNetworks;
 

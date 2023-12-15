@@ -6,8 +6,11 @@ import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Color;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3f;
 
 public class TravellingPointVisualizer {
     @SuppressWarnings("UnnecessaryBoxing")
@@ -29,10 +32,14 @@ public class TravellingPointVisualizer {
                             CreateClient.OUTLINER.showLine()
                         }
                     }*/
-                        /*CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 2 + (bogey == carriage.leadingBogey() ? 0 : 1)), bogey.leading().getPosition(), bogey.trailing().getPosition())
+                        Vec3 leadPos = bogey.leading().getPosition(train.graph);
+                        Vec3 trailPos = bogey.trailing().getPosition(train.graph);
+                        mc.level.addParticle(new DustParticleOptions(new Vector3f(0, 1, 0), 2.0f), leadPos.x, leadPos.y+2, leadPos.z, 0, 0, 0);
+                        mc.level.addParticle(new DustParticleOptions(new Vector3f(1, 0, 0), 2.0f), trailPos.x, trailPos.y+2, trailPos.z, 0, 0, 0);
+                        CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 2 + (bogey == carriage.leadingBogey() ? 0 : 1)), bogey.leading().getPosition(train.graph), bogey.trailing().getPosition(train.graph))
                             .colored(color)
-                            .lineWidth(18/16f);*/
-                        int extent = 2;
+                            .lineWidth(2/16f);
+                        /*int extent = 2;
                         CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 0),
                                 bogey.getAnchorPosition().add(0, extent, 0), bogey.getAnchorPosition().add(0, -extent, 0))
                             .colored(color)
@@ -44,7 +51,7 @@ public class TravellingPointVisualizer {
                         CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 2),
                                 bogey.getAnchorPosition().add(0, 0, extent), bogey.getAnchorPosition().add(0, 0, -extent))
                             .colored(color)
-                            .lineWidth(4/16f);
+                            .lineWidth(4/16f);*/
                     }
                 }
             }

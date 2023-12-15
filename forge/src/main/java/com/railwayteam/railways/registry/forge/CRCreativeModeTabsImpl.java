@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
+import com.railwayteam.railways.registry.CRPalettes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -48,6 +49,14 @@ public class CRCreativeModeTabsImpl {
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
             .build());
 
+    public static final RegistryObject<CreativeModeTab> PALETTES_TAB = TAB_REGISTER.register("palettes",
+        () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.railways_palettes"))
+            .withTabsBefore(CAPS_TAB.getKey())
+            .icon(() -> CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack())
+            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
+            .build());
+
     public static void register(IEventBus modEventBus) {
         TAB_REGISTER.register(modEventBus);
     }
@@ -64,6 +73,10 @@ public class CRCreativeModeTabsImpl {
         return CAPS_TAB.get();
     }
 
+    public static CreativeModeTab getPalettesTab() {
+        return PALETTES_TAB.get();
+    }
+
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         return MAIN_TAB.getKey();
     }
@@ -74,5 +87,9 @@ public class CRCreativeModeTabsImpl {
 
     public static ResourceKey<CreativeModeTab> getCapsTabKey() {
         return CAPS_TAB.getKey();
+    }
+
+    public static ResourceKey<CreativeModeTab> getPalettesTabKey() {
+        return PALETTES_TAB.getKey();
     }
 }

@@ -7,7 +7,7 @@ os.chdir("..")
 
 
 directories = []
-for mod_id in ["biomesoplenty", "blue_skies", "byg", "hexcasting", "railways", "twilightforest", "natures_spirit"]:
+for mod_id in ["biomesoplenty", "blue_skies", "byg", "hexcasting", "railways", "twilightforest", "natures_spirit", "create_dd", "quark"]:
     item_textures = f"common/src/main/resources/assets/{mod_id}/textures/item/"
     directories.extend([
         os.path.join(item_textures, "track"),

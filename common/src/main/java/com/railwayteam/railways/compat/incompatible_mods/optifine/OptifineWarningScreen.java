@@ -1,19 +1,19 @@
 package com.railwayteam.railways.compat.incompatible_mods.optifine;
 
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.mixin.client.AccessorWarningScreen;
 import com.railwayteam.railways.util.Utils;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineLabel;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.multiplayer.WarningScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-
-import java.io.File;
 
 @SuppressWarnings("ConstantConditions")
 @Environment(EnvType.CLIENT)
@@ -32,14 +32,17 @@ public class OptifineWarningScreen extends WarningScreen {
 
         addRenderableWidget(
                 Button.builder(OPTIFINE_ALTERNATIVES, buttonWidget -> Util.getPlatform().openUri(
-                        "https://prismlauncher.org/wiki/getting-started/install-of-alternatives/"
+                        "https://optifine.alternatives.lambdaurora.dev/"
                 ))
                         .bounds(width / 2 - 155 + 160, 100 + yOffset, 150, 20)
                         .build()
         );
 
         addRenderableWidget(
-                Button.builder(QUIT_GAME, buttonWidget -> this.minecraft.stop())
+                Button.builder(PROCEED_ANYWAY, buttonWidget -> {
+                            CRConfigs.client().disableOptifineWarning.set(true);
+                            Minecraft.getInstance().setScreen(new TitleScreen());
+                        })
                         .bounds(width / 2 - 75, 130 + yOffset, 150, 20)
                         .build()
         );
@@ -65,6 +68,6 @@ public class OptifineWarningScreen extends WarningScreen {
 
     private static final Component OPEN_MODS_FOLDER = Component.translatable("label.railways.open_mods_folder");
     private static final Component OPTIFINE_ALTERNATIVES = Component.translatable("label.railways.optifine_alternatives");
-    private static final Component QUIT_GAME = Component.translatable("menu.quit");
+    private static final Component PROCEED_ANYWAY = Component.translatable("label.railways.proceed_anyway");
 
 }

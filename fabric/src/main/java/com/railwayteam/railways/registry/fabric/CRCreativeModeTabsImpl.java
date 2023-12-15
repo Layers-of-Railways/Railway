@@ -5,6 +5,7 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.TabInfo;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
+import com.railwayteam.railways.registry.CRPalettes;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -43,6 +44,13 @@ public class CRCreativeModeTabsImpl {
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
             .build());
 
+    private static final TabInfo PALETTES_TAB = register("palettes",
+            () -> FabricItemGroup.builder()
+                    .title(Component.translatable("itemGroup.railways_palettes"))
+                    .icon(() -> CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack())
+                    .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
+                    .build());
+
     public static CreativeModeTab getBaseTab() {
         return MAIN_TAB.tab();
     }
@@ -53,6 +61,10 @@ public class CRCreativeModeTabsImpl {
 
     public static CreativeModeTab getCapsTab() {
         return CAPS_TAB.tab();
+    }
+
+    public static CreativeModeTab getPalettesTab() {
+        return PALETTES_TAB.tab();
     }
 
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
@@ -73,5 +85,9 @@ public class CRCreativeModeTabsImpl {
         CreativeModeTab tab = supplier.get();
         Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key, tab);
         return new TabInfo(key, tab);
+    }
+
+    public static ResourceKey<CreativeModeTab> getPalettesTabKey() {
+        return PALETTES_TAB.key();
     }
 }

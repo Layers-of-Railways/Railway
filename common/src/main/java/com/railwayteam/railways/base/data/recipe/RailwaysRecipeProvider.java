@@ -2,6 +2,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.registries.Registries;
@@ -9,7 +10,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -139,6 +142,50 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
     public static TagKey<Item> brassSheet() {
       return CommonTags.BRASS_PLATES.tag;
+    }
+
+    public static TagKey<Item> woodenSlab() {
+      return ItemTags.WOODEN_SLABS;
+    }
+
+    public static ItemLike contraptionControls() {
+      return AllBlocks.CONTRAPTION_CONTROLS.get();
+    }
+
+    public static ItemLike stick() {
+      return Items.STICK;
+    }
+
+    public static ItemLike andesiteAlloy() {
+      return AllItems.ANDESITE_ALLOY.get();
+    }
+
+    public static ItemLike smallCog() {
+      return AllBlocks.COGWHEEL.get();
+    }
+
+    public static ItemLike ironBlock() {
+      return Blocks.IRON_BLOCK;
+    }
+
+    public static TagKey<Item> dye(@NotNull DyeColor color) {
+      return CommonTags.DYES.get(color).tag;
+    }
+
+    public static TagKey<Item> brassIngot() {
+      return CommonTags.BRASS_INGOTS.tag;
+    }
+
+    public static ItemLike shaft() {
+      return AllBlocks.SHAFT.get();
+    }
+
+    public static ItemLike linkPin() {
+      return CRBlocks.LINK_AND_PIN.get();
+    }
+
+    public static ItemLike headstock() {
+      return CRBlocks.HEADSTOCK.get();
     }
   }
 }

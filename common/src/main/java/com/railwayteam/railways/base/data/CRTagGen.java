@@ -28,7 +28,7 @@ public class CRTagGen {
 	@SafeVarargs
 	public static void addOptionalTag(ResourceLocation id, TagKey<Block>... tags) {
 		for (TagKey<Block> tag : tags) {
-			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<ResourceLocation>()).add(id);
+			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<>()).add(id);
 		}
 	}
 
@@ -48,12 +48,14 @@ public class CRTagGen {
 		CommonTags.ZINC_NUGGETS.generateCommon(tags);
 		CommonTags.BRASS_NUGGETS.generateCommon(tags);
 		CommonTags.COPPER_INGOTS.generateCommon(tags);
+		CommonTags.BRASS_INGOTS.generateCommon(tags);
 		CommonTags.IRON_INGOTS.generateCommon(tags);
 		CommonTags.STRING.generateCommon(tags)
 			.generateBoth(tags, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
 		CommonTags.IRON_PLATES.generateCommon(tags);
 		CommonTags.BRASS_PLATES.generateCommon(tags);
-//			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));
+		CommonTags.WORKBENCH.generateCommon(tags)
+				.generateBoth(tags, tag -> tag.add(Items.CRAFTING_TABLE.builtInRegistryHolder().key()));
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

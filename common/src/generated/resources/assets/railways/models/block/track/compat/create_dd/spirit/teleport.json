@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "create_dd:block/track/spirit/portal_track_spirit",
+    "2": "create_dd:block/track/spirit/portal_track_mip_spirit",
+    "3": "create_dd:block/track/spirit/standard_track_spirit",
+    "particle": "create_dd:block/track/spirit/standard_track_crossing_spirit"
+  }
+}

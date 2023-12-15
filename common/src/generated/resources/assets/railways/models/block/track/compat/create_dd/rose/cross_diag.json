@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_diag",
+  "textures": {
+    "0": "create_dd:block/track/rose/standard_track_rose",
+    "1": "create_dd:block/track/rose/standard_track_mip_rose",
+    "2": "create_dd:block/track/rose/standard_track_crossing_rose",
+    "particle": "create_dd:block/track/rose/standard_track_crossing_rose"
+  }
+}

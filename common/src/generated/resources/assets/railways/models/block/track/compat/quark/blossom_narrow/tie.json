@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "quark:block/track/blossom/standard_track_blossom",
+    "1": "quark:block/track/blossom/standard_track_mip_blossom",
+    "particle": "quark:block/track/blossom/standard_track_crossing_blossom"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "railways:locometal_smokebox",
+    "railways:white_locometal_smokebox",
+    "railways:orange_locometal_smokebox",
+    "railways:magenta_locometal_smokebox",
+    "railways:light_blue_locometal_smokebox",
+    "railways:yellow_locometal_smokebox",
+    "railways:lime_locometal_smokebox",
+    "railways:pink_locometal_smokebox",
+    "railways:gray_locometal_smokebox",
+    "railways:light_gray_locometal_smokebox",
+    "railways:cyan_locometal_smokebox",
+    "railways:purple_locometal_smokebox",
+    "railways:blue_locometal_smokebox",
+    "railways:brown_locometal_smokebox",
+    "railways:green_locometal_smokebox",
+    "railways:red_locometal_smokebox",
+    "railways:black_locometal_smokebox"
+  ]
+}
