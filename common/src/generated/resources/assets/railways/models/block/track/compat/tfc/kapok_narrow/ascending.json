@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/ascending",
+  "textures": {
+    "0": "tfc:block/track/kapok/standard_track_kapok",
+    "1": "tfc:block/track/kapok/standard_track_mip_kapok",
+    "particle": "tfc:block/track/kapok/standard_track_crossing_kapok"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d1_zo",
+  "textures": {
+    "1": "tfc:block/track/sycamore/standard_track_sycamore",
+    "2": "tfc:block/track/sycamore/standard_track_mip_sycamore",
+    "3": "tfc:block/track/sycamore/standard_track_crossing_sycamore",
+    "particle": "tfc:block/track/sycamore/standard_track_crossing_sycamore"
+  }
+}

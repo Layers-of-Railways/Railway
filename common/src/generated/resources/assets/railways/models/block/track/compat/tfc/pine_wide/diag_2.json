@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag_2",
+  "textures": {
+    "1": "tfc:block/track/pine/standard_track_pine",
+    "2": "tfc:block/track/pine/standard_track_mip_pine",
+    "3": "tfc:block/track/pine/standard_track_crossing_pine",
+    "particle": "tfc:block/track/pine/standard_track_crossing_pine"
+  }
+}

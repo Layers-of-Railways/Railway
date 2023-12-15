@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_right",
+  "textures": {
+    "0": "tfc:block/track/hickory/standard_track_hickory",
+    "1": "tfc:block/track/hickory/standard_track_mip_hickory",
+    "particle": "tfc:block/track/hickory/standard_track_crossing_hickory"
+  }
+}

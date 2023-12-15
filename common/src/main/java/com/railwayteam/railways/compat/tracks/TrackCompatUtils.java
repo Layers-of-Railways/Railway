@@ -41,7 +41,8 @@ public abstract class TrackCompatUtils {
             "blue_skies",
             "twilightforest",
             "biomesoplenty",
-            "natures_spirit"
+            "natures_spirit",
+            "tfc" // TerraFirmaCraft
     );
 
     public static boolean anyLoaded() {

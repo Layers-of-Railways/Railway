@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "tfc:block/track/birch/portal_track_birch",
+    "2": "tfc:block/track/birch/portal_track_mip_birch",
+    "3": "tfc:block/track/birch/standard_track_birch",
+    "particle": "tfc:block/track/birch/standard_track_crossing_birch"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d2_xo",
+  "textures": {
+    "0": "tfc:block/track/oak/standard_track_oak",
+    "1": "tfc:block/track/oak/standard_track_mip_oak",
+    "2": "tfc:block/track/oak/standard_track_crossing_oak",
+    "particle": "tfc:block/track/oak/standard_track_crossing_oak"
+  }
+}

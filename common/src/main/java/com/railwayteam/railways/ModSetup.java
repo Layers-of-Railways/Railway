@@ -43,5 +43,6 @@ public class ModSetup {
     TwilightForestTrackCompat.register();
     BiomesOPlentyTrackCompat.register();
     NaturesSpiritTrackCompat.register();
+    TFCTrackCompat.register();
   }
 }

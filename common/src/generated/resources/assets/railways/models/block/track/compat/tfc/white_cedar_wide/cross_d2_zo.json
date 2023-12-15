@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "tfc:block/track/white_cedar/standard_track_white_cedar",
+    "2": "tfc:block/track/white_cedar/standard_track_mip_white_cedar",
+    "3": "tfc:block/track/white_cedar/standard_track_crossing_white_cedar",
+    "particle": "tfc:block/track/white_cedar/standard_track_crossing_white_cedar"
+  }
+}

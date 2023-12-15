@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "tfc:block/track/chestnut/portal_track_chestnut",
+    "2": "tfc:block/track/chestnut/portal_track_mip_chestnut",
+    "3": "tfc:block/track/chestnut/standard_track_chestnut",
+    "particle": "tfc:block/track/chestnut/standard_track_crossing_chestnut"
+  }
+}

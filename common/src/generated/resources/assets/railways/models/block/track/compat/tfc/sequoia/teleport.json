@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/teleport",
+  "textures": {
+    "1": "tfc:block/track/sequoia/portal_track_sequoia",
+    "2": "tfc:block/track/sequoia/portal_track_mip_sequoia",
+    "3": "tfc:block/track/sequoia/standard_track_sequoia",
+    "particle": "tfc:block/track/sequoia/standard_track_crossing_sequoia"
+  }
+}

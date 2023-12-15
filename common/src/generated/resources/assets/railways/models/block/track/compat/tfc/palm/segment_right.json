@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/track/segment_right",
+  "textures": {
+    "0": "tfc:block/track/palm/standard_track_palm",
+    "1": "tfc:block/track/palm/standard_track_mip_palm",
+    "particle": "tfc:block/track/palm/standard_track_crossing_palm"
+  }
+}

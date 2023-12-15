@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/z_ortho",
+  "textures": {
+    "1": "tfc:block/track/rosewood/standard_track_rosewood",
+    "2": "tfc:block/track/rosewood/standard_track_mip_rosewood",
+    "3": "tfc:block/track/rosewood/standard_track_crossing_rosewood",
+    "particle": "tfc:block/track/rosewood/standard_track_crossing_rosewood"
+  }
+}

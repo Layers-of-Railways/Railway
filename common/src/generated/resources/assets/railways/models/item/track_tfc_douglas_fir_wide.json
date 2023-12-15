@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tfc:item/track/track_douglas_fir_wide"
+  }
+}

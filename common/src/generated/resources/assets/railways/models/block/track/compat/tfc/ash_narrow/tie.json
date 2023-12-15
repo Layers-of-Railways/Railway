@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "tfc:block/track/ash/standard_track_ash",
+    "1": "tfc:block/track/ash/standard_track_mip_ash",
+    "particle": "tfc:block/track/ash/standard_track_crossing_ash"
+  }
+}

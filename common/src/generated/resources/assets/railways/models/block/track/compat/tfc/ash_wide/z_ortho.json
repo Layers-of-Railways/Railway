@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/z_ortho",
+  "textures": {
+    "1": "tfc:block/track/ash/standard_track_ash",
+    "2": "tfc:block/track/ash/standard_track_mip_ash",
+    "3": "tfc:block/track/ash/standard_track_crossing_ash",
+    "particle": "tfc:block/track/ash/standard_track_crossing_ash"
+  }
+}
