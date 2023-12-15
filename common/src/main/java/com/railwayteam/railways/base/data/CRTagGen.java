@@ -6,7 +6,6 @@ import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -70,8 +69,7 @@ public class CRTagGen {
 		return tagAppender(prov, tag.tag);
 	}
 
-	@ExpectPlatform
 	public static <T> TagAppender<T> tagAppender(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
-		throw new AssertionError();
+		return prov.addTag(tag);
 	}
 }
