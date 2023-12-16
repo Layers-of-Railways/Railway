@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class BygTrackCompat extends GenericTrackCompat {
     BygTrackCompat() {
-        super("byg");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.BYG.isLoaded;
+        super(Mods.BYG);
     }
 
     private static boolean registered = false;

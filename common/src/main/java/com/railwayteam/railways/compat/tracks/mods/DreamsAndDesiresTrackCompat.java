@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class DreamsAndDesiresTrackCompat extends GenericTrackCompat {
     DreamsAndDesiresTrackCompat() {
-        super("create_dd");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.DREAMSANDDESIRES.isLoaded;
+        super(Mods.DREAMSANDDESIRES);
     }
 
     private static boolean registered = false;
