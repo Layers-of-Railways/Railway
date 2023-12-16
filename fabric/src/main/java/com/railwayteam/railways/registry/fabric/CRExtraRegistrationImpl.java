@@ -4,11 +4,14 @@ import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.simibubi.create.Create;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 
 public class CRExtraRegistrationImpl {
+    private static final ResourceLocation COPYCAT_ID = Create.asResource("copycat");
+
     public static void platformSpecificRegistration() {
         RegistryEntryAddedCallback.event(Registry.BLOCK_ENTITY_TYPE).register((rawId, id, blockEntityType) ->  {
-            if (id.equals(Create.asResource("copycat")))
+            if (id == COPYCAT_ID)
                 CRExtraRegistration.addVentAsCopycat(blockEntityType);
         });
     }
