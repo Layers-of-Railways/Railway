@@ -7,8 +7,8 @@ import net.minecraft.core.Registry;
 
 public class CRExtraRegistrationImpl {
     public static void platformSpecificRegistration() {
-        RegistryEntryAddedCallback.event(Registry.BLOCK_ENTITY_TYPE).register((rawId, Id, blockEntityType) ->  {
-            if (Id.equals(Create.asResource("copycat")))
+        RegistryEntryAddedCallback.event(Registry.BLOCK_ENTITY_TYPE).register((rawId, id, blockEntityType) ->  {
+            if (id.equals(Create.asResource("copycat")))
                 CRExtraRegistration.addVentAsCopycat(blockEntityType);
         });
     }
