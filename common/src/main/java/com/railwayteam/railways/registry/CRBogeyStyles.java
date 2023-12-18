@@ -12,7 +12,8 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.Narr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowSmallBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.HandcarBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.double_axle.*;
-import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.standard.MediumStandardRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.MediumSingleWheelRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.MediumStandardRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.LeafspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.SingleaxleBogeyRenderer;
@@ -213,9 +214,13 @@ public class CRBogeyStyles {
 
     // Medium
     public static final BogeyStyle
-            MEDIUM_STANDARD = create("medium_standard", DOUBLEAXLE_CYCLE_GROUP)
-            // TODO .displayName
+        MEDIUM_STANDARD = create("medium_standard", DOUBLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_standard"))
             .size(BogeySizes.SMALL, () -> MediumStandardRenderer::new, CRBlocks.MEDIUM_STANDARD)
+            .build(),
+        MEDIUM_SINGLE_WHEEL = create("medium_single_wheel", SINGLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_single_wheel"))
+            .size(BogeySizes.SMALL, () -> MediumSingleWheelRenderer::new, CRBlocks.MEDIUM_SINGLE_WHEEL)
             .build();
 
 

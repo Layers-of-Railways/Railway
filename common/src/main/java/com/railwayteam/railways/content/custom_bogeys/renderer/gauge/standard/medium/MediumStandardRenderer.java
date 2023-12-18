@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.standard;
+package com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium;
 
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;

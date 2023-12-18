@@ -120,6 +120,8 @@
   "railways.bogeys.styles.wide_comically_large": "Comically Large",
   "railways.bogeys.styles.narrow_default": "Narrow",
   "railways.bogeys.styles.narrow_double_scotch": "Narrow Double Scotch Yoke",
+  "railways.bogeys.styles.medium_standard": "Medium Standard",
+  "railways.bogeys.styles.medium_single_wheel": "Medium Single Wheel",
 
   "railways.style_select.manage_favorites": "Manage Favorites",
   "railways.style_select.title.favorites.pick_slot": "Pick Slot",

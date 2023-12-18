@@ -14,6 +14,7 @@
     "railways:narrow_small_bogey",
     "railways:narrow_scotch_bogey",
     "railways:narrow_double_scotch_bogey",
-    "railways:medium_standard"
+    "railways:medium_standard",
+    "railways:medium_single_wheel"
   ]
 }

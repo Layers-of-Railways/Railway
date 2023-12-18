@@ -458,6 +458,12 @@ public class CRBlockPartials {
         MEDIUM_STANDARD_FRAME = block("bogey/medium/standard/frame")
     ;
 
+    public static final PartialModel
+            MEDIUM_SINGLE_WHEEL_WHEELS = block("bogey/medium/single_wheel/wheels"),
+            MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame")
+    ;
+
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 

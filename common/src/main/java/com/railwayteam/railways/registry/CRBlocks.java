@@ -16,6 +16,7 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.medium.MediumSingleWheelBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.MediumStandardBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -440,6 +441,13 @@ public class CRBlocks {
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Standard Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumSingleWheelBogeyBlock> MEDIUM_SINGLE_WHEEL =
+            REGISTRATE.block("medium_single_wheel", MediumSingleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Single Wheel Bogey")
                     .register();
 
 
