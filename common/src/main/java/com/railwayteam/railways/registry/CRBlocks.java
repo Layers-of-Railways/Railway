@@ -16,8 +16,7 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.medium.MediumSingleWheelBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.medium.MediumStandardBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.medium.MediumBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock;
@@ -436,18 +435,11 @@ public class CRBlocks {
             .lang("Handcar")
             .register();
 
-    public static final BlockEntry<MediumStandardBogeyBlock> MEDIUM_STANDARD =
-            REGISTRATE.block("medium_standard", MediumStandardBogeyBlock::new)
+    public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
+            REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Standard Bogey")
-                    .register();
-
-    public static final BlockEntry<MediumSingleWheelBogeyBlock> MEDIUM_SINGLE_WHEEL =
-            REGISTRATE.block("medium_single_wheel", MediumSingleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Single Wheel Bogey")
+                    .lang("Medium Bogey")
                     .register();
 
 

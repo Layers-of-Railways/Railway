@@ -6,12 +6,12 @@ import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.world.phys.Vec3;
 
-public class MediumStandardBogeyBlock extends CRBogeyBlock {
-    public MediumStandardBogeyBlock(Properties props) {
+public class MediumBogeyBlock extends CRBogeyBlock {
+    public MediumBogeyBlock(Properties props) {
         this(props, CRBogeyStyles.MEDIUM_STANDARD, BogeySizes.SMALL);
     }
 
-    protected MediumStandardBogeyBlock(Properties props, BogeyStyle defaultStyle, BogeySizes.BogeySize size) {
+    protected MediumBogeyBlock(Properties props, BogeyStyle defaultStyle, BogeySizes.BogeySize size) {
         super(props, defaultStyle, size);
     }
 

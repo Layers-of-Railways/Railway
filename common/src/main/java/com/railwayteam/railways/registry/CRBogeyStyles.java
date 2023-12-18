@@ -216,11 +216,11 @@ public class CRBogeyStyles {
     public static final BogeyStyle
         MEDIUM_STANDARD = create("medium_standard", DOUBLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_standard"))
-            .size(BogeySizes.SMALL, () -> MediumStandardRenderer::new, CRBlocks.MEDIUM_STANDARD)
+            .size(BogeySizes.SMALL, () -> MediumStandardRenderer::new, CRBlocks.MEDIUM_BOGEY)
             .build(),
         MEDIUM_SINGLE_WHEEL = create("medium_single_wheel", SINGLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_single_wheel"))
-            .size(BogeySizes.SMALL, () -> MediumSingleWheelRenderer::new, CRBlocks.MEDIUM_SINGLE_WHEEL)
+            .size(BogeySizes.SMALL, () -> MediumSingleWheelRenderer::new, CRBlocks.MEDIUM_BOGEY)
             .build();
 
 
