@@ -16,6 +16,7 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.medium.MediumStandardBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock;
@@ -433,6 +434,13 @@ public class CRBlocks {
             .build()
             .lang("Handcar")
             .register();
+
+    public static final BlockEntry<MediumStandardBogeyBlock> MEDIUM_STANDARD =
+            REGISTRATE.block("medium_standard", MediumStandardBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Standard Bogey")
+                    .register();
 
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =

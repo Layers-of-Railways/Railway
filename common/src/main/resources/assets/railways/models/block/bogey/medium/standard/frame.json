@@ -1,0 +1,12 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/medium/standard/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/medium/standard/trailing_bogey_base",
+    "1": "railways:block/bogeys/medium/standard/trailing_bogey_base2",
+    "2": "railways:block/bogeys/medium/standard/axis",
+    "3": "railways:block/bogeys/medium/standard/frame"
+  }
+}

@@ -12,6 +12,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.Narr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowSmallBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.HandcarBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.double_axle.*;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.standard.MediumStandardRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.LeafspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.SingleaxleBogeyRenderer;
@@ -209,6 +210,13 @@ public class CRBogeyStyles {
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
         .size(BogeySizes.SMALL, () -> HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
         .build();
+
+    // Medium
+    public static final BogeyStyle
+            MEDIUM_STANDARD = create("medium_standard", DOUBLEAXLE_CYCLE_GROUP)
+            // TODO .displayName
+            .size(BogeySizes.SMALL, () -> MediumStandardRenderer::new, CRBlocks.MEDIUM_STANDARD)
+            .build();
 
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {
