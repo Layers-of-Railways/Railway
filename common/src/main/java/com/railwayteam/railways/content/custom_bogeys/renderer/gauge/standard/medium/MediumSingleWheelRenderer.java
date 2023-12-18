@@ -30,9 +30,9 @@ public class MediumSingleWheelRenderer extends BogeyRenderer {
                 .render(ms, light, vb);
 
         getTransform(MEDIUM_SINGLE_WHEEL_WHEELS, ms, inInstancedContraption)
-                .translate(0, 7 / 16f, 0)
+                .translate(0, 12 / 16f, 0)
                 .rotateX(wheelAngle)
-                .translate(0, -7 / 16f, 0)
+                .translate(0, -13 / 16f, 0)
                 .render(ms, light, vb);
     }
 }
