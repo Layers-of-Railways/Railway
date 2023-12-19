@@ -17,7 +17,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 public class Medium202TrailingRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_2_0_2_TRAILING_WHEELS, MEDIUM_2_0_2_TRAILING_FRAME);
+        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, MEDIUM_2_0_2_TRAILING_FRAME);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
     }
@@ -47,7 +47,7 @@ public class Medium202TrailingRenderer extends BogeyRenderer {
                 .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
-        getTransform(MEDIUM_2_0_2_TRAILING_WHEELS, ms, inInstancedContraption)
+        getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)
                 .translate(0, 12 / 16f, 0)
                 .rotateX(wheelAngle)
                 .translate(0, -13 / 16f, 0)

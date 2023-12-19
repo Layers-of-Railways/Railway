@@ -453,18 +453,17 @@ public class CRBlockPartials {
         HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
     ;
 
-    public static final PartialModel MEDIUM_SHARED_WHEELS = block("bogey/medium/shared/wheels");
-
-    public static final PartialModel MEDIUM_STANDARD_FRAME = block("bogey/medium/standard/frame");
-
-    public static final PartialModel MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame");
-
     public static final PartialModel
-            MEDIUM_2_0_2_TRAILING_WHEELS = block("bogey/medium/2-0-2_trailing/wheels"),
-            MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2-0-2_trailing/frame")
-    ;
+            MEDIUM_SHARED_WHEELS = block("bogey/medium/shared/wheels"),
 
-    public static final PartialModel MEDIUM_TRIPLE_WHEEL = block("bogey/medium/triple_wheel/frame");
+            MEDIUM_STANDARD_FRAME = block("bogey/medium/standard/frame"),
+
+            MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame"),
+
+            MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2-0-2_trailing/frame"),
+
+            MEDIUM_TRIPLE_WHEEL = block("bogey/medium/triple_wheel/frame")
+    ;
 
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
