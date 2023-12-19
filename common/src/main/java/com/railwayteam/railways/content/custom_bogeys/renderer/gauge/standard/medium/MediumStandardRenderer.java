@@ -9,13 +9,12 @@ import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_STANDARD_FRAME;
-import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_STANDARD_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class MediumStandardRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_STANDARD_WHEELS, 2);
+        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 2);
         createModelInstance(materialManager, MEDIUM_STANDARD_FRAME);
     }
 
@@ -31,7 +30,7 @@ public class MediumStandardRenderer extends BogeyRenderer {
                 .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
-        BogeyModelData[] wheels = getTransform(MEDIUM_STANDARD_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
             if (!inInstancedContraption)
                 ms.pushPose();

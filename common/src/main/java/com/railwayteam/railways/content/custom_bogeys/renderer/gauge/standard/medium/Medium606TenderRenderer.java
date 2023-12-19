@@ -10,11 +10,11 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class MediumSingleWheelRenderer extends BogeyRenderer {
+public class Medium606TenderRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS);
-        createModelInstance(materialManager, MEDIUM_SINGLE_WHEEL_FRAME);
+        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 3);
+        createModelInstance(materialManager, MEDIUM_6_0_6_TENDER_FRAME);
     }
 
     @Override
@@ -25,14 +25,21 @@ public class MediumSingleWheelRenderer extends BogeyRenderer {
     @Override
     public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
         boolean inInstancedContraption = vb == null;
-        getTransform(MEDIUM_SINGLE_WHEEL_FRAME, ms, inInstancedContraption)
+        getTransform(MEDIUM_6_0_6_TENDER_FRAME, ms, inInstancedContraption)
                 .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
-        getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)
-                .translate(0, 12 / 16f, 0)
-                .rotateX(wheelAngle)
-                .translate(0, -13 / 16f, 0)
-                .render(ms, light, vb);
+        BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 3);
+        for (int side = -1; side < 2; side++) {
+            if (!inInstancedContraption)
+                ms.pushPose();
+            BogeyModelData wheel = wheels[side + 1];
+            wheel.translate(0, 13 / 16f, side*1.5)
+                    .rotateX(wheelAngle)
+                    .translate(0, -13 / 16f, 0)
+                    .render(ms, light, vb);
+            if (!inInstancedContraption)
+                ms.popPose();
+        }
     }
 }
