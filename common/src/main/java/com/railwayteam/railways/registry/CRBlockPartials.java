@@ -457,12 +457,10 @@ public class CRBlockPartials {
             MEDIUM_SHARED_WHEELS = block("bogey/medium/shared/wheels"),
 
             MEDIUM_STANDARD_FRAME = block("bogey/medium/standard/frame"),
-
             MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame"),
-
             MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2-0-2_trailing/frame"),
-
-            MEDIUM_TRIPLE_WHEEL = block("bogey/medium/triple_wheel/frame")
+            MEDIUM_TRIPLE_WHEEL_FRAME = block("bogey/medium/triple_wheel/frame"),
+            MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6-0-6_trailing/frame")
     ;
 
 

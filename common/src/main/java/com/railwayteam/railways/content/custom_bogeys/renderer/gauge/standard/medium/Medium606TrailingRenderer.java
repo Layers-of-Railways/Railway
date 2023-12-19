@@ -14,11 +14,10 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class MediumTripleWheelRenderer extends BogeyRenderer {
+public class Medium606TrailingRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 3);
-        createModelInstance(materialManager, MEDIUM_TRIPLE_WHEEL_FRAME);
+        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, MEDIUM_6_0_6_TRAILING_FRAME);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
     }
@@ -44,7 +43,7 @@ public class MediumTripleWheelRenderer extends BogeyRenderer {
                     .render(ms, light, vb);
         }
 
-        getTransform(MEDIUM_TRIPLE_WHEEL_FRAME, ms, inInstancedContraption)
+        getTransform(MEDIUM_6_0_6_TRAILING_FRAME, ms, inInstancedContraption)
                 .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
