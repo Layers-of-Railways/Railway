@@ -26,6 +26,7 @@ public class MediumStandardRenderer extends BogeyRenderer {
     @Override
     public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
         boolean inInstancedContraption = vb == null;
+
         getTransform(MEDIUM_STANDARD_FRAME, ms, inInstancedContraption)
                 .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
@@ -37,7 +38,7 @@ public class MediumStandardRenderer extends BogeyRenderer {
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 13 / 16f, side)
                     .rotateX(wheelAngle)
-                    .translate(0, -13 / 16f, -1)
+                    .translate(0, -13 / 16f, 0)
                     .render(ms, light, vb);
             if (!inInstancedContraption)
                 ms.popPose();
