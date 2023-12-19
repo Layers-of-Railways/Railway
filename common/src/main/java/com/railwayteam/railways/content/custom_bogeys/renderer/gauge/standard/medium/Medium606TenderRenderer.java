@@ -37,7 +37,7 @@ public class Medium606TenderRenderer extends BogeyRenderer {
 
         for (int i : Iterate.zeroAndOne) {
             secondaryShafts[i]
-                    .translate(-.5f, .31f, .5f + i * -1)
+                    .translate(-.5f, .31f, .5f + i * -2)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()

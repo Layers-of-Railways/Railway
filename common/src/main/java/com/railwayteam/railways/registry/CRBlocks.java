@@ -16,6 +16,7 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.medium.Medium202TrailingBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.Medium606TenderBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.MediumBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
@@ -441,6 +442,13 @@ public class CRBlocks {
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
+            REGISTRATE.block("medium_2_0_2_tender", Medium202TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 2-0-2 Trailing Bogey")
                     .register();
 
     public static final BlockEntry<Medium606TenderBogeyBlock> MEDIUM_6_0_6_TENDER =
