@@ -6,12 +6,12 @@ import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.world.phys.Vec3;
 
-public class Medium606TenderBogeyBlock extends CRBogeyBlock {
-    public Medium606TenderBogeyBlock(Properties props) {
-        this(props, CRBogeyStyles.MEDIUM_6_0_6_TENDER, BogeySizes.SMALL);
+public class MediumTripleWheelBogeyBlock extends CRBogeyBlock {
+    public MediumTripleWheelBogeyBlock(Properties props) {
+        this(props, CRBogeyStyles.MEDIUM_TRIPLE_WHEEL, BogeySizes.SMALL);
     }
 
-    protected Medium606TenderBogeyBlock(Properties props, BogeyStyle defaultStyle, BogeySizes.BogeySize size) {
+    protected MediumTripleWheelBogeyBlock(Properties props, BogeyStyle defaultStyle, BogeySizes.BogeySize size) {
         super(props, defaultStyle, size);
     }
 
