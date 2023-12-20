@@ -460,7 +460,8 @@ public class CRBlockPartials {
             MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame"),
             MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2-0-2_trailing/frame"),
             MEDIUM_TRIPLE_WHEEL_FRAME = block("bogey/medium/triple_wheel/frame"),
-            MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6-0-6_trailing/frame")
+            MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6-0-6_trailing/frame"),
+            MEDIUM_6_0_6_TENDER_FRAME = block("bogey/medium/6-0-6_tender/frame")
     ;
 
 
