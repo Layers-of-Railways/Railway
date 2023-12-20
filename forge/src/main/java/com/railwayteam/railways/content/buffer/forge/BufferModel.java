@@ -7,12 +7,18 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
@@ -22,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 import static com.railwayteam.railways.content.buffer.BufferModelUtils.combineSwappers;
 import static com.railwayteam.railways.content.buffer.BufferModelUtils.getSwapper;
@@ -71,22 +78,60 @@ public class BufferModel implements BakedModel {
 
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
+        if (false) {
+            return wrapped.getQuads(state, direction, random);
+        }
         return Collections.emptyList();
+    }
+
+    // WAY too complicated method of getting custom item models to work
+    @Override
+    public List<BakedModel> getRenderPasses(@NotNull ItemStack stack, boolean fabulous) {
+        if (false) {
+            return List.of(this);
+        }
+        UnaryOperator<TextureAtlasSprite> materialSwapper = null;
+        UnaryOperator<TextureAtlasSprite> colorSwapper = null;
+
+        if (stack.hasTag()) {
+            CompoundTag tag = stack.getTag();
+            if (tag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+                CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
+                if (blockEntityTag.contains("Material", Tag.TAG_COMPOUND)) {
+                    materialSwapper = getSwapper(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), blockEntityTag.getCompound("Material")));
+                }
+                if (blockEntityTag.contains("Color", Tag.TAG_INT)) {
+                    colorSwapper = getSwapper(DyeColor.byId(blockEntityTag.getInt("Color")));
+                }
+            }
+        }
+        final UnaryOperator<TextureAtlasSprite> finalMaterialSwapper = materialSwapper;
+        final UnaryOperator<TextureAtlasSprite> finalColorSwapper = colorSwapper;
+        return List.of(new BufferModel(wrapped) {
+            @Override
+            public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
+                if (finalMaterialSwapper != null || finalColorSwapper != null) {
+                    return BakedModelHelper.swapSprites(wrapped.getQuads(state, direction, random), combineSwappers(finalMaterialSwapper, finalColorSwapper));
+                } else {
+                    return wrapped.getQuads(state, direction, random);
+                }
+            }
+        });
     }
 
     @Override
     public boolean useAmbientOcclusion() {
-        return false;
+        return wrapped.useAmbientOcclusion();
     }
 
     @Override
     public boolean isGui3d() {
-        return false;
+        return wrapped.isGui3d();
     }
 
     @Override
     public boolean usesBlockLight() {
-        return true;
+        return wrapped.usesBlockLight();
     }
 
     @Override
@@ -107,6 +152,12 @@ public class BufferModel implements BakedModel {
 
     @Override
     public ItemOverrides getOverrides() {
-        return ItemOverrides.EMPTY;
+        return wrapped.getOverrides();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public ItemTransforms getTransforms() {
+        return wrapped.getTransforms();
     }
 }
