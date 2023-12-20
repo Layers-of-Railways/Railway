@@ -195,4 +195,16 @@ public class BuilderTransformersImpl {
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
                 .getExistingFile(p.modLoc("block/bogey/narrow/top"))));
     }
+
+    public static <B extends GenericCrossingBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> genericCrossing() {
+        return b -> b.onRegister(CreateRegistrate.blockModel(() -> GenericCrossingModel::new));
+    }
+
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {
+        return b -> b.onRegister(CreateRegistrate.blockModel(() -> BufferModel::new));
+    }
+
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
+        return i -> i.onRegister(CreateRegistrate.itemModel(() -> BufferModel::new));
+    }
 }

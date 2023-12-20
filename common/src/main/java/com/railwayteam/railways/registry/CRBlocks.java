@@ -79,6 +79,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
+import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -386,6 +387,18 @@ public class CRBlocks {
 
     public static final BlockEntry<HandcarBlock> HANDCAR =
         REGISTRATE.block("handcar", HandcarBlock::new)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .transform(BuilderTransformers.handcar())
+            .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
+            .item(HandcarItem::new)
+            .properties(p -> p.stacksTo(1))
+            .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
+            .build()
+            .lang("Handcar")
+            .register();
+
+    public static final BlockEntry<HandcarBlock> HANDCAR =
+        REGISTRATE.block("handcar", HandcarBlock::new)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(BuilderTransformers.handcar())
             .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
@@ -407,6 +420,7 @@ public class CRBlocks {
                     .instabreak()
                     .noLootTable()
                     .noCollission()
+
             )
             .transform(BuilderTransformers.conductorWhistleFlag())
             .lang("Conductor Whistle")

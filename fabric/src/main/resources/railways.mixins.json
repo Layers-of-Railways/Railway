@@ -6,7 +6,6 @@
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
     "LevelRendererMixin",
-    "TrainHUDMixin",
     "PortingLibObjLoaderMixin",
     "PortingLibModelsMixin",
     "TrainHUDMixin",

@@ -326,6 +326,15 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             return this;
         }
 
+        GeneratedRecipeBuilder setEmiDefault() {
+            return setEmiDefault(true);
+        }
+
+        GeneratedRecipeBuilder setEmiDefault(boolean addToEmiDefaults) {
+            this.addToEmiDefaults = addToEmiDefaults;
+            return this;
+        }
+
         GeneratedRecipe viaShaped(UnaryOperator<ShapedRecipeBuilder> builder) {
             return register(consumer -> {
                 ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result.get(), amount));
@@ -406,7 +415,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
             private GeneratedRecipe create(UnaryOperator<SingleItemRecipeBuilder> builder) {
                 return register(consumer -> {
-                    SingleItemRecipeBuilder b = builder.apply(SingleItemRecipeBuilder.stonecutting(ingredient.get(), RecipeCategory.MISC, result.get()));
+                    SingleItemRecipeBuilder b = builder.apply(SingleItemRecipeBuilder.stonecutting(ingredient.get(), RecipeCategory.MISC, result.get(), amount));
                     if (unlockedBy != null)
                         b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                     b.save(consumer, createLocation("stonecutting"));

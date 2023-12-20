@@ -104,6 +104,7 @@ public class Railways {
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
+    gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);

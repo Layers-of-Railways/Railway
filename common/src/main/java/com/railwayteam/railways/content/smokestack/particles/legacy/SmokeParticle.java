@@ -145,9 +145,7 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		quaternion.mul(Axis.YP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
 		quaternion.mul(Axis.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
 
-		Vector3f vector3f = new Vector3f(-1.0F, -1.0F, 0.0F);
-		vector3f.rotate(quaternion);
-		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)};
+		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-size, -size, offsetDepth), new Vector3f(-size, size, offsetDepth), new Vector3f(size, size, offsetDepth), new Vector3f(size, -size, offsetDepth)};
 		float j = this.getQuadSize(partialTicks);
 
 		for(int k = 0; k < 4; ++k) {
