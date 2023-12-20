@@ -33,7 +33,7 @@ public class BoilerGenerator extends SpecialBlockStateGen {
     }
 
     @ExpectPlatform
-    public static <T extends Block> ModelFile getModelStatic(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state, DyeColor color) {
+    private static <T extends Block> ModelFile getModelStatic(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state, DyeColor color) {
         throw new AssertionError();
     }
 }

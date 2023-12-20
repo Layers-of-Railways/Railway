@@ -16,12 +16,10 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
-import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
@@ -40,8 +38,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Locale;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -136,15 +132,9 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
     public static <B extends HandcarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> handcar() {
-        return b -> b.initialProperties(SharedProperties::softMetal)
-            .properties(p -> p
-                .sound(SoundType.NETHERITE_BLOCK)
-                .noOcclusion())
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
-                .getExistingFile(p.mcLoc("air"))))
-            .loot((p, l) -> p.dropOther(l, CRBlocks.HANDCAR.get()));
+        throw new AssertionError();
     }
 
     @ExpectPlatform
@@ -152,39 +142,19 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(@Nullable DyeColor color, @Nullable String type) {
-        return b -> {
-            BlockBuilder<B, P> out = b.initialProperties(SharedProperties::softMetal)
-                .properties(p -> p
-                    .mapColor(ColorUtils.mapColorFromDye(color, MapColor.COLOR_BLACK))
-                    .sound(SoundType.NETHERITE_BLOCK)
-                )
-                .transform(pickaxeOnly())
-                .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
-                .tag(CRTags.AllBlockTags.LOCOMETAL.tag);
-            if (type != null)
-                out = out.blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
-                    c.getName(), p.modLoc("block/palettes/" + colorName(color) + "/" + type)
-                )));
-            return out;
-        };
+        throw new AssertionError();
     }
 
+    @ExpectPlatform
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(@Nullable DyeColor color) {
-        return b -> b.transform(locoMetalBase(color, null))
-            .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + colorName(color) + "/riveted_pillar_side"),
-                p.modLoc("block/palettes/" + colorName(color) + "/riveted_pillar_top")
-            ));
+        throw new AssertionError();
     }
 
-    // not done
+    @ExpectPlatform
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
-        return b -> b.transform(locoMetalBase(color, null))
-            .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + colorName(color) + "/tank_side"),
-                p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top")
-            ));
+        throw new AssertionError();
     }
 
     public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color) {
@@ -198,10 +168,6 @@ public class BuilderTransformers {
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
             .transform(pickaxeOnly())
             .blockstate(new BoilerGenerator(color)::generate);
-    }
-
-    private static String colorName(@Nullable DyeColor color) {
-        return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
     }
 
     @ExpectPlatform

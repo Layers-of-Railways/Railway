@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
+import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.OilburnerSmokeStackBlock;
@@ -18,7 +19,11 @@ import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.buffer.forge.BufferModel;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.forge.GenericCrossingModel;
+import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -31,12 +36,18 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
@@ -183,6 +194,17 @@ public class BuilderTransformersImpl {
             .withExistingParent(c.getName(), p.mcLoc("block/air"))));
     }
 
+    public static <B extends HandcarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> handcar() {
+        return b -> b.initialProperties(SharedProperties::softMetal)
+            .properties(p -> p
+                .sound(SoundType.NETHERITE_BLOCK)
+                .noOcclusion())
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
+                .getExistingFile(p.mcLoc("air"))))
+            .loot((p, l) -> p.dropOther(l, CRBlocks.HANDCAR.get()));
+    }
+
     public static <B extends CRBogeyBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> standardBogey() {
         return b -> b.transform(sharedBogey())
             .blockstate((c, p) -> BlockStateGen.horizontalAxisBlock(c, p, s -> p.models()
@@ -205,11 +227,49 @@ public class BuilderTransformersImpl {
         return b -> b.onRegister(CreateRegistrate.blockModel(() -> GenericCrossingModel::new));
     }
 
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(@Nullable DyeColor color, @Nullable String type) {
+        return b -> {
+            BlockBuilder<B, P> out = b.initialProperties(SharedProperties::softMetal)
+                .properties(p -> p
+                    .mapColor(ColorUtils.mapColorFromDye(color, MapColor.COLOR_BLACK))
+                    .sound(SoundType.NETHERITE_BLOCK)
+                )
+                .transform(pickaxeOnly())
+                .tag(AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+                .tag(CRTags.AllBlockTags.LOCOMETAL.tag);
+            if (type != null)
+                out = out.blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
+                    c.getName(), p.modLoc("block/palettes/" + colorName(color) + "/" + type)
+                )));
+            return out;
+        };
+    }
+
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(@Nullable DyeColor color) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .blockstate((c, p) -> p.axisBlock(c.get(),
+                p.modLoc("block/palettes/" + colorName(color) + "/riveted_pillar_side"),
+                p.modLoc("block/palettes/" + colorName(color) + "/riveted_pillar_top")
+            ));
+    }
+
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .blockstate((c, p) -> p.axisBlock(c.get(),
+                p.modLoc("block/palettes/" + colorName(color) + "/tank_side"),
+                p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top")
+            ));
+    }
+
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {
         return b -> b.onRegister(CreateRegistrate.blockModel(() -> BufferModel::new));
     }
 
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
         return i -> i.onRegister(CreateRegistrate.itemModel(() -> BufferModel::new));
+    }
+
+    private static String colorName(@Nullable DyeColor color) {
+        return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
     }
 }

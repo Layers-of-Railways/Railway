@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Locale;
 
 public class BoilerGeneratorImpl {
-    public static <T extends Block> ModelFile getModelStatic(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state, DyeColor color) {
+    private static <T extends Block> ModelFile getModelStatic(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state, DyeColor color) {
         BoilerBlock.Style style = state.getValue(BoilerBlock.STYLE);
         Direction.Axis axis = state.getValue(BoilerBlock.HORIZONTAL_AXIS);
 
