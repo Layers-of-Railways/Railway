@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -76,20 +75,15 @@ public class BufferModel implements BakedModel {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
-        if (false) {
-            return wrapped.getQuads(state, direction, random);
-        }
         return Collections.emptyList();
     }
 
     // WAY too complicated method of getting custom item models to work
     @Override
     public List<BakedModel> getRenderPasses(@NotNull ItemStack stack, boolean fabulous) {
-        if (false) {
-            return List.of(this);
-        }
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;
         UnaryOperator<TextureAtlasSprite> colorSwapper = null;
 
@@ -98,7 +92,7 @@ public class BufferModel implements BakedModel {
             if (tag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
                 CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
                 if (blockEntityTag.contains("Material", Tag.TAG_COMPOUND)) {
-                    materialSwapper = getSwapper(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), blockEntityTag.getCompound("Material")));
+                    materialSwapper = getSwapper(NbtUtils.readBlockState(blockEntityTag.getCompound("Material")));
                 }
                 if (blockEntityTag.contains("Color", Tag.TAG_INT)) {
                     colorSwapper = getSwapper(DyeColor.byId(blockEntityTag.getInt("Color")));
@@ -108,6 +102,7 @@ public class BufferModel implements BakedModel {
         final UnaryOperator<TextureAtlasSprite> finalMaterialSwapper = materialSwapper;
         final UnaryOperator<TextureAtlasSprite> finalColorSwapper = colorSwapper;
         return List.of(new BufferModel(wrapped) {
+            @SuppressWarnings("deprecation")
             @Override
             public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
                 if (finalMaterialSwapper != null || finalColorSwapper != null) {
