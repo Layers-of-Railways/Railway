@@ -1,7 +1,11 @@
 package com.railwayteam.railways.base.data.fabric;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.LinkPinBlock;
+import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.fabric.BufferModel;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
@@ -43,11 +47,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
@@ -272,5 +278,54 @@ public class BuilderTransformersImpl {
 
     private static String colorName(@Nullable DyeColor color) {
         return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    }
+
+    public static <B extends TrackBufferBlock<?>, P> NonNullUnaryOperator<BlockBuilder<B, P>> bufferBlockState(Function<BlockState, ResourceLocation> modelFunc, Function<BlockState, Direction> facingFunc) {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(modelFunc.apply(state)))
+                .rotationY(((int) facingFunc.apply(state).toYRot() + 180) % 360)
+                .build(), BlockStateProperties.WATERLOGGED
+            )
+        );
+    }
+
+    public static <B extends MonoTrackBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monoBuffer() {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> {
+                    boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
+                    return ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
+                        .rotationX(hanging ? 180 : 0)
+                        .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
+                        .build();
+                }, MonoTrackBufferBlock.WATERLOGGED
+            )
+        );
+    }
+
+    public static <B extends LinkPinBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> linkAndPin() {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .build(), LinkPinBlock.WATERLOGGED
+            )
+        );
+    }
+
+    public static <B extends HeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> headstock() {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
+                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
+                .build(), HeadstockBlock.WATERLOGGED
+            )
+        );
+    }
+
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBlockState() {
+        return b -> b.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+            .withExistingParent(c.getName(), p.modLoc("block/invisible"))));
     }
 }

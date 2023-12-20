@@ -1,5 +1,9 @@
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.content.buffer.LinkPinBlock;
+import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
@@ -28,6 +32,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -35,9 +40,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Function;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -167,7 +175,7 @@ public class BuilderTransformers {
             .tag(CRTags.AllBlockTags.LOCOMETAL.tag)
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
             .transform(pickaxeOnly())
-            .blockstate(new BoilerGenerator(color)::generate);
+            .blockstate(BoilerGenerator.create(color)::generate);
     }
 
     @ExpectPlatform
@@ -177,6 +185,31 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends TrackBufferBlock<?>, P> NonNullUnaryOperator<BlockBuilder<B, P>> bufferBlockState(Function<BlockState, ResourceLocation> modelFunc, Function<BlockState, Direction> facingFunc) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends MonoTrackBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> monoBuffer() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends LinkPinBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> linkAndPin() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends HeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> headstock() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBlockState() {
         throw new AssertionError();
     }
 }

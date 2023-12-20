@@ -59,7 +59,6 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
@@ -186,8 +185,6 @@ public class CRBlocks {
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
         .initialProperties(SharedProperties::softMetal)
-        //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()
-        //.getExistingFile(prov.modLoc("block/" + ctx.getName() + "/block"))))
         .transform(BuilderTransformers.semaphore())
             .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
@@ -469,13 +466,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-                .forAllStatesExcept(state -> ConfiguredModel.builder()
-                        .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
-                        .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                        .build(), StandardTrackBufferBlock.WATERLOGGED
-                )
-        )
+        .transform(BuilderTransformers.bufferBlockState(state -> state.getValue(StandardTrackBufferBlock.STYLE).getModel(), state -> state.getValue(StandardTrackBufferBlock.FACING)))
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
@@ -491,13 +482,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build(), NarrowTrackBufferBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.bufferBlockState(state -> state.getValue(NarrowTrackBufferBlock.STYLE).getModel(), state -> state.getValue(NarrowTrackBufferBlock.FACING)))
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
@@ -511,17 +496,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> {
-                boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
-                return ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
-                    .rotationX(hanging ? 180 : 0)
-                    .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
-                    .build();
-                }, MonoTrackBufferBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.monoBuffer())
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
@@ -535,13 +510,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .properties(BlockBehaviour.Properties::noCollission)
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build(), WideTrackBufferBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.bufferBlockState(state -> Railways.asResource("block/buffer/wide_buffer_stop"), state -> state.getValue(WideTrackBufferBlock.FACING)))
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
@@ -552,13 +521,7 @@ public class CRBlocks {
     public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), LinkPinBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.linkAndPin())
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Link 'n Pin")
@@ -571,13 +534,7 @@ public class CRBlocks {
     public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
-                .build(), HeadstockBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.headstock())
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Headstock")
@@ -600,8 +557,7 @@ public class CRBlocks {
             .tag(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-                .withExistingParent(c.getName(), p.modLoc("block/invisible"))))
+            .transform(BuilderTransformers.invisibleBlockState())
             .lang("Generic Crossing")
             .register();
 

@@ -20,8 +20,13 @@ public class ObjModelBuilder<T extends ModelBuilder<T>> extends CustomLoaderBuil
     private Boolean emissiveAmbient;
     private ResourceLocation mtlOverride;
 
+    // needed so that the right loader is called for forge and fabric
+    private static final ResourceLocation FORGE_OBJ = new ResourceLocation("forge", "obj");
+    private static final ResourceLocation PORTING_LIB_LOADER = new ResourceLocation("porting_lib", "loader");
+    private static final ResourceLocation PORTING_LIB_OBJ = new ResourceLocation("porting_lib", "obj");
+
     protected ObjModelBuilder(T parent, ExistingFileHelper existingFileHelper) {
-        super(new ResourceLocation("porting_lib:obj"), parent, existingFileHelper);
+        super(FORGE_OBJ, parent, existingFileHelper);
     }
 
     public ObjModelBuilder<T> modelLocation(ResourceLocation modelLocation) {
@@ -63,6 +68,8 @@ public class ObjModelBuilder<T extends ModelBuilder<T>> extends CustomLoaderBuil
     @Override
     public JsonObject toJson(JsonObject json) {
         json = super.toJson(json);
+
+        json.addProperty(PORTING_LIB_LOADER.toString(), PORTING_LIB_OBJ.toString());
 
         Preconditions.checkNotNull(modelLocation, "modelLocation must not be null");
 

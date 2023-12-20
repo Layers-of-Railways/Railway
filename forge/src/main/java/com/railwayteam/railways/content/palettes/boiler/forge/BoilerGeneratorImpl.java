@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.palettes.boiler.forge;
 
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -10,11 +11,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-public class BoilerGeneratorImpl {
-    private static <T extends Block> ModelFile getModelStatic(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state, DyeColor color) {
+public class BoilerGeneratorImpl extends BoilerGenerator {
+    protected BoilerGeneratorImpl(@Nullable DyeColor color) {
+        super(color);
+    }
+
+    public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
         BoilerBlock.Style style = state.getValue(BoilerBlock.STYLE);
         Direction.Axis axis = state.getValue(BoilerBlock.HORIZONTAL_AXIS);
 
@@ -29,5 +35,9 @@ public class BoilerGeneratorImpl {
                 .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
                 .texture("sides", prov.modLoc("block/palettes/" + colorName + (CRPalettes.Styles.BRASS_WRAPPED_BOILER.contains(ctx.get()) ? "/wrapped_boiler_side" : "/boiler_side")))
                 .texture("particle", prov.modLoc("block/palettes/" + colorName + "/riveted_pillar_top"));
+    }
+
+    public static BoilerGenerator create(@Nullable DyeColor color) {
+        return new BoilerGeneratorImpl(color);
     }
 }

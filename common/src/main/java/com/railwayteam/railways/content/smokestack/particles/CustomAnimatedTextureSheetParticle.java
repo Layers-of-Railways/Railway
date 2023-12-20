@@ -27,14 +27,14 @@ public abstract class CustomAnimatedTextureSheetParticle extends TextureSheetPar
 
     @Override
     protected float getV0() {
-        int frames = (this.sprite.getX() * frameWidthFactor()) / (this.sprite.getY() * frameHeightFactor());
+        int frames = (this.sprite.contents().height() * frameWidthFactor()) / (this.sprite.contents().width() * frameHeightFactor());
         int frameNumber = (int) (frames * getAnimationProgress());
         return this.sprite.getV(16. * ((double) frameNumber / frames));
     }
 
     @Override
     protected float getV1() {
-        int frames = (this.sprite.getX() * frameWidthFactor()) / (this.sprite.getY() * frameHeightFactor());
+        int frames = (this.sprite.contents().height() * frameWidthFactor()) / (this.sprite.contents().width() * frameHeightFactor());
         int frameNumber = (int) (frames * getAnimationProgress());
         return this.sprite.getV(16. * ((double) frameNumber + 1) / frames);
     }
