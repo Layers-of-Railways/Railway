@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Contract;
 
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class EntityUtils {
 	@ExpectPlatform
@@ -29,7 +30,7 @@ public class EntityUtils {
 	}
 
 	@ExpectPlatform
-	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
+	public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
 		throw new AssertionError();
 	}
 
@@ -48,12 +49,12 @@ public class EntityUtils {
 		throw new AssertionError();
 	}
 
-	public static boolean isHolding(Player player, Function<ItemStack, Boolean> test) {
-		return test.apply(player.getItemInHand(InteractionHand.MAIN_HAND))
-				|| test.apply(player.getItemInHand(InteractionHand.OFF_HAND));
+	public static boolean isHolding(Player player, Predicate<ItemStack> predicate) {
+		return predicate.test(player.getItemInHand(InteractionHand.MAIN_HAND))
+				|| predicate.test(player.getItemInHand(InteractionHand.OFF_HAND));
 	}
 
-	public static boolean isHoldingItem(Player player, Function<Item, Boolean> test) {
-		return isHolding(player, (stack) -> test.apply(stack.getItem()));
+	public static boolean isHoldingItem(Player player, Predicate<Item> predicate) {
+		return isHolding(player, (stack) -> predicate.test(stack.getItem()));
 	}
 }

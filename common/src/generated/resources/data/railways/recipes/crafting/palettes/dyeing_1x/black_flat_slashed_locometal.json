@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:black_flat_slashed_locometal"
+  }
+}

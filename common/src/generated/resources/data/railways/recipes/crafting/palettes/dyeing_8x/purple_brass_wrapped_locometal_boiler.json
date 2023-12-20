@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/brass_wrapped_boiler"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/purple_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:purple_brass_wrapped_locometal_boiler"
+  },
+  "show_notification": true
+}

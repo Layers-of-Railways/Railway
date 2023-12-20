@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.coupling.coupler;
 
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
@@ -41,6 +42,7 @@ public class TrackCoupler extends SingleBlockEntityEdgePoint {
     }
 
     public void keepAlive(Train train) {
+        if (((IHandcarTrain) train).snr$isHandcar()) return;
         activated = 8;
         currentTrain = train.id;
     }

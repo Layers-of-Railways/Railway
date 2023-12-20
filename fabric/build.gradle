@@ -37,7 +37,7 @@ configurations {
 
 repositories {
     // mavens for Fabric-exclusives
-    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu
+    maven { url = "https://maven.terraformersmc.com/releases/" } // Mod Menu, EMI
     maven { url = "https://mvn.devos.one/snapshots/" } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
     maven { url = "https://cursemaven.com" } // Forge Config API Port
     maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
@@ -61,15 +61,6 @@ repositories {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
     } // Cardinal Components (Hex Casting dependency)
-}
-
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        switch (requested.module.name) { // some dependencies pull in broken, outdated versions of these.
-            case "fabric-loader": useVersion(fabric_loader_version); break
-            case "fabric-api": useVersion(fabric_api_version); break
-        }
-    }
 }
 
 dependencies {
@@ -123,8 +114,8 @@ dependencies {
         modLocalRuntime "maven.modrinth:simple-voice-chat:fabric-${voicechat_version}"
     }
 
-    // because create fabric is a bit broken I think (also actually using this library)
-    modApi("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
+    // because create fabric is a bit broken I think
+    modImplementation("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
@@ -160,8 +151,7 @@ dependencies {
     if (enable_eb.toBoolean()) {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
     }
-    implementation(include("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}"))
-    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}")
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")))
 }
 
 processResources {
@@ -293,11 +283,21 @@ publishing {
 
     repositories {
         if (System.getenv("MAVEN_TOKEN")) {
-            maven {
-                url "https://maven.ithundxr.dev/releases"
-                credentials {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
                 }
             }
         }

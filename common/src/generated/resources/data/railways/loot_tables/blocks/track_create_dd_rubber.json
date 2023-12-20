@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:track_create_dd_rubber"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "railways:blocks/track_create_dd_rubber"
+}

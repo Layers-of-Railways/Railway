@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "railways:block/brown_locometal_pillar_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "railways:block/brown_locometal_pillar"
+    },
+    "axis=z": {
+      "model": "railways:block/brown_locometal_pillar_horizontal",
+      "x": 90
+    }
+  }
+}

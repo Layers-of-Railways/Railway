@@ -17,14 +17,21 @@ public class ModSetup {
     throw new AssertionError();
   }
 
+  @ExpectPlatform
+  public static void usePalettesTab() {
+    throw new AssertionError();
+  }
+
   public static void register() {
     useBaseTab();
     CRTrackMaterials.register();
     CRBogeyStyles.register();
     CRCreativeModeTabs.register();
     CRItems.register();
+    CRSpriteShifts.register();
     CRBlockEntities.register();
     CRBlocks.register();
+    CRPalettes.register();
     CRContainerTypes.register();
     CREntities.register();
     CRSounds.register();
@@ -43,6 +50,8 @@ public class ModSetup {
     TwilightForestTrackCompat.register();
     BiomesOPlentyTrackCompat.register();
     NaturesSpiritTrackCompat.register();
+    DreamsAndDesiresTrackCompat.register();
+    QuarkTrackCompat.register();
     TFCTrackCompat.register();
   }
 }

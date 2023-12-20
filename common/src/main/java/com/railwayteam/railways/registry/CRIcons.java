@@ -35,7 +35,8 @@ public class CRIcons extends AllIcons {
     public static final CRIcons
         I_DOOR_MANUAL = newRow(),
         I_DOOR_NORMAL = next(),
-        I_DOOR_SPECIAL = next();
+        I_DOOR_SPECIAL = next(),
+        I_DOOR_SPECIAL_INVERTED = next();
 
     public static final CRIcons
         I_SWITCH_MANUAL = newRow(),

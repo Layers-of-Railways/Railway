@@ -13,7 +13,7 @@ public interface AccessorTrain {
     void snr_setStress(double[] stress);
 
     @Mixin(value = Train.Penalties.class, remap = false)
-    public interface AccessorPenalties {
+    interface AccessorPenalties {
         @Accessor
         static int getRED_SIGNAL() {
             throw new RuntimeException("Should be mixed in");

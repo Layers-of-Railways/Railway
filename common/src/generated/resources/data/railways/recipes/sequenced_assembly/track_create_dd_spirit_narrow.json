@@ -1,0 +1,78 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create_dd"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create_dd"
+    }
+  ],
+  "ingredient": {
+    "item": "create_dd:spirit_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_create_dd_spirit_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_spirit_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_create_dd_spirit_narrow"
+  }
+}

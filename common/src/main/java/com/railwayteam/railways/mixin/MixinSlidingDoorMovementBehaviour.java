@@ -22,7 +22,7 @@ public class MixinSlidingDoorMovementBehaviour {
             cir.setReturnValue(false);
             return;
         }
-        if (mode(context) == SlidingDoorMode.MANUAL)
+        if (!mode(context).canOpenSpecially())
             cir.setReturnValue(false);
     }
 }

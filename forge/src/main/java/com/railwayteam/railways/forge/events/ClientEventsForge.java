@@ -1,16 +1,13 @@
 package com.railwayteam.railways.forge.events;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
-import com.railwayteam.railways.compat.incompatible_mods.optifine.OptifineWarningScreen;
 import com.railwayteam.railways.events.ClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.level.LevelEvent;
@@ -44,5 +41,11 @@ public class ClientEventsForge {
 		int key = event.getKey();
 		boolean pressed = event.getAction() != 0;
 		ClientEvents.onKeyInput(key, pressed);
+	}
+
+	@SubscribeEvent
+	public static void onTagsUpdated(TagsUpdatedEvent event) {
+		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED)
+			ClientEvents.onTagsUpdated();
 	}
 }

@@ -2,7 +2,10 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
-import com.railwayteam.railways.base.data.lang.CRLangPartials;
+import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
+import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
+import com.railwayteam.railways.base.data.lang.CRLangGen;
+import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
@@ -20,10 +23,7 @@ import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -99,10 +99,13 @@ public class Railways {
   public static void gatherData(DataGenerator.PackGenerator gen) {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
+    REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
+    gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
     PonderLocalization.provideRegistrateLang(REGISTRATE);
-    gen.addProvider((PackOutput output) -> CRLangPartials.createMerger(output, MODID, "Steam 'n' Rails", CRLangPartials.values()));
+    gen.addProvider(EmiExcludedTagGen::new);
+    gen.addProvider(EmiRecipeDefaultsGen::new);
   }
 
   public static CreateRegistrate registrate() {
@@ -121,11 +124,6 @@ public class Railways {
 
   @ExpectPlatform
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
-    throw new AssertionError();
-  }
-
-  @ExpectPlatform
-  public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
     throw new AssertionError();
   }
 

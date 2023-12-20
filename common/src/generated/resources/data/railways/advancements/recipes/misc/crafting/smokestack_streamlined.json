@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///smokestack_streamlined"
+        "recipe": "railways:crafting/smokestack_streamlined"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///smokestack_streamlined"
+      "railways:crafting/smokestack_streamlined"
     ]
   },
   "sends_telemetry_event": false

@@ -1,0 +1,73 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create_dd"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create_dd"
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_create_dd_smoked"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_create_dd_smoked_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        },
+        {
+          "item": "create_dd:smoked_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_create_dd_smoked_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_create_dd_smoked_wide"
+  }
+}

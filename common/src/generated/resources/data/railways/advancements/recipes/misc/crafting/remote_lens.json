@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///remote_lens"
+        "recipe": "railways:crafting/remote_lens"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///remote_lens"
+      "railways:crafting/remote_lens"
     ]
   },
   "sends_telemetry_event": false

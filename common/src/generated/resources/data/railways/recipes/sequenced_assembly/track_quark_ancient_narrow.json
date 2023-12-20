@@ -1,0 +1,78 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "quark"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "quark"
+    }
+  ],
+  "ingredient": {
+    "item": "quark:ancient_slab"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_quark_ancient_narrow"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        },
+        [
+          {
+            "tag": "railways:internal/nuggets/iron_nuggets"
+          },
+          {
+            "tag": "railways:internal/nuggets/zinc_nuggets"
+          }
+        ]
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_ancient_narrow"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_quark_ancient_narrow"
+  }
+}

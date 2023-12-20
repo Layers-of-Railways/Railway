@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/smokebox"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/red_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:red_locometal_smokebox"
+  },
+  "show_notification": true
+}

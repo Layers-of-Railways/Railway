@@ -173,6 +173,8 @@ public abstract class MixinStationBlock {
                                 }));
                 }
             }
+            if (CRBlocks.CONDUCTOR_WHISTLE_FLAG.isIn(itemInHand))
+                cir.setReturnValue(InteractionResult.PASS);
         }
     }
 

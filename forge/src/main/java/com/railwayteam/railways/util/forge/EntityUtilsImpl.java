@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util.forge;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.forge.ConductorFakePlayerForge;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -23,8 +24,8 @@ public class EntityUtilsImpl {
 		ItemHandlerHelper.giveItemToPlayer(player, stack);
 	}
 
-	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
-		return new ConductorFakePlayerForge(level);
+	public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
+		return new ConductorFakePlayerForge(level, conductor);
 	}
 
 	public static double getReachDistance(Player player) {

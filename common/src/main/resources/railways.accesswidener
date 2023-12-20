@@ -15,3 +15,4 @@ accessible field net/minecraft/server/level/ServerPlayer camera Lnet/minecraft/w
 accessible field net/minecraft/client/player/LocalPlayer xRotLast F
 accessible field net/minecraft/client/player/LocalPlayer yRotLast F
 accessible field net/minecraft/world/entity/Entity level Lnet/minecraft/world/level/Level;
+accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo state Lnet/minecraft/world/level/block/state/BlockState;

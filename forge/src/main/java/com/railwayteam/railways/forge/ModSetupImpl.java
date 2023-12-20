@@ -11,4 +11,8 @@ public class ModSetupImpl {
     public static void useTracksTab() {
         Railways.registrate().useCreativeTab(CRCreativeModeTabsImpl.TRACKS_TAB);
     }
+
+    public static void usePalettesTab() {
+        Railways.registrate().useCreativeTab(CRCreativeModeTabsImpl.PALETTES_TAB);
+    }
 }

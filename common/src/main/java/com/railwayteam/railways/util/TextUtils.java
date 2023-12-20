@@ -88,4 +88,22 @@ public class TextUtils {
         }, Style.EMPTY);
         return Components.literal(partsStringBuilder.toString());
     }
+
+    public static String joinSpace(String... strings) {
+        return join(" ", strings);
+    }
+
+    public static String joinUnderscore(String... strings) {
+        return join("_", strings);
+    }
+
+    public static String join(String separator, final String... strings) {
+        String[] filtered = Stream.of(strings).filter(s -> !s.isEmpty()).toArray(String[]::new);
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < filtered.length; i++) {
+            out.append(filtered[i]);
+            if (i < filtered.length - 1) out.append(separator);
+        }
+        return out.toString();
+    }
 }

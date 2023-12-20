@@ -40,6 +40,11 @@ public class CRCreativeModeTabs {
     }
 
     @ExpectPlatform
+    public static CreativeModeTab getPalettesTab() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         throw new AssertionError();
     }
@@ -54,6 +59,11 @@ public class CRCreativeModeTabs {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
+    public static ResourceKey<CreativeModeTab> getPalettesTabKey() {
+        throw new AssertionError();
+    }
+
     public static void register() {
         // just to load class
     }
@@ -61,7 +71,8 @@ public class CRCreativeModeTabs {
     public enum Tabs {
         MAIN(CRCreativeModeTabs::getBaseTabKey),
         TRACK(CRCreativeModeTabs::getTracksTabKey),
-        CAPS(CRCreativeModeTabs::getCapsTabKey);
+        CAPS(CRCreativeModeTabs::getCapsTabKey),
+        PALETTES(CRCreativeModeTabs::getPalettesTabKey);
 
         private final Supplier<ResourceKey<CreativeModeTab>> keySupplier;
 

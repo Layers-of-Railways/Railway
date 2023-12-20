@@ -6,10 +6,15 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommonTags {
+	public static final List<CommonTag<Item>> ALL_ITEMS = new ArrayList<>();
+	public static final List<CommonTag<Block>> ALL_BLOCKS = new ArrayList<>();
+
 	public static final CommonTag<Item>
 			STRING = item("string"),
 			IRON_NUGGETS = item("nuggets/iron_nuggets", "iron_nuggets", "nuggets/iron"),
@@ -18,7 +23,10 @@ public class CommonTags {
 			IRON_PLATES = item("plates/iron_plates", "iron_plates", "plates/iron"),
 			BRASS_PLATES = item("plates/brass_plates", "brass_plates", "plates/brass"),
 			COPPER_INGOTS = item("ingots/copper_ingots", "copper_ingots", "ingots/copper"),
-			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron");
+			BRASS_INGOTS = item("ingots/brass_ingots", "brass_ingots", "ingots/brass"),
+			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron"),
+			WORKBENCH = item("workbench");
+
 
 	// TFC Compat Tags
 	public static final CommonTag<Item>
@@ -38,12 +46,20 @@ public class CommonTags {
 	public static final CommonTag<Block>
 			RELOCATION_NOT_SUPPORTED = block("relocation_not_supported");
 
+	public static CommonTag<Block> block(String common, String fabric, String forge) {
+		CommonTag<Block> tag = CommonTag.conventional(Registries.BLOCK, common, fabric, forge);
+		ALL_BLOCKS.add(tag);
+		return tag;
+	}
+
 	public static CommonTag<Block> block(String path) {
-		return CommonTag.conventional(Registries.BLOCK, path);
+		return block(path, path, path);
 	}
 
 	public static CommonTag<Item> item(String common, String fabric, String forge) {
-		return CommonTag.conventional(Registries.ITEM, common, fabric, forge);
+		CommonTag<Item> tag = CommonTag.conventional(Registries.ITEM, common, fabric, forge);
+		ALL_ITEMS.add(tag);
+		return tag;
 	}
 
 	public static CommonTag<Item> item(String path) {

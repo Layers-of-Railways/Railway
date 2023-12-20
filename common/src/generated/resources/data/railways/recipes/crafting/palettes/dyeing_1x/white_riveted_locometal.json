@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/riveted"
+    },
+    {
+      "tag": "railways:internal/dyes/white_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:white_riveted_locometal"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/boiler"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:black_locometal_boiler"
+  },
+  "show_notification": true
+}

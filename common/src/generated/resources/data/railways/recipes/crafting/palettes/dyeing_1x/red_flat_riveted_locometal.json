@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_riveted"
+    },
+    {
+      "tag": "railways:internal/dyes/red_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:red_flat_riveted_locometal"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/slashed"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/light_blue_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:light_blue_slashed_locometal"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:workbench",
+      "required": false
+    },
+    {
+      "id": "#forge:workbench",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/boiler"
+    },
+    {
+      "tag": "railways:internal/dyes/yellow_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:yellow_locometal_boiler"
+  }
+}

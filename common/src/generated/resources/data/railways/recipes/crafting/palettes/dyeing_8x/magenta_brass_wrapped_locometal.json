@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/brass_wrapped_slashed"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/magenta_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:magenta_brass_wrapped_locometal"
+  },
+  "show_notification": true
+}

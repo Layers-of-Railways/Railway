@@ -2,9 +2,8 @@ package com.railwayteam.railways.forge;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
+import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.simibubi.create.foundation.utility.Components;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
@@ -23,16 +22,19 @@ import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.ref.WeakReference;
 import java.util.OptionalInt;
 
 // NOTICE: changes must be replicated in ConductorFakePlayerFabric.
 // annoying that we can't merge them any further.
-public class ConductorFakePlayerForge extends FakePlayer {
+public class ConductorFakePlayerForge extends FakePlayer implements IConductorHoldingFakePlayer {
 	private static final Connection NETWORK_MANAGER = new Connection(PacketFlow.CLIENTBOUND);
 
-	public ConductorFakePlayerForge(ServerLevel level) {
+	private final WeakReference<ConductorEntity> conductor;
+	public ConductorFakePlayerForge(ServerLevel level, ConductorEntity conductor) {
 		super(level, ConductorEntity.FAKE_PLAYER_PROFILE);
 		connection = new ConductorNetHandler(level.getServer(), this);
+		this.conductor = new WeakReference<>(conductor);
 	}
 
 	@Override
@@ -72,6 +74,11 @@ public class ConductorFakePlayerForge extends FakePlayer {
 	public ItemStack eat(@NotNull Level world, ItemStack stack) {
 		stack.shrink(1);
 		return stack;
+	}
+
+	@Override
+	public @Nullable ConductorEntity getConductor() {
+		return conductor.get();
 	}
 
 	private static class ConductorNetHandler extends ServerGamePacketListenerImpl {

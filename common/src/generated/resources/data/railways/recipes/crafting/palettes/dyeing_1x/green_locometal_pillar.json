@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/pillar"
+    },
+    {
+      "tag": "railways:internal/dyes/green_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:green_locometal_pillar"
+  }
+}

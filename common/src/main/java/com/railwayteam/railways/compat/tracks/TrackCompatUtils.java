@@ -42,6 +42,8 @@ public abstract class TrackCompatUtils {
             "twilightforest",
             "biomesoplenty",
             "natures_spirit",
+            "create_dd", // Dreams 'n' Desires
+            "quark",
             "tfc" // TerraFirmaCraft
     );
 

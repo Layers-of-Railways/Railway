@@ -6,14 +6,13 @@ import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
-import net.minecraft.core.Registry;
+import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
+import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.Set;
-
-import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 
 public class CRExtraRegistration {
     public static boolean registeredSignalSource = false;
@@ -33,11 +32,8 @@ public class CRExtraRegistration {
         } catch (NullPointerException ignored) {
             maybeRegisteredCopycat = null;
         }
-        Create.REGISTRATE.addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
+        addSignalSource();
         Create.REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
-        if (maybeRegistered != null) {
-            addSignalSource(maybeRegistered);
-        }
         if (maybeRegisteredCopycat != null) {
             addVentAsCopycat(maybeRegisteredCopycat);
         }
@@ -60,9 +56,10 @@ public class CRExtraRegistration {
         registeredVentAsCopycat = true;
     }
 
-    public static void addSignalSource(Block block) {
+    public static void addSignalSource() {
         if (registeredSignalSource) return;
-        assignDataBehaviour(new SignalDisplaySource()).accept(block);
+        DisplayBehaviour signalDisplaySource = AllDisplayBehaviours.register(Create.asResource("track_signal_source"), new SignalDisplaySource());
+        AllDisplayBehaviours.assignBlock(signalDisplaySource, Create.asResource("track_signal"));
         registeredSignalSource = true;
     }
 }

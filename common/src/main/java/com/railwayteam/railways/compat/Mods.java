@@ -20,9 +20,11 @@ public enum Mods {
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
+    FARMERSDELIGHT("farmersdelight"),
 	FIGURA("figura"),
 	NATURES_SPIRIT("natures_spirit"),
-
+	DREAMSANDDESIRES("create_dd"),
+	QUARK("quark"),
 	TFC("tfc")
 	;
 

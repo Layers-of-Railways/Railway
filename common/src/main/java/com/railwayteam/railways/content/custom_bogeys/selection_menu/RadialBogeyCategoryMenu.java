@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
+import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRIcons;
@@ -20,7 +21,6 @@ import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
 import com.simibubi.create.foundation.gui.widget.Indicator;
 import com.simibubi.create.foundation.utility.AngleHelper;
@@ -66,13 +66,11 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     private ResourceLocation selectedCategory;
 
     @Nullable
-    private Integer favoriteSlot; // should be index to store in
-
-    private static final int CENTER = -5;
+    private Integer favoriteSlot; // should be the index to store in
 
     private static final int MANAGE_FAVORITES = -7;
 
-    public RadialBogeyCategoryMenu(State state) {
+    RadialBogeyCategoryMenu(State state) {
         this.state = state;
         hoveredSlot = -1;
     }
@@ -98,6 +96,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
         try {
+            //noinspection deprecation
             RenderSystem.runAsFancy(() -> render.accept(new RenderInfo(ms, bufferSource, 0xF000F0)));
         } catch (Exception e) {
             if (Utils.isDevEnv())
@@ -114,6 +113,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     private static final Map<BogeyStyle, boolean[]> CACHED_COMPATS = new HashMap<>();
     private static final Map<ResourceLocation, Indicator.State[]> CACHED_CATEGORY_COMPATS = new HashMap<>();
 
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     protected void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         PoseStack ms = graphics.pose();
@@ -130,11 +130,8 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             hoveredSlot =
                     (Mth.floor((AngleHelper.deg(Mth.atan2(hoveredY, hoveredX)) + 360 + 180 - 22.5f)) % 360)
                             / 45;
-        boolean renderCenterSlot = false;//state == State.PICK_STYLE;
         if (scrollMode && distance > 150)
             scrollMode = false;
-        if (renderCenterSlot && distance <= 150)
-            hoveredSlot = CENTER;
 
         ms.pushPose();
         ms.translate(width / 2, height / 2, 0);
@@ -368,17 +365,6 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             renderCompatLabels(graphics);
         }
 
-        if (renderCenterSlot) {
-            ms.pushPose();
-            AllGuiTextures.TOOLBELT_SLOT.render(graphics, -12, -12);
-            AllIcons.I_CONFIG_BACK.render(graphics, -9, -9);
-            if (!scrollMode && CENTER == hoveredSlot) {
-                AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -13, -13);
-                tip = Components.translatable("railways.style_select.back_to_groups")
-                        .withStyle(ChatFormatting.GOLD);
-            }
-            ms.popPose();
-        }
         /*
         end core rendering
          */
@@ -391,14 +377,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             if (i1 > 8) {
                 ms.pushPose();
                 ms.translate(0, -80, 0.0F);
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                int k1 = 16777215;
-                int k = i1 << 24 & -16777216;
-                int l = font.width(title);
-                graphics.drawString(font, title, (-l / 2), -4, k1 | k);
-                RenderSystem.disableBlend();
-                ms.popPose();
+                drawComponent(graphics, title, i1);
             }
         }
 
@@ -413,16 +392,22 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             if (i1 > 8) {
                 ms.pushPose();
                 ms.translate((float) (width / 2), (float) (height - 68), 0.0F);
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                int k1 = 16777215;
-                int k = i1 << 24 & -16777216;
-                int l = font.width(tip);
-                graphics.drawString(font, tip, (-l / 2), -4, k1 | k);
-                RenderSystem.disableBlend();
-                ms.popPose();
+                drawComponent(graphics, tip, i1);
             }
         }
+    }
+
+    private void drawComponent(GuiGraphics guiGraphics, Component title, int i1) {
+        PoseStack ms = guiGraphics.pose();
+
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        int k1 = 16777215;
+        int k = i1 << 24 & -16777216;
+        int l = font.width(title);
+        guiGraphics.drawString(font, title, (-l / 2), -4, k1 | k);
+        RenderSystem.disableBlend();
+        ms.popPose();
     }
 
     private void renderCompatLabels(GuiGraphics graphics) {
@@ -436,6 +421,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             wideCompat ? Indicator.State.GREEN : Indicator.State.RED);
     }
 
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     private void renderCompatLabels(GuiGraphics graphics, Indicator.State narrowState, Indicator.State standardState, Indicator.State wideState) {
         PoseStack ms = graphics.pose();
         ms.pushPose();
@@ -536,28 +522,10 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 }
                 onClose();
                 BogeyCategoryHandlerClient.COOLDOWN = 2;
+                TagCycleHandlerClient.COOLDOWN = 2;
                 AccessorToolboxHandlerClient.setCOOLDOWN(2);
                 return true;
             }
-            /*if (selected == DEPOSIT) {
-                onClose();
-                ToolboxHandlerClient.COOLDOWN = 2;
-                return true;
-            }
-
-            if (state == RadialToolboxMenu.State.SELECT_BOX && selected >= 0 && selected < toolboxes.size()) {
-                state = RadialToolboxMenu.State.SELECT_ITEM;
-                selectedBox = toolboxes.get(selected);
-                return true;
-            }
-
-            if (state == RadialToolboxMenu.State.DETACH || state == RadialToolboxMenu.State.SELECT_ITEM || state == RadialToolboxMenu.State.SELECT_ITEM_UNEQUIP) {
-                if (selected == UNEQUIP || selected >= 0) {
-                    onClose();
-                    ToolboxHandlerClient.COOLDOWN = 2;
-                    return true;
-                }
-            }*/
         }
 
         if (button == 1) { // right click to go back
@@ -570,6 +538,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         return super.mouseClicked(x, y, button);
     }
 
+    @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         Window window = Minecraft.getInstance().getWindow();
