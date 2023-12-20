@@ -178,6 +178,10 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return AllBlocks.SHAFT.get();
     }
 
+    public static ItemLike smallBuffer() {
+      return CRBlocks.SMALL_BUFFER.get();
+    }
+
     public static ItemLike linkPin() {
       return CRBlocks.LINK_AND_PIN.get();
     }

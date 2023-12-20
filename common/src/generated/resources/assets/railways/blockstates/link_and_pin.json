@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,linkless=false": {
-      "model": "railways:block/buffer/link_and_pin",
+      "model": "railways:block/buffer/single_deco/link_and_pin",
       "y": 90
     },
     "facing=east,linkless=true": {
-      "model": "railways:block/buffer/link_and_pin_linkless",
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
       "y": 90
     },
     "facing=north,linkless=false": {
-      "model": "railways:block/buffer/link_and_pin"
+      "model": "railways:block/buffer/single_deco/link_and_pin"
     },
     "facing=north,linkless=true": {
-      "model": "railways:block/buffer/link_and_pin_linkless"
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless"
     },
     "facing=south,linkless=false": {
-      "model": "railways:block/buffer/link_and_pin",
+      "model": "railways:block/buffer/single_deco/link_and_pin",
       "y": 180
     },
     "facing=south,linkless=true": {
-      "model": "railways:block/buffer/link_and_pin_linkless",
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
       "y": 180
     },
     "facing=west,linkless=false": {
-      "model": "railways:block/buffer/link_and_pin",
+      "model": "railways:block/buffer/single_deco/link_and_pin",
       "y": 270
     },
     "facing=west,linkless=true": {
-      "model": "railways:block/buffer/link_and_pin_linkless",
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
       "y": 270
     }
   }

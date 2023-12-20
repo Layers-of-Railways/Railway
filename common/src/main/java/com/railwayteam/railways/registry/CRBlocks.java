@@ -4,6 +4,8 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.buffer.*;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
+import com.railwayteam.railways.content.buffer.single_deco.GenericDyeableSingleBufferBlock;
+import com.railwayteam.railways.content.buffer.single_deco.LinkPinBlock;
 import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
@@ -607,7 +609,7 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
                 .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
                 .build(), LinkPinBlock.WATERLOGGED
             )
@@ -617,7 +619,45 @@ public class CRBlocks {
         .lang("Link 'n Pin")
         .item()
         .transform(BuilderTransformers.variantBufferItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/link_and_pin")))
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/link_and_pin")))
+        .build()
+        .register();
+
+    public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
+                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Big Buffer")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
+        .build()
+        .register();
+
+    public static final BlockEntry<GenericDyeableSingleBufferBlock> SMALL_BUFFER = REGISTRATE.block("small_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.SMALL_BUFFER))
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
+                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+            )
+        )
+        .transform(pickaxeOnly())
+        .transform(BuilderTransformers.variantBuffer())
+        .lang("Small Buffer")
+        .item()
+        .transform(BuilderTransformers.variantBufferItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
         .build()
         .register();
 

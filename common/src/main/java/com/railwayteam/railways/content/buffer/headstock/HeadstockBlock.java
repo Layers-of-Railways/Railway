@@ -93,9 +93,9 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return (switch (state.getValue(STYLE)) {
-            case PLAIN -> CRShapes.headstockPlain();
-            case BUFFER -> CRShapes.headstockBuffer();
-            case LINK, LINKLESS -> CRShapes.headstockLinkPin();
+            case PLAIN -> CRShapes.HEADSTOCK_PLAIN;
+            case BUFFER -> CRShapes.HEADSTOCK_BUFFER;
+            case LINK, LINKLESS -> CRShapes.HEADSTOCK_LINK_PIN;
         }).get(state.getValue(FACING));
     }
 

@@ -1,11 +1,12 @@
-package com.railwayteam.railways.content.buffer;
+package com.railwayteam.railways.content.buffer.single_deco;
 
+import com.railwayteam.railways.content.buffer.DyeableBlockEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
-import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
+import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -33,20 +33,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class LinkPinBlock extends HorizontalDirectionalBlock implements IBE<DyeableBlockEntity>, IWrenchable, ProperWaterloggedBlock {
-    public static final BooleanProperty LINKLESS = BooleanProperty.create("linkless");
+public abstract class AbstractDyeableSingleBufferBlock extends HorizontalDirectionalBlock implements IBE<DyeableBlockEntity>, IWrenchable, ProperWaterloggedBlock {
 
-    public LinkPinBlock(Properties properties) {
+    public AbstractDyeableSingleBufferBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
-            .setValue(WATERLOGGED, false)
-            .setValue(LINKLESS, false));
+            .setValue(WATERLOGGED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED, LINKLESS));
+        super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED));
     }
 
     @Override
@@ -56,12 +54,14 @@ public class LinkPinBlock extends HorizontalDirectionalBlock implements IBE<Dyea
         IBE.onRemove(state, worldIn, pos, newState);
     }
 
+    protected abstract BlockState cycleStyle(BlockState originalState, Direction targetedFace);
+
     @Override
     public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
         if (targetedFace.getAxis().isVertical()) {
             return IWrenchable.super.getRotatedBlockState(originalState, targetedFace);
         } else {
-            return originalState.cycle(LINKLESS);
+            return cycleStyle(originalState, targetedFace);
         }
     }
 
@@ -85,10 +85,12 @@ public class LinkPinBlock extends HorizontalDirectionalBlock implements IBE<Dyea
         return withWater(state, context);
     }
 
+    protected abstract VoxelShaper getShaper(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context);
+
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return CRShapes.LINK_PIN.get(state.getValue(FACING));
+        return getShaper(state, level, pos, context).get(state.getValue(FACING));
     }
 
     @SuppressWarnings("deprecation")

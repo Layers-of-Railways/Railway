@@ -160,6 +160,26 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#*#")
         );
 
+    GeneratedRecipe SMALL_BUFFER = create(CRBlocks.SMALL_BUFFER)
+        .unlockedBy(Ingredients::industrialIron)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.shaft())
+            .pattern("#I_")
+        );
+
+    GeneratedRecipe BIG_BUFFER = create(CRBlocks.BIG_BUFFER)
+        .unlockedBy(Ingredients::smallBuffer)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.smallBuffer())
+            .pattern("#I_")
+        );
+
     GeneratedRecipe LINK_AND_PIN = create(CRBlocks.LINK_AND_PIN)
         .unlockedBy(Ingredients::industrialIron)
         .returns(4)

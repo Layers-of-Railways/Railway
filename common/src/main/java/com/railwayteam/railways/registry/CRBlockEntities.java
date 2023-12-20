@@ -110,7 +110,7 @@ public class CRBlockEntities {
 
     public static final BlockEntityEntry<DyeableBlockEntity> DYEABLE = REGISTRATE
         .blockEntity("dyeable", DyeableBlockEntity::new)
-        .validBlocks(CRBlocks.LINK_AND_PIN)
+        .validBlocks(CRBlocks.LINK_AND_PIN, CRBlocks.BIG_BUFFER, CRBlocks.SMALL_BUFFER)
         .register();
 
     public static final BlockEntityEntry<HeadstockBlockEntity> HEADSTOCK = REGISTRATE
