@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "railways:link_and_pin"
@@ -14,5 +15,6 @@
   ],
   "result": {
     "item": "railways:headstock"
-  }
+  },
+  "show_notification": true
 }

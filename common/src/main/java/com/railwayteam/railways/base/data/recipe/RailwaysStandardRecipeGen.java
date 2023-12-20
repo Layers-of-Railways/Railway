@@ -326,15 +326,6 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             return this;
         }
 
-        GeneratedRecipeBuilder setEmiDefault() {
-            return setEmiDefault(true);
-        }
-
-        GeneratedRecipeBuilder setEmiDefault(boolean addToEmiDefaults) {
-            this.addToEmiDefaults = addToEmiDefaults;
-            return this;
-        }
-
         GeneratedRecipe viaShaped(UnaryOperator<ShapedRecipeBuilder> builder) {
             return register(consumer -> {
                 ShapedRecipeBuilder b = builder.apply(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, result.get(), amount));

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "railways:palettes/dye_groups/flat_slashed"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "railways:black_flat_slashed_locometal"
-  }
+  },
+  "show_notification": true
 }

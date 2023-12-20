@@ -1,7 +1,7 @@
 {
   "parent": "railways:block/palettes/boiler/boiler",
   "flip_v": true,
-  "loader": "forge:obj",
+  "loader": "porting_lib:obj",
   "model": "railways:models/block/palettes/boiler/boiler_x.obj",
   "textures": {
     "front": "railways:block/palettes/pink/smokebox_door",

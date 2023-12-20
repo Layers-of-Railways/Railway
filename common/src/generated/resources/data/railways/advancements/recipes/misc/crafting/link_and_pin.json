@@ -30,5 +30,6 @@
     "recipes": [
       "railways:crafting/link_and_pin"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,4 +1,7 @@
 {
+  "block": [
+    "railways:internal/relocation_not_supported"
+  ],
   "item": [
     "railways:internal/string",
     "railways:internal/nuggets/iron_nuggets",
@@ -10,6 +13,8 @@
     "railways:internal/ingots/brass_ingots",
     "railways:internal/ingots/iron_ingots",
     "railways:internal/workbench",
+    "railways:internal/rods/wrought_iron",
+    "railways:internal/rods/zinc",
     "railways:internal/dyes/white_dyes",
     "railways:internal/dyes/orange_dyes",
     "railways:internal/dyes/magenta_dyes",
@@ -26,8 +31,5 @@
     "railways:internal/dyes/green_dyes",
     "railways:internal/dyes/red_dyes",
     "railways:internal/dyes/black_dyes"
-  ],
-  "block": [
-    "railways:internal/relocation_not_supported"
   ]
 }

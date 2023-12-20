@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "create:andesite_casing"
@@ -27,5 +28,6 @@
   ],
   "result": {
     "item": "railways:handcar"
-  }
+  },
+  "show_notification": true
 }

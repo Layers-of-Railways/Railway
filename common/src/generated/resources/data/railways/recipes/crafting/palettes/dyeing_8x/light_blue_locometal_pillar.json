@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "railways:palettes/dye_groups/pillar"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "railways:light_blue_locometal_pillar"
-  }
+  },
+  "show_notification": true
 }

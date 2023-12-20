@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -76,7 +77,7 @@ public class BufferModel extends ForwardingBakedModel {
             if (tag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
                 CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
                 if (blockEntityTag.contains("Material", Tag.TAG_COMPOUND)) {
-                    materialSwapper = getSwapper(NbtUtils.readBlockState(blockEntityTag.getCompound("Material")));
+                    materialSwapper = getSwapper(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), blockEntityTag.getCompound("Material")));
                 }
                 if (blockEntityTag.contains("Color", Tag.TAG_INT)) {
                     colorSwapper = getSwapper(DyeColor.byId(blockEntityTag.getInt("Color")));

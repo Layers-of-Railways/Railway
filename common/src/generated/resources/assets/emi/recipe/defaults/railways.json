@@ -171,19 +171,19 @@
     "railways:mechanical_crafting/locometal_boiler",
     "railways:mechanical_crafting/brass_wrapped_locometal_boiler"
   ],
+  "disabled": [],
+  "resolutions": {},
   "tags": {
-    "#item:railways:palettes/dye_groups/slashed": "item:railways:slashed_locometal",
-    "#item:railways:palettes/dye_groups/riveted": "item:railways:riveted_locometal",
-    "#item:railways:palettes/dye_groups/pillar": "item:railways:locometal_pillar",
-    "#item:railways:palettes/dye_groups/smokebox": "item:railways:locometal_smokebox",
-    "#item:railways:palettes/dye_groups/plated": "item:railways:plated_locometal",
-    "#item:railways:palettes/dye_groups/flat_slashed": "item:railways:flat_slashed_locometal",
-    "#item:railways:palettes/dye_groups/flat_riveted": "item:railways:flat_riveted_locometal",
-    "#item:railways:palettes/dye_groups/brass_wrapped_slashed": "item:railways:brass_wrapped_locometal",
+    "#item:railways:palettes/cycle_groups/base": "item:railways:riveted_locometal",
     "#item:railways:palettes/dye_groups/boiler": "item:railways:locometal_boiler",
     "#item:railways:palettes/dye_groups/brass_wrapped_boiler": "item:railways:brass_wrapped_locometal_boiler",
-    "#item:railways:palettes/cycle_groups/base": "item:railways:riveted_locometal"
-  },
-  "resolutions": {},
-  "disabled": []
+    "#item:railways:palettes/dye_groups/brass_wrapped_slashed": "item:railways:brass_wrapped_locometal",
+    "#item:railways:palettes/dye_groups/flat_riveted": "item:railways:flat_riveted_locometal",
+    "#item:railways:palettes/dye_groups/flat_slashed": "item:railways:flat_slashed_locometal",
+    "#item:railways:palettes/dye_groups/pillar": "item:railways:locometal_pillar",
+    "#item:railways:palettes/dye_groups/plated": "item:railways:plated_locometal",
+    "#item:railways:palettes/dye_groups/riveted": "item:railways:riveted_locometal",
+    "#item:railways:palettes/dye_groups/slashed": "item:railways:slashed_locometal",
+    "#item:railways:palettes/dye_groups/smokebox": "item:railways:locometal_smokebox"
+  }
 }

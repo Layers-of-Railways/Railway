@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.train_debug;
 
-import com.mojang.math.Vector3f;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageBogey;

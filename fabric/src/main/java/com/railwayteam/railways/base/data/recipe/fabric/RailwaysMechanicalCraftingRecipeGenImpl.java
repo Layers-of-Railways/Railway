@@ -16,7 +16,7 @@ public class RailwaysMechanicalCraftingRecipeGenImpl extends RailwaysMechanicalC
 
     public static RecipeProvider create(PackOutput gen) {
         RailwaysMechanicalCraftingRecipeGenImpl provider = new RailwaysMechanicalCraftingRecipeGenImpl(gen);
-        return new FabricRecipeProvider(gen) {
+        return new FabricRecipeProvider((FabricDataOutput) gen) {
             @Override
             public void buildRecipes(Consumer<FinishedRecipe> exporter) {
                 provider.buildRecipes(exporter);

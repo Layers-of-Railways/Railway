@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "railways:palettes/dye_groups/boiler"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "railways:gray_locometal_boiler"
-  }
+  },
+  "show_notification": true
 }

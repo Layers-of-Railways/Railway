@@ -1,14 +1,8 @@
 package com.railwayteam.railways.base.data.compat.emi;
 
-import com.google.common.hash.Hashing;
-import com.google.common.hash.HashingOutputStream;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.railwayteam.railways.registry.CRPalettes;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -16,13 +10,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class EmiRecipeDefaultsGen implements DataProvider {
     public static final List<ResourceLocation> DEFAULT_RECIPES = new ArrayList<>();
@@ -37,21 +30,14 @@ public class EmiRecipeDefaultsGen implements DataProvider {
 
     @SuppressWarnings("DuplicatedCode")
     @Override
-    public void run(@NotNull CachedOutput output) throws IOException {
+    public CompletableFuture<?> run(@NotNull CachedOutput output) {
         Path path = this.packOutput.getOutputFolder()
             .resolve("assets/emi/recipe/defaults/railways.json");
 
-        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-        HashingOutputStream hashingoutputstream = new HashingOutputStream(Hashing.sha1(), bytearrayoutputstream);
-
-        Writer writer = new OutputStreamWriter(hashingoutputstream, StandardCharsets.UTF_8);
-        writer.append(run());
-        writer.close();
-
-        output.writeIfNeeded(path, bytearrayoutputstream.toByteArray(), hashingoutputstream.hash());
+        return DataProvider.saveStable(output, run(), path);
     }
 
-    private String run() {
+    private JsonElement run() {
         JsonObject object = new JsonObject();
 
         JsonArray added = new JsonArray();
@@ -70,7 +56,7 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         object.add("resolutions", new JsonObject());
         object.add("disabled", new JsonArray());
 
-        return GSON.toJson(object);
+        return object;
     }
 
     @Override

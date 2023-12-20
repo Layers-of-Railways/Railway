@@ -53,7 +53,7 @@ public class HeadstockBlockEntity extends DyeableBlockEntity implements IMateria
         if (!compound.contains("Material"))
             return;
 
-        material = NbtUtils.readBlockState(compound.getCompound("Material"));
+        material = NbtUtils.readBlockState(blockHolderGetter(), compound.getCompound("Material"));
         if (material.isAir())
             material = Blocks.SPRUCE_PLANKS.defaultBlockState();
 

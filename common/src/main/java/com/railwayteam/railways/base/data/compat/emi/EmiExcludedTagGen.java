@@ -1,23 +1,19 @@
 package com.railwayteam.railways.base.data.compat.emi;
 
-import com.google.common.hash.Hashing;
-import com.google.common.hash.HashingOutputStream;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.railwayteam.railways.multiloader.CommonTag;
 import com.railwayteam.railways.multiloader.CommonTags;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.Iterator;
+import java.util.concurrent.CompletableFuture;
 
 public class EmiExcludedTagGen implements DataProvider {
     private static final String INDENT = "  ";
@@ -28,57 +24,32 @@ public class EmiExcludedTagGen implements DataProvider {
     }
 
     @Override
-    public void run(CachedOutput output) throws IOException {
+    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput output) {
         Path path = this.packOutput.getOutputFolder()
             .resolve("assets/emi/tag/exclusions/railways.json");
 
-        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
-        HashingOutputStream hashingoutputstream = new HashingOutputStream(Hashing.sha1(), bytearrayoutputstream);
-
-        Writer writer = new OutputStreamWriter(hashingoutputstream, StandardCharsets.UTF_8);
-        writer.append(run());
-        writer.close();
-
-        output.writeIfNeeded(path, bytearrayoutputstream.toByteArray(), hashingoutputstream.hash());
+        return DataProvider.saveStable(output, run(), path);
     }
 
-    private String run() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\n")
-            .append(INDENT)
-            .append("\"item\": [\n");
-        // fill in items
-        Iterator<CommonTag<Item>> itemIterator = CommonTags.ALL_ITEMS.iterator();
-        while (itemIterator.hasNext()) {
-            CommonTag<Item> itemTag = itemIterator.next();
-            builder.append(INDENT).append(INDENT).append("\"");
-            builder.append(itemTag.tag.location());
-            builder.append("\"");
-            if (itemIterator.hasNext()) {
-                builder.append(",");
+    private JsonElement run() {
+        JsonObject object = new JsonObject();
+        {
+            JsonArray item = new JsonArray();
+            // fill in items
+            for (CommonTag<Item> itemTag : CommonTags.ALL_ITEMS) {
+                item.add(itemTag.tag.location().toString());
             }
-            builder.append("\n");
+            object.add("item", item);
         }
-        builder.append(INDENT)
-            .append("],\n")
-            .append(INDENT)
-            .append("\"block\": [\n");
-        // fill in blocks
-        Iterator<CommonTag<Block>> blockIterator = CommonTags.ALL_BLOCKS.iterator();
-        while (blockIterator.hasNext()) {
-            CommonTag<Block> blockTag = blockIterator.next();
-            builder.append(INDENT).append(INDENT).append("\"");
-            builder.append(blockTag.tag.location());
-            builder.append("\"");
-            if (blockIterator.hasNext()) {
-                builder.append(",");
+        {
+            JsonArray block = new JsonArray();
+            // fill in blocks
+            for (CommonTag<Block> blockTag : CommonTags.ALL_BLOCKS) {
+                block.add(blockTag.tag.location().toString());
             }
-            builder.append("\n");
+            object.add("block", block);
         }
-        builder.append(INDENT)
-                .append("]\n");
-        builder.append("}");
-        return builder.toString();
+        return object;
     }
 
     @Override

@@ -30,5 +30,6 @@
     "recipes": [
       "railways:crafting/handcar"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

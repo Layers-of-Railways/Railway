@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "tag": "railways:palettes/dye_groups/flat_riveted"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "railways:gray_flat_riveted_locometal"
-  }
+  },
+  "show_notification": true
 }

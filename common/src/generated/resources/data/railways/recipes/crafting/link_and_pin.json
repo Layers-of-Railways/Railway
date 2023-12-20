@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "create:industrial_iron_block"
@@ -22,5 +23,6 @@
   "result": {
     "count": 4,
     "item": "railways:link_and_pin"
-  }
+  },
+  "show_notification": true
 }

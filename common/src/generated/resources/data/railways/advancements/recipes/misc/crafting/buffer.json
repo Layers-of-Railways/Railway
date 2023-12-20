@@ -30,5 +30,6 @@
     "recipes": [
       "railways:crafting/buffer"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

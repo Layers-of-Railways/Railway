@@ -23,7 +23,6 @@ import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -104,7 +103,6 @@ public class Railways {
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
-    gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
     PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);
