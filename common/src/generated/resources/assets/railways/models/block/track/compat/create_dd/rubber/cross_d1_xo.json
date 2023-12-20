@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "create_dd:block/track/rubber/standard_track_rubber",
+    "1": "create_dd:block/track/rubber/standard_track_mip_rubber",
+    "2": "create_dd:block/track/rubber/standard_track_crossing_rubber",
+    "particle": "create_dd:block/track/rubber/standard_track_crossing_rubber"
+  }
+}

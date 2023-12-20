@@ -19,11 +19,7 @@ import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
-import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.trains.entity.Navigation;
-import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,7 +69,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             snr$fakePlayer = false;
             return true;
         }
-        return instance.closerThan(pos, distance);
+        return original.call(instance, pos, distance);
     }
 
     @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))

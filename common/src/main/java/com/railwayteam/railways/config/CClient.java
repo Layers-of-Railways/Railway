@@ -11,7 +11,7 @@ public class CClient extends ConfigBase {
 
 
     // no group
-    public final ConfigBool disableOptifineWarning = b(false, "disableOptifineNag", Comments.disableOptifineWarning);
+    public final ConfigBool disableOptifineWarning = b(false, "disableOptifineWarning", Comments.disableOptifineWarning);
     public final ConfigBool showExtendedCouplerDebug = b(false, "showExtendedCouplerDebug", Comments.showExtendedCouplerDebug);
     public final ConfigBool skipClientDerailing = b(false, "skipClientDerailing", Comments.skipClientDerailing);
     public final ConfigBool useConductorSpyShader = b(true, "useConductorSpyShader", Comments.useConductorSpyShader);

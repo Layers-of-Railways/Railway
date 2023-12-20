@@ -28,7 +28,7 @@ public class CRTagGen {
 	@SafeVarargs
 	public static void addOptionalTag(ResourceLocation id, TagKey<Block>... tags) {
 		for (TagKey<Block> tag : tags) {
-			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<ResourceLocation>()).add(id);
+			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<>()).add(id);
 		}
 	}
 	public static void generateBlockTags(RegistrateTagsProvider<Block> tags) {
@@ -53,7 +53,8 @@ public class CRTagGen {
 			.generateBoth(tags, tag -> tag.add(Items.STRING));
 		CommonTags.IRON_PLATES.generateCommon(tags);
 		CommonTags.BRASS_PLATES.generateCommon(tags);
-//			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));
+		CommonTags.WORKBENCH.generateCommon(tags)
+				.generateBoth(tags, tag -> tag.add(Items.CRAFTING_TABLE));
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

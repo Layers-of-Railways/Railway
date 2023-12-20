@@ -5,7 +5,7 @@
 **Create Steam 'n' Rails** is an addon mod for Create that aims to extend Create's train and steam systems. Current features include custom tracks, semaphores, and conductors.
 
 ## Contributing (for team members):
-1. Create a new branch for your feature (named `1.18/<feat>`)
+1. Create a new branch for your feature (named `1.19/<feat>`)
 2. Write your feature
 3. Make a pull request
 4. Have somebody review it, and merge

@@ -2,15 +2,18 @@
 Version 1.6.0
 ------------------------------------------------------
 Additions
-- Cherry Tracks (1.20.1)
-- Bamboo Tracks (1.20.1)
-- Stripped Bamboo Tracks (1.20.1)
+- Cherry, Bamboo & Stripped Bamboo Tracks (1.20.1)
+- Natures Spirit compat Tracks (1.20.1)
+- TerraFirmaCraft compat Tracks (1.20.1)
+- Create: Dreams and Desires compat Tracks
+- Quark compat tracks
 - Handcar: wrench to pick up
 - Players can now click a station with a whistle to summon a train directly to that station
 - A deployer using a whistle on air will clear the schedule of the bound train
 - You can now whistle a dual-headed train while in motion and have it slow and reverse
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
+- Buffer blocks
 
 Changes
 - Generic Crossing Tracks - any two tracks can now cross at a junction
@@ -23,11 +26,16 @@ Changes
 - Couplers validate placement less frequently, improving performance
 - Remote Conductor-controlled trains adjust speed based on signal strength
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
+- Train status messages now include coordinates
+- Make optifine warning screen easier to skip
 
 Fixes
 - Mixin conflict with VS2
-- Fix Farmers delight fabric crash (small hacky fix)
 - Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
+- Fix waypoint schedule items not showing up in the Station Summary (#329)
+- Fix villagers opening sliding doors in the 'special' mode (#317)
+- Fix normal nixie tube relays (#311)
+- Fix signal debug line rendering for monorail tracks
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------

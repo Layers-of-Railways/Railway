@@ -63,14 +63,6 @@ repositories {
     } // Cardinal Components (Hex Casting dependency)
 }
 
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        if (requested.module.name == "fabric-loader") {
-            useVersion(fabric_loader_version)
-        }
-    }
-}
-
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     common(project(path: ":common", configuration: "namedElements")) { transitive = false }
@@ -120,7 +112,7 @@ dependencies {
     }
 
     // because create fabric is a bit broken I think
-    modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.9"
+    modImplementation("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
     // mod compat for tracks
     if (enable_hexcasting.toBoolean()) {
@@ -153,8 +145,7 @@ dependencies {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${EB_verison}+fabric")
     }
 
-    implementation(include("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}"))
-    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${mixin_extras_version}")
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${mixin_extras_version}")))
 }
 
 processResources {

@@ -9,6 +9,7 @@
     "railways:internal/ingots/copper_ingots",
     "railways:internal/ingots/brass_ingots",
     "railways:internal/ingots/iron_ingots",
+    "railways:internal/workbench",
     "railways:internal/dyes/white_dyes",
     "railways:internal/dyes/orange_dyes",
     "railways:internal/dyes/magenta_dyes",

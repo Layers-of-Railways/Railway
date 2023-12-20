@@ -29,5 +29,7 @@ public class ModSetup {
     BlueSkiesTrackCompat.register();
     TwilightForestTrackCompat.register();
     BiomesOPlentyTrackCompat.register();
+    DreamsAndDesiresTrackCompat.register();
+    QuarkTrackCompat.register();
   }
 }

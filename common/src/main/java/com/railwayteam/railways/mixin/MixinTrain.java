@@ -1,9 +1,12 @@
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
+import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.mixin_interfaces.*;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -13,7 +16,6 @@ import com.simibubi.create.content.trains.entity.TravellingPoint;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackNode;
-import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
@@ -24,7 +26,9 @@ import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,9 +50,6 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Shadow public abstract void arriveAt(GlobalStation station);
 
-    @Shadow public abstract void leaveStation();
-
-    @Shadow public ScheduleRuntime runtime;
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
     @Unique
@@ -233,6 +234,23 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
             c -> ((IOccupiedCouplers) train).snr$getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).snr$setIndex(tag.getInt("ScheduleHolderIndex"));
         ((IHandcarTrain) train).snr$setHandcar(tag.getBoolean("IsHandcar"));
+    }
+
+    @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
+    private void snr$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local Train train, @Local(name = "v", ordinal = 0) Vec3 v) {
+        // Self Train / Train that collided with the other one
+        if (((IHandcarTrain) this).snr$isHandcar()) {
+            TrainUtils.discardTrain((Train) (Object) this);
+            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            ci.cancel();
+        }
+
+        // Other Train / Train that got collided with
+        if (((IHandcarTrain) train).snr$isHandcar()) {
+            TrainUtils.discardTrain(train);
+            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            ci.cancel();
+        }
     }
 
     @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
