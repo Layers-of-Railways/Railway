@@ -78,18 +78,13 @@ public class BufferModel implements BakedModel {
 
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
-        if (false) {
-            return wrapped.getQuads(state, direction, random);
-        }
         return Collections.emptyList();
     }
 
     // WAY too complicated method of getting custom item models to work
+    @SuppressWarnings("deprecation")
     @Override
     public List<BakedModel> getRenderPasses(@NotNull ItemStack stack, boolean fabulous) {
-        if (false) {
-            return List.of(this);
-        }
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;
         UnaryOperator<TextureAtlasSprite> colorSwapper = null;
 
@@ -108,6 +103,7 @@ public class BufferModel implements BakedModel {
         final UnaryOperator<TextureAtlasSprite> finalMaterialSwapper = materialSwapper;
         final UnaryOperator<TextureAtlasSprite> finalColorSwapper = colorSwapper;
         return List.of(new BufferModel(wrapped) {
+            @SuppressWarnings("deprecation")
             @Override
             public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
                 if (finalMaterialSwapper != null || finalColorSwapper != null) {
