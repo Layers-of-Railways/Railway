@@ -116,6 +116,6 @@ public abstract class AbstractDyeableSingleBufferBlock extends HorizontalDirecti
 
     @Override
     public BlockEntityType<? extends DyeableBlockEntity> getBlockEntityType() {
-        return CRBlockEntities.DYEABLE.get();
+        return CRBlockEntities.HEADSTOCK.get();
     }
 }

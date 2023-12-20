@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"3": "railways:block/buffer/big_buffer"
+		"3": "railways:block/buffer/big_buffer",
+		"particle": "railways:block/buffer/big_buffer"
 	},
 	"elements": [
 		{

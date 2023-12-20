@@ -609,7 +609,7 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
                 .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
                 .build(), LinkPinBlock.WATERLOGGED
             )

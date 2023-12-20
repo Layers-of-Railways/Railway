@@ -96,6 +96,7 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
             case PLAIN -> CRShapes.HEADSTOCK_PLAIN;
             case BUFFER -> CRShapes.HEADSTOCK_BUFFER;
             case LINK, LINKLESS -> CRShapes.HEADSTOCK_LINK_PIN;
+            case KNUCKLE, KNUCKLE_SPLIT -> CRShapes.HEADSTOCK_KNUCKLE;
         }).get(state.getValue(FACING));
     }
 
@@ -131,7 +132,9 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
         PLAIN("wooden_headstock"),
         BUFFER("wooden_headstock_buffer"),
         LINK("wooden_headstock_link_and_pin"),
-        LINKLESS("wooden_headstock_link_and_pin_linkless")
+        LINKLESS("wooden_headstock_link_and_pin_linkless"),
+        KNUCKLE("wooden_headstock_knuckle_coupler"),
+        KNUCKLE_SPLIT("wooden_headstock_split_knuckle_coupler")
         ;
 
         private final String model;

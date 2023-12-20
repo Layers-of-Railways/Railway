@@ -3,7 +3,8 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"4": "railways:block/buffer/small_buffer"
+		"4": "railways:block/buffer/small_buffer",
+		"particle": "railways:block/buffer/small_buffer"
 	},
 	"elements": [
 		{
