@@ -1,6 +1,7 @@
 {
   "parent": "railways:block/smokestack/obj_smokestack",
   "loader": "forge:obj",
+  "porting_lib:loader": "porting_lib:obj",
   "flip_v": true,
   "model": "railways:models/block/smokestack/block_caboosestyle.obj",
   "textures": {

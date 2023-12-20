@@ -5,6 +5,7 @@
 		"1": "railways:entity/conductor"
 	},
 	"loader": "forge:obj",
+	"porting_lib:loader": "porting_lib:obj",
 	"flip_v": true,
 	"model": "railways:models/item/dev_caps/tiestoettoet.obj",
 	"display": {
