@@ -1,6 +1,7 @@
 {
 	"parent": "block/block",
 	"loader": "forge:obj",
+	"porting_lib:loader": "porting_lib:obj",
 	"ambientocclusion": false,
 	"flip_v": true,
 	"model": "railways:models/block/bogey/wide/wheels.obj",

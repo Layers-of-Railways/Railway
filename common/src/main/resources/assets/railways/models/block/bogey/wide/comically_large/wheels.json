@@ -1,6 +1,7 @@
 {
 	"parent": "railways:block/bogey/wide/comically_large/textures",
 	"loader": "forge:obj",
+	"porting_lib:loader": "porting_lib:obj",
 	"flip_v": true,
 	"model": "railways:models/block/bogey/wide/comically_large/wheels.obj"
 }

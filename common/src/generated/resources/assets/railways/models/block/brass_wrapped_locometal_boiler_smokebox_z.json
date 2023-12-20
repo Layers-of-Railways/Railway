@@ -3,6 +3,7 @@
   "flip_v": true,
   "loader": "forge:obj",
   "model": "railways:models/block/palettes/boiler/boiler_z.obj",
+  "porting_lib:loader": "porting_lib:obj",
   "textures": {
     "front": "railways:block/palettes/netherite/smokebox_door",
     "particle": "railways:block/palettes/netherite/riveted_pillar_top",

@@ -3,6 +3,7 @@
   "flip_v": true,
   "loader": "forge:obj",
   "model": "railways:models/block/palettes/boiler/boiler_x.obj",
+  "porting_lib:loader": "porting_lib:obj",
   "textures": {
     "front": "railways:block/palettes/orange/boiler_gullet",
     "particle": "railways:block/palettes/orange/riveted_pillar_top",
