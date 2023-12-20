@@ -34,12 +34,12 @@ import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make
 public class GenericTrackCompat {
     public final Mods mod;
     public final String modid;
-    public static boolean modLoaded = false;
+    public boolean modLoaded;
 
     public GenericTrackCompat(Mods mod) {
         this.mod = mod;
         this.modid = mod.asId();
-        modLoaded = mod.isLoaded;
+        this.modLoaded = mod.isLoaded;
     }
 
     protected final Map<String, TrackMaterial> MATERIALS = new HashMap<>();
@@ -53,17 +53,9 @@ public class GenericTrackCompat {
         Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
     }
 
-    protected static boolean registerTracksAnywayGlobal() {
-        return CRConfigs.getRegisterMissingTracks() || modLoaded; // || Utils.isDevEnv();
-    }
-
-    protected boolean registerTracksAnyway() {
-        return registerTracksAnywayGlobal();
-    }
-
     // If tracks/materials should still be registered if the base block is missing
     protected final boolean shouldRegisterMissing() {
-        return isDataGen() || registerTracksAnyway();
+        return isDataGen() || CRConfigs.getRegisterMissingTracks() || modLoaded;
     }
 
     public void register(String... names) {
