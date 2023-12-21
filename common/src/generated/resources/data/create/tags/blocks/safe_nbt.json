@@ -15,7 +15,8 @@
     "railways:narrow_scotch_bogey",
     "railways:narrow_double_scotch_bogey",
     "railways:medium_bogey",
-    "railways:medium_2_0_2_tender",
-    "railways:medium_triple_wheel"
+    "railways:medium_triple_wheel",
+    "railways:medium_quadruple_wheel",
+    "railways:medium_2_0_2_tender"
   ]
 }

@@ -137,6 +137,7 @@ public class CRBogeyStyles {
     public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
     public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
+    public static final String QUADRUPLEAXLE_CYCLE_GROUP = "quadrupleaxles";
 
     public static final String WIDE_DOUBLEAXLE_CYCLE_GROUP = "wide_doubleaxles";
 
@@ -221,21 +222,22 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.medium_single_wheel"))
             .size(BogeySizes.SMALL, () -> MediumSingleWheelRenderer::new, CRBlocks.MEDIUM_BOGEY)
             .build(),
-        MEDIUM_2_0_2_TRAILING = create("medium_2_0_2_trailing", SINGLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
-            .size(BogeySizes.SMALL, () -> Medium202TrailingRenderer::new, CRBlocks.MEDIUM_2_0_2_TRAILING)
-            .build(),
-
         MEDIUM_TRIPLE_WHEEL = create("medium_triple_wheel", TRIPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_triple_wheel"))
             .size(BogeySizes.SMALL, () -> MediumTripleWheelRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
             .build(),
-
+        MEDIUM_QUADRUPLE_WHEEL = create("medium_quadruple_wheel", QUADRUPLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_quadruple_wheel"))
+            .size(BogeySizes.SMALL, () -> MediumQuadrupleWheelRenderer::new, CRBlocks.MEDIUM_QUADRUPLE_WHEEL)
+            .build(),
+        MEDIUM_2_0_2_TRAILING = create("medium_2_0_2_trailing", SINGLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
+            .size(BogeySizes.SMALL, () -> Medium202TrailingRenderer::new, CRBlocks.MEDIUM_2_0_2_TRAILING)
+            .build(),
         MEDIUM_6_0_6_TRAILING = create("medium_6_0_6_trailing", TRIPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_6_0_6_trailing"))
             .size(BogeySizes.SMALL, () -> Medium606TrailingRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
             .build(),
-
         MEDIUM_6_0_6_TENDER = create("medium_6_0_6_tender", TRIPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_6_0_6_tender"))
             .size(BogeySizes.SMALL, () -> Medium606TenderRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
@@ -272,6 +274,7 @@ public class CRBogeyStyles {
         registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("singleaxle_icon"));
         registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
         registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
+        registerStyleCategory(QUADRUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quadrupleaxle_icon"));
         if (Mods.EXTENDEDBOGEYS.isLoaded) {
             registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_triple_axle_icon"));
         }

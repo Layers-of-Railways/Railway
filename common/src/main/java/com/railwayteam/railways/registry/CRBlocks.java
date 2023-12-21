@@ -17,6 +17,7 @@ import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.Medium202TrailingBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.medium.MediumQuadrupleWheelBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.MediumTripleWheelBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.MediumBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
@@ -444,18 +445,25 @@ public class CRBlocks {
                     .lang("Medium Bogey")
                     .register();
 
-    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
-            REGISTRATE.block("medium_2_0_2_tender", Medium202TrailingBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium 2-0-2 Trailing Bogey")
-                    .register();
-
     public static final BlockEntry<MediumTripleWheelBogeyBlock> MEDIUM_TRIPLE_WHEEL =
             REGISTRATE.block("medium_triple_wheel", MediumTripleWheelBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Triple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumQuadrupleWheelBogeyBlock> MEDIUM_QUADRUPLE_WHEEL =
+            REGISTRATE.block("medium_quadruple_wheel", MediumQuadrupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quadruple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
+            REGISTRATE.block("medium_2_0_2_tender", Medium202TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 2-0-2 Trailing Bogey")
                     .register();
 
 
