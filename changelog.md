@@ -28,6 +28,9 @@ Changes
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 - Train status messages now include coordinates
 - Make optifine warning screen easier to skip
+- Soul fire smoke in smoke stacks, clicking a smoketsack with soul soil or soul sand will make it output soul fire themed smoke
+- Smokestacks can be dyed via being clicked with dye
+- Smokestacks show their dye color/style when wearing goggles
 
 Fixes
 - Mixin conflict with VS2
