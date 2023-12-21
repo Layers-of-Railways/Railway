@@ -16,7 +16,7 @@ Additions
 - Buffer blocks
 
 Changes
-- Generic Crossing Tracks - any two tracks can now cross at a junction
+- Generic Crossing Tracks—any two tracks can now cross at a junction
 - Decoupled trains' names will now stop at one "Split off from: ..."
 - Trains will now approach nearby stations when they are the rear train in a decoupled set
 - Trains relocated by a wrench will now try to approach nearby stations after relocation
@@ -28,13 +28,13 @@ Changes
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 - Train status messages now include coordinates
 - Make optifine warning screen easier to skip
-- Soul fire smoke in smoke stacks, clicking a smoketsack with soul soil or soul sand will make it output soul fire themed smoke
+- Soul fire smoke in smoke stacks, clicking a smokestack with soul soil or soul sand will make it output soul fire themed smoke
 - Smokestacks can be dyed via being clicked with dye
 - Smokestacks show their dye color/style when wearing goggles
 
 Fixes
 - Mixin conflict with VS2
-- Autoschedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
+- Auto schedule application properly sets the schedule index on trains, increasing reliability in automated coupling systems
 - Fix waypoint schedule items not showing up in the Station Summary (#329)
 - Fix villagers opening sliding doors in the 'special' mode (#317)
 - Fix normal nixie tube relays (#311)
