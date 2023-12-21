@@ -234,6 +234,10 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
             .size(BogeySizes.SMALL, () -> Medium202TrailingRenderer::new, CRBlocks.MEDIUM_2_0_2_TRAILING)
             .build(),
+        MEDIUM_4_0_4_TRAILING = create("medium_4_0_4_trailing", DOUBLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_4_0_4_trailing"))
+            .size(BogeySizes.SMALL, () -> Medium404TrailingRenderer::new, CRBlocks.MEDIUM_4_0_4_TRAILING)
+            .build(),
         MEDIUM_6_0_6_TRAILING = create("medium_6_0_6_trailing", TRIPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_6_0_6_trailing"))
             .size(BogeySizes.SMALL, () -> Medium606TrailingRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)

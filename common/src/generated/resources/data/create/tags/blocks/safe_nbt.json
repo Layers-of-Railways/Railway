@@ -17,6 +17,7 @@
     "railways:medium_bogey",
     "railways:medium_triple_wheel",
     "railways:medium_quadruple_wheel",
-    "railways:medium_2_0_2_tender"
+    "railways:medium_2_0_2_trailing",
+    "railways:medium_4_0_4_trailing"
   ]
 }
