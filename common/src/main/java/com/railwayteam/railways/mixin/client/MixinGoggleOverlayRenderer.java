@@ -22,7 +22,7 @@ public class MixinGoggleOverlayRenderer {
     private static ItemStack changeDisplayItem(ItemEntry<GogglesItem> instance, Operation<ItemStack> original,
                                                @Local BlockEntity be, @Local(name = "wearingGoggles") boolean wearingGoggles) {
         if (be instanceof IHaveCustomGoggleIcon gte && wearingGoggles) {
-            return gte.setGoggleIcon(Minecraft.getInstance().player.isShiftKeyDown());
+            return gte.railways$setGoggleIcon(Minecraft.getInstance().player.isShiftKeyDown());
         }
 
         return original.call(instance);

@@ -8,7 +8,7 @@ public interface IHaveCustomGoggleIcon {
      * this method will be called when looking at a BlockEntity that implemented this
      * interface
      */
-    default ItemStack setGoggleIcon(boolean isPlayerSneaking) {
+    default ItemStack railways$setGoggleIcon(boolean isPlayerSneaking) {
         return AllItems.GOGGLES.asStack();
     }
 }

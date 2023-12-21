@@ -94,7 +94,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     }
 
     @Override
-    public ItemStack setGoggleIcon(boolean isPlayerSneaking) {
+    public ItemStack railways$setGoggleIcon(boolean isPlayerSneaking) {
         if (color != null)
             return ColorUtils.getDyeColorDyeItem(color).getDefaultInstance();
 
