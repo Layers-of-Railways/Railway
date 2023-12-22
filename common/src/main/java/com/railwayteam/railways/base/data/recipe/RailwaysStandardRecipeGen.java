@@ -202,6 +202,15 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("___")
         );
 
+    GeneratedRecipe COPYCAT_HEADSTOCK = create(CRBlocks.COPYCAT_HEADSTOCK)
+        .unlockedBy(Ingredients::linkPin)
+        .viaShaped(b -> b
+            .define('#', Ingredients.linkPin())
+            .define('_', Ingredients.copycatPanel())
+            .pattern(" # ")
+            .pattern("___")
+        );
+
     GeneratedRecipe BUFFER = create(CRBlocks.TRACK_BUFFER)
         .unlockedBy(Ingredients::headstock)
         .viaShaped(b -> b

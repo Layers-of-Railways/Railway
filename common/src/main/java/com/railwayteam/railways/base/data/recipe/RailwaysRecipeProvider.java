@@ -189,5 +189,9 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
     public static ItemLike headstock() {
       return CRBlocks.HEADSTOCK.get();
     }
+
+    public static ItemLike copycatPanel() {
+      return AllBlocks.COPYCAT_PANEL.get();
+    }
   }
 }

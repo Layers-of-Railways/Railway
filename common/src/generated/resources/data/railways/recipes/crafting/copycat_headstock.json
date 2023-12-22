@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "railways:link_and_pin"
+    },
+    "_": {
+      "item": "create:copycat_panel"
+    }
+  },
+  "pattern": [
+    " # ",
+    "___"
+  ],
+  "result": {
+    "item": "railways:copycat_headstock"
+  }
+}

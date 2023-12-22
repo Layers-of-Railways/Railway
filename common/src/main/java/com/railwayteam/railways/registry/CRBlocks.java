@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.buffer.single_deco.GenericDyeableSingleBufferBlock;
 import com.railwayteam.railways.content.buffer.single_deco.LinkPinBlock;
@@ -88,6 +89,7 @@ import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehavio
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOnly;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 @SuppressWarnings("unused")
@@ -532,7 +534,7 @@ public class CRBlocks {
                 )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Track Buffer")
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
@@ -554,7 +556,7 @@ public class CRBlocks {
             )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Narrow Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
@@ -578,7 +580,7 @@ public class CRBlocks {
             )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Monorail Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
@@ -598,7 +600,7 @@ public class CRBlocks {
             )
         )
         .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Wide Track Buffer")
         .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
@@ -633,7 +635,7 @@ public class CRBlocks {
                 .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
             )
         )
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Big Buffer")
         .item()
@@ -652,7 +654,7 @@ public class CRBlocks {
                 .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
             )
         )
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Small Buffer")
         .item()
@@ -666,17 +668,36 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
                 .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), HeadstockBlock.WATERLOGGED
             )
         )
-        .transform(pickaxeOnly())
+        .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Headstock")
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/wooden_headstock_buffer")))
+        .build()
+        .register();
+
+    public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
+        .initialProperties(SharedProperties::softMetal)
+        .properties(p -> p.sound(SoundType.COPPER))
+        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true)))
+                .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
+                .build(), CopycatHeadstockBlock.WATERLOGGED
+            )
+        )
+        .transform(axeOrPickaxe())
+        .transform(BuilderTransformers.copycatHeadstock())
+        .lang("Copycat Headstock")
+        .item()
+        .transform(BuilderTransformers.copycatHeadstockItem())
+        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/copycat_headstock_buffer")))
         .build()
         .register();
 

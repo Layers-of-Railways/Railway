@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.buffer.headstock;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
@@ -10,8 +9,6 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,19 +30,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Locale;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<HeadstockBlockEntity>, IWrenchable, ProperWaterloggedBlock {
-    public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
+    public static final EnumProperty<HeadstockStyle> STYLE = EnumProperty.create("style", HeadstockStyle.class);
 
     public HeadstockBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
             .setValue(WATERLOGGED, false)
-            .setValue(STYLE, Style.BUFFER));
+            .setValue(STYLE, HeadstockStyle.BUFFER));
     }
 
     @Override
@@ -126,29 +122,5 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
     @Override
     public BlockEntityType<? extends HeadstockBlockEntity> getBlockEntityType() {
         return CRBlockEntities.HEADSTOCK.get();
-    }
-
-    public enum Style implements StringRepresentable {
-        PLAIN("wooden_headstock"),
-        BUFFER("wooden_headstock_buffer"),
-        LINK("wooden_headstock_link_and_pin"),
-        LINKLESS("wooden_headstock_link_and_pin_linkless"),
-        KNUCKLE("wooden_headstock_knuckle_coupler"),
-        KNUCKLE_SPLIT("wooden_headstock_split_knuckle_coupler")
-        ;
-
-        private final String model;
-        Style(String model) {
-            this.model = model;
-        }
-
-        public ResourceLocation getModel() {
-            return Railways.asResource("block/buffer/headstock/" + model);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return name().toLowerCase(Locale.ROOT);
-        }
     }
 }
