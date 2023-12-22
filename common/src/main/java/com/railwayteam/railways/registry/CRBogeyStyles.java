@@ -138,8 +138,7 @@ public class CRBogeyStyles {
     public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
     public static final String QUADRUPLEAXLE_CYCLE_GROUP = "quadrupleaxles";
-
-    public static final String WIDE_DOUBLEAXLE_CYCLE_GROUP = "wide_doubleaxles";
+    public static final String QUINTUPLEAXLE_CYCLE_GROUP = "quintupleaxles";
 
     // Single Axles
     public static final BogeyStyle
@@ -230,6 +229,10 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.medium_quadruple_wheel"))
             .size(BogeySizes.SMALL, () -> MediumQuadrupleWheelRenderer::new, CRBlocks.MEDIUM_QUADRUPLE_WHEEL)
             .build(),
+        MEDIUM_QUINTUPLE_WHEEL = create("medium_quintuple_wheel", QUINTUPLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_quintuple_wheel"))
+            .size(BogeySizes.SMALL, () -> MediumQuintupleWheelRenderer::new, CRBlocks.MEDIUM_QUINTUPLE_WHEEL)
+            .build(),
         MEDIUM_2_0_2_TRAILING = create("medium_2_0_2_trailing", SINGLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
             .size(BogeySizes.SMALL, () -> Medium202TrailingRenderer::new, CRBlocks.MEDIUM_2_0_2_TRAILING)
@@ -279,6 +282,7 @@ public class CRBogeyStyles {
         registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
         registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
         registerStyleCategory(QUADRUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quadrupleaxle_icon"));
+        registerStyleCategory(QUINTUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quintupleaxle_icon"));
         if (Mods.EXTENDEDBOGEYS.isLoaded) {
             registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_triple_axle_icon"));
         }

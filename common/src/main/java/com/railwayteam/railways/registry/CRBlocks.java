@@ -456,6 +456,13 @@ public class CRBlocks {
                     .lang("Medium Quadruple Wheel Bogey")
                     .register();
 
+    public static final BlockEntry<MediumQuintupleWheelBogeyBlock> MEDIUM_QUINTUPLE_WHEEL =
+            REGISTRATE.block("medium_quintuple_wheel", MediumQuintupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quintuple Wheel Bogey")
+                    .register();
+
     public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
             REGISTRATE.block("medium_2_0_2_trailing", Medium202TrailingBogeyBlock::new)
                     .properties(p -> p.color(MaterialColor.PODZOL))
