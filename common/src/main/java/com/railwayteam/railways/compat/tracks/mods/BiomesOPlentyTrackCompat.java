@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class BiomesOPlentyTrackCompat extends GenericTrackCompat {
     BiomesOPlentyTrackCompat() {
-        super("biomesoplenty");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.BIOMESOPLENTY.isLoaded;
+        super(Mods.BIOMESOPLENTY);
     }
 
     private static boolean registered = false;

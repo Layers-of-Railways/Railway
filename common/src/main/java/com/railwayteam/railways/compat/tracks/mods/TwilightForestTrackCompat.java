@@ -10,12 +10,7 @@ import java.util.Map;
 
 public class TwilightForestTrackCompat extends GenericTrackCompat {
     TwilightForestTrackCompat() {
-        super("twilightforest");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.TWILIGHTFOREST.isLoaded;
+        super(Mods.TWILIGHTFOREST);
     }
 
     private static final Map<String, String> slab_map = ImmutableMap.of(
