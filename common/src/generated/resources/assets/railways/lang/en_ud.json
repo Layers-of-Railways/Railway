@@ -826,6 +826,8 @@
   "railways.schedule.instruction.redstone_link.power": "%s :ןǝʌǝꞀ ɹǝʍoԀ",
   "railways.schedule.instruction.redstone_link.power_edit_box": "ןǝʌǝꞀ ɹǝʍoԀ",
   "railways.schedule.instruction.waypoint_destination": "uoıʇɐʇS ɥbnoɹɥʇ ʇuıodʎɐM",
+  "railways.smokestack.goggle.tooltip": "%s :ǝןʎʇS pǝʇɔǝןǝS",
+  "railways.smokestack.goggle.tooltip.color": "%s :ɹoןoƆ ǝʎᗡ pǝʇɔǝןǝS",
   "railways.station.open_left": "sɹooᗡ ʇɟǝꞀ uǝdO",
   "railways.station.open_right": "sɹooᗡ ʇɥbıᴚ uǝdO",
   "railways.station.train_limit": "ʇıɯıꞀ",
