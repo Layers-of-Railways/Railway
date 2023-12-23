@@ -252,6 +252,10 @@ public class CRBogeyStyles {
         MEDIUM_8_0_8_TENDER = create("medium_8_0_8_tender", QUADRUPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.medium_8_0_8_tender"))
             .size(BogeySizes.SMALL, () -> Medium808TenderRenderer::new, CRBlocks.MEDIUM_QUADRUPLE_WHEEL)
+            .build(),
+        MEDIUM_10_0_10_TENDER = create("medium_10_0_10_tender", QUINTUPLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.medium_10_0_10_tender"))
+            .size(BogeySizes.SMALL, () -> Medium10010TenderRenderer::new, CRBlocks.MEDIUM_QUINTUPLE_WHEEL)
             .build();
 
 
