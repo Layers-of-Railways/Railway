@@ -23,22 +23,24 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = CarriageSounds.class, remap = false)
+@Mixin(value = CarriageSounds.class)
 public class MixinCarriageSounds {
-    @Shadow private LerpedFloat seatCrossfade;
+    @Shadow(remap = false)
+    LerpedFloat seatCrossfade;
+
     @Unique
     private boolean snr$skip;
 
     @Unique
     private boolean snr$isHandcar;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     private void skipIfInvisible(CarriageContraptionEntity entity, CallbackInfo ci) {
         snr$skip = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.INVISIBLE || b.getStyle() == CRBogeyStyles.INVISIBLE_MONOBOGEY);
         snr$isHandcar = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
     }
 
-    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true, remap = false)
     private void actuallySkip(Carriage.DimensionalCarriageEntity dce, CallbackInfo ci) {
         if (snr$skip)
             ci.cancel();
