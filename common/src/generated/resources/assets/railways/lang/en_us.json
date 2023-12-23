@@ -840,6 +840,8 @@
   "railways.schedule.instruction.redstone_link.power": "Power Level: %s",
   "railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
   "railways.schedule.instruction.waypoint_destination": "Waypoint through Station",
+  "railways.smokestack.goggle.tooltip": "Selected Style: %s",
+  "railways.smokestack.goggle.tooltip.color": "Selected Dye Color: %s",
   "railways.station.open_left": "Open Left Doors",
   "railways.station.open_right": "Open Right Doors",
   "railways.station.train_limit": "Limit",

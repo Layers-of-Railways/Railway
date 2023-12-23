@@ -81,6 +81,8 @@
     "NbtUtilsMixin",
     "PlayerEntityMixin",
     "StructureMixin",
+    "client.MixinCarriageParticles",
+    "client.MixinGoggleOverlayRenderer",
     "compat.voicechat.EntityAudioChannelImplMixin",
     "compat.voicechat.ServerMixin",
     "compat.voicechat.ServerWorldUtilsMixin",

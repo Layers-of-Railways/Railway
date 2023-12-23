@@ -1,6 +1,7 @@
 {
 	"parent": "railways:block/bogey/wide/scotch_yoke/textures",
 	"loader": "forge:obj",
+	"porting_lib:loader": "porting_lib:obj",
 	"flip_v": true,
 	"model": "railways:models/block/bogey/wide/scotch_yoke/wheels.obj"
 }
