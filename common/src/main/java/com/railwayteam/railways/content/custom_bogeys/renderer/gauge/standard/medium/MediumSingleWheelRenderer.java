@@ -45,7 +45,6 @@ public class MediumSingleWheelRenderer extends BogeyRenderer {
         }
 
         getTransform(MEDIUM_SINGLE_WHEEL_FRAME, ms, inInstancedContraption)
-                .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
         getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)

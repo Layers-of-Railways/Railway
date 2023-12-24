@@ -44,7 +44,6 @@ public class Medium202TrailingRenderer extends BogeyRenderer {
         }
 
         getTransform(MEDIUM_2_0_2_TRAILING_FRAME, ms, inInstancedContraption)
-                .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
         getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)

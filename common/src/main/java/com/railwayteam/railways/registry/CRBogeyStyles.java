@@ -119,7 +119,7 @@ public class CRBogeyStyles {
 
     public static final BogeyStyle MONOBOGEY = create("monobogey", "monobogey")
         .displayName(Components.translatable("railways.bogeys.styles.monobogey"))
-        .size(BogeySizes.SMALL, () -> MonoBogeyRenderer.SmallMonoBogeyRenderer::new, CRBlocks.MONO_BOGEY)
+        .size(BogeySizes.SMALL, () -> MonoBogeyRenderer::new, CRBlocks.MONO_BOGEY)
         .build();
 
     public static final BogeyStyle INVISIBLE = create("invisible", Create.asResource(STANDARD_CYCLE_GROUP))

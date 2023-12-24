@@ -59,7 +59,7 @@ processResources {
     exclude("resourcepacks/")
 
     // dont add development or to-do files into built jar
-    exclude("**/*.bbmodel", "**/*.lnk", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+    exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
 
     // Minify all .json files in built jars
     doLast {

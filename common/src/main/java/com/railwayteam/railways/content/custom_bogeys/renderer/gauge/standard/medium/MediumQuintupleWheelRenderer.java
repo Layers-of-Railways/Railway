@@ -44,7 +44,6 @@ public class MediumQuintupleWheelRenderer extends BogeyRenderer {
         }
 
         getTransform(MEDIUM_QUINTUPLE_WHEEL_FRAME, ms, inInstancedContraption)
-                .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
         BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 5);

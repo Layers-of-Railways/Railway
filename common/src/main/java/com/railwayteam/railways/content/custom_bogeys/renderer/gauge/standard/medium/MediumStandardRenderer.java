@@ -45,7 +45,6 @@ public class MediumStandardRenderer extends BogeyRenderer {
         }
 
         getTransform(MEDIUM_STANDARD_FRAME, ms, inInstancedContraption)
-                .translate(0, 0 / 16f, 0)
                 .render(ms, light, vb);
 
         BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 2);

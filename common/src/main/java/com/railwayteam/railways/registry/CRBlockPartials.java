@@ -400,7 +400,8 @@ public class CRBlockPartials {
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
         MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
         MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay"),
-        MONOBOGEY_FRAME = block("bogey/monorail/frame"),
+        MONOBOGEY_FRAME_UPRIGHT = block("bogey/monorail/frame_upright"),
+        MONOBOGEY_FRAME_UPSIDE_DOWN = block("bogey/monorail/frame_upside_down"),
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
     public static final PartialModel
