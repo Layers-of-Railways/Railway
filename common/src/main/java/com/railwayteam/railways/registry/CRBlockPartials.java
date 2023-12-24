@@ -409,7 +409,7 @@ public class CRBlockPartials {
         LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
         COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
         FREIGHT_FRAME = block("bogey/freight/freight_frame"),
-        ARCHBAR_FRAME = block("bogey/archbar/archbar_frame"),
+        ARCHBAR_FRAME = block("bogey/archbar/frame"),
         PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
         MODERN_FRAME = block("bogey/modern/modern_frame"),
         BLOMBERG_FRAME = block("bogey/blomberg/blomberg_frame"),
