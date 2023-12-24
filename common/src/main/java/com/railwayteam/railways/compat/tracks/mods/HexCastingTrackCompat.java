@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class HexCastingTrackCompat extends GenericTrackCompat {
     HexCastingTrackCompat() {
-        super("hexcasting");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.HEXCASTING.isLoaded;
+        super(Mods.HEXCASTING);
     }
 
     private static boolean registered = false;

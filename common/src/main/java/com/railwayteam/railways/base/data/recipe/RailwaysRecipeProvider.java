@@ -1,8 +1,11 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.headstock.HeadstockStyle;
+import com.railwayteam.railways.content.buffer.single_deco.LinkPinBlock;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.Registry;
@@ -178,12 +181,32 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
       return AllBlocks.SHAFT.get();
     }
 
+    public static ItemLike smallBuffer() {
+      return CRBlocks.SMALL_BUFFER.get();
+    }
+
     public static ItemLike linkPin() {
-      return CRBlocks.LINK_AND_PIN.get();
+      return CRBlocks.LINK_AND_PIN_GROUP.get(LinkPinBlock.Style.LINK).get();
+    }
+
+    public static TagKey<Item> linkPinTag() {
+      return CRTags.AllItemTags.DECO_COUPLERS.tag;
     }
 
     public static ItemLike headstock() {
-      return CRBlocks.HEADSTOCK.get();
+      return CRBlocks.HEADSTOCK_GROUP.get(HeadstockStyle.LINK).get();
+    }
+
+    public static TagKey<Item> headstockTag() {
+      return CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag;
+    }
+
+    public static ItemLike copycatHeadstock() {
+      return CRBlocks.COPYCAT_HEADSTOCK_GROUP.get(HeadstockStyle.LINK).get();
+    }
+
+    public static ItemLike copycatPanel() {
+      return AllBlocks.COPYCAT_PANEL.get();
     }
   }
 }

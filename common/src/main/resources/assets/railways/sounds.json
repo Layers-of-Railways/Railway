@@ -4,5 +4,15 @@
     "sounds": [
       "railways:conductor_whistle"
     ]
+  },
+  "handcar_cog": {
+    "sounds": [
+      {
+        "type": "file",
+        "attenuation_distance": 128,
+        "name": "create:cogs"
+      }
+    ],
+    "subtitle": "create.subtitle.cogs"
   }
 }

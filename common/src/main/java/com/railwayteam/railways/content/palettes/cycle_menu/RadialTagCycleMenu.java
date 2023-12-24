@@ -17,13 +17,15 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -35,11 +37,13 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
     private int scrollSlot = 0;
     private final TagKey<Item> tag;
     private final List<Item> cycle;
+    private final @Nullable CompoundTag stackTag;
 
-    RadialTagCycleMenu(TagKey<Item> tag, List<Item> cycle) {
+    RadialTagCycleMenu(TagKey<Item> tag, List<Item> cycle, @Nullable CompoundTag stackTag) {
         hoveredSlot = -1;
         this.cycle = cycle;
         this.tag = tag;
+        this.stackTag = stackTag;
     }
 
     @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "DuplicatedCode"})
@@ -84,19 +88,22 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
             boolean selected = (slot == (scrollMode ? scrollSlot : hoveredSlot));
 
             if (slot < cycle.size()) {
-                ItemLike item = cycle.get(slot);
+                ItemStack stack = new ItemStack(cycle.get(slot));
+                if (stackTag != null) {
+                    stack.setTag(stackTag.copy());
+                }
 
                 if (minecraft != null) {
 
                     AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
-                    GuiGameElement.of(item)
+                    GuiGameElement.of(stack)
                         .at(3, 3)
                         .render(ms);
 
 
                     if (selected) {
                         AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
-                        tip = Components.empty().append(item.asItem().getDescription())
+                        tip = Components.empty().append(stack.getHoverName())
                             .withStyle(ChatFormatting.GOLD);
                     }
                 }

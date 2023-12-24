@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/diag",
+  "textures": {
+    "1": "dreamsanddesires:block/track/rose/standard_track_rose",
+    "2": "dreamsanddesires:block/track/rose/standard_track_mip_rose",
+    "3": "dreamsanddesires:block/track/rose/standard_track_crossing_rose",
+    "particle": "dreamsanddesires:block/track/rose/standard_track_crossing_rose"
+  }
+}

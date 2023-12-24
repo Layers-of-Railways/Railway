@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/diag",
+  "textures": {
+    "0": "dreamsanddesires:block/track/rose/standard_track_rose",
+    "1": "dreamsanddesires:block/track/rose/standard_track_mip_rose",
+    "2": "dreamsanddesires:block/track/rose/standard_track_crossing_rose",
+    "particle": "dreamsanddesires:block/track/rose/standard_track_crossing_rose"
+  }
+}
