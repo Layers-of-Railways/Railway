@@ -14,6 +14,8 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBoge
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
+import com.railwayteam.railways.content.buffer.headstock.forge.CopycatHeadstockModel;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -30,6 +32,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
+import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -41,8 +44,10 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -326,5 +331,24 @@ public class BuilderTransformersImpl {
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBlockState() {
         return b -> b.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
             .withExistingParent(c.getName(), p.modLoc("block/invisible"))));
+    }
+
+    @SuppressWarnings("removal") // Create uses these, I can too
+    public static <B extends CopycatHeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstock() {
+        return b -> b
+            .properties(p -> p.noOcclusion()
+                .color(MaterialColor.NONE))
+            .addLayer(() -> RenderType::solid)
+            .addLayer(() -> RenderType::cutout)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .addLayer(() -> RenderType::translucent)
+            .color(() -> CopycatBlock::wrappedColor)
+            .onRegister(CreateRegistrate.blockModel(() -> CopycatHeadstockModel::new));
+    }
+
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> copycatHeadstockItem() {
+        return i -> i
+            .color(() -> CopycatHeadstockBlock::wrappedItemColor)
+            .onRegister(CreateRegistrate.itemModel(() -> CopycatHeadstockModel::new));
     }
 }

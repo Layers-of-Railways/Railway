@@ -1,18 +1,27 @@
 package com.railwayteam.railways.content.smokestack;
 
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.IHaveCustomGoggleIcon;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SmokeStackBlockEntity extends SmartBlockEntity {
+public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveCustomGoggleIcon {
 
     public @Nullable DyeColor getColor() {
         return color;
@@ -66,5 +75,29 @@ public class SmokeStackBlockEntity extends SmartBlockEntity {
             tag.putInt("color", color.getId());
         }
         tag.putBoolean("isSoul", isSoul());
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        if (color != null)
+            Lang.builder(Railways.MODID)
+                    .translate("smokestack.goggle.tooltip.color", ColorUtils.coloredName(color.getName()))
+                    .forGoggles(tooltip);
+
+        if (isSoul || color == null) {
+            Lang.builder(Railways.MODID)
+                    .translate("smokestack.goggle.tooltip", isSoul ? "Soul" : "Default")
+                    .forGoggles(tooltip);
+        }
+
+        return true;
+    }
+
+    @Override
+    public ItemStack railways$setGoggleIcon(boolean isPlayerSneaking) {
+        if (color != null)
+            return ColorUtils.getDyeColorDyeItem(color).getDefaultInstance();
+
+        return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : AllItems.GOGGLES.asStack();
     }
 }

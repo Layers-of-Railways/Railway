@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "railways:link_and_pin",
+    "railways:link_and_pin_linkless",
+    "railways:knuckle_coupler",
+    "railways:split_knuckle_coupler"
+  ]
+}

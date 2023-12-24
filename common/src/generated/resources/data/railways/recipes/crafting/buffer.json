@@ -9,7 +9,7 @@
       "item": "create:metal_girder"
     },
     ">": {
-      "item": "railways:headstock"
+      "tag": "railways:wooden_headstocks"
     },
     "_": {
       "tag": "minecraft:wooden_slabs"

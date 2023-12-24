@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
@@ -210,6 +211,16 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBlockState() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends CopycatHeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstock() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> copycatHeadstockItem() {
         throw new AssertionError();
     }
 }

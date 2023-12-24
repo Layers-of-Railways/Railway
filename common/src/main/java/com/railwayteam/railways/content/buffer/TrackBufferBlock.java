@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+// fixme handle 45 degree turns
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extends HorizontalDirectionalBlock implements IBE<BE>, IWrenchable, ProperWaterloggedBlock {

@@ -95,7 +95,10 @@ public class CRTags {
 
   public enum AllItemTags {
     CONDUCTOR_CAPS,
-    PHANTOM_TRACK_REVEALING
+    PHANTOM_TRACK_REVEALING,
+    DECO_COUPLERS,
+    WOODEN_HEADSTOCKS,
+    COPYCAT_HEADSTOCKS,
     ;
 
     public final TagKey<Item> tag;
@@ -157,7 +160,7 @@ public class CRTags {
     for (AllItemTags itemTag : AllItemTags.values()) {
       ResourceLocation loc = itemTag.tag.location();
       consumer.accept("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
-          TextUtils.titleCaseConversion(itemTag.name()).replace('_', ' '));
+          TextUtils.titleCaseConversion(itemTag.name().replace('_', ' ')));
     }
     consumer.accept("tag.item.forge.string", "String");
   }

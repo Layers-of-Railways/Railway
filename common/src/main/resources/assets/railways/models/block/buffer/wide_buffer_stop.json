@@ -1,6 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"ambient_occlusion": false,
 	"texture_size": [32, 32],
 	"textures": {
 		"3": "railways:block/buffer/big_buffer",
@@ -127,14 +126,14 @@
 			}
 		},
 		{
-			"from": [37.702, -12.94975, 1.501],
-			"to": [40.7, 8.05025, 5.501],
+			"from": [37.22183, -12.94975, 1.98117],
+			"to": [41.22183, 8.05025, 4.97917],
 			"rotation": {"angle": -45, "axis": "z", "origin": [39.22183, -0.94975, 3.501]},
 			"faces": {
-				"north": {"uv": [2, 8.499, 12.5, 7], "rotation": 90, "texture": "#9"},
-				"east": {"uv": [0, 2, 10.5, 0], "rotation": 90, "texture": "#9"},
-				"south": {"uv": [10.5, 2, 0, 3.499], "rotation": 270, "texture": "#9"},
-				"west": {"uv": [0, 2, 10.5, 0], "rotation": 90, "texture": "#9"}
+				"north": {"uv": [0, 2, 10.5, 0], "rotation": 90, "texture": "#9"},
+				"east": {"uv": [2, 8.499, 12.5, 7], "rotation": 90, "texture": "#9"},
+				"south": {"uv": [0, 2, 10.5, 0], "rotation": 90, "texture": "#9"},
+				"west": {"uv": [10.5, 2, 0, 3.499], "rotation": 270, "texture": "#9"}
 			}
 		},
 		{
@@ -229,14 +228,14 @@
 			}
 		},
 		{
-			"from": [-24.7, -12.94975, 1.501],
-			"to": [-21.702, 8.05025, 5.501],
+			"from": [-25.22183, -12.94975, 1.98117],
+			"to": [-21.22183, 8.05025, 4.97917],
 			"rotation": {"angle": 45, "axis": "z", "origin": [-23.22183, -0.94975, 3.501]},
 			"faces": {
-				"north": {"uv": [2, 7, 12.5, 8.499], "rotation": 90, "texture": "#9"},
-				"east": {"uv": [0, 0, 10.5, 2], "rotation": 90, "texture": "#9"},
-				"south": {"uv": [10.5, 3.499, 0, 2], "rotation": 270, "texture": "#9"},
-				"west": {"uv": [0, 0, 10.5, 2], "rotation": 90, "texture": "#9"}
+				"north": {"uv": [0, 0, 10.5, 2], "rotation": 90, "texture": "#9"},
+				"east": {"uv": [10.5, 3.499, 0, 2], "rotation": 270, "texture": "#9"},
+				"south": {"uv": [0, 0, 10.5, 2], "rotation": 90, "texture": "#9"},
+				"west": {"uv": [2, 7, 12.5, 8.499], "rotation": 90, "texture": "#9"}
 			}
 		},
 		{
@@ -668,5 +667,6 @@
 			"color": 0,
 			"children": [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]
 		}
-	]
+	],
+	"ambient_occlusion": false
 }

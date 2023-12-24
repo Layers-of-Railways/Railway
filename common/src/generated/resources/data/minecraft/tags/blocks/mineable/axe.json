@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "railways:semaphore",
-    "railways:conductor_vent"
+    "railways:conductor_vent",
+    "railways:buffer",
+    "railways:buffer_narrow",
+    "railways:buffer_mono",
+    "railways:buffer_wide",
+    "railways:big_buffer",
+    "railways:small_buffer",
+    "railways:headstock",
+    "railways:copycat_headstock"
   ]
 }

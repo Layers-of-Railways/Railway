@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting/headstock"
+        "recipe": "railways:crafting/wooden_headstock_link_and_pin"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting/headstock"
+      "railways:crafting/wooden_headstock_link_and_pin"
     ]
   },
   "sends_telemetry_event": false

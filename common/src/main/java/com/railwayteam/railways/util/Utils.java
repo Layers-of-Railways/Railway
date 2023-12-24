@@ -9,7 +9,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
@@ -32,7 +31,6 @@ public class Utils {
 	}
 
 	@ExpectPlatform
-	@Contract // shut
 	public static boolean isDevEnv() {
 		throw new AssertionError();
 	}
@@ -42,7 +40,7 @@ public class Utils {
 			String result = System.getenv(name);
 			return result != null && result.toLowerCase(Locale.ROOT).equals("true");
 		} catch (SecurityException e) {
-			Railways.LOGGER.warn("Caught a security exception while trying to access environment variable `"+name+"`.");
+			Railways.LOGGER.warn("Caught a security exception while trying to access environment variable `{}`.", name);
 			return false;
 		}
 	}

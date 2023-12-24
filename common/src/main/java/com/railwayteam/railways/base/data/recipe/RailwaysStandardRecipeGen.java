@@ -159,7 +159,27 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#*#")
         );
 
-    GeneratedRecipe LINK_AND_PIN = create(CRBlocks.LINK_AND_PIN)
+    GeneratedRecipe SMALL_BUFFER = create(CRBlocks.SMALL_BUFFER)
+        .unlockedBy(Ingredients::industrialIron)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.shaft())
+            .pattern("#I_")
+        );
+
+    GeneratedRecipe BIG_BUFFER = create(CRBlocks.BIG_BUFFER)
+        .unlockedBy(Ingredients::smallBuffer)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.smallBuffer())
+            .pattern("#I_")
+        );
+
+    GeneratedRecipe LINK_AND_PIN = create(Ingredients::linkPin)
         .unlockedBy(Ingredients::industrialIron)
         .returns(4)
         .viaShaped(b -> b
@@ -172,11 +192,20 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("__ ")
         );
 
-    GeneratedRecipe HEADSTOCK = create(CRBlocks.HEADSTOCK)
+    GeneratedRecipe HEADSTOCK = create(Ingredients::headstock)
         .unlockedBy(Ingredients::linkPin)
         .viaShaped(b -> b
-            .define('#', Ingredients.linkPin())
+            .define('#', Ingredients.linkPinTag())
             .define('_', Ingredients.woodenSlab())
+            .pattern(" # ")
+            .pattern("___")
+        );
+
+    GeneratedRecipe COPYCAT_HEADSTOCK = create(Ingredients::copycatHeadstock)
+        .unlockedBy(Ingredients::linkPin)
+        .viaShaped(b -> b
+            .define('#', Ingredients.linkPinTag())
+            .define('_', Ingredients.copycatPanel())
             .pattern(" # ")
             .pattern("___")
         );
@@ -186,7 +215,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .viaShaped(b -> b
             .define('#', Ingredients.industrialIron())
             .define('_', Ingredients.woodenSlab())
-            .define('>', Ingredients.headstock())
+            .define('>', Ingredients.headstockTag())
             .define('=', Ingredients.girder())
             .pattern(">_>")
             .pattern("===")

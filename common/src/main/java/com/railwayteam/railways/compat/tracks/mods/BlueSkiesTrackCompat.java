@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class BlueSkiesTrackCompat extends GenericTrackCompat {
     BlueSkiesTrackCompat() {
-        super("blue_skies");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.BLUE_SKIES.isLoaded;
+        super(Mods.BLUE_SKIES);
     }
 
     private static boolean registered = false;
