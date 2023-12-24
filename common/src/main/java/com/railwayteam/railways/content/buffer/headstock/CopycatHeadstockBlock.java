@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.buffer.headstock;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
 import com.railwayteam.railways.util.ShapeUtils;
@@ -46,7 +47,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final EnumProperty<HeadstockStyle> STYLE = EnumProperty.create("style", HeadstockStyle.class);
+    public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
@@ -267,5 +268,10 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
             return GrassColor.get(0.5D, 1.0D);
         }
 
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return CRBlocks.COPYCAT_HEADSTOCK_GROUP.get(state.getValue(STYLE)).asStack();
     }
 }

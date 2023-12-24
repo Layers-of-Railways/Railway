@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class TagCycleHandlerServer {
-    private static final TagCycleTracker CYCLE_TRACKER = new TagCycleTracker();
+    public static final TagCycleTracker CYCLE_TRACKER = new TagCycleTracker();
 
     static {
         CRPalettes.CYCLE_GROUPS.values().forEach(CYCLE_TRACKER::registerCycle);
@@ -24,7 +24,9 @@ public class TagCycleHandlerServer {
         TagKey<Item> handTag = CYCLE_TRACKER.getCycleTag(handStack.getItem());
         TagKey<Item> targetTag = CYCLE_TRACKER.getCycleTag(target);
         if (handTag == null || !handTag.equals(targetTag)) return false;
-        player.setItemInHand(hand, new ItemStack(target, handStack.getCount()));
+        ItemStack newStack = new ItemStack(target, handStack.getCount());
+        newStack.setTag(handStack.getTag());
+        player.setItemInHand(hand, newStack);
         return true;
     }
 

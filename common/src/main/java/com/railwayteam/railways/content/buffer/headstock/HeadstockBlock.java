@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.buffer.headstock;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -12,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -122,5 +124,10 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
     @Override
     public BlockEntityType<? extends HeadstockBlockEntity> getBlockEntityType() {
         return CRBlockEntities.HEADSTOCK.get();
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return CRBlocks.HEADSTOCK_GROUP.get(state.getValue(STYLE)).asStack();
     }
 }

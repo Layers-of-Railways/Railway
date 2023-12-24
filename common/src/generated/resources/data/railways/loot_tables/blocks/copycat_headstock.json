@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:copycat_headstock"
+          "name": "minecraft:air"
         }
       ],
       "rolls": 1.0

@@ -180,7 +180,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#I_")
         );
 
-    GeneratedRecipe LINK_AND_PIN = create(CRBlocks.LINK_AND_PIN)
+    GeneratedRecipe LINK_AND_PIN = create(Ingredients::linkPin)
         .unlockedBy(Ingredients::industrialIron)
         .returns(4)
         .viaShaped(b -> b
@@ -193,19 +193,19 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("__ ")
         );
 
-    GeneratedRecipe HEADSTOCK = create(CRBlocks.HEADSTOCK)
+    GeneratedRecipe HEADSTOCK = create(Ingredients::headstock)
         .unlockedBy(Ingredients::linkPin)
         .viaShaped(b -> b
-            .define('#', Ingredients.linkPin())
+            .define('#', Ingredients.linkPinTag())
             .define('_', Ingredients.woodenSlab())
             .pattern(" # ")
             .pattern("___")
         );
 
-    GeneratedRecipe COPYCAT_HEADSTOCK = create(CRBlocks.COPYCAT_HEADSTOCK)
+    GeneratedRecipe COPYCAT_HEADSTOCK = create(Ingredients::copycatHeadstock)
         .unlockedBy(Ingredients::linkPin)
         .viaShaped(b -> b
-            .define('#', Ingredients.linkPin())
+            .define('#', Ingredients.linkPinTag())
             .define('_', Ingredients.copycatPanel())
             .pattern(" # ")
             .pattern("___")
@@ -216,7 +216,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .viaShaped(b -> b
             .define('#', Ingredients.industrialIron())
             .define('_', Ingredients.woodenSlab())
-            .define('>', Ingredients.headstock())
+            .define('>', Ingredients.headstockTag())
             .define('=', Ingredients.girder())
             .pattern(">_>")
             .pattern("===")
