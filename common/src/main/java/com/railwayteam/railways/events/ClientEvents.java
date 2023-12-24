@@ -7,6 +7,7 @@ import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
+import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.ConfigureDevCapeC2SPacket;
 import net.minecraft.client.Minecraft;
@@ -61,6 +62,7 @@ public class ClientEvents {
     public static void onClientWorldLoad(Level level) {
         DummyRailwayMarkerHandler.getInstance().onJoinWorld();
         PhantomSpriteManager.firstRun = true;
+        CRExtraRegistration.register();
     }
 
     protected static boolean isGameActive() {

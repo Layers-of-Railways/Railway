@@ -3,10 +3,12 @@ package com.railwayteam.railways.registry;
 import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
+import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
 import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -18,11 +20,26 @@ public class CRExtraRegistration {
 
     // register the source, working independently of mod loading order
     public static void register() {
-        platformSpecificRegistration();
+        Block maybeRegistered;
+        BlockEntityType<?> maybeRegisteredCopycat;
+        try {
+            maybeRegistered = AllBlocks.TRACK_SIGNAL.get();
+        } catch (NullPointerException ignored) {
+            maybeRegistered = null;
+        }
+        try {
+            maybeRegisteredCopycat = AllBlockEntityTypes.COPYCAT.get();
+        } catch (NullPointerException ignored) {
+            maybeRegisteredCopycat = null;
+        }
         addSignalSource();
+        Create.REGISTRATE.addRegisterCallback("copycat", Registry.BLOCK_ENTITY_TYPE_REGISTRY, CRExtraRegistration::addVentAsCopycat);
+        if (maybeRegisteredCopycat != null) {
+            addVentAsCopycat(maybeRegisteredCopycat);
+        }
     }
 
-    public static void addVentAsCopycat(BlockEntityType<?> object) {
+    private static void addVentAsCopycat(BlockEntityType<?> object) {
         if (registeredVentAsCopycat) return;
         Block ventBlock;
         try {
@@ -44,10 +61,5 @@ public class CRExtraRegistration {
         DisplayBehaviour signalDisplaySource = AllDisplayBehaviours.register(Create.asResource("track_signal_source"), new SignalDisplaySource());
         AllDisplayBehaviours.assignBlock(signalDisplaySource, Create.asResource("track_signal"));
         registeredSignalSource = true;
-    }
-
-    @ExpectPlatform
-    public static void platformSpecificRegistration() {
-        throw new AssertionError();
     }
 }
