@@ -33,7 +33,7 @@ side = "BOTH"
 modId="create"
 mandatory=true
 versionRange="${create_version}"
-ordering="AFTER"
+ordering="NONE"
 side="BOTH"
 
 [[dependencies.railways]]

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.simibubi.create.AllBlockEntityTypes;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
 import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
@@ -20,13 +19,7 @@ public class CRExtraRegistration {
 
     // register the source, working independently of mod loading order
     public static void register() {
-        Block maybeRegistered;
         BlockEntityType<?> maybeRegisteredCopycat;
-        try {
-            maybeRegistered = AllBlocks.TRACK_SIGNAL.get();
-        } catch (NullPointerException ignored) {
-            maybeRegistered = null;
-        }
         try {
             maybeRegisteredCopycat = AllBlockEntityTypes.COPYCAT.get();
         } catch (NullPointerException ignored) {
