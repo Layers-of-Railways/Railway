@@ -41,6 +41,7 @@
     "MixinGlobalStation",
     "MixinIOWorker",
     "MixinLootTables",
+    "MixinMountedStorageManager",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",
@@ -107,10 +108,12 @@
     "client.MixinBogeyBlockEntityRenderer",
     "client.MixinCarriageContraptionEntity",
     "client.MixinCarriageContraptionInstance",
+    "client.MixinCarriageParticles",
     "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
     "client.MixinDebugRenderer",
     "client.MixinGlobalRailwayManager",
+    "client.MixinGoggleOverlayRenderer",
     "client.MixinItemModelShaper",
     "client.MixinParticleEngine",
     "client.MixinPlayerInfo",
@@ -142,9 +145,7 @@
     "conductor_possession.MixinItemInHandRenderer",
     "conductor_possession.MixinLocalPlayer",
     "conductor_possession.MixinMinecraft",
-    "conductor_possession.MixinMouseHandler",
-    "client.MixinCarriageParticles",
-    "client.MixinGoggleOverlayRenderer"
+    "conductor_possession.MixinMouseHandler"
   ],
   "injectors": {
     "defaultRequire": 1
