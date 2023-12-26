@@ -4,7 +4,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.multiloader.Env;
-import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -80,7 +79,6 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             if (excluded != null && v == excluded) continue;
 
             items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v))
-                .properties(p -> p.tab(CRItems.mainCreativeTab))
                 .lang(v.getLangName(context))
                 .transform(itemTransformer)
                 .tag(cycleTag)

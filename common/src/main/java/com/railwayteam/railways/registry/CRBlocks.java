@@ -68,7 +68,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -525,13 +524,6 @@ public class CRBlocks {
     public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), LinkPinBlock.WATERLOGGED
-            )
-        )
         .transform(BuilderTransformers.linkAndPin())
         .transform(pickaxeOnly())
         .transform(BuilderTransformers.variantBuffer())
@@ -550,13 +542,7 @@ public class CRBlocks {
     public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.bigBuffer())
         .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Big Buffer")
@@ -569,13 +555,7 @@ public class CRBlocks {
     public static final BlockEntry<GenericDyeableSingleBufferBlock> SMALL_BUFFER = REGISTRATE.block("small_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.SMALL_BUFFER))
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
-            )
-        )
+        .transform(BuilderTransformers.smallBuffer())
         .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Small Buffer")
@@ -588,13 +568,6 @@ public class CRBlocks {
     public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
-                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
-                .build(), HeadstockBlock.WATERLOGGED
-            )
-        )
         .transform(BuilderTransformers.headstock())
         .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
@@ -612,13 +585,6 @@ public class CRBlocks {
     public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true)))
-                .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
-                .build(), CopycatHeadstockBlock.WATERLOGGED
-            )
-        )
         .transform(axeOrPickaxe())
         .transform(BuilderTransformers.copycatHeadstock())
         .lang("Copycat Headstock")
