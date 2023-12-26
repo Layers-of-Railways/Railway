@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     }
 
     public Iterable<ItemEntry<BlockStateBlockItem<T>>> getItems() {
-        return items.values();
+        return Arrays.stream(values).map(this::get).toList();
     }
 
     private void register() {

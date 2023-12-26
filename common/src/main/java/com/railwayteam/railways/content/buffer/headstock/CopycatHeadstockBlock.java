@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.buffer.headstock;
 
+import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
@@ -45,7 +46,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
+public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements BlockStateBlockItemGroup.GroupedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
     public CopycatHeadstockBlock(Properties pProperties) {
