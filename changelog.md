@@ -14,6 +14,7 @@ Additions
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
 - Buffer blocks
+- Crafting tables work on trains
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction

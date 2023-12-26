@@ -595,7 +595,7 @@ public class CRBlocks {
         .register();
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
-        = new BlockStateBlockItemGroup<>(true, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
+        = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
         BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag);
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
