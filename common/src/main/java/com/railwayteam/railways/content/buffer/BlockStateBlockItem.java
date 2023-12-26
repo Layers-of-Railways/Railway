@@ -2,10 +2,7 @@ package com.railwayteam.railways.content.buffer;
 
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,12 +29,12 @@ public class BlockStateBlockItem<T extends Comparable<T>> extends BlockItem {
         return this.getOrCreateDescriptionId();
     }
 
-    @Override
+    /*@Override
     public void fillItemCategory(@NotNull CreativeModeTab category, @NotNull NonNullList<ItemStack> items) {
         if (this.allowedIn(category)) {
             items.add(new ItemStack(this));
         }
-    }
+    }*/
 
     @Nullable
     protected BlockState getPlacementState(@NotNull BlockPlaceContext context) {

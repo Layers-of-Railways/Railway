@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -232,7 +233,7 @@ public class CopycatHeadstockModel implements BakedModel {
     }
 
     private static boolean filterCopycatParts(BakedQuad quad) {
-        return !quad.getSprite().getName().equals(new ResourceLocation("create", "block/copycat_base"));
+        return !quad.getSprite().contents().name().equals(new ResourceLocation("create", "block/copycat_base"));
     }
 
     private static @NotNull List<BakedQuad> filterQuads(@NotNull Predicate<BakedQuad> filter, @NotNull List<BakedQuad> quads) {
@@ -250,7 +251,7 @@ public class CopycatHeadstockModel implements BakedModel {
             if (tag.contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
                 CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
                 if (blockEntityTag.contains("Material", Tag.TAG_COMPOUND)) {
-                    material = NbtUtils.readBlockState(blockEntityTag.getCompound("Material"));
+                    material = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), blockEntityTag.getCompound("Material"));
                 }
                 if (blockEntityTag.contains("Color", Tag.TAG_INT)) {
                     colorSwapper = getSwapper(DyeColor.byId(blockEntityTag.getInt("Color")));
