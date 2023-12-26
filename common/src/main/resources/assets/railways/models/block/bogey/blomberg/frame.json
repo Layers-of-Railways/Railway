@@ -4,7 +4,7 @@
   "flip_v": true,
   "model": "railways:models/block/bogey/blomberg/frame.obj",
   "textures": {
-    "0": "railways:block/bogeys/medium/shared/trailing_bogey_base",
+    "0": "railways:block/bogeys/standard/shared/trailing_bogey_base",
     "1": "railways:block/bogeys/standard/blomberg_body"
   }
 }

@@ -5,6 +5,6 @@
 	"flip_v": true,
     	"model": "railways:models/block/bogey/y25/y25_frame.obj",
     	"textures": {
-    		"0": "railways:block/bogeys/y25_frame"
+    		"0": "railways:block/bogeys/standard/y25_frame"
     }
 }
