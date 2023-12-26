@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.IStyle<C> & Comparable<T>> {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
+    private static final HashMap<ResourceLocation, BlockStateBlockItemGroup<?, ?>> ALL = new HashMap<>();
 
     private final C context;
     @NotNull
@@ -60,10 +61,20 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         this.excluded = excluded;
 
         this.register();
+
+        ALL.put(blockEntry.getId(), this);
+    }
+
+    public static BlockStateBlockItemGroup<?, ?> get(ResourceLocation id) {
+        return ALL.get(id);
     }
 
     public ItemEntry<BlockStateBlockItem<T>> get(T value) {
         return items.get(value);
+    }
+
+    public Iterable<ItemEntry<BlockStateBlockItem<T>>> getItems() {
+        return items.values();
     }
 
     private void register() {
@@ -94,4 +105,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
 
         String getLangName(T context);
     }
+
+    /** Marker interface */
+    public interface GroupedBlock {}
 }

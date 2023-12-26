@@ -23,7 +23,7 @@ import java.util.Locale;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class LinkPinBlock extends AbstractDyeableSingleBufferBlock {
+public class LinkPinBlock extends AbstractDyeableSingleBufferBlock implements BlockStateBlockItemGroup.GroupedBlock {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
 
     public LinkPinBlock(Properties properties) {
