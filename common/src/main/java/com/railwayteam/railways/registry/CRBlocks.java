@@ -68,7 +68,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -711,7 +710,7 @@ public class CRBlocks {
         .register();
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
-        = new BlockStateBlockItemGroup<>(true, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
+        = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
         BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag);
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
