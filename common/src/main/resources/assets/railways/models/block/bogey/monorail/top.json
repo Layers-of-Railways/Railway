@@ -3,7 +3,8 @@
 	"textures": {
 		"0": "railways:block/bogeys/bogey_top",
 		"1": "create:block/railway_casing",
-		"2": "create:block/bogey/particle"
+		"2": "create:block/bogey/particle",
+		"particle": "create:block/bogey/particle"
 	},
 	"elements": [
 		{
