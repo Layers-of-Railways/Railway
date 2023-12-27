@@ -1,8 +1,0 @@
-{
-  "parent": "railways:block/wide_gauge_base/segment_right",
-  "textures": {
-    "0": "dreamsanddesires:block/track/rubber/standard_track_rubber",
-    "1": "dreamsanddesires:block/track/rubber/standard_track_mip_rubber",
-    "particle": "dreamsanddesires:block/track/rubber/standard_track_crossing_rubber"
-  }
-}
