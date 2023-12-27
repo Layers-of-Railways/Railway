@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/narrow_gauge_base/diag_2",
-  "textures": {
-    "1": "dreamsanddesires:block/track/spirit/standard_track_spirit",
-    "2": "dreamsanddesires:block/track/spirit/standard_track_mip_spirit",
-    "3": "dreamsanddesires:block/track/spirit/standard_track_crossing_spirit",
-    "particle": "dreamsanddesires:block/track/spirit/standard_track_crossing_spirit"
-  }
-}

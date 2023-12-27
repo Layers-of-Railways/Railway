@@ -1,9 +1,0 @@
-{
-  "parent": "create:block/track/diag",
-  "textures": {
-    "0": "dreamsanddesires:block/track/rubber/standard_track_rubber",
-    "1": "dreamsanddesires:block/track/rubber/standard_track_mip_rubber",
-    "2": "dreamsanddesires:block/track/rubber/standard_track_crossing_rubber",
-    "particle": "dreamsanddesires:block/track/rubber/standard_track_crossing_rubber"
-  }
-}

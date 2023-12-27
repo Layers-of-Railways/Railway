@@ -1,9 +1,0 @@
-{
-  "parent": "railways:block/narrow_gauge_base/cross_ortho",
-  "textures": {
-    "1": "dreamsanddesires:block/track/rubber/standard_track_rubber",
-    "2": "dreamsanddesires:block/track/rubber/standard_track_mip_rubber",
-    "3": "dreamsanddesires:block/track/rubber/standard_track_crossing_rubber",
-    "particle": "dreamsanddesires:block/track/rubber/standard_track_crossing_rubber"
-  }
-}
