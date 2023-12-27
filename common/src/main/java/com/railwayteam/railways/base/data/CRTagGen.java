@@ -6,6 +6,7 @@ import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -72,7 +73,8 @@ public class CRTagGen {
 		return tagAppender(prov, tag.tag);
 	}
 
+	@ExpectPlatform // this has to be platformed out because addTag on fabric has a signature that includes FabricTagProvider$FabricTagBuilder
 	public static <T> TagAppender<T> tagAppender(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
-		return prov.addTag(tag);
+		throw new AssertionError();
 	}
 }
