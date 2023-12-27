@@ -21,7 +21,8 @@ public enum Mods {
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
 	FARMERSDELIGHT("farmersdelight"),
-	DREAMSANDDESIRES("create_dd"),
+    // Dreams and Desires
+    CREATE_DD("create_dd"),
 	QUARK("quark")
 	;
 

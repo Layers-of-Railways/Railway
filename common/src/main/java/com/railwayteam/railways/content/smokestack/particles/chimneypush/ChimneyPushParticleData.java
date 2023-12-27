@@ -10,6 +10,7 @@ import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -118,6 +119,11 @@ public abstract class ChimneyPushParticleData<T extends ChimneyPushParticleData<
 	public abstract ParticleEngine.SpriteParticleRegistration<T> getMetaFactory();
 
 	public abstract float getQuadSize();
+
+	public static ChimneyPushParticleData<?> create(boolean small, boolean leadOnly, @NotNull DyeColor color) {
+		float idx = -(2 + color.getId());
+		return create(small, leadOnly, idx, idx, idx);
+	}
 
 	public static ChimneyPushParticleData<?> create(boolean small, boolean leadOnly, float red, float green, float blue) {
 		if (small) {

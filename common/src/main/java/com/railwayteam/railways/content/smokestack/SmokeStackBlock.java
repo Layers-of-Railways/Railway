@@ -133,8 +133,7 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
                 if (isSoul) {
                     particleType = PuffSmokeParticleData.create(small, stationary, -2, -2, -2);
                 } else if (color != null) {
-                    float[] c = color.getTextureDiffuseColors();
-                    particleType = PuffSmokeParticleData.create(small, stationary, c[0], c[1], c[2]);
+                    particleType = PuffSmokeParticleData.create(small, stationary, color);
                 } else {
                     particleType = PuffSmokeParticleData.create(small, stationary);
                 }
@@ -155,11 +154,7 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
 
     }
 
-    /**
-     * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
-     */
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    void blockEntityAnimateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(ENABLED)) {
             if (random.nextFloat() < type.particleSpawnChance * 1.5 && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
