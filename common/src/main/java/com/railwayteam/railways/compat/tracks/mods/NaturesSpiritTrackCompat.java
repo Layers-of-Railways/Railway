@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class NaturesSpiritTrackCompat extends GenericTrackCompat {
     NaturesSpiritTrackCompat() {
-        super("natures_spirit");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.NATURES_SPIRIT.isLoaded;
+        super(Mods.NATURES_SPIRIT);
     }
 
     private static boolean registered = false;

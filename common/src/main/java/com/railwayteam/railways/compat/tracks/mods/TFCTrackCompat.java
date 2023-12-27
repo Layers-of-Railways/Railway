@@ -12,12 +12,7 @@ import java.util.stream.Stream;
 
 public class TFCTrackCompat extends GenericTrackCompat {
     TFCTrackCompat() {
-        super("tfc");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.TFC.isLoaded;
+        super(Mods.TFC);
     }
 
     @Override

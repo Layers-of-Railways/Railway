@@ -23,7 +23,8 @@ public enum Mods {
     FARMERSDELIGHT("farmersdelight"),
 	FIGURA("figura"),
 	NATURES_SPIRIT("natures_spirit"),
-	DREAMSANDDESIRES("create_dd"),
+    // Dreams and Desires
+    CREATE_DD("create_dd"),
 	QUARK("quark"),
 	TFC("tfc")
 	;

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "railways:link_and_pin"
+      "tag": "railways:deco_couplers"
     },
     "_": {
       "tag": "minecraft:wooden_slabs"
@@ -14,7 +14,7 @@
     "___"
   ],
   "result": {
-    "item": "railways:headstock"
+    "item": "railways:wooden_headstock_link_and_pin"
   },
   "show_notification": true
 }

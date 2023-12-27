@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.DyeableBlockEntity;
 import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.buffer.WoodVariantTrackBufferBlockEntity;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlockEntity;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlockEntity;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRenderer;
@@ -110,12 +111,17 @@ public class CRBlockEntities {
 
     public static final BlockEntityEntry<DyeableBlockEntity> DYEABLE = REGISTRATE
         .blockEntity("dyeable", DyeableBlockEntity::new)
-        .validBlocks(CRBlocks.LINK_AND_PIN)
+        .validBlocks(CRBlocks.LINK_AND_PIN, CRBlocks.BIG_BUFFER, CRBlocks.SMALL_BUFFER)
         .register();
 
     public static final BlockEntityEntry<HeadstockBlockEntity> HEADSTOCK = REGISTRATE
         .blockEntity("headstock", HeadstockBlockEntity::new)
         .validBlocks(CRBlocks.HEADSTOCK)
+        .register();
+
+    public static final BlockEntityEntry<CopycatHeadstockBlockEntity> COPYCAT_HEADSTOCK = REGISTRATE
+        .blockEntity("copycat_headstock", CopycatHeadstockBlockEntity::new)
+        .validBlocks(CRBlocks.COPYCAT_HEADSTOCK)
         .register();
 
 

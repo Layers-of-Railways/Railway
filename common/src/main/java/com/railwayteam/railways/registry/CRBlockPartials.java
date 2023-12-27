@@ -449,6 +449,7 @@ public class CRBlockPartials {
         HANDCAR_COUPLING = block("bogey/handcar/coupling"),
         HANDCAR_FRAME = block("bogey/handcar/frame"),
         HANDCAR_HANDLE = block("bogey/handcar/handle"),
+        HANDCAR_HANDLE_FIRST_PERSON = block("bogey/handcar/handle_first_person"),
         HANDCAR_LARGE_COG = block("bogey/handcar/large_cog"),
         HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
     ;

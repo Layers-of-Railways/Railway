@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:deco_couplers"
+    },
+    "_": {
+      "item": "create:copycat_panel"
+    }
+  },
+  "pattern": [
+    " # ",
+    "___"
+  ],
+  "result": {
+    "item": "railways:copycat_headstock_link_and_pin"
+  },
+  "show_notification": true
+}

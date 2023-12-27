@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-19T17:59:49.791375162	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
+// 1.20.1	2023-12-26T16:52:47.557524245	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
 f43c8880102bbc27cb430c59ba3cc9ae2b870cc9 data/railways/recipes/sequenced_assembly/track_quark_ancient_narrow.json
 871ce86011b2893c9e7fe9a6d0fb7298e55d744b data/railways/recipes/sequenced_assembly/track_tfc_hickory_wide.json
 ffa16cec0e76f67acb58c6af3837d5a924989051 data/railways/recipes/sequenced_assembly/track_quark_azalea_narrow.json
@@ -326,8 +326,8 @@ e93649ca9e60c6b46372f9d20c40a10a03cbaf0b data/railways/recipes/sequenced_assembl
 b5839bfe23a47440790005cf7b0f652a612f1b9b data/railways/recipes/sequenced_assembly/track_natures_spirit_ghaf.json
 19ec9d81194ff585dda532d6468711ddffc15522 data/railways/recipes/sequenced_assembly/track_byg_embur.json
 7fef6e91631115e0d0e5083eec4c1b04178f2c30 data/railways/recipes/sequenced_assembly/track_tfc_ash_narrow.json
-6606ccf2f3c3d47e9d14042004034e947660f8b0 data/railways/recipes/sequenced_assembly/track_tfc_spruce_wide.json
 3690c69435da7531a32dcde4c0818aa8715c0d56 data/railways/recipes/sequenced_assembly/track_tfc_hickory.json
+6606ccf2f3c3d47e9d14042004034e947660f8b0 data/railways/recipes/sequenced_assembly/track_tfc_spruce_wide.json
 25e0eb8f19aca4355ba4fe984f4266579f0d9f9a data/railways/recipes/sequenced_assembly/track_byg_witch_hazel_wide.json
 1ba7c2f8c1087ddac29586cf930bb6a4a0ccc95b data/railways/recipes/sequenced_assembly/track_twilightforest_mangrove_narrow.json
 fafb644c7b2fdc6868e2f77113edbdb2c29d8f96 data/railways/recipes/sequenced_assembly/track_twilightforest_darkwood_wide.json

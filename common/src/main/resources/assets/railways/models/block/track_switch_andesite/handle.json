@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "minecraft:block/block",
+	"parent": "railways:block/track_switch_andesite/block",
 	"textures": {
 		"0": "railways:block/track_switch/axis",
 		"1": "railways:block/track_switch/axis_top",

@@ -304,9 +304,9 @@ public class TrainUtils {
             entity.discard();
             entity.ejectPassengers();
             ((AccessorAbstractContraptionEntity) entity).snr_moveCollidedEntitiesOnDisassembly(transform);
-
-            Create.RAILWAYS.removeTrain(train.id);
-            CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, false));
         }
+        train.invalid = true; // don't remove yet, otherwise concurrent modification exceptions happen
+        /*Create.RAILWAYS.removeTrain(train.id);
+        CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, false));*/
     }
 }

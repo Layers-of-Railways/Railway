@@ -13,6 +13,6 @@ public class ModSetupImpl {
     }
 
     public static void usePalettesTab() {
-        Railways.registrate().useCreativeTab(CRCreativeModeTabs.getTracksTabKey());
+        Railways.registrate().useCreativeTab(CRCreativeModeTabs.getPalettesTabKey());
     }
 }

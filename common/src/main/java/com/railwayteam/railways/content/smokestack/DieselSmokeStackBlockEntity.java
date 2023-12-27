@@ -61,6 +61,6 @@ public class DieselSmokeStackBlockEntity extends SmartBlockEntity implements ISp
 
     @Override
     public void notifySpeed(double speed) {
-        this.notifiedSpeed = 112 / (1 + Math.pow(2, -16*speed + 10)) + 48;
+        this.notifiedSpeed = 112 / (1 + Math.pow(2, -16 * speed + 10)) + 48;
     }
 }

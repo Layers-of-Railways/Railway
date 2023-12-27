@@ -16,6 +16,8 @@ public class CRCreativeModeTabsRegistrateDisplayItemsGeneratorImpl {
             tabObject = CRCreativeModeTabsImpl.CAPS_TAB;
         } else if (tab == CRCreativeModeTabs.getTracksTabKey()) {
             tabObject = CRCreativeModeTabsImpl.TRACKS_TAB;
+        } else if (tab == CRCreativeModeTabs.getPalettesTabKey()) {
+            tabObject = CRCreativeModeTabsImpl.PALETTES_TAB;
         } else {
             tabObject = CRCreativeModeTabsImpl.MAIN_TAB;
         }

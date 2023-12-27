@@ -58,11 +58,11 @@ public abstract class TrackCompatUtils {
     }
 
     @ApiStatus.Internal
-    public static boolean mixinIgnoreErrorForMissingItem(ResourceLocation resourceLocation) {
+    public static boolean mixinSkipLootLoading(ResourceLocation resourceLocation) {
         if (resourceLocation.getNamespace().equals(Railways.MODID)) {
             for (String compatMod : TRACK_COMPAT_MODS) {
-                if (resourceLocation.getPath().contains(compatMod)) {
-                    return true;
+                if (resourceLocation.getPath().startsWith("blocks/track_"+compatMod)) {
+                    return !GenericTrackCompat.get(compatMod).shouldRegisterMissing();
                 }
             }
         }

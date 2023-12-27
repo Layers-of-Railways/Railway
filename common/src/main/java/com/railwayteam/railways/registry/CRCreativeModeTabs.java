@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
@@ -263,6 +264,19 @@ public class CRCreativeModeTabs {
             for (RegistryEntry<Block> entry : Railways.registrate().getAll(Registries.BLOCK)) {
                 if (!isInCreativeTab(entry, tab))
                     continue;
+                if (entry.get() instanceof BlockStateBlockItemGroup.GroupedBlock) {
+                    BlockStateBlockItemGroup<?, ?> group = BlockStateBlockItemGroup.get(entry.getId());
+                    for (ItemEntry<?> itemEntry : group.getItems()) {
+                        Item item = itemEntry.get()
+                            .asItem();
+                        if (item == Items.AIR)
+                            continue;
+                        if (!exclusionPredicate.test(item))
+                            items.add(item);
+                    }
+                    continue;
+                }
+
                 Item item = entry.get()
                     .asItem();
                 if (item == Items.AIR)

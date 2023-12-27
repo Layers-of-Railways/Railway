@@ -6,12 +6,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class QuarkTrackCompat extends GenericTrackCompat {
     QuarkTrackCompat() {
-        super("quark");
-    }
-
-    @Override
-    protected boolean registerTracksAnyway() {
-        return super.registerTracksAnyway() || Mods.QUARK.isLoaded;
+        super(Mods.QUARK);
     }
 
     private static boolean registered = false;

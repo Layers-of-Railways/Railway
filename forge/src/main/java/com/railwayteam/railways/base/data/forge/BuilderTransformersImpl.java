@@ -1,10 +1,14 @@
 package com.railwayteam.railways.base.data.forge;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.buffer.LinkPinBlock;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.forge.BufferModel;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
+import com.railwayteam.railways.content.buffer.headstock.forge.CopycatHeadstockModel;
+import com.railwayteam.railways.content.buffer.single_deco.GenericDyeableSingleBufferBlock;
+import com.railwayteam.railways.content.buffer.single_deco.LinkPinBlock;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
@@ -15,19 +19,19 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.forge.GenericCrossingModel;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.OilburnerSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
-import com.railwayteam.railways.content.buffer.forge.BufferModel;
-import com.railwayteam.railways.content.custom_tracks.generic_crossing.forge.GenericCrossingModel;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -38,6 +42,7 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -306,7 +311,7 @@ public class BuilderTransformersImpl {
     public static <B extends LinkPinBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> linkAndPin() {
         return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/link_and_pin" + (state.getValue(LinkPinBlock.LINKLESS) ? "_linkless" : ""))))
+                .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
                 .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
                 .build(), LinkPinBlock.WATERLOGGED
             )
@@ -316,7 +321,7 @@ public class BuilderTransformersImpl {
     public static <B extends HeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> headstock() {
         return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel()))
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
                 .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), HeadstockBlock.WATERLOGGED
             )
@@ -326,5 +331,50 @@ public class BuilderTransformersImpl {
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> invisibleBlockState() {
         return b -> b.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
             .withExistingParent(c.getName(), p.modLoc("block/invisible"))));
+    }
+
+    @SuppressWarnings("removal") // Create uses these, I can too
+    public static <B extends CopycatHeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstock() {
+        return b -> b
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                .forAllStatesExcept(state -> ConfiguredModel.builder()
+                    .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(true)))
+                    .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
+                    .build(), HeadstockBlock.WATERLOGGED
+                )
+            ).properties(p -> p.noOcclusion()
+                .mapColor(MapColor.NONE))
+            .addLayer(() -> RenderType::solid)
+            .addLayer(() -> RenderType::cutout)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .addLayer(() -> RenderType::translucent)
+            .color(() -> CopycatBlock::wrappedColor)
+            .onRegister(CreateRegistrate.blockModel(() -> CopycatHeadstockModel::new));
+    }
+
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> copycatHeadstockItem() {
+        return i -> i
+            .color(() -> CopycatHeadstockBlock::wrappedItemColor)
+            .onRegister(CreateRegistrate.itemModel(() -> CopycatHeadstockModel::new));
+    }
+
+    public static <B extends GenericDyeableSingleBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> bigBuffer() {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
+                .rotationY(((int) state.getValue(GenericDyeableSingleBufferBlock.FACING).toYRot() + 180) % 360)
+                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+            )
+        );
+    }
+
+    public static <B extends GenericDyeableSingleBufferBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> smallBuffer() {
+        return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
+                .rotationY(((int) state.getValue(GenericDyeableSingleBufferBlock.FACING).toYRot() + 180) % 360)
+                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+            )
+        );
     }
 }

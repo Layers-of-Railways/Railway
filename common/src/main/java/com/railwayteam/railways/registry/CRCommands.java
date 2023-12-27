@@ -25,7 +25,8 @@ public class CRCommands {
       railwaysCommand = railwaysCommand
           .then(TrackDemoCommand.register())
           .then(ConductorDemoCommand.register())
-          .then(ReloadCasingCollisionCommand.register());
+          .then(ReloadCasingCollisionCommand.register())
+          .then(ReloadCreativeTabsCommand.register());
     }
 
     LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(railwaysCommand);

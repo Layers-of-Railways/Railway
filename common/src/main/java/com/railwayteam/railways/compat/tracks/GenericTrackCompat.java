@@ -2,6 +2,7 @@ package com.railwayteam.railways.compat.tracks;
 
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
 import com.railwayteam.railways.multiloader.CommonTags;
@@ -31,10 +32,21 @@ import static com.railwayteam.railways.registry.CRItems.ITEM_INCOMPLETE_TRACK;
 import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
 
 public class GenericTrackCompat {
-    public final String modid;
+    private static final Map<String, GenericTrackCompat> ALL = new HashMap<>();
 
-    public GenericTrackCompat(String modid) {
-        this.modid = modid;
+    public final Mods mod;
+    public final String modid;
+    public boolean modLoaded;
+
+    public GenericTrackCompat(Mods mod) {
+        this.mod = mod;
+        this.modid = mod.asId();
+        this.modLoaded = mod.isLoaded;
+        ALL.put(modid, this);
+    }
+
+    public static GenericTrackCompat get(String modid) {
+        return ALL.get(modid);
     }
 
     protected final Map<String, TrackMaterial> MATERIALS = new HashMap<>();
@@ -48,17 +60,9 @@ public class GenericTrackCompat {
         ModSetup.useTracksTab();
     }
 
-    protected static boolean registerTracksAnywayGlobal() {
-        return CRConfigs.getRegisterMissingTracks(); // || Utils.isDevEnv();
-    }
-
-    protected boolean registerTracksAnyway() {
-        return registerTracksAnywayGlobal();
-    }
-
     // If tracks/materials should still be registered if the base block is missing
     protected final boolean shouldRegisterMissing() {
-        return isDataGen() || registerTracksAnyway();
+        return isDataGen() || CRConfigs.getRegisterMissingTracks() || modLoaded;
     }
 
     public void register(String... names) {

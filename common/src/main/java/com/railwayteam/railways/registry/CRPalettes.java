@@ -32,11 +32,8 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-    static {
-        ModSetup.usePalettesTab();
-    }
-
     public static void register() { // registration order is important for a clean inventory layout
+        ModSetup.usePalettesTab();
         for (Styles style : Styles.values())
             style.register(null);
 
