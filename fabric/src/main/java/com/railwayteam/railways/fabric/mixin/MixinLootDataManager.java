@@ -18,7 +18,7 @@ public class MixinLootDataManager {
         "method_51195"
     }, at = @At("HEAD"), cancellable = true)
     private static void skipMissingLoot(LootDataType lootDataType, Map map, ResourceLocation id, JsonElement json, CallbackInfo ci) {
-        if (TrackCompatUtils.mixinIgnoreErrorForMissingItem(id)) {
+        if (TrackCompatUtils.mixinSkipLootLoading(id)) {
             ci.cancel();
         }
     }

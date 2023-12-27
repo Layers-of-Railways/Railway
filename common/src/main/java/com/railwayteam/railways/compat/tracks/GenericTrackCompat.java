@@ -32,6 +32,8 @@ import static com.railwayteam.railways.registry.CRItems.ITEM_INCOMPLETE_TRACK;
 import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
 
 public class GenericTrackCompat {
+    private static final Map<String, GenericTrackCompat> ALL = new HashMap<>();
+
     public final Mods mod;
     public final String modid;
     public boolean modLoaded;
@@ -40,6 +42,11 @@ public class GenericTrackCompat {
         this.mod = mod;
         this.modid = mod.asId();
         this.modLoaded = mod.isLoaded;
+        ALL.put(modid, this);
+    }
+
+    public static GenericTrackCompat get(String modid) {
+        return ALL.get(modid);
     }
 
     protected final Map<String, TrackMaterial> MATERIALS = new HashMap<>();

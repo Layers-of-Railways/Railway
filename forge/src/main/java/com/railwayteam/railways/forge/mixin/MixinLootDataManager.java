@@ -19,7 +19,7 @@ public class MixinLootDataManager {
         "lambda$scheduleElementParse$4"
     }, at = @At("HEAD"), cancellable = true)
     private static void skipMissingLoot(LootDataType lootDataType, ResourceManager resourceManager, Map map, ResourceLocation id, JsonElement json, CallbackInfo ci) {
-        if (TrackCompatUtils.mixinIgnoreErrorForMissingItem(id)) {
+        if (TrackCompatUtils.mixinSkipLootLoading(id)) {
             ci.cancel();
         }
     }
