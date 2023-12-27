@@ -100,4 +100,15 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
 
         return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : AllItems.GOGGLES.asStack();
     }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (level != null && level.isClientSide) {
+            if (this.level.getRandom().nextFloat() < 0.11f) {
+                ((SmokeStackBlock) this.getBlockState().getBlock()).blockEntityAnimateTick(this.getBlockState(), this.level, this.getBlockPos(), this.level.getRandom());
+            }
+        }
+    }
 }

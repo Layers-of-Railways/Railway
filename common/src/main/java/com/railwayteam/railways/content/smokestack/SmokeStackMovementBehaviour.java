@@ -253,8 +253,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             if (movementTicks == 0) {
                 ChimneyPushParticleData<?> particleType;
                 if (color != null) {
-                    float[] c = color.getTextureDiffuseColors();
-                    particleType = ChimneyPushParticleData.create(random.nextBoolean(), false, c[0], c[1], c[2]);
+                    particleType = ChimneyPushParticleData.create(random.nextBoolean(), false, color);
                 } else {
                     particleType = ChimneyPushParticleData.create(random.nextBoolean(), false);
                 }
@@ -320,8 +319,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             if (context.world.getGameTime() % steamInterval >= 0 && context.world.getGameTime() % steamInterval <= 3) {
                 color = isSoul ? DyeColor.RED : DyeColor.WHITE;
                 if (data.getPushParticles().isEmpty()) {
-                    float[] c = color.getTextureDiffuseColors();
-                    ChimneyPushParticleData<?> particleType = ChimneyPushParticleData.create(false, false, c[0], c[1], c[2]);
+                    ChimneyPushParticleData<?> particleType = ChimneyPushParticleData.create(false, false, color);
 
                     Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(type.getParticleSpawnOffset());
                     data.addAndTrackParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
