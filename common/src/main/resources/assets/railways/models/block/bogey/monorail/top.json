@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "railways:block/bogeys/bogey_top",
+		"0": "railways:block/bogeys/standard/bogey_top",
 		"1": "create:block/railway_casing",
 		"2": "create:block/bogey/particle",
 		"particle": "create:block/bogey/particle"
