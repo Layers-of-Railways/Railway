@@ -11,6 +11,6 @@ public class LargePlatformDoubleAxleBogeyBlock extends DoubleAxleBogeyBlock {
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 5 / 32f, 42 / 32f);
+        return new Vec3(0, 7 / 32f, 32 / 32f);
     }
 }
