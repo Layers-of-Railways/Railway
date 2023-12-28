@@ -15,6 +15,7 @@ Additions
 - Locometal block series
 - Buffer blocks
 - Crafting tables work on trains
+- Hovering over a track-related block (couplers, signals, stations, etc) with a wrench will highlight the track it is bound to and vice-versa
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction

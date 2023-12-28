@@ -23,12 +23,14 @@ public class MixinMountedStorageManager {
     private void handlePlayerStorageInteraction(Contraption contraption, Player player, BlockPos localPos, CallbackInfoReturnable<Boolean> cir) {
         StructureTemplate.StructureBlockInfo info = contraption.getBlocks().get(localPos);
 
+        if (info == null || !(info.state.getBlock() instanceof CraftingTableBlock))
+            return;
+
         if (player.level.isClientSide()) {
-            if (info.state.getBlock() instanceof CraftingTableBlock)
-                cir.setReturnValue(true);
+            cir.setReturnValue(true);
         }
 
-        Component name = info != null ? info.state.getBlock().getName() : Component.translatable("container.crafting");
+        Component name = info.state.getBlock().getName();
         player.openMenu(new SimpleMenuProvider((syncId, inventory, player1) -> new CraftingMenu(syncId, inventory), name));
 
         Vec3 soundPos = contraption.entity.toGlobalVector(Vec3.atCenterOf(localPos), 0);

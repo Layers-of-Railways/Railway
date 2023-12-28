@@ -69,6 +69,7 @@
     "MixinTrackEdge",
     "MixinTrackEdgePoint",
     "MixinTrackMaterial",
+    "MixinTrackObserver",
     "MixinTrackPlacement",
     "MixinTrackTargetingBehaviour",
     "MixinTrackTargetingBlockItem",
