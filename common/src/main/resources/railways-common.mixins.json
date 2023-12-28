@@ -41,7 +41,6 @@
     "MixinGlobalStation",
     "MixinIOWorker",
     "MixinLootTables",
-    "MixinMountedStorageManager",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",
