@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -17,7 +18,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 public class BlombergBogeyRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 2);
+        createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 2);
         createModelInstance(materialManager, BLOMBERG_FRAME);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
@@ -47,14 +48,13 @@ public class BlombergBogeyRenderer extends BogeyRenderer {
         getTransform(BLOMBERG_FRAME, ms, inInstancedContraption)
                 .render(ms, light, vb);
 
-        BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] wheels = getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
             if (!inInstancedContraption)
                 ms.pushPose();
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 13 / 16f, side)
+            wheel.translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
-                    .translate(0, -13 / 16f, 0)
                     .render(ms, light, vb);
             if (!inInstancedContraption)
                 ms.popPose();
