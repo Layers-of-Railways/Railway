@@ -163,7 +163,6 @@ public class CRShapes {
 
     public static final VoxelShape
         COAL_STACK = shape(4, 0, 4, 12, 16, 12).build(),
-        DIESEL_STACK = shape(0, 0, 0, 16, 4, 16).build(),
         OIL_STACK = shape(1, 8, 1, 15, 16, 15)
             .add(2, 0, 2, 14, 8, 14)
             .build(),
@@ -180,7 +179,9 @@ public class CRShapes {
             .add(5, 8, 6, 11, 12, 10)
             .forHorizontalAxis(),
         LONG_STACK = shape(1, 0, 3, 15, 4, 13)
-        .forHorizontalAxis();
+            .forHorizontalAxis(),
+        DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
+            .forDirectional(Direction.UP);
 
     public static final VoxelShape
         BLOCK = Shapes.block(),

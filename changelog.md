@@ -34,6 +34,7 @@ Changes
 - Smokestacks can be dyed via being clicked with dye
 - Smokestacks show their dye color/style when wearing goggles
 - Signals, stations, and other blocks with a 'track pad' do not render the pad on phantom tracks when the tracks are not visible
+- Radiator fans can now be placed in any direction
 
 Fixes
 - Mixin conflict with VS2

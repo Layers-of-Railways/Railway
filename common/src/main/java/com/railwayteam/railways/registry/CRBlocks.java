@@ -487,9 +487,14 @@ public class CRBlocks {
     public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, ShapeWrapper.wrapped(CRShapes.DIESEL_STACK)))
         .initialProperties(SharedProperties::softMetal)
         .blockstate((c, p) -> p.getVariantBuilder(c.get())
-            .forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
-                .build()))
+            .forAllStatesExcept(state -> {
+                Direction dir = state.getValue(BlockStateProperties.FACING);
+                return ConfiguredModel.builder()
+                    .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
+                    .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+            }, DieselSmokeStackBlock.WATERLOGGED, DieselSmokeStackBlock.ENABLED, DieselSmokeStackBlock.POWERED))
         .properties(p -> p.color(MaterialColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
         .properties(BlockBehaviour.Properties::noOcclusion)
