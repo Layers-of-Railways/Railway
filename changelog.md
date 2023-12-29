@@ -41,6 +41,7 @@ Fixes
 - Fix villagers opening sliding doors in the 'special' mode (#317)
 - Fix normal nixie tube relays (#311)
 - Fix signal debug line rendering for monorail tracks
+- Change conductor cap offset on players to fix clipping with some skins
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------

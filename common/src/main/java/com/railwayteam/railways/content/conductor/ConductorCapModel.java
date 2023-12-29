@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -123,5 +124,10 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 
 	public void setProperties (HumanoidModel<?> base) {
 		this.cap.copyFrom(doNotTilt ? base.head : base.hat);
+		if (base instanceof PlayerModel<?> && override == null) {
+			float s = 1 / 16f;
+			this.cap.offsetScale(new Vector3f(s, s, s));
+			this.cap.offsetPos(new Vector3f(0, 0, -10 / 16f));
+		}
 	}
 }
