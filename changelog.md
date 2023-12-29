@@ -42,6 +42,7 @@ Fixes
 - Fix normal nixie tube relays (#311)
 - Fix signal debug line rendering for monorail tracks
 - Change conductor cap offset on players to fix clipping with some skins
+- Rework a conductor spy mixin for Tweakeroo freecam compat
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------

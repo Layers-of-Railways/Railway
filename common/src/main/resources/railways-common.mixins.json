@@ -136,6 +136,7 @@
     "client.MixinTrainHatOffsets",
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
+    "compat.malilib.MixinGuiTextFieldGeneric",
     "compat.voicechat.FreecamUtilMixin",
     "conductor_possession.AccessorKeyMapping",
     "conductor_possession.ClientChunkCacheMixin",

@@ -23,7 +23,9 @@ public enum Mods {
 	FARMERSDELIGHT("farmersdelight"),
     // Dreams and Desires
     CREATE_DD("create_dd"),
-	QUARK("quark")
+	QUARK("quark"),
+	MALILIB("malilib"),
+	TWEAKEROO("tweakeroo"),
 	;
 
 	public final boolean isLoaded;
