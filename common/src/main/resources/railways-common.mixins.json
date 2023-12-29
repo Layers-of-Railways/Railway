@@ -43,8 +43,6 @@
     "MixinExplosionDamageCalculator",
     "MixinGlobalStation",
     "MixinIOWorker",
-    "MixinMountedStorageManager",
-    "MixinLootTables",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",

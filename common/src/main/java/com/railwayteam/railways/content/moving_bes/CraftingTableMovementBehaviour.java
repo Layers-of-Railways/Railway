@@ -24,7 +24,7 @@ public class CraftingTableMovementBehaviour extends MovingInteractionBehaviour {
         player.openMenu(new SimpleMenuProvider((syncId, inventory, player1) -> new CraftingMenu(syncId, inventory), name));
 
         Vec3 soundPos = contraption.entity.toGlobalVector(Vec3.atCenterOf(localPos), 0);
-        player.level.playSound(null, new BlockPos(soundPos), SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.75f, 1f);
+        player.level.playSound(null, BlockPos.containing(soundPos), SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.75f, 1f);
         return true;
     }
 }
