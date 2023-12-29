@@ -119,6 +119,7 @@
     "client.MixinPlayerInfo",
     "client.MixinPlayerRenderer",
     "client.MixinRadialToolboxMenu",
+    "client.MixinStationRenderer",
     "client.MixinStationScreen",
     "client.MixinSuperGlueSelectionHandler",
     "client.MixinTextureAtlas",

@@ -45,6 +45,7 @@ Fixes
 - Fix signal debug line rendering for monorail tracks
 - Change conductor cap offset on players to fix clipping with some skins
 - Rework a conductor spy mixin for Tweakeroo freecam compat
+- Offset train assembly overlay on encased tracks
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
