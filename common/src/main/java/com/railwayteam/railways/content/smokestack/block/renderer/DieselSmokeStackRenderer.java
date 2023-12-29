@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.smokestack.block.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
