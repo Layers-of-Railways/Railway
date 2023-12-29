@@ -33,6 +33,7 @@ Changes
 - Soul fire smoke in smoke stacks, clicking a smokestack with soul soil or soul sand will make it output soul fire themed smoke
 - Smokestacks can be dyed via being clicked with dye
 - Smokestacks show their dye color/style when wearing goggles
+- Signals, stations, and other blocks with a 'track pad' do not render the pad on phantom tracks when the tracks are not visible
 
 Fixes
 - Mixin conflict with VS2
