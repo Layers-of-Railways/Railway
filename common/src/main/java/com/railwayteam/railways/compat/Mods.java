@@ -26,7 +26,9 @@ public enum Mods {
     // Dreams and Desires
     CREATE_DD("create_dd"),
 	QUARK("quark"),
-	TFC("tfc")
+	TFC("tfc"),
+	MALILIB("malilib"),
+	TWEAKEROO("tweakeroo"),
 	;
 
 	public final boolean isLoaded;

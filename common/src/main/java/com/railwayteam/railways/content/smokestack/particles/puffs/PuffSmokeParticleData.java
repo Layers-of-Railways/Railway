@@ -10,6 +10,7 @@ import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -118,6 +119,11 @@ public abstract class PuffSmokeParticleData<T extends PuffSmokeParticleData<T>> 
 	public abstract ParticleEngine.SpriteParticleRegistration<T> getMetaFactory();
 
 	public abstract float getQuadSize();
+
+	public static PuffSmokeParticleData<?> create(boolean small, boolean stationary, @NotNull DyeColor color) {
+		float idx = -(3+color.getId());
+		return create(small, stationary, idx, idx, idx);
+	}
 
 	public static PuffSmokeParticleData<?> create(boolean small, boolean stationary, float red, float green, float blue) {
 		if (small) {

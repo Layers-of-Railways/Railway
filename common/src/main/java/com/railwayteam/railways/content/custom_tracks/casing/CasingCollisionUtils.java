@@ -237,6 +237,7 @@ public class CasingCollisionUtils {
     public static void register() {
         OFFSETS.clear();
         registerStandard(TrackType.STANDARD);
+        registerStandard(CRTrackType.UNIVERSAL);
         registerStandard(CRTrackType.NARROW_GAUGE);
         registerWide(CRTrackType.WIDE_GAUGE);
     }

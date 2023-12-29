@@ -41,6 +41,7 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraRegistration.register();
     CasingCollisionUtils.register();
+    CRInteractionBehaviours.register();
 
     // Compat
     useTracksTab();

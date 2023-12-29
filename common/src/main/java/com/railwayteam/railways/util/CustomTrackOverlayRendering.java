@@ -3,6 +3,7 @@ package com.railwayteam.railways.util;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlockPartials.TrackCasingSpec;
@@ -97,6 +98,9 @@ public class CustomTrackOverlayRendering {
         if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE) {
             BezierConnection bc = trackTE.getConnections().get(bezierPoint.curveTarget());
             if (bc != null) {
+                if (bc.getMaterial() == CRTrackMaterials.PHANTOM && !PhantomSpriteManager.isVisible())
+                    return null;
+
                 double length = Mth.floor(bc.getLength() * 2);
                 int seg = bezierPoint.segment() + 1;
                 double t = seg / length;
@@ -135,6 +139,9 @@ public class CustomTrackOverlayRendering {
                 .normalize();
             normal = ((ITrackBlock) state.getBlock()).getUpNormal(world, pos, state);
         }
+
+        if (state.getBlock() instanceof TrackBlock track && track.getMaterial() == CRTrackMaterials.PHANTOM && !PhantomSpriteManager.isVisible())
+            return null;
 
         //Shift for casings and monorails
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
