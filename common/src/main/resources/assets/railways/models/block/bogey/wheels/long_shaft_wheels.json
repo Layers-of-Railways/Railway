@@ -4,7 +4,7 @@
   "flip_v": true,
   "model": "railways:models/block/bogey/wheels/long_shaft_wheels.obj",
   "textures": {
-    "0": "create:block/bogey/wheel",
-    "1": "create:block/axis"
+    "0": "create:block/axis",
+    "1": "create:block/bogey/wheel"
   }
 }
