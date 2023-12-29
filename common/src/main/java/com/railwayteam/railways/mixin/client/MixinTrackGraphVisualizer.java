@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinTrackGraphVisualizer {
     @Unique private static boolean snr$isEnabled = false;
 
-    // If the track edge is a monorail track then change the y offset and make it higher so that
+    // If the track edge is a monorail track, then change the y offset and make it higher so that
     // the signal line is visible to the player
     @ModifyConstant(method = "visualiseSignalEdgeGroups", constant = @Constant(floatValue = 64f))
     private static float fixYOffsetForMonorailTracks(float constant, @Local TrackEdge edge) {
