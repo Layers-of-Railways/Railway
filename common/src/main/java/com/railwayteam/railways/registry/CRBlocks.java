@@ -180,6 +180,15 @@ public class CRBlocks {
                         .modelFile(p.models().getExistingFile(modelLoc))
                         .build());
             }
+
+//fixme
+//                    .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+//                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+//                            .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
+//                            .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+//                            .build(), LinkPinBlock.WATERLOGGED
+//                    )
+//            )
         }, rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
     }
 

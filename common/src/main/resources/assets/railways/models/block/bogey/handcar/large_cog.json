@@ -106,7 +106,6 @@
 				"east": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
 				"south": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
 				"west": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
-				"up": {"uv": [0, 0, 1, 1], "rotation": 90, "texture": "#missing"},
 				"down": {"uv": [5.25, 9.625, 5.5, 9.875], "rotation": 90, "texture": "#0"}
 			}
 		}

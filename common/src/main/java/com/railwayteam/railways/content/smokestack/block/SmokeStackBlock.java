@@ -6,6 +6,7 @@ import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntit
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticle;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
+import com.railwayteam.railways.content.smokestack.style.SmokestackStyle;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.util.ShapeWrapper;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -21,9 +22,13 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -33,15 +38,27 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEntity> {
+    public static final EnumProperty<SmokestackStyle> STYLE = EnumProperty.create("style", SmokestackStyle.class);
 
     public final SmokeStackType type;
     public boolean createsStationarySmoke;
 
     public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
         super(properties, shape);
-        this.registerDefaultState(this.makeDefaultState());
+        this.registerDefaultState(this.makeDefaultState().setValue(STYLE, SmokestackStyle.STEEL));
         this.type = type;
         this.createsStationarySmoke = createsStationarySmoke;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(STYLE);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return super.getStateForPlacement(context).setValue(STYLE, SmokestackStyle.BRASS);
     }
 
     @Override
