@@ -1,6 +1,8 @@
-package com.railwayteam.railways.content.smokestack;
+package com.railwayteam.railways.content.smokestack.block.be;
 
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
+import com.railwayteam.railways.content.smokestack.ISpeedNotifiable;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.simibubi.create.content.contraptions.ContraptionWorld;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;

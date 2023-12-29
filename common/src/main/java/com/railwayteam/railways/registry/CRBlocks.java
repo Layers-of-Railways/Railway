@@ -39,6 +39,10 @@ import com.railwayteam.railways.content.handcar.HandcarItem;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.*;
+import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.OilburnerSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
@@ -193,7 +197,6 @@ public class CRBlocks {
             .onRegister(AllMovementBehaviours.movementBehaviour(movementBehaviour))
             .lang(description)
             .item()
-            .model((c, p) -> p.withExistingParent("item/" + c.getName(), modelLoc))
             .build()
             .register();
     }

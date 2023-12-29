@@ -1,6 +1,8 @@
-package com.railwayteam.railways.content.smokestack;
+package com.railwayteam.railways.content.smokestack.block;
 
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.smokestack.SmokeType;
+import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticle;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
@@ -154,7 +156,7 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
 
     }
 
-    void blockEntityAnimateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void blockEntityAnimateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(ENABLED)) {
             if (random.nextFloat() < type.particleSpawnChance * 1.5 && createsStationarySmoke) {
                 for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {

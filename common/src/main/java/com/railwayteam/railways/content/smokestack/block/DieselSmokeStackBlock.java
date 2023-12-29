@@ -1,5 +1,6 @@
-package com.railwayteam.railways.content.smokestack;
+package com.railwayteam.railways.content.smokestack.block;
 
+import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.util.ShapeWrapper;
 import net.minecraft.MethodsReturnNonnullByDefault;

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.smokestack;
+package com.railwayteam.railways.content.smokestack.block;
 
 import com.railwayteam.railways.util.ShapeWrapper;
 import net.minecraft.MethodsReturnNonnullByDefault;
