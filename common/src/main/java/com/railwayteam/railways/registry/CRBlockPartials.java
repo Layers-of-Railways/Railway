@@ -413,7 +413,7 @@ public class CRBlockPartials {
         FREIGHT_FRAME = block("bogey/freight/frame"),
         ARCHBAR_FRAME = block("bogey/archbar/frame"),
         PASSENGER_FRAME = block("bogey/passenger/frame"),
-        MODERN_FRAME = block("bogey/modern/modern_frame"),
+        MODERN_FRAME = block("bogey/modern/frame"),
         BLOMBERG_FRAME = block("bogey/blomberg/frame"),
         Y25_FRAME = block("bogey/y25/frame"),
         HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
