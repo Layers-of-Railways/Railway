@@ -405,12 +405,14 @@ public class CRBlockPartials {
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
     public static final PartialModel
+        LONG_SHAFTED_WHEELS = block("bogey/wheels/long_shaft_wheels"),
+
         SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
         LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
         COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
         FREIGHT_FRAME = block("bogey/freight/frame"),
         ARCHBAR_FRAME = block("bogey/archbar/frame"),
-        PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
+        PASSENGER_FRAME = block("bogey/passenger/frame"),
         MODERN_FRAME = block("bogey/modern/modern_frame"),
         BLOMBERG_FRAME = block("bogey/blomberg/frame"),
         Y25_FRAME = block("bogey/y25/frame"),

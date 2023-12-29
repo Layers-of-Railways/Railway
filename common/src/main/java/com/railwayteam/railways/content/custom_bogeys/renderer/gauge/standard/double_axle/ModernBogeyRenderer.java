@@ -27,6 +27,7 @@ public class ModernBogeyRenderer extends BogeyRenderer {
     @Override
     public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
         boolean inInstancedContraption = vb == null;
+
         getTransform(MODERN_FRAME, ms, inInstancedContraption)
                 .translate(0, 5 / 16f, 0)
                 .render(ms, light, vb);

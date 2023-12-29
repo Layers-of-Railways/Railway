@@ -1,0 +1,9 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/passenger/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/standard/passenger_body"
+  }
+}

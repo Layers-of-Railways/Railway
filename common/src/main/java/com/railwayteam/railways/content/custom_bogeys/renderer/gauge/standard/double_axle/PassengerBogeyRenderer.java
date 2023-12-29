@@ -9,13 +9,12 @@ import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.CR_BOGEY_WHEELS;
-import static com.railwayteam.railways.registry.CRBlockPartials.PASSENGER_FRAME;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class PassengerBogeyRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+        createModelInstance(materialManager, LONG_SHAFTED_WHEELS, 2);
         createModelInstance(materialManager, PASSENGER_FRAME);
     }
 
@@ -27,11 +26,11 @@ public class PassengerBogeyRenderer extends BogeyRenderer {
     @Override
     public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
         boolean inInstancedContraption = vb == null;
+
         getTransform(PASSENGER_FRAME, ms, inInstancedContraption)
-                .translate(0, 5 / 16f, 0)
                 .render(ms, light, vb);
 
-        BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] wheels = getTransform(LONG_SHAFTED_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
             if (!inInstancedContraption)
                 ms.pushPose();
