@@ -200,7 +200,7 @@ public class CRBlocks {
 
         SMOKESTACK_GROUP.put(variant,
                 new BlockStateBlockItemGroup<>("smokestack_" + variant + "_", SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
-                        BuilderTransformers.variantBufferItem(), SmokestackStyle.variantToTagKey(variant))
+                        BuilderTransformers.variantBufferItem(), SmokestackStyle.variantToTagKey(variant), false)
         );
 
         return BLOCK;
