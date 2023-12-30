@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/smokestack/block_oilburner",
+  "textures": {
+    "0": "railways:block/smokestack/oilburner/copper_cap_brass",
+    "particle": "#0"
+  }
+}
