@@ -26,8 +26,8 @@ public class OilburnerSmokeStackBlock extends SmokeStackBlock {
 
     public static final BooleanProperty ENCASED = BooleanProperty.create("encased");
 
-    public OilburnerSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
-        super(properties, type, shape, createsStationarySmoke);
+    public OilburnerSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke, String variant) {
+        super(properties, type, shape, createsStationarySmoke, variant);
         registerDefaultState(defaultBlockState().setValue(ENCASED, false));
     }
 

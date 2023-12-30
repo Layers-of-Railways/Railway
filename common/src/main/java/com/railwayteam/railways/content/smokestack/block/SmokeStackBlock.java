@@ -36,8 +36,8 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
     public final SmokeStackType type;
     public boolean createsStationarySmoke;
 
-    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
-        super(properties, shape);
+    public SmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke, String variant) {
+        super(properties, shape, variant);
         this.registerDefaultState(this.makeDefaultState());
         this.type = type;
         this.createsStationarySmoke = createsStationarySmoke;

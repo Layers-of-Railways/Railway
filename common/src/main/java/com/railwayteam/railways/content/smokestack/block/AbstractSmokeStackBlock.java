@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.smokestack.block;
 
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -13,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -42,11 +44,13 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     protected final ShapeWrapper shape;
+    final String variant;
 
-    public AbstractSmokeStackBlock(Properties properties, ShapeWrapper shape) {
+    public AbstractSmokeStackBlock(Properties properties, ShapeWrapper shape, String variant) {
         super(properties);
         this.registerDefaultState(this.makeDefaultState());
         this.shape = shape;
+        this.variant = variant;
     }
 
     @Override
@@ -67,6 +71,11 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(STYLE).add(ENABLED).add(POWERED).add(WATERLOGGED);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return CRBlocks.SMOKESTACK_GROUP.get(variant).get(state.getValue(STYLE)).asStack();
     }
 
     @Override

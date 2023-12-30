@@ -24,8 +24,8 @@ public class AxisSmokeStackBlock extends SmokeStackBlock {
 
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
-    public AxisSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke) {
-        super(properties, type, shape, createsStationarySmoke);
+    public AxisSmokeStackBlock(Properties properties, SmokeStackType type, ShapeWrapper shape, boolean createsStationarySmoke, String variant) {
+        super(properties, type, shape, createsStationarySmoke, variant);
     }
 
     @Override
