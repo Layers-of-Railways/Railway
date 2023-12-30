@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.smokestack.block;
 
+import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -34,7 +36,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extends Block implements ProperWaterloggedBlock, IWrenchable, IBE<T> {
-
+    public static final EnumProperty<SmokestackStyle> STYLE = EnumProperty.create("style", SmokestackStyle.class);
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -55,6 +57,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
 
     protected BlockState makeDefaultState() {
         return this.defaultBlockState()
+            .setValue(STYLE, SmokestackStyle.STEEL)
             .setValue(ENABLED, true)
             .setValue(POWERED, false)
             .setValue(WATERLOGGED, false);
@@ -63,7 +66,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(ENABLED).add(POWERED).add(WATERLOGGED);
+        builder.add(STYLE).add(ENABLED).add(POWERED).add(WATERLOGGED);
     }
 
     @Override
@@ -77,6 +80,8 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = this.defaultBlockState();
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
+
+        blockstate = blockstate.setValue(STYLE, SmokestackStyle.BRASS);
 
         if (context.getLevel().hasNeighborSignal(context.getClickedPos())) {
             blockstate = blockstate.setValue(ENABLED, false).setValue(POWERED, true);

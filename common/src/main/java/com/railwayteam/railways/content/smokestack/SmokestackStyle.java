@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.smokestack.style;
+package com.railwayteam.railways.content.smokestack;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
