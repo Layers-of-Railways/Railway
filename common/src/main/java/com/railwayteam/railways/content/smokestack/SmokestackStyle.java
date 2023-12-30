@@ -41,7 +41,7 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
 
     @Override
     public String getLangName(String context) {
-        return TextUtils.titleCaseConversion(context) + " " + langName;
+        return TextUtils.titleCaseConversion(context.replace("_", " ")) + " " + langName;
     }
 
     @Override
