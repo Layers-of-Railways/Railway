@@ -34,7 +34,6 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     private final TagKey<Item> cycleTag;
     @Nullable
     private final T excluded;
-    private final boolean addToCreativeTab;
 
     @NotNull
     private final NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer;
@@ -45,19 +44,13 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
                                     @NotNull TagKey<Item> cycleTag) {
-        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, true);
-    }
-
-    public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
-                                    @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
-                                    @NotNull TagKey<Item> cycleTag, boolean addToCreativeTab) {
-        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, addToCreativeTab);
+        this(context, property, values, blockEntry, itemTransformer, cycleTag, null);
     }
 
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values,
                                     @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
-                                    @NotNull TagKey<Item> cycleTag, @Nullable T excluded, boolean addToCreativeTab) {
+                                    @NotNull TagKey<Item> cycleTag, @Nullable T excluded) {
         this.context = context;
         this.property = property;
         this.values = values;
@@ -65,7 +58,6 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         this.itemTransformer = itemTransformer;
         this.cycleTag = cycleTag;
         this.excluded = excluded;
-        this.addToCreativeTab = addToCreativeTab;
 
         this.register();
     }
@@ -87,7 +79,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             if (excluded != null && v == excluded) continue;
 
             items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v))
-                .properties(p -> p.tab(addToCreativeTab ? CRItems.mainCreativeTab : null))
+                .properties(p -> p.tab(CRItems.mainCreativeTab))
                 .lang(v.getLangName(context))
                 .transform(itemTransformer)
                 .tag(cycleTag)
