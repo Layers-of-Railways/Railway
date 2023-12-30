@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.smokestack;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.TextUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
@@ -40,16 +41,7 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
 
     @Override
     public String getLangName(String context) {
-        // "smokestack_oilburner_"
-        String spaced = context.replace("_", " ");
-        // "smokestack oilburner "
-        String uppercase = spaced.replace("smokestack", "Smokestack");
-        // "Smokestack oilburner "
-        String[] words = uppercase.split(" ");
-        words[1] = Character.toUpperCase(words[1].charAt(0)) + words[1].substring(1);
-        // "Smokestack Oilburner "
-        String result = String.join(" ", words);
-        return result + " " + langName;
+        return TextUtils.titleCaseConversion(context) + " " + langName;
     }
 
     @Override

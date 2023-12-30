@@ -44,14 +44,14 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
 
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
-                                    @NotNull TagKey<Item> cycleTag, boolean addToCreativeTab) {
-        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, addToCreativeTab);
+                                    @NotNull TagKey<Item> cycleTag) {
+        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, true);
     }
 
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
-                                    @NotNull TagKey<Item> cycleTag) {
-        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, true);
+                                    @NotNull TagKey<Item> cycleTag, boolean addToCreativeTab) {
+        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, addToCreativeTab);
     }
 
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values,
@@ -86,8 +86,8 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         for (T v : values) {
             if (excluded != null && v == excluded) continue;
 
-            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, addToCreativeTab))
-                .properties(p -> p.tab(CRItems.mainCreativeTab))
+            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v))
+                .properties(p -> p.tab(addToCreativeTab ? CRItems.mainCreativeTab : null))
                 .lang(v.getLangName(context))
                 .transform(itemTransformer)
                 .tag(cycleTag)

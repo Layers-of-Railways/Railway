@@ -16,17 +16,15 @@ import org.jetbrains.annotations.Nullable;
 public class BlockStateBlockItem<T extends Comparable<T>> extends BlockItem {
     protected final Property<T> property;
     protected final T value;
-    protected final boolean addToCreativeTab;
 
-    protected BlockStateBlockItem(Block block, Properties properties, Property<T> property, T value, boolean addToCreativeTab) {
+    protected BlockStateBlockItem(Block block, Properties properties, Property<T> property, T value) {
         super(block, properties);
         this.property = property;
         this.value = value;
-        this.addToCreativeTab = addToCreativeTab;
     }
 
-    public static <T extends Comparable<T>> NonNullFunction<Properties, BlockStateBlockItem<T>> create(NonNullSupplier<Block> blockSupplier, Property<T> property, T value, boolean addToCreativeTab) {
-        return (p) -> new BlockStateBlockItem<>(blockSupplier.get(), p, property, value, addToCreativeTab);
+    public static <T extends Comparable<T>> NonNullFunction<Properties, BlockStateBlockItem<T>> create(NonNullSupplier<Block> blockSupplier, Property<T> property, T value) {
+        return (p) -> new BlockStateBlockItem<>(blockSupplier.get(), p, property, value);
     }
 
     @Override
@@ -36,8 +34,6 @@ public class BlockStateBlockItem<T extends Comparable<T>> extends BlockItem {
 
     @Override
     public void fillItemCategory(@NotNull CreativeModeTab category, @NotNull NonNullList<ItemStack> items) {
-        if (!addToCreativeTab) return;
-
         if (this.allowedIn(category)) {
             items.add(new ItemStack(this));
         }
