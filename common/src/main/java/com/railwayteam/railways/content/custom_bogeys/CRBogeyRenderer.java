@@ -809,6 +809,8 @@ public class CRBogeyRenderer {
                 return false;
             }
             if (player != null && player.getRootVehicle() instanceof CarriageContraptionEntity cce) {
+                if (carriageBogey == null)
+                    return true;
                 return cce.trainId.equals(carriageBogey.carriage.train.id)
                     && cce.carriageIndex == carriageBogey.carriage.train.carriages.indexOf(carriageBogey.carriage);
             }
