@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 //import static com.railwayteam.railways.content.coupling.CouplerOverlayType.getCouplerOverlayType;
 
-@Mixin(value = TrackBlock.class, remap = false)
+@Mixin(value = TrackBlock.class)
 public class MixinTrackBlockClient {
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/jozufozu/flywheel/util/transform/TransformStack;translate(DDD)Ljava/lang/Object;", ordinal = 0),
