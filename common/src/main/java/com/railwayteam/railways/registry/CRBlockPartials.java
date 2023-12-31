@@ -407,9 +407,9 @@ public class CRBlockPartials {
     public static final PartialModel
         LONG_SHAFTED_WHEELS = block("bogey/wheels/long_shaft_wheels"),
 
-        SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
-        LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
-        COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
+        SINGLEAXLE_FRAME = block("bogey/singleaxle/frame"),
+        LEAFSPRING_FRAME = block("bogey/leafspring/frame"),
+        COILSPRING_FRAME = block("bogey/coilspring/frame"),
         FREIGHT_FRAME = block("bogey/freight/frame"),
         ARCHBAR_FRAME = block("bogey/archbar/frame"),
         PASSENGER_FRAME = block("bogey/passenger/frame"),
