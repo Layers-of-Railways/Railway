@@ -43,6 +43,7 @@
     "MixinExplosionDamageCalculator",
     "MixinGlobalStation",
     "MixinIOWorker",
+    "MixinLargeFireball",
     "MixinNavigation",
     "MixinNixieTubeBlockEntity",
     "MixinNixieTubeDisplaySource",

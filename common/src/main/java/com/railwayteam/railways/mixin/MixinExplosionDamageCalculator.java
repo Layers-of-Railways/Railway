@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.simibubi.create.AllTags;
 import net.minecraft.core.BlockPos;
@@ -21,8 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinExplosionDamageCalculator {
     @Inject(method = "shouldBlockExplode", at = @At("HEAD"), cancellable = true)
     private void creepersDontBreakTracks(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power, CallbackInfoReturnable<Boolean> cir) {
-        if (explosion.getDirectSourceEntity() instanceof Creeper && AllTags.AllBlockTags.TRACKS.matches(state) && !CRConfigs.server().creeperTrackDamage.get()) {
-            cir.setReturnValue(false);
+        if (explosion.getDirectSourceEntity() instanceof Creeper || Railways.largeGhastFireballExplosion) {
+            if (AllTags.AllBlockTags.TRACKS.matches(state) && !CRConfigs.server().explosiveTrackDamage.get()) {
+                cir.setReturnValue(false);
+            }
         }
     }
 }
