@@ -4,7 +4,10 @@ import com.railwayteam.railways.content.smokestack.particles.CustomAnimatedTextu
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +27,7 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
         this.friction = 0.99f;
         this.random = random;
         this.stationarySource = stationarySource;
-        setLifetime(random.nextIntBetweenInclusive(65, 105) + (stationarySource ? 40 : 0));
+        setLifetime(random.nextIntBetweenInclusive(65, 105) + (stationarySource ? 60 : 0));
     }
 
     @Override
@@ -66,12 +69,14 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
         @Override
         public Particle createParticle(@NotNull T type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PuffSmokeParticle particle = new PuffSmokeParticle(level, x, y, z, level.getRandom(), type.stationary, ySpeed);
-            int textureCount = 3;
+            int textureCount = 3 + 16;
             int idx = 0;
             if (Mth.equal(type.red, -1) && Mth.equal(type.green, -1) && Mth.equal(type.blue, -1)) {
                 idx = 1;
             } else if (Mth.equal(type.red, -2) && Mth.equal(type.green, -2) && Mth.equal(type.blue, -2)) {
                 idx = 2;
+            } else if (Mth.equal(type.red, type.green) && Mth.equal(type.green, type.blue) && type.red < -2 && type.red >= -18) {
+                idx = ((int) Math.abs(type.red));
             }
             particle.setSprite(spriteSet.get(idx, textureCount - 1));
             particle.age = level.getRandom().nextInt(5);

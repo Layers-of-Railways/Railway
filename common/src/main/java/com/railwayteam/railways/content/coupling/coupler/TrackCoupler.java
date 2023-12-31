@@ -75,6 +75,8 @@ public class TrackCoupler extends SingleBlockEntityEdgePoint {
     @Override
     public void read(FriendlyByteBuf buffer, DimensionPalette dimensions) {
         super.read(buffer, dimensions);
+        if (buffer.readBoolean())
+            blockEntityPos = buffer.readBlockPos();
     }
 
     @Override
@@ -88,5 +90,8 @@ public class TrackCoupler extends SingleBlockEntityEdgePoint {
     @Override
     public void write(FriendlyByteBuf buffer, DimensionPalette dimensions) {
         super.write(buffer, dimensions);
+        buffer.writeBoolean(blockEntityPos != null);
+        if (blockEntityPos != null)
+            buffer.writeBlockPos(blockEntityPos);
     }
 }

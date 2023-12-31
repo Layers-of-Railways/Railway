@@ -19,6 +19,11 @@ public abstract class PhantomSpriteManager {
     private static boolean lastVisible = false;
     public static boolean firstRun = true;
     public static boolean hasChanged = false;
+    private static boolean visible = false;
+
+    public static boolean isVisible() {
+        return visible;
+    }
 
     public static boolean register(SpriteContents sprite) {
         if (sprite.name().getNamespace().equals(Railways.MODID) && sprite.name().getPath().startsWith("block/track/phantom/")) {
@@ -30,7 +35,7 @@ public abstract class PhantomSpriteManager {
     }
 
     public static void tick(Minecraft mc) {
-        boolean visible = mc.player != null
+        visible = mc.player != null
             && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())
                 || CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.OFFHAND).getItem()));
         if (visible != lastVisible || firstRun) {

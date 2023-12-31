@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-26T16:52:47.548017329	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2023-12-29T11:44:11.9938531	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 8f3d45ffc0f820e3090a01b4acebb41caf4086ea data/railways/recipes/stonecutting/palettes/cycling/pink_plated_locometal.json
 bd659f2672f722e440cf3ae318f05f9dd06d16f8 data/railways/advancements/recipes/misc/crafting/handcar.json
 c01da7ccb421202fb26ba09bdac3d37bc4aa793f data/railways/recipes/crafting/palettes/dyeing_8x/gray_flat_slashed_locometal.json
@@ -542,8 +542,8 @@ b388ff36d1819d13522217b9e24ec7153a8ec21d data/railways/recipes/crafting/big_buff
 1424dc1fd68f5cc6ab88f761b3b2b5c31f91eff8 data/railways/recipes/crafting/palettes/dyeing_8x/lime_locometal_smokebox.json
 a0ffbf63b30e7fea039c36914895a3c4c856c812 data/railways/recipes/stonecutting/palettes/cycling/light_blue_locometal_smokebox.json
 8aa6e182c6141baca3a6b66bd6dcb6577ca39c5e data/railways/recipes/crafting/palettes/dyeing_1x/red_plated_locometal.json
-4b8bd1e6d587a979075a00bb3ed1bf354a5216c3 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_8x/lime_locometal_boiler.json
 ea7e2458c241346c7aae4c29bfec15c1a9d276dd data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/white_locometal_smokebox.json
+4b8bd1e6d587a979075a00bb3ed1bf354a5216c3 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_8x/lime_locometal_boiler.json
 932def051f59cb6c231a7f48fb396d113dde3b62 data/railways/recipes/crafting/palettes/dyeing_8x/black_plated_locometal.json
 a43ace7e37f444596ae4388ff6dc5b6632f734df data/railways/recipes/stonecutting/palettes/cycling/orange_locometal_pillar.json
 c950360934098d9e8f8016b00b00e0e0963c629d data/railways/recipes/crafting/small_buffer.json

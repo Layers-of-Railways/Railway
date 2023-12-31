@@ -1,5 +1,7 @@
 package com.railwayteam.railways.content.conductor;
 
+import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.compat.tweakeroo.TweakerooCompat;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.CameraMovePacket;
 import com.railwayteam.railways.util.packet.DismountCameraPacket;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -162,7 +165,7 @@ public class ConductorPossessionController {
                             new ServerboundMovePlayerPacket.PosRot(cam.getX(), cam.getY(), cam.getZ(),
                                     cam.getYRot(), cam.getXRot(), cam.onGround())));
             }
-        } else if (wasMounted) { // catch in case we didn't want to dismount
+        } else if (wasMounted && !Mods.TWEAKEROO.runIfInstalled(() -> TweakerooCompat::inFreecam).orElse(false)) { // catch in case we didn't want to dismount
             wasMounted = false;
             dismount();
             mc.levelRenderer.allChanged();
@@ -247,7 +250,8 @@ public class ConductorPossessionController {
     }
 
     @Environment(EnvType.CLIENT)
-    private static void dismount() {
+    @ApiStatus.Internal
+    public static void dismount() {
         CRPackets.PACKETS.send(new DismountCameraPacket());
         wasMounted = false;
     }

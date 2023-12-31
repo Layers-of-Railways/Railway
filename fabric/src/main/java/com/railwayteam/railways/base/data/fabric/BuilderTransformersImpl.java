@@ -149,10 +149,16 @@ public class BuilderTransformersImpl {
     }
 
     public static <B extends DieselSmokeStackBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> dieselSmokeStack() {
-        return a -> a.blockstate((c, p) -> p.getVariantBuilder(c.get())
-            .forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
-                .build()));
+        return a -> a
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                .forAllStatesExcept(state -> {
+                    Direction dir = state.getValue(BlockStateProperties.FACING);
+                    return ConfiguredModel.builder()
+                        .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
+                        .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                        .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                        .build();
+                }, DieselSmokeStackBlock.WATERLOGGED, DieselSmokeStackBlock.ENABLED, DieselSmokeStackBlock.POWERED));
     }
 
     public static <B extends VentBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> conductorVent() {
