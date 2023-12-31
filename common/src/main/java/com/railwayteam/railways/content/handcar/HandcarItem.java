@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.handcar;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin_interfaces.IDeployAnywayBlockItem;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
@@ -49,7 +50,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-public class HandcarItem extends BlockItem {
+public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
     public HandcarItem(Block block, Properties properties) {
         super(block, properties);
     }

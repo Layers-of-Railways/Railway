@@ -33,6 +33,7 @@
     "MixinCarriageContraptionEntity",
     "MixinConfigHelper",
     "MixinContraption",
+    "MixinDeployerHandler",
     "MixinDirectBeltInputBehaviour",
     "MixinDoorBlock",
     "MixinDoorMovingInteraction",
