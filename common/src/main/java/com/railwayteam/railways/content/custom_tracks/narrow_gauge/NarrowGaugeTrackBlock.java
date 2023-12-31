@@ -92,7 +92,7 @@ public class NarrowGaugeTrackBlock extends TrackBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        if (CRTrackMaterials.getBaseFromNarrow(material).getBlock() instanceof NoCollisionCustomTrackBlock noCollisionBlock) {
+        if (CRTrackMaterials.getBaseFromNarrow(getMaterial()).getBlock() instanceof NoCollisionCustomTrackBlock noCollisionBlock) {
             return noCollisionBlock.getCollisionShape(pState, pLevel, pPos, pContext);
         }
         return super.getCollisionShape(pState, pLevel, pPos, pContext);

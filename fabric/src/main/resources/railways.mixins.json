@@ -9,7 +9,9 @@
     "PortingLibObjLoaderMixin",
     "PortingLibModelsMixin",
     "TrainHUDMixin",
-    "TrackBlockOutlineMixin"
+    "TrackBlockOutlineMixin",
+    "TrainHUDMixin",
+    "MixinGoggleOverlayRenderer"
   ],
   "mixins": [
     "DetectorRailBlockMixin",
