@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:smokestack_woodburner_brass_cap_copper"
+          "name": "railways:smokestack_woodburner"
         }
       ],
       "rolls": 1.0

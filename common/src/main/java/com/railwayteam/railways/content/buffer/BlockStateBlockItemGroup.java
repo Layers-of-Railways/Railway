@@ -75,16 +75,21 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             TagCycleHandlerClient.CYCLE_TRACKER.scheduleRecompute();
         });
 
+        boolean primary = true;
         for (T v : values) {
-            if (excluded != null && v == excluded) continue;
+            if (excluded != null && v == excluded) {
+                primary = false;
+                continue;
+            }
 
-            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v))
+            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, primary))
                 .properties(p -> p.tab(CRItems.mainCreativeTab))
                 .lang(v.getLangName(context))
                 .transform(itemTransformer)
                 .tag(cycleTag)
                 .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))
                 .register());
+            primary = false;
         }
     }
 

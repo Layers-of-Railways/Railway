@@ -6,13 +6,16 @@
     },
     "+": {
       "item": "minecraft:campfire"
+    },
+    ".": {
+      "tag": "railways:internal/nuggets/iron_nuggets"
     }
   },
   "pattern": [
-    "# #",
-    "#+#"
+    ".#.",
+    " + "
   ],
   "result": {
-    "item": "railways:smokestack_oilburner_brass_cap_copper"
+    "item": "railways:smokestack_caboosestyle"
   }
 }

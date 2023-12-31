@@ -59,6 +59,7 @@ import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.DataIngredient;
@@ -171,7 +172,7 @@ public class CRBlocks {
                                                         c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
                                                         Railways.asResource("block/smokestack/block_" + variant)
                                                 )
-                                                .texture("0", state.getValue(SmokeStackBlock.STYLE).getModel("smokestack/" + variant + "/"))
+                                                .texture("0", state.getValue(SmokeStackBlock.STYLE).getModel(Couple.create("smokestack/" + variant + "/", "")))
                                                 .texture("particle", "#0")
                                 )
                                 .rotationY(rotates ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
@@ -180,9 +181,10 @@ public class CRBlocks {
                 rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
     }
 
-    public static final HashMap<String, BlockStateBlockItemGroup<String, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
+    public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke, NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> blockStateProvider, SmokeStackFunction<SmokeStackBlock> blockFunction) {
+        TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
         BlockEntry<SmokeStackBlock> BLOCK = REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, type, shape, emitStationarySmoke, variant))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(blockStateProvider)
@@ -193,14 +195,17 @@ public class CRBlocks {
             .transform(pickaxeOnly())
             .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
             .lang(description)
-            .item()
+            .item(BlockStateBlockItem.create(SmokeStackBlock.STYLE, SmokestackStyle.STEEL, true))
+                .lang(description)
+                .tab(() -> CRItems.mainCreativeTab)
                 .model((c, p) -> p.withExistingParent(c.getName(), Railways.asResource("block/smokestack_" + variant + "_steel")))
+                .tag(cycleTag)
             .build()
             .register();
 
         SMOKESTACK_GROUP.put(variant,
-                new BlockStateBlockItemGroup<>("smokestack_" + variant + "_", SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
-                        i -> i, SmokestackStyle.variantToTagKey(variant), SmokestackStyle.STEEL)
+            new BlockStateBlockItemGroup<>(Couple.create("smokestack_" + variant + "_", description), SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
+                i -> i.tab(() -> null), cycleTag, SmokestackStyle.STEEL)
         );
 
         return BLOCK;

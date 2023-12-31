@@ -11,9 +11,12 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -137,5 +140,15 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
                 }
             }
         }
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+        super.fillItemCategory(tab, items);
+    }
+
+    @Override
+    public Item asItem() {
+        return super.asItem();
     }
 }

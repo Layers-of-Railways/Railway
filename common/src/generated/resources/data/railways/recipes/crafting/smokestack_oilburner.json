@@ -10,10 +10,9 @@
   },
   "pattern": [
     "# #",
-    "# #",
     "#+#"
   ],
   "result": {
-    "item": "railways:smokestack_coalburner_brass_cap_copper"
+    "item": "railways:smokestack_oilburner"
   }
 }

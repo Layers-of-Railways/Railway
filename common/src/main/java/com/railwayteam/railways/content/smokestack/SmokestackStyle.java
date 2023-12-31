@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
+import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
@@ -12,14 +13,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemGroup.IStyle<String> {
+public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemGroup.IStyle<Couple<String>> {
     STEEL("steel", "Steel"),
-    BRASS_CAP_STEEL("brass_cap_steel", "Brass Cap Steel"),
-    COPPER_CAP_STEEL("copper_cap_steel", "Copper Cap Steel"),
+    BRASS_CAP_STEEL("brass_cap_steel", "Brass Capped Steel"),
+    COPPER_CAP_STEEL("copper_cap_steel", "Copper Capped Steel"),
     BRASS("brass", "Brass"),
-    COPPER_CAP_BRASS("copper_cap_brass", "Copper Cap Brass"),
+    COPPER_CAP_BRASS("copper_cap_brass", "Copper Capped Brass"),
     COPPER("copper", "Copper"),
-    BRASS_CAP_COPPER("brass_cap_copper", "Brass Cap Copper");
+    BRASS_CAP_COPPER("brass_cap_copper", "Brass Capped Copper");
 
     private final String model;
     private final String langName;
@@ -30,8 +31,8 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
     }
 
     @Override
-    public ResourceLocation getModel(String context) {
-        return Railways.asResource("block/" + context + model);
+    public ResourceLocation getModel(Couple<String> context) {
+        return Railways.asResource("block/" + context.getFirst() + model);
     }
 
     @Override
@@ -40,13 +41,13 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
     }
 
     @Override
-    public String getLangName(String context) {
-        return TextUtils.titleCaseConversion(context.replace("_", " ")) + " " + langName;
+    public String getLangName(Couple<String> context) {
+        return langName + " " + TextUtils.titleCaseConversion(context.getSecond());
     }
 
     @Override
-    public String getBlockId(String context) {
-        return context + model;
+    public String getBlockId(Couple<String> context) {
+        return context.getFirst() + model;
     }
 
     public String getBlockId() {

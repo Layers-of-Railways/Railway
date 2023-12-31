@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:smokestack_long_brass_cap_copper"
+          "name": "railways:smokestack_long"
         }
       ],
       "rolls": 1.0

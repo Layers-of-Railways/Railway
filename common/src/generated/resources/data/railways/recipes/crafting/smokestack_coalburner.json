@@ -9,9 +9,11 @@
     }
   },
   "pattern": [
+    "# #",
+    "# #",
     "#+#"
   ],
   "result": {
-    "item": "railways:smokestack_streamlined_brass_cap_copper"
+    "item": "railways:smokestack_coalburner"
   }
 }

@@ -52,6 +52,7 @@
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSeatMovementBehaviour",
+    "MixinShapedRecipeBuilder",
     "MixinSignalBoundary",
     "MixinSignalPropagator",
     "MixinSlidingDoorBlock",

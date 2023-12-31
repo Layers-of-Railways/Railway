@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting/smokestack_long_brass_cap_copper"
+        "recipe": "railways:crafting/smokestack_oilburner"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting/smokestack_long_brass_cap_copper"
+      "railways:crafting/smokestack_oilburner"
     ]
   }
 }
