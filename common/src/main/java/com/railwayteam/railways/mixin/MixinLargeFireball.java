@@ -18,7 +18,7 @@ public abstract class MixinLargeFireball extends Fireball {
         super(entityType, level);
     }
 
-    @Inject(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;)Lnet/minecraft/world/level/Explosion;"))
+    @Inject(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;"))
     private void markExplode(HitResult result, CallbackInfo ci) {
         if (getOwner() instanceof Ghast) {
             Railways.largeGhastFireballExplosion = true;
