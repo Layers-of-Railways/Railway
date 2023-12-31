@@ -176,6 +176,7 @@ public class BuilderTransformers {
             )
             .tag(CRTags.AllBlockTags.LOCOMETAL.tag)
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
+            .tag(AllTags.AllBlockTags.COPYCAT_DENY.tag)
             .transform(pickaxeOnly())
             .blockstate(BoilerGenerator.create(color)::generate);
     }
