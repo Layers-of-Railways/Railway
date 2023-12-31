@@ -66,6 +66,10 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         return items.get(value);
     }
 
+    public void registerDefaultEntry(T value, ItemEntry<BlockStateBlockItem<T>> entry) {
+        items.put(value, entry);
+    }
+
     private void register() {
         TagCycleHandlerServer.CYCLE_TRACKER.registerCycle(cycleTag);
         TagCycleHandlerServer.CYCLE_TRACKER.scheduleRecompute();
