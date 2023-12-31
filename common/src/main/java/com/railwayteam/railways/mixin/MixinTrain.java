@@ -240,15 +240,19 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     private void snr$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local Train train, @Local(name = "v", ordinal = 0) Vec3 v) {
         // Self Train / Train that collided with the other one
         if (((IHandcarTrain) this).snr$isHandcar()) {
-            TrainUtils.discardTrain((Train) (Object) this);
-            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            if (!invalid) {
+                TrainUtils.discardTrain((Train) (Object) this);
+                Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            }
             ci.cancel();
         }
 
         // Other Train / Train that got collided with
         if (((IHandcarTrain) train).snr$isHandcar()) {
-            TrainUtils.discardTrain(train);
-            Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            if (!train.invalid) {
+                TrainUtils.discardTrain(train);
+                Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
+            }
             ci.cancel();
         }
     }

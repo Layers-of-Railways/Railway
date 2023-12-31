@@ -36,6 +36,7 @@
     "MixinConfigHelper",
     "MixinContraption",
     "MixinDataFixTypes",
+    "MixinDeployerHandler",
     "MixinDirectBeltInputBehaviour",
     "MixinDoorBlock",
     "MixinDoorMovingInteraction",
