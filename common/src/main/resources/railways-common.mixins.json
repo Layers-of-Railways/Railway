@@ -114,7 +114,6 @@
     "client.MixinCurvedTrackInteraction",
     "client.MixinDebugRenderer",
     "client.MixinGlobalRailwayManager",
-    "client.MixinGoggleOverlayRenderer",
     "client.MixinItemModelShaper",
     "client.MixinParticleEngine",
     "client.MixinPlayerInfo",
