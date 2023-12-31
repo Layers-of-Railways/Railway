@@ -162,17 +162,21 @@ public class CRShapes {
         .build();
 
     public static final VoxelShape
-        COAL_STACK = shape(4, 0, 4, 12, 16, 12).build(),
-        OIL_STACK = shape(1, 8, 1, 15, 16, 15)
-            .add(2, 0, 2, 14, 8, 14)
+        COAL_STACK = shape(4, 0, 4, 12, 16, 12)
+            .add(3, 12, 3, 13, 15, 13)
+            .build(),
+        OIL_STACK = shape(2, 0, 2, 14, 16, 14)
+            .add(0, 11, 0, 16, 14, 16)
             .build(),
         STREAMLINED_STACK = shape(0, 0, 2, 2, 4, 16)
             .add(14, 0, 0, 16, 4, 14)
             .add(0, 0, 0, 14, 4, 2)
             .add(2, 0, 14, 16, 4, 16)
             .build(),
-        WOOD_STACK = shape(4, 0, 4, 12, 14, 12)
-            .add(0, 6, 0, 16, 14, 16)
+        WOOD_STACK = shape(4, 0, 4, 12, 4, 12)
+            .add(2 ,4, 2, 14, 9, 14)
+            .add(0 ,9, 0, 16, 14, 16)
+            .add(2 ,14, 2, 14, 16, 14)
             .build();
     public static final VoxelShaper
         CABOOSE_STACK = shape(7, 0, 7, 9, 12, 9)

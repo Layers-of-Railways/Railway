@@ -93,7 +93,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
         BlockState blockstate = this.defaultBlockState();
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
 
-        blockstate = blockstate.setValue(STYLE, SmokestackStyle.BRASS);
+        blockstate = blockstate.setValue(STYLE, SmokestackStyle.STEEL);
 
         if (context.getLevel().hasNeighborSignal(context.getClickedPos())) {
             blockstate = blockstate.setValue(ENABLED, false).setValue(POWERED, true);
