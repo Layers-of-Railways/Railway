@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
@@ -143,7 +144,7 @@ public class BuilderTransformers {
             ));
     }
 
-    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color) {
+    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p
                 .color(ColorUtils.materialColorFromDye(color, MaterialColor.COLOR_BLACK))
@@ -154,7 +155,7 @@ public class BuilderTransformers {
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
             .tag(AllTags.AllBlockTags.COPYCAT_DENY.tag)
             .transform(pickaxeOnly())
-            .blockstate(new BoilerGenerator(color)::generate);
+            .blockstate(new BoilerGenerator(color, wrapping)::generate);
     }
 
     private static String colorName(@Nullable DyeColor color) {

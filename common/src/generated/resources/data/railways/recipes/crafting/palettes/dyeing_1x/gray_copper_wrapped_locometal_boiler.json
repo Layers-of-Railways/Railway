@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/copper_wrapped_boiler"
+    },
+    {
+      "tag": "railways:internal/dyes/gray_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:gray_copper_wrapped_locometal_boiler"
+  }
+}
