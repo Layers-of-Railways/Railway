@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "railways:magenta_slashed_locometal"
+    },
+    "d": {
+      "tag": "railways:internal/ingots/iron_ingots"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:magenta_iron_wrapped_locometal"
+  }
+}

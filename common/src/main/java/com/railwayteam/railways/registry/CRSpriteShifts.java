@@ -16,18 +16,26 @@ import java.util.Map;
 
 public class CRSpriteShifts {
     public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
-            SLASHED_LOCOMETAL = new HashMap<>(17, 2),
-            RIVETED_LOCOMETAL = new HashMap<>(17, 2),
-            BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-            BOILER_SIDE = new HashMap<>(17, 2),
-            BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
+        SLASHED_LOCOMETAL = new HashMap<>(17, 2),
+        RIVETED_LOCOMETAL = new HashMap<>(17, 2),
+        BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+        COPPER_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+        IRON_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+        BOILER_SIDE = new HashMap<>(17, 2),
+        BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
+        COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
+        IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
     
     private static void initLocometal(@Nullable DyeColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
         BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
+        COPPER_WRAPPED_LOCOMETAL.put(color, locometal(color, "copper_wrapped_slashed"));
+        IRON_WRAPPED_LOCOMETAL.put(color, locometal(color, "iron_wrapped_slashed"));
         BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
         BRASS_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "wrapped_boiler_side"));
+        COPPER_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "copper_wrapped_boiler_side"));
+        IRON_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "iron_wrapped_boiler_side"));
     }
 
     static {

@@ -22,6 +22,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
@@ -167,7 +168,7 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
-    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color) {
+    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p
                 .mapColor(ColorUtils.mapColorFromDye(color, MapColor.COLOR_BLACK))
@@ -178,7 +179,7 @@ public class BuilderTransformers {
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
             .tag(AllTags.AllBlockTags.COPYCAT_DENY.tag)
             .transform(pickaxeOnly())
-            .blockstate(BoilerGenerator.create(color)::generate);
+            .blockstate(BoilerGenerator.create(color, wrapping)::generate);
     }
 
     @ExpectPlatform

@@ -266,6 +266,34 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             )
     );
 
+    DyedRecipeList LOCOMETAL_WRAPPING_COPPER = new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
+            .unlockedBy(() -> Styles.SLASHED.get(color).get())
+            .returns(8)
+            .setEmiDefault(color == null)
+            .viaShaped(b -> b
+                .define('#', Styles.SLASHED.get(color).get())
+                .define('d', Ingredients.copperIngot())
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    );
+
+    DyedRecipeList LOCOMETAL_WRAPPING_IRON = new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
+            .unlockedBy(() -> Styles.SLASHED.get(color).get())
+            .returns(8)
+            .setEmiDefault(color == null)
+            .viaShaped(b -> b
+                .define('#', Styles.SLASHED.get(color).get())
+                .define('d', Ingredients.ironIngot())
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    );
+
     // cut a color to other blocks in the cycle
     CyclingStyleList<DyedRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new NullableDyedRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/cycling", style.get(color))

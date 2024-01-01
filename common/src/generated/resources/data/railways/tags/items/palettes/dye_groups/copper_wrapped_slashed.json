@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "railways:copper_wrapped_locometal",
+    "railways:white_copper_wrapped_locometal",
+    "railways:orange_copper_wrapped_locometal",
+    "railways:magenta_copper_wrapped_locometal",
+    "railways:light_blue_copper_wrapped_locometal",
+    "railways:yellow_copper_wrapped_locometal",
+    "railways:lime_copper_wrapped_locometal",
+    "railways:pink_copper_wrapped_locometal",
+    "railways:gray_copper_wrapped_locometal",
+    "railways:light_gray_copper_wrapped_locometal",
+    "railways:cyan_copper_wrapped_locometal",
+    "railways:purple_copper_wrapped_locometal",
+    "railways:blue_copper_wrapped_locometal",
+    "railways:brown_copper_wrapped_locometal",
+    "railways:green_copper_wrapped_locometal",
+    "railways:red_copper_wrapped_locometal",
+    "railways:black_copper_wrapped_locometal"
+  ]
+}
