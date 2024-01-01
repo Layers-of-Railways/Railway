@@ -36,7 +36,7 @@ public class PalettesDemoCommand {
                         pattern.place(ctx.getSource().getLevel(), origin, dyeColor);
                     }
 
-                    ctx.getSource().sendSuccess(Components.literal("Placed palettes blocks"), true);
+                    ctx.getSource().sendSuccess(() -> Components.literal("Placed palettes blocks"), true);
                     return 1;
                 }));
     }

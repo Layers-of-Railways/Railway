@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
       "item": "railways:pink_slashed_locometal"
@@ -16,5 +17,6 @@
   "result": {
     "count": 8,
     "item": "railways:pink_iron_wrapped_locometal"
-  }
+  },
+  "show_notification": true
 }

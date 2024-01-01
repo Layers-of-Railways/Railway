@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-29T11:44:12.003201816	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
+// 1.20.1	2024-01-01T00:18:01.232059487	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
 f43c8880102bbc27cb430c59ba3cc9ae2b870cc9 data/railways/recipes/sequenced_assembly/track_quark_ancient_narrow.json
 871ce86011b2893c9e7fe9a6d0fb7298e55d744b data/railways/recipes/sequenced_assembly/track_tfc_hickory_wide.json
 ffa16cec0e76f67acb58c6af3837d5a924989051 data/railways/recipes/sequenced_assembly/track_quark_azalea_narrow.json
@@ -193,8 +193,8 @@ a0b313c6c9d22d74e4514376b837e7b948ac36c7 data/railways/recipes/sequenced_assembl
 e9fc171b502e7b6f3985f64783b1eecb599c5c04 data/railways/recipes/sequenced_assembly/track_byg_fir_wide.json
 83473e02da148ce53f7910ed4f8a1eca84378f38 data/railways/recipes/sequenced_assembly/track_byg_pine.json
 6ca609b158a912a071f6cc5e01b4bea05d25006e data/railways/recipes/sequenced_assembly/track_natures_spirit_olive_narrow.json
-da5d37dfd9005f316eca4eeeb1b1d3e408cda6b5 data/railways/recipes/sequenced_assembly/track_byg_white_mangrove_narrow.json
 70ff74d9c89585284ee794fc5d65948a230e87cf data/railways/recipes/sequenced_assembly/track_byg_blue_enchanted.json
+da5d37dfd9005f316eca4eeeb1b1d3e408cda6b5 data/railways/recipes/sequenced_assembly/track_byg_white_mangrove_narrow.json
 d998677235278a4d1b87528ba053a65145a1801f data/railways/recipes/sequenced_assembly/track_byg_jacaranda_wide.json
 8a1b5b00e2bb7c36e6bb0d090ab9029c9a305ce2 data/railways/recipes/sequenced_assembly/track_twilightforest_twilight_oak_narrow.json
 38b822f99fd1831b4cfcaad167e09fe9f3d0a02f data/railways/recipes/sequenced_assembly/track_quark_ancient.json
