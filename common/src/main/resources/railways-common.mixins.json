@@ -139,6 +139,7 @@
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
     "compat.malilib.MixinGuiTextFieldGeneric",
+    "compat.sodium.MixinBlockOcclusionCache",
     "compat.voicechat.FreecamUtilMixin",
     "conductor_possession.AccessorKeyMapping",
     "conductor_possession.ClientChunkCacheMixin",
