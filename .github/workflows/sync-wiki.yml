@@ -39,11 +39,15 @@ jobs:
         run: |
           rsync -av --delete tmp_wiki/ .docs/ --exclude .git
 
-      - name: Commit and push changes
+      - name: Check for changes in .docs
+        run: |
+          cd .docs
+          git status
+
+      - name: Commit and push changes (if any)
         run: |
           git add .
-          git commit -m "Update docs from Wiki [skip ci]"
-          git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
+          git diff-index --quiet HEAD || git commit -m "Update docs from Wiki [skip ci]" && git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
 
       - name: Push content to wiki
         run: |
