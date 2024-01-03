@@ -31,8 +31,8 @@ jobs:
           mkdir tmp_wiki
           cd tmp_wiki
           git init
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
+          git config --global user.name $USER_NAME
+          git config --global user.email $USER_EMAIL
           git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
       - name: Update .docs folder
