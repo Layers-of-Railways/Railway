@@ -1,7 +1,5 @@
 # Welcome to the Steam 'n' Rails wiki
 
-Test
-
 > [!Warning]
 > This wiki is still being worked on, information may be incomplete
 
