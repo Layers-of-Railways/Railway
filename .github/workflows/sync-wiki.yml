@@ -2,18 +2,17 @@ name: Publish docs to Wiki
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     paths:
       - .docs/**
     branches:
       - 1.19/dev
 
-permissions:
-  contents: write
-
 env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  USER_NAME: Wiki Bot
+  USER_NAME: SyncBot
   USER_EMAIL: bot@ithundxr.dev
   OWNER: Layers-of-Railways
   REPOSITORY_NAME: Railway
@@ -22,6 +21,7 @@ jobs:
   publish_docs_to_wiki:
     name: Publish docs to Wiki
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
           git init
           git config user.name $USER_NAME
           git config user.email $USER_EMAIL
-          git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+          git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
       - name: Push content to wiki
         run: |
@@ -41,4 +41,4 @@ jobs:
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content" 
-          git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
+          git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git main
