@@ -3,7 +3,7 @@
 > [!Warning]
 > This wiki is still being worked on, information may be incomplete
 
-Create: Steam 'n' Rails is an addon mod for Create that aims to extend Create's train and steam systems.<br> Current features include custom tracks, semaphores, and conductors.<br>
+Create: Steam 'n' Rails is an addon mod for Create that aims to extend Create's train and steam systems.<br> Current features include custom tracks, semaphores, bogeys, and conductors.<br>
 <kbd>[Modrinth](https://modrinth.com/mod/create-steam-n-rails)</kbd>
 <kbd>[CurseForge](https://www.curseforge.com/minecraft/mc-mods/create-steam-n-rails)</kbd>
 <kbd>[Discord](https://discord.gg/md78MGbEfK)</kbd>
