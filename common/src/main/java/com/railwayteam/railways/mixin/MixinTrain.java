@@ -44,26 +44,18 @@ import java.util.*;
 @Mixin(value = Train.class, remap = false)
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain {
     @Shadow public TrackGraph graph;
-
     @Shadow public Navigation navigation;
     @Shadow public double speed;
-
     @Shadow public abstract void arriveAt(GlobalStation station);
-
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
-    @Unique
-    public Set<UUID> snr$occupiedCouplers;
-    @Unique
-    protected int snr$index = 0;
-    @Unique
-    protected boolean snr$isHandcar = false;
-    @Unique
-    protected boolean snr$isStrictSignalTrain = false;
-    @Unique
-    protected int snr$controlBlockedTicks = -1;
-    @Unique
-    protected int snr$controlBlockedSign = 0;
+
+    @Unique public Set<UUID> snr$occupiedCouplers;
+    @Unique protected int snr$index = 0;
+    @Unique protected boolean snr$isHandcar = false;
+    @Unique protected boolean snr$isStrictSignalTrain = false;
+    @Unique protected int snr$controlBlockedTicks = -1;
+    @Unique protected int snr$controlBlockedSign = 0;
 
     @Override
     public boolean snr$isControlBlocked() {
@@ -120,7 +112,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Inject(method = "earlyTick", at = @At("HEAD"))
     private void killEmptyTrains(Level level, CallbackInfo ci) { // hopefully help deal with empty trains
-        if (carriages.size() == 0)
+        if (carriages.isEmpty())
             invalid = true;
 
         if (snr$controlBlockedTicks > 0)
