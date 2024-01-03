@@ -35,9 +35,19 @@ jobs:
           git config user.email $USER_EMAIL
           git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
+      - name: Update .docs folder
+        run: |
+          rsync -av --delete tmp_wiki/ .docs/ --exclude .git
+
+      - name: Commit and push changes
+        run: |
+          cd .docs
+          git add .
+          git commit -m "Update docs from Wiki [skip ci]"
+          git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
+
       - name: Push content to wiki
         run: |
-          rsync -av --delete .docs/ tmp_wiki/ --exclude .git
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content" 
