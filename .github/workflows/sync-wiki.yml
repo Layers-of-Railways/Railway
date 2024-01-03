@@ -31,8 +31,8 @@ jobs:
           mkdir tmp_wiki
           cd tmp_wiki
           git init
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
+          git config --global user.name $USER_NAME
+          git config --global user.email $USER_EMAIL
           git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
       - name: Update .docs folder
@@ -42,8 +42,6 @@ jobs:
       - name: Commit and push changes
         run: |
           cd .docs
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
           git add .
           git commit -m "Update docs from Wiki [skip ci]"
           git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
@@ -51,8 +49,6 @@ jobs:
       - name: Push content to wiki
         run: |
           cd tmp_wiki
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
           git add .
           git commit -m "Update Wiki content" 
           git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git main
