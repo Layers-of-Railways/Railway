@@ -12,7 +12,7 @@ on:
 
 env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  USER_NAME: SyncBot
+  USER_NAME: github-actions
   USER_EMAIL: bot@ithundxr.dev
   OWNER: Layers-of-Railways
   REPOSITORY_NAME: Railway
