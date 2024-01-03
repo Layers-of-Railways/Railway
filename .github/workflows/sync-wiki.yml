@@ -41,7 +41,6 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          cd .docs
           git add .
           git commit -m "Update docs from Wiki [skip ci]"
           git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
