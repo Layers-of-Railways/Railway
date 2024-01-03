@@ -8,6 +8,9 @@ on:
     branches:
       - 1.19/dev
 
+permissions:
+  contents: write
+
 env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   USER_NAME: Wiki Bot
@@ -21,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Pull content from wiki
         run: |
@@ -38,4 +41,4 @@ jobs:
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content" 
-          git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
+          git push -f --set-upstream https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
