@@ -1,8 +1,8 @@
-package com.railwayteam.railways.content.custom_bogeys.selection_menu;
+package com.railwayteam.railways.content.legacy.selection_menu;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.RadialBogeyCategoryMenu.State;
+import com.railwayteam.railways.content.legacy.selection_menu.RadialBogeyCategoryMenu.State;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
@@ -33,6 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.*;
 
+@Deprecated(forRemoval = true)
 @Environment(EnvType.CLIENT)
 public class BogeyCategoryHandlerClient {
 

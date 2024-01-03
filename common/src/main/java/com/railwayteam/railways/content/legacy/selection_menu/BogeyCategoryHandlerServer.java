@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.selection_menu;
+package com.railwayteam.railways.content.legacy.selection_menu;
 
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Deprecated(forRemoval = true)
 public class BogeyCategoryHandlerServer {
     public static Map<UUID, Pair<BogeyStyle, @Nullable BogeySize>> selectedStyles = new HashMap<>();
 

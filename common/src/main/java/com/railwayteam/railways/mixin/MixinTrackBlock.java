@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;

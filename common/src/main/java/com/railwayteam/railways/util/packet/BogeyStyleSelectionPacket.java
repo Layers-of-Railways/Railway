@@ -1,6 +1,6 @@
 package com.railwayteam.railways.util.packet;
 
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;

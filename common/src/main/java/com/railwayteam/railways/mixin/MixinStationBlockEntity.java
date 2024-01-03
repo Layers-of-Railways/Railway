@@ -3,7 +3,7 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.registry.CRBogeyStyles;

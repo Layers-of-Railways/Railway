@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.selection_menu;
+package com.railwayteam.railways.content.legacy.selection_menu;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -50,9 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY;
-import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.optimizeFavorites;
-
+@Deprecated(forRemoval = true)
 public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
     private State state;
@@ -139,7 +137,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         core rendering
          */
 
-        if (favoriteSlot == null && selectedCategory != MANAGE_FAVORITES_CATEGORY) {
+        if (favoriteSlot == null && selectedCategory != BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY) {
             if (hoveredX > 60 && hoveredX < 100 && hoveredY > -20 && hoveredY < 20)
                 hoveredSlot = MANAGE_FAVORITES;
 
@@ -161,7 +159,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         if (favoriteSlot != null) {
             title = Components.translatable("railways.style_select.title.favorites.pick_style")
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
-        } else if (selectedCategory == MANAGE_FAVORITES_CATEGORY) {
+        } else if (selectedCategory == BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY) {
             title = Components.translatable("railways.style_select.title.favorites.pick_slot")
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
         } else if (selectedCategory != null) {
@@ -209,7 +207,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                             tip = Components.translatable("railways.style_select.category." + id.getNamespace() + "." + id.getPath())
                                     .withStyle(ChatFormatting.GOLD);
 
-                            if (id != MANAGE_FAVORITES_CATEGORY) {
+                            if (id != BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY) {
                                 if (id == BogeyCategoryHandlerClient.FAVORITES_CATEGORY)
                                     CACHED_CATEGORY_COMPATS.remove(BogeyCategoryHandlerClient.FAVORITES_CATEGORY);
                                 Indicator.State[] compats = CACHED_CATEGORY_COMPATS.computeIfAbsent(id, (k) -> {
@@ -481,7 +479,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         if (button == 0) {
             if (selected == MANAGE_FAVORITES) {
                 state = State.PICK_STYLE;
-                selectedCategory = MANAGE_FAVORITES_CATEGORY;
+                selectedCategory = BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY;
                 return true;
             }
             if (state == State.PICK_CATEGORY && selected >= 0 && selected < BogeyCategoryHandlerClient.categoryCount()) {
@@ -490,7 +488,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                 return true;
             }
 
-            if (state == State.PICK_STYLE && selectedCategory == MANAGE_FAVORITES_CATEGORY) {
+            if (state == State.PICK_STYLE && selectedCategory == BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY) {
                 state = State.PICK_CATEGORY;
                 favoriteSlot = selected;
                 selectedCategory = null;
@@ -507,7 +505,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
                         BogeyCategoryHandlerClient.getFavorites().remove((int) favoriteSlot);
                         BogeyCategoryHandlerClient.getFavorites().add(favoriteSlot, style);
                     }
-                    optimizeFavorites();
+                    BogeyCategoryHandlerClient.optimizeFavorites();
                 } else {
                     BogeyCategoryHandlerClient.setSelectedStyle(style, size);
                 }
@@ -520,7 +518,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
         }
 
         if (button == 1) { // right click to go back
-            if (state == State.PICK_STYLE && selectedCategory != MANAGE_FAVORITES_CATEGORY) {
+            if (state == State.PICK_STYLE && selectedCategory != BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY) {
                 state = State.PICK_CATEGORY;
                 return true;
             }

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
+import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllKeys;

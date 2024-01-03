@@ -25,7 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
-import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.registerStyleCategory;
+import static com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerClient.registerStyleCategory;
 import static com.simibubi.create.AllBogeyStyles.STANDARD_CYCLE_GROUP;
 
 public class CRBogeyStyles {
