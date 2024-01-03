@@ -41,4 +41,4 @@ jobs:
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content" 
-          git push -f --set-upstream https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
+          git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
