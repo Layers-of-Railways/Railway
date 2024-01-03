@@ -1,5 +1,5 @@
 
-Blocks used for more realistic train infrastructure. Supports up to 3 track branches.
+Blocks used for more realistic train infrastructure. Supports up to three track branches.
 ### **Andesite Switch** 
 ![Andesite Switch](https://github.com/StarFluxie/Images-archive/assets/140427286/1f34cbac-beee-4c54-bb6f-847ed013da76)
 
@@ -22,8 +22,8 @@ When an arrow hits a switch, it cycles through which direction it's set to.
 https://github.com/StarFluxie/Images-archive/assets/140427286/b2dfe475-cda3-44ba-a91f-62d8498050e5
 
 #### **Locking the switch**
-You can lock the switch by powering it with redstone form underneath.
-In lock state it will ignore any non-redstone switching attempts.
+You can lock the switch by powering it with redstone from underneath.
+In the locked state, it will ignore any non-redstone switching attempts.
 
 ![Switch locking](https://github.com/StarFluxie/Images-archive/assets/140427286/d16fa232-d774-440e-a7ea-67d8dd32d53a)
 ***
