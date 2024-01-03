@@ -24,9 +24,6 @@ Make sure to set the following environment variable when running datagen.
 DATAGEN=TRUE
 ```
 
-### Merging:
-Before merging any branches (1.19/dev into 1.19/feat) etc run `./setup-git.sh`
-
 ### Commit Tricks:
 
 - Include `[ci skip]` in your commit message to skip the automatic preview build
