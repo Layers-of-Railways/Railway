@@ -17,7 +17,7 @@ The switch changes its direction to the side that received the Redstone signal.
 https://github.com/StarFluxie/Images-archive/assets/140427286/4b07599c-bd99-4c90-9f4c-7fceaa73c635
 
 #### **Arrow Switching**
-When a switch is hit by an arrow, it cycles through which direction it's set to.
+When an arrow hits a switch, it cycles through which direction it's set to.
 
 https://github.com/StarFluxie/Images-archive/assets/140427286/b2dfe475-cda3-44ba-a91f-62d8498050e5
 
