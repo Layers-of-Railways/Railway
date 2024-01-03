@@ -12,8 +12,8 @@ env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   USER_NAME: Wiki Bot
   USER_EMAIL: bot@ithundxr.dev
-  OWNER: ${{ github.event.repository.owner.name }}
-  REPOSITORY_NAME: ${{ github.event.repository.name }}
+  OWNER: Layers-of-Railways
+  REPOSITORY_NAME: Railway
 
 jobs:
   publish_docs_to_wiki:
