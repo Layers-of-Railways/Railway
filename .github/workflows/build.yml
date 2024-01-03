@@ -1,5 +1,10 @@
 name: Build
-on: [workflow_dispatch, push]
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - .docs/**
+
 
 jobs:
   build:
