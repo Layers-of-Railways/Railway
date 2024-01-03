@@ -12,8 +12,8 @@ on:
 
 env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  USER_NAME: github-actions
-  USER_EMAIL: bot@ithundxr.dev
+  USER_NAME: github-actions[bot]
+  USER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
   OWNER: Layers-of-Railways
   REPOSITORY_NAME: Railway
 
@@ -31,8 +31,8 @@ jobs:
           mkdir tmp_wiki
           cd tmp_wiki
           git init
-          git config --global user.name $USER_NAME
-          git config --global user.email $USER_EMAIL
+          git config user.name $USER_NAME
+          git config user.email $USER_EMAIL
           git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
       - name: Update .docs folder
