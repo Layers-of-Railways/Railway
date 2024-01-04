@@ -7,29 +7,51 @@ import com.railwayteam.railways.content.handcar.ik.DoubleArmIK;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.foundation.utility.Iterate;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
-import static com.railwayteam.railways.registry.CRBlockPartials.CR_BOGEY_WHEELS;
 
 public class HandcarBogeyRenderer extends BogeyRenderer {
+    private CarriageBogey carriageBogey;
+
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
         createModelInstance(materialManager, HANDCAR_COUPLING);
         createModelInstance(materialManager, HANDCAR_FRAME);
+        createModelInstance(materialManager, HANDCAR_HANDLE_FIRST_PERSON);
         createModelInstance(materialManager, HANDCAR_HANDLE);
         createModelInstance(materialManager, HANDCAR_LARGE_COG);
         createModelInstance(materialManager, HANDCAR_SMALL_COG);
+
+        this.carriageBogey = carriageBogey;
     }
 
     @Override
     public BogeySizes.BogeySize getSize() {
         return BogeySizes.SMALL;
+    }
+
+    private boolean isFirstPerson() {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        if (!mc.options.getCameraType().isFirstPerson()) {
+            return false;
+        }
+        if (player != null && player.getRootVehicle() instanceof CarriageContraptionEntity cce) {
+            if (carriageBogey == null)
+                return true;
+            return cce.trainId.equals(carriageBogey.carriage.train.id)
+                    && cce.carriageIndex == carriageBogey.carriage.train.carriages.indexOf(carriageBogey.carriage);
+        }
+        return false;
     }
 
     @Override
@@ -69,11 +91,21 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
             handleAngle = Mth.atan2(handle_offset.y, handle_offset.x);
         }
 
+        boolean firstPerson = isFirstPerson();
+
         getTransform(HANDCAR_HANDLE, ms, inInstancedContraption)
                 .translateY(39 / 16.)
                 .rotateZ(180)
                 .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
                 .translateY(-34 / 16.)
+                .scale(firstPerson ? 0 : 1)
+                .render(ms, light, vb);
+        getTransform(HANDCAR_HANDLE_FIRST_PERSON, ms, inInstancedContraption)
+                .translateY(39 / 16.)
+                .rotateZ(180)
+                .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
+                .translateY(-34 / 16.)
+                .scale(firstPerson ? 1 : 0)
                 .render(ms, light, vb);
 
         getTransform(HANDCAR_COUPLING, ms, inInstancedContraption)
