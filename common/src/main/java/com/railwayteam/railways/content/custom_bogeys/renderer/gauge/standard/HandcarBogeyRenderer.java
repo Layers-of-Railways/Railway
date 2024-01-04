@@ -23,7 +23,7 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
 
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
+        createModelInstance(materialManager, HANDCAR_WHEELS, 2);
         createModelInstance(materialManager, HANDCAR_COUPLING, HANDCAR_FRAME, HANDCAR_HANDLE_FIRST_PERSON,
                 HANDCAR_HANDLE, HANDCAR_LARGE_COG, HANDCAR_SMALL_COG);
 
@@ -123,14 +123,14 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
                 .translate(0, -7 / 16f, 0)
                 .render(ms, light, vb);
 
-        BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] wheels = getTransform(HANDCAR_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
             if (!inInstancedContraption)
                 ms.pushPose();
             wheels[(side + 1) / 2]
                     .translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
-                    .translate(0, -7 / 16f, 0)
+                    .translate(0, -12 / 16f, 0)
                     .render(ms, light, vb);
             if (!inInstancedContraption)
                 ms.popPose();

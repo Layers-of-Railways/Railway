@@ -449,6 +449,7 @@ public class CRBlockPartials {
     ;
 
     public static final PartialModel
+        HANDCAR_WHEELS = block("bogey/handcar/wheels"),
         HANDCAR_COUPLING = block("bogey/handcar/coupling"),
         HANDCAR_FRAME = block("bogey/handcar/frame"),
         HANDCAR_HANDLE = block("bogey/handcar/handle"),
