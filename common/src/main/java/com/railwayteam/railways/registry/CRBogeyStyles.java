@@ -137,8 +137,6 @@ public class CRBogeyStyles {
     public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
     public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
-    public static final String QUADRUPLEAXLE_CYCLE_GROUP = "quadrupleaxles";
-    public static final String QUINTUPLEAXLE_CYCLE_GROUP = "quintupleaxles";
 
     // Single Axles
     public static final BogeyStyle
@@ -243,8 +241,6 @@ public class CRBogeyStyles {
         registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("singleaxle_icon"));
         registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
         registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
-        registerStyleCategory(QUADRUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quadrupleaxle_icon"));
-        registerStyleCategory(QUINTUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quintupleaxle_icon"));
         if (Mods.EXTENDEDBOGEYS.isLoaded) {
             registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_triple_axle_icon"));
         }

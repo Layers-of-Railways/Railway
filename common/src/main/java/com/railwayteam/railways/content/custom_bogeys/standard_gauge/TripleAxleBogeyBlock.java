@@ -1,5 +1,6 @@
-package com.railwayteam.railways.content.custom_bogeys;
+package com.railwayteam.railways.content.custom_bogeys.standard_gauge;
 
+import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import net.minecraft.world.phys.Vec3;

@@ -24,12 +24,8 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, CR_BOGEY_WHEELS, 2);
-        createModelInstance(materialManager, HANDCAR_COUPLING);
-        createModelInstance(materialManager, HANDCAR_FRAME);
-        createModelInstance(materialManager, HANDCAR_HANDLE_FIRST_PERSON);
-        createModelInstance(materialManager, HANDCAR_HANDLE);
-        createModelInstance(materialManager, HANDCAR_LARGE_COG);
-        createModelInstance(materialManager, HANDCAR_SMALL_COG);
+        createModelInstance(materialManager, HANDCAR_COUPLING, HANDCAR_FRAME, HANDCAR_HANDLE_FIRST_PERSON,
+                HANDCAR_HANDLE, HANDCAR_LARGE_COG, HANDCAR_SMALL_COG);
 
         this.carriageBogey = carriageBogey;
     }
@@ -112,19 +108,6 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
                 .translate(coupling_pos)
                 .rotateXRadians(-(couplingAngle - Mth.HALF_PI))
                 .render(ms, light, vb);
-
-            /*
-            getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption)
-                .translateY(hingePos2.y)
-                .translateZ(hingePos2.x)
-                .scale(0.5f, 2.0f, 2.0f)
-                .render(ms, light, vb);
-
-            getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption)
-                .translateY(upperVec2.y)
-                .translateZ(upperVec2.x)
-                .scale(0.5f, 1.0f, 1.0f)
-                .render(ms, light, vb);*/
 
         getTransform(HANDCAR_LARGE_COG, ms, inInstancedContraption)
                 .translate(-8 / 16f, 12 / 16f, -3.5 / 16f)

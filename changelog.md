@@ -3,7 +3,7 @@ Version 1.6.0
 ------------------------------------------------------
 Additions
 - Cherry, Bamboo & Stripped Bamboo Tracks (1.20.1)
-- Natures Spirit compat Tracks (1.20.1)
+- Nature's Spirit compat Tracks (1.20.1)
 - TerraFirmaCraft compat Tracks (1.20.1)
 - Create: Dreams and Desires compat Tracks
 - Quark compat tracks
@@ -15,7 +15,7 @@ Additions
 - Locometal block series
 - Buffer blocks
 - Crafting tables work on trains
-- Hovering over a track-related block (couplers, signals, stations, etc) with a wrench will highlight the track it is bound to and vice-versa
+- Hovering over a track-related block (couplers, signals, stations, etc.) with a wrench will highlight the track it is bound to and vice versa
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction
@@ -33,9 +33,10 @@ Changes
 - Soul fire smoke in smoke stacks, clicking a smokestack with soul soil or soul sand will make it output soul fire themed smoke
 - Smokestacks can be dyed via being clicked with dye
 - Smokestacks show their dye color/style when wearing goggles
-- Signals, stations, and other blocks with a 'track pad' do not render the pad on phantom tracks when the tracks are not visible
+- Signals, stations, and other blocks with a 'trackpad' do not render the pad on phantom tracks when the tracks are not visible
 - Radiator fans can now be placed in any direction
 - Creeper explosions and Ghast Fireballs no longer break tracks
+- Remastered Monobogeys, Single Axle, Double Axle and Triple Axle Bogies
 
 Fixes
 - Mixin conflict with VS2
