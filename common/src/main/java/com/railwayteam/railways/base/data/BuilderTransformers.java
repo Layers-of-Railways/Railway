@@ -1,5 +1,6 @@
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
@@ -10,6 +11,7 @@ import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.AllBlocks;
@@ -142,7 +144,7 @@ public class BuilderTransformers {
             ));
     }
 
-    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color) {
+    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p
                 .color(ColorUtils.materialColorFromDye(color, MaterialColor.COLOR_BLACK))
@@ -151,8 +153,9 @@ public class BuilderTransformers {
             )
             .tag(CRTags.AllBlockTags.LOCOMETAL.tag)
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
+            .tag(AllTags.AllBlockTags.COPYCAT_DENY.tag)
             .transform(pickaxeOnly())
-            .blockstate(new BoilerGenerator(color)::generate);
+            .blockstate(new BoilerGenerator(color, wrapping)::generate);
     }
 
     private static String colorName(@Nullable DyeColor color) {
@@ -166,6 +169,16 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends CopycatHeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstock() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> copycatHeadstockItem() {
         throw new AssertionError();
     }
 }

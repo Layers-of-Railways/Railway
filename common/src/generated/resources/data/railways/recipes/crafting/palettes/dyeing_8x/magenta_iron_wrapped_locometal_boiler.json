@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/iron_wrapped_boiler"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/magenta_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:magenta_iron_wrapped_locometal_boiler"
+  }
+}

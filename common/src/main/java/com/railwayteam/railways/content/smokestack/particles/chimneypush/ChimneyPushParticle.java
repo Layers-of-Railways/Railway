@@ -138,10 +138,12 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         @Override
         public Particle createParticle(@NotNull T type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             ChimneyPushParticle particle = new ChimneyPushParticle(level, x, y, z, level.getRandom(), type.leadOnly, type instanceof ChimneyPushParticleData.Small);
-            int textureCount = 2;
+            int textureCount = 2 + 16;
             int idx = 0;
             if (Mth.equal(type.red, -1) && Mth.equal(type.green, -1) && Mth.equal(type.blue, -1)) {
                 idx = 1;
+            } else if (Mth.equal(type.red, type.green) && Mth.equal(type.green, type.blue) && type.red < -1 && type.red >= -17) {
+                idx = ((int) Math.abs(type.red));
             }
             particle.setSprite(spriteSet.get(idx, textureCount - 1));
             particle.age = level.getRandom().nextInt(5);

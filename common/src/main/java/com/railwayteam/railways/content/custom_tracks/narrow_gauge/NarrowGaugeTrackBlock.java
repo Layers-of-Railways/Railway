@@ -1,6 +1,8 @@
 package com.railwayteam.railways.content.custom_tracks.narrow_gauge;
 
+import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.registry.CRShapes;
+import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -86,5 +88,13 @@ public class NarrowGaugeTrackBlock extends TrackBlock {
             }
         }
         return AllShapes.TRACK_FALLBACK;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        if (CRTrackMaterials.getBaseFromNarrow(getMaterial()).getBlock() instanceof NoCollisionCustomTrackBlock noCollisionBlock) {
+            return noCollisionBlock.getCollisionShape(pState, pLevel, pPos, pContext);
+        }
+        return super.getCollisionShape(pState, pLevel, pPos, pContext);
     }
 }

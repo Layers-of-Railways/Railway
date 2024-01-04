@@ -22,6 +22,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDe
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBogeyStyles;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.CubeParticleData;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -208,6 +209,7 @@ public class CRBogeyStyles {
     // Handcar
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
         .size(BogeySizes.SMALL, () -> HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
+        .soundType(AllSoundEvents.COGS.getId())
         .build();
 
 

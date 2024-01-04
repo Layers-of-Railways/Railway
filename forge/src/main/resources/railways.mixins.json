@@ -7,7 +7,8 @@
   "client": [
     "ClientPacketListenerMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin"
+    "TrainHUDMixin",
+    "MixinGoggleOverlayRenderer"
   ],
   "mixins": [
     "ChunkMapAccessor",

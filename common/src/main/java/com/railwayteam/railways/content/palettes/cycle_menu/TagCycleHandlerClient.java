@@ -10,15 +10,17 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameType;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class TagCycleHandlerClient {
-    private static final TagCycleTracker CYCLE_TRACKER = new TagCycleTracker();
+    public static final TagCycleTracker CYCLE_TRACKER = new TagCycleTracker();
     @ApiStatus.Internal
     public static int COOLDOWN = 0;
 
@@ -50,13 +52,18 @@ public class TagCycleHandlerClient {
             return;
 
         MutableObject<TagKey<Item>> cycleTag = new MutableObject<>();
-        if (!EntityUtils.isHoldingItem(player, item -> {
+        MutableObject<@Nullable CompoundTag> stackTag = new MutableObject<>();
+        if (!EntityUtils.isHolding(player, stack -> {
+            Item item = stack.getItem();
             TagKey<Item> tag = CYCLE_TRACKER.getCycleTag(item);
-            if (tag != null) cycleTag.setValue(tag);
+            if (tag != null) {
+                cycleTag.setValue(tag);
+                stackTag.setValue(stack.getTag());
+            }
             return tag != null;
         })) return;
 
-        ScreenOpener.open(new RadialTagCycleMenu(cycleTag.getValue(), CYCLE_TRACKER.getCycle(cycleTag.getValue())));
+        ScreenOpener.open(new RadialTagCycleMenu(cycleTag.getValue(), CYCLE_TRACKER.getCycle(cycleTag.getValue()), stackTag.getValue()));
     }
 
     public static void onTagsUpdated() {

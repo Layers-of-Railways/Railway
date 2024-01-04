@@ -5,9 +5,8 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.graph.EdgePointType;
-import com.simibubi.create.content.trains.track.ITrackBlock;
-import com.simibubi.create.content.trains.track.TrackBlockOutline;
-import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
+import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
@@ -54,6 +53,15 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
         return super.getPlacementState(context);
     }
 
+    private static boolean isOkShape(BlockState state) {
+        TrackShape shape = state.getValue(TrackBlock.SHAPE);
+        return switch (shape) {
+            case ZO, XO,
+                TE, TN, TS, TW -> true;
+            default -> false;
+        };
+    }
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getItemInHand();
@@ -80,6 +88,12 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
 
             if (result.getValue().feedback != null) {
                 player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
+                    .withStyle(ChatFormatting.RED), true);
+                AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
+                return InteractionResult.FAIL;
+            }
+            if (!isOkShape(state)) {
+                player.displayClientMessage(Components.translatable("railways.buffer.invalid_shape")
                     .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;

@@ -1,10 +1,12 @@
 package com.railwayteam.railways.content.handcar;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.mixin_interfaces.IDeployAnywayBlockItem;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.packet.CurvedTrackHandcarPlacementPacket;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -12,14 +14,17 @@ import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.entity.TravellingPoint.SteerDirection;
 import com.simibubi.create.content.trains.graph.*;
-import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem.OverlapResult;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Lang;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -36,6 +41,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +50,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
-public class HandcarItem extends BlockItem {
+public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
     public HandcarItem(Block block, Properties properties) {
         super(block, properties);
     }
@@ -93,41 +99,71 @@ public class HandcarItem extends BlockItem {
             if (loc == null)
                 return InteractionResult.FAIL;
 
-            TrackGraph graph = loc.graph;
-            TrackNode node1 = graph.locateNode(loc.edge.getFirst());
-            TrackNode node2 = graph.locateNode(loc.edge.getSecond());
-            TrackEdge edge = graph.getConnectionsFrom(node1).get(node2);
-            if (edge == null)
-                return InteractionResult.FAIL;
-
-            double offset = getBogeyBlock().getWheelPointSpacing() / 2;
-            TravellingPoint tp1 = new TravellingPoint(node1, node2, edge, loc.position, false);
-            TravellingPoint tp2 = new TravellingPoint(node1, node2, edge, loc.position, false);
-            tp1.travel(graph, offset, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
-            tp2.travel(graph, -offset, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));/*
-
-            tp1.travel(graph, 10, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
-            tp2.travel(graph, 10, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
-            tp1.travel(graph, -10, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
-            tp2.travel(graph, -10, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));*/
-
-            if (!(level instanceof ServerLevel serverLevel))
-                return InteractionResult.FAIL;
-            Train train = makeTrain(
-                player.getUUID(),
-                graph,
-                tp1,
-                tp2,
-                serverLevel
-            );
-
-
-            AllSoundEvents.CONTROLLER_CLICK.play(level, null, pos, 1, 1);
-            return InteractionResult.SUCCESS;
+            boolean success = placeHandcar(loc, level, player, pos);
+            if (success) {
+                stack.shrink(1);
+            }
+            return success ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         }
 
 
         return InteractionResult.PASS;
+    }
+
+    @ApiStatus.Internal
+    @NotNull
+    public boolean placeHandcar(TrackGraphLocation trackGraphLocation, Level level, Player player, BlockPos soundPos) {
+        TrackGraph graph = trackGraphLocation.graph;
+        TrackNode node1 = graph.locateNode(trackGraphLocation.edge.getFirst());
+        TrackNode node2 = graph.locateNode(trackGraphLocation.edge.getSecond());
+        TrackEdge edge = graph.getConnectionsFrom(node1).get(node2);
+        if (edge == null)
+            return false;
+
+        double offset = getBogeyBlock().getWheelPointSpacing() / 2;
+        TravellingPoint tp1 = new TravellingPoint(node1, node2, edge, trackGraphLocation.position, false);
+        TravellingPoint tp2 = new TravellingPoint(node1, node2, edge, trackGraphLocation.position, false);
+        tp1.travel(graph, offset, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
+        tp2.travel(graph, -offset, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));/*
+
+        tp1.travel(graph, 10, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
+        tp2.travel(graph, 10, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
+        tp1.travel(graph, -10, tp1.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));
+        tp2.travel(graph, -10, tp2.steer(SteerDirection.NONE, new Vec3(0, 1, 0)));*/
+
+        if (!(level instanceof ServerLevel serverLevel))
+            return false;
+        makeTrain(
+            player.getUUID(),
+            graph,
+            tp1,
+            tp2,
+            serverLevel
+        );
+
+
+        AllSoundEvents.CONTROLLER_CLICK.play(level, null, soundPos, 1, 1);
+        return true;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        TrackBlockEntity be = selection.blockEntity();
+        BezierTrackPointLocation loc = selection.loc();
+        boolean front = player.getLookAngle()
+            .dot(selection.direction()) < 0;
+
+        BezierConnection bc = be.getConnections().get(loc.curveTarget());
+
+        TrackType trackType = bc.getMaterial().trackType;
+        if (!(trackType == TrackType.STANDARD || trackType == CRTrackType.UNIVERSAL))
+            return false;
+
+        CRPackets.PACKETS.send(new CurvedTrackHandcarPlacementPacket(be.getBlockPos(), loc.curveTarget(),
+            loc.segment(), front, player.getInventory().selected));
+        return true;
     }
 
     private @Nullable Train makeTrain(UUID owner, TrackGraph graph, TravellingPoint tp1, TravellingPoint tp2,
@@ -168,7 +204,7 @@ public class HandcarItem extends BlockItem {
         return train;
     }
 
-    private static void withGraphLocation(Level level, BlockPos pos, boolean front,
+    public static void withGraphLocation(Level level, BlockPos pos, boolean front,
                                          BezierTrackPointLocation targetBezier,
                                          BiConsumer<OverlapResult, TrackGraphLocation> callback) {
 

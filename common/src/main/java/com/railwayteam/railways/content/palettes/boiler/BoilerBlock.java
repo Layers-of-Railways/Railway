@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
+import com.railwayteam.railways.mixin_interfaces.IForceRenderingSodium;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-public class BoilerBlock extends Block implements IWrenchable {
+public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public static final EnumProperty<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
@@ -50,8 +51,12 @@ public class BoilerBlock extends Block implements IWrenchable {
     @SuppressWarnings("deprecation")
     @Override
     public boolean skipRendering(@NotNull BlockState state, BlockState adjacentBlockState, @NotNull Direction direction) {
-        return (adjacentBlockState.is(this) && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS))
-            || super.skipRendering(state, adjacentBlockState, direction);
+        return (adjacentBlockState.is(this) && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS));
+    }
+
+    @Override
+    public boolean forceRenderingSodium(@NotNull BlockState state, BlockState adjacentBlockState, @NotNull Direction direction) {
+        return !skipRendering(state, adjacentBlockState, direction);
     }
 
     @SuppressWarnings("deprecation")

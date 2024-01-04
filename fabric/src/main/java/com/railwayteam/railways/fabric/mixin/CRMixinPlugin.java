@@ -24,6 +24,8 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
         // Fix null issue between create & farmers delight
         if (mixinName.contains("compat.farmersdelight_fabric"))
             return Mods.FARMERSDELIGHT.isLoaded;
+        if (mixinName.contains("compat.malilib"))
+            return Mods.MALILIB.isLoaded;
         return true;
     }
 

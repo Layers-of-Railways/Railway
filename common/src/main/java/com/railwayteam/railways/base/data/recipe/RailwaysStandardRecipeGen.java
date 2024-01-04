@@ -160,7 +160,27 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#*#")
         );
 
-    GeneratedRecipe LINK_AND_PIN = create(CRBlocks.LINK_AND_PIN)
+    GeneratedRecipe SMALL_BUFFER = create(CRBlocks.SMALL_BUFFER)
+        .unlockedBy(Ingredients::industrialIron)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.shaft())
+            .pattern("#I_")
+        );
+
+    GeneratedRecipe BIG_BUFFER = create(CRBlocks.BIG_BUFFER)
+        .unlockedBy(Ingredients::smallBuffer)
+        .returns(4)
+        .viaShaped(b -> b
+            .define('#', Ingredients.industrialIron())
+            .define('_', Ingredients.ironSheet())
+            .define('I', Ingredients.smallBuffer())
+            .pattern("#I_")
+        );
+
+    GeneratedRecipe LINK_AND_PIN = create(Ingredients::linkPin)
         .unlockedBy(Ingredients::industrialIron)
         .returns(4)
         .viaShaped(b -> b
@@ -173,11 +193,20 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("__ ")
         );
 
-    GeneratedRecipe HEADSTOCK = create(CRBlocks.HEADSTOCK)
+    GeneratedRecipe HEADSTOCK = create(Ingredients::headstock)
         .unlockedBy(Ingredients::linkPin)
         .viaShaped(b -> b
-            .define('#', Ingredients.linkPin())
+            .define('#', Ingredients.linkPinTag())
             .define('_', Ingredients.woodenSlab())
+            .pattern(" # ")
+            .pattern("___")
+        );
+
+    GeneratedRecipe COPYCAT_HEADSTOCK = create(Ingredients::copycatHeadstock)
+        .unlockedBy(Ingredients::linkPin)
+        .viaShaped(b -> b
+            .define('#', Ingredients.linkPinTag())
+            .define('_', Ingredients.copycatPanel())
             .pattern(" # ")
             .pattern("___")
         );
@@ -187,7 +216,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .viaShaped(b -> b
             .define('#', Ingredients.industrialIron())
             .define('_', Ingredients.woodenSlab())
-            .define('>', Ingredients.headstock())
+            .define('>', Ingredients.headstockTag())
             .define('=', Ingredients.girder())
             .pattern(">_>")
             .pattern("===")
@@ -232,6 +261,34 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.brassIngot())
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    );
+
+    DyedRecipeList LOCOMETAL_WRAPPING_COPPER = new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
+            .unlockedBy(() -> Styles.SLASHED.get(color).get())
+            .returns(8)
+            .setEmiDefault(color == null)
+            .viaShaped(b -> b
+                .define('#', Styles.SLASHED.get(color).get())
+                .define('d', Ingredients.copperIngot())
+                .pattern("###")
+                .pattern("#d#")
+                .pattern("###")
+            )
+    );
+
+    DyedRecipeList LOCOMETAL_WRAPPING_IRON = new NullableDyedRecipeList(color ->
+        new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
+            .unlockedBy(() -> Styles.SLASHED.get(color).get())
+            .returns(8)
+            .setEmiDefault(color == null)
+            .viaShaped(b -> b
+                .define('#', Styles.SLASHED.get(color).get())
+                .define('d', Ingredients.ironIngot())
                 .pattern("###")
                 .pattern("#d#")
                 .pattern("###")
