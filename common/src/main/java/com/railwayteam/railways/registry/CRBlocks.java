@@ -16,7 +16,6 @@ import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBog
 import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.narrow_gauge.NarrowGaugeBogeyBlock;
@@ -434,49 +433,6 @@ public class CRBlocks {
             .build()
             .lang("Handcar")
             .register();
-
-    public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
-            REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Bogey")
-                    .register();
-
-    public static final BlockEntry<MediumTripleWheelBogeyBlock> MEDIUM_TRIPLE_WHEEL =
-            REGISTRATE.block("medium_triple_wheel", MediumTripleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Triple Wheel Bogey")
-                    .register();
-
-    public static final BlockEntry<MediumQuadrupleWheelBogeyBlock> MEDIUM_QUADRUPLE_WHEEL =
-            REGISTRATE.block("medium_quadruple_wheel", MediumQuadrupleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Quadruple Wheel Bogey")
-                    .register();
-
-    public static final BlockEntry<MediumQuintupleWheelBogeyBlock> MEDIUM_QUINTUPLE_WHEEL =
-            REGISTRATE.block("medium_quintuple_wheel", MediumQuintupleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium Quintuple Wheel Bogey")
-                    .register();
-
-    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
-            REGISTRATE.block("medium_2_0_2_trailing", Medium202TrailingBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium 2-0-2 Trailing Bogey")
-                    .register();
-
-    public static final BlockEntry<Medium404TrailingBogeyBlock> MEDIUM_4_0_4_TRAILING =
-            REGISTRATE.block("medium_4_0_4_trailing", Medium404TrailingBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
-                    .transform(BuilderTransformers.standardBogey())
-                    .lang("Medium 4-0-4 Trailing Bogey")
-                    .register();
-
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
         REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
