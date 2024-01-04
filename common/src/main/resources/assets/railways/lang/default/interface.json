@@ -148,5 +148,7 @@
 
   "label.railways.open_mods_folder": "Open Mods Folder",
   "label.railways.optifine_alternatives": "Optifine Alternatives",
-  "label.railways.proceed_anyway": "Proceed Anyway"
+  "label.railways.proceed_anyway": "Proceed Anyway",
+
+  "railways.bogey_menu.title": "Bogey Preview"
 }

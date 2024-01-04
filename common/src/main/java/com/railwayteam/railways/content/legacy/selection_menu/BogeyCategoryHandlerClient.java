@@ -2,7 +2,7 @@ package com.railwayteam.railways.content.legacy.selection_menu;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.content.legacy.selection_menu.RadialBogeyCategoryMenu.State;
+import com.railwayteam.railways.content.bogey_menu.BogeyMenuScreen;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
@@ -309,7 +309,7 @@ public class BogeyCategoryHandlerClient {
         if (!EntityUtils.isHolding(player, AllBlocks.RAILWAY_CASING::isIn))
             return;
 
-        ScreenOpener.open(new RadialBogeyCategoryMenu(State.PICK_CATEGORY));
+        ScreenOpener.open(new BogeyMenuScreen());
     }
 
     public static final Map<Pair<BogeyStyle, @Nullable BogeySize>, ResourceLocation> ICONS = new HashMap<>();
