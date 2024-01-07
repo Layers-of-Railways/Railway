@@ -17,7 +17,7 @@ public class MixinLootDataManager {
     @Inject(method = {
         "method_51195"
     }, at = @At("HEAD"), cancellable = true)
-    private static void skipMissingLoot(LootDataType lootDataType, Map map, ResourceLocation id, JsonElement json, CallbackInfo ci) {
+    private static <T> void skipMissingLoot(LootDataType<T> lootDataType, Map<ResourceLocation, T> map, ResourceLocation id, JsonElement json, CallbackInfo ci) {
         if (TrackCompatUtils.mixinSkipLootLoading(id)) {
             ci.cancel();
         }
