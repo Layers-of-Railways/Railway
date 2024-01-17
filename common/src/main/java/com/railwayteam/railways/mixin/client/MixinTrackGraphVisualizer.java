@@ -30,8 +30,8 @@ public class MixinTrackGraphVisualizer {
     // If the track edge is a monorail track, then change the y offset and make it higher so that
     // the signal line is visible to the player
     @ModifyExpressionValue(method = "visualiseSignalEdgeGroups", at = @At(value = "CONSTANT", args = "floatValue=64f"))
-    private static float fixYOffsetForMonorailTracks(float constant, @Local TrackEdge edge) {
-        return edge.getTrackMaterial() == CRTrackMaterials.MONORAIL ? 5.1f : constant;
+    private static float fixYOffsetForMonorailTracks(float original, @Local TrackEdge edge) {
+        return edge.getTrackMaterial() == CRTrackMaterials.MONORAIL ? 5.1f : original;
     }
 
     @Inject(method = "debugViewGraph",
