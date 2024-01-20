@@ -5,8 +5,8 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
-import com.railwayteam.railways.content.switches.TrackSwitchTileEntity;
-import com.railwayteam.railways.content.switches.TrackSwitchTileEntity.PonderData;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
+import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity.PonderData;
 import com.railwayteam.railways.mixin_interfaces.IStandardBogeyTEVirtualCoupling;
 import com.railwayteam.railways.ponder.scenes.temp.CreateSceneBuilder;
 import com.railwayteam.railways.registry.CRBlocks;
@@ -16,7 +16,6 @@ import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.content.trains.signal.SignalBlock;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
 import net.createmod.catnip.utility.Pointing;
-import net.createmod.ponder.api.scene.PonderStoryBoard;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.foundation.*;
@@ -549,7 +548,7 @@ public class TrainScenes {
                 @Override
                 protected void onHitBlock(@NotNull BlockHitResult result) {
                     super.onHitBlock(result);
-                    if (level.getBlockEntity(result.getBlockPos()) instanceof TrackSwitchTileEntity switchBE) {
+                    if (level.getBlockEntity(result.getBlockPos()) instanceof TrackSwitchBlockEntity switchBE) {
                         switchBE.setStatePonder(switchBE.getState().nextStateForPonder(SwitchConstraint.NONE));
 
                         int output = switchBE.getTargetAnalogOutput();
@@ -593,8 +592,8 @@ public class TrainScenes {
                 return true;
             }
 
-            private Optional<TrackSwitchTileEntity> getSwitch(PonderScene scene) {
-                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchTileEntity switchBE)
+            private Optional<TrackSwitchBlockEntity> getSwitch(PonderScene scene) {
+                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchBlockEntity switchBE)
                     return Optional.of(switchBE);
                 return Optional.empty();
             }
@@ -619,8 +618,8 @@ public class TrainScenes {
                 return true;
             }
 
-            private Optional<TrackSwitchTileEntity> getSwitch(PonderScene scene) {
-                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchTileEntity switchBE)
+            private Optional<TrackSwitchBlockEntity> getSwitch(PonderScene scene) {
+                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchBlockEntity switchBE)
                     return Optional.of(switchBE);
                 return Optional.empty();
             }
@@ -645,8 +644,8 @@ public class TrainScenes {
                 return true;
             }
 
-            private Optional<TrackSwitchTileEntity> getSwitch(PonderScene scene) {
-                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchTileEntity switchBE)
+            private Optional<TrackSwitchBlockEntity> getSwitch(PonderScene scene) {
+                if (scene.getWorld().getBlockEntity(switchPos) instanceof TrackSwitchBlockEntity switchBE)
                     return Optional.of(switchBE);
                 return Optional.empty();
             }
