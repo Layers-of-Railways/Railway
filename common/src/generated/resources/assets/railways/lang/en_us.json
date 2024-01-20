@@ -180,8 +180,6 @@
   "block.railways.slashed_locometal": "Slashed Locometal",
   "block.railways.small_buffer": "Small Buffer",
   "block.railways.smokestack_caboosestyle": "Caboose Smokestack",
-  "block.railways.smokestack_caboosestyle.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _smokestack style_ to place.",
-  "block.railways.smokestack_caboosestyle.tooltip": "CABOOSESTYLE",
   "block.railways.smokestack_coalburner": "Coalburner Smokestack",
   "block.railways.smokestack_diesel": "Radiator Fan",
   "block.railways.smokestack_long": "Long Smokestack",

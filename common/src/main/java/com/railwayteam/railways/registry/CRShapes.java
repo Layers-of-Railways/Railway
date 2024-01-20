@@ -174,8 +174,10 @@ public class CRShapes {
             .add(2 ,14, 2, 14, 16, 14)
             .build();
     public static final VoxelShaper
-        CABOOSE_STACK = shape(7, 0, 7, 9, 12, 9)
-            .add(5, 8, 6, 11, 12, 10)
+        CABOOSE_STACK = shape(4, 0, 4, 12, 2, 12)
+            .add(5, 2, 5, 11, 3, 11)
+            .add(6, 3, 6, 10, 10, 10)
+            .add(5, 10, 4, 11, 13, 12)
             .forHorizontalAxis(),
         LONG_STACK = shape(1, 0, 3, 15, 5, 13)
             .add(0, 2, 2, 16, 4, 14)
