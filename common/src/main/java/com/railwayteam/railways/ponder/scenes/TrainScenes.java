@@ -1,6 +1,5 @@
 package com.railwayteam.railways.ponder.scenes;
 
-
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
