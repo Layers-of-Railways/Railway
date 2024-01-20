@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "railways:green_slashed_locometal"
+    },
+    "d": {
+      "tag": "railways:internal/ingots/copper_ingots"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:green_copper_wrapped_locometal"
+  }
+}

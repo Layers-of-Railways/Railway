@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock.Style;
-import com.railwayteam.railways.registry.CRPalettes;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -10,16 +10,17 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class BoilerGenerator extends SpecialBlockStateGen {
     private final @Nullable DyeColor color;
+    private final @Nullable Wrapping wrapping;
 
-    public BoilerGenerator(@Nullable DyeColor color) {
+    public BoilerGenerator(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
         this.color = color;
+        this.wrapping = wrapping;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class BoilerGenerator extends SpecialBlockStateGen {
             .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_"+axis.getName()+".obj"))
             .end()
             .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
-            .texture("sides", prov.modLoc("block/palettes/" + colorName + (CRPalettes.Styles.BRASS_WRAPPED_BOILER.contains(ctx.get()) ? "/wrapped_boiler_side" : "/boiler_side")))
+            .texture("sides", prov.modLoc("block/palettes/" + colorName + "/" + (wrapping != null ? wrapping.prefix("wrapped_boiler_side") : "boiler_side")))
             .texture("particle", prov.modLoc("block/palettes/" + colorName + "/riveted_pillar_top"));
     }
 }

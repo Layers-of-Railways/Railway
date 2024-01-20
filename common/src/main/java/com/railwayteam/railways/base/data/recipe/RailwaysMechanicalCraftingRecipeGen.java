@@ -44,6 +44,30 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
             .patternLine(" #/# ")
             .patternLine("  #  ")));
 
+    DyedRecipeList COPPER_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.COPPER_WRAPPED_BOILER.get(color).get())
+        .returns(4)
+        .setEmiDefault(color == null)
+        .recipe(b -> b.key('#', Styles.COPPER_WRAPPED_SLASHED.get(color).get())
+            .key('u', Items.BUCKET)
+            .key('/', Items.BLAZE_ROD)
+            .patternLine("  #  ")
+            .patternLine(" #u# ")
+            .patternLine("#///#")
+            .patternLine(" #/# ")
+            .patternLine("  #  ")));
+
+    DyedRecipeList IRON_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.IRON_WRAPPED_BOILER.get(color).get())
+        .returns(4)
+        .setEmiDefault(color == null)
+        .recipe(b -> b.key('#', Styles.IRON_WRAPPED_SLASHED.get(color).get())
+            .key('u', Items.BUCKET)
+            .key('/', Items.BLAZE_ROD)
+            .patternLine("  #  ")
+            .patternLine(" #u# ")
+            .patternLine("#///#")
+            .patternLine(" #/# ")
+            .patternLine("  #  ")));
+
     protected RailwaysMechanicalCraftingRecipeGen(DataGenerator pGenerator) {
         super(pGenerator);
     }

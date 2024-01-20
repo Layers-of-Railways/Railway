@@ -39,11 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 @Mixin(value = TrackBlock.class, remap = false)
-public abstract class MixinTrackBlock extends Block {
-  public MixinTrackBlock(Properties pProperties) {
-    super(pProperties);
-  }
-
+public class MixinTrackBlock {
   @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
   private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
     //noinspection ConstantValue

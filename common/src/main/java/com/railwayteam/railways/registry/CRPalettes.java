@@ -76,8 +76,12 @@ public class CRPalettes {
         FLAT_SLASHED(CRPalettes::flatSlashedLocometal, true, "Flat Slashed Locometal"),
         FLAT_RIVETED(CRPalettes::flatRivetedLocometal, true, "Flat Riveted Locometal"),
         BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, false, "Brass Wrapped Locometal"),
+        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, false, "Copper Wrapped Locometal"),
+        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, false, "Iron Wrapped Locometal"),
         BOILER(CRPalettes::locometalBoiler, false, "Locometal Boilers"),
-        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, false, "Brass Wrapped Locometal Boilers")
+        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, false, "Brass Wrapped Locometal Boilers"),
+        COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, false, "Copper Wrapped Locometal Boilers"),
+        IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, false, "Iron Wrapped Locometal Boilers")
         ;
 
         private static Styles[] CYCLING = null;
@@ -245,9 +249,35 @@ public class CRPalettes {
     }
 
     @SafeVarargs
+    public static BlockEntry<?> copperWrappedLocometal(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "copper_wrapped_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "copper_wrapped_slashed"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.COPPER_WRAPPED_LOCOMETAL.get(color))))
+            .lang(joinSpace(colorName, "Copper Wrapped Locometal"))
+            .item()
+            .tag(tags)
+            .build()
+            .register();
+    }
+
+
+
+    @SafeVarargs
+    public static BlockEntry<?> ironWrappedLocometal(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "iron_wrapped_locometal"), Block::new)
+            .transform(BuilderTransformers.locoMetalBase(color, "iron_wrapped_slashed"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.IRON_WRAPPED_LOCOMETAL.get(color))))
+            .lang(joinSpace(colorName, "Iron Wrapped Locometal"))
+            .item()
+            .tag(tags)
+            .build()
+            .register();
+    }
+
+    @SafeVarargs
     public static BlockEntry<?> locometalBoiler(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_boiler"), BoilerBlock::new)
-            .transform(BuilderTransformers.locoMetalBoiler(color))
+            .transform(BuilderTransformers.locoMetalBoiler(color, null))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Locometal Boiler"))
             .item()
@@ -259,12 +289,36 @@ public class CRPalettes {
     @SafeVarargs
     public static BlockEntry<?> brassWrappedLocometalBoiler(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "brass_wrapped_locometal_boiler"), BoilerBlock::new)
-            .transform(BuilderTransformers.locoMetalBoiler(color))
+            .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.BRASS))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Brass Wrapped Locometal Boiler"))
             .item()
             .tag(tags)
             .transform(customItemModel(joinUnderscore(colorString, "brass_wrapped_locometal_boiler_gullet_x")))
+            .register();
+    }
+
+    @SafeVarargs
+    public static BlockEntry<?> copperWrappedLocometalBoiler(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "copper_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.COPPER))
+            .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.COPPER_WRAPPED_BOILER_SIDE.get(color))))
+            .lang(joinSpace(colorName, "Copper Wrapped Locometal Boiler"))
+            .item()
+            .tag(tags)
+            .transform(customItemModel(joinUnderscore(colorString, "copper_wrapped_locometal_boiler_gullet_x")))
+            .register();
+    }
+
+    @SafeVarargs
+    public static BlockEntry<?> ironWrappedLocometalBoiler(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "iron_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.IRON))
+            .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.IRON_WRAPPED_BOILER_SIDE.get(color))))
+            .lang(joinSpace(colorName, "Iron Wrapped Locometal Boiler"))
+            .item()
+            .tag(tags)
+            .transform(customItemModel(joinUnderscore(colorString, "iron_wrapped_locometal_boiler_gullet_x")))
             .register();
     }
 
@@ -325,6 +379,23 @@ public class CRPalettes {
                     return values.get(Styles.getCyclingValues()[index++]);
                 }
             };
+        }
+    }
+
+    public enum Wrapping {
+        BRASS(false, Styles.BRASS_WRAPPED_BOILER),
+        COPPER(true, Styles.COPPER_WRAPPED_BOILER),
+        IRON(true, Styles.IRON_WRAPPED_BOILER);
+        private final boolean doPrefix;
+        public final Styles boilerStyle;
+
+        Wrapping(boolean doPrefix, Styles boilerStyle) {
+            this.doPrefix = doPrefix;
+            this.boilerStyle = boilerStyle;
+        }
+
+        public String prefix(String base) {
+            return doPrefix ? name().toLowerCase(Locale.ROOT) + "_" + base : base;
         }
     }
 }

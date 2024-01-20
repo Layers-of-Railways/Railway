@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "railways:block/copper_wrapped_locometal"
+    }
+  }
+}

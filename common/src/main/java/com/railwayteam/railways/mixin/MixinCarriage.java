@@ -163,6 +163,8 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     private boolean snr$isIncompatible(boolean original, boolean leading) {
         CarriageBogey bogey = leading ? leadingBogey() : trailingBogey();
         TravellingPoint point = leading ? getLeadingPoint() : getTrailingPoint();
+        if (point.edge == null)
+            return false;
         if (point.edge.getTrackMaterial().trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
         if (CarriageBogeyUtils.getType(bogey).getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)

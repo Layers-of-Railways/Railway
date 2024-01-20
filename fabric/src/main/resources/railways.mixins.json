@@ -7,7 +7,8 @@
   "client": [
     "LevelRendererMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin"
+    "TrainHUDMixin",
+    "MixinGoggleOverlayRenderer"
   ],
   "mixins": [
     "DetectorRailBlockMixin",
