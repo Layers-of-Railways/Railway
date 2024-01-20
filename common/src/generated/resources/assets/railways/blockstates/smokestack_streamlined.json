@@ -1,171 +1,395 @@
 {
   "variants": {
-    "enabled=false,powered=false,style=brass,waterlogged=false": {
+    "axis=x,enabled=false,powered=false,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=false,powered=true,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=x,enabled=true,powered=true,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
+    },
+    "axis=z,enabled=false,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=false,powered=false,style=brass,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=false,powered=false,style=brass_cap_copper,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=false,powered=false,style=brass_cap_copper,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=false,powered=false,style=brass_cap_steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=brass_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=false,powered=false,style=brass_cap_steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=brass_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=false,powered=false,style=copper,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=false,powered=false,style=copper,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=false,powered=false,style=copper_cap_brass,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=copper_cap_brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=false,powered=false,style=copper_cap_brass,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=copper_cap_brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=false,powered=false,style=copper_cap_steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=copper_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=false,powered=false,style=copper_cap_steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=copper_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=false,powered=false,style=steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=false,style=steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=false,powered=false,style=steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=false,style=steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=false,powered=true,style=brass,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=false,powered=true,style=brass,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=false,powered=true,style=brass_cap_copper,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=false,powered=true,style=brass_cap_copper,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=false,powered=true,style=brass_cap_steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=brass_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=false,powered=true,style=brass_cap_steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=brass_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=false,powered=true,style=copper,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=false,powered=true,style=copper,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=false,powered=true,style=copper_cap_brass,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=copper_cap_brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=false,powered=true,style=copper_cap_brass,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=copper_cap_brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=false,powered=true,style=copper_cap_steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=copper_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=false,powered=true,style=copper_cap_steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=copper_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=false,powered=true,style=steel,waterlogged=false": {
+    "axis=z,enabled=false,powered=true,style=steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=false,powered=true,style=steel,waterlogged=true": {
+    "axis=z,enabled=false,powered=true,style=steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=true,powered=false,style=brass,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=true,powered=false,style=brass,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=true,powered=false,style=brass_cap_copper,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=true,powered=false,style=brass_cap_copper,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=true,powered=false,style=brass_cap_steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=brass_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=true,powered=false,style=brass_cap_steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=brass_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=true,powered=false,style=copper,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=true,powered=false,style=copper,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=true,powered=false,style=copper_cap_brass,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=copper_cap_brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=true,powered=false,style=copper_cap_brass,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=copper_cap_brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=true,powered=false,style=copper_cap_steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=copper_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=true,powered=false,style=copper_cap_steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=copper_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=true,powered=false,style=steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=false,style=steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=true,powered=false,style=steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=false,style=steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=true,powered=true,style=brass,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=true,powered=true,style=brass,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "enabled=true,powered=true,style=brass_cap_copper,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=true,powered=true,style=brass_cap_copper,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "enabled=true,powered=true,style=brass_cap_steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=brass_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=true,powered=true,style=brass_cap_steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=brass_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "enabled=true,powered=true,style=copper,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=copper,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=true,powered=true,style=copper,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=copper,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "enabled=true,powered=true,style=copper_cap_brass,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=copper_cap_brass,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=true,powered=true,style=copper_cap_brass,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=copper_cap_brass,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "enabled=true,powered=true,style=copper_cap_steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=copper_cap_steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=true,powered=true,style=copper_cap_steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=copper_cap_steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "enabled=true,powered=true,style=steel,waterlogged=false": {
+    "axis=z,enabled=true,powered=true,style=steel,waterlogged=false": {
       "model": "railways:block/smokestack_streamlined_steel"
     },
-    "enabled=true,powered=true,style=steel,waterlogged=true": {
+    "axis=z,enabled=true,powered=true,style=steel,waterlogged=true": {
       "model": "railways:block/smokestack_streamlined_steel"
     }
   }

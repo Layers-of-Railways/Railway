@@ -35,6 +35,12 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
         return Railways.asResource("block/" + context.getFirst() + model);
     }
 
+    public ResourceLocation getTexture(String variant) {
+        if (!variant.equals("caboosestyle"))
+            return Railways.asResource("block/smokestack/" + variant + "/" + model);
+        return Railways.asResource("block/smokestack/caboosestyle");
+    }
+
     @Override
     public @NotNull String getSerializedName() {
         return name().toLowerCase(Locale.ROOT);

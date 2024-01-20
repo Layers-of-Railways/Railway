@@ -168,11 +168,6 @@ public class CRShapes {
         OIL_STACK = shape(2, 0, 2, 14, 16, 14)
             .add(0, 11, 0, 16, 14, 16)
             .build(),
-        STREAMLINED_STACK = shape(0, 0, 2, 2, 4, 16)
-            .add(14, 0, 0, 16, 4, 14)
-            .add(0, 0, 0, 14, 4, 2)
-            .add(2, 0, 14, 16, 4, 16)
-            .build(),
         WOOD_STACK = shape(4, 0, 4, 12, 4, 12)
             .add(2 ,4, 2, 14, 9, 14)
             .add(0 ,9, 0, 16, 14, 16)
@@ -182,8 +177,11 @@ public class CRShapes {
         CABOOSE_STACK = shape(7, 0, 7, 9, 12, 9)
             .add(5, 8, 6, 11, 12, 10)
             .forHorizontalAxis(),
-        LONG_STACK = shape(1, 0, 3, 15, 4, 13)
-            .forHorizontalAxis(),
+        LONG_STACK = shape(1, 0, 3, 15, 5, 13)
+            .add(0, 2, 2, 16, 4, 14)
+            .forHorizontal(Direction.WEST),
+        STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
+            .forHorizontal(Direction.WEST),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
             .forDirectional(Direction.UP);
 
