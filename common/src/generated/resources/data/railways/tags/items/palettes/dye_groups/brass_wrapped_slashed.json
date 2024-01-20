@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "railways:brass_wrapped_locometal",
+    "railways:white_brass_wrapped_locometal",
+    "railways:orange_brass_wrapped_locometal",
+    "railways:magenta_brass_wrapped_locometal",
+    "railways:light_blue_brass_wrapped_locometal",
+    "railways:yellow_brass_wrapped_locometal",
+    "railways:lime_brass_wrapped_locometal",
+    "railways:pink_brass_wrapped_locometal",
+    "railways:gray_brass_wrapped_locometal",
+    "railways:light_gray_brass_wrapped_locometal",
+    "railways:cyan_brass_wrapped_locometal",
+    "railways:purple_brass_wrapped_locometal",
+    "railways:blue_brass_wrapped_locometal",
+    "railways:brown_brass_wrapped_locometal",
+    "railways:green_brass_wrapped_locometal",
+    "railways:red_brass_wrapped_locometal",
+    "railways:black_brass_wrapped_locometal"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "quark"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "quark"
+      ]
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_quark_blossom"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_quark_blossom_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        },
+        {
+          "item": "quark:blossom_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_quark_blossom_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_quark_blossom_wide"
+  }
+}

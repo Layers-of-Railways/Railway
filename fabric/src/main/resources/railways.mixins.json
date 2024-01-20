@@ -6,8 +6,9 @@
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
     "LevelRendererMixin",
+    "TrackBlockOutlineMixin",
     "TrainHUDMixin",
-    "TrackBlockOutlineMixin"
+    "MixinGoggleOverlayRenderer"
   ],
   "mixins": [
     "DetectorRailBlockMixin",

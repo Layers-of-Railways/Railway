@@ -13,10 +13,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
@@ -34,11 +34,6 @@ public class CommonEventsForge {
 	public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player)
 			CommonEvents.onPlayerJoin(player);
-	}
-
-	@SubscribeEvent
-	public static void onWorldJoin(LevelEvent.Load event) {
-		CommonEvents.backupDisplayRegister();
 	}
 
 	private static final ResourceLocation conductorItemCap = Railways.asResource("conductor_item_capability");
@@ -59,5 +54,11 @@ public class CommonEventsForge {
 				}
 			});
 		}
+	}
+
+	@SubscribeEvent
+	public static void onTagsUpdated(TagsUpdatedEvent event) {
+		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD)
+			CommonEvents.onTagsUpdated();
 	}
 }

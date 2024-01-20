@@ -2,8 +2,9 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
+import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
+import com.railwayteam.railways.content.buffer.BufferModelUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
 import com.railwayteam.railways.ponder.CRPonderPlugin;
@@ -45,6 +46,7 @@ public class RailwaysClient {
 
     CRDevCaps.register();
     CRBogeyStyles.registerClient();
+    BufferModelUtils.register();
 
     DevCapeUtils.INSTANCE.init();
   }

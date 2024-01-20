@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "porting_lib:loader": "porting_lib:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/handcar/handle.obj",
+  "textures": {
+    "0": "railways:block/bogeys/handcar_frame"
+  }
+}

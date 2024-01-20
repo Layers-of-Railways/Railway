@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "andesite-track-switch",
+	"parent": "block/block",
 	"textures": {
 		"0": "create:block/andesite_casing",
 		"1": "railways:block/track_switch/andesite_casing_xxshort",

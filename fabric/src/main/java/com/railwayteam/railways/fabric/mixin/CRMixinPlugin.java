@@ -19,9 +19,13 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetName, String mixinName) {
-        if (mixinName.contains("compat.voicechat")) {
+        if (mixinName.contains("compat.voicechat"))
             return Mods.VOICECHAT.isLoaded;
-        }
+        // Fix null issue between create & farmers delight
+        if (mixinName.contains("compat.farmersdelight_fabric"))
+            return Mods.FARMERSDELIGHT.isLoaded;
+        if (mixinName.contains("compat.malilib"))
+            return Mods.MALILIB.isLoaded;
         return true;
     }
 

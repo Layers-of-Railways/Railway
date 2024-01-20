@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
@@ -36,17 +37,19 @@ public class CRItems {
     public ItemStack makeIcon() { return ITEM_CONDUCTOR_CAP.get(DyeColor.BLUE).asStack(); }
   };
 
-  public static final CreativeModeTab tracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID+"_tracks") {
+  public static final CreativeModeTab tracksCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID + "_tracks") {
     @Override
     @Nonnull
     public ItemStack makeIcon() { return CRBlocks.DARK_OAK_TRACK.asStack(); }
   };
 
-  public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;//makeItemTag(Railways.MODID, "conductor_caps");
+  public static final CreativeModeTab palettesCreativeTab = new CreativeModeTab(ItemUtils.nextTabId(), Railways.MODID + "_palettes") {
+    @Override
+    @Nonnull
+    public ItemStack makeIcon() { return CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack(); }
+  };
 
-  public static TagKey<Item> makeForgeItemTag(String path) {
-    return makeItemTag("forge", path);
-  }
+  public static final TagKey<Item> CONDUCTOR_CAPS = CRTags.AllItemTags.CONDUCTOR_CAPS.tag;
 
   public static TagKey<Item> makeItemTag(String mod, String path) {
     return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(mod, path));
@@ -57,7 +60,7 @@ public class CRItems {
     .model((ctx,prov)-> prov.withExistingParent(name, prov.mcLoc("item/minecart")).texture("layer0", prov.modLoc("item/" + name)));
   }
 
-  public static Item woolByColor (DyeColor color) {
+  public static Item woolByColor(DyeColor color) {
     return switch (color) {
       case WHITE -> Items.WHITE_WOOL;
       case ORANGE -> Items.ORANGE_WOOL;
@@ -79,7 +82,7 @@ public class CRItems {
   }
 
   public static final ItemEntry<? extends Item> ITEM_BENCHCART = makeMinecart("benchcart", MinecartWorkbench.TYPE)
-      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(Items.CRAFTING_TABLE)
+      .recipe((ctx,prov)-> ShapelessRecipeBuilder.shapeless(ctx.get()).requires(Items.MINECART).requires(CommonTags.WORKBENCH.tag)
         .unlockedBy("hasitem", InventoryChangeTrigger.TriggerInstance.hasItems(Items.MINECART)).save(prov))
       .lang("Minecart with Workbench")
       .register();
@@ -107,7 +110,7 @@ public class CRItems {
               .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
               .lang("Incomplete " + colorName + " Conductor's Cap")
           .register());
-      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p-> ConductorCapItem.create(p, color))
+      ITEM_CONDUCTOR_CAP.put(color, REGISTRATE.item(colorReg + "_conductor_cap", p -> ConductorCapItem.create(p, color))
         .model(((dataGenContext, itemModelProvider) -> itemModelProvider.withExistingParent(colorReg + "_conductor_cap", itemModelProvider.modLoc("item/conductor_cap"))
             .texture("cap", itemModelProvider.modLoc("entity/caps/" + colorReg + "_conductor_cap"))))
         .lang(colorName + " Conductor's Cap")
@@ -115,7 +118,7 @@ public class CRItems {
         .properties(p -> p.stacksTo(1))
         .recipe((ctx, prov)-> ShapelessRecipeBuilder.shapeless(ctx.get())
             .requires(CONDUCTOR_CAPS)
-            .requires(CommonTags.DYES.get(color).tag)
+            .requires(Ingredients.dye(color))
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
             .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
         .register());

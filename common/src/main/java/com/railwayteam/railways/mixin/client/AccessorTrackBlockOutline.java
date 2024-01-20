@@ -7,18 +7,18 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(TrackBlockOutline.class)
 public interface AccessorTrackBlockOutline {
-    @Accessor
-    static VoxelShape getLONG_CROSS() {
+    @Accessor("LONG_CROSS")
+    static VoxelShape getLongCross() {
         throw new AssertionError();
     }
 
-    @Accessor
-    static VoxelShape getLONG_ORTHO() {
+    @Accessor("LONG_ORTHO")
+    static VoxelShape getLongOrtho() {
         throw new AssertionError();
     }
 
-    @Accessor
-    static VoxelShape getLONG_ORTHO_OFFSET() {
+    @Accessor("LONG_ORTHO_OFFSET")
+    static VoxelShape getLongOrthoOffset() {
         throw new AssertionError();
     }
 }

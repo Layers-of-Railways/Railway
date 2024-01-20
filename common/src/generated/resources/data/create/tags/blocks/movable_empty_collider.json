@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "railways:buffer",
+    "railways:buffer_narrow",
+    "railways:buffer_mono",
+    "railways:buffer_wide"
+  ]
+}

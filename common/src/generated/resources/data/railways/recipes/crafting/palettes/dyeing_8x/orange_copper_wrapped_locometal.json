@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/copper_wrapped_slashed"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/orange_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:orange_copper_wrapped_locometal"
+  }
+}

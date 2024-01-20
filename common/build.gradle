@@ -1,3 +1,6 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
@@ -37,6 +40,9 @@ dependencies {
 
     modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
     modCompileOnly "maven.modrinth:simple-voice-chat:fabric-${voicechat_version}"
+    modCompileOnly "curse.maven:malilib-303119:${malilib_version}"
+    modCompileOnly "curse.maven:tweakeroo-297344:${tweakeroo_version}"
+    modCompileOnly "maven.modrinth:sodium:${sodium_version}"
 
     // mod compat for tracks
 
@@ -48,16 +54,26 @@ dependencies {
     if (enable_eb.toBoolean())
         modImplementation("com.rabbitminers:extendedbogeys-common:${EB_verison}+common-patch-")
 
-    implementation("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}")
-    annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras_version}")
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
 }
 
 architectury {
-    common(rootProject.enabled_platforms.split(","))
+    common(enabled_platforms.split(","))
 }
 
 processResources {
-    exclude("resourcepacks/", "**/*.bbmodel", "**/*.lnk", "**/*.txt") // must be part of primary mod to be findable, dont add development or todo files into built jar
+    // must be part of primary mod to be findable
+    exclude("resourcepacks/")
+
+    // dont add development or to-do files into built jar
+    exclude("**/*.bbmodel", "**/*.lnk", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+
+    // Minify all .json files in built jars
+    doLast {
+        fileTree(dir: processResources.outputs.files.asPath, include: '**/*.json').each {
+            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+        }
+    }
 }
 
 sourceSets.main {
@@ -78,11 +94,21 @@ publishing {
 
     repositories {
         if (System.getenv("MAVEN_TOKEN")) {
-            maven {
-                url "https://maven.ithundxr.dev/releases"
-                credentials {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
+            if (System.getenv("RELEASE_BUILD")) {
+                maven {
+                    url "https://maven.ithundxr.dev/releases"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
+                }
+            } else {
+                maven {
+                    url "https://maven.ithundxr.dev/snapshots"
+                    credentials {
+                        username = "railways-github"
+                        password = System.getenv("MAVEN_TOKEN")
+                    }
                 }
             }
         }

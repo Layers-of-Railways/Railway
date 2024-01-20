@@ -10,6 +10,7 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBogeyStyles;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.CubeParticleData;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -192,6 +193,12 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.narrow_double_scotch"))
             .size(BogeySizes.LARGE, () -> CRBogeyRenderer.NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
             .build();
+
+    // Handcar
+    public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
+        .size(BogeySizes.SMALL, () -> CRBogeyRenderer.HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
+        .soundType(AllSoundEvents.COGS.getId())
+        .build();
 
 
     public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {

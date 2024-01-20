@@ -38,10 +38,6 @@ public class CommonTag<T> {
 		);
 	}
 
-	public static <T> CommonTag<T> conventional(ResourceKey<? extends Registry<T>> registry, String path) {
-		return conventional(registry, path, path, path);
-	}
-
 	public CommonTag<T> generateBoth(RegistrateTagsProvider<T> tags, Consumer<TagAppender<T>> consumer) {
 		consumer.accept(CRTagGen.tagAppender(tags, fabric));
 		consumer.accept(CRTagGen.tagAppender(tags, forge));

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///smokestack_caboosestyle"
+        "recipe": "railways:crafting/smokestack_caboosestyle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///smokestack_caboosestyle"
+      "railways:crafting/smokestack_caboosestyle"
     ]
   }
 }

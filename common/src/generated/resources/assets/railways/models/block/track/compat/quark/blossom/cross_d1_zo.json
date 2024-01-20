@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_zo",
+  "textures": {
+    "0": "quark:block/track/blossom/standard_track_blossom",
+    "1": "quark:block/track/blossom/standard_track_mip_blossom",
+    "2": "quark:block/track/blossom/standard_track_crossing_blossom",
+    "particle": "quark:block/track/blossom/standard_track_crossing_blossom"
+  }
+}

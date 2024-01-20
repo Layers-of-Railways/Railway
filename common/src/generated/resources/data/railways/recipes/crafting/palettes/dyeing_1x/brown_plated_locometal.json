@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/plated"
+    },
+    {
+      "tag": "railways:internal/dyes/brown_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:brown_plated_locometal"
+  }
+}

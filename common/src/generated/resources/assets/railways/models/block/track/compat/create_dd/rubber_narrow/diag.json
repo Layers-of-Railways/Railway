@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/diag",
+  "textures": {
+    "1": "create_dd:block/track/rubber/standard_track_rubber",
+    "2": "create_dd:block/track/rubber/standard_track_mip_rubber",
+    "3": "create_dd:block/track/rubber/standard_track_crossing_rubber",
+    "particle": "create_dd:block/track/rubber/standard_track_crossing_rubber"
+  }
+}

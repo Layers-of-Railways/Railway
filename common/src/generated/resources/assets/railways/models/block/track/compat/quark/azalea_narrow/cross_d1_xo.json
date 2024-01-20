@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_xo",
+  "textures": {
+    "1": "quark:block/track/azalea/standard_track_azalea",
+    "2": "quark:block/track/azalea/standard_track_mip_azalea",
+    "3": "quark:block/track/azalea/standard_track_crossing_azalea",
+    "particle": "quark:block/track/azalea/standard_track_crossing_azalea"
+  }
+}

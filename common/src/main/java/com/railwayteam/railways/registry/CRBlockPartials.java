@@ -445,6 +445,15 @@ public class CRBlockPartials {
         NARROW_DOUBLE_SCOTCH_PISTONS = block("bogey/narrow/double_scotch/pistons")
     ;
 
+    public static final PartialModel
+        HANDCAR_COUPLING = block("bogey/handcar/coupling"),
+        HANDCAR_FRAME = block("bogey/handcar/frame"),
+        HANDCAR_HANDLE = block("bogey/handcar/handle"),
+        HANDCAR_HANDLE_FIRST_PERSON = block("bogey/handcar/handle_first_person"),
+        HANDCAR_LARGE_COG = block("bogey/handcar/large_cog"),
+        HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
+    ;
+
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 

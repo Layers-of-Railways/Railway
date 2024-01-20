@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///smokestack_long"
+        "recipe": "railways:crafting/smokestack_long"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///smokestack_long"
+      "railways:crafting/smokestack_long"
     ]
   }
 }

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d1_xo",
+  "textures": {
+    "0": "quark:block/track/ancient/standard_track_ancient",
+    "1": "quark:block/track/ancient/standard_track_mip_ancient",
+    "2": "quark:block/track/ancient/standard_track_crossing_ancient",
+    "particle": "quark:block/track/ancient/standard_track_crossing_ancient"
+  }
+}

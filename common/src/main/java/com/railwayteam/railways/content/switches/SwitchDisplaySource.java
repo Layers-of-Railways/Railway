@@ -9,7 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 public class SwitchDisplaySource extends SingleLineDisplaySource {
     @Override
     protected MutableComponent provideLine(DisplayLinkContext context, DisplayTargetStats stats) {
-        if (context.getSourceBlockEntity() instanceof TrackSwitchTileEntity sw) {
+        if (context.getSourceBlockEntity() instanceof TrackSwitchBlockEntity sw) {
             return Components.translatable("railways.display_source.switch."+sw.getState().getSerializedName());
         }
         return Components.empty();

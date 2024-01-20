@@ -19,7 +19,13 @@ public enum Mods {
 	HEXCASTING("hexcasting",true),
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
-	VOICECHAT("voicechat")
+	VOICECHAT("voicechat"),
+	FARMERSDELIGHT("farmersdelight"),
+    // Dreams and Desires
+    CREATE_DD("create_dd"),
+	QUARK("quark"),
+	MALILIB("malilib"),
+	TWEAKEROO("tweakeroo"),
 	;
 
 	public final boolean isLoaded;

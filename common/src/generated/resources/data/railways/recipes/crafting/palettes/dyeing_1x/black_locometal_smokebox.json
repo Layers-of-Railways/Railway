@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/smokebox"
+    },
+    {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:black_locometal_smokebox"
+  }
+}

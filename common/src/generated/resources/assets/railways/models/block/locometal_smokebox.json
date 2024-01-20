@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "railways:block/palettes/netherite/smokebox_tank_top",
+    "side": "railways:block/palettes/netherite/tank_side"
+  }
+}

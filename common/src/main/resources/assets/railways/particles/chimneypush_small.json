@@ -1,0 +1,22 @@
+{
+  "textures": [
+    "railways:chimneypush_small_dyeable",
+    "railways:chimneypush_small",
+    "railways:dyed_smoke/white/chimneypush_small_dyeable",
+    "railways:dyed_smoke/orange/chimneypush_small_dyeable",
+    "railways:dyed_smoke/magenta/chimneypush_small_dyeable",
+    "railways:dyed_smoke/light_blue/chimneypush_small_dyeable",
+    "railways:dyed_smoke/yellow/chimneypush_small_dyeable",
+    "railways:dyed_smoke/lime/chimneypush_small_dyeable",
+    "railways:dyed_smoke/pink/chimneypush_small_dyeable",
+    "railways:dyed_smoke/gray/chimneypush_small_dyeable",
+    "railways:dyed_smoke/light_gray/chimneypush_small_dyeable",
+    "railways:dyed_smoke/cyan/chimneypush_small_dyeable",
+    "railways:dyed_smoke/purple/chimneypush_small_dyeable",
+    "railways:dyed_smoke/blue/chimneypush_small_dyeable",
+    "railways:dyed_smoke/brown/chimneypush_small_dyeable",
+    "railways:dyed_smoke/green/chimneypush_small_dyeable",
+    "railways:dyed_smoke/red/chimneypush_small_dyeable",
+    "railways:dyed_smoke/black/chimneypush_small_dyeable"
+  ]
+}

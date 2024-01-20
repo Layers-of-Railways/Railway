@@ -10,15 +10,20 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class PhantomSpriteManager {
-    private static final Map<ResourceLocation, WeakReference<TextureAtlasSprite>> map = new HashMap<>();
+    private static final Map<ResourceLocation, WeakReference<TextureAtlasSprite>> map = new ConcurrentHashMap<>();
     private static boolean lastVisible = false;
     public static boolean firstRun = true;
     public static boolean hasChanged = false;
+    private static boolean visible = false;
+
+    public static boolean isVisible() {
+        return visible;
+    }
 
     public static boolean register(TextureAtlasSprite sprite) {
         if (sprite.getName().getNamespace().equals(Railways.MODID) && sprite.getName().getPath().startsWith("block/track/phantom/")) {
@@ -30,7 +35,7 @@ public abstract class PhantomSpriteManager {
     }
 
     public static void tick(Minecraft mc) {
-        boolean visible = mc.player != null
+        visible = mc.player != null
             && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())
                 || CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.OFFHAND).getItem()));
         if (visible != lastVisible || firstRun) {
