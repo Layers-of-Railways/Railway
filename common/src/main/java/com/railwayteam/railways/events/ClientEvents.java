@@ -26,23 +26,20 @@ public class ClientEvents {
     public static void onClientTickStart(Minecraft mc) {
         PhantomSpriteManager.tick(mc);
 
+        Level level = mc.level;
+        long ticks = level == null ? 1 : level.getGameTime();
+        if (ticks % 40 == 0 && previousDevCapeSetting != (previousDevCapeSetting = CRConfigs.client().useDevCape.get())) {
+            CRPackets.PACKETS.send(new ConfigureDevCapeC2SPacket(previousDevCapeSetting));
+        }
+
         if (DummyRailwayMarkerHandler.getInstance() != null) {
-            Level level = mc.level;
-            long ticks = level == null ? 1 : level.getGameTime();
-            if (ticks % 40 == 0 && previousDevCapeSetting != (previousDevCapeSetting = CRConfigs.client().useDevCape.get())) {
-                CRPackets.PACKETS.send(new ConfigureDevCapeC2SPacket(previousDevCapeSetting));
-            }
             if (ticks % CRConfigs.client().journeymapRemoveObsoleteTicks.get() == 0) {
                 DummyRailwayMarkerHandler.getInstance().removeObsolete();
                 DummyRailwayMarkerHandler.getInstance().reloadMarkers();
             }
-//            DummyRailwayMarkerHandler.getInstance().removeObsolete(CreateClient.RAILWAYS.trains.keySet());
 
             if (ticks % CRConfigs.client().journeymapUpdateTicks.get() == 0) {
                 DummyRailwayMarkerHandler.getInstance().runUpdates();
-/*            for (Train train : CreateClient.RAILWAYS.trains.values()) {
-                DummyRailwayMarkerHandler.getInstance().addOrUpdateTrain(train);
-            }*/
             }
         }
 
