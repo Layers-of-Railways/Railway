@@ -40,6 +40,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
+import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
@@ -166,7 +167,7 @@ public class CRBlocks {
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
         return makeSmokeStack(variant, type, description, rotates, shape, spawnExtraSmoke, emitStationarySmoke,
                 (c, p) -> p.getVariantBuilder(c.get())
-                        .forAllStates(state -> ConfiguredModel.builder()
+                        .forAllStatesExcept(state -> ConfiguredModel.builder()
                                 .modelFile(p.models().withExistingParent(
                                                         c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
                                                         Railways.asResource("block/smokestack/block_" + variant)
@@ -175,7 +176,10 @@ public class CRBlocks {
                                                 .texture("particle", "#0")
                                 )
                                 .rotationY(rotates ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
-                                .build()
+                                .build(),
+                            AbstractSmokeStackBlock.ENABLED,
+                            AbstractSmokeStackBlock.POWERED,
+                            AbstractSmokeStackBlock.WATERLOGGED
                         ),
                 rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
     }
