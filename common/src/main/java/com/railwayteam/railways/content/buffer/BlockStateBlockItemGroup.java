@@ -32,7 +32,6 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     private final BlockEntry<?> blockEntry;
     @NotNull
     private final TagKey<Item> cycleTag;
-
     @Nullable
     private final T excluded;
 
@@ -67,6 +66,10 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         return items.get(value);
     }
 
+    public void registerDefaultEntry(T value, ItemEntry<BlockStateBlockItem<T>> entry) {
+        items.put(value, entry);
+    }
+
     private void register() {
         TagCycleHandlerServer.CYCLE_TRACKER.registerCycle(cycleTag);
         TagCycleHandlerServer.CYCLE_TRACKER.scheduleRecompute();
@@ -76,16 +79,21 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             TagCycleHandlerClient.CYCLE_TRACKER.scheduleRecompute();
         });
 
+        boolean primary = true;
         for (T v : values) {
-            if (excluded != null && v == excluded) continue;
+            if (excluded != null && v == excluded) {
+                primary = false;
+                continue;
+            }
 
-            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v))
+            items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, primary))
                 .properties(p -> p.tab(CRItems.mainCreativeTab))
                 .lang(v.getLangName(context))
                 .transform(itemTransformer)
                 .tag(cycleTag)
                 .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))
                 .register());
+            primary = false;
         }
     }
 

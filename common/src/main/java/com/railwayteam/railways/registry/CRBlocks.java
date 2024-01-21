@@ -38,7 +38,12 @@ import com.railwayteam.railways.content.handcar.HandcarControlsInteractionBehavi
 import com.railwayteam.railways.content.handcar.HandcarItem;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
-import com.railwayteam.railways.content.smokestack.*;
+import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
+import com.railwayteam.railways.content.smokestack.SmokestackStyle;
+import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
@@ -47,7 +52,6 @@ import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -56,15 +60,18 @@ import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -78,10 +85,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
@@ -157,57 +161,63 @@ public class CRBlocks {
 
     @FunctionalInterface
     private interface SmokeStackFunction<T extends SmokeStackBlock> {
-        T create(BlockBehaviour.Properties properties, SmokeStackBlock.SmokeStackType type, ShapeWrapper shape, boolean emitStationarySmoke);
+        T create(BlockBehaviour.Properties properties, SmokeStackBlock.SmokeStackType type, ShapeWrapper shape, boolean emitStationarySmoke, String variant);
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
-        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_" + variant);
-        return makeSmokeStack(variant, type, description, rotates, shape, spawnExtraSmoke, emitStationarySmoke, (c, p) -> {
-//                rotates ? p.axisBlock(c.get(), p.models().getExistingFile(modelLoc)) : null
-            if (rotates) {
-                p.getVariantBuilder(c.get())
-                    .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(p.models().getExistingFile(modelLoc))
-                        .rotationY((state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0))
-                        .build());
-            } else {
-                p.getVariantBuilder(c.get())
-                    .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(p.models().getExistingFile(modelLoc))
-                        .build());
-            }
-        }, rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
+        return makeSmokeStack(variant, type, description, rotates, shape, spawnExtraSmoke, emitStationarySmoke,
+                (c, p) -> p.getVariantBuilder(c.get())
+                        .forAllStatesExcept(state -> ConfiguredModel.builder()
+                                .modelFile(p.models().withExistingParent(
+                                                        c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
+                                                        Railways.asResource("block/smokestack/block_" + variant)
+                                                )
+                                                .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
+                                                .texture("particle", "#0")
+                                )
+                                .rotationY(rotates ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                                .build(),
+                            AbstractSmokeStackBlock.ENABLED,
+                            AbstractSmokeStackBlock.POWERED,
+                            AbstractSmokeStackBlock.WATERLOGGED
+                        ),
+                rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
     }
 
+    public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
+
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke, NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> blockStateProvider, SmokeStackFunction<SmokeStackBlock> blockFunction) {
-        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_" + variant);
-        MovementBehaviour movementBehaviour = new SmokeStackMovementBehaviour(spawnExtraSmoke);
-        return REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, type, shape, emitStationarySmoke))
+        TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
+        BlockEntry<SmokeStackBlock> BLOCK = REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, type, shape, emitStationarySmoke, variant))
             .initialProperties(SharedProperties::softMetal)
-            .blockstate(blockStateProvider::accept)
+            .blockstate(blockStateProvider)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
-            .onRegister(AllMovementBehaviours.movementBehaviour(movementBehaviour))
+            .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
             .lang(description)
-            .item()
-            .model((c, p) -> p.withExistingParent("item/" + c.getName(), modelLoc))
+            .item(BlockStateBlockItem.create(SmokeStackBlock.STYLE, SmokestackStyle.STEEL, true))
+                .lang(description)
+                .tab(() -> CRItems.mainCreativeTab)
+                .model((c, p) -> p.withExistingParent(c.getName(), Railways.asResource("block/smokestack_" + variant + "_steel")))
+                .tag(cycleTag)
             .build()
             .register();
+
+        if (!variant.equals("caboosestyle")) {
+            BlockStateBlockItemGroup<Couple<String>, SmokestackStyle> group = new BlockStateBlockItemGroup<>(Couple.create("smokestack_" + variant + "_", description), SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
+                    i -> i.tab(() -> null), cycleTag, SmokestackStyle.STEEL);
+            SMOKESTACK_GROUP.put(variant, group);
+            group.registerDefaultEntry(SmokestackStyle.STEEL, ItemEntry.cast(REGISTRATE.get("smokestack_" + variant, Registry.ITEM_REGISTRY)));
+        }
+
+        return BLOCK;
     }
-
-
-//  commented out because I'm pretty sure but not 100% that it was removed.
-//    static {
-//        REGISTRATE.startSection(AllSections.LOGISTICS);
-//    }
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
         .initialProperties(SharedProperties::softMetal)
-        //.blockstate((ctx,prov)->prov.horizontalBlock(ctx.get(), blockState -> prov.models()
-        //.getExistingFile(prov.modLoc("block/" + ctx.getName() + "/block"))))
         .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry())
             .forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(prov.models().getExistingFile(prov.modLoc(
@@ -472,16 +482,11 @@ public class CRBlocks {
     woodburner
      */
     public static final BlockEntry<SmokeStackBlock>
-        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, com.railwayteam.railways.util.ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
+        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
         LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Long Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
-        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true, (c, p) -> {
-            p.getVariantBuilder(c.get())
-                .forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_oilburner" + (state.getValue(OilburnerSmokeStackBlock.ENCASED) ? "_encased" : ""))))
-                    .build());
-        }, OilburnerSmokeStackBlock::new),
-        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", CRShapes.STREAMLINED_STACK, true),
+        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
+        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", true, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false,true),
         WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK, true);
 
     public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, ShapeWrapper.wrapped(CRShapes.DIESEL_STACK)))

@@ -87,8 +87,7 @@ public class CRTags {
       return state.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public enum AllItemTags {
@@ -97,6 +96,13 @@ public class CRTags {
     DECO_COUPLERS,
     WOODEN_HEADSTOCKS,
     COPYCAT_HEADSTOCKS,
+
+    CABOOSESTYLE_STACK,
+    LONG_STACK,
+    COALBURNER_STACK,
+    OILBURNER_STACK,
+    STREAMLINED_STACK,
+    WOODBURNER_STACK
     ;
 
     public final TagKey<Item> tag;
@@ -134,8 +140,7 @@ public class CRTags {
       return stack.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public static <T> TagKey<T> optionalTag(Registry<T> registry, ResourceLocation id) {
