@@ -50,17 +50,17 @@ public class NbtUtilsMixin {
              * Compat Cherry Track Fixer
              */
             if (CompatCherryTrackFix.standardCherryOld.contains(tag.getString("Name"))) {
-                snr$fixCherryTrackData(tag, "railways:track_cherry");
+                railways$fixCherryTrackData(tag, "railways:track_cherry");
             } else if (CompatCherryTrackFix.wideCherryOld.contains(tag.getString("Name"))) {
-                snr$fixCherryTrackData(tag, "railways:track_cherry_wide");
+                railways$fixCherryTrackData(tag, "railways:track_cherry_wide");
             } else if (CompatCherryTrackFix.narrowCherryOld.contains(tag.getString("Name"))) {
-                snr$fixCherryTrackData(tag, "railways:track_cherry_narrow");
+                railways$fixCherryTrackData(tag, "railways:track_cherry_narrow");
             }
         }
     }
 
     @Unique
-    private static void snr$fixCherryTrackData(CompoundTag tag, String name) {
+    private static void railways$fixCherryTrackData(CompoundTag tag, String name) {
         tag.putString("Name", name);
         CompoundTag properties = tag.getCompound("Properties");
         tag.put("Properties", properties);

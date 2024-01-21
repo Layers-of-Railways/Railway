@@ -18,8 +18,8 @@ public class TFCTrackCompat extends GenericTrackCompat {
     @Override
     protected Ingredient getIngredientForRail() {
         return Ingredient.fromValues(Stream.of(
-                AccessorIngredient_TagValue.railway$create(CommonTags.TFC_IRON_ROD.tag),
-                AccessorIngredient_TagValue.railway$create(CommonTags.TFC_ZINC_ROD.tag)
+                AccessorIngredient_TagValue.railways$create(CommonTags.TFC_IRON_ROD.tag),
+                AccessorIngredient_TagValue.railways$create(CommonTags.TFC_ZINC_ROD.tag)
         ));
     }
 

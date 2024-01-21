@@ -26,28 +26,28 @@ public abstract class MixinSpriteContents implements IPotentiallyInvisibleSprite
     @Inject(method = "<init>", at = @At("RETURN"))
     private void railways$onInit(ResourceLocation name, FrameSize frameSize, NativeImage originalImage, AnimationMetadataSection metadata, CallbackInfo ci) {
         if (PhantomSpriteManager.register((SpriteContents) (Object) this))
-            snr$shouldDoInvisibility = true;
+            railways$shouldDoInvisibility = true;
     }
 
     @Unique
-    private boolean snr$visible = true;
+    private boolean railways$visible = true;
     @Unique
-    private boolean snr$shouldDoInvisibility = false;
+    private boolean railways$shouldDoInvisibility = false;
 
     @Override
-    public void snr$uploadFrame(boolean visible) {
-        this.snr$visible = visible;
-        this.snr$shouldDoInvisibility = true;
+    public void railways$uploadFrame(boolean visible) {
+        this.railways$visible = visible;
+        this.railways$shouldDoInvisibility = true;
         if (this.animatedTexture != null)
-            ((AnimatedTextureDuck) this.animatedTexture).snr$uploadWithVisibility();
+            ((AnimatedTextureDuck) this.animatedTexture).railways$uploadWithVisibility();
     }
 
-    public boolean snr$shouldDoInvisibility() {
-        return snr$shouldDoInvisibility;
+    public boolean railways$shouldDoInvisibility() {
+        return railways$shouldDoInvisibility;
     }
 
-    public boolean snr$isVisible() {
-        return snr$visible || !snr$shouldDoInvisibility;
+    public boolean railways$isVisible() {
+        return railways$visible || !railways$shouldDoInvisibility;
     }
 
     @Mixin(SpriteContents.AnimatedTexture.class)
@@ -60,26 +60,26 @@ public abstract class MixinSpriteContents implements IPotentiallyInvisibleSprite
         @Shadow abstract void uploadFrame(int x, int y, int frameIndex);
 
         @Unique
-        private int snr$uploadX = 0;
+        private int railways$uploadX = 0;
         @Unique
-        private int snr$uploadY = 0;
+        private int railways$uploadY = 0;
 
         @Inject(method = "uploadFirstFrame", at = @At("HEAD"))
         private void railways$onUploadFirstFrame(int x, int y, CallbackInfo ci) {
-            snr$uploadX = x;
-            snr$uploadY = y;
+            railways$uploadX = x;
+            railways$uploadY = y;
         }
 
         @ModifyVariable(method = "uploadFrame", argsOnly = true, ordinal = 2, at = @At("LOAD"))
         private int railways$modifyFrameIndex(int frameIndex) {
-            if (!((IPotentiallyInvisibleSpriteContents) field_28469).snr$shouldDoInvisibility()) return frameIndex;
-            return ((IPotentiallyInvisibleSpriteContents) field_28469).snr$isVisible() ? 0 : 1;
+            if (!((IPotentiallyInvisibleSpriteContents) field_28469).railways$shouldDoInvisibility()) return frameIndex;
+            return ((IPotentiallyInvisibleSpriteContents) field_28469).railways$isVisible() ? 0 : 1;
         }
 
         @Override
-        public void snr$uploadWithVisibility() {
-            if (!((IPotentiallyInvisibleSpriteContents) field_28469).snr$shouldDoInvisibility()) return;
-            uploadFrame(snr$uploadX, snr$uploadY, ((IPotentiallyInvisibleSpriteContents) field_28469).snr$isVisible() ? 0 : 1);
+        public void railways$uploadWithVisibility() {
+            if (!((IPotentiallyInvisibleSpriteContents) field_28469).railways$shouldDoInvisibility()) return;
+            uploadFrame(railways$uploadX, railways$uploadY, ((IPotentiallyInvisibleSpriteContents) field_28469).railways$isVisible() ? 0 : 1);
         }
     }
 }

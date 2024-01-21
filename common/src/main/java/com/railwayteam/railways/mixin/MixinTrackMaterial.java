@@ -20,7 +20,7 @@ public class MixinTrackMaterial {
      * Which is from 1.20 Vanilla.
      */
     @Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
-    private static void snr$updateCherryCompatTracks(String serializedName, CallbackInfoReturnable<TrackMaterial> cir) {
+    private static void railways$updateCherryCompatTracks(String serializedName, CallbackInfoReturnable<TrackMaterial> cir) {
         switch (serializedName) {
             case "biomesoplenty:cherry", "byg:cherry", "blue_skies:cherry"
                     -> cir.setReturnValue(CRTrackMaterials.CHERRY);

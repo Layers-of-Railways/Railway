@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Also see snr$updateCherryCompatTracks inside {@link MixinTrackMaterial}
+ * Also see railways$updateCherryCompatTracks inside {@link MixinTrackMaterial}
  */
 public class CompatCherryTrackFix extends DataFix {
     /*

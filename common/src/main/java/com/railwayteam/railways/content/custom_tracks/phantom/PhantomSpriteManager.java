@@ -59,7 +59,7 @@ public abstract class PhantomSpriteManager {
             for (WeakReference<SpriteContents> ref : map.values()) {
                 SpriteContents sprite = ref.get();
                 if (sprite != null) {
-                    ((IPotentiallyInvisibleSpriteContents) sprite).snr$uploadFrame(lastVisible);
+                    ((IPotentiallyInvisibleSpriteContents) sprite).railways$uploadFrame(lastVisible);
                 }
             }
         }

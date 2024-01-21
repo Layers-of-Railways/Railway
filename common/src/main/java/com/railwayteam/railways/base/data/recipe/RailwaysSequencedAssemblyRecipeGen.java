@@ -105,8 +105,8 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                             || ((AccessorIngredient_TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
                     })) {
                         railsIngredient = Ingredient.fromValues(Stream.of(
-                            AccessorIngredient_TagValue.railway$create(Ingredients.ironNugget()),
-                            AccessorIngredient_TagValue.railway$create(Ingredients.zincNugget())));
+                            AccessorIngredient_TagValue.railways$create(Ingredients.ironNugget()),
+                            AccessorIngredient_TagValue.railways$create(Ingredients.zincNugget())));
                     }
 
                     Ingredient finalRailsIngredient = railsIngredient;
@@ -134,8 +134,8 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                     || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
             })) {
                 railsIngredient = Ingredient.fromValues(Stream.of(
-                    AccessorIngredient_TagValue.railway$create(Ingredients.ironNugget()),
-                    AccessorIngredient_TagValue.railway$create(Ingredients.zincNugget())));
+                    AccessorIngredient_TagValue.railways$create(Ingredients.ironNugget()),
+                    AccessorIngredient_TagValue.railways$create(Ingredients.zincNugget())));
             }
 
             Ingredient finalRailsIngredient = railsIngredient;
