@@ -17,7 +17,7 @@ public class CategoryIcon implements ItemLike {
     }
 
     public static CategoryIcon standard(String name) {
-        return new CategoryIcon(Railways.asResource("textures/gui/bogey_icons/"+name+".png"));
+        return new CategoryIcon(Railways.asResource("textures/gui/bogey_icons/" + name + ".png"));
     }
 
     public static NonNullSupplier<CategoryIcon> standardSupplier(String name) {

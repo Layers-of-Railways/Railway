@@ -2,7 +2,7 @@
 	"credit": "By Slimeist",
 	"texture_size": [128, 128],
 	"textures": {
-		"0": "railways:block/bogeys/handcar_frame",
+		"0": "railways:block/bogeys/standard/handcar_frame",
 		"1": "create:block/cogwheel"
 	},
 	"elements": [
@@ -99,8 +99,8 @@
 			}
 		},
 		{
-			"from": [2, -3.5, -4],
-			"to": [4, -1.5, -2],
+			"from": [2.001, -3.5, -4.001],
+			"to": [4.001, -1.5, -2.001],
 			"faces": {
 				"north": {"uv": [0.625, 11.375, 0.375, 11.625], "rotation": 270, "texture": "#0"},
 				"east": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},

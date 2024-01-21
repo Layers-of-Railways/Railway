@@ -5,6 +5,6 @@
   "flip_v": true,
   "model": "railways:models/block/bogey/handcar/handle.obj",
   "textures": {
-    "0": "railways:block/bogeys/handcar_frame"
+    "0": "railways:block/bogeys/standard/handcar_frame"
   }
 }

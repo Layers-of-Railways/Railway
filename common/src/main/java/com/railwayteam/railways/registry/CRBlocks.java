@@ -15,10 +15,10 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.DoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.LargePlatformDoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.SingleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.standard_gauge.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.standard_gauge.LargePlatformDoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.standard_gauge.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.standard_gauge.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -446,7 +446,6 @@ public class CRBlocks {
             .build()
             .lang("Handcar")
             .register();
-
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
         REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)

@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/wheels/long_shaft_wheels.obj",
+  "textures": {
+    "0": "create:block/axis",
+    "1": "create:block/bogey/wheel"
+  }
+}
