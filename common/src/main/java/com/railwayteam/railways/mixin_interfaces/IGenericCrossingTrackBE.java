@@ -18,9 +18,9 @@ import java.util.List;
 
 public interface IGenericCrossingTrackBE {
     @Nullable
-    Pair<TrackMaterial, TrackShape> snr$getFirstCrossingPiece();
+    Pair<TrackMaterial, TrackShape> railways$getFirstCrossingPiece();
     @Nullable
-    Pair<TrackMaterial, TrackShape> snr$getSecondCrossingPiece();
+    Pair<TrackMaterial, TrackShape> railways$getSecondCrossingPiece();
 
     @Environment(EnvType.CLIENT)
     static @NotNull BakedModel getModel(@NotNull Pair<TrackMaterial, TrackShape> data) {

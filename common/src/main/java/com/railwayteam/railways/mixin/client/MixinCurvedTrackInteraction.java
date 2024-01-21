@@ -34,7 +34,7 @@ public abstract class MixinCurvedTrackInteraction {
           ),
           cancellable = true
   )
-  private static void railway$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
+  private static void railways$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
     LocalPlayer player = Minecraft.getInstance().player;
     if (AdventureUtils.isAdventure(player))
       return;

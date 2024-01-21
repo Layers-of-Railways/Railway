@@ -137,8 +137,8 @@ public class GenericTrackCompat {
 
     protected Ingredient getIngredientForRail() {
         return Ingredient.fromValues(Stream.of(
-                AccessorIngredient_TagValue.railway$create(CommonTags.IRON_NUGGETS.tag),
-                AccessorIngredient_TagValue.railway$create(CommonTags.ZINC_NUGGETS.tag)
+                AccessorIngredient_TagValue.railways$create(CommonTags.IRON_NUGGETS.tag),
+                AccessorIngredient_TagValue.railways$create(CommonTags.ZINC_NUGGETS.tag)
         ));
     }
 

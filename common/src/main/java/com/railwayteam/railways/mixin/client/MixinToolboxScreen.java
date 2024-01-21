@@ -20,7 +20,7 @@ public abstract class MixinToolboxScreen extends AbstractSimiContainerScreen<Too
 	}
 
 	@Inject(method = "lambda$init$1", at = @At("HEAD"), cancellable = true)
-	private void railway$disposeConductorToolbox(CallbackInfo ci) {
+	private void railways$disposeConductorToolbox(CallbackInfo ci) {
 		if (menu.contentHolder instanceof MountedToolbox mounted) {
 			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
 			ci.cancel();

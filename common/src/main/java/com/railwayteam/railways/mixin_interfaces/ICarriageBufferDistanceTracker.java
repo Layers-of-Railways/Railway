@@ -3,9 +3,9 @@ package com.railwayteam.railways.mixin_interfaces;
 import org.jetbrains.annotations.Nullable;
 
 public interface ICarriageBufferDistanceTracker {
-    @Nullable Integer snr$getLeadingDistance();
-    @Nullable Integer snr$getTrailingDistance();
+    @Nullable Integer railways$getLeadingDistance();
+    @Nullable Integer railways$getTrailingDistance();
 
-    void snr$setLeadingDistance(int distance);
-    void snr$setTrailingDistance(int distance);
+    void railways$setLeadingDistance(int distance);
+    void railways$setTrailingDistance(int distance);
 }

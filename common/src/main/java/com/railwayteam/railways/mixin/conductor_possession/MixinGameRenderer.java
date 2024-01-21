@@ -27,7 +27,7 @@ public abstract class MixinGameRenderer {
     @Shadow protected abstract void loadEffect(ResourceLocation resourceLocation);
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
-    private void snr$bobView(PoseStack matrixStack, float partialTicks, CallbackInfo ci) {
+    private void railways$bobView(PoseStack matrixStack, float partialTicks, CallbackInfo ci) {
         if (!(minecraft.getCameraEntity() instanceof ConductorEntity conductor)) {
             return;
         }
@@ -42,14 +42,14 @@ public abstract class MixinGameRenderer {
     }
 
     @Inject(method = "checkEntityPostEffect", at = @At("RETURN"))
-    private void snr$checkEntityPostEffect(Entity entity, CallbackInfo ci) {
+    private void railways$checkEntityPostEffect(Entity entity, CallbackInfo ci) {
         if (entity instanceof ConductorEntity && CRConfigs.client().useConductorSpyShader.get()) {
             loadEffect(new ResourceLocation("shaders/post/scan_pincushion.json"));
         }
     }
 
     @Inject(method = "shouldRenderBlockOutline", at = @At("HEAD"), cancellable = true)
-    private void snr$shouldRenderBlockOutline(CallbackInfoReturnable<Boolean> cir) {
+    private void railways$shouldRenderBlockOutline(CallbackInfoReturnable<Boolean> cir) {
         if (ClientHandler.isPlayerMountedOnCamera()) {
             boolean flag = !minecraft.options.hideGui;
             HitResult hitresult = this.minecraft.hitResult;

@@ -81,7 +81,7 @@ public class GenericCrossingBlockEntity extends SmartBlockEntity implements IMer
     }
 
     @Override
-    public @Nullable Pair<TrackMaterial, TrackShape> snr$getFirstCrossingPiece() {
+    public @Nullable Pair<TrackMaterial, TrackShape> railways$getFirstCrossingPiece() {
         TrackMaterial primary = getPrimary();
         Couple<TrackShape> unmerged = TrackShapeLookup.getUnmerged(getBlockState().getValue(GenericCrossingBlock.SHAPE));
         if (unmerged == null) return null;
@@ -90,7 +90,7 @@ public class GenericCrossingBlockEntity extends SmartBlockEntity implements IMer
     }
 
     @Override
-    public @Nullable Pair<TrackMaterial, TrackShape> snr$getSecondCrossingPiece() {
+    public @Nullable Pair<TrackMaterial, TrackShape> railways$getSecondCrossingPiece() {
         TrackMaterial secondary = getSecondary();
         Couple<TrackShape> unmerged = TrackShapeLookup.getUnmerged(getBlockState().getValue(GenericCrossingBlock.SHAPE));
         if (unmerged == null) return null;

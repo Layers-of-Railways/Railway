@@ -19,12 +19,12 @@ public class MixinContraption {
     private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {
         BlockEntity be = world.getBlockEntity(add);
         if (be instanceof IPreAssembleCallback preTransformCallback)
-            preTransformCallback.snr$preAssemble();
+            preTransformCallback.railways$preAssemble();
 
         if (be instanceof SmartBlockEntity smartBE) {
             for (BlockEntityBehaviour behaviour : smartBE.getAllBehaviours()) {
                 if (behaviour instanceof IPreAssembleCallback preTransformCallback)
-                    preTransformCallback.snr$preAssemble();
+                    preTransformCallback.railways$preAssemble();
             }
         }
     }

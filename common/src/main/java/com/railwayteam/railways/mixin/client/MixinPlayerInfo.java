@@ -26,7 +26,7 @@ public class MixinPlayerInfo {
     @Shadow @Final private Map<MinecraftProfileTexture.Type, ResourceLocation> textureLocations;
     @Shadow private @Nullable String skinModel;
 
-    @Unique private boolean railway$texturesLoaded;
+    @Unique private boolean railways$texturesLoaded;
     @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
     // Replaces skin inside the dev env with the conductor skin
@@ -42,8 +42,8 @@ public class MixinPlayerInfo {
 
     @Inject(method = "getCapeLocation", at = @At("HEAD"))
     private void registerCapeTextures(CallbackInfoReturnable<ResourceLocation> cir) {
-        if (!railway$texturesLoaded && DevCapeUtils.INSTANCE.useDevCape(profile.getId())) {
-            railway$texturesLoaded = true;
+        if (!railways$texturesLoaded && DevCapeUtils.INSTANCE.useDevCape(profile.getId())) {
+            railways$texturesLoaded = true;
             this.textureLocations.put(MinecraftProfileTexture.Type.CAPE, DEV_CAPE);
         }
     }
@@ -60,7 +60,7 @@ public class MixinPlayerInfo {
             value = "INVOKE",
             target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
     ))
-    private void snr$setModelToLarge(CallbackInfo ci) {
+    private void railways$setModelToLarge(CallbackInfo ci) {
         if (Utils.isDevEnv()) {
             skinModel = "default";
         }

@@ -34,7 +34,7 @@ public class NbtUtilsMixin {
     // moved general updating to MixinDataFixTypes.java
 
     @Inject(method = "readBlockState", at = @At("HEAD"))
-    private static void snr$upgradeBlocks(HolderGetter<Block> blockGetter, CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
+    private static void railways$upgradeBlocks(HolderGetter<Block> blockGetter, CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
         if (tag.contains("Name", Tag.TAG_STRING)) {
             /*
              * MonoBogey Fixer

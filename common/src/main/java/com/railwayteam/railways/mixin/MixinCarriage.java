@@ -52,28 +52,28 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     }
 
     @Unique
-    private @Nullable Integer snr$leadingBufferDistance = null;
+    private @Nullable Integer railways$leadingBufferDistance = null;
     @Unique
-    private @Nullable Integer snr$trailingBufferDistance = null;
+    private @Nullable Integer railways$trailingBufferDistance = null;
 
     @Override
-    public @Nullable Integer snr$getLeadingDistance() {
-        return snr$leadingBufferDistance;
+    public @Nullable Integer railways$getLeadingDistance() {
+        return railways$leadingBufferDistance;
     }
 
     @Override
-    public @Nullable Integer snr$getTrailingDistance() {
-        return snr$trailingBufferDistance;
+    public @Nullable Integer railways$getTrailingDistance() {
+        return railways$trailingBufferDistance;
     }
 
     @Override
-    public void snr$setLeadingDistance(int distance) {
-        snr$leadingBufferDistance = distance;
+    public void railways$setLeadingDistance(int distance) {
+        railways$leadingBufferDistance = distance;
     }
 
     @Override
-    public void snr$setTrailingDistance(int distance) {
-        snr$trailingBufferDistance = distance;
+    public void railways$setTrailingDistance(int distance) {
+        railways$trailingBufferDistance = distance;
     }
 
     @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
@@ -107,10 +107,10 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
         }
         tag.put("ControllingConductors", listTag);
 
-        if (snr$leadingBufferDistance != null)
-            tag.putInt("LeadingBufferDistance", snr$leadingBufferDistance);
-        if (snr$trailingBufferDistance != null)
-            tag.putInt("TrailingBufferDistance", snr$trailingBufferDistance);
+        if (railways$leadingBufferDistance != null)
+            tag.putInt("LeadingBufferDistance", railways$leadingBufferDistance);
+        if (railways$trailingBufferDistance != null)
+            tag.putInt("TrailingBufferDistance", railways$trailingBufferDistance);
     }
 
     @Inject(method = "read", at = @At("RETURN"))
@@ -128,10 +128,10 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
         }
 
         if (tag.contains("LeadingBufferDistance", Tag.TAG_INT))
-            ((ICarriageBufferDistanceTracker) carriage).snr$setLeadingDistance(tag.getInt("LeadingBufferDistance"));
+            ((ICarriageBufferDistanceTracker) carriage).railways$setLeadingDistance(tag.getInt("LeadingBufferDistance"));
 
         if (tag.contains("TrailingBufferDistance", Tag.TAG_INT))
-            ((ICarriageBufferDistanceTracker) carriage).snr$setTrailingDistance(tag.getInt("TrailingBufferDistance"));
+            ((ICarriageBufferDistanceTracker) carriage).railways$setTrailingDistance(tag.getInt("TrailingBufferDistance"));
     }
 
     @Inject(method = "travel", at = @At("HEAD"))
@@ -150,17 +150,17 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 0))
     private boolean allowUniversalTrackLeading(boolean original) {
-        return snr$isIncompatible(original, true);
+        return railways$isIncompatible(original, true);
     }
 
     @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 1))
     private boolean allowUniversalTrackTrailing(boolean original) {
-        return snr$isIncompatible(original, false);
+        return railways$isIncompatible(original, false);
     }
 
     @Unique
-    private boolean snr$isIncompatible(boolean original, boolean leading) {
+    private boolean railways$isIncompatible(boolean original, boolean leading) {
         CarriageBogey bogey = leading ? leadingBogey() : trailingBogey();
         TravellingPoint point = leading ? getLeadingPoint() : getTrailingPoint();
         if (point.edge == null)

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Ingredient.TagValue.class)
 public interface AccessorIngredient_TagValue {
     @Invoker("<init>")
-    static Ingredient.TagValue railway$create(TagKey<Item> tag) {
+    static Ingredient.TagValue railways$create(TagKey<Item> tag) {
         throw new AssertionError();
     }
 
