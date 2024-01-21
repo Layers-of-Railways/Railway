@@ -9,17 +9,17 @@ public class MixinCarriageContraptionEntity implements IUpdateCount {
     private int updateCount = 0;
 
     @Override
-    public int snr_getUpdateCount() {
+    public int railways$getUpdateCount() {
         return updateCount;
     }
 
     @Override
-    public void snr_fromParent(IUpdateCount parent) {
-        updateCount = parent.snr_getUpdateCount();
+    public void railways$fromParent(IUpdateCount parent) {
+        updateCount = parent.railways$getUpdateCount();
     }
 
     @Override
-    public void snr_markUpdate() {
+    public void railways$markUpdate() {
         updateCount++;
     }
 }

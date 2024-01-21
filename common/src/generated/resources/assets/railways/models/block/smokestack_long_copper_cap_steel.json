@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/smokestack/block_long",
+  "textures": {
+    "0": "railways:block/smokestack/long/copper_cap_steel",
+    "particle": "#0"
+  }
+}

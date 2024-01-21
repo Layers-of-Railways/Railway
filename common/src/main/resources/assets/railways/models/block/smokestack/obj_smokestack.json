@@ -1,7 +1,0 @@
-{
-	"parent": "block/block",
-	"textures": {
-		"caboose": "railways:block/smokestack/caboosestyle",
-		"woodburner": "railways:block/smokestack/woodburner"
-	}
-}

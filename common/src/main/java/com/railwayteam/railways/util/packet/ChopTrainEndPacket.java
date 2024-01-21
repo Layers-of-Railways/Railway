@@ -47,10 +47,10 @@ public class ChopTrainEndPacket implements S2CPacket {
                     train.carriages.remove(train.carriages.size() - 1);
                     train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
                 }
-                double[] originalStress = ((AccessorTrain) train).snr_getStress();
+                double[] originalStress = ((AccessorTrain) train).railways$getStress();
                 double[] newStress = new double[originalStress.length - numberOfCarriages];
                 System.arraycopy(originalStress, 0, newStress, 0, newStress.length);
-                ((AccessorTrain) train).snr_setStress(newStress);
+                ((AccessorTrain) train).railways$setStress(newStress);
                 train.doubleEnded = doubleEnded;
             }
         }

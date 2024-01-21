@@ -41,8 +41,8 @@ public class GenericCrossingModel implements BakedModel, FabricBakedModel {
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
         if (blockView.getBlockEntity(pos) instanceof IGenericCrossingTrackBE genericCrossing) {
-            Pair<TrackMaterial, TrackShape> piece1 = genericCrossing.snr$getFirstCrossingPiece();
-            Pair<TrackMaterial, TrackShape> piece2 = genericCrossing.snr$getSecondCrossingPiece();
+            Pair<TrackMaterial, TrackShape> piece1 = genericCrossing.railways$getFirstCrossingPiece();
+            Pair<TrackMaterial, TrackShape> piece2 = genericCrossing.railways$getSecondCrossingPiece();
 
             if (piece1 != null)
                 context.bakedModelConsumer().accept(IGenericCrossingTrackBE.getModel(piece1), state);

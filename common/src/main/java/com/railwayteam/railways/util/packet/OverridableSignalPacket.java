@@ -63,7 +63,7 @@ public class OverridableSignalPacket implements S2CPacket {
                 SignalBlockEntity signalBE = null;
                 if (signalPos != null && level.getBlockEntity(signalPos) instanceof SignalBlockEntity signal)
                     signalBE = signal;
-                overridableSignal.snr$refresh(signalBE, signalState, ticks, distantSignal);
+                overridableSignal.railways$refresh(signalBE, signalState, ticks, distantSignal);
             }
         }
     }

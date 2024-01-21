@@ -29,11 +29,13 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.connectedText
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRPalettes {
-    private static final CreateRegistrate REGISTRATE = Railways.registrate().creativeModeTab(
-        () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
-    );
+    private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static void register() { // registration order is important for a clean inventory layout
+        // set creative mode tab here so as not to break with classloading order
+        REGISTRATE.creativeModeTab(
+            () -> CRItems.palettesCreativeTab, "Create Steam 'n' Rails: Palettes"
+        );
         for (Styles style : Styles.values())
             style.register(null);
 
@@ -41,6 +43,8 @@ public class CRPalettes {
             for (Styles style : Styles.values())
                 style.register(dyeColor);
         }
+        // reset tab, just to be safe
+        REGISTRATE.creativeModeTab(() -> CRItems.mainCreativeTab);
     }
 
     public static final Map<@Nullable DyeColor, TagKey<Item>> CYCLE_GROUPS = new HashMap<>(17, 2);

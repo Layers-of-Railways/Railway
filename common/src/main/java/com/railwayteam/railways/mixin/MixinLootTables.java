@@ -52,7 +52,7 @@ public class MixinLootTables {
             "method_20711",
             "a"
     }, at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"), require = 0)
-    private static void snr$error(Logger instance, String s, Object o1, Object o2) {
+    private static void railways$error(Logger instance, String s, Object o1, Object o2) {
         if (ignoreNextError) {
             ignoreNextError = false;
             return;
@@ -62,7 +62,7 @@ public class MixinLootTables {
 
     @SuppressWarnings({"UnresolvedMixinReference", "MixinAnnotationTarget"})
     @Redirect(method = "lambda$apply$0", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"), require = 0)
-    private void snr$error2(Logger instance, String s, Object o1, Object o2) {
+    private void railways$error2(Logger instance, String s, Object o1, Object o2) {
         if (ignoreNextError) {
             ignoreNextError = false;
             return;

@@ -42,7 +42,7 @@ public class TrackCoupler extends SingleBlockEntityEdgePoint {
     }
 
     public void keepAlive(Train train) {
-        if (((IHandcarTrain) train).snr$isHandcar()) return;
+        if (((IHandcarTrain) train).railways$isHandcar()) return;
         activated = 8;
         currentTrain = train.id;
     }

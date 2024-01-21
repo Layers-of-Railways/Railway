@@ -22,7 +22,7 @@ public class MixinAbstractMinecart_Type {
 	private static Type[] $VALUES; // moj
 
 	@Invoker("<init>")
-	private static Type railway$createType(String name, int ordinal) {
+	private static Type railways$createType(String name, int ordinal) {
 		throw new AssertionError();
 	}
 
@@ -30,10 +30,10 @@ public class MixinAbstractMinecart_Type {
 			method = "<clinit>",
 			at = @At("TAIL")
 	)
-	private static void railway$addTypes(CallbackInfo ci) {
+	private static void railways$addTypes(CallbackInfo ci) {
 		ArrayList<Type> types = new ArrayList<>(List.of($VALUES));
-		types.add(railway$createType("RAILWAY_JUKEBOX", $VALUES.length));
-		types.add(railway$createType("RAILWAY_WORKBENCH", $VALUES.length + 1));
+		types.add(railways$createType("RAILWAY_JUKEBOX", $VALUES.length));
+		types.add(railways$createType("RAILWAY_WORKBENCH", $VALUES.length + 1));
 		$VALUES = types.toArray(Type[]::new);
 	}
 }

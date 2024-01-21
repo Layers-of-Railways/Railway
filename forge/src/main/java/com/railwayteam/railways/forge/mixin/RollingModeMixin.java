@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(targets = "com.simibubi.create.content.contraptions.actors.roller.RollerBlockEntity$RollingMode", remap = false)
 public class RollingModeMixin {
     @Unique
-    public void snr$placeholder() {} // required to actually get the mixin to be applied
+    public void railways$placeholder() {} // required to actually get the mixin to be applied
 }

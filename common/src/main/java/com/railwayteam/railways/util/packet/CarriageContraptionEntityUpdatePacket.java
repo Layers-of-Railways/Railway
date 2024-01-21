@@ -46,10 +46,10 @@ public class CarriageContraptionEntityUpdatePacket implements S2CPacket {
       Entity target = level.getEntity(this.id);
       if (target instanceof CarriageContraptionEntity cce) {
         cce.trainId = trainId;
-        ((AccessorCarriageContraptionEntity) cce).snr_setCarriage(null);
+        ((AccessorCarriageContraptionEntity) cce).railways$setCarriage(null);
         cce.carriageIndex = carriageIndex;
-        ((AccessorCarriageContraptionEntity) cce).snr_bindCarriage();
-        ((IUpdateCount) cce).snr_markUpdate();
+        ((AccessorCarriageContraptionEntity) cce).railways$bindCarriage();
+        ((IUpdateCount) cce).railways$markUpdate();
       }
     }
   }

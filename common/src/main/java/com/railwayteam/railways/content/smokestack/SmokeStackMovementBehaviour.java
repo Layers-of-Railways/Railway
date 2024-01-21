@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticle;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticleData;
 import com.railwayteam.railways.mixin.client.AccessorLevelRenderer;
