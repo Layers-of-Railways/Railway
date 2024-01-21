@@ -223,7 +223,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                     if (location != null && location.graph != null) {
                         location.graph.removePoint(CREdgePointTypes.COUPLER, point.id);
                         Create.RAILWAYS.trains.forEach((uuid, train) -> {
-                            ((IOccupiedCouplers) train).snr$getOccupiedCouplers().remove(point.id);
+                            ((IOccupiedCouplers) train).railways$getOccupiedCouplers().remove(point.id);
                             if (uuid == point.getCurrentTrain() || train.graph == location.graph) {
                                 train.updateSignalBlocks = true;
                             }

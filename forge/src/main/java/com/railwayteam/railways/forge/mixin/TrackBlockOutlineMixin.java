@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TrackBlockOutline.class)
 public class TrackBlockOutlineMixin {
     @Inject(method = "drawCustomBlockSelection", at = @At("HEAD"), cancellable = true, remap = false)
-    private static void snr$cancel(RenderHighlightEvent.Block event, CallbackInfo ci) {
+    private static void railways$cancel(RenderHighlightEvent.Block event, CallbackInfo ci) {
         if (CustomTrackBlockOutline.skipCustomRendering())
             ci.cancel();
     }

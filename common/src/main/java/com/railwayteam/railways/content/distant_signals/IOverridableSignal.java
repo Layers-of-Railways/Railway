@@ -6,11 +6,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public interface IOverridableSignal {
-    default void snr$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks) {
-        snr$refresh(signalBE, state, ticks, false);
+    default void railways$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks) {
+        railways$refresh(signalBE, state, ticks, false);
     }
 
-    void snr$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal);
+    void railways$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal);
 
-    Optional<SignalBlockEntity.SignalState> snr$getOverriddenState();
+    Optional<SignalBlockEntity.SignalState> railways$getOverriddenState();
 }

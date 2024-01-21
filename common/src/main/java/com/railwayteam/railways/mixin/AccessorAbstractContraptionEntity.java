@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(AbstractContraptionEntity.class)
 public interface AccessorAbstractContraptionEntity {
     @Accessor(value = "skipActorStop", remap = false)
-    void snr_setSkipActorStop(boolean skipActorStop);
+    void railways$setSkipActorStop(boolean skipActorStop);
 
     @Invoker(value = "moveCollidedEntitiesOnDisassembly", remap = false)
-    void snr_moveCollidedEntitiesOnDisassembly(StructureTransform transform);
+    void railways$moveCollidedEntitiesOnDisassembly(StructureTransform transform);
 }

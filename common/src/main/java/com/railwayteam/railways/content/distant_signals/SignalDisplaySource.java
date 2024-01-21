@@ -61,7 +61,7 @@ public class SignalDisplaySource extends SingleLineDisplaySource {
                 return true;
 
             if (source instanceof NixieTubeDisplaySource && context.getSourceBlockEntity() instanceof NixieTubeBlockEntity nixieSource) {
-                if (((IOverridableSignal) nixieSource).snr$getOverriddenState().isPresent())
+                if (((IOverridableSignal) nixieSource).railways$getOverriddenState().isPresent())
                     return true;
                 if (getState(nixie.getFullText()).isPresent()) {
                     return true;

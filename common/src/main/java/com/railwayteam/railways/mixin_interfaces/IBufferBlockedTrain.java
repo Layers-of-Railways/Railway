@@ -1,8 +1,8 @@
 package com.railwayteam.railways.mixin_interfaces;
 
 public interface IBufferBlockedTrain {
-    boolean snr$isControlBlocked();
-    void snr$setControlBlocked(boolean controlBlocked);
+    boolean railways$isControlBlocked();
+    void railways$setControlBlocked(boolean controlBlocked);
 
-    int snr$getBlockedSign();
+    int railways$getBlockedSign();
 }

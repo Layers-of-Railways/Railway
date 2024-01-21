@@ -20,7 +20,7 @@ public class MixinParticleEngine {
     @Shadow @Final private static List<ParticleRenderType> RENDER_ORDER;
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
-    private static void snr$addRenderType(CallbackInfo ci) {
+    private static void railways$addRenderType(CallbackInfo ci) {
         RENDER_ORDER = ImmutableList.<ParticleRenderType>builder()
             .addAll(RENDER_ORDER)
             .add(SmokeParticle.TRANSPARENT_SMOKE)

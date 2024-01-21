@@ -11,6 +11,6 @@ import java.lang.ref.WeakReference;
 public interface AccessorControlsHandler {
     @Accessor
     static WeakReference<AbstractContraptionEntity> getEntityRef() {
-        throw new RuntimeException("Should be mixed in");
+        throw new AssertionError();
     }
 }

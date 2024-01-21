@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinEntity {
     @SuppressWarnings({"ConstantValue"})
     @Inject(method = "turn", at = @At("HEAD"), cancellable = true)
-    private void snr$turn(double yaw, double pitch, CallbackInfo ci) {
+    private void railways$turn(double yaw, double pitch, CallbackInfo ci) {
         ConductorEntity conductor;
         if ((Object) this instanceof Player this$player &&
                 (conductor = ConductorPossessionController.getPossessingConductor(this$player)) != null) {
@@ -23,7 +23,7 @@ public class MixinEntity {
     }
 
     @Inject(method = "push(Lnet/minecraft/world/entity/Entity;)V", at = @At("HEAD"), cancellable = true)
-    private void snr$stopPushing(Entity entity, CallbackInfo ci) {
+    private void railways$stopPushing(Entity entity, CallbackInfo ci) {
         if (ConductorPossessionController.getPossessingConductor((Entity) (Object) this) == entity)
             ci.cancel();
     }

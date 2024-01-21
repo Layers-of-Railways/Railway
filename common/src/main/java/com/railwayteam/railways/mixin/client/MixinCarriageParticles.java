@@ -15,19 +15,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CarriageParticles.class)
 public class MixinCarriageParticles {
-    @Unique private boolean snr$isHandcar;
+    @Unique private boolean railways$isHandcar;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void snr$checkIfHandcar(CarriageContraptionEntity entity, CallbackInfo ci) {
-        snr$isHandcar = entity.getCarriage().bogeys.both(b -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
+    private void railways$checkIfHandcar(CarriageContraptionEntity entity, CallbackInfo ci) {
+        railways$isHandcar = entity.getCarriage().bogeys.both(b -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
     }
 
     @WrapWithCondition(method = "tick", at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"
     ))
-    private boolean snr$skipParticlesForHandcar(Level instance, ParticleOptions particleData, double x, double y, double z,
+    private boolean railways$skipParticlesForHandcar(Level instance, ParticleOptions particleData, double x, double y, double z,
                                                 double xSpeed, double ySpeed, double zSpeed, @Local(ordinal = 1) boolean spark) {
-        return spark || !snr$isHandcar;
+        return spark || !railways$isHandcar;
     }
 }

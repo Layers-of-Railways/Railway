@@ -76,16 +76,16 @@ public class MixinTrackTargetingBlockItem {
         @Mutable
         private static TrackTargetingBlockItem.OverlapResult[] $VALUES;
 
-        private static final TrackTargetingBlockItem.OverlapResult NOT_STRAIGHT = snr$addResult("NOT_STRAIGHT", "track_target.not_straight");
+        private static final TrackTargetingBlockItem.OverlapResult NOT_STRAIGHT = railways$addResult("NOT_STRAIGHT", "track_target.not_straight");
 
         @Invoker("<init>")
-        public static TrackTargetingBlockItem.OverlapResult snr$invokeInit(String internalName, int internalId, String feedback) {
+        public static TrackTargetingBlockItem.OverlapResult railways$invokeInit(String internalName, int internalId, String feedback) {
             throw new AssertionError();
         }
 
-        private static TrackTargetingBlockItem.OverlapResult snr$addResult(String internalName, String feedback) {
+        private static TrackTargetingBlockItem.OverlapResult railways$addResult(String internalName, String feedback) {
             ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<>(Arrays.asList($VALUES));
-            TrackTargetingBlockItem.OverlapResult result = snr$invokeInit(internalName, results.get(results.size() - 1).ordinal() + 1, feedback);
+            TrackTargetingBlockItem.OverlapResult result = railways$invokeInit(internalName, results.get(results.size() - 1).ordinal() + 1, feedback);
             results.add(result);
             $VALUES = results.toArray(new TrackTargetingBlockItem.OverlapResult[0]);
             return result;

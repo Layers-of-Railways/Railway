@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Minecraft.class)
 public class MixinMinecraft {
     @Inject(method = "handleKeybinds", at = @At("HEAD"))
-    private void snr$handleStart(CallbackInfo ci) {
+    private void railways$handleStart(CallbackInfo ci) {
         ConductorPossessionController.onHandleKeybinds((Minecraft) (Object) this, true);
     }
 
     @Inject(method = "handleKeybinds", at = @At("RETURN"))
-    private void snr$handleEnd(CallbackInfo ci) {
+    private void railways$handleEnd(CallbackInfo ci) {
         ConductorPossessionController.onHandleKeybinds((Minecraft) (Object) this, false);
     }
 }

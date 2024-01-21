@@ -21,7 +21,7 @@ public class EnderManMixin {
 			locals = LocalCapture.CAPTURE_FAILHARD,
 			cancellable = true
 	)
-	private void railway$conductorCapsPreventAnger(Player player, CallbackInfoReturnable<Boolean> cir,
+	private void railways$conductorCapsPreventAnger(Player player, CallbackInfoReturnable<Boolean> cir,
 												   ItemStack helmet) {
 		if (helmet.is(CRItems.CONDUCTOR_CAPS))
 			cir.setReturnValue(false);

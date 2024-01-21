@@ -17,7 +17,7 @@ public class MixinAbstractMinecart {
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private static void railway$createCustomMinecarts(Level level, double x, double y, double z, Type type, CallbackInfoReturnable<AbstractMinecart> cir) {
+	private static void railways$createCustomMinecarts(Level level, double x, double y, double z, Type type, CallbackInfoReturnable<AbstractMinecart> cir) {
 		if (type == MinecartJukebox.TYPE)
 			cir.setReturnValue(MinecartJukebox.create(level, x, y, z));
 		if (type == MinecartWorkbench.TYPE)

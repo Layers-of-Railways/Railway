@@ -7,31 +7,31 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Train.class)
 public interface AccessorTrain {
     @Accessor(value = "stress", remap = false)
-    double[] snr_getStress();
+    double[] railways$getStress();
 
     @Accessor(value = "stress", remap = false)
-    void snr_setStress(double[] stress);
+    void railways$setStress(double[] stress);
 
     @Mixin(value = Train.Penalties.class, remap = false)
     interface AccessorPenalties {
-        @Accessor
-        static int getRED_SIGNAL() {
-            throw new RuntimeException("Should be mixed in");
+        @Accessor("RED_SIGNAL")
+        static int railways$getRedSignal() {
+            throw new AssertionError();
         }
 
-        @Accessor
-        static int getREDSTONE_RED_SIGNAL() {
-            throw new RuntimeException("Should be mixed in");
+        @Accessor("REDSTONE_RED_SIGNAL")
+        static int railways$getRedstoneRedSignal() {
+            throw new AssertionError();
         }
 
-        @Accessor
-        static int getSTATION_WITH_TRAIN() {
-            throw new RuntimeException("Should be mixed in");
+        @Accessor("STATION_WITH_TRAIN")
+        static int railways$getStationWithTrain() {
+            throw new AssertionError();
         }
 
-        @Accessor
-        static int getSTATION() {
-            throw new RuntimeException("Should be mixed in");
+        @Accessor("STATION")
+        static int railways$getStation() {
+            throw new AssertionError();
         }
     }
 }

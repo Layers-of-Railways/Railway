@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(OrientedContraptionEntity.class)
 public interface AccessorOrientedContraptionEntity {
     @Invoker(value = "makeStructureTransform", remap = false)
-    StructureTransform snr_makeStructureTransform();
+    StructureTransform railways$makeStructureTransform();
 }
