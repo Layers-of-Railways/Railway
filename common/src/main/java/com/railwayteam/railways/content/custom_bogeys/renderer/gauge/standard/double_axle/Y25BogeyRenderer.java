@@ -55,6 +55,7 @@ public class Y25BogeyRenderer extends BogeyRenderer {
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
+                    .translate(0, -12 / 16f, 0)
                     .render(ms, light, vb);
             if (!inInstancedContraption)
                 ms.popPose();
