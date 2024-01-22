@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.custom_bogeys.wide_gauge;
+package com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge;
 
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;

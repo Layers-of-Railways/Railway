@@ -4,7 +4,6 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -14,11 +13,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.FREIGHT_FRAME;
+import static com.railwayteam.railways.registry.CRBlockPartials.LONG_SHAFTED_WHEELS;
 
 public class FreightBogeyRenderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 2);
+        createModelInstance(materialManager, LONG_SHAFTED_WHEELS, 2);
         createModelInstance(materialManager, FREIGHT_FRAME);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
@@ -48,7 +48,7 @@ public class FreightBogeyRenderer extends BogeyRenderer {
         getTransform(FREIGHT_FRAME, ms, inInstancedContraption)
                 .render(ms, light, vb);
 
-        BogeyModelData[] wheels = getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] wheels = getTransform(LONG_SHAFTED_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
             if (!inInstancedContraption)
                 ms.pushPose();
