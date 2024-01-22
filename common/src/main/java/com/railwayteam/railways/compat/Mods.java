@@ -20,8 +20,8 @@ public enum Mods {
 	TWILIGHTFOREST("twilightforest"),
 	SODIUM("sodium"),
 	VOICECHAT("voicechat"),
- // Dreams and Desires
- CREATE_DD("create_dd"),
+     // Dreams and Desires
+     CREATE_DD("create_dd"),
 	QUARK("quark"),
 	MALILIB("malilib"),
 	TWEAKEROO("tweakeroo"),
