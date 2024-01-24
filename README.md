@@ -39,3 +39,5 @@ Certain sections of the code are from the Create mod, which is licensed under th
 Some datafixer code is from the Quilt Standard Libraries, which is licensed under the Apache-2.0 license. See [QSL's license](https://github.com/QuiltMC/quilt-standard-libraries/blob/1.19.4/LICENSE) for more information.
 
 Most of the code for spy conductors is from Security Craft, which is licensed under the MIT license. See [Security Craft's license](https://github.com/Geforce132/SecurityCraft/blob/1.18.2/LICENSE) for more information.
+
+Most of the code for annotation based conditional mixins is from Neruina, which is licensed under the MIT license. See [Neruina's license](https://github.com/Bawnorton/Neruina/blob/multi-version/LICENSE.txt) for more information.

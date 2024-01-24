@@ -20,10 +20,10 @@ public class IncompatibleModsCheck {
     public static void warnings(Minecraft mc) {
         if (IncompatibleModsCheck.optifinePresent) {
             if (!CRConfigs.client().disableOptifineWarning.get()) {
-                Railways.LOGGER.fatal("Optifine Has been detected, Disabled Warning Status: false");
+                Railways.LOGGER.error("Optifine Has been detected, Disabled Warning Status: false");
                 mc.setScreen(new OptifineWarningScreen());
             } else {
-                Railways.LOGGER.fatal("Optifine Has been detected, Disabled Warning Status: true");
+                Railways.LOGGER.error("Optifine Has been detected, Disabled Warning Status: true");
             }
         }
     }
