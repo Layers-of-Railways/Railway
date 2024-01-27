@@ -42,7 +42,7 @@ public class CRTags {
 
 
   public enum AllBlockTags {
-    SEMAPHORE_POLES(MOD, MOD.optionalDefault,false),
+    SEMAPHORE_POLES,
     TRACK_CASING_BLACKLIST(MOD, MOD.optionalDefault,false),
     CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false), // so other mods / datapacks can make more blocks usable for conductor spies
     LOCOMETAL,
@@ -50,6 +50,7 @@ public class CRTags {
     ;
 
     public final TagKey<Block> tag;
+    public final boolean alwaysDatagen;
 
 
     AllBlockTags() {
@@ -70,7 +71,12 @@ public class CRTags {
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.BLOCK, id);
+      if (optional) {
+        tag = optionalTag(Registry.BLOCK, id);
+      } else {
+        tag = TagKey.create(Registry.BLOCK_REGISTRY, id);
+      }
+      this.alwaysDatagen = alwaysDatagen;
     }
 
     @SuppressWarnings("deprecation")
@@ -126,7 +132,11 @@ public class CRTags {
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.ITEM, id);
+      if (optional) {
+        tag = optionalTag(Registry.ITEM, id);
+      } else {
+        tag = TagKey.create(Registry.ITEM_REGISTRY, id);
+      }
       this.alwaysDatagen = alwaysDatagen;
     }
 

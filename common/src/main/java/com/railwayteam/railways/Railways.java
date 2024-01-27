@@ -103,10 +103,10 @@ public class Railways {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
     REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
+    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
     gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
-    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, new EmiExcludedTagGen(gen));
     gen.addProvider(true, new EmiRecipeDefaultsGen(gen));
   }
