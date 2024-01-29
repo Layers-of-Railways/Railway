@@ -46,21 +46,10 @@ subprojects {
         maven { url = uri("https://maven.maxhenkel.de/repository/public") } // Simple Voice Chat
     }
 
-    val loom = project.extensions.getByName<LoomGradleExtensionAPI>("loom")
-
-//    loom {
-//        silentMojangMappingsLicense()
-//        runs.configureEach {
-//            vmArg("-Dmixin.debug.export=true")
-//            vmArg("-Dmixin.env.remapRefMap=true")
-//            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-//        }
-//    }
-
     dependencies {
         "minecraft"("com.mojang:minecraft:${"minecraft_version"()}")
         // layered mappings - Mojmap names, parchment and QM docs and parameters
-        "mappings"(loom.layered {
+        "mappings"(project.extensions.getByName<LoomGradleExtensionAPI>("loom").layered {
             mappings("org.quiltmc:quilt-mappings:${"minecraft_version"()}+build.${"qm_version"()}:intermediary-v2")
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
             officialMojangMappings { nameSyntheticMembers = false }

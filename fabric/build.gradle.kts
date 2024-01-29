@@ -1,3 +1,5 @@
+import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.configuration.FabricApiExtension.DataGenerationSettings
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -14,20 +16,27 @@ loom {
     val common = project(":common")
     accessWidenerPath = common.loom.accessWidenerPath
 
-    //fixme
-//    runs {
-//        datagen {
-//            client()
-//
-//            name = "Minecraft Data"
-//            vmArg = "-Dfabric-api.datagen"
-//            vmArg = "-Dfabric-api.datagen.output-dir=${common.file("src/generated/resources")}"
-//            vmArg = "-Dfabric-api.datagen.modid=railways"
-//            vmArg = "-Dporting_lib.datagen.existing_resources=${common.file("src/main/resources")}"
-//
-//            environmentVariable("DATAGEN", "TRUE")
-//        }
-//    }
+    silentMojangMappingsLicense()
+    runs.configureEach {
+        vmArg("-Dmixin.debug.export=true")
+        vmArg("-Dmixin.env.remapRefMap=true")
+        vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+    }
+
+
+    runs {
+        create("datagen") {
+            client()
+
+            name = "Minecraft Data"
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${common.file("src/generated/resources")}")
+            vmArg("-Dfabric-api.datagen.modid=railways")
+            vmArg("-Dporting_lib.datagen.existing_resources=${common.file("src/main/resources")}")
+
+            environmentVariable("DATAGEN", "TRUE")
+        }
+    }
 }
 
 val common: Configuration by configurations.creating

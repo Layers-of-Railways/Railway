@@ -65,12 +65,17 @@ tasks.processResources {
     exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
 
     // Minify all .json files in built jars
-    //fixme
-//    doLast {
-//        fileTree(dir = outputs.files.asPath, include = "**/*.json").forEach { file ->
-//            file.writeText(JsonOutput.toJson(JsonSlurper().parseText(file.readText())))
-//        }
-//    }
+    doLast {
+        val outputDir = File(outputs.files.asPath)
+        outputDir.walkTopDown()
+            .filter { it.isFile && it.extension == "json" }
+            .forEach { file ->
+                val jsonContent = file.readText()
+                val parsedJson = JsonSlurper().parseText(jsonContent)
+                val updatedJson = JsonOutput.toJson(parsedJson)
+                file.writeText(updatedJson)
+            }
+    }
 }
 
 sourceSets.main {
