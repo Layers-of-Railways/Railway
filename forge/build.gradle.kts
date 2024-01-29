@@ -1,17 +1,18 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
-    id "me.modmuss50.mod-publish-plugin"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("me.modmuss50.mod-publish-plugin")
 }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
+    val common = project(":common")
+    accessWidenerPath = common.loom.accessWidenerPath
 
     forge {
         mixinConfig("railways-common.mixins.json")
         mixinConfig("railways.mixins.json")
 
         convertAccessWideners = true
-        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+        extraAccessWideners.add = loom.accessWidenerPath.get().asFile.name
     }
 }
 
@@ -20,69 +21,70 @@ architectury {
     forge()
 }
 
-configurations {
-    common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
-}
+val common: Configuration by configurations.creating
+val shadowCommon: Configuration by configurations.creating
+val developmentForge: Configuration by configurations.getting
 
+configurations {
+    compileOnly.configure { extendsFrom(common) }
+    runtimeOnly.configure { extendsFrom(common) }
+    developmentForge.extendsFrom(common)
+}
 repositories {
     // mavens for Forge-exclusives
-    maven { url = "https://maven.theillusivec4.top/" } // Curios
+    maven { url = uri("https://maven.theillusivec4.top/") } // Curios
     maven { // Create Forge and Registrate Forge
-        url = "https://maven.tterrag.com/"
+        url = uri("https://maven.tterrag.com/")
         content {
             includeGroup("com.tterrag.registrate")
             includeGroup("com.simibubi.create")
         }
     }
     maven {
-        url = "https://maven.blamejared.com/"
+        url = uri("https://maven.blamejared.com/")
         content {
             includeGroup("at.petra-k")
             includeGroup("vazkii.patchouli")
         }
     } // JEI, Hex Casting
     maven {
-        name = 'Ladysnake Mods'
-        url = 'https://maven.ladysnake.org/releases'
+        name = "Ladysnake Mods"
+        url = uri("https://maven.ladysnake.org/releases")
         content {
             includeGroup("dev.onyxstudios.cardinal-components-api")
         }
     } // Cardinal Components (Hex Casting dependency)
     maven {
-        url = "https://jitpack.io"
+        url = uri("https://jitpack.io")
         content {
             includeGroupByRegex("com.github.*")
         }
     } // Pehkui (Hex Casting dependency)
-    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes (Hex Casting dependency)
+    maven { url = uri("https://maven.jamieswhiteshirt.com/libs-release") } // Reach Entity Attributes (Hex Casting dependency)
     // Add KFF Maven repository (Hex Casting dependency)
     maven {
-        name = 'Kotlin for Forge'
-        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        name = "Kotlin for Forge"
+        url = uri("https://thedarkcolour.github.io/KotlinForForge/")
         content {
             includeGroup("thedarkcolour")
         }
     }
 
     maven {
-        url "https://cursemaven.com"
+        url = uri("https://cursemaven.com")
         content {
-            includeGroup "curse.maven"
+            includeGroup = "curse.maven"
         }
     } // Biomes O' Plenty
 }
 
 dependencies {
-    forge("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
-    common(project(path: ":common", configuration: "namedElements")) { transitive = false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    forge("net.minecraftforge:forge:${"minecraft_version"()}-${"forge_version"()}")
+    common(project(":common", "namedElements")) { isTransitive = false }
+    shadowCommon(project(":common", "transformProductionForge")) { isTransitive = false }
 
     // Create and its dependencies
-    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { transitive = false }
+    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { isTransitive = false }
     modImplementation("com.tterrag.registrate:Registrate:${registrate_forge_version}")
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_forge_version}")
 
@@ -96,10 +98,10 @@ dependencies {
     modLocalRuntime("maven.modrinth:journeymap:${journeymap_version}-forge")
     modCompileOnly("info.journeymap:journeymap-api:${journeymap_api_version}-SNAPSHOT") // for some reason this is needed explicitly
 
-    modCompileOnly "de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}"
+    modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${voicechat_api_version}")
 
     if (enable_simple_voice_chat.toBoolean()) {
-        modLocalRuntime "maven.modrinth:simple-voice-chat:forge-${voicechat_version}"
+        modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${voicechat_version}")
     }
 
     // mod compat for tracks
@@ -173,7 +175,7 @@ processResources {
 def getGitHash = { ->
     def stdout = new ByteArrayOutputStream()
     exec {
-        commandLine 'git', 'rev-parse', 'HEAD'
+        commandLine "git", "rev-parse", "HEAD"
         standardOutput = stdout
     }
     return stdout.toString().trim()
@@ -182,7 +184,7 @@ def getGitHash = { ->
 def hasUnstaged = { ->
     def stdout = new ByteArrayOutputStream()
     exec {
-        commandLine 'git', 'status', '--porcelain'
+        commandLine "git", "status", "--porcelain"
         standardOutput = stdout
     }
     def result = stdout.toString().replaceAll("M gradlew", "").trim()
@@ -276,10 +278,10 @@ publishing {
     }
 
     repositories {
-        if (System.getenv("MAVEN_TOKEN")) {
-            if (System.getenv("RELEASE_BUILD")) {
+        if (System.getenv("MAVEN_TOKEN") != null) {
+            if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
                 maven {
-                    url "https://maven.ithundxr.dev/releases"
+                    url = uri("https://maven.ithundxr.dev/releases")
                     credentials {
                         username = "railways-github"
                         password = System.getenv("MAVEN_TOKEN")
@@ -287,7 +289,7 @@ publishing {
                 }
             } else {
                 maven {
-                    url "https://maven.ithundxr.dev/snapshots"
+                    url = uri("https://maven.ithundxr.dev/snapshots")
                     credentials {
                         username = "railways-github"
                         password = System.getenv("MAVEN_TOKEN")
@@ -296,4 +298,9 @@ publishing {
             }
         }
     }
+}
+
+operator fun String.invoke(): String {
+    return rootProject.ext[this] as? String
+        ?: throw IllegalStateException("Property $this is not defined")
 }
