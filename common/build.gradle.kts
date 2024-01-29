@@ -89,7 +89,7 @@ sourceSets.main {
 publishing {
     publications {
         create<MavenPublication>("mavenCommon") {
-            artifactId = "${base.archivesName}-${project.name}-${"minecraft_version"()}"
+            artifactId = "${"archives_base_name"()}-${project.name}-${"minecraft_version"()}"
             from(components["java"])
         }
     }

@@ -281,8 +281,8 @@ publishMods {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenFabric") {
-            artifactId = "${base.archivesName}-${project.name}-${"minecraft_version"()}"
+        create<MavenPublication>("mavenForge") {
+            artifactId = "${"archives_base_name"()}-${project.name}-${"minecraft_version"()}"
             from(components["java"])
         }
     }
