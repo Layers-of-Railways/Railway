@@ -1,4 +1,5 @@
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
     java
@@ -58,7 +59,7 @@ subprojects {
 
     tasks.register<Copy>("moveBuiltJars") {
         if (project.path != ":common") {
-            val remapJar by project.tasks.named<Jar>("remapJar")
+            val remapJar by project.tasks.named<RemapJarTask>("remapJar")
             dependsOn(remapJar)
             from(remapJar)
         }
