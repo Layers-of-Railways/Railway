@@ -23,6 +23,11 @@ subprojects {
         }
     }
 
+    processResources {
+        // dont add development or to-do files into built jar
+        exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+    }
+
     repositories {
         mavenCentral()
         maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
