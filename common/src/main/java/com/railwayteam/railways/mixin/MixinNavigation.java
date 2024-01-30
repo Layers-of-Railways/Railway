@@ -98,13 +98,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return original.call(instance);
     }
 
-    @WrapOperation(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
+    @WrapOperation(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
     private Train replacePresentTrain(GlobalStation instance, Operation<Train> original) {
         return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);
     }
 
     @SuppressWarnings("unused")
-    @ModifyExpressionValue(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
+    @ModifyExpressionValue(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
         at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
         if (target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL)
@@ -344,12 +344,12 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return Pair.of(result.getValue(), Pair.of(headOn.getValue(), Optional.ofNullable(targetState.getValue())));
     }
 
-    @Inject(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
+    @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
     private void recordSearch(double maxDistance, double maxCost, boolean forward, Navigation.StationTest stationTest, CallbackInfo ci) {
         Railways.navigationCallDepth += 1;
     }
 
-    @Inject(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
+    @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
     private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, Navigation.StationTest stationTest, CallbackInfo ci) {
         if (Railways.navigationCallDepth > 0)
             Railways.navigationCallDepth -= 1;
