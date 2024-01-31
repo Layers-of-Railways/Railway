@@ -31,9 +31,9 @@ subprojects {
         // dont add development or to-do files into built jar
         exclude(".cache/", "**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
 
-        doLast {
-            minifyJson(it)
-        }
+//        doLast {
+//            minifyJson(it)
+//        }
     }
 
     repositories {
