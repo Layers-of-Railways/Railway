@@ -146,7 +146,7 @@ dependencies {
     }
 
     compileOnly("io.github.llamalad7:mixinextras-common:${mixin_extras_version}")
-    implementation(annotationProcessor("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}"))
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")))
 }
 
 processResources {
