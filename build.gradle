@@ -1,4 +1,8 @@
 import dev.ithundxr.silk.ChangelogText
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
@@ -25,7 +29,11 @@ subprojects {
 
     processResources {
         // dont add development or to-do files into built jar
-        exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+        exclude(".cache/", "**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+
+        doLast {
+            minifyJson(it)
+        }
     }
 
     repositories {
@@ -116,4 +124,38 @@ allprojects {
 
 String getChangelogText() {
     return ChangelogText.getChangelogText(project)
+}
+
+def minifyJson(ProcessResources task) {
+    def temporaryDir = new File(task.temporaryDir, 'minify')
+    temporaryDir.mkdirs()
+    def file = remapJar.archiveFile.get().asFile
+    if(!file.exists()) return
+
+    copy {
+        from zipTree(file)
+        into temporaryDir
+        exclude '.cache/**'
+    }
+    file.delete()
+
+    temporaryDir.eachFileRecurse {
+        if (it.name.endsWith('.json') || it.name.endsWith('.mcmeta')) {
+            it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
+        }
+    }
+
+    new ZipOutputStream(file.newOutputStream()).withCloseable { out ->
+        out.setLevel(Deflater.BEST_COMPRESSION)
+        out.setMethod(ZipOutputStream.DEFLATED)
+        temporaryDir.eachFileRecurse {
+            if (!it.isFile()) return
+            def entryName = temporaryDir.toPath().relativize(it.toPath()).toString()
+            out.putNextEntry(new ZipEntry(entryName))
+            out.write(it.bytes)
+            out.closeEntry()
+        }
+        out.flush()
+        out.finish()
+    }
 }
