@@ -141,12 +141,5 @@
   "railways.smokestack.goggle.tooltip": "Selected Style: %s",
   "railways.smokestack.goggle.tooltip.color": "Selected Dye Color: %s",
 
-  "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
-
-  "header.railways.optifine": "Warning: Optifine present on game client",
-  "message.railways.optifine": "Warning: Steam 'n' Rails is incompatible with Optifine, ranging from minor visual artifacts to game crashes. It's recommended to remove the mod to avoid these issues and more. This warning can be disable by clicking proceed anyway however you accept responsibility for any bugs or issues you encounter. If you needed Optifine for one reason or another, check LambdAurora's Optifine Alternatives list:",
-
-  "label.railways.open_mods_folder": "Open Mods Folder",
-  "label.railways.optifine_alternatives": "Optifine Alternatives",
-  "label.railways.proceed_anyway": "Proceed Anyway"
+  "railways.buffer.invalid_shape": "Buffers must be placed on a straight track"
 }

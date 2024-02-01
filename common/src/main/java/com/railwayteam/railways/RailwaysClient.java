@@ -2,7 +2,6 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.compat.incompatible_mods.IncompatibleModsCheck;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.buffer.BufferModelUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
@@ -20,8 +19,6 @@ import java.util.function.Supplier;
 
 public class RailwaysClient {
   public static void init() {
-    IncompatibleModsCheck.run();
-
     registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
 
