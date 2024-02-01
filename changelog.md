@@ -29,7 +29,6 @@ Changes
 - Remote Conductor-controlled trains adjust speed based on signal strength
 - Smoke rework 2.0: more minecraft-style smoke, with config for old smoke
 - Train status messages now include coordinates
-- Make optifine warning screen easier to skip
 - Soul fire smoke in smoke stacks, clicking a smokestack with soul soil or soul sand will make it output soul fire themed smoke
 - Smokestacks can be dyed via being clicked with dye
 - Smokestacks show their dye color/style when wearing goggles
@@ -37,6 +36,7 @@ Changes
 - Radiator fans can now be placed in any direction
 - Creeper explosions and Ghast Fireballs no longer break tracks
 - Remastered Monobogeys, Single Axle, Double Axle and Triple Axle Bogies
+- Removed optifine warning screen
 
 Fixes
 - Mixin conflict with VS2
@@ -48,6 +48,7 @@ Fixes
 - Change conductor cap offset on players to fix clipping with some skins
 - Rework a conductor spy mixin for Tweakeroo freecam compat
 - Offset train assembly overlay on encased tracks
+- Made the mod work with optifine again
 ------------------------------------------------------
 Version 1.5.1
 ------------------------------------------------------
