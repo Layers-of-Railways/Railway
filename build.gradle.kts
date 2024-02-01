@@ -47,6 +47,12 @@ subprojects {
         maven { url = uri("https://maven.maxhenkel.de/repository/public") } // Simple Voice Chat
     }
 
+    configurations.configureEach {
+        resolutionStrategy {
+            force("net.fabricmc:fabric-loader:${"fabric_loader_version"()}")
+        }
+    }
+
     dependencies {
         "minecraft"("com.mojang:minecraft:${"minecraft_version"()}")
         // layered mappings - Mojmap names, parchment and QM docs and parameters

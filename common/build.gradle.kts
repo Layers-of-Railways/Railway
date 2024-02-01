@@ -1,6 +1,3 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
@@ -61,21 +58,8 @@ tasks.processResources {
     // must be part of primary mod to be findable
     exclude("resourcepacks/")
 
-    // dont add development or to-do files into built jar
+    // don't add development or to-do files into built jar
     exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
-
-    // Minify all .json files in built jars
-    doLast {
-        val outputDir = File(outputs.files.asPath)
-        outputDir.walkTopDown()
-            .filter { it.isFile && it.extension == "json" }
-            .forEach { file ->
-                val jsonContent = file.readText()
-                val parsedJson = JsonSlurper().parseText(jsonContent)
-                val updatedJson = JsonOutput.toJson(parsedJson)
-                file.writeText(updatedJson)
-            }
-    }
 }
 
 sourceSets.main {
