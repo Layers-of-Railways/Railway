@@ -161,7 +161,7 @@ processResources {
             "fabric_loader_version", fabric_loader_version,
             "fabric_api_version", fabric_api_version,
             "minecraft_version", minecraft_version,
-            "create_version", create_fabric_version, // on fabric, use the entire version, unlike forge
+            "create_version", create_fabric_version.split("\\+")[0], // on fabric, use the entire version, unlike forge
             "voicechat_api_version", voicechat_api_version
     )
     properties.forEach((k, v) -> inputs.property(k, v))
