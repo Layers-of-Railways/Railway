@@ -1,0 +1,11 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/handcar/wheels.obj",
+  "textures": {
+    "0": "create:block/axis",
+    "1": "create:block/axis_top",
+    "2": "create:block/bogey/wheel"
+  }
+}

@@ -24,9 +24,9 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.FileWriter;
@@ -38,7 +38,7 @@ import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
-  public static final Logger LOGGER = LogManager.getLogger(MODID);
+  public static final Logger LOGGER = LoggerFactory.getLogger("Railways");
   public static final String VERSION = findVersion();
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
@@ -100,10 +100,10 @@ public class Railways {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
     REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
+    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
-    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);
   }

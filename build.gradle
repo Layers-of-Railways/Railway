@@ -54,6 +54,12 @@ subprojects {
         maven { url = 'https://maven.maxhenkel.de/repository/public' } // Simple Voice Chat
     }
 
+    configurations.configureEach {
+        resolutionStrategy {
+            force("net.fabricmc:fabric-loader:${fabric_loader_version}")
+        }
+    }
+
     dependencies {
         minecraft "com.mojang:minecraft:${minecraft_version}"
         // layered mappings - Mojmap names, parchment and QM docs and parameters
@@ -78,7 +84,6 @@ subprojects {
 }
 
 allprojects {
-
     apply plugin: "java"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
@@ -86,18 +91,13 @@ allprojects {
     archivesBaseName = archives_base_name
     group = maven_group
 
-    if (System.getenv("RELEASE_BUILD")) {
-        version = "${mod_version}+${project.name}-mc${minecraft_version}"
-    } else {
-        // Formats the mod version to include the loader, Minecraft version, and build number (if present)
-        // example: 1.0.0+fabric-1.18.2-100
-        String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-        version = "${mod_version}+${project.name}-mc${minecraft_version}" + (buildNumber != null ? "-build.${buildNumber}" : "")
-    }
+    // Formats the mod version to include the loader, Minecraft version, and build number (if present)
+    // example: 1.0.0+fabric-1.19.2-build.100 (or -local)
+    String isRelease = System.getenv("RELEASE_BUILD")
+    String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
+    String build = buildNumber ? "build.${buildNumber}" : "local"
 
-
-    repositories {
-    }
+    version = "$mod_version+$project.name-mc$minecraft_version" + (isRelease ? "" : "-$build")
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"

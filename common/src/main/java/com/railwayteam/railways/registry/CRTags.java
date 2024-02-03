@@ -44,7 +44,7 @@ public class CRTags {
 
 
   public enum AllBlockTags {
-    SEMAPHORE_POLES(MOD, MOD.optionalDefault,false),
+    SEMAPHORE_POLES,
     TRACK_CASING_BLACKLIST(MOD, MOD.optionalDefault,false),
     CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false), // so other mods / datapacks can make more blocks usable for conductor spies
     LOCOMETAL,
@@ -52,6 +52,7 @@ public class CRTags {
     ;
 
     public final TagKey<Block> tag;
+    public final boolean alwaysDatagen;
 
 
     AllBlockTags() {
@@ -72,7 +73,12 @@ public class CRTags {
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(BuiltInRegistries.BLOCK, id);
+      if (optional) {
+        tag = optionalTag(BuiltInRegistries.BLOCK, id);
+      } else {
+        tag = TagKey.create(Registries.BLOCK, id);
+      }
+      this.alwaysDatagen = alwaysDatagen;
     }
 
     @SuppressWarnings("deprecation")
@@ -89,8 +95,7 @@ public class CRTags {
       return state.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public enum AllItemTags {
@@ -99,6 +104,13 @@ public class CRTags {
     DECO_COUPLERS,
     WOODEN_HEADSTOCKS,
     COPYCAT_HEADSTOCKS,
+
+    CABOOSESTYLE_STACK,
+    LONG_STACK,
+    COALBURNER_STACK,
+    OILBURNER_STACK,
+    STREAMLINED_STACK,
+    WOODBURNER_STACK
     ;
 
     public final TagKey<Item> tag;
@@ -122,7 +134,11 @@ public class CRTags {
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(BuiltInRegistries.ITEM, id);
+      if (optional) {
+        tag = optionalTag(BuiltInRegistries.ITEM, id);
+      } else {
+        tag = TagKey.create(Registries.ITEM, id);
+      }
       this.alwaysDatagen = alwaysDatagen;
     }
 
@@ -136,8 +152,7 @@ public class CRTags {
       return stack.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public static <T> TagKey<T> optionalTag(Registry<T> registry, ResourceLocation id) {

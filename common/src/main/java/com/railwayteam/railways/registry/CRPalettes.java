@@ -41,6 +41,8 @@ public class CRPalettes {
             for (Styles style : Styles.values())
                 style.register(dyeColor);
         }
+        // reset tab, just to be safe
+        ModSetup.useBaseTab();
     }
 
     public static final Map<@Nullable DyeColor, TagKey<Item>> CYCLE_GROUPS = new HashMap<>(17, 2);

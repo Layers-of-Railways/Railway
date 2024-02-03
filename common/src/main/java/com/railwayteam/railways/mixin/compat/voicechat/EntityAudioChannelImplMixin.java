@@ -2,6 +2,8 @@ package com.railwayteam.railways.mixin.compat.voicechat;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.railwayteam.railways.annotation.ConditionalMixin;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import de.maxhenkel.voicechat.plugins.impl.audiochannel.EntityAudioChannelImpl;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.UUID;
 
+@ConditionalMixin(mods = Mods.VOICECHAT)
 @Mixin(EntityAudioChannelImpl.class)
 public class EntityAudioChannelImplMixin {
     @SuppressWarnings("unused")

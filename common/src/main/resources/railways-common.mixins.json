@@ -2,8 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.railwayteam.railways.mixin",
+  "plugin": "com.railwayteam.railways.mixin.CRMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MixinAbstractContainerMenu",
     "AccessorAbstractContraptionEntity",
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
@@ -12,7 +14,6 @@
     "AccessorCarriageContraptionEntity",
     "AccessorCreativeModeTabs",
     "AccessorIngredient_TagValue",
-    "AccessorLangMerger",
     "AccessorNavigation",
     "AccessorOrientedContraptionEntity",
     "AccessorScheduleRuntime",
@@ -23,6 +24,8 @@
     "AccessorTrain",
     "AccessorTrain$AccessorPenalties",
     "ChunkSerializerMixin",
+    "MixinContainerLevelAccess",
+    "MixinItemCombinerMenu",
     "MixinAbstractBogeyBlock",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
@@ -155,6 +158,7 @@
     "conductor_possession.MixinMouseHandler"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   }
 }

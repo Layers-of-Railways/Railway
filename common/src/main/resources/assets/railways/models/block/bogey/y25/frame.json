@@ -1,0 +1,11 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/y25/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/standard/y25_extras",
+    "1": "create:block/bogey/wheel",
+    "2": "railways:block/bogeys/standard/y25_body"
+  }
+}

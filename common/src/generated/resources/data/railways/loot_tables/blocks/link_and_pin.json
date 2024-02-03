@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "railways:split_knuckle_coupler"
+          "name": "railways:link_and_pin"
         }
       ],
       "rolls": 1.0

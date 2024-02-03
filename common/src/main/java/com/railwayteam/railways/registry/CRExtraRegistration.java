@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
 import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;

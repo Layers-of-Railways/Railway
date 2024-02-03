@@ -53,7 +53,6 @@ import java.util.function.Consumer;
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.MANAGE_FAVORITES_CATEGORY;
 import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.optimizeFavorites;
 
-//fixme changed AllGuiTextures.ENUM.render to not pass this in the color field
 public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
 
     private State state;

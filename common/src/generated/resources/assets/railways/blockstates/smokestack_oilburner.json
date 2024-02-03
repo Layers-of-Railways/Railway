@@ -1,51 +1,339 @@
 {
   "variants": {
-    "enabled=false,encased=false,powered=false,waterlogged=false": {
+    "enabled=false,encased=false,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=false,encased=false,powered=false,waterlogged=true": {
+    "enabled=false,encased=false,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=false,encased=false,powered=true,waterlogged=false": {
+    "enabled=false,encased=false,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=false,encased=false,powered=true,waterlogged=true": {
+    "enabled=false,encased=false,powered=false,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=false,encased=true,powered=false,waterlogged=false": {
+    "enabled=false,encased=false,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=false,powered=true,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=false,encased=true,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=false,encased=true,powered=false,waterlogged=true": {
+    "enabled=false,encased=true,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=false,encased=true,powered=true,waterlogged=false": {
+    "enabled=false,encased=true,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=false,encased=true,powered=true,waterlogged=true": {
+    "enabled=false,encased=true,powered=false,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=true,encased=false,powered=false,waterlogged=false": {
+    "enabled=false,encased=true,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=false,encased=true,powered=true,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=false,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=true,encased=false,powered=false,waterlogged=true": {
+    "enabled=true,encased=false,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=true,encased=false,powered=true,waterlogged=false": {
+    "enabled=true,encased=false,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=true,encased=false,powered=true,waterlogged=true": {
+    "enabled=true,encased=false,powered=false,style=brass_cap_copper,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner"
     },
-    "enabled=true,encased=true,powered=false,waterlogged=false": {
+    "enabled=true,encased=false,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=false,powered=true,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner"
+    },
+    "enabled=true,encased=true,powered=false,style=brass,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=true,encased=true,powered=false,waterlogged=true": {
+    "enabled=true,encased=true,powered=false,style=brass,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=true,encased=true,powered=true,waterlogged=false": {
+    "enabled=true,encased=true,powered=false,style=brass_cap_copper,waterlogged=false": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     },
-    "enabled=true,encased=true,powered=true,waterlogged=true": {
+    "enabled=true,encased=true,powered=false,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=false,style=steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass_cap_copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass_cap_copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=brass_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper_cap_brass,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper_cap_brass,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper_cap_steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=copper_cap_steel,waterlogged=true": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=steel,waterlogged=false": {
+      "model": "railways:block/smokestack/block_oilburner_encased"
+    },
+    "enabled=true,encased=true,powered=true,style=steel,waterlogged=true": {
       "model": "railways:block/smokestack/block_oilburner_encased"
     }
   }

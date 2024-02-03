@@ -5,14 +5,14 @@ import com.railwayteam.railways.registry.CRCreativeModeTabs;
 
 public class ModSetupImpl {
     public static void useBaseTab() {
-        Railways.registrate().useCreativeTab(CRCreativeModeTabs.getBaseTabKey());
+        Railways.registrate().setCreativeTab(CRCreativeModeTabs.getBaseTabKey());
     }
 
     public static void useTracksTab() {
-        Railways.registrate().useCreativeTab(CRCreativeModeTabs.getTracksTabKey());
+        Railways.registrate().setCreativeTab(CRCreativeModeTabs.getTracksTabKey());
     }
 
     public static void usePalettesTab() {
-        Railways.registrate().useCreativeTab(CRCreativeModeTabs.getPalettesTabKey());
+        Railways.registrate().setCreativeTab(CRCreativeModeTabs.getPalettesTabKey());
     }
 }

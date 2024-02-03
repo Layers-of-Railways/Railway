@@ -19,8 +19,8 @@ import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
-import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
@@ -129,7 +129,7 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(ResourceLocation modelLoc, boolean rotates) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(ResourceLocation modelLoc, String variant, boolean rotates) {
         throw new AssertionError();
     }
 

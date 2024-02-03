@@ -1,14 +1,17 @@
 package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -32,11 +35,22 @@ public class CRTagGen {
 		}
 	}
 
-	public static void generateBlockTags(RegistrateTagsProvider<Block> tags) {
-//		tagAppender(tags, AllBlockTags.TRACKS)
-//			.add(AllBlocks.TRACK.get());
+	public static void generateBlockTags(RegistrateTagsProvider<Block> prov) {
+		prov.addTag(CRTags.AllBlockTags.SEMAPHORE_POLES.tag)
+				.add(AllBlocks.METAL_GIRDER.get(), AllBlocks.METAL_GIRDER_ENCASED_SHAFT.get())
+				.forceAddTag(BlockTags.FENCES);
+
+		prov.addTag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
+
+		// VALIDATE
+
+		for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
+			if (tag.alwaysDatagen) {
+				tagAppender(prov, tag);
+			}
+		}
 		for (TagKey<Block> tag : OPTIONAL_TAGS.keySet()) {
-			var appender = tagAppender(tags, tag);
+			var appender = tagAppender(prov, tag);
 			for (ResourceLocation loc : OPTIONAL_TAGS.get(tag))
 				appender.addOptional(loc);
 		}

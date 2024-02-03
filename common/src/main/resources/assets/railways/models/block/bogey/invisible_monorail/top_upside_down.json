@@ -2,7 +2,7 @@
 	"credit": "By the Railway Team",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "railways:block/bogeys/top_invisible",
+		"2": "railways:block/bogeys/standard/top_invisible",
 		"particle": "create:block/bogey/particle"
 	},
 	"elements": [
