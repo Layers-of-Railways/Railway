@@ -134,11 +134,6 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> oilburnerSmokeStack() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {
         throw new AssertionError();
     }

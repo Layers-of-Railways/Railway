@@ -198,15 +198,6 @@ public class BuilderTransformersImpl {
                 );
     }
 
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> oilburnerSmokeStack() {
-        return (c, p) -> {
-            p.getVariantBuilder(c.get())
-                .forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_oilburner"+(state.getValue(OilburnerSmokeStackBlock.ENCASED) ? "_encased" : ""))))
-                    .build());
-        };
-    }
-
     public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {
         return a -> a.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
             .withExistingParent(c.getName(), p.mcLoc("block/air"))));

@@ -43,7 +43,6 @@ import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.OilburnerSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
@@ -445,7 +444,7 @@ public class CRBlocks {
         CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
         LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Long Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
-        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true, BuilderTransformers.oilburnerSmokeStack(), OilburnerSmokeStackBlock::new),
+        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
         STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", false, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), true, true),
         WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK, true);
 
