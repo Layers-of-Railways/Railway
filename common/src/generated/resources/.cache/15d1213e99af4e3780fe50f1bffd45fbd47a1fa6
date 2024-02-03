@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-03T12:11:22.844134077	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2024-02-03T12:21:05.48178132	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 78e8d80033deabca4938809c7be94941cec41038 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_8x/green_copper_wrapped_locometal_boiler.json
 8de30093675d9e4c2a30c3d9b8b9fcc128ee9685 data/railways/recipes/crafting/palettes/dyeing_1x/yellow_slashed_locometal.json
 4d863db6cc12bebb223a3ae38419002b8c9b878b data/railways/recipes/crafting/palettes/dyeing_1x/black_iron_wrapped_locometal.json
@@ -969,8 +969,8 @@ d92ca1f508b1a44e45ceab1bab8508e4f53650e2 data/railways/recipes/stonecutting/pale
 c7fe5a9f4b5b9310c0e7f9877f64f1b3698fb693 data/railways/recipes/crafting/palettes/dyeing_8x/lime_brass_wrapped_locometal.json
 981ded2f7046114377bc49f14a603fb3b8c56945 data/railways/recipes/crafting/palettes/dyeing_8x/light_gray_locometal_pillar.json
 1bf356ca95d449cc450f2f2b0fc9d5c43196cced data/railways/advancements/recipes/misc/crafting/palettes/wrapping/red_brass_wrapped_locometal.json
-2fd34331f928ef81a97b3bbb3c1fdbeb281edd5f data/railways/recipes/crafting/palettes/dyeing_1x/yellow_locometal_boiler.json
 dc588fb3b2f1d157bffed5df73fbdef4a3c5f824 data/railways/recipes/crafting/palettes/dyeing_1x/white_copper_wrapped_locometal.json
+2fd34331f928ef81a97b3bbb3c1fdbeb281edd5f data/railways/recipes/crafting/palettes/dyeing_1x/yellow_locometal_boiler.json
 76e31219adba319ebb73f5ca15026a72e32f40bb data/railways/recipes/crafting/palettes/dyeing_1x/light_gray_iron_wrapped_locometal_boiler.json
 dcc239de12d07d9e08b80bad81eaee3c0f4c5bd7 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/gray_copper_wrapped_locometal.json
 1c9b1e9cada1aadfe35fd55b02f2ef39a076f317 data/railways/recipes/crafting/palettes/dyeing_1x/light_gray_brass_wrapped_locometal.json
