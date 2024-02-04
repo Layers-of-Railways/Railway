@@ -13,25 +13,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.loading.LoadingModList;
-import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
 import net.minecraftforge.network.PacketDistributor;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
-import java.util.List;
 
 public class UtilsImpl {
-	public static boolean isModLoaded(String id, @Nullable String fabricId) {
-		List<ModInfo> mods = LoadingModList.get().getMods();
-		for (ModInfo mod : mods) {
-			if (mod.getModId().equals(id)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public static Path configDir() {
 		return FMLPaths.CONFIGDIR.get();
 	}

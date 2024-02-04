@@ -2,8 +2,6 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.util.ConditionalMixinManager;
 import org.objectweb.asm.tree.ClassNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
@@ -11,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 public class CRMixinPlugin implements IMixinConfigPlugin {
-    public static final Logger LOGGER = LoggerFactory.getLogger("Railways/MixinPlugin");
-
     @Override
     public void onLoad(String mixinPackage) { } // NO-OP
 

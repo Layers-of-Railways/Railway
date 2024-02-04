@@ -13,15 +13,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 
 public class UtilsImpl {
-	public static boolean isModLoaded(String id, @Nullable String fabricId) {
-		return FabricLoader.getInstance().isModLoaded(fabricId != null ? fabricId : id);
-	}
-
 	public static Path configDir() {
 		return FabricLoader.getInstance().getConfigDir();
 	}

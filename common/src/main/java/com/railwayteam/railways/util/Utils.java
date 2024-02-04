@@ -9,17 +9,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.level.chunk.LevelChunk;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.Locale;
 
 public class Utils {
-	@ExpectPlatform
-	public static boolean isModLoaded(String id, @Nullable String fabricId) {
-		throw new AssertionError();
-	}
-
 	@ExpectPlatform
 	public static Path configDir() {
 		throw new AssertionError();
