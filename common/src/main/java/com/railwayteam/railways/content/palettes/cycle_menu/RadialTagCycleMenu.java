@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
-import com.railwayteam.railways.util.Utils;
+import com.railwayteam.railways.util.client.ClientUtils;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
@@ -215,7 +215,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
     @Override
     public boolean keyReleased(int code, int scanCode, int modifiers) {
         InputConstants.Key mouseKey = InputConstants.getKey(code, scanCode);
-        if (Utils.isActiveAndMatches(AllKeys.TOOL_MENU.getKeybind(), mouseKey)) {
+        if (ClientUtils.isActiveAndMatches(AllKeys.TOOL_MENU.getKeybind(), mouseKey)) {
             onClose();
             return true;
         }
