@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge;
+package com.railwayteam.railways.forge.asm.testing;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.objectweb.asm.ClassReader;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static com.railwayteam.railways.forge.RollingModeEnumAdder.processRollingMode;
+import static com.railwayteam.railways.forge.asm.RollingModeEnumAdder.processRollingMode;
 
 /*
 This class is just for testing asm transformation and should not be called during normal mod use

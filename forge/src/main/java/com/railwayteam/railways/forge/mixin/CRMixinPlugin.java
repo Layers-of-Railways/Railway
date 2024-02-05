@@ -1,6 +1,7 @@
 package com.railwayteam.railways.forge.mixin;
 
-import com.railwayteam.railways.forge.RollingModeEnumAdder;
+import com.railwayteam.railways.forge.asm.ContainerLevelAccessASM;
+import com.railwayteam.railways.forge.asm.RollingModeEnumAdder;
 import com.railwayteam.railways.util.ConditionalMixinManager;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -29,9 +30,12 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        if (targetClassName.equals("com.simibubi.create.content.contraptions.actors.roller.RollerBlockEntity$RollingMode")) {
+        // Adds an Enum
+        if (targetClassName.equals("com.simibubi.create.content.contraptions.actors.roller.RollerBlockEntity$RollingMode"))
             RollingModeEnumAdder.processRollingMode(targetClass);
-        }
+        // Adds an instanceof check and return
+        if (targetClassName.equals("net.minecraft.world.inventory.ContainerLevelAccess"))
+            ContainerLevelAccessASM.processNode(targetClass);
     }
 
     @Override
