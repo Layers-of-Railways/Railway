@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class GuiBlockMovementBehaviour extends MovingInteractionBehaviour {
+public class GuiBlockMovingInteractionBehaviour extends MovingInteractionBehaviour {
     @Override
     public boolean handlePlayerInteraction(Player player, InteractionHand activeHand, BlockPos localPos, AbstractContraptionEntity contraptionEntity) {
         if (player.level.isClientSide())
