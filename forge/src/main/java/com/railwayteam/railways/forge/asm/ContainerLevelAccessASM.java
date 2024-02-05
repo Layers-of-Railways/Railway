@@ -30,7 +30,7 @@ public class ContainerLevelAccessASM {
                 InsnList newInstructions = new InsnList();
 
                 // Load parameter level to stack
-                newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0)); // ALOAD 0
+                newInstructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
 
                 // Call createNewGuiContraptionWorld method
                 newInstructions.add(new MethodInsnNode(
