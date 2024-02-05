@@ -10,7 +10,7 @@ import org.objectweb.asm.tree.*;
  * 1. Load's the "Level" parameter to stack
  * 2. It invokes the utility method
  * 3. Adds DUP instruction
- * 4. It creates a label to go back to the DUP instruction which holds the method call
+ * 4. It creates a label to go be able go jump to the original code
  * 5. It then adds a Jump instruction to go to the end of the method/return default if the method call result is null
  * 6. If it's not null, aka hasn't jumped to the end, then it returns the value of the called method
  * 7. Places a label and POP so that the original code could be called
