@@ -30,12 +30,12 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-        // Adds an Enum
-        if (targetClassName.equals("com.simibubi.create.content.contraptions.actors.roller.RollerBlockEntity$RollingMode"))
-            RollingModeEnumAdder.processRollingMode(targetClass);
         // Adds an instanceof check and return
         if (targetClassName.equals("net.minecraft.world.inventory.ContainerLevelAccess"))
             ContainerLevelAccessASM.processNode(targetClass);
+        // Adds an Enum
+        if (targetClassName.equals("com.simibubi.create.content.contraptions.actors.roller.RollerBlockEntity$RollingMode"))
+            RollingModeEnumAdder.processRollingMode(targetClass);
     }
 
     @Override
