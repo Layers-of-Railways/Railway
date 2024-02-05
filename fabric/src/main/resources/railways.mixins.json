@@ -13,7 +13,7 @@
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "GoggleOverlayRendererMixin",
-    "MixinContainerLevelAccess"
+    "ContainerLevelAccessMixin"
   ],
   "injectors": {
     "defaultRequire": 1,

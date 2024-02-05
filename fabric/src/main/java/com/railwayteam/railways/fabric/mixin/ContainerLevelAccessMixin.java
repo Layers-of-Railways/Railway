@@ -11,8 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // Empty mixin to get this to pass through the mixin config plugin, so we can do some asm on it :3
-@Mixin(ContainerLevelAccess.class)
-public interface MixinContainerLevelAccess {
+// Priority of 2000 to be applied after any other @Overwrite's
+@Mixin(value = ContainerLevelAccess.class, priority = 2000)
+public interface ContainerLevelAccessMixin {
     @Inject(method = "create", at = @At("HEAD"), cancellable = true)
     private static void create(Level level, BlockPos pos, CallbackInfoReturnable<ContainerLevelAccess> cir) {
         if (level instanceof GuiBlockContraptionWorld guiBlockContraptionWorld) {

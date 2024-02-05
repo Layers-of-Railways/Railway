@@ -13,7 +13,7 @@
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
     "GoggleOverlayRendererMixin",
-    "MixinContainerLevelAccess",
+    "ContainerLevelAccessMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],

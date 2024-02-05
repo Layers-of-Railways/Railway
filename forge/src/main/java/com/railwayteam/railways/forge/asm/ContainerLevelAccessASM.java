@@ -4,7 +4,6 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
-
 /*
  * What this does is
  * 1. Load's the "Level" parameter to stack
