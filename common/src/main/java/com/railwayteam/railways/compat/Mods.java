@@ -1,7 +1,7 @@
 package com.railwayteam.railways.compat;
 
-import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.utility.Lang;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -48,7 +48,7 @@ public enum Mods {
 
 	Mods(@Nullable String fabricId, boolean requiredForDataGen) {
 		this.fabricId = fabricId;
-		this.isLoaded = Utils.isModLoaded(asId(), fabricId);
+		this.isLoaded = isModLoaded(asId(), fabricId);
 		this.requiredForDataGen = requiredForDataGen;
 	}
 
@@ -86,5 +86,10 @@ public enum Mods {
 
 	public void assertForDataGen() {
 		assert (!requiredForDataGen || isLoaded);
+	}
+
+	@ExpectPlatform
+	public static boolean isModLoaded(String id, @Nullable String fabricId) {
+		throw new AssertionError();
 	}
 }

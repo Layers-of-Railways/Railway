@@ -7,13 +7,14 @@
   "client": [
     "ClientPacketListenerMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin",
-    "MixinGoggleOverlayRenderer"
+    "TrainHUDMixin"
   ],
   "mixins": [
     "MixinLootDataManager",
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "GoggleOverlayRendererMixin",
+    "ContainerLevelAccessMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],

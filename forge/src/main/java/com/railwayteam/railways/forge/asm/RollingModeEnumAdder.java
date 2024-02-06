@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge;
+package com.railwayteam.railways.forge.asm;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.tree.*;

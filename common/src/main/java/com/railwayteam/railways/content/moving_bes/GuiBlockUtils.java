@@ -2,6 +2,8 @@ package com.railwayteam.railways.content.moving_bes;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 public class GuiBlockUtils {
@@ -14,5 +16,18 @@ public class GuiBlockUtils {
                     true
             ));
         }
+    }
+
+    // Called Via ASM, do not remove
+    @Nullable
+    public static GuiBlockLevelAccess createNewGuiContraptionWorld(Level level) {
+        if (level instanceof GuiBlockContraptionWorld guiBlockContraptionWorld) {
+            return new GuiBlockLevelAccess(
+                    guiBlockContraptionWorld.getLevel(),
+                    guiBlockContraptionWorld.contraption.entity,
+                    guiBlockContraptionWorld.blockPos
+            );
+        }
+        return null;
     }
 }
