@@ -5,15 +5,16 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
+    "GoggleOverlayRendererMixin",
     "LevelRendererMixin",
     "PortingLibObjLoaderMixin",
     "PortingLibModelsMixin",
     "TrainHUDMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin",
-    "MixinGoggleOverlayRenderer"
+    "TrainHUDMixin"
   ],
   "mixins": [
+    "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "MixinLootDataManager"
