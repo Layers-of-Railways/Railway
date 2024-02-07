@@ -140,8 +140,13 @@ dependencies {
         modLocalRuntime("maven.modrinth:create-dreams-and-desires:${"dnd_version"()}")
     }
     if ("enable_quark"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:quark:${"minecraft_version"()}-${"quark_version"()}")
-        modLocalRuntime("vazkii.autoreglib:AutoRegLib:${"arl_version"()}")
+        modLocalRuntime("org.violetmoon.quark:Quark:${"quark_version"()}")
+        modLocalRuntime("org.violetmoon.zeta:zeta:${"zeta_version"()}")
+    }
+
+    if ("enable_tfc"().toBoolean()) {
+        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}")
+        modLocalRuntime("maven.modrinth:terrafirmacraft:${"tfc_version"()}")
     }
 
     if ("enable_sodium_rubidium"().toBoolean()) {

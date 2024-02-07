@@ -129,6 +129,10 @@ dependencies {
         modLocalRuntime("maven.modrinth:corgilib:${"corgilib_version_fabric"()}")
     }
 
+    if ("enable_natures_spirit"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:natures-spirit:${"natures_spirit_version"()}")
+    }
+
     if ("enable_tweakeroo"().toBoolean()) {
         modLocalRuntime("curse.maven:tweakeroo-297344:${"tweakeroo_version"()}")
         modLocalRuntime("curse.maven:malilib-303119:${"malilib_version"()}")
