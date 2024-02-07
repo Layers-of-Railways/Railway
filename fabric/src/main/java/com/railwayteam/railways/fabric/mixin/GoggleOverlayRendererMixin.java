@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge.mixin;
+package com.railwayteam.railways.fabric.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(GoggleOverlayRenderer.class)
-public class MixinGoggleOverlayRenderer {
+public class GoggleOverlayRendererMixin {
     @WrapOperation(
             method = "renderOverlay",
             at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;asStack()Lnet/minecraft/world/item/ItemStack;")
