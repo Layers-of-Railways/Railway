@@ -161,8 +161,8 @@ tasks.processResources {
     }
 
     // set up properties for filling into metadata
-    val properties = mapOf<String, String>(
-            "version" to version as String,
+    val properties = mapOf(
+            "version" to version,
             "fabric_loader_version" to "fabric_loader_version"(),
             "fabric_api_version" to "fabric_api_version"(),
             "minecraft_version" to "minecraft_version"(),

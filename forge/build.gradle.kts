@@ -171,8 +171,8 @@ tasks.processResources {
     }
 
     // set up properties for filling into metadata
-    val properties = mapOf<String, String>(
-            "version" to version as String,
+    val properties = mapOf(
+            "version" to version,
             "forge_version" to "forge_version"().split("\\.")[0], // only specify major version of forge
             "minecraft_version" to "minecraft_version"(),
             "create_version" to "create_forge_version"().split("-")[0], // cut off build number
