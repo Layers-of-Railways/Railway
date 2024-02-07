@@ -166,7 +166,7 @@ tasks.processResources {
             "fabric_loader_version" to "fabric_loader_version"(),
             "fabric_api_version" to "fabric_api_version"(),
             "minecraft_version" to "minecraft_version"(),
-            "create_version" to "create_fabric_version"(), // on fabric, use the entire version, unlike forge
+            "create_version" to "create_fabric_version"().split("\\+")[0], // Trim +mcX.XX.X from version string
             "voicechat_api_version" to "voicechat_api_version"()
     )
 
