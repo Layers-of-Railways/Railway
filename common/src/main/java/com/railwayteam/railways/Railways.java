@@ -82,11 +82,9 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-/*    RegistrationListening.whenBothRegistered(
-            Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("create", "track"),
-            Registry.BLOCK, CRBlocks.MONORAIL_TRACK.getId(), // last track
-            (type, block) -> TrackMaterial.addCustomValidTracks(type)
-    );*/
+    if (Mods.isModLoaded("embeddium", null)) {
+      LOGGER.info("there is a brick about to fall through your roof at terminal velocity");
+    }
 
     if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
