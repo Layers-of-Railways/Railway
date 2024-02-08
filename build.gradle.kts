@@ -147,7 +147,6 @@ subprojects {
         dependsOn(shadowJar)
         archiveClassifier = null
         doLast {
-            println("Squishing jar ${outputs.files.singleFile}")
             squishJar(outputs.files.singleFile)
         }
     }
@@ -243,7 +242,6 @@ fun squishJar(jar: File) {
                 return@forEach
 
             if (name.endsWith(".json") || name.endsWith(".mcmeta")) {
-                println("Compressing $name")
                 data = (JsonOutput.toJson(JsonSlurper().parse(data)).toByteArray())
             }
 
