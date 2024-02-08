@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 architectury.forge()
 
 loom {
@@ -22,69 +20,8 @@ loom {
     }
 }
 
-
-val common: Configuration by configurations.creating
-val shadowCommon: Configuration by configurations.creating
-val developmentForge: Configuration by configurations.getting
-
-configurations {
-    compileOnly.configure { extendsFrom(common) }
-    runtimeOnly.configure { extendsFrom(common) }
-    developmentForge.extendsFrom(common)
-}
-
-repositories {
-    // mavens for Forge-exclusives
-    maven { url = uri("https://maven.theillusivec4.top/") } // Curios
-    maven { // Create Forge and Registrate Forge
-        url = uri("https://maven.tterrag.com/")
-        content {
-            includeGroup("com.tterrag.registrate")
-            includeGroup("com.simibubi.create")
-        }
-    }
-    maven {
-        url = uri("https://maven.blamejared.com/")
-        content {
-            includeGroup("at.petra-k")
-            includeGroup("vazkii.patchouli")
-        }
-    } // JEI, Hex Casting
-    maven {
-        name = "Ladysnake Mods"
-        url = uri("https://maven.ladysnake.org/releases")
-        content {
-            includeGroup("dev.onyxstudios.cardinal-components-api")
-        }
-    } // Cardinal Components (Hex Casting dependency)
-    maven {
-        url = uri("https://jitpack.io")
-        content {
-            includeGroupByRegex("com.github.*")
-        }
-    } // Pehkui (Hex Casting dependency)
-    maven { url = uri("https://maven.jamieswhiteshirt.com/libs-release") } // Reach Entity Attributes (Hex Casting dependency)
-    // Add KFF Maven repository (Hex Casting dependency)
-    maven {
-        name = "Kotlin for Forge"
-        url = uri("https://thedarkcolour.github.io/KotlinForForge/")
-        content {
-            includeGroup("thedarkcolour")
-        }
-    }
-
-    maven {
-        url = uri("https://cursemaven.com")
-        content {
-            includeGroup("curse.maven")
-        }
-    } // Biomes O' Plenty
-}
-
 dependencies {
     forge("net.minecraftforge:forge:${"minecraft_version"()}-${"forge_version"()}")
-    common(project(":common", "namedElements")) { isTransitive = false }
-    shadowCommon(project(":common", "transformProductionForge")) { isTransitive = false }
 
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
@@ -158,91 +95,6 @@ dependencies {
     include(mixinExtras)
 }
 
-tasks.processResources {
-    // include packs
-    from(rootProject.file("common/src/main/resources")) {
-        include("resourcepacks/")
-    }
-
-    // set up properties for filling into metadata
-    val properties = mapOf(
-            "version" to version,
-            "forge_version" to "forge_version"().split("\\.")[0], // only specify major version of forge
-            "minecraft_version" to "minecraft_version"(),
-            "create_version" to "create_forge_version"().split("-")[0], // cut off build number
-            "voicechat_api_version" to "voicechat_api_version"()
-    )
-
-    properties.forEach { (k, v) -> inputs.property(k, v) }
-
-    filesMatching("META-INF/mods.toml") {
-        expand(properties)
-    }
-}
-
-val getGitHash = {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "rev-parse", "HEAD")
-        standardOutput = stdout
-    }
-    stdout.toString().trim()
-}
-
-val hasUnstaged = {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "status", "--porcelain")
-        standardOutput = stdout
-    }
-    val result = stdout.toString().replace("M gradlew", "").trim()
-    if (result.isNotEmpty())
-        println("Found stageable results:\n${result}\n")
-    result.isNotEmpty()
-}
-
-tasks.shadowJar {
-    exclude("fabric.mod.json")
-    exclude("architectury.common.json")
-    configurations = listOf(shadowCommon)
-    archiveClassifier = "dev-shadow"
-}
-
-tasks.remapJar {
-    inputFile.set(tasks.shadowJar.get().archiveFile)
-    dependsOn(tasks.shadowJar)
-    archiveClassifier = null
-}
-
-tasks.jar {
-    archiveClassifier = "dev"
-
-    val gitHash = "\"${getGitHash()}" + (if (hasUnstaged()) "-modified" else "") + "\""
-
-    manifest {
-        attributes(mapOf("Git-Hash" to gitHash))
-    }
-}
-
-tasks.sourcesJar {
-    val commonSources = project(":common").tasks.getByName<Jar>("sourcesJar")
-    dependsOn(commonSources)
-    from(commonSources.archiveFile.map { zipTree(it) })
-
-    val gitHash =  "\"${getGitHash()}" + (if (hasUnstaged()) "-modified" else "") + "\""
-
-    manifest {
-        attributes(mapOf("Git-Hash" to gitHash))
-    }
-}
-
-components.getByName("java") {
-    this as AdhocComponentWithVariants
-    this.withVariantsFromConfiguration(project.configurations["shadowRuntimeElements"]) {
-        skip()
-    }
-}
-
 publishMods {
     file(tasks.remapJar.get().archiveFile)
     version.set(project.version.toString())
@@ -269,37 +121,6 @@ publishMods {
 
         requires {
             slug = "create"
-        }
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenForge") {
-            artifactId = "${"archives_base_name"()}-${project.name}-${"minecraft_version"()}"
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        if (System.getenv("MAVEN_TOKEN") != null) {
-            if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/releases")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            } else {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/snapshots")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            }
         }
     }
 }

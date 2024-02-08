@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 architectury.fabric()
 
 loom {
@@ -29,50 +27,8 @@ loom {
     }
 }
 
-val common: Configuration by configurations.creating
-val shadowCommon: Configuration by configurations.creating
-val developmentFabric: Configuration by configurations.getting
-
-configurations {
-    compileOnly.configure { extendsFrom(common) }
-    runtimeOnly.configure { extendsFrom(common) }
-    developmentFabric.extendsFrom(common)
-}
-
-repositories {
-    // mavens for Fabric-exclusives
-    maven { url = uri("https://maven.terraformersmc.com/releases/") } // Mod Menu, EMI
-    maven { url = uri("https://mvn.devos.one/snapshots/") } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
-    maven { url = uri("https://cursemaven.com") } // Forge Config API Port
-    maven { url = uri("https://maven.cafeteria.dev/releases") } // Fake Player API
-    maven { url = uri("https://maven.jamieswhiteshirt.com/libs-release") } // Reach Entity Attributes
-    maven { url = uri("https://jitpack.io/") } // Mixin Extras, Fabric ASM
-    maven { // forge config api port
-        name = "Fuzs Mod Resources"
-        url = uri("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
-    }
-    maven {
-        url = uri("https://maven.blamejared.com/")
-        content {
-            includeGroup("at.petra-k")
-            includeGroup("vazkii.patchouli")
-        }
-    } // JEI, Hex Casting
-    maven {
-        name = "Ladysnake Mods"
-        url = uri("https://maven.ladysnake.org/releases")
-        content {
-            includeGroup("dev.onyxstudios.cardinal-components-api")
-        }
-    } // Cardinal Components (Hex Casting dependency)
-}
-
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:${"fabric_loader_version"()}")
-    common(project(":common", "namedElements")) { isTransitive = false }
-    shadowCommon(project(":common", "transformProductionFabric")) { isTransitive = false }
-
-    // dependencies
     modImplementation("net.fabricmc.fabric-api:fabric-api:${"fabric_api_version"()}")
 
     // Create - dependencies are added transitively
@@ -144,92 +100,6 @@ dependencies {
     include(mixinExtras)
 }
 
-tasks.processResources {
-    // include packs
-    from(rootProject.file("common/src/main/resources")) {
-        include("resourcepacks/")
-    }
-
-    // set up properties for filling into metadata
-    val properties = mapOf(
-            "version" to version,
-            "fabric_loader_version" to "fabric_loader_version"(),
-            "fabric_api_version" to "fabric_api_version"(),
-            "minecraft_version" to "minecraft_version"(),
-            "create_version" to "create_fabric_version"().split("\\+")[0], // Trim +mcX.XX.X from version string
-            "voicechat_api_version" to "voicechat_api_version"()
-    )
-
-    properties.forEach { (k, v) -> inputs.property(k, v) }
-
-    filesMatching("fabric.mod.json") {
-        expand(properties)
-    }
-}
-
-val getGitHash = {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "rev-parse", "HEAD")
-        standardOutput = stdout
-    }
-    stdout.toString().trim()
-}
-
-val hasUnstaged = {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "status", "--porcelain")
-        standardOutput = stdout
-    }
-    val result = stdout.toString().replace("M gradlew", "").trim()
-    if (result.isNotEmpty())
-        println("Found stageable results:\n${result}\n")
-    result.isNotEmpty()
-}
-
-tasks.shadowJar {
-    exclude("architectury.common.json")
-    configurations = listOf(shadowCommon)
-    archiveClassifier = "dev-shadow"
-}
-
-tasks.remapJar {
-    injectAccessWidener = true
-    inputFile.set(tasks.shadowJar.get().archiveFile)
-    dependsOn(tasks.shadowJar)
-    archiveClassifier = null
-}
-
-tasks.jar {
-    archiveClassifier = "dev"
-
-    val gitHash = "\"${getGitHash()}" + (if (hasUnstaged()) "-modified" else "") + "\""
-
-    manifest {
-        attributes(mapOf("Git-Hash" to gitHash))
-    }
-}
-
-tasks.sourcesJar {
-    val commonSources = project(":common").tasks.getByName<Jar>("sourcesJar")
-    dependsOn(commonSources)
-    from(commonSources.archiveFile.map { zipTree(it) })
-
-    val gitHash =  "\"${getGitHash()}" + (if (hasUnstaged()) "-modified" else "") + "\""
-
-    manifest {
-        attributes(mapOf("Git-Hash" to gitHash))
-    }
-}
-
-components.getByName("java") {
-    this as AdhocComponentWithVariants
-    this.withVariantsFromConfiguration(project.configurations["shadowRuntimeElements"]) {
-        skip()
-    }
-}
-
 publishMods {
     file(tasks.remapJar.get().archiveFile)
     version.set(project.version.toString())
@@ -256,37 +126,6 @@ publishMods {
 
         requires {
             slug = "create-fabric"
-        }
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenFabric") {
-            artifactId = "${"archives_base_name"()}-${project.name}-${"minecraft_version"()}"
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        if (System.getenv("MAVEN_TOKEN") != null) {
-            if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/releases")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            } else {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/snapshots")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            }
         }
     }
 }
