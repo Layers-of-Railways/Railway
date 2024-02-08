@@ -147,6 +147,7 @@ subprojects {
         dependsOn(shadowJar)
         archiveClassifier = null
         doLast {
+            println("Squishing jar ${outputs.files.singleFile}")
             squishJar(outputs.files.singleFile)
         }
     }
@@ -237,13 +238,17 @@ fun squishJar(jar: File) {
 
     JarOutputStream(jar.outputStream()).use { out ->
         out.setLevel(Deflater.BEST_COMPRESSION)
-        contents.forEach {
-            out.putNextEntry(JarEntry(it.key))
+        contents.forEach { var (name, data) = it
+            if(name.startsWith("architectury_inject_${project.name}_common"))
+                return@forEach
+
             if (name.endsWith(".json") || name.endsWith(".mcmeta")) {
-                out.write(JsonOutput.toJson(JsonSlurper().parse(it.value)).toByteArray())
-            } else {
-                out.write(it.value)
+                println("Compressing $name")
+                data = (JsonOutput.toJson(JsonSlurper().parse(data)).toByteArray())
             }
+
+            out.putNextEntry(JarEntry(name))
+            out.write(data)
             out.closeEntry()
         }
         out.finish()

@@ -53,7 +53,7 @@ tasks.processResources {
     exclude("resourcepacks/")
 
     // don't add development or to-do files into built jar
-    exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+    exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1")
 }
 
 sourceSets.main {
