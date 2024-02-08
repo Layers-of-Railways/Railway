@@ -10,7 +10,6 @@ import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipe
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
-import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;
@@ -86,7 +85,7 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-    if (Loader.FORGE.isCurrent() && Mods.isModLoaded("embeddium", null)) {
+    if (Mods.isModLoaded("embeddium", null)) {
       LOGGER.info("there is a brick about to fall through your roof at terminal velocity");
     }
 
