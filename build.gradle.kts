@@ -105,13 +105,14 @@ subprojects {
         }
 
         repositories {
-            if (System.getenv("MAVEN_TOKEN") != null) {
+            val mavenToken = System.getenv("MAVEN_TOKEN")
+            if (mavenToken != null && mavenToken.isNotEmpty()) {
                 if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
                     maven {
                         url = uri("https://maven.ithundxr.dev/releases")
                         credentials {
                             username = "railways-github"
-                            password = System.getenv("MAVEN_TOKEN")
+                            password = mavenToken
                         }
                     }
                 } else {
@@ -119,7 +120,7 @@ subprojects {
                         url = uri("https://maven.ithundxr.dev/snapshots")
                         credentials {
                             username = "railways-github"
-                            password = System.getenv("MAVEN_TOKEN")
+                            password = mavenToken
                         }
                     }
                 }
