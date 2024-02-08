@@ -40,9 +40,8 @@
     "fabric-api": ">=${fabric_api_version}",
     "create": "${create_version}"
   },
-  "suggests": {
-    "hexcasting": "*",
-    "voicechat": ">=${minecraft_version}-${voicechat_api_version}"
+  "breaks": {
+    "sodium": "<0.5.6"
   },
   "custom": {
     "modmenu": {

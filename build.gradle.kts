@@ -4,7 +4,7 @@ import net.fabricmc.loom.task.RemapJarTask
 plugins {
     java
     id("architectury-plugin") version "3.4-SNAPSHOT"
-    id("dev.architectury.loom") version "1.4.+" apply false
+    id("dev.architectury.loom") version "1.5.+" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
 }
