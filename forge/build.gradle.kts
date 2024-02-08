@@ -1,9 +1,6 @@
 import java.io.ByteArrayOutputStream
 
-plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("me.modmuss50.mod-publish-plugin")
-}
+architectury.forge()
 
 loom {
     val common = project(":common")
@@ -25,10 +22,6 @@ loom {
     }
 }
 
-architectury {
-    platformSetupLoomIde()
-    forge()
-}
 
 val common: Configuration by configurations.creating
 val shadowCommon: Configuration by configurations.creating
@@ -39,6 +32,7 @@ configurations {
     runtimeOnly.configure { extendsFrom(common) }
     developmentForge.extendsFrom(common)
 }
+
 repositories {
     // mavens for Forge-exclusives
     maven { url = uri("https://maven.theillusivec4.top/") } // Curios
@@ -186,7 +180,7 @@ tasks.processResources {
     }
 }
 
-val getGitHash = { ->
+val getGitHash = {
     val stdout = ByteArrayOutputStream()
     exec {
         commandLine("git", "rev-parse", "HEAD")
@@ -195,7 +189,7 @@ val getGitHash = { ->
     stdout.toString().trim()
 }
 
-val hasUnstaged = { ->
+val hasUnstaged = {
     val stdout = ByteArrayOutputStream()
     exec {
         commandLine("git", "status", "--porcelain")

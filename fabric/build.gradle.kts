@@ -1,16 +1,6 @@
-import net.fabricmc.loom.api.LoomGradleExtensionAPI
-import net.fabricmc.loom.configuration.FabricApiExtension.DataGenerationSettings
 import java.io.ByteArrayOutputStream
 
-plugins {
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("me.modmuss50.mod-publish-plugin")
-}
-
-architectury {
-    platformSetupLoomIde()
-    fabric()
-}
+architectury.fabric()
 
 loom {
     val common = project(":common")
@@ -177,7 +167,7 @@ tasks.processResources {
     }
 }
 
-val getGitHash = { ->
+val getGitHash = {
     val stdout = ByteArrayOutputStream()
     exec {
         commandLine("git", "rev-parse", "HEAD")
@@ -186,7 +176,7 @@ val getGitHash = { ->
     stdout.toString().trim()
 }
 
-val hasUnstaged = { ->
+val hasUnstaged = {
     val stdout = ByteArrayOutputStream()
     exec {
         commandLine("git", "status", "--porcelain")
