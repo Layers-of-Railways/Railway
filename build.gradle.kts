@@ -4,6 +4,7 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
+import org.gradle.configurationcache.extensions.capitalized
 import java.io.ByteArrayOutputStream
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -27,7 +28,9 @@ architectury {
     minecraft = "minecraft_version"()
 }
 
-val gitHash = "\"${calculateGitHash()}" + (if (hasUnstaged()) "-modified" else "") + "\""
+val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
+val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
+val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
 
 tasks.jar {
     enabled = false
@@ -43,11 +46,9 @@ allprojects {
 
     // Formats the mod version to include the loader, Minecraft version, and build number (if present)
     // example: 1.0.0+fabric-1.19.2-build.100 (or -local)
-    val isRelease: Boolean = System.getenv("RELEASE_BUILD")?.toBoolean() == true
-    val buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-    val build = if (buildNumber != null) "build.${buildNumber}" else "local"
+    val build = buildNumber?.let { "-build.${it}" } ?: "-local"
 
-    version = "${"mod_version"()}+${project.name}-mc${"minecraft_version"()}" + ( if (isRelease) "" else "-${build}")
+    version = "${"mod_version"()}+${project.name}-mc${"minecraft_version"() + if (isRelease) build else ""}"
 
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
@@ -63,8 +64,7 @@ subprojects {
 
     setupRepositories()
 
-    @Suppress("DEPRECATION")
-    val capitalizedName = project.name.capitalize()
+    val capitalizedName = project.name.capitalized()
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
     loom.silentMojangMappingsLicense()
@@ -81,8 +81,8 @@ subprojects {
         // layered mappings - Mojmap names, parchment and QM docs and parameters
         "mappings"(loom.layered {
             mappings("org.quiltmc:quilt-mappings:${"minecraft_version"()}+build.${"qm_version"()}:intermediary-v2")
-            parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
             officialMojangMappings { nameSyntheticMembers = false }
+            parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
         })
     }
 
@@ -107,7 +107,7 @@ subprojects {
         repositories {
             val mavenToken = System.getenv("MAVEN_TOKEN")
             if (mavenToken != null && mavenToken.isNotEmpty()) {
-                if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
+                if (isRelease) {
                     maven {
                         url = uri("https://maven.ithundxr.dev/releases")
                         credentials {
@@ -156,8 +156,8 @@ subprojects {
     val development = configurations.maybeCreate("development${capitalizedName}")
 
     configurations {
-        compileOnly.configure { extendsFrom(common) }
-        runtimeOnly.configure { extendsFrom(common) }
+        compileOnly.get().extendsFrom(common)
+        runtimeOnly.get().extendsFrom(common)
         development.extendsFrom(common)
     }
 
@@ -264,19 +264,16 @@ fun Project.setupRepositories() {
         mavenCentral()
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
-        maven("https://maven.parchmentmc.org") // Parchment mappings
-        maven("https://maven.quiltmc.org/repository/release") // Quilt Mappings
+        exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
+        exclusiveMaven("https://maven.quiltmc.org/repository/release", "org.quiltmc") // Quilt Mappings
         maven("https://jm.gserv.me/repository/maven-public/") // JourneyMap API
-        maven("https://api.modrinth.com/maven") { // LazyDFU, JourneyMap
-            content {
-                includeGroup("maven.modrinth")
-            }
-        }
+        exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU, JourneyMap
+        exclusiveMaven("https://cursemaven.com", "curse.maven")
         maven("https://maven.theillusivec4.top/") // Curios
         maven("https://maven.tterrag.com/") { // Flywheel, Registrate, Create
             content {
-                includeGroup("com.tterrag.registrate")
                 includeGroup("com.simibubi.create")
+                includeGroup("com.tterrag.registrate")
                 includeGroup("com.jozufozu.flywheel")
             }
         }
@@ -293,52 +290,21 @@ fun Project.setupRepositories() {
             }
         }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat
-        maven("https://maven.blamejared.com/") { // JEI, Hex Casting
-            content {
-                includeGroup("at.petra-k")
-                includeGroup("vazkii.patchouli")
-            }
-        }
-        maven("https://maven.ladysnake.org/releases") { // Cardinal Components (Hex Casting dependency)
-            content {
-                includeGroup("dev.onyxstudios.cardinal-components-api")
-            }
-        }
         maven("https://jitpack.io") { // Pehkui (Hex Casting dependency)
             content {
                 includeGroupByRegex("com.github.*")
             }
         }
-        maven("https://maven.jamieswhiteshirt.com/libs-release") // Reach Entity Attributes (Hex Casting dependency)
-        maven("https://thedarkcolour.github.io/KotlinForForge/") { // KFF (Hex Casting dependency)
-            content {
-                includeGroup("thedarkcolour")
-            }
-        }
-
-        maven("https://cursemaven.com") { // Biomes O' Plenty
-            content {
-                includeGroup("curse.maven")
-            }
-        }
+        exclusiveMaven("https://maven.jamieswhiteshirt.com/libs-release", "com.jameswhiteshirt.reach-entity-attributes")// Reach Entity Attributes
+        exclusiveMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour") // KFF (Hex Casting dependency)
         maven("https://maven.terraformersmc.com/releases/") // Mod Menu, EMI
         maven("https://mvn.devos.one/snapshots/") // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
-        maven("https://cursemaven.com") // Forge Config API Port
         maven("https://maven.cafeteria.dev/releases") // Fake Player API
         maven("https://maven.jamieswhiteshirt.com/libs-release") // Reach Entity Attributes
         maven("https://jitpack.io/") // Mixin Extras, Fabric ASM
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
-        maven("https://maven.blamejared.com/") { // JEI, Hex Casting
-            content {
-                includeGroup("at.petra-k")
-                includeGroup("vazkii.patchouli")
-            }
-        }
-        maven("https://maven.ladysnake.org/releases") { // Cardinal Components (Hex Casting dependency)
-            content {
-                includeGroup("dev.onyxstudios.cardinal-components-api")
-            }
-        }
+        exclusiveMaven("https://maven.blamejared.com", "at.petra-k", "vazkii.patchouli") // JEI, Hex Casting
+        exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
     }
 }
 
@@ -351,10 +317,6 @@ fun calculateGitHash(): String {
     return stdout.toString().trim()
 }
 
-fun Project.architectury(action: Action<ArchitectPluginExtension>) {
-    action.execute(this.extensions.getByType<ArchitectPluginExtension>())
-}
-
 fun hasUnstaged(): Boolean {
     val stdout = ByteArrayOutputStream()
     exec {
@@ -365,4 +327,19 @@ fun hasUnstaged(): Boolean {
     if (result.isNotEmpty())
         println("Found stageable results:\n${result}\n")
     return result.isNotEmpty()
+}
+
+fun Project.architectury(action: Action<ArchitectPluginExtension>) {
+    action.execute(this.extensions.getByType<ArchitectPluginExtension>())
+}
+
+fun RepositoryHandler.exclusiveMaven(url: String, vararg groups: String) {
+    exclusiveContent {
+        forRepository { maven(url) }
+        filter {
+            groups.forEach {
+                includeGroup(it)
+            }
+        }
+    }
 }
