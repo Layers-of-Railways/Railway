@@ -1,7 +1,6 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
@@ -255,12 +254,6 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
             }
             ci.cancel();
         }
-    }
-
-    @Inject(method = "collideWithOtherTrains", at = @At("HEAD"), cancellable = true)
-    private void maybeNoCollision(Level level, Carriage carriage, CallbackInfo ci) {
-        if (CRConfigs.server().optimization.disableTrainCollision.get())
-            ci.cancel();
     }
 
     @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)

@@ -145,8 +145,5 @@ public class Railways {
   public static int navigationCallDepth = 0;
 
   @ApiStatus.Internal
-  public static boolean skipUprightCalculation = false;
-
-  @ApiStatus.Internal
   public static boolean largeGhastFireballExplosion = false;
 }
