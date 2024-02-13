@@ -42,10 +42,7 @@ dependencies {
     modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
     modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")*/
 
-    val mixinExtras = "io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}"
-
-    annotationProcessor(mixinExtras)
-    implementation(mixinExtras)
+    annotationProcessor(implementation("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
 }
 
 tasks.processResources {

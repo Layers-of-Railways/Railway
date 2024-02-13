@@ -93,11 +93,7 @@ dependencies {
         modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_verison"()}+fabric")
     }
 
-    val mixinExtras = "io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}"
-
-    annotationProcessor(mixinExtras)
-    implementation(mixinExtras)
-    include(mixinExtras)
+    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!)
 }
 
 publishMods {

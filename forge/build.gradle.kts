@@ -87,12 +87,8 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
 
-    val mixinExtras = "io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}"
-
     compileOnly("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")
-    annotationProcessor(mixinExtras)
-    implementation(mixinExtras)
-    include(mixinExtras)
+    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
 }
 
 publishMods {
