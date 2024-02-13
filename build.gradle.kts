@@ -48,7 +48,7 @@ allprojects {
     // example: 1.0.0+fabric-1.19.2-build.100 (or -local)
     val build = buildNumber?.let { "-build.${it}" } ?: "-local"
 
-    version = "${"mod_version"()}+${project.name}-mc${"minecraft_version"() + if (isRelease) build else ""}"
+    version = "${"mod_version"()}+${project.name}-mc${"minecraft_version"() + if (isRelease) "" else build}"
 
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
