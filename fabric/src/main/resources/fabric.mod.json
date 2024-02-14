@@ -38,7 +38,7 @@
     "minecraft": "${minecraft_version}",
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": ">=${fabric_api_version}",
-    "create": "${create_version}"
+    "create": "${create_fabric_version}"
   },
   "breaks": {
     "sodium": "<0.5.6"

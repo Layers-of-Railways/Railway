@@ -2,16 +2,14 @@ loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
 
-repositories {
-    // mavens for Create Fabric and dependencies
-    maven { url = uri("https://api.modrinth.com/maven") } // LazyDFU, Journyemap
-    maven { url = uri("https://maven.terraformersmc.com/releases/") } // Mod Menu
-    maven { url = uri("https://mvn.devos.one/snapshots/") } // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
-    maven { url = uri("https://cursemaven.com") } // Forge Config API Port
-    maven { url = uri("https://maven.cafeteria.dev/releases") } // Fake Player API
-    maven { url = uri("https://maven.jamieswhiteshirt.com/libs-release") } // Reach Entity Attributes
-    maven { url = uri("https://jitpack.io/") } // Mixin Extras, Fabric ASM
-    maven { url = uri("https://maven.blamejared.com/") } // JEI, Hex Casting
+architectury {
+    common {
+        for(p in rootProject.subprojects) {
+            if(p != project) {
+                this@common.add(p.name)
+            }
+        }
+    }
 }
 
 dependencies {
@@ -44,14 +42,7 @@ dependencies {
     modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
     modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")*/
 
-    val mixinExtras = "io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}"
-
-    annotationProcessor(mixinExtras)
-    implementation(mixinExtras)
-}
-
-architectury {
-    common(rootProject.property("enabled_platforms").toString().split(","))
+    annotationProcessor(implementation("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
 }
 
 tasks.processResources {
@@ -59,7 +50,7 @@ tasks.processResources {
     exclude("resourcepacks/")
 
     // don't add development or to-do files into built jar
-    exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1", "**/PlatformMethods.class")
+    exclude("**/*.bbmodel", "**/*.lnk", "**/*.xcf", "**/*.md", "**/*.txt", "**/*.blend", "**/*.blend1")
 }
 
 sourceSets.main {
@@ -67,37 +58,6 @@ sourceSets.main {
         srcDir("src/generated/resources")
         exclude(".cache/**")
         exclude("assets/create/**")
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenCommon") {
-            artifactId = "${"archives_base_name"()}-${project.name}-${"minecraft_version"()}"
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        if (System.getenv("MAVEN_TOKEN") != null) {
-            if (System.getenv("RELEASE_BUILD")?.toBoolean() == true) {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/releases")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            } else {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/snapshots")
-                    credentials {
-                        username = "railways-github"
-                        password = System.getenv("MAVEN_TOKEN")
-                    }
-                }
-            }
-        }
     }
 }
 
