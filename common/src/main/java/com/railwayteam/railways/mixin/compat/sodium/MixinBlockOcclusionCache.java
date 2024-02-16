@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockOcclusionCache.class)
 public class MixinBlockOcclusionCache {
     @Inject(method = "shouldDrawSide", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;skipRendering(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z"), cancellable = true)
-    private void forceRendering(BlockState selfState, BlockGetter view, BlockPos pos, Direction facing, CallbackInfoReturnable<Boolean> cir, @Local(name = "adjState") BlockState adjState) {
+    private void forceRendering(BlockState selfState, BlockGetter view, BlockPos pos, Direction facing, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 1) BlockState adjState) {
         if (selfState.getBlock() instanceof IForceRenderingSodium forceRendering) {
             if (forceRendering.forceRenderingSodium(selfState, adjState, facing))
                 cir.setReturnValue(true);
