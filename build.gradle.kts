@@ -305,6 +305,7 @@ fun Project.setupRepositories() {
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
         exclusiveMaven("https://maven.blamejared.com", "at.petra-k", "vazkii.patchouli") // JEI, Hex Casting
         exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
+        maven("https://maven.createmod.net") // Ponder & Catnip
     }
 }
 

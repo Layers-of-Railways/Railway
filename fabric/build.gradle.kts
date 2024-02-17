@@ -34,6 +34,9 @@ dependencies {
     // Create - dependencies are added transitively
     modImplementation("com.simibubi.create:create-fabric-${"minecraft_version"()}:${"create_fabric_version"()}")
 
+    modImplementation("net.createmod.catnip:Catnip-Fabric-${"minecraft_version"()}:${"catnip_version"()}")
+    modImplementation("net.createmod.ponder:Ponder-Fabric-${"minecraft_version"()}:${"ponder_version"()}")
+
     // Fabric ASM (enum extension etc)
     modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
         exclude (group = "net.fabricmc.fabric-api")
