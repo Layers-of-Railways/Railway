@@ -193,7 +193,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
         Carriage carriage = new Carriage(bogey, null, 0);
         Train train = new Train(UUID.randomUUID(), owner, graph, List.of(carriage), new ArrayList<>(), true);
 
-        ((IHandcarTrain) train).snr$setHandcar(true);
+        ((IHandcarTrain) train).railways$setHandcar(true);
 
         carriage.setContraption(level, contraption);
 

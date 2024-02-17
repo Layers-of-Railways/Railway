@@ -40,8 +40,8 @@ public class GenericCrossingModel implements BakedModel {
     public @NotNull ModelData getModelData(@NotNull BlockAndTintGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ModelData modelData) {
         if (level.getBlockEntity(pos) instanceof IGenericCrossingTrackBE genericCrossing) {
             return modelData.derive()
-                .with(FIRST_PIECE, genericCrossing.snr$getFirstCrossingPiece())
-                .with(SECOND_PIECE, genericCrossing.snr$getSecondCrossingPiece())
+                .with(FIRST_PIECE, genericCrossing.railways$getFirstCrossingPiece())
+                .with(SECOND_PIECE, genericCrossing.railways$getSecondCrossingPiece())
                 .build();
         } else {
             return modelData;

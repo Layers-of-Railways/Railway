@@ -36,7 +36,7 @@ public abstract class MixinTrackBlockOutline {
     }
 
     @Unique
-    private static TrackMaterial railway$resultMaterial;
+    private static TrackMaterial railways$resultMaterial;
 
     @ModifyVariable(
             method = "pickCurves",
@@ -46,8 +46,8 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultMaterial = bc.getMaterial();
+    private static BezierConnection railways$grabResultMonorailState(BezierConnection bc) {
+        railways$resultMaterial = bc.getMaterial();
         return bc;
     }
 
@@ -59,11 +59,11 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static VoxelShape railway$renderCurvedMonorailShape(VoxelShape shape) {
-        return CustomTrackBlockOutline.convert(shape, railway$resultMaterial);
+    private static VoxelShape railways$renderCurvedMonorailShape(VoxelShape shape) {
+        return CustomTrackBlockOutline.convert(shape, railways$resultMaterial);
     }
 
-    private static TrackMaterial railway$walkingMaterial;
+    private static TrackMaterial railways$walkingMaterial;
 
     @ModifyVariable(
             method = "drawCustomBlockSelection",
@@ -73,8 +73,8 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static BlockState railway$grabMonorailState(BlockState state) {
-        railway$walkingMaterial = state.getBlock() instanceof TrackBlock trackBlock ? trackBlock.getMaterial() : TrackMaterial.ANDESITE;
+    private static BlockState railways$grabMonorailState(BlockState state) {
+        railways$walkingMaterial = state.getBlock() instanceof TrackBlock trackBlock ? trackBlock.getMaterial() : TrackMaterial.ANDESITE;
         return state;
     }
 
@@ -85,8 +85,8 @@ public abstract class MixinTrackBlockOutline {
                     target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"
             )
     )
-    private static Object railway$renderMonorailBlockShape(Object o) {
-        return CustomTrackBlockOutline.convert(o, railway$walkingMaterial);
+    private static Object railways$renderMonorailBlockShape(Object o) {
+        return CustomTrackBlockOutline.convert(o, railways$walkingMaterial);
     }
 
     @WrapOperation(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true))

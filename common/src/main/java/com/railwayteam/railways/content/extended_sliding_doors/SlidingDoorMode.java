@@ -107,6 +107,6 @@ public enum SlidingDoorMode implements INamedIconOptions {
     }
 
     public interface IHasDoorMode {
-        SlidingDoorMode snr$getSlidingDoorMode();
+        SlidingDoorMode railways$getSlidingDoorMode();
     }
 }

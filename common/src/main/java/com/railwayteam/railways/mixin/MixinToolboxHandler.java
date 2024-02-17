@@ -37,7 +37,7 @@ public abstract class MixinToolboxHandler {
   }
 
   @Inject(method = { "onLoad", "onUnload" }, at = @At("HEAD"), cancellable = true)
-  private static void railway$keepMountedToolboxesOutOfMap(ToolboxBlockEntity be, CallbackInfo ci) {
+  private static void railways$keepMountedToolboxesOutOfMap(ToolboxBlockEntity be, CallbackInfo ci) {
     if (be instanceof MountedToolbox)
       ci.cancel();
   }
@@ -52,7 +52,7 @@ public abstract class MixinToolboxHandler {
           ),
           locals = LocalCapture.CAPTURE_FAILHARD
   )
-  private static void railway$connectConductorToolboxes(Entity entity, Level world, CallbackInfo ci,
+  private static void railways$connectConductorToolboxes(Entity entity, Level world, CallbackInfo ci,
                                      ServerPlayer player, boolean sendData, CompoundTag compound, int i,
                                      String key, CompoundTag data, BlockPos pos, int slot) {
     if (!data.hasUUID("EntityUUID") || !(world instanceof ServerLevel level))
@@ -78,7 +78,7 @@ public abstract class MixinToolboxHandler {
           )
   )
   @SuppressWarnings("InvalidInjectorMethodSignature")
-  private static BlockEntity railway$getConductorToolbox(BlockEntity be,
+  private static BlockEntity railways$getConductorToolbox(BlockEntity be,
                                                          Player player, int hotbarSlot, boolean keepItems) {
     if (!(player.level instanceof ServerLevel level))
       return be;
@@ -95,7 +95,7 @@ public abstract class MixinToolboxHandler {
   }
 
   @Inject(method = "getNearest", at = @At("RETURN"))
-  private static void railway$findNearbyConductors(LevelAccessor world, Player player, int maxAmount,
+  private static void railways$findNearbyConductors(LevelAccessor world, Player player, int maxAmount,
                                                    CallbackInfoReturnable<List<ToolboxBlockEntity>> cir) {
     List<ToolboxBlockEntity> toolboxes = cir.getReturnValue();
     Set<ConductorEntity> conductors = ConductorEntity.WITH_TOOLBOXES.get(world);

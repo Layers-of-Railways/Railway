@@ -68,7 +68,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playSound(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FF)V", remap = true),
             locals = LocalCapture.CAPTURE_FAILSOFT, remap = true, require = 0
     )
-    private void snr$setBogeyData(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos,
+    private void railways$setBogeyData(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos,
                               CallbackInfoReturnable<Boolean> cir, BoundingBox bb, BlockPos up, BlockPos down,
                               int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
         if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
@@ -113,7 +113,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", ordinal = 0), require = 0)
-    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
+    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local AbstractBogeyBlock<?> typeOfFirstBogey, @Local(ordinal = 0) LocalBooleanRef atLeastOneForwardControls) {
         if (typeOfFirstBogey instanceof HandcarBlock) {
             atLeastOneForwardControls.set(true);
         }
@@ -122,10 +122,10 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     @Inject(method = "applyAutoSchedule", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/schedule/Schedule;Z)V"))
     private void setScheduleIndexOnAutoSchedule(CallbackInfo ci, @Local Train imminentTrain) {
         int idx = 0;
-        ((IIndexedSchedule) imminentTrain).snr$setIndex(0); // backup
+        ((IIndexedSchedule) imminentTrain).railways$setIndex(0); // backup
         for (Carriage carriage : imminentTrain.carriages) {
             if (carriage.presentConductors.either(b -> b)) {
-                ((IIndexedSchedule) imminentTrain).snr$setIndex(idx);
+                ((IIndexedSchedule) imminentTrain).railways$setIndex(idx);
                 if (Utils.isDevEnv())
                     Railways.LOGGER.info("[SET_INDEX {}] on train {} called in MixinStationBlockEntity#setScheduleIndexOnAutoSchedule", idx, imminentTrain.name.getString());
                 break;

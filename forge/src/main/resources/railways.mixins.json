@@ -7,17 +7,19 @@
   "client": [
     "ClientPacketListenerMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin",
-    "MixinGoggleOverlayRenderer"
+    "TrainHUDMixin"
   ],
   "mixins": [
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "GoggleOverlayRendererMixin",
+    "ContainerLevelAccessMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   },
   "plugin": "com.railwayteam.railways.forge.mixin.CRMixinPlugin"
 }

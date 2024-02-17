@@ -14,7 +14,7 @@ public class MixinDoorBlock {
     @Inject(method = "isWoodenDoor(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", at = @At("RETURN"), cancellable = true)
     private static void doNotOpenSpecialDoors(Level level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            if (level.getBlockEntity(pos) instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.snr$getSlidingDoorMode() == SlidingDoorMode.SPECIAL) {
+            if (level.getBlockEntity(pos) instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.railways$getSlidingDoorMode() == SlidingDoorMode.SPECIAL) {
                 cir.setReturnValue(false);
             }
         }

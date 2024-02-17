@@ -29,20 +29,20 @@ public class MixinCarriageSounds {
     LerpedFloat seatCrossfade;
 
     @Unique
-    private boolean snr$skip;
+    private boolean railways$skip;
 
     @Unique
-    private boolean snr$isHandcar;
+    private boolean railways$isHandcar;
 
     @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     private void skipIfInvisible(CarriageContraptionEntity entity, CallbackInfo ci) {
-        snr$skip = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.INVISIBLE || b.getStyle() == CRBogeyStyles.INVISIBLE_MONOBOGEY);
-        snr$isHandcar = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
+        railways$skip = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.INVISIBLE || b.getStyle() == CRBogeyStyles.INVISIBLE_MONOBOGEY);
+        railways$isHandcar = entity.getCarriage().bogeys.both((b) -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
     }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true, remap = false)
     private void actuallySkip(Carriage.DimensionalCarriageEntity dce, CallbackInfo ci) {
-        if (snr$skip)
+        if (railways$skip)
             ci.cancel();
     }
 
@@ -51,7 +51,7 @@ public class MixinCarriageSounds {
         "submitSharedSoundVolume"
     }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;getMainEvent()Lnet/minecraft/sounds/SoundEvent;"))
     private SoundEvent useCogRumble(AllSoundEvents.SoundEntry instance, Operation<SoundEvent> original) {
-        if (snr$isHandcar && instance == AllSoundEvents.TRAIN)
+        if (railways$isHandcar && instance == AllSoundEvents.TRAIN)
             return CRSounds.HANDCAR_COGS.get();
         return original.call(instance);
     }
@@ -62,7 +62,7 @@ public class MixinCarriageSounds {
         @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 1)
     }, remap = true)
     private boolean shouldPlaySteamSound(AllSoundEvents.SoundEntry instance, Level world, Vec3 pos, float volume, float pitch, boolean fade) {
-        return instance != AllSoundEvents.STEAM || !snr$isHandcar;
+        return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
     @SuppressWarnings("unused")
@@ -70,7 +70,7 @@ public class MixinCarriageSounds {
         @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 2)
     }, remap = true)
     private boolean shouldPlaySteamReleaseSound(AllSoundEvents.SoundEntry instance, Level world, Vec3 pos, float volume, float pitch, boolean fade) {
-        return instance != AllSoundEvents.STEAM || !snr$isHandcar;
+        return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
     @SuppressWarnings("unused")
@@ -78,13 +78,13 @@ public class MixinCarriageSounds {
         @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V")
     }, remap = true)
     private boolean shouldPlaySteamReleaseSound3(Level instance, double x, double y, double z, SoundEvent sound, SoundSource category, float volume, float pitch, boolean distanceDelay) {
-        return !snr$isHandcar;
+        return !railways$isHandcar;
     }
 
     @WrapOperation(method = "finalizeSharedVolume", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageSounds$LoopingSound;setVolume(F)V", ordinal = 0))
     private void handcarNoCrossfade(@Coerce /* CarriageSounds.LoopingSound */ AbstractTickableSoundInstance instance,
                                     float volume, Operation<Void> original) {
-        if (snr$isHandcar) {
+        if (railways$isHandcar) {
             float crossfade = seatCrossfade.getValue();
             volume = (1 - (crossfade * .125f)) * volume * 1024;
         }

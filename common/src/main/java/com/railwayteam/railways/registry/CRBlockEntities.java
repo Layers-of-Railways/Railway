@@ -18,9 +18,9 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBloc
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
-import com.railwayteam.railways.content.smokestack.DieselSmokeStackBlockEntity;
-import com.railwayteam.railways.content.smokestack.DieselSmokeStackRenderer;
-import com.railwayteam.railways.content.smokestack.SmokeStackBlockEntity;
+import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
+import com.railwayteam.railways.content.smokestack.block.renderer.DieselSmokeStackRenderer;
+import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;

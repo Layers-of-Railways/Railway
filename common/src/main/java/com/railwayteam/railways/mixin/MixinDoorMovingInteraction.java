@@ -24,7 +24,7 @@ public class MixinDoorMovingInteraction {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", ordinal = 1, remap = true),
         cancellable = true
     )
-    private void snr$lockSpecial(Player player, Contraption contraption, BlockPos pos,
+    private void railways$lockSpecial(Player player, Contraption contraption, BlockPos pos,
                                  BlockState currentState, CallbackInfoReturnable<BlockState> cir) {
         if (player == null) return;
         if (!(currentState.getBlock() instanceof SlidingDoorBlock)) return;

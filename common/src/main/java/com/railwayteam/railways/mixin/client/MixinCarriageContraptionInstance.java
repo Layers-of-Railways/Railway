@@ -23,17 +23,17 @@ public abstract class MixinCarriageContraptionInstance extends EntityInstance<Ca
     }
 
     @Override
-    public int snr_getUpdateCount() {
+    public int railways$getUpdateCount() {
         return updateCount;
     }
 
     @Override
-    public void snr_fromParent(IUpdateCount parent) {
-        updateCount = parent.snr_getUpdateCount();
+    public void railways$fromParent(IUpdateCount parent) {
+        updateCount = parent.railways$getUpdateCount();
     }
 
     @Override
-    public void snr_markUpdate() {
+    public void railways$markUpdate() {
         updateCount++;
     }
 
@@ -41,7 +41,7 @@ public abstract class MixinCarriageContraptionInstance extends EntityInstance<Ca
     private Couple<BogeyInstance> bogeys;
 
     @Inject(method = "beginFrame", at = @At("HEAD"), remap = false)
-    private void snr_refreshBogeys(CallbackInfo ci) {
+    private void railways$refreshBogeys(CallbackInfo ci) {
         if (IUpdateCount.outOfSync(this, (IUpdateCount) this.entity)) {
             if (bogeys != null) {
                 bogeys.forEach(instance -> {
@@ -52,7 +52,7 @@ public abstract class MixinCarriageContraptionInstance extends EntityInstance<Ca
                 });
                 bogeys = null;
             }
-            this.snr_fromParent((IUpdateCount) this.entity);
+            this.railways$fromParent((IUpdateCount) this.entity);
         }
     }
 }

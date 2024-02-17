@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/smokestack/block_streamlined",
+  "textures": {
+    "0": "railways:block/smokestack/streamlined/copper",
+    "particle": "#0"
+  }
+}

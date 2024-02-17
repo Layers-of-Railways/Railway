@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface AccessorToolboxHandlerClient {
   @Accessor("COOLDOWN")
   static int getCOOLDOWN() {
-    throw new RuntimeException("Should be mixed in");
+    throw new AssertionError();
   }
 
   @Accessor("COOLDOWN")
   static void setCOOLDOWN(int i) {
-    throw new RuntimeException("Should be mixed in");
+    throw new AssertionError();
   }
 }

@@ -15,7 +15,6 @@ public class CServer extends ConfigBase {
     public final CSemaphores semaphores = nested(0, CSemaphores::new, Comments.semaphores);
     public final CConductors conductors = nested(0, CConductors::new, Comments.conductors);
     public final CJourneymap journeymap = nested(0, CJourneymap::new, Comments.journeymap);
-    public final COptimization optimization = nested(0, COptimization::new, Comments.optimization);
 
     @Override
     public String getName() {
@@ -33,6 +32,5 @@ public class CServer extends ConfigBase {
         static String semaphores = "Semaphore settings";
         static String conductors = "Conductor settings";
         static String journeymap = "Journeymap compat settings";
-        static String optimization = "Optimization settings (may be experimental)";
     }
 }

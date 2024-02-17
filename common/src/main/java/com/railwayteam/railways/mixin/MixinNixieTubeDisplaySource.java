@@ -22,17 +22,17 @@ import static com.railwayteam.railways.content.distant_signals.SignalDisplaySour
 @Mixin(value = NixieTubeDisplaySource.class, remap = false)
 public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySource {
     @Inject(method = "allowsLabeling", at = @At("RETURN"), cancellable = true)
-    private void snr$allowLabeling(DisplayLinkContext context, CallbackInfoReturnable<Boolean> cir) {
+    private void railways$allowLabeling(DisplayLinkContext context, CallbackInfoReturnable<Boolean> cir) {
         if (context.blockEntity().activeTarget instanceof SemaphoreDisplayTarget)
             cir.setReturnValue(false);
     }
 
     @Inject(method = "provideLine", at = @At("HEAD"), cancellable = true)
-    private void snr$provideLine(DisplayLinkContext context, DisplayTargetStats stats, CallbackInfoReturnable<MutableComponent> cir) {
+    private void railways$provideLine(DisplayLinkContext context, DisplayTargetStats stats, CallbackInfoReturnable<MutableComponent> cir) {
         // if this is an overridden signal, provide the proper output
         SignalBlockEntity.SignalState state;
         if (context.getSourceBlockEntity() instanceof IOverridableSignal signalBE) {
-            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.snr$getOverriddenState();
+            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.railways$getOverriddenState();
             if (optionalState.isPresent()) {
                 state = optionalState.get();
             } else {

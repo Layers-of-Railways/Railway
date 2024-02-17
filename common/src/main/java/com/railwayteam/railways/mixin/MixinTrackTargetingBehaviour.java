@@ -20,7 +20,7 @@ public abstract class MixinTrackTargetingBehaviour<T extends TrackEdgePoint> ext
     @Shadow public abstract Direction.AxisDirection getTargetDirection();
 
     @Override
-    public void snr$preAssemble() {
+    public void railways$preAssemble() {
         if (edgePoint != null && !getWorld().isClientSide)
             edgePoint.blockEntityRemoved(getPos(), getTargetDirection() == Direction.AxisDirection.POSITIVE);
     }

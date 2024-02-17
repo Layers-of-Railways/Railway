@@ -23,6 +23,7 @@ public class ModSetup {
     CRExtraRegistration.register();
     CasingCollisionUtils.register();
     CRInteractionBehaviours.register();
+    CRPortalTracks.register();
 
     // Compat
     HexCastingTrackCompat.register();

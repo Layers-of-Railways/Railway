@@ -7,15 +7,17 @@
   "client": [
     "LevelRendererMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin",
-    "MixinGoggleOverlayRenderer"
+    "TrainHUDMixin"
   ],
   "mixins": [
     "DetectorRailBlockMixin",
-    "EnderManMixin"
+    "EnderManMixin",
+    "GoggleOverlayRendererMixin",
+    "ContainerLevelAccessMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   },
   "plugin": "com.railwayteam.railways.fabric.mixin.CRMixinPlugin"
 }

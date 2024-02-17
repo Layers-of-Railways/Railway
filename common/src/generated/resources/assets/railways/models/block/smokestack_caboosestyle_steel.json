@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/smokestack/block_caboosestyle",
+  "textures": {
+    "0": "railways:block/smokestack/caboosestyle",
+    "particle": "#0"
+  }
+}

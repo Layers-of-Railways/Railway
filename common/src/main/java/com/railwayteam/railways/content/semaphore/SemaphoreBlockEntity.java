@@ -209,7 +209,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
     }
 
     @Override
-    public void snr$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal) {
+    public void railways$refresh(@Nullable SignalBlockEntity signalBE, SignalBlockEntity.SignalState state, int ticks, boolean distantSignal) {
         if (level == null) return;
         cachedSignalTE = new WeakReference<>(signalBE);
         signalState = state;
@@ -222,7 +222,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
     }
 
     @Override
-    public Optional<SignalBlockEntity.SignalState> snr$getOverriddenState() {
+    public Optional<SignalBlockEntity.SignalState> railways$getOverriddenState() {
         if (overrideLastingTicks > 0 && signalState != null)
             return Optional.of(signalState);
         return Optional.empty();

@@ -17,25 +17,25 @@ import java.util.List;
 @Mixin(value = SlidingDoorBlockEntity.class, remap = false)
 public class MixinSlidingDoorBlockEntity implements SlidingDoorMode.IHasDoorMode {
     @Unique
-    private ScrollOptionBehaviour<SlidingDoorMode> snr$doorModeScroll;
+    private ScrollOptionBehaviour<SlidingDoorMode> railways$doorModeScroll;
 
     @Inject(method = "addBehaviours", at = @At("RETURN"))
     private void addScrollBehaviour(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         SlidingDoorBlockEntity this_ = (SlidingDoorBlockEntity) (Object) this;
-        snr$doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
+        railways$doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
             @Override
             public void read(CompoundTag nbt, boolean clientPacket) {
                 super.read(nbt, clientPacket);
                 setValue(value); // ensure that it is properly bounded
             }
         };
-        snr$doorModeScroll.requiresWrench();
+        railways$doorModeScroll.requiresWrench();
 //        doorModeScroll.value = doorModeScroll.scrollableValue = 1;
-        behaviours.add(snr$doorModeScroll);
+        behaviours.add(railways$doorModeScroll);
     }
 
     @Override
-    public SlidingDoorMode snr$getSlidingDoorMode() {
-        return snr$doorModeScroll == null ? SlidingDoorMode.NORMAL : snr$doorModeScroll.get();
+    public SlidingDoorMode railways$getSlidingDoorMode() {
+        return railways$doorModeScroll == null ? SlidingDoorMode.NORMAL : railways$doorModeScroll.get();
     }
 }

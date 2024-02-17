@@ -15,7 +15,7 @@ public class MixinWalkNodeEvaluator {
     @Inject(method = "getBlockPathTypeRaw", at = @At("RETURN"), cancellable = true)
     private static void doNotOpenSpecialDoors(BlockGetter level, BlockPos pos, CallbackInfoReturnable<BlockPathTypes> cir) {
         if (cir.getReturnValue() == BlockPathTypes.DOOR_WOOD_CLOSED) {
-            if (level.getBlockEntity(pos) instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.snr$getSlidingDoorMode() == SlidingDoorMode.SPECIAL) {
+            if (level.getBlockEntity(pos) instanceof SlidingDoorMode.IHasDoorMode doorMode && doorMode.railways$getSlidingDoorMode() == SlidingDoorMode.SPECIAL) {
                 cir.setReturnValue(BlockPathTypes.DOOR_IRON_CLOSED);
             }
         }
