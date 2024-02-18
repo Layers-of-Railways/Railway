@@ -208,7 +208,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
     private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
-                                 CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 0) LocalIntRef targetSpeed) {
+                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeed) {
         if (((IBufferBlockedTrain) carriage.train).railways$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).railways$getBlockedSign() == Mth.sign(targetSpeed.get())) {
             targetSpeed.set(0);
         }

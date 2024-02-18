@@ -49,7 +49,7 @@ public class MixinTrackPlacement {
     private static void placeGenericCrossing0(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(ordinal = 4) BlockState toPlace) {
+                                             @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(name="toPlace") BlockState toPlace) {
         oldToPlace.set(toPlace);
     }
 
@@ -57,8 +57,8 @@ public class MixinTrackPlacement {
     private static void placeGenericCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Local(ordinal = 3) BlockState stateAtPos,
-                                             @Local(ordinal = 4) LocalRef<BlockState> toPlace,
+                                             @Local(name="stateAtPos") BlockState stateAtPos,
+                                             @Local(name="toPlace") LocalRef<BlockState> toPlace,
                                              @Share("oldToPlace") LocalRef<BlockState> oldToPlace,
                                              @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingData) {
         crossingData.set(null);
@@ -83,7 +83,7 @@ public class MixinTrackPlacement {
     private static void maybePlaceCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                            BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                            CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                           @Local(ordinal = 3) BlockPos offsetPos,
+                                           @Local(name="offsetPos") BlockPos offsetPos,
                                            @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingDataRef) {
         @Nullable GenericCrossingData crossingData = crossingDataRef.get();
         if (crossingData != null && level.getBlockEntity(offsetPos) instanceof GenericCrossingBlockEntity genericCrossingBE) {

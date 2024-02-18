@@ -23,7 +23,7 @@ public class MixinStationRenderer {
     @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/station/StationBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/render/CachedBufferer;partial(Lcom/jozufozu/flywheel/core/PartialModel;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/simibubi/create/foundation/render/SuperByteBuffer;"))
     private void shiftAssemblyOverlayOnEncasedTracks(
         StationBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-        CallbackInfo ci, @Local BlockState trackState, @Local MutableBlockPos currentPos) {
+        CallbackInfo ci, @Local(name = "currentPos") MutableBlockPos currentPos, @Local(name = "trackState") BlockState trackState) {
         ms.pushPose();
 
         if (trackState.getBlock() instanceof TrackBlock trackBlock
