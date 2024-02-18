@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,15 +25,20 @@ import java.util.Locale;
 public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public static final EnumProperty<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+    public static final BooleanProperty RAISED = BooleanProperty.create("raised"); // raise by 1/2 block
 
     public BoilerBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(STYLE, Style.GULLET).setValue(HORIZONTAL_AXIS, Axis.X));
+        registerDefaultState(defaultBlockState()
+            .setValue(STYLE, Style.GULLET)
+            .setValue(HORIZONTAL_AXIS, Axis.X)
+            .setValue(RAISED, false)
+        );
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(STYLE, HORIZONTAL_AXIS);
+        builder.add(STYLE, HORIZONTAL_AXIS, RAISED);
     }
 
     /*@Override
@@ -51,7 +57,9 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     @SuppressWarnings("deprecation")
     @Override
     public boolean skipRendering(@NotNull BlockState state, BlockState adjacentBlockState, @NotNull Direction direction) {
-        return (adjacentBlockState.is(this) && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS));
+        return adjacentBlockState.is(this)
+            && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS)
+            && adjacentBlockState.getValue(RAISED) == state.getValue(RAISED);
     }
 
     @Override
@@ -83,10 +91,13 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        boolean raised = context.getPlayer() != null && context.getPlayer().isCrouching();
         Axis axis = context.getClickedFace().getAxis();
         if (axis == Axis.Y)
             axis = context.getHorizontalDirection().getAxis();
-        return defaultBlockState().setValue(HORIZONTAL_AXIS, axis);
+        return defaultBlockState()
+            .setValue(HORIZONTAL_AXIS, axis)
+            .setValue(RAISED, raised);
     }
 
     public enum Style implements StringRepresentable {

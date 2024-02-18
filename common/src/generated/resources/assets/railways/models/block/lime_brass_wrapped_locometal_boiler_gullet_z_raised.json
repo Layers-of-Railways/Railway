@@ -1,0 +1,12 @@
+{
+  "parent": "railways:block/palettes/boiler/boiler",
+  "flip_v": true,
+  "loader": "forge:obj",
+  "model": "railways:models/block/palettes/boiler/boiler_z_raised.obj",
+  "porting_lib:loader": "porting_lib:obj",
+  "textures": {
+    "front": "railways:block/palettes/lime/boiler_gullet",
+    "particle": "railways:block/palettes/lime/riveted_pillar_top",
+    "sides": "railways:block/palettes/lime/wrapped_boiler_side"
+  }
+}
