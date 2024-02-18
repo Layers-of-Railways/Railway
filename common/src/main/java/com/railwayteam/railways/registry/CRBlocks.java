@@ -681,7 +681,7 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
                 .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), HeadstockBlock.WATERLOGGED
             )
@@ -704,7 +704,7 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true)))
+                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
                 .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), CopycatHeadstockBlock.WATERLOGGED
             )

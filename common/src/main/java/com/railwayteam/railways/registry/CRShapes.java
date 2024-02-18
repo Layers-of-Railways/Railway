@@ -74,6 +74,12 @@ public class CRShapes {
             .add(4, 5, 12, 6, 11, 15)
             .add(5, 5.5, 14, 9, 10.5, 16)
             .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_SCREWLINK = shape(4, 6, 3, 12, 10, 4)
+            .add(5, 6, 4, 11, 10, 6)
+            .add(7, 7, 6, 9, 9, 8)
+            .add(7, 6.5, 7, 9, 9.5, 11)
+            .add(0, 4, 0, 16, 16, 3)
             .forHorizontal(Direction.SOUTH);
 
     public static final VoxelShaper LINK_PIN =
@@ -99,6 +105,11 @@ public class CRShapes {
             .add(4, 5, 6, 12, 11, 9)
             .add(4, 5, 9, 6, 11, 12)
             .add(5, 5.5, 11, 9, 10.5, 13)
+            .forHorizontal(Direction.SOUTH),
+        SCREWLINK = shape(4, 6, 0, 12, 10, 1)
+            .add(5, 6, 1, 11, 10, 3)
+            .add(7, 7, 3, 9, 9, 5)
+            .add(7, 6.5, 4, 9, 9.5, 8)
             .forHorizontal(Direction.SOUTH);
 
     private static VoxelShape narrowAscending() {

@@ -10,10 +10,11 @@
     "TrainHUDMixin"
   ],
   "mixins": [
+    "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
-    "GoggleOverlayRendererMixin",
-    "ContainerLevelAccessMixin"
+    "TrackObserverTEMPMixin",
+    "GoggleOverlayRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1,
