@@ -1,4 +1,4 @@
-package com.railwayteam.railways;
+  package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
@@ -81,10 +81,6 @@ public class Railways {
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
-
-    if (Mods.isModLoaded("embeddium", null)) {
-      LOGGER.info("there is a brick about to fall through your roof at terminal velocity");
-    }
 
     if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();

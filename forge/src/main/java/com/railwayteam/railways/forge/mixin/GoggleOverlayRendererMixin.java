@@ -20,7 +20,7 @@ public class GoggleOverlayRendererMixin {
             at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;asStack()Lnet/minecraft/world/item/ItemStack;")
     )
     private static ItemStack changeDisplayItem(ItemEntry<GogglesItem> instance, Operation<ItemStack> original,
-                                               @Local BlockEntity be, @Local(name = "wearingGoggles") boolean wearingGoggles) {
+                                               @Local BlockEntity be, @Local boolean wearingGoggles) {
         if (be instanceof IHaveCustomGoggleIcon gte && wearingGoggles) {
             return gte.railways$setGoggleIcon(Minecraft.getInstance().player.isShiftKeyDown());
         }
