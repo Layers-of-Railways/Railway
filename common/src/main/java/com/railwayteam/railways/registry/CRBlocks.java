@@ -325,15 +325,19 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
 
-    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new LinkedHashMap<>();
-    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new LinkedHashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
 
     static {
-        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
+        List<TrackMaterial> wideMaterials = new ArrayList<>(CRTrackMaterials.WIDE_GAUGE.values());
+        wideMaterials.sort(Comparator.comparing((trackMaterial -> trackMaterial.id)));
+        for (TrackMaterial wideMaterial : wideMaterials) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
         }
 
-        for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
+        List<TrackMaterial> narrowMaterials = new ArrayList<>(CRTrackMaterials.NARROW_GAUGE.values());
+        narrowMaterials.sort(Comparator.comparing((trackMaterial -> trackMaterial.id)));
+        for (TrackMaterial narrowMaterial : narrowMaterials) {
             NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
         }
     }
