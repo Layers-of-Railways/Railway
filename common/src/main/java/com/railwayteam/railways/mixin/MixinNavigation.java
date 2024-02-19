@@ -384,7 +384,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;burnFuel()V"))
     private void applyBufferSlowdown(Level level, CallbackInfo ci,
-                                     @Local(ordinal = 5) LocalDoubleRef targetDistance) {
+                                     @Local(name = "targetDistance") LocalDoubleRef targetDistance) {
         if (railways$bufferDistance.get() < targetDistance.get())
             targetDistance.set(railways$bufferDistance.get());
         // reset buffer distance for next time

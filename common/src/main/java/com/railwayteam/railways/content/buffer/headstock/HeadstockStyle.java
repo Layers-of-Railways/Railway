@@ -14,7 +14,8 @@ public enum HeadstockStyle implements StringRepresentable, BlockStateBlockItemGr
     LINK("headstock_link_and_pin", "Headstock (Link 'n Pin)"),
     LINKLESS("headstock_link_and_pin_linkless", "Headstock (Linkless Link 'n Pin)"),
     KNUCKLE("headstock_knuckle_coupler", "Headstock (Knuckle Coupler)"),
-    KNUCKLE_SPLIT("headstock_split_knuckle_coupler", "Headstock (Split Knuckle Coupler)");
+    KNUCKLE_SPLIT("headstock_split_knuckle_coupler", "Headstock (Split Knuckle Coupler)"),
+    SCREWLINK("headstock_screwlink_coupler", "Headstock (Screwlink Coupler)");
 
     private final String model;
     private final String langName;
@@ -24,8 +25,8 @@ public enum HeadstockStyle implements StringRepresentable, BlockStateBlockItemGr
         this.langName = langName;
     }
 
-    public ResourceLocation getModel(boolean copycat) {
-        return Railways.asResource("block/buffer/headstock/" + (copycat ? "copycat_" : "wooden_") + model);
+    public ResourceLocation getModel(boolean copycat, boolean upsideDown) {
+        return Railways.asResource("block/buffer/headstock/" + (copycat ? "copycat_" : "wooden_") + model + (upsideDown ? "_upside_down" : ""));
     }
 
     @Override
@@ -40,7 +41,7 @@ public enum HeadstockStyle implements StringRepresentable, BlockStateBlockItemGr
 
     @Override
     public ResourceLocation getModel(Boolean context) {
-        return getModel((boolean) context);
+        return getModel(context, false);
     }
 
     @Override

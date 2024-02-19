@@ -113,7 +113,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", ordinal = 0), require = 0)
-    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local AbstractBogeyBlock<?> typeOfFirstBogey, @Local(ordinal = 0) LocalBooleanRef atLeastOneForwardControls) {
+    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
         if (typeOfFirstBogey instanceof HandcarBlock) {
             atLeastOneForwardControls.set(true);
         }
