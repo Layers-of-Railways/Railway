@@ -14,5 +14,18 @@
   "block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place.",
 
   "block.railways.handcar.tooltip": "HANDCAR",
-  "block.railways.handcar.summary": "Use a wrench to pick up"
+  "block.railways.handcar.summary": "Use a wrench to pick up.",
+
+  "block.railways.boiler.tooltip": "BOILER",
+  "block.railways.boiler.tooltip.summary": "Use a wrench to change the style, or sneak while placing to raise the boiler half a block.",
+
+  "block.railways.generic_radial.tooltip": "GENERIC RADIAL",
+  "block.railways.generic_radial.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select variants of this block.",
+
+  "block.railways.smokestack.tooltip": "SMOKESTACK",
+  "block.railways.smokestack.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select variants of this block.",
+  "block.railways.smokestack.tooltip.condition1": "When you use a dye item on a smokestack",
+  "block.railways.smokestack.tooltip.behaviour1": "The _emitted smoke_ will change color",
+  "block.railways.smokestack.tooltip.condition2": "When you use soul sand or soul soil on a smokestack",
+  "block.railways.smokestack.tooltip.behaviour2": "The _emitted smoke_ will change to _soul smoke_"
 }
