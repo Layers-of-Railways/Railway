@@ -328,9 +328,10 @@ public class CRBlocks {
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
 
+    // Sorts it by ID to prevent tags moving around for no reason
     static {
         List<TrackMaterial> wideMaterials = new ArrayList<>(CRTrackMaterials.WIDE_GAUGE.values());
-        wideMaterials.sort(Comparator.comparing((trackMaterial -> trackMaterial.id)));
+        wideMaterials.sort(Comparator.comparing((t -> t.id)));
         for (TrackMaterial wideMaterial : wideMaterials) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
         }
