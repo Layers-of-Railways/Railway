@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -49,16 +50,20 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements BlockStateBlockItemGroup.GroupedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
+    public static final BooleanProperty UPSIDE_DOWN = HeadstockBlock.UPSIDE_DOWN;
+
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
-            .setValue(STYLE, HeadstockStyle.BUFFER));
+            .setValue(STYLE, HeadstockStyle.BUFFER)
+            .setValue(UPSIDE_DOWN, false)
+        );
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(FACING, STYLE));
+        super.createBlockStateDefinition(builder.add(FACING, STYLE, UPSIDE_DOWN));
     }
 
     @Override
@@ -131,6 +136,8 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
         if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing.getOpposite())
             return true;
         if (other.getValue(FACING) != facing)
+            return false;
+        if (other.getValue(UPSIDE_DOWN) != state.getValue(UPSIDE_DOWN))
             return false;
         return pDirection.getAxis() != facing.getAxis() && pDirection.getAxis().isHorizontal();
     }
@@ -221,6 +228,9 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
                 state = state.setValue(FACING, context.getHorizontalDirection().getOpposite());
             } else {
                 state = state.setValue(FACING, context.getClickedFace());
+                if (context.getClickLocation().y - (double) context.getClickedPos().getY() < 0.5) {
+                    state = state.setValue(UPSIDE_DOWN, true);
+                }
             }
         }
         return state; // withWater() is already handled by super
@@ -229,12 +239,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (switch (state.getValue(STYLE)) {
-            case PLAIN -> CRShapes.HEADSTOCK_PLAIN;
-            case BUFFER -> CRShapes.HEADSTOCK_BUFFER;
-            case LINK, LINKLESS -> CRShapes.HEADSTOCK_LINK_PIN;
-            case KNUCKLE, KNUCKLE_SPLIT -> CRShapes.HEADSTOCK_KNUCKLE;
-        }).get(state.getValue(FACING));
+        return CRBlocks.HEADSTOCK.get().getShape(state, level, pos, context);
     }
 
     protected VoxelShape getHeadstockShape(BlockState state) {

@@ -1,4 +1,4 @@
-  package com.railwayteam.railways;
+package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;

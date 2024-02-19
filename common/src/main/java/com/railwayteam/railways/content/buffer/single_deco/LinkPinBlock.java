@@ -47,6 +47,7 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock implements Bl
         return switch (state.getValue(STYLE)) {
             case LINK, LINKLESS -> CRShapes.LINK_PIN;
             case KNUCKLE, KNUCKLE_SPLIT -> CRShapes.KNUCKLE;
+            case SCREWLINK -> CRShapes.SCREWLINK;
         };
     }
 
@@ -54,7 +55,8 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock implements Bl
         LINK("link_and_pin", "Link 'n Pin"),
         LINKLESS("link_and_pin_linkless", "Linkless Link 'n Pin"),
         KNUCKLE("knuckle_coupler", "Knuckle Coupler"),
-        KNUCKLE_SPLIT("split_knuckle_coupler", "Split Knuckle Coupler")
+        KNUCKLE_SPLIT("split_knuckle_coupler", "Split Knuckle Coupler"),
+        SCREWLINK("screwlink_coupler", "Screwlink Coupler")
         ;
 
         private final String model;

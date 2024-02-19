@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Contraption.class)
 public class MixinContraption {
     @Inject(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
-    private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(ordinal = 1) BlockPos add) {
+    private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {
         BlockEntity be = world.getBlockEntity(add);
         if (be instanceof IPreAssembleCallback preTransformCallback)
             preTransformCallback.railways$preAssemble();

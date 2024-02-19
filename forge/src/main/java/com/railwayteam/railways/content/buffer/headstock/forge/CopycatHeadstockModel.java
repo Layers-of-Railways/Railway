@@ -171,6 +171,7 @@ public class CopycatHeadstockModel implements BakedModel {
                                               ModelData wrappedData, @Nullable RenderType renderType) {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
+        boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
 
         BakedModel model = getModelOf(material);
         List<BakedQuad> templateQuads = model.getQuads(material, side, rand, wrappedData, renderType);
@@ -193,6 +194,9 @@ public class CopycatHeadstockModel implements BakedModel {
                     bb = bb.move(0, 10 / 16., 0);
                 else
                     offset = offset.add(0, 4 / 16., 0);
+
+                if (upsideDown)
+                    offset = offset.add(0, -4 / 16., 0);
 
                 //noinspection ConstantValue
                 if (false) { // debug explode

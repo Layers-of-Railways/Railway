@@ -9,6 +9,7 @@ import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagKey;
@@ -149,12 +150,6 @@ public class CRPalettes {
         BlockEntry<?> register(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags);
     }
 
-    // no textures for these yet
-//            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-//            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
-//            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-//            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
-
     @SafeVarargs
     private static BlockEntry<?> slashedLocometal(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "slashed_locometal"), Block::new)
@@ -163,6 +158,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Slashed Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -175,6 +171,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Riveted Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -186,6 +183,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Locometal Pillar"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -197,6 +195,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Locometal Smokebox"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -208,6 +207,7 @@ public class CRPalettes {
             .lang(joinSpace("Plated", colorName, "Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -219,6 +219,7 @@ public class CRPalettes {
             .lang(joinSpace("Flat", colorName, "Slashed Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -230,6 +231,7 @@ public class CRPalettes {
             .lang(joinSpace("Flat", colorName, "Riveted Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }

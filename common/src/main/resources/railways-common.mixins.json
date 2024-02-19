@@ -119,6 +119,7 @@
     "client.MixinDebugRenderer",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
+    "client.MixinLevelRenderer",
     "client.MixinParticleEngine",
     "client.MixinPlayerInfo",
     "client.MixinPlayerRenderer",
