@@ -45,7 +45,8 @@ jobs:
 
   codeql:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    needs: build
+    timeout-minutes: 60
     permissions:
       actions: read
       contents: read
