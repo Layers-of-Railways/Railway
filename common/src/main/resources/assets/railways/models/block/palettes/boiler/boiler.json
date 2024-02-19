@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/large_wheels",
+  "ambient_occlusion": false
+}

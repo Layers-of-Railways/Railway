@@ -12,6 +12,8 @@
   "mixins": [
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "GoggleOverlayRendererMixin",
+    "ContainerLevelAccessMixin",
     "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
@@ -20,7 +22,8 @@
     "TrainMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   },
   "plugin": "com.railwayteam.railways.forge.mixin.CRMixinPlugin"
 }

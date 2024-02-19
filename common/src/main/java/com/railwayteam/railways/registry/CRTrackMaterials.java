@@ -6,6 +6,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.phantom.PhantomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlock;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.simibubi.create.content.trains.track.TrackBlock;
@@ -132,7 +133,7 @@ public class CRTrackMaterials {
             .particle(new ResourceLocation("block/glass"))
             .noRecipeGen()
             .trackType(CRTrackType.UNIVERSAL)
-            .customBlockFactory(NoCollisionCustomTrackBlock::new)
+            .customBlockFactory(PhantomTrackBlock::new)
             .standardModels()
             .build(),
         WIDE_GAUGE_ANDESITE = wideVariant(TrackMaterial.ANDESITE),

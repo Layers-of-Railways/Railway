@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "railways:block/buffer/wide_buffer_stop"
+    },
+    "facing=south": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 270
+    }
+  }
+}

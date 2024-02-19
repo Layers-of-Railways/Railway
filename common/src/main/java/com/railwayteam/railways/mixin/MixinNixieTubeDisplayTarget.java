@@ -15,18 +15,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 import static com.railwayteam.railways.content.distant_signals.SignalDisplaySource.getSignalState;
-import static com.railwayteam.railways.content.distant_signals.SignalDisplaySource.shouldActAsSignal;
+import static com.railwayteam.railways.content.distant_signals.SignalDisplaySource.hasSignalSource;
 
 @Mixin(value = NixieTubeDisplayTarget.class, remap = false)
 public class MixinNixieTubeDisplayTarget {
     @Inject(method = "acceptLine", at = @At("HEAD"), cancellable = true)
-    private void snr$handleSignalInput(MutableComponent text, DisplayLinkContext context, CallbackInfo ci) {
-        if (shouldActAsSignal(context)) {
+    private void railways$handleSignalInput(MutableComponent text, DisplayLinkContext context, CallbackInfo ci) {
+        if (hasSignalSource(context)) {
             ci.cancel();
 
             Pair<SignalBlockEntity.SignalState, Optional<SignalBlockEntity>> state = getSignalState(context, text);
             if (context.getTargetBlockEntity() instanceof IOverridableSignal overridableSignal) {
-                overridableSignal.refresh(
+                overridableSignal.railways$refresh(
                     state.getSecond().orElse(null),
                     state.getFirst(),
                     context.getSourceBlockEntity() instanceof SignalBlockEntity ? 43 : 103
@@ -36,8 +36,8 @@ public class MixinNixieTubeDisplayTarget {
     }
 
     @Inject(method = "getWidth", at = @At("HEAD"), cancellable = true)
-    private void snr$overwriteWidth(DisplayLinkContext context, CallbackInfoReturnable<Integer> cir) {
-        if (shouldActAsSignal(context))
+    private void railways$overwriteWidth(DisplayLinkContext context, CallbackInfoReturnable<Integer> cir) {
+        if (hasSignalSource(context))
             cir.setReturnValue(2);
     }
 }

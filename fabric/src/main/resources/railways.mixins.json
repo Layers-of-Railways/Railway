@@ -10,15 +10,19 @@
     "TrainHUDMixin"
   ],
   "mixins": [
+    "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
-    "TrainMixin"
+    "TrainMixin",
+    "TrackObserverTEMPMixin",
+    "GoggleOverlayRendererMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   },
   "plugin": "com.railwayteam.railways.fabric.mixin.CRMixinPlugin"
 }

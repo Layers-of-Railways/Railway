@@ -4,6 +4,8 @@
 	"flip_v": true,
 	"model": "railways:models/block/bogey/monorail/wheel.obj",
 	"textures": {
-		"0": "railways:block/monorail/monorail_bogey"
+		"0": "create:block/axis",
+		"1": "create:block/axis_top",
+		"2": "create:block/bogey/wheel"
 	}
 }

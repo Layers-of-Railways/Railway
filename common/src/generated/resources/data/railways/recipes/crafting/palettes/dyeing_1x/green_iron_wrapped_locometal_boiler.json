@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/iron_wrapped_boiler"
+    },
+    {
+      "tag": "railways:internal/dyes/green_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:green_iron_wrapped_locometal_boiler"
+  }
+}

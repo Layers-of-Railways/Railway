@@ -1,0 +1,23 @@
+{
+  "textures": [
+    "railways:smallpuff_dyeable",
+    "railways:smallpuff",
+    "railways:mediumpuff_soul",
+    "railways:dyed_smoke/white/smallpuff_dyeable",
+    "railways:dyed_smoke/orange/smallpuff_dyeable",
+    "railways:dyed_smoke/magenta/smallpuff_dyeable",
+    "railways:dyed_smoke/light_blue/smallpuff_dyeable",
+    "railways:dyed_smoke/yellow/smallpuff_dyeable",
+    "railways:dyed_smoke/lime/smallpuff_dyeable",
+    "railways:dyed_smoke/pink/smallpuff_dyeable",
+    "railways:dyed_smoke/gray/smallpuff_dyeable",
+    "railways:dyed_smoke/light_gray/smallpuff_dyeable",
+    "railways:dyed_smoke/cyan/smallpuff_dyeable",
+    "railways:dyed_smoke/purple/smallpuff_dyeable",
+    "railways:dyed_smoke/blue/smallpuff_dyeable",
+    "railways:dyed_smoke/brown/smallpuff_dyeable",
+    "railways:dyed_smoke/green/smallpuff_dyeable",
+    "railways:dyed_smoke/red/smallpuff_dyeable",
+    "railways:dyed_smoke/black/smallpuff_dyeable"
+  ]
+}

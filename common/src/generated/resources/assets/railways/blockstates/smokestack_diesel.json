@@ -1,28 +1,186 @@
 {
   "variants": {
-    "enabled=false,powered=false,waterlogged=false": {
+    "facing=down,style=brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=brass_cap_copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=brass_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=copper_cap_brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=copper_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=down,style=steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 180
+    },
+    "facing=east,style=brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=brass_cap_copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=brass_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=copper_cap_brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=copper_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=east,style=steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,style=brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=brass_cap_copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=brass_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=copper_cap_brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=copper_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=north,style=steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90
+    },
+    "facing=south,style=brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=brass_cap_copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=brass_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=copper_cap_brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=copper_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south,style=steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,style=brass": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=false,powered=false,waterlogged=true": {
+    "facing=up,style=brass_cap_copper": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=false,powered=true,waterlogged=false": {
+    "facing=up,style=brass_cap_steel": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=false,powered=true,waterlogged=true": {
+    "facing=up,style=copper": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=true,powered=false,waterlogged=false": {
+    "facing=up,style=copper_cap_brass": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=true,powered=false,waterlogged=true": {
+    "facing=up,style=copper_cap_steel": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=true,powered=true,waterlogged=false": {
+    "facing=up,style=steel": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "enabled=true,powered=true,waterlogged=true": {
-      "model": "railways:block/smokestack/block_diesel_case"
+    "facing=west,style=brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=brass_cap_copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=brass_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=copper": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=copper_cap_brass": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=copper_cap_steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,style=steel": {
+      "model": "railways:block/smokestack/block_diesel_case",
+      "x": 90,
+      "y": 270
     }
   }
 }

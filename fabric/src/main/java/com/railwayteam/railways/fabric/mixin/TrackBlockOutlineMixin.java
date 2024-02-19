@@ -12,7 +12,7 @@ public class TrackBlockOutlineMixin {
 
 
     @Inject(method = "drawCustomBlockSelection", at = @At("HEAD"), cancellable = true)
-    private static void snr$cancel(CallbackInfoReturnable<Boolean> cir) {
+    private static void railways$cancel(CallbackInfoReturnable<Boolean> cir) {
         if (CustomTrackBlockOutline.skipCustomRendering())
             cir.setReturnValue(false);
     }

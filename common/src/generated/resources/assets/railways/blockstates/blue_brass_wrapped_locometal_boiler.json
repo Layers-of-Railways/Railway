@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,raised=false,style=gullet": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_gullet_x"
+    },
+    "axis=x,raised=false,style=smokebox": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_smokebox_x"
+    },
+    "axis=x,raised=true,style=gullet": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_gullet_x_raised"
+    },
+    "axis=x,raised=true,style=smokebox": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_smokebox_x_raised"
+    },
+    "axis=z,raised=false,style=gullet": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_gullet_z"
+    },
+    "axis=z,raised=false,style=smokebox": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_smokebox_z"
+    },
+    "axis=z,raised=true,style=gullet": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_gullet_z_raised"
+    },
+    "axis=z,raised=true,style=smokebox": {
+      "model": "railways:block/blue_brass_wrapped_locometal_boiler_smokebox_z_raised"
+    }
+  }
+}

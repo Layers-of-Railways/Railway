@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/brass_wrapped_slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/light_blue_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:light_blue_brass_wrapped_locometal"
+  }
+}

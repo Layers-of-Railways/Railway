@@ -1,9 +1,0 @@
-{
-	"parent": "block/block",
-	"loader": "forge:obj",
-	"flip_v": true,
-    	"model": "railways:models/block/bogey/blomberg/blomberg_frame.obj",
-    	"textures": {
-    		"0": "railways:block/bogeys/blomberg_frame"
-    }
-}

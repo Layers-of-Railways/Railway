@@ -1,0 +1,121 @@
+{
+	"credit": "By Slimeist",
+	"texture_size": [128, 128],
+	"textures": {
+		"0": "railways:block/bogeys/standard/handcar_frame",
+		"1": "create:block/cogwheel"
+	},
+	"elements": [
+		{
+			"name": "Gear",
+			"from": [-9, -1.5, -1.5],
+			"to": [9, 1.5, 1.5],
+			"faces": {
+				"north": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"east": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"south": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"west": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"up": {"uv": [7, 6, 16, 7.5], "texture": "#1"},
+				"down": {"uv": [7, 6, 16, 7.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Gear2",
+			"from": [-1.5, -1.5, -9],
+			"to": [1.5, 1.5, 9],
+			"rotation": {"angle": 45, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"east": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"south": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"west": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"up": {"uv": [7, 6, 16, 7.5], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [7, 6, 16, 7.5], "rotation": 270, "texture": "#1"}
+			}
+		},
+		{
+			"name": "Gear3",
+			"from": [-9, -1.5, -1.5],
+			"to": [9, 1.5, 1.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"east": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"south": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"west": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"up": {"uv": [7, 6, 16, 7.5], "texture": "#1"},
+				"down": {"uv": [7, 6, 16, 7.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Gear4",
+			"from": [-1.5, -1.5, -9],
+			"to": [1.5, 1.5, 9],
+			"faces": {
+				"north": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"east": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"south": {"uv": [5, 8, 6.5, 9.5], "texture": "#1"},
+				"west": {"uv": [7, 8, 16, 9.5], "texture": "#1"},
+				"up": {"uv": [7, 6, 16, 7.5], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [7, 6, 16, 7.5], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"name": "GearCaseInner",
+			"from": [-6, -1.45, -6],
+			"to": [6, 1.45, 6],
+			"faces": {
+				"north": {"uv": [0, 6, 6, 7.5], "texture": "#1"},
+				"east": {"uv": [0, 6, 6, 7.5], "texture": "#1"},
+				"south": {"uv": [0, 6, 6, 7.5], "texture": "#1"},
+				"west": {"uv": [0, 6, 6, 7.5], "texture": "#1"},
+				"up": {"uv": [4, 0, 10, 6], "texture": "#1"},
+				"down": {"uv": [4, 0, 10, 6], "texture": "#1"}
+			}
+		},
+		{
+			"name": "GearCaseOuter",
+			"from": [-4, -2, -4],
+			"to": [4, 2, 4],
+			"faces": {
+				"north": {"uv": [0, 4, 4, 6], "texture": "#1"},
+				"east": {"uv": [0, 4, 4, 6], "texture": "#1"},
+				"south": {"uv": [0, 4, 4, 6], "texture": "#1"},
+				"west": {"uv": [0, 4, 4, 6], "texture": "#1"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#1"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#1"}
+			}
+		},
+		{
+			"from": [-2, -2.5, -2],
+			"to": [2, 8, 2],
+			"faces": {
+				"north": {"uv": [6.0625, 0, 7.375, 0.5], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [7.375, 0.5, 6.0625, 0], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [6, 0, 7.3125, 0.5], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [7.375, 0, 6.0625, 0.5], "rotation": 90, "texture": "#0"},
+				"up": {"uv": [2.125, 11.875, 2.625, 12.375], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [2.125, 11.875, 2.625, 12.375], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"from": [2.001, -3.5, -4.001],
+			"to": [4.001, -1.5, -2.001],
+			"faces": {
+				"north": {"uv": [0.625, 11.375, 0.375, 11.625], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0.375, 11.375, 0.625, 11.625], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [5.25, 9.625, 5.5, 9.875], "rotation": 90, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "cogwheel",
+			"origin": [-1, 4, -0.5],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7]
+		}
+	]
+}

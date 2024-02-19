@@ -41,7 +41,7 @@ public abstract class NbtUtilsMixin {
     }
 
     @Inject(method = "readBlockState", at = @At("HEAD"))
-    private static void snr$upgradeMonoBogey(CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
+    private static void railways$upgradeMonoBogey(CompoundTag tag, CallbackInfoReturnable<BlockState> cir) {
         if (tag.contains("Name", Tag.TAG_STRING) && tag.getString("Name").equals("railways:mono_bogey_upside_down")) {
             tag.putString("Name", "railways:mono_bogey");
             CompoundTag properties = tag.getCompound("Properties");

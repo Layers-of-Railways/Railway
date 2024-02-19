@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_riveted"
+    },
+    {
+      "tag": "railways:internal/dyes/brown_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:brown_flat_riveted_locometal"
+  }
+}

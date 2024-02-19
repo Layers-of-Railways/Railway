@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import static com.railwayteam.railways.content.distant_signals.SignalDisplaySource.isSignalTarget;
@@ -21,17 +22,17 @@ import static com.railwayteam.railways.content.distant_signals.SignalDisplaySour
 @Mixin(value = NixieTubeDisplaySource.class, remap = false)
 public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySource {
     @Inject(method = "allowsLabeling", at = @At("RETURN"), cancellable = true)
-    private void snr$allowLabeling(DisplayLinkContext context, CallbackInfoReturnable<Boolean> cir) {
+    private void railways$allowLabeling(DisplayLinkContext context, CallbackInfoReturnable<Boolean> cir) {
         if (context.blockEntity().activeTarget instanceof SemaphoreDisplayTarget)
             cir.setReturnValue(false);
     }
 
     @Inject(method = "provideLine", at = @At("HEAD"), cancellable = true)
-    private void snr$provideLine(DisplayLinkContext context, DisplayTargetStats stats, CallbackInfoReturnable<MutableComponent> cir) {
+    private void railways$provideLine(DisplayLinkContext context, DisplayTargetStats stats, CallbackInfoReturnable<MutableComponent> cir) {
         // if this is an overridden signal, provide the proper output
         SignalBlockEntity.SignalState state;
         if (context.getSourceBlockEntity() instanceof IOverridableSignal signalBE) {
-            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.getOverriddenState();
+            Optional<SignalBlockEntity.SignalState> optionalState = signalBE.railways$getOverriddenState();
             if (optionalState.isPresent()) {
                 state = optionalState.get();
             } else {
@@ -45,7 +46,6 @@ public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySourc
             cir.setReturnValue(Components.literal(state.name()));
             return;
         }
-        cir.setReturnValue(Components.translatable("railways.display_source.signal." + state.name().toLowerCase()));
-        return;
+        cir.setReturnValue(Components.translatable("railways.display_source.signal." + state.name().toLowerCase(Locale.ROOT)));
     }
 }

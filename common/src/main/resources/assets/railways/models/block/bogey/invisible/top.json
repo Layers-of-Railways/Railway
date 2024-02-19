@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"4": "railways:block/bogeys/top_invisible",
+		"4": "railways:block/bogeys/standard/top_invisible",
 		"particle": "create:block/bogey/particle"
 	},
 	"elements": [

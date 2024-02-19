@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_diag",
+  "textures": {
+    "1": "create_dd:block/track/smoked/standard_track_smoked",
+    "2": "create_dd:block/track/smoked/standard_track_mip_smoked",
+    "3": "create_dd:block/track/smoked/standard_track_crossing_smoked",
+    "particle": "create_dd:block/track/smoked/standard_track_crossing_smoked"
+  }
+}

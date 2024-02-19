@@ -1,5 +1,6 @@
 package com.railwayteam.railways.util.fabric;
 
+import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.fabric.ConductorFakePlayerFabric;
 import com.simibubi.create.foundation.utility.fabric.ReachUtil;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
@@ -20,8 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-
-import java.util.Random;
 
 public class EntityUtilsImpl {
 	public static CompoundTag getPersistentData(Entity entity) {
@@ -45,8 +44,8 @@ public class EntityUtilsImpl {
 		}
 	}
 
-	public static ServerPlayer createConductorFakePlayer(ServerLevel level) {
-		return new ConductorFakePlayerFabric(level);
+	public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
+		return new ConductorFakePlayerFabric(level, conductor);
 	}
 
 	public static double getReachDistance(Player player) {

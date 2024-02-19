@@ -1,14 +1,17 @@
 package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -28,14 +31,26 @@ public class CRTagGen {
 	@SafeVarargs
 	public static void addOptionalTag(ResourceLocation id, TagKey<Block>... tags) {
 		for (TagKey<Block> tag : tags) {
-			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<ResourceLocation>()).add(id);
+			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<>()).add(id);
 		}
 	}
-	public static void generateBlockTags(RegistrateTagsProvider<Block> tags) {
-//		tagAppender(tags, AllBlockTags.TRACKS)
-//			.add(AllBlocks.TRACK.get());
+	public static void generateBlockTags(RegistrateTagsProvider<Block> prov) {
+		prov.tag(CRTags.AllBlockTags.SEMAPHORE_POLES.tag)
+				.add(AllBlocks.METAL_GIRDER.get(), AllBlocks.METAL_GIRDER_ENCASED_SHAFT.get())
+				.forceAddTag(BlockTags.FENCES);
+
+		prov.tag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
+
+		// VALIDATE
+
+		for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
+			if (tag.alwaysDatagen) {
+				tagAppender(prov, tag);
+			}
+		}
+
 		for (TagKey<Block> tag : OPTIONAL_TAGS.keySet()) {
-			var appender = tagAppender(tags, tag);
+			var appender = tagAppender(prov, tag);
 			for (ResourceLocation loc : OPTIONAL_TAGS.get(tag))
 				appender.addOptional(loc);
 		}
@@ -47,12 +62,14 @@ public class CRTagGen {
 		CommonTags.ZINC_NUGGETS.generateCommon(tags);
 		CommonTags.BRASS_NUGGETS.generateCommon(tags);
 		CommonTags.COPPER_INGOTS.generateCommon(tags);
+		CommonTags.BRASS_INGOTS.generateCommon(tags);
 		CommonTags.IRON_INGOTS.generateCommon(tags);
 		CommonTags.STRING.generateCommon(tags)
 			.generateBoth(tags, tag -> tag.add(Items.STRING));
 		CommonTags.IRON_PLATES.generateCommon(tags);
 		CommonTags.BRASS_PLATES.generateCommon(tags);
-//			.generateBoth(tags, tag -> tag.add(AllItems.IRON_SHEET.get()));
+		CommonTags.WORKBENCH.generateCommon(tags)
+				.generateBoth(tags, tag -> tag.add(Items.CRAFTING_TABLE));
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

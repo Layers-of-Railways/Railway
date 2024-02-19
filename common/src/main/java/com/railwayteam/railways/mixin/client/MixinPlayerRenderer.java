@@ -47,7 +47,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             visualEntity = new ConductorEntity(CREntities.CONDUCTOR.get(), entity.level);
         }
 
-        snr$transformVisualConductor(entity, visualEntity);
+        railways$transformVisualConductor(entity, visualEntity);
         visualEntity.visualBaseModel = getModel();
         visualEntity.visualBaseModel.crouching = entity.isCrouching();
         visualEntity.visualBaseModel.swimAmount = entity.getSwimAmount(partialTicks);
@@ -56,7 +56,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
                 0, partialTicks, matrixStack, buffer, packedLight);
     }
 
-    private static void snr$transformVisualConductor(AbstractClientPlayer player, ConductorEntity conductor) {
+    private static void railways$transformVisualConductor(AbstractClientPlayer player, ConductorEntity conductor) {
         conductor.xo = player.xo;
         conductor.yo = player.yo;
         conductor.zo = player.zo;
@@ -93,7 +93,7 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     }
 
     @Inject(method = "renderRightHand", at = @At("HEAD"), cancellable = true)
-    private void snr$renderRightHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
+    private void railways$renderRightHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
         if (!ConductorEntity.isPlayerDisguised(player))
             return;
         ci.cancel();
@@ -102,19 +102,19 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             visualEntity = new ConductorEntity(CREntities.CONDUCTOR.get(), player.level);
         }
 
-        snr$transformVisualConductor(player, visualEntity);
+        railways$transformVisualConductor(player, visualEntity);
         visualEntity.visualBaseModel = getModel();
         visualEntity.visualBaseModel.crouching = player.isCrouching();
         visualEntity.visualBaseModel.swimAmount = player.getSwimAmount(0);
         visualEntity.visualBaseEntity = player;
         if (Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(visualEntity) instanceof ConductorRenderer conductorRenderer) {
-            this.snr$renderHand(matrixStack, buffer, combinedLight, visualEntity, conductorRenderer.getModel().rightArm,
+            this.railways$renderHand(matrixStack, buffer, combinedLight, visualEntity, conductorRenderer.getModel().rightArm,
                     visualEntity.visualBaseModel, conductorRenderer.getModel(), conductorRenderer);
         }
     }
 
     @Inject(method = "renderLeftHand", at = @At("HEAD"), cancellable = true)
-    private void snr$renderLeftHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
+    private void railways$renderLeftHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, AbstractClientPlayer player, CallbackInfo ci) {
         if (!ConductorEntity.isPlayerDisguised(player))
             return;
         ci.cancel();
@@ -123,18 +123,18 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
             visualEntity = new ConductorEntity(CREntities.CONDUCTOR.get(), player.level);
         }
 
-        snr$transformVisualConductor(player, visualEntity);
+        railways$transformVisualConductor(player, visualEntity);
         visualEntity.visualBaseModel = getModel();
         visualEntity.visualBaseModel.crouching = player.isCrouching();
         visualEntity.visualBaseModel.swimAmount = player.getSwimAmount(0);
         visualEntity.visualBaseEntity = player;
         if (Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(visualEntity) instanceof ConductorRenderer conductorRenderer) {
-            this.snr$renderHand(matrixStack, buffer, combinedLight, visualEntity, conductorRenderer.getModel().leftArm,
+            this.railways$renderHand(matrixStack, buffer, combinedLight, visualEntity, conductorRenderer.getModel().leftArm,
                     visualEntity.visualBaseModel, conductorRenderer.getModel(), conductorRenderer);
         }
     }
 
-    private void snr$renderHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
+    private void railways$renderHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
                                 ConductorEntity conductor, ModelPart rendererArm, PlayerModel<?> playermodel,
                                 ConductorEntityModel<ConductorEntity> conductorModel, ConductorRenderer conductorRenderer) {
         playermodel.attackTime = 0.0f;

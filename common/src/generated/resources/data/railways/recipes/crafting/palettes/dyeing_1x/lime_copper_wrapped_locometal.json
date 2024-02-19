@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/copper_wrapped_slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/lime_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:lime_copper_wrapped_locometal"
+  }
+}

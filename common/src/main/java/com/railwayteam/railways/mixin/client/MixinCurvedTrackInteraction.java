@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
+import com.railwayteam.railways.content.handcar.HandcarItem;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
@@ -33,7 +34,12 @@ public abstract class MixinCurvedTrackInteraction {
           ),
           cancellable = true
   )
-  private static void railway$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
+  private static void railways$encaseCurve(CallbackInfoReturnable<Boolean> cir) {
+    LocalPlayer player = Minecraft.getInstance().player;
+    if (AdventureUtils.isAdventure(player))
+      return;
+    ItemStack held = player.getMainHandItem();
+
     BezierPointSelection result = TrackBlockOutline.result;
     TrackBlockEntity track = result.blockEntity();
     BezierTrackPointLocation location = result.loc();
@@ -41,14 +47,14 @@ public abstract class MixinCurvedTrackInteraction {
     Map<BlockPos, BezierConnection> connections = track.getConnections();
     BezierConnection connection = connections == null ? null : connections.get(curveTarget);
 
-    // allow encasing if no connection or not monorail
-    // todo: that doesn't seem right? same as old behavior though
-    if (connection == null || connection.getMaterial().trackType != CRTrackMaterials.CRTrackType.MONORAIL) {
-      LocalPlayer player = Minecraft.getInstance().player;
-      if (AdventureUtils.isAdventure(player))
-        return;
-      ItemStack held = player.getMainHandItem();
+    if (held.getItem() instanceof HandcarItem handcar && handcar.useOnCurve(result, held)) {
+      player.swing(InteractionHand.MAIN_HAND);
+      cir.setReturnValue(true);
+      return;
+    }
 
+    // allow encasing if no connection or not monorail
+    if (connection == null || connection.getMaterial().trackType != CRTrackMaterials.CRTrackType.MONORAIL) {
       // if non-empty, must be a valid slab
       if (!held.isEmpty()) {
         if (!(held.getItem() instanceof BlockItem block))

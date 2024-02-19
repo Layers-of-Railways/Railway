@@ -19,7 +19,7 @@ public class SemaphoreDisplayTarget extends DisplayTarget {
     public void acceptText(int line, List<MutableComponent> text, DisplayLinkContext context) {
         Pair<SignalBlockEntity.SignalState, Optional<SignalBlockEntity>> state = getSignalState(context, text.get(0));
         if (context.getTargetBlockEntity() instanceof IOverridableSignal overridableSignal) {
-            overridableSignal.refresh(
+            overridableSignal.railways$refresh(
                 state.getSecond().orElse(null),
                 state.getFirst(),
                 context.getSourceBlockEntity() instanceof SignalBlockEntity ? 43 : 103,

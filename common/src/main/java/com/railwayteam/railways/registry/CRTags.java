@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.function.BiConsumer;
 
 import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
 
@@ -39,12 +42,15 @@ public class CRTags {
 
 
   public enum AllBlockTags {
-    SEMAPHORE_POLES(MOD,MOD.optionalDefault,false),
-    TRACK_CASING_BLACKLIST(MOD,MOD.optionalDefault,false),
-    CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false) // so other mods / datapacks can make more blocks usable for conductor spies
+    SEMAPHORE_POLES,
+    TRACK_CASING_BLACKLIST(MOD, MOD.optionalDefault,false),
+    CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false), // so other mods / datapacks can make more blocks usable for conductor spies
+    LOCOMETAL,
+    LOCOMETAL_BOILERS
     ;
 
     public final TagKey<Block> tag;
+    public final boolean alwaysDatagen;
 
 
     AllBlockTags() {
@@ -65,7 +71,12 @@ public class CRTags {
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.BLOCK, id);
+      if (optional) {
+        tag = optionalTag(Registry.BLOCK, id);
+      } else {
+        tag = TagKey.create(Registry.BLOCK_REGISTRY, id);
+      }
+      this.alwaysDatagen = alwaysDatagen;
     }
 
     @SuppressWarnings("deprecation")
@@ -82,13 +93,22 @@ public class CRTags {
       return state.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public enum AllItemTags {
     CONDUCTOR_CAPS,
-    PHANTOM_TRACK_REVEALING
+    PHANTOM_TRACK_REVEALING,
+    DECO_COUPLERS,
+    WOODEN_HEADSTOCKS,
+    COPYCAT_HEADSTOCKS,
+
+    CABOOSESTYLE_STACK,
+    LONG_STACK,
+    COALBURNER_STACK,
+    OILBURNER_STACK,
+    STREAMLINED_STACK,
+    WOODBURNER_STACK
     ;
 
     public final TagKey<Item> tag;
@@ -112,7 +132,11 @@ public class CRTags {
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
       ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
-      tag = optionalTag(Registry.ITEM, id);
+      if (optional) {
+        tag = optionalTag(Registry.ITEM, id);
+      } else {
+        tag = TagKey.create(Registry.ITEM_REGISTRY, id);
+      }
       this.alwaysDatagen = alwaysDatagen;
     }
 
@@ -126,8 +150,7 @@ public class CRTags {
       return stack.is(tag);
     }
 
-    public static void register() {
-    }
+    public static void register() { }
   }
 
   public static <T> TagKey<T> optionalTag(Registry<T> registry, ResourceLocation id) {
@@ -138,5 +161,20 @@ public class CRTags {
   public static void register() {
     AllBlockTags.register();
     AllItemTags.register();
+  }
+
+  public static void provideLangEntries(BiConsumer<String, String> consumer) {
+    for (AllBlockTags blockTag : AllBlockTags.values()) {
+      ResourceLocation loc = blockTag.tag.location();
+      consumer.accept("tag.block." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+          TextUtils.titleCaseConversion(blockTag.name()).replace('_', ' '));
+    }
+
+    for (AllItemTags itemTag : AllItemTags.values()) {
+      ResourceLocation loc = itemTag.tag.location();
+      consumer.accept("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
+          TextUtils.titleCaseConversion(itemTag.name().replace('_', ' ')));
+    }
+    consumer.accept("tag.item.forge.string", "String");
   }
 }

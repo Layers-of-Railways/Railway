@@ -26,7 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -190,7 +190,8 @@ public class BogeyCategoryHandlerClient {
         STYLE_CATEGORY_ORDER.add(id);
     }
 
-    static int COOLDOWN = 0;
+    @ApiStatus.Internal
+    public static int COOLDOWN = 0;
 
     public static @Nullable BogeyStyle getSelectedStyle() {
         return selectedStyle;
@@ -303,7 +304,6 @@ public class BogeyCategoryHandlerClient {
         LocalPlayer player = mc.player;
         if (player == null)
             return;
-        Level level = player.level;
 
         if (!EntityUtils.isHolding(player, AllBlocks.RAILWAY_CASING::isIn))
             return;

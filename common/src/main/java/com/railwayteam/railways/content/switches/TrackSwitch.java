@@ -130,7 +130,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
     public void blockEntityAdded(BlockEntity tile, boolean front) {
         super.blockEntityAdded(tile, front);
 
-        if (tile instanceof TrackSwitchTileEntity te) {
+        if (tile instanceof TrackSwitchBlockEntity te) {
             te.calculateExits(this);
             automatic = te.isAutomatic();
             locked = te.isLocked();

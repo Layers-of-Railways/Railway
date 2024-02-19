@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/x_ortho",
+  "textures": {
+    "1": "quark:block/track/ancient/standard_track_ancient",
+    "2": "quark:block/track/ancient/standard_track_mip_ancient",
+    "3": "quark:block/track/ancient/standard_track_crossing_ancient",
+    "particle": "quark:block/track/ancient/standard_track_crossing_ancient"
+  }
+}

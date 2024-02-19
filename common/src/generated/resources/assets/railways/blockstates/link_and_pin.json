@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "facing=east,style=knuckle": {
+      "model": "railways:block/buffer/single_deco/knuckle_coupler",
+      "y": 90
+    },
+    "facing=east,style=knuckle_split": {
+      "model": "railways:block/buffer/single_deco/split_knuckle_coupler",
+      "y": 90
+    },
+    "facing=east,style=link": {
+      "model": "railways:block/buffer/single_deco/link_and_pin",
+      "y": 90
+    },
+    "facing=east,style=linkless": {
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
+      "y": 90
+    },
+    "facing=east,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
+      "y": 90
+    },
+    "facing=north,style=knuckle": {
+      "model": "railways:block/buffer/single_deco/knuckle_coupler"
+    },
+    "facing=north,style=knuckle_split": {
+      "model": "railways:block/buffer/single_deco/split_knuckle_coupler"
+    },
+    "facing=north,style=link": {
+      "model": "railways:block/buffer/single_deco/link_and_pin"
+    },
+    "facing=north,style=linkless": {
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless"
+    },
+    "facing=north,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler"
+    },
+    "facing=south,style=knuckle": {
+      "model": "railways:block/buffer/single_deco/knuckle_coupler",
+      "y": 180
+    },
+    "facing=south,style=knuckle_split": {
+      "model": "railways:block/buffer/single_deco/split_knuckle_coupler",
+      "y": 180
+    },
+    "facing=south,style=link": {
+      "model": "railways:block/buffer/single_deco/link_and_pin",
+      "y": 180
+    },
+    "facing=south,style=linkless": {
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
+      "y": 180
+    },
+    "facing=south,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
+      "y": 180
+    },
+    "facing=west,style=knuckle": {
+      "model": "railways:block/buffer/single_deco/knuckle_coupler",
+      "y": 270
+    },
+    "facing=west,style=knuckle_split": {
+      "model": "railways:block/buffer/single_deco/split_knuckle_coupler",
+      "y": 270
+    },
+    "facing=west,style=link": {
+      "model": "railways:block/buffer/single_deco/link_and_pin",
+      "y": 270
+    },
+    "facing=west,style=linkless": {
+      "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
+      "y": 270
+    },
+    "facing=west,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
+      "y": 270
+    }
+  }
+}

@@ -53,31 +53,31 @@ public abstract class MixinAbstractBogeyBlock {
             level.setBlock(pos, targetState, 3);
 
             BlockEntity newBlockEntity = level.getBlockEntity(pos);
-            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity newTileEntity)) {
+            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity bogeyBlockEntity)) {
                 cir.setReturnValue(InteractionResult.FAIL);
                 return;
             }
-            newTileEntity.setBogeyData(oldData);
+            bogeyBlockEntity.setBogeyData(oldData);
         }
     }
 
     @Unique
-    private final ThreadLocal<TrackType> snr$trackType = new ThreadLocal<>();
+    private final ThreadLocal<TrackType> railways$trackType = new ThreadLocal<>();
 
     @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("HEAD"), remap = true)
     private void storeSupportType(Level level, BlockPos pos, CallbackInfoReturnable<BogeyStyle> cir) {
         AbstractBogeyBlock<?> $this = (AbstractBogeyBlock<?>) (Object) this;
         BlockPos trackPos = $this.isUpsideDown(level.getBlockState(pos)) ? pos.above() : pos.below();
         if (level.getBlockState(trackPos).getBlock() instanceof ITrackBlock trackBlock) {
-            snr$trackType.set(trackBlock.getMaterial().trackType);
+            railways$trackType.set(trackBlock.getMaterial().trackType);
         } else {
-            snr$trackType.remove();
+            railways$trackType.remove();
         }
     }
 
     @Inject(method = "getNextStyle(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At("RETURN"), remap = true)
     private void clearSupportType(Level level, BlockPos pos, CallbackInfoReturnable<BogeyStyle> cir) {
-        snr$trackType.remove();
+        railways$trackType.remove();
     }
 
     @Inject(method = "use", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;getNextStyle(Lcom/simibubi/create/content/trains/bogey/BogeyStyle;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;"), remap = true)
@@ -86,21 +86,21 @@ public abstract class MixinAbstractBogeyBlock {
         AbstractBogeyBlock<?> $this = (AbstractBogeyBlock<?>) (Object) this;
         BlockPos trackPos = $this.isUpsideDown(state) ? pos.above() : pos.below();
         if (level.getBlockState(trackPos).getBlock() instanceof ITrackBlock trackBlock) {
-            snr$trackType.set(trackBlock.getMaterial().trackType);
+            railways$trackType.set(trackBlock.getMaterial().trackType);
         } else {
-            snr$trackType.remove();
+            railways$trackType.remove();
         }
     }
 
     @Inject(method = "use", at = @At("RETURN"), remap = true)
     private void clearSupportTypeUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
                                      BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
-        snr$trackType.remove();
+        railways$trackType.remove();
     }
 
     @WrapOperation(method = "getNextStyle(Lcom/simibubi/create/content/trains/bogey/BogeyStyle;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At(value = "INVOKE", target = "Ljava/util/Map;values()Ljava/util/Collection;"))
     private Collection<BogeyStyle> filterStyles(Map<ResourceLocation, BogeyStyle> instance, Operation<Collection<BogeyStyle>> original) {
-        TrackType trackType = snr$trackType.get();
+        TrackType trackType = railways$trackType.get();
         if (trackType == null) {
             return original.call(instance);
         } else {

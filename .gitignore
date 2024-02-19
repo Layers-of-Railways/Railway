@@ -1,3 +1,6 @@
+# Github Stuff
+tmp_wiki/
+
 # eclipse
 bin
 *.launch
@@ -7,37 +10,30 @@ bin
 .project
 
 # idea
-out
+out/
 *.ipr
 *.iws
 *.iml
 .idea
 
 # gradle
-build
-.gradle
+build/
+.gradle/
 
 # other
-eclipse
-run
+eclipse/
+run/
 
 # Files from Forge MDK
 forge*changelog.txt
 /server/
 
 # Custom
-/src/main/resources/assets/create/
-jars
-/libs/
-/changelog.html
-/fabric/changelog.html
-/forge/changelog.html
-/common/changelog.html
-/recent_changelog.html
-/fabric/recent_changelog.html
-/forge/recent_changelog.html
-/common/recent_changelog.html
-/forge/libs/
+**/src/main/resources/assets/create/
+jars/
+**/libs/
+**/changelog.html
+**/recent_changelog.html
 .DS_Store
 
 ##################
@@ -46,7 +42,6 @@ jars
 
 # Slimeist (techno-sam)
 /build_archive/
-/common/src/main/resources/assets/create/
 /development_assets/venv/
 /common/src/main/resources/assets/minecraft/textures/block/
 /.architectury-transformer/

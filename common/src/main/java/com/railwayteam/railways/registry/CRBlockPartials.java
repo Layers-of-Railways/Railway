@@ -400,19 +400,22 @@ public class CRBlockPartials {
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
         MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
         MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay"),
-        MONOBOGEY_FRAME = block("bogey/monorail/frame"),
+        MONOBOGEY_FRAME_UPRIGHT = block("bogey/monorail/frame_upright"),
+        MONOBOGEY_FRAME_UPSIDE_DOWN = block("bogey/monorail/frame_upside_down"),
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
     public static final PartialModel
-        SINGLEAXLE_FRAME = block("bogey/singleaxle/singleaxle_frame"),
-        LEAFSPRING_FRAME = block("bogey/leafspring/leafspring_frame"),
-        COILSPRING_FRAME = block("bogey/coilspring/coilspring_frame"),
-        FREIGHT_FRAME = block("bogey/freight/freight_frame"),
-        ARCHBAR_FRAME = block("bogey/archbar/archbar_frame"),
-        PASSENGER_FRAME = block("bogey/passenger/passenger_frame"),
-        MODERN_FRAME = block("bogey/modern/modern_frame"),
-        BLOMBERG_FRAME = block("bogey/blomberg/blomberg_frame"),
-        Y25_FRAME = block("bogey/y25/y25_frame"),
+        LONG_SHAFTED_WHEELS = block("bogey/wheels/long_shaft_wheels"),
+
+        SINGLEAXLE_FRAME = block("bogey/singleaxle/frame"),
+        LEAFSPRING_FRAME = block("bogey/leafspring/frame"),
+        COILSPRING_FRAME = block("bogey/coilspring/frame"),
+        FREIGHT_FRAME = block("bogey/freight/frame"),
+        ARCHBAR_FRAME = block("bogey/archbar/frame"),
+        PASSENGER_FRAME = block("bogey/passenger/frame"),
+        MODERN_FRAME = block("bogey/modern/frame"),
+        BLOMBERG_FRAME = block("bogey/blomberg/frame"),
+        Y25_FRAME = block("bogey/y25/frame"),
         HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
         RADIAL_FRAME = block("bogey/radial/radial_frame"),
         CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels"),
@@ -443,6 +446,16 @@ public class CRBlockPartials {
         NARROW_SCOTCH_PISTONS = block("bogey/narrow/default_scotch/pistons"),
         NARROW_DOUBLE_SCOTCH_FRAME = block("bogey/narrow/double_scotch/frame"),
         NARROW_DOUBLE_SCOTCH_PISTONS = block("bogey/narrow/double_scotch/pistons")
+    ;
+
+    public static final PartialModel
+        HANDCAR_WHEELS = block("bogey/handcar/wheels"),
+        HANDCAR_COUPLING = block("bogey/handcar/coupling"),
+        HANDCAR_FRAME = block("bogey/handcar/frame"),
+        HANDCAR_HANDLE = block("bogey/handcar/handle"),
+        HANDCAR_HANDLE_FIRST_PERSON = block("bogey/handcar/handle_first_person"),
+        HANDCAR_LARGE_COG = block("bogey/handcar/large_cog"),
+        HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
     ;
 
     public static final PartialModel

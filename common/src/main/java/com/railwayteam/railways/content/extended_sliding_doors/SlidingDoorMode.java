@@ -15,8 +15,24 @@ import net.minecraft.world.phys.Vec3;
 
 public enum SlidingDoorMode implements INamedIconOptions {
     NORMAL(CRIcons.I_DOOR_NORMAL), //shouldOpen -> noChange; shouldUpdate -> noChange; - default behaviour
-    MANUAL(CRIcons.I_DOOR_MANUAL), //shouldOpen -> noChange; shouldUpdate -> never; // done block redstone operation
-    SPECIAL(CRIcons.I_DOOR_SPECIAL), //shouldOpen -> &= at right station; shouldUpdate -> noChange; // done block hand operation (shift-use works on trains/contraptions though)
+    MANUAL(CRIcons.I_DOOR_MANUAL) { //shouldOpen -> noChange; shouldUpdate -> never; // done block redstone operation
+        @Override
+        public boolean canOpenSpecially() {
+            return false;
+        }
+    },
+    SPECIAL(CRIcons.I_DOOR_SPECIAL) { //shouldOpen -> &= at right station; shouldUpdate -> noChange; // done block hand operation (shift-use works on trains/contraptions though)
+        @Override
+        public boolean canOpenManually() {
+            return false;
+        }
+    },
+    SPECIAL_INVERTED(CRIcons.I_DOOR_SPECIAL_INVERTED) { //shouldOpen -> &= at right station; shouldUpdate -> !shouldUpdate; // done block hand operation (shift-use works on trains/contraptions though)
+        @Override
+        public boolean canOpenManually() {
+            return false;
+        }
+    },
     ;
 
     private final String translationKey;
@@ -29,6 +45,13 @@ public enum SlidingDoorMode implements INamedIconOptions {
     SlidingDoorMode(AllIcons icon, boolean stationBased) {
         this.icon = icon;
         this.translationKey = "sliding_door.mode." + Lang.asId(name());
+    }
+
+    public boolean canOpenManually() {
+        return true;
+    }
+    public boolean canOpenSpecially() {
+        return true;
     }
 
     @Override
@@ -84,6 +107,6 @@ public enum SlidingDoorMode implements INamedIconOptions {
     }
 
     public interface IHasDoorMode {
-        SlidingDoorMode getSlidingDoorMode();
+        SlidingDoorMode railways$getSlidingDoorMode();
     }
 }

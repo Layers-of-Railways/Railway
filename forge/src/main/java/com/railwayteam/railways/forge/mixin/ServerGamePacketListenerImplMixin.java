@@ -26,7 +26,7 @@ public class ServerGamePacketListenerImplMixin {
 			),
 			cancellable = true
 	)
-	private void railway$handleC2S(ServerboundCustomPayloadPacket packet, CallbackInfo ci) {
+	private void railways$handleC2S(ServerboundCustomPayloadPacket packet, CallbackInfo ci) {
 		ResourceLocation id = packet.getIdentifier();
 		PacketSet handler = PacketSetImpl.HANDLERS.get(id);
 		if (handler != null) {

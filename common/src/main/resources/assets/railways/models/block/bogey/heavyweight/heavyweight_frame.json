@@ -1,9 +1,10 @@
 {
 	"parent": "block/block",
 	"loader": "forge:obj",
+	"porting_lib:loader": "porting_lib:obj",
 	"flip_v": true,
     	"model": "railways:models/block/bogey/heavyweight/heavyweight_frame.obj",
     	"textures": {
-    		"0": "railways:block/bogeys/heavyweight_frame"
+    		"0": "railways:block/bogeys/standard/heavyweight_frame"
     }
 }

@@ -2,7 +2,10 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
-import com.railwayteam.railways.base.data.lang.CRLangPartials;
+import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
+import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
+import com.railwayteam.railways.base.data.lang.CRLangGen;
+import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
@@ -12,7 +15,6 @@ import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.LangMerger;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -23,11 +25,9 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.FileWriter;
@@ -39,7 +39,7 @@ import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
-  public static final Logger LOGGER = LogManager.getLogger(MODID);
+  public static final Logger LOGGER = LoggerFactory.getLogger("Railways");
   public static final String VERSION = findVersion();
   public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
@@ -85,12 +85,6 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-/*    RegistrationListening.whenBothRegistered(
-            Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("create", "track"),
-            Registry.BLOCK, CRBlocks.MONORAIL_TRACK.getId(), // last track
-            (type, block) -> TrackMaterial.addCustomValidTracks(type)
-    );*/
-
     if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
@@ -102,10 +96,13 @@ public class Railways {
   public static void gatherData(DataGenerator gen) {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
+    REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
+    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
-    PonderLocalization.provideRegistrateLang(REGISTRATE);
-    gen.addProvider(true, new LangMerger(gen, MODID, "Steam 'n' Rails", CRLangPartials.values()));
+    gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
+    gen.addProvider(true, new EmiExcludedTagGen(gen));
+    gen.addProvider(true, new EmiRecipeDefaultsGen(gen));
   }
 
   public static CreateRegistrate registrate() {
@@ -127,11 +124,6 @@ public class Railways {
     throw new AssertionError();
   }
 
-  @ExpectPlatform
-  public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
-    throw new AssertionError();
-  }
-
   // All the below are helper variables for switch mixins
   @ApiStatus.Internal
   public static boolean trackEdgeTemporarilyFlipped = false;
@@ -149,5 +141,5 @@ public class Railways {
   public static int navigationCallDepth = 0;
 
   @ApiStatus.Internal
-  public static boolean skipUprightCalculation = false;
+  public static boolean largeGhastFireballExplosion = false;
 }

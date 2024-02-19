@@ -12,6 +12,7 @@ public class ModSetup {
     CRSpriteShifts.register();
     CRBlockEntities.register();
     CRBlocks.register();
+    CRPalettes.register();
     CRContainerTypes.register();
     CREntities.register();
     CRSounds.register();
@@ -21,6 +22,8 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraRegistration.register();
     CasingCollisionUtils.register();
+    CRInteractionBehaviours.register();
+    CRPortalTracks.register();
 
     // Compat
     HexCastingTrackCompat.register();
@@ -28,5 +31,7 @@ public class ModSetup {
     BlueSkiesTrackCompat.register();
     TwilightForestTrackCompat.register();
     BiomesOPlentyTrackCompat.register();
+    DreamsAndDesiresTrackCompat.register();
+    QuarkTrackCompat.register();
   }
 }

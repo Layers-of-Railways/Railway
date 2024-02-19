@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/slashed"
+    },
+    {
+      "tag": "railways:internal/dyes/lime_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:lime_slashed_locometal"
+  }
+}

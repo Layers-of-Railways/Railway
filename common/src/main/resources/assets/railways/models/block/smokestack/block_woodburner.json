@@ -1,9 +1,81 @@
 {
-  "parent": "railways:block/smokestack/obj_smokestack",
-  "loader": "forge:obj",
-  "flip_v": true,
-  "model": "railways:models/block/smokestack/block_woodburner.obj",
-  "textures": {
-    "particle": "railways:block/smokestack/woodburner"
-  }
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 4, 12],
+			"faces": {
+				"north": {"uv": [4, 10.5, 8, 12.5], "texture": "#0"},
+				"east": {"uv": [4, 10.5, 8, 12.5], "texture": "#0"},
+				"south": {"uv": [4, 10.5, 8, 12.5], "texture": "#0"},
+				"west": {"uv": [4, 10.5, 8, 12.5], "texture": "#0"},
+				"up": {"uv": [4, 10.5, 0, 14.5], "texture": "#0"},
+				"down": {"uv": [4, 10.5, 0, 14.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 9, 0],
+			"to": [16, 14, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 8, 10.5], "texture": "#0"},
+				"east": {"uv": [0, 8, 8, 10.5], "texture": "#0"},
+				"south": {"uv": [0, 8, 8, 10.5], "texture": "#0"},
+				"west": {"uv": [0, 8, 8, 10.5], "texture": "#0"},
+				"up": {"uv": [8, 8, 0, 0], "texture": "#0"},
+				"down": {"uv": [8, 8, 0, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [2, 4, 2],
+			"to": [14, 16, 14],
+			"faces": {
+				"north": {"uv": [8, 6, 14, 12], "texture": "#0"},
+				"east": {"uv": [8, 6, 14, 12], "texture": "#0"},
+				"south": {"uv": [8, 6, 14, 12], "texture": "#0"},
+				"west": {"uv": [8, 6, 14, 12], "texture": "#0"},
+				"up": {"uv": [14, 6, 8, 0], "texture": "#0"},
+				"down": {"uv": [14, 0, 8, 6], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [-1.5, 0.75, -0.5],
+			"scale": [0.35, 0.35, 0.35]
+		},
+		"thirdperson_lefthand": {
+			"translation": [-1.5, 0.75, -0.5],
+			"scale": [0.35, 0.35, 0.35]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [23, 45, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"head": {
+			"translation": [0, 1.75, 0]
+		},
+		"fixed": {
+			"translation": [0, 0, 4]
+		}
+	},
+	"groups": [
+		{
+			"name": "Chimney",
+			"origin": [-16, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
 }

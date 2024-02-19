@@ -1,8 +1,10 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
+import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllShapes.Builder;
 import com.simibubi.create.foundation.utility.VoxelShaper;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -48,6 +50,67 @@ public class CRShapes {
         MONORAIL_TRACK_CROSS = shape(MONORAIL_TRACK_ORTHO.get(SOUTH)).add(MONORAIL_TRACK_ORTHO.get(EAST)).build(),
         MONORAIL_TRACK_CROSS_DIAG = shape(MONORAIL_TRACK_DIAG.get(SOUTH)).add(MONORAIL_TRACK_DIAG.get(EAST)).build(),
         MONORAIL_TRACK_FALLBACK = shape(0, 0, 0, 16, 16, 16).build();
+
+    public static VoxelShaper
+        HEADSTOCK_LINK_PIN = shape(3, 5, 3, 13, 11, 4)
+            .add(5, 5, 4, 11, 11, 7)
+            .add(6, 6, 7, 10, 10, 9)
+            .add(5, 6, 9, 11, 10, 12)
+            .add(4, 5, 12, 12, 11, 13)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_BUFFER = shape(3, 5, 3, 13, 11, 4)
+            .add(5, 5, 4, 11, 11, 8)
+            .add(6, 6, 8, 10, 10, 12)
+            .add(4, 4, 12, 12, 12, 13)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_PLAIN = shape(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_KNUCKLE = shape(3, 5, 3, 13, 11, 4)
+            .add(4, 5, 4, 12, 11, 7)
+            .add(6, 6, 7, 10, 10, 9)
+            .add(4, 5, 9, 12, 11, 12)
+            .add(4, 5, 12, 6, 11, 15)
+            .add(5, 5.5, 14, 9, 10.5, 16)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_SCREWLINK = shape(4, 6, 3, 12, 10, 4)
+            .add(5, 6, 4, 11, 10, 6)
+            .add(7, 7, 6, 9, 9, 8)
+            .add(7, 6.5, 7, 9, 9.5, 11)
+            .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH);
+
+    public static final VoxelShaper LINK_PIN =
+        shape(3, 5, 0, 13, 11, 1)
+            .add(5, 5, 1, 11, 11, 4)
+            .add(6, 6, 4, 10, 10, 6)
+            .add(5, 6, 6, 11, 10, 9)
+            .add(4, 5, 9, 12, 11, 10)
+            .forHorizontal(Direction.SOUTH),
+        SMALL_BUFFER = shape(3, 5, 0, 13, 11, 1)
+            .add(5, 5, 1, 11, 11, 5)
+            .add(6, 6, 5, 10, 10, 9)
+            .add(4, 4, 9, 12, 12, 10)
+            .forHorizontal(Direction.SOUTH),
+        BIG_BUFFER = shape(0, 4, 0, 16, 12, 2)
+            .add(4, 4, 2, 12, 12, 8)
+            .add(5, 5, 8, 11, 11, 14)
+            .add(2, 2, 14, 16, 14, 14)
+            .forHorizontal(Direction.SOUTH),
+        KNUCKLE = shape(3, 5, 0, 13, 11, 1)
+            .add(4, 5, 1, 12, 11, 4)
+            .add(6, 6, 4, 10, 10, 6)
+            .add(4, 5, 6, 12, 11, 9)
+            .add(4, 5, 9, 6, 11, 12)
+            .add(5, 5.5, 11, 9, 10.5, 13)
+            .forHorizontal(Direction.SOUTH),
+        SCREWLINK = shape(4, 6, 0, 12, 10, 1)
+            .add(5, 6, 1, 11, 10, 3)
+            .add(7, 7, 3, 9, 9, 5)
+            .add(7, 6.5, 4, 9, 9.5, 8)
+            .forHorizontal(Direction.SOUTH);
 
     private static VoxelShape narrowAscending() {
         VoxelShape shape = Block.box(-7, 0, 0, 16 + 7, 4, 4);
@@ -110,30 +173,38 @@ public class CRShapes {
         .build();
 
     public static final VoxelShape
-        COAL_STACK = shape(4, 0, 4, 12, 16, 12).build(),
-        DIESEL_STACK = shape(0, 0, 0, 16, 4, 16).build(),
-        OIL_STACK = shape(1, 8, 1, 15, 16, 15)
-            .add(2, 0, 2, 14, 8, 14)
+        COAL_STACK = shape(4, 0, 4, 12, 16, 12)
+            .add(3, 12, 3, 13, 15, 13)
             .build(),
-        STREAMLINED_STACK = shape(0, 0, 2, 2, 4, 16)
-            .add(14, 0, 0, 16, 4, 14)
-            .add(0, 0, 0, 14, 4, 2)
-            .add(2, 0, 14, 16, 4, 16)
+        OIL_STACK = shape(2, 0, 2, 14, 16, 14)
+            .add(0, 11, 0, 16, 14, 16)
             .build(),
-        WOOD_STACK = shape(4, 0, 4, 12, 14, 12)
-            .add(0, 6, 0, 16, 14, 16)
+        WOOD_STACK = shape(4, 0, 4, 12, 4, 12)
+            .add(2 ,4, 2, 14, 9, 14)
+            .add(0 ,9, 0, 16, 14, 16)
+            .add(2 ,14, 2, 14, 16, 14)
             .build();
     public static final VoxelShaper
-        CABOOSE_STACK = shape(7, 0, 7, 9, 12, 9)
-            .add(5, 8, 6, 11, 12, 10)
+        CABOOSE_STACK = shape(4, 0, 4, 12, 2, 12)
+            .add(5, 2, 5, 11, 3, 11)
+            .add(6, 3, 6, 10, 10, 10)
+            .add(5, 10, 4, 11, 13, 12)
             .forHorizontalAxis(),
-        LONG_STACK = shape(1, 0, 3, 15, 4, 13)
-        .forHorizontalAxis();
+        LONG_STACK = shape(1, 0, 3, 15, 5, 13)
+            .add(0, 2, 2, 16, 4, 14)
+            .forHorizontal(Direction.WEST),
+        STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
+            .forHorizontal(Direction.WEST),
+        DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
+            .forDirectional(Direction.UP);
 
     public static final VoxelShape
         BLOCK = Shapes.block(),
         BOTTOM_SLAB = shape(0, 0, 0, 16, 8, 16).build(),
         TOP_SLAB = shape(0, 8, 0, 16, 16, 16).build();
+
+    public static final VoxelShape HANDCAR = shape(AllShapes.SEAT_COLLISION)
+        .add(-16, 0, 0, 16, 4, 16).build();
 
     private static Builder shape(VoxelShape shape) {
         return new Builder(shape);

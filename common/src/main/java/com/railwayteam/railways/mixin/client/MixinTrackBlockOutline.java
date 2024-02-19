@@ -1,13 +1,18 @@
 package com.railwayteam.railways.mixin.client;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.CustomTrackBlockOutline;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +36,7 @@ public abstract class MixinTrackBlockOutline {
     }
 
     @Unique
-    private static TrackMaterial railway$resultMaterial;
+    private static TrackMaterial railways$resultMaterial;
 
     @ModifyVariable(
             method = "pickCurves",
@@ -41,8 +46,8 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static BezierConnection railway$grabResultMonorailState(BezierConnection bc) {
-        railway$resultMaterial = bc.getMaterial();
+    private static BezierConnection railways$grabResultMonorailState(BezierConnection bc) {
+        railways$resultMaterial = bc.getMaterial();
         return bc;
     }
 
@@ -54,11 +59,11 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static VoxelShape railway$renderCurvedMonorailShape(VoxelShape shape) {
-        return CustomTrackBlockOutline.convert(shape, railway$resultMaterial);
+    private static VoxelShape railways$renderCurvedMonorailShape(VoxelShape shape) {
+        return CustomTrackBlockOutline.convert(shape, railways$resultMaterial);
     }
 
-    private static TrackMaterial railway$walkingMaterial;
+    private static TrackMaterial railways$walkingMaterial;
 
     @ModifyVariable(
             method = "drawCustomBlockSelection",
@@ -68,8 +73,8 @@ public abstract class MixinTrackBlockOutline {
                     remap = true
             )
     )
-    private static BlockState railway$grabMonorailState(BlockState state) {
-        railway$walkingMaterial = state.getBlock() instanceof TrackBlock trackBlock ? trackBlock.getMaterial() : TrackMaterial.ANDESITE;
+    private static BlockState railways$grabMonorailState(BlockState state) {
+        railways$walkingMaterial = state.getBlock() instanceof TrackBlock trackBlock ? trackBlock.getMaterial() : TrackMaterial.ANDESITE;
         return state;
     }
 
@@ -80,8 +85,16 @@ public abstract class MixinTrackBlockOutline {
                     target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"
             )
     )
-    private static Object railway$renderMonorailBlockShape(Object o) {
-        return CustomTrackBlockOutline.convert(o, railway$walkingMaterial);
+    private static Object railways$renderMonorailBlockShape(Object o) {
+        return CustomTrackBlockOutline.convert(o, railways$walkingMaterial);
+    }
+
+    @WrapOperation(method = "drawCustomBlockSelection", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true))
+    private static Block genericCrossingsAreCustom(BlockState instance, Operation<Block> originalOperation) {
+        Block original = originalOperation.call(instance);
+        if (original instanceof GenericCrossingBlock)
+            return AllBlocks.TRACK.get();
+        return original;
     }
 }
 

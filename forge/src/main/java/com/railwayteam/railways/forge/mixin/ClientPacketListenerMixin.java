@@ -28,7 +28,7 @@ public class ClientPacketListenerMixin {
 			),
 			cancellable = true
 	)
-	private void railway$handleS2C(ClientboundCustomPayloadPacket packet, CallbackInfo ci) {
+	private void railways$handleS2C(ClientboundCustomPayloadPacket packet, CallbackInfo ci) {
 		ResourceLocation id = packet.getIdentifier();
 		PacketSet handler = PacketSetImpl.HANDLERS.get(id);
 		if (handler != null) {

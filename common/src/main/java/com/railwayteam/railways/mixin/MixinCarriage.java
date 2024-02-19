@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
+import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.entity.*;
@@ -16,12 +17,14 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Mixin(value = Carriage.class, remap = false)
-public abstract class MixinCarriage implements ICarriageConductors {
+public abstract class MixinCarriage implements ICarriageConductors, ICarriageBufferDistanceTracker {
 
     @Shadow public Train train;
 
@@ -46,6 +49,31 @@ public abstract class MixinCarriage implements ICarriageConductors {
     @Override
     public List<UUID> getControllingConductors() {
         return controllingConductors;
+    }
+
+    @Unique
+    private @Nullable Integer railways$leadingBufferDistance = null;
+    @Unique
+    private @Nullable Integer railways$trailingBufferDistance = null;
+
+    @Override
+    public @Nullable Integer railways$getLeadingDistance() {
+        return railways$leadingBufferDistance;
+    }
+
+    @Override
+    public @Nullable Integer railways$getTrailingDistance() {
+        return railways$trailingBufferDistance;
+    }
+
+    @Override
+    public void railways$setLeadingDistance(int distance) {
+        railways$leadingBufferDistance = distance;
+    }
+
+    @Override
+    public void railways$setTrailingDistance(int distance) {
+        railways$trailingBufferDistance = distance;
     }
 
     @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
@@ -78,6 +106,11 @@ public abstract class MixinCarriage implements ICarriageConductors {
             listTag.add(uuidTag);
         }
         tag.put("ControllingConductors", listTag);
+
+        if (railways$leadingBufferDistance != null)
+            tag.putInt("LeadingBufferDistance", railways$leadingBufferDistance);
+        if (railways$trailingBufferDistance != null)
+            tag.putInt("TrailingBufferDistance", railways$trailingBufferDistance);
     }
 
     @Inject(method = "read", at = @At("RETURN"))
@@ -93,6 +126,12 @@ public abstract class MixinCarriage implements ICarriageConductors {
                 }
             }
         }
+
+        if (tag.contains("LeadingBufferDistance", Tag.TAG_INT))
+            ((ICarriageBufferDistanceTracker) carriage).railways$setLeadingDistance(tag.getInt("LeadingBufferDistance"));
+
+        if (tag.contains("TrailingBufferDistance", Tag.TAG_INT))
+            ((ICarriageBufferDistanceTracker) carriage).railways$setTrailingDistance(tag.getInt("TrailingBufferDistance"));
     }
 
     @Inject(method = "travel", at = @At("HEAD"))
@@ -111,23 +150,30 @@ public abstract class MixinCarriage implements ICarriageConductors {
     @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 0))
     private boolean allowUniversalTrackLeading(boolean original) {
-        return snr$isIncompatible(original, true);
+        return railways$isIncompatible(original, true);
     }
 
     @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 1))
     private boolean allowUniversalTrackTrailing(boolean original) {
-        return snr$isIncompatible(original, false);
+        return railways$isIncompatible(original, false);
     }
 
     @Unique
-    private boolean snr$isIncompatible(boolean original, boolean leading) {
+    private boolean railways$isIncompatible(boolean original, boolean leading) {
         CarriageBogey bogey = leading ? leadingBogey() : trailingBogey();
         TravellingPoint point = leading ? getLeadingPoint() : getTrailingPoint();
+        if (point.edge == null)
+            return false;
         if (point.edge.getTrackMaterial().trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
         if (CarriageBogeyUtils.getType(bogey).getTrackType(bogey.getStyle()) == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return false;
         return original;
+    }
+
+    @Inject(method = "manageEntities", at = @At("HEAD"), cancellable = true)
+    private void allowTravellingWithoutLevel(Level level, CallbackInfo ci) {
+        if (level == null) ci.cancel();
     }
 }

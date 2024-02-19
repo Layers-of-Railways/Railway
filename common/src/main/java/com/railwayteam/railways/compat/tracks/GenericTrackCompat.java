@@ -1,7 +1,10 @@
 package com.railwayteam.railways.compat.tracks;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
+import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
@@ -20,6 +23,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.railwayteam.railways.Railways.registrate;
 import static com.railwayteam.railways.compat.tracks.TrackCompatUtils.buildCompatModels;
@@ -28,10 +32,14 @@ import static com.railwayteam.railways.registry.CRItems.ITEM_INCOMPLETE_TRACK;
 import static com.simibubi.create.content.trains.track.TrackMaterialFactory.make;
 
 public class GenericTrackCompat {
+    public final Mods mod;
     public final String modid;
+    public boolean modLoaded;
 
-    public GenericTrackCompat(String modid) {
-        this.modid = modid;
+    public GenericTrackCompat(Mods mod) {
+        this.mod = mod;
+        this.modid = mod.asId();
+        this.modLoaded = mod.isLoaded;
     }
 
     protected final Map<String, TrackMaterial> MATERIALS = new HashMap<>();
@@ -45,17 +53,9 @@ public class GenericTrackCompat {
         Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
     }
 
-    protected static boolean registerTracksAnywayGlobal() {
-        return CRConfigs.getRegisterMissingTracks(); // || Utils.isDevEnv();
-    }
-
-    protected boolean registerTracksAnyway() {
-        return registerTracksAnywayGlobal();
-    }
-
     // If tracks/materials should still be registered if the base block is missing
     protected final boolean shouldRegisterMissing() {
-        return isDataGen() || registerTracksAnyway();
+        return isDataGen() || CRConfigs.getRegisterMissingTracks() || modLoaded;
     }
 
     public void register(String... names) {
@@ -72,6 +72,7 @@ public class GenericTrackCompat {
                 .block(() -> BLOCKS.get(name))
                 .particle(asResource("block/track/"+name+"/standard_track_crossing_"+name))
                 .sleeper(baseBlock.map(Ingredient::of).orElseGet(() -> SoftIngredient.of(getSlabLocation(name))))
+                .rails(getIngredientForRail())
             );
             MATERIALS.put(name, standardMaterial);
 
@@ -125,6 +126,13 @@ public class GenericTrackCompat {
 
     protected ResourceLocation getSlabLocation(String name) {
         return asResource(name+"_slab");
+    }
+
+    protected Ingredient getIngredientForRail() {
+        return Ingredient.fromValues(Stream.of(
+                AccessorIngredient_TagValue.railways$create(CommonTags.IRON_NUGGETS.tag),
+                AccessorIngredient_TagValue.railways$create(CommonTags.ZINC_NUGGETS.tag)
+        ));
     }
 
     private TrackMaterial wideVariant(TrackMaterial material) {
