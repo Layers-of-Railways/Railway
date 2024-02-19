@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
@@ -52,6 +53,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
+    @Shadow public double speed;
     @Unique
     public Set<UUID> railways$occupiedCouplers;
     @Unique
@@ -259,12 +261,6 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         }
     }
 
-    @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcars(CallbackInfoReturnable<Float> cir) {
-        if (railways$isHandcar)
-            cir.setReturnValue(cir.getReturnValue() * 0.5f);
-    }
-
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
     private void slowDownHandcarsOnTurns(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
@@ -273,19 +269,23 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Inject(method = "maxSpeed", at = @At("HEAD"), cancellable = true)
     public void maxSpeed(CallbackInfoReturnable<Float> cir) {
-        if (CRConfigs.server().realism.realisticTrains.get())
+        if (railways$isHandcar)
+            cir.setReturnValue(cir.getReturnValue() * 0.5f);
+        else if (CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.poweredTrainTopSpeed.getF() / 20);
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("HEAD"), cancellable = true)
     public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
-        if (CRConfigs.server().realism.realisticTrains.get())
+        if (railways$isHandcar)
+            cir.setReturnValue(cir.getReturnValue() * 0.75f);
+        else if (CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.poweredTrainTurningTopSpeed.getF() / 20);
     }
 
     @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
     public void acceleration(CallbackInfoReturnable<Float> cir) {
-        if (CRConfigs.server().realism.realisticTrains.get())
+        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.poweredTrainAcceleration.getF() / 400);
     }
 }
