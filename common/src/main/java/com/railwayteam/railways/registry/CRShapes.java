@@ -115,7 +115,7 @@ public class CRShapes {
     public static VoxelShape narrowDiagonal() {
         VoxelShape shape = Block.box(0, 0, 0, 16, 4, 16);
         VoxelShape[] shapes = new VoxelShape[6];
-        int off = 0;
+        int off;
 
         for (int i = 0; i < 3; i++) {
             off = (i + 1) * 2;
@@ -135,6 +135,18 @@ public class CRShapes {
 
         return shape.optimize();
     }
+
+    public static VoxelShape boiler() {
+        VoxelShape shape = Shapes.empty();
+
+        for (double i = 0; i < 10; i++) {
+            shape = Shapes.or(shape, Block.box(0, -7 + i, 2 - i, 16, 23 - i, 14 + i));
+        }
+
+        return shape.optimize();
+    }
+
+    public static final VoxelShaper BOILER = shape(boiler()).forHorizontal(EAST);
 
     public static final VoxelShaper
         NARROW_TRACK_ORTHO = shape(-7, 0, 0, 16 + 7, 4, 16).forHorizontal(NORTH),
