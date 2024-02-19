@@ -107,17 +107,19 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
+                                        @NotNull CollisionContext context) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getCollisionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
+                                                 @NotNull CollisionContext context) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
-    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public @NotNull VoxelShape getInteractionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
