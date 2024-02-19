@@ -24,7 +24,6 @@ import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.OilburnerSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRBlocks;
@@ -319,7 +318,7 @@ public class BuilderTransformersImpl {
     public static <B extends HeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> headstock() {
         return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
+                    .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
                 .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), HeadstockBlock.WATERLOGGED
             )
@@ -336,7 +335,7 @@ public class BuilderTransformersImpl {
         return b -> b
             .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
                 .forAllStatesExcept(state -> ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(true)))
+                    .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
                     .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                     .build(), HeadstockBlock.WATERLOGGED
                 )

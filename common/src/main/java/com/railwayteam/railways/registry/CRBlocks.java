@@ -585,14 +585,6 @@ public class CRBlocks {
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
         .transform(BuilderTransformers.headstock())
-            // fixme
-            //         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            //            .forAllStatesExcept(state -> ConfiguredModel.builder()
-            //                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
-            //                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
-            //                .build(), HeadstockBlock.WATERLOGGED
-            //            )
-            //        )
         .transform(axeOrPickaxe())
         .transform(BuilderTransformers.variantBuffer())
         .lang("Headstock")
@@ -610,14 +602,6 @@ public class CRBlocks {
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
         .transform(axeOrPickaxe())
-            //fixme
-            //         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            //            .forAllStatesExcept(state -> ConfiguredModel.builder()
-            //                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
-            //                .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
-            //                .build(), CopycatHeadstockBlock.WATERLOGGED
-            //            )
-            //        )
         .transform(BuilderTransformers.copycatHeadstock())
         .lang("Copycat Headstock")
         /*.item()

@@ -24,14 +24,15 @@ public class BoilerGeneratorImpl extends BoilerGenerator {
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
         BoilerBlock.Style style = state.getValue(BoilerBlock.STYLE);
         Direction.Axis axis = state.getValue(BoilerBlock.HORIZONTAL_AXIS);
+        boolean raised = state.getValue(BoilerBlock.RAISED);
 
         // I know it's barbaric to have the rotation be separate models instead of in blockstate,
         // but when I do it in blockstate there's horrible shading issues for the z rotation
         String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
-        return prov.models().withExistingParent(ctx.getName() + "_" + style.getSerializedName() + "_" + axis.getName(), prov.modLoc("block/palettes/boiler/boiler"))
+        return prov.models().withExistingParent(ctx.getName() + "_" + style.getSerializedName() + "_" + axis.getName() + (raised ? "_raised" : ""), prov.modLoc("block/palettes/boiler/boiler"))
             .customLoader(ObjModelBuilder::begin)
             .flipV(true)
-            .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_"+axis.getName()+".obj"))
+            .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_"+axis.getName()+(raised ? "_raised" : "")+".obj"))
             .end()
             .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
             .texture("sides", prov.modLoc("block/palettes/" + colorName + "/" + (wrapping != null ? wrapping.prefix("wrapped_boiler_side") : "boiler_side")))
