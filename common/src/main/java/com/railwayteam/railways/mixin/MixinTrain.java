@@ -54,6 +54,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
     @Shadow public double speed;
+    @Shadow public int fuelTicks;
     @Unique
     public Set<UUID> railways$occupiedCouplers;
     @Unique
@@ -261,31 +262,25 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         }
     }
 
-    @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcarsOnTurns(CallbackInfoReturnable<Float> cir) {
-        if (railways$isHandcar)
-            cir.setReturnValue(cir.getReturnValue() * 0.75f);
-    }
-
-    @Inject(method = "maxSpeed", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
     public void maxSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
-        else if (CRConfigs.server().realism.realisticTrains.get())
-            cir.setReturnValue(AllConfigs.server().trains.poweredTrainTopSpeed.getF() / 20);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20*20));
     }
 
-    @Inject(method = "maxTurnSpeed", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
     public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
-        else if (CRConfigs.server().realism.realisticTrains.get())
-            cir.setReturnValue(AllConfigs.server().trains.poweredTrainTurningTopSpeed.getF() / 20);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20*20));
     }
 
     @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
     public void acceleration(CallbackInfoReturnable<Float> cir) {
-        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get())
-            cir.setReturnValue(AllConfigs.server().trains.poweredTrainAcceleration.getF() / 400);
+        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400*20));
     }
 }

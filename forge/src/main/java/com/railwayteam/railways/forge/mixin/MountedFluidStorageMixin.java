@@ -25,11 +25,12 @@ public abstract class MountedFluidStorageMixin {
 
     @Shadow SmartFluidTank tank;
 
-    @Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
+    // This method is only used for normal fluid storage, and we don't want fuel tanks to go into it
+    /*@Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
     private static void canUseAsStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
         if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
             cir.setReturnValue(fuelTankBlockEntity.isController());
-    }
+    }*/
 
     @Inject(method = "createMountedTank", at = @At("HEAD"), cancellable = true)
     private void createMountedTank(BlockEntity be, CallbackInfoReturnable<SmartFluidTank> cir) {

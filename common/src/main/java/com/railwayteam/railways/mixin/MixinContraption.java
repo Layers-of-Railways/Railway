@@ -28,12 +28,15 @@ public abstract class MixinContraption implements IContraptionFuel {
 
     @Shadow protected abstract BlockPos toLocalPos(BlockPos globalPos);
 
-    @Inject(method = "getBlockEntityNBT", at = @At("TAIL"))
+    @Inject(method = "getBlockEntityNBT", at = @At("RETURN"))
     private void getBlockEntityNBT(Level world, BlockPos pos, CallbackInfoReturnable<CompoundTag> cir) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity == null)
             return;
-        CompoundTag nbt = blockEntity.saveWithFullMetadata();
+        // This is necessary because simply calling saveWithFullMetadata again will return a _different_ NBT tag
+        CompoundTag nbt = cir.getReturnValue();
+        if (nbt == null)
+            return;
 
         if (AbstractionUtils.isInstanceOfFuelTankBlockEntity(blockEntity) && nbt.contains("Controller"))
             nbt.put("Controller", NbtUtils.writeBlockPos(toLocalPos(NbtUtils.readBlockPos(nbt.getCompound("Controller")))));

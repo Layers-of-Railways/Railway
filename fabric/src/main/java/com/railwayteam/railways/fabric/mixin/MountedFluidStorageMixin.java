@@ -2,7 +2,6 @@ package com.railwayteam.railways.fabric.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
 import io.github.fabricators_of_create.porting_lib.transfer.fluid.FluidTank;
@@ -10,7 +9,6 @@ import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,11 +22,12 @@ public abstract class MountedFluidStorageMixin {
     @Shadow SmartFluidTank tank;
     @Shadow private BlockEntity blockEntity;
 
-    @Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
+    // This method is only used for normal fluid storage, and we don't want fuel tanks to go into it
+    /*@Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
     private static void canUseAsStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
         if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
             cir.setReturnValue(fuelTankBlockEntity.isController());
-    }
+    }*/
 
     @Inject(method = "createMountedTank", at = @At("HEAD"), cancellable = true)
     private void createMountedTank(BlockEntity be, CallbackInfoReturnable<FuelTankBlockEntity.FuelFluidHandler> cir) {

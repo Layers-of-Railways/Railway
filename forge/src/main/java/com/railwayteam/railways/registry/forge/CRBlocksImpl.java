@@ -7,13 +7,19 @@ import com.railwayteam.railways.content.fuel.tank.FuelTankGenerator;
 import com.railwayteam.railways.content.fuel.tank.FuelTankItem;
 import com.railwayteam.railways.content.fuel.tank.FuelTankModel;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.content.contraptions.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceMovement;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 
 import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
@@ -48,5 +54,11 @@ public class CRBlocksImpl {
             .transform(customItemModel())
             .register();
 
-    public static void platformBasedRegistration() {}
+    public static void platformBasedRegistration() {
+        BlockMovementChecks.registerAttachedCheck((BlockState state, Level world, BlockPos pos, Direction direction) -> {
+            if (state.getBlock() instanceof FuelTankBlock && ConnectivityHandler.isConnected(world, pos, pos.relative(direction)))
+                return BlockMovementChecks.CheckResult.SUCCESS;
+            return BlockMovementChecks.CheckResult.PASS;
+        });
+    }
 }

@@ -39,7 +39,6 @@
     "MixinDeployerHandler",
     "MixinDoorBlock",
     "MixinContraption",
-    "MixinDirectBeltInputBehaviour",
     "MixinDoorMovingInteraction",
     "MixinEdgeData",
     "MixinExplosionDamageCalculator",
