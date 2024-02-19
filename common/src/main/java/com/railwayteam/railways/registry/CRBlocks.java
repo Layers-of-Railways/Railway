@@ -15,17 +15,17 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.DoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.LargePlatformDoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
@@ -325,8 +325,8 @@ public class CRBlocks {
     public static final BlockEntry<TrackBlock> PHANTOM_TRACK = makeTrack(CRTrackMaterials.PHANTOM);
     public static final BlockEntry<TrackBlock> MANGROVE_TRACK = makeTrack(CRTrackMaterials.MANGROVE);
 
-    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
-    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new LinkedHashMap<>();
+    public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new LinkedHashMap<>();
 
     static {
         for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
