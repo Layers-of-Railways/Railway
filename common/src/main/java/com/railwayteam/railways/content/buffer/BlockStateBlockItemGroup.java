@@ -10,7 +10,7 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -101,7 +101,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
 
             items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, primary))
                 .lang(v.getLangName(context))
-                .onRegisterAfter(Registry.ITEM_REGISTRY, i -> ItemDescription.useKey(i, "block.railways.generic_radial"))
+                .onRegisterAfter(Registries.ITEM, i -> ItemDescription.useKey(i, "block.railways.generic_radial"))
                 .transform(itemTransformer)
                 .tag(cycleTag)
                 .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))

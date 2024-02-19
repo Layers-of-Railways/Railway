@@ -2,7 +2,6 @@ package com.railwayteam.railways.content.palettes.boiler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.railwayteam.railways.mixin_interfaces.IForceRenderingSodium;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;

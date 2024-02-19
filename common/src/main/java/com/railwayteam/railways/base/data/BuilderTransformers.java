@@ -37,6 +37,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -175,7 +176,7 @@ public class BuilderTransformers {
             .tag(CRTags.AllBlockTags.LOCOMETAL_BOILERS.tag)
             .tag(AllTags.AllBlockTags.COPYCAT_DENY.tag)
             .transform(pickaxeOnly())
-            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.boiler"))
+            .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.boiler"))
             .blockstate(BoilerGenerator.create(color, wrapping)::generate);
     }
 
