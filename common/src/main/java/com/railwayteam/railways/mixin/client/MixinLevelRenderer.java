@@ -30,9 +30,10 @@ public class MixinLevelRenderer {
             poseStack.pushPose();
             poseStack.translate(offset.x, offset.y, offset.z);
             poseStack.translate(0.5, 0.5, 0.5);
+            hasCustomOutline.matrixRotation(poseStack, state);
             poseStack.translate(-0.5, -0.5, -0.5);
 
-            hasCustomOutline.customOutline(instance, poseStack, lineVb, entity, camera, pos, state);
+            hasCustomOutline.customOutline(poseStack, lineVb, state);
 
             poseStack.popPose();
 
