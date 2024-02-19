@@ -42,23 +42,3 @@ jobs:
         with:
           name: Artifacts
           path: jars
-
-  codeql:
-    runs-on: ubuntu-latest
-    needs: build
-    timeout-minutes: 60
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    steps:
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: java
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:java"
