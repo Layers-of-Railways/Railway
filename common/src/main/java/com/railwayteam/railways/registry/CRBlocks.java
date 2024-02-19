@@ -337,7 +337,7 @@ public class CRBlocks {
         }
 
         List<TrackMaterial> narrowMaterials = new ArrayList<>(CRTrackMaterials.NARROW_GAUGE.values());
-        narrowMaterials.sort(Comparator.comparing((trackMaterial -> trackMaterial.id)));
+        narrowMaterials.sort(Comparator.comparing((t -> t.id)));
         for (TrackMaterial narrowMaterial : narrowMaterials) {
             NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
         }
