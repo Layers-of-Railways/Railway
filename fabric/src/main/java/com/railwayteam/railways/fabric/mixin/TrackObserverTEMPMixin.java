@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 // FIXME: Remove once Create Fabric is fixed
 @Mixin(TrackObserver.class)
 public class TrackObserverTEMPMixin {
-    @WrapOperation(method = "write(Lnet/minecraft/nbt/CompoundTag;Lcom/simibubi/create/content/trains/graph/DimensionPalette;)V", at = @At(value = "INVOKE", target = "Lio/github/fabricators_of_create/porting_lib/util/NBTSerializer;serializeNBTCompound(Ljava/lang/Object;)Lnet/minecraft/nbt/CompoundTag;"))
+    @WrapOperation(method = "write(Lnet/minecraft/nbt/CompoundTag;Lcom/simibubi/create/content/trains/graph/DimensionPalette;)V", at = @At(value = "INVOKE", target = "Lio/github/fabricators_of_create/porting_lib/util/NBTSerializer;serializeNBTCompound(Ljava/lang/Object;)Lnet/minecraft/nbt/CompoundTag;"), require = 0)
     private CompoundTag fixSerialization(Object c, Operation<CompoundTag> original) {
         return ((FilterItemStack) c).serializeNBT();
     }
