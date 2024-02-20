@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
+    "GoggleOverlayRendererMixin",
     "LevelRendererMixin",
     "TrackBlockOutlineMixin",
     "TrainHUDMixin"
@@ -13,8 +14,7 @@
     "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
-    "TrackObserverTEMPMixin",
-    "GoggleOverlayRendererMixin"
+    "TrackObserverTEMPMixin"
   ],
   "injectors": {
     "defaultRequire": 1,
