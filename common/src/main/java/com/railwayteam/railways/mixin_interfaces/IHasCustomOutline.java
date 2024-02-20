@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
+// Implementation inspired from https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/src/main/java/xfacthd/framedblocks/api/render/OutlineRenderer.java which is licensed under LGPL
 public interface IHasCustomOutline {
     void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state);
 
