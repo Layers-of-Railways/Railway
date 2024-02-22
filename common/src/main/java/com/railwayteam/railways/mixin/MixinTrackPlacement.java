@@ -30,16 +30,18 @@ import static com.simibubi.create.content.trains.track.TrackBlock.SHAPE;
 
 @Mixin(value = TrackPlacement.class)
 public class MixinTrackPlacement {
-    // minimum curve length for wide gauge
-    @SuppressWarnings("unused")
+    // minimum curve length for gauges
     @ModifyExpressionValue(method = "tryConnect", at = {
         @At(value = "CONSTANT", args = "doubleValue=7"),
         @At(value = "CONSTANT", args = "doubleValue=3.25")
     })
-    private static double widerCurveForWideGauge(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
+    private static double modifiedCurvesForGauges(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
+        // Wide Gauge
         if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE)
             return value * 2;
-        else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE)
+        // Narrow Gauge and Phantom Tracks
+        else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE ||
+                TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return value * 0.5;
 
         return value;
