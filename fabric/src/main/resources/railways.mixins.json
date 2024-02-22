@@ -13,8 +13,7 @@
   "mixins": [
     "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
-    "EnderManMixin",
-    "TrackObserverTEMPMixin"
+    "EnderManMixin"
   ],
   "injectors": {
     "defaultRequire": 1,
