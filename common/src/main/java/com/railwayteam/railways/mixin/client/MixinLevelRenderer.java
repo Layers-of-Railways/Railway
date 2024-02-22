@@ -16,6 +16,11 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+/**
+ * Implemented was inspired/derived from <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/src/main/java/xfacthd/framedblocks/client/render/special/BlockOutlineRenderer.java">Framed Blocks</a>
+ * <p>
+ * Which is licensed under <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/LICENSE">LGPL</a>
+ */
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer {
     @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderHitOutline(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/entity/Entity;DDDLnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"))
@@ -30,9 +35,10 @@ public class MixinLevelRenderer {
             poseStack.pushPose();
             poseStack.translate(offset.x, offset.y, offset.z);
             poseStack.translate(0.5, 0.5, 0.5);
+            hasCustomOutline.matrixRotation(poseStack, state);
             poseStack.translate(-0.5, -0.5, -0.5);
 
-            hasCustomOutline.customOutline(instance, poseStack, lineVb, entity, camera, pos, state);
+            hasCustomOutline.customOutline(poseStack, lineVb, state);
 
             poseStack.popPose();
 

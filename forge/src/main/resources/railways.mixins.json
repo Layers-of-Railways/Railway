@@ -6,6 +6,7 @@
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
     "ClientPacketListenerMixin",
+    "GoggleOverlayRendererMixin",
     "TrackBlockOutlineMixin",
     "TrainHUDMixin"
   ],
@@ -13,7 +14,6 @@
     "MixinLootDataManager",
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
-    "GoggleOverlayRendererMixin",
     "ContainerLevelAccessMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"

@@ -5,13 +5,10 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -103,72 +100,75 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
+                                        @NotNull CollisionContext context) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getCollisionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
+                                                 @NotNull CollisionContext context) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
-    public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+    public @NotNull VoxelShape getInteractionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
-    public void customOutline(LevelRenderer levelRenderer, PoseStack poseStack, VertexConsumer consumer, Entity entity, Camera camera, BlockPos pos, BlockState state) {
+    public void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state) {
         // First line / direction on right side
-        drawLine(consumer, poseStack, pos, camera, 2, -7, 0, -7, 2, 0);
+        drawLine(consumer, poseStack, 2, -7, 0, -7, 2, 0);
         // Second line | direction on right side
-        drawLine(consumer, poseStack, pos, camera, -7, 2, 0, -7, 14, 0);
+        drawLine(consumer, poseStack, -7, 2, 0, -7, 14, 0);
         // Third line \ direction on right side
-        drawLine(consumer, poseStack, pos, camera, -7, 14, 0, 2, 23, 0);
+        drawLine(consumer, poseStack, -7, 14, 0, 2, 23, 0);
         // Fourth line - direction on middle
-        drawLine(consumer, poseStack, pos, camera, 2, 23, 0, 14, 23, 0);
+        drawLine(consumer, poseStack, 2, 23, 0, 14, 23, 0);
         // Fifth line / direction on left side
-        drawLine(consumer, poseStack, pos, camera, 14, 23, 0, 23, 14, 0);
-        // Fifth line / direction on left side
-        drawLine(consumer, poseStack, pos, camera, 14, 23, 0, 23, 14, 0);
+        drawLine(consumer, poseStack, 14, 23, 0, 23, 14, 0);
         // Sixth line | direction on left side
-        drawLine(consumer, poseStack, pos, camera, 23, 14, 0, 23, 2, 0);
+        drawLine(consumer, poseStack, 23, 14, 0, 23, 2, 0);
         // Seventh line \ direction on left side
-        drawLine(consumer, poseStack, pos, camera, 23, 2, 0, 14, -7, 0);
+        drawLine(consumer, poseStack, 23, 2, 0, 14, -7, 0);
         // Eighth line - direction on middle
-        drawLine(consumer, poseStack, pos, camera, 14, -7, 0, 2, -7, 0);
+        drawLine(consumer, poseStack, 14, -7, 0, 2, -7, 0);
 
         // -- Backside --
 
         // First line / direction on right side
-        drawLine(consumer, poseStack, pos, camera, 2, -7, 16, -7, 2, 16);
+        drawLine(consumer, poseStack, 2, -7, 16, -7, 2, 16);
         // Second line | direction on right side
-        drawLine(consumer, poseStack, pos, camera, -7, 2, 16, -7, 14, 16);
+        drawLine(consumer, poseStack, -7, 2, 16, -7, 14, 16);
         // Third line \ direction on right side
-        drawLine(consumer, poseStack, pos, camera, -7, 14, 16, 2, 23, 16);
+        drawLine(consumer, poseStack, -7, 14, 16, 2, 23, 16);
         // Fourth line - direction on middle
-        drawLine(consumer, poseStack, pos, camera, 2, 23, 16, 14, 23, 16);
+        drawLine(consumer, poseStack, 2, 23, 16, 14, 23, 16);
         // Fifth line / direction on left side
-        drawLine(consumer, poseStack, pos, camera, 14, 23, 16, 23, 14, 16);
-        // Fifth line / direction on left side
-        drawLine(consumer, poseStack, pos, camera, 14, 23, 16, 23, 14, 16);
+        drawLine(consumer, poseStack, 14, 23, 16, 23, 14, 16);
         // Sixth line | direction on left side
-        drawLine(consumer, poseStack, pos, camera, 23, 14, 16, 23, 2, 16);
+        drawLine(consumer, poseStack, 23, 14, 16, 23, 2, 16);
         // Seventh line \ direction on left side
-        drawLine(consumer, poseStack, pos, camera, 23, 2, 16, 14, -7, 16);
+        drawLine(consumer, poseStack, 23, 2, 16, 14, -7, 16);
         // Eighth line - direction on middle
-        drawLine(consumer, poseStack, pos, camera, 14, -7, 16, 2, -7, 16);
+        drawLine(consumer, poseStack, 14, -7, 16, 2, -7, 16);
 
         // -- Sides --
-        drawLine(consumer, poseStack, pos, camera, 2, -7, 0, 2, -7, 16);
-        drawLine(consumer, poseStack, pos, camera, -7, 2, 0, -7, 2, 16);
-        drawLine(consumer, poseStack, pos, camera, -7, 14, 0, -7, 14, 16);
-        drawLine(consumer, poseStack, pos, camera, 2, 23, 0, 2, 23, 16);
-        drawLine(consumer, poseStack, pos, camera, 14, 23, 0, 14, 23, 16);
-        drawLine(consumer, poseStack, pos, camera, 23, 14, 0, 23, 14, 16);
-        drawLine(consumer, poseStack, pos, camera, 23, 14, 0, 23, 14, 16);
-        drawLine(consumer, poseStack, pos, camera, 23, 2, 0, 23, 2, 16);
-        drawLine(consumer, poseStack, pos, camera, 14, -7, 0, 14, -7, 16);
+        drawLine(consumer, poseStack, 2, -7, 0, 2, -7, 16);
+        drawLine(consumer, poseStack, -7, 2, 0, -7, 2, 16);
+        drawLine(consumer, poseStack, -7, 14, 0, -7, 14, 16);
+        drawLine(consumer, poseStack, 2, 23, 0, 2, 23, 16);
+        drawLine(consumer, poseStack, 14, 23, 0, 14, 23, 16);
+        drawLine(consumer, poseStack, 23, 14, 0, 23, 14, 16);
+        drawLine(consumer, poseStack, 23, 2, 0, 23, 2, 16);
+        drawLine(consumer, poseStack, 14, -7, 0, 14, -7, 16);
+    }
+
+    @Override
+    public void matrixRotation(PoseStack poseStack, BlockState state) {
+        if (state.getValue(HORIZONTAL_AXIS) == Axis.X)
+            poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));
     }
 
     public enum Style implements StringRepresentable {
