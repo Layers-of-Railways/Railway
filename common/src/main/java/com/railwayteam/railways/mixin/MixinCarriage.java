@@ -1,12 +1,12 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
 import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
@@ -138,13 +138,13 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     private void markTravelStart(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                  TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
         if (train.navigation.isActive()) // only do automatic stuff when automatically operated
-            Railways.trackEdgeCarriageTravelling = true;
+            MixinVariables.trackEdgeCarriageTravelling = true;
     }
 
     @Inject(method = "travel", at = @At("RETURN"))
     private void markTravelEnd(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
-        Railways.trackEdgeCarriageTravelling = false;
+        MixinVariables.trackEdgeCarriageTravelling = false;
     }
 
     @SuppressWarnings("unused")

@@ -5,13 +5,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalDoubleRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -38,7 +38,10 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -346,13 +349,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
     private void recordSearch(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
-        Railways.navigationCallDepth += 1;
+        MixinVariables.navigationCallDepth += 1;
     }
 
     @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
     private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
-        if (Railways.navigationCallDepth > 0)
-            Railways.navigationCallDepth -= 1;
+        if (MixinVariables.navigationCallDepth > 0)
+            MixinVariables.navigationCallDepth -= 1;
     }
 
     @Inject(method = "findNearestApproachable", at = @At("HEAD"), cancellable = true)
