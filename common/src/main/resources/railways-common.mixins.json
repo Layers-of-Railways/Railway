@@ -138,6 +138,7 @@
     "client.MixinTrackInstance_BezierTrackInstance",
     "client.MixinTrackRenderer",
     "client.MixinTrackTargetingClient",
+    "client.MixinTrainHatArmorLayer",
     "client.MixinTrainHatOffsets",
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
