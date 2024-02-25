@@ -6,7 +6,6 @@ import com.railwayteam.railways.registry.CRParticleTypes;
 import io.github.fabricators_of_create.porting_lib.event.client.ClientWorldEvents;
 import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
 import io.github.fabricators_of_create.porting_lib.event.client.ParticleManagerRegistrationCallback;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
@@ -17,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEventsFabric {
 	public static void init() {
-		ClientLifecycleEvents.CLIENT_STARTED.register(ClientEvents::onClientStarted);
 		ClientTickEvents.START_CLIENT_TICK.register(ClientEvents::onClientTickStart);
 		ClientTickEvents.END_CLIENT_TICK.register(ClientEvents::onClientTickEnd);
 		KeyInputCallback.EVENT.register((key, scancode, action, mods) -> {

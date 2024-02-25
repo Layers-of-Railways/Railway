@@ -126,6 +126,7 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
     protected void emitBlockQuadsInner(@Nullable BlockAndTintGetter blockView, @Nullable BlockState state, @Nullable BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context, BlockState material, CullFaceRemovalData cullFaceRemovalData, OcclusionData occlusionData) {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
+        boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
 
         BakedModel model = getModelOf(material);
 
@@ -162,6 +163,9 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
                         bb = bb.move(0, 10 / 16., 0);
                     else
                         offset = offset.add(0, 4 / 16., 0);
+
+                    if (upsideDown)
+                        offset = offset.add(0, -4 / 16., 0);
 
                     //noinspection ConstantValue
                     if (false) { // debug explode

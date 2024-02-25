@@ -20,13 +20,13 @@ import static com.railwayteam.railways.content.distant_signals.SignalDisplaySour
 @Mixin(value = NixieTubeDisplayTarget.class, remap = false)
 public class MixinNixieTubeDisplayTarget {
     @Inject(method = "acceptLine", at = @At("HEAD"), cancellable = true)
-    private void snr$handleSignalInput(MutableComponent text, DisplayLinkContext context, CallbackInfo ci) {
+    private void railways$handleSignalInput(MutableComponent text, DisplayLinkContext context, CallbackInfo ci) {
         if (hasSignalSource(context)) {
             ci.cancel();
 
             Pair<SignalBlockEntity.SignalState, Optional<SignalBlockEntity>> state = getSignalState(context, text);
             if (context.getTargetBlockEntity() instanceof IOverridableSignal overridableSignal) {
-                overridableSignal.snr$refresh(
+                overridableSignal.railways$refresh(
                     state.getSecond().orElse(null),
                     state.getFirst(),
                     context.getSourceBlockEntity() instanceof SignalBlockEntity ? 43 : 103
@@ -36,7 +36,7 @@ public class MixinNixieTubeDisplayTarget {
     }
 
     @Inject(method = "getWidth", at = @At("HEAD"), cancellable = true)
-    private void snr$overwriteWidth(DisplayLinkContext context, CallbackInfoReturnable<Integer> cir) {
+    private void railways$overwriteWidth(DisplayLinkContext context, CallbackInfoReturnable<Integer> cir) {
         if (hasSignalSource(context))
             cir.setReturnValue(2);
     }

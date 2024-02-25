@@ -30,8 +30,8 @@ public class TrackBuffer extends SingleBlockEntityEdgePoint {
             : train.carriages.get(0);
         if (leadingCarriage instanceof ICarriageBufferDistanceTracker bufferDistanceTracker) {
             Integer distance = backwards
-                ? bufferDistanceTracker.snr$getTrailingDistance()
-                : bufferDistanceTracker.snr$getLeadingDistance();
+                ? bufferDistanceTracker.railways$getTrailingDistance()
+                : bufferDistanceTracker.railways$getLeadingDistance();
             if (distance != null)
                 return distance + 1;
         }

@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
@@ -15,6 +14,7 @@ import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
+import com.railwayteam.railways.util.MixinVariables;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
@@ -55,18 +55,18 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     }
 
     @Unique
-    private boolean snr$fakePlayer = false;
+    private boolean railways$fakePlayer = false;
 
     @Inject(method = "control", at = @At("HEAD"))
     private void recordFakePlayer(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
         if (player.getGameProfile() == ConductorEntity.FAKE_PLAYER_PROFILE)
-            snr$fakePlayer = true;
+            railways$fakePlayer = true;
     }
 
     @WrapOperation(method = "control", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z", remap = true))
-    private boolean snr$closerThan(Vec3 instance, Position pos, double distance, Operation<Boolean> original) {
-        if (snr$fakePlayer) {
-            snr$fakePlayer = false;
+    private boolean railways$closerThan(Vec3 instance, Position pos, double distance, Operation<Boolean> original) {
+        if (railways$fakePlayer) {
+            railways$fakePlayer = false;
             return true;
         }
         return original.call(instance, pos, distance);
@@ -106,10 +106,10 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         boolean spaceDown = heldControls.contains(4);
 
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
-        Railways.temporarilySkipSwitches = true;
+        MixinVariables.temporarilySkipSwitches = true;
         boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
-        Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).snr$findNearestApproachableSwitch(forward);
-        Railways.temporarilySkipSwitches = false;
+        Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).railways$findNearestApproachableSwitch(forward);
+        MixinVariables.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData == null ? null : lookAheadData.getFirst();
         boolean headOn = lookAheadData != null && lookAheadData.getSecond().getFirst();
         Optional<SwitchState> targetState = lookAheadData == null ? Optional.empty() : lookAheadData.getSecond().getSecond();
@@ -131,21 +131,21 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     }
 
     @Unique
-    boolean snr$switchMessage = false;
+    boolean railways$switchMessage = false;
 
     @Unique
     private void displayApproachSwitchMessage(Player player, TrackSwitch sw, boolean isWrong) {
         sendSwitchInfo(player, sw.getSwitchState(), sw.isAutomatic(), isWrong, sw.isLocked());
-        snr$switchMessage = true;
+        railways$switchMessage = true;
     }
 
     @Unique
     private void cleanUpApproachSwitchMessage(Player player) {
-        if (!snr$switchMessage)
+        if (!railways$switchMessage)
             return;
         if (player instanceof ServerPlayer sp)
             CRPackets.PACKETS.sendTo(sp, SwitchDataUpdatePacket.clear());
-        snr$switchMessage = false;
+        railways$switchMessage = false;
     }
 
     @Unique
@@ -165,7 +165,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         ICarriageBufferDistanceTracker distanceTracker = (ICarriageBufferDistanceTracker) carriage;
         if (level.isClientSide) return;
 
-        if (distanceTracker.snr$getLeadingDistance() != null && distanceTracker.snr$getTrailingDistance() != null) return;
+        if (distanceTracker.railways$getLeadingDistance() != null && distanceTracker.railways$getTrailingDistance() != null) return;
 
         BlockPos leadingBogeyPos = null;
         BlockPos trailingBogeyPos = null;
@@ -202,14 +202,14 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         if (trailingBogeyPos == null)
             trailingBogeyPos = leadingBogeyPos;
         int trailingDistance = trailingBogeyPos == null ? 0 : Math.abs(trailingBounds - trailingBogeyPos.get(axis));
-        distanceTracker.snr$setLeadingDistance(leadingDistance);
-        distanceTracker.snr$setTrailingDistance(trailingDistance);
+        distanceTracker.railways$setLeadingDistance(leadingDistance);
+        distanceTracker.railways$setTrailingDistance(trailingDistance);
     }
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
     private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
                                  CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeed) {
-        if (((IBufferBlockedTrain) carriage.train).snr$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).snr$getBlockedSign() == Mth.sign(targetSpeed.get())) {
+        if (((IBufferBlockedTrain) carriage.train).railways$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).railways$getBlockedSign() == Mth.sign(targetSpeed.get())) {
             targetSpeed.set(0);
         }
     }

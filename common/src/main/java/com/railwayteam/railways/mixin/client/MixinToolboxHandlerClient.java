@@ -21,7 +21,7 @@ import java.util.UUID;
 public class MixinToolboxHandlerClient {
 
   @Unique
-  private static ConductorEntity railway$getConductorForSlot(int slot) {
+  private static ConductorEntity railways$getConductorForSlot(int slot) {
     Minecraft mc = Minecraft.getInstance();
     LocalPlayer player = mc.player;
     CompoundTag toolboxData = EntityUtils.getPersistentData(player).getCompound("CreateToolboxData");
@@ -45,11 +45,11 @@ public class MixinToolboxHandlerClient {
   // region --- can reach selected ---
   // when opening the radial menu, Create will check if the toolbox for the selected slot can be reached.
   // for conductor toolboxes, we need to use the entity's pos instead of the stored BE pos (non-existent)
-  // the conductor is cached on first get (railway$conductorForSelectedSlot) and stored for second check.
+  // the conductor is cached on first get (railways$conductorForSelectedSlot) and stored for second check.
 
   @Unique
   @Nullable
-  private static ConductorEntity railway$conductorForSelectedSlot;
+  private static ConductorEntity railways$conductorForSelectedSlot;
 
   @ModifyVariable(
           method = "onKeyInput",
@@ -60,9 +60,9 @@ public class MixinToolboxHandlerClient {
           )
   )
   @SuppressWarnings("DataFlowIssue")
-  private static BlockPos railway$useConductorToolboxDistance(BlockPos pos) {
-    ConductorEntity conductor = railway$getConductorForSlot(Minecraft.getInstance().player.getInventory().selected);
-    railway$conductorForSelectedSlot = conductor;
+  private static BlockPos railways$useConductorToolboxDistance(BlockPos pos) {
+    ConductorEntity conductor = railways$getConductorForSlot(Minecraft.getInstance().player.getInventory().selected);
+    railways$conductorForSelectedSlot = conductor;
     return conductor == null ? pos : conductor.blockPosition();
   }
 
@@ -76,8 +76,8 @@ public class MixinToolboxHandlerClient {
           )
   )
   @SuppressWarnings("InvalidInjectorMethodSignature")
-  private static BlockEntity railway$getConductorToolbox(BlockEntity be) {
-    ConductorEntity conductor = railway$conductorForSelectedSlot;
+  private static BlockEntity railways$getConductorToolbox(BlockEntity be) {
+    ConductorEntity conductor = railways$conductorForSelectedSlot;
     return conductor == null ? be : conductor.getToolbox();
   }
 
@@ -88,7 +88,7 @@ public class MixinToolboxHandlerClient {
   // slot is grabbed and stored for use when needed.
 
   @Unique
-  private static int railway$currentRenderedSlot;
+  private static int railways$currentRenderedSlot;
 
   @ModifyArg(
           method = "renderOverlay",
@@ -98,8 +98,8 @@ public class MixinToolboxHandlerClient {
                   target = "Ljava/lang/String;valueOf(I)Ljava/lang/String;"
           )
   )
-  private static int railway$grabSlot(int slot) {
-    railway$currentRenderedSlot = slot;
+  private static int railways$grabSlot(int slot) {
+    railways$currentRenderedSlot = slot;
     return slot;
   }
 
@@ -113,8 +113,8 @@ public class MixinToolboxHandlerClient {
           )
   )
   @SuppressWarnings("InvalidInjectorMethodSignature")
-  private static BlockPos railway$useConductorToolboxForBackground(BlockPos pos) {
-    ConductorEntity conductor = railway$getConductorForSlot(railway$currentRenderedSlot);
+  private static BlockPos railways$useConductorToolboxForBackground(BlockPos pos) {
+    ConductorEntity conductor = railways$getConductorForSlot(railways$currentRenderedSlot);
     return conductor == null ? pos : conductor.blockPosition();
   }
 

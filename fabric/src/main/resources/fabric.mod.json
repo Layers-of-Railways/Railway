@@ -10,7 +10,7 @@
   "contact": {
     "sources": "https://github.com/Layers-of-Railways/Railway/"
   },
-  "license": "MIT",
+  "license": ["MIT"],
   "icon": "assets/railways/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -28,9 +28,6 @@
     ],
     "mm:early_risers": [
       "com.railwayteam.railways.fabric.EarlyRiser"
-    ],
-    "preLaunch": [
-      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ]
   },
   "mixins": [
@@ -41,11 +38,7 @@
     "minecraft": "${minecraft_version}",
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": ">=${fabric_api_version}",
-    "create": "*"
-  },
-  "recommends": {
-    "create": "${create_version}",
-    "mm": ">=2.3"
+    "create": "${create_fabric_version}"
   },
   "suggests": {
     "hexcasting": "*",
@@ -53,9 +46,6 @@
   },
   "custom": {
     "modmenu": {
-      "parent": {
-        "id": "create"
-      },
       "links": {
         "Modrinth": "https://modrinth.com/mod/create-steam-n-rails",
         "CurseForge": "https://curseforge.com/minecraft/mc-mods/create-steam-n-rails",

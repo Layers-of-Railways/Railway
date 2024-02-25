@@ -12,8 +12,8 @@ on:
 
 env:
   USER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  USER_NAME: SyncBot
-  USER_EMAIL: bot@ithundxr.dev
+  USER_NAME: github-actions-bot
+  USER_EMAIL: github-actions[bot]@users.noreply.github.com
   OWNER: Layers-of-Railways
   REPOSITORY_NAME: Railway
 
@@ -31,24 +31,31 @@ jobs:
           mkdir tmp_wiki
           cd tmp_wiki
           git init
-          git config user.name $USER_NAME
-          git config user.email $USER_EMAIL
+          git config --global user.name $USER_NAME
+          git config --global user.email $USER_EMAIL
           git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
       - name: Update .docs folder
         run: |
           rsync -av --delete tmp_wiki/ .docs/ --exclude .git
 
-      - name: Commit and push changes
+      - name: Check for changes in .docs
         run: |
           cd .docs
+          git status
+
+      - name: Commit and push changes
+        run: |
           git add .
-          git commit -m "Update docs from Wiki [skip ci]"
-          git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
+          git diff-index --quiet HEAD || git commit -m "Update docs from Wiki" && git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
+
+      - name: Check for changes in tmp_wiki
+        run: |
+          cd tmp_wiki
+          git status
 
       - name: Push content to wiki
         run: |
           cd tmp_wiki
           git add .
-          git commit -m "Update Wiki content" 
-          git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git main
+          git diff-index --quiet HEAD || git commit -m "Update Wiki content" && git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master

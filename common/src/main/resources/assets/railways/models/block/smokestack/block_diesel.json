@@ -4,7 +4,7 @@
 	"textures": {
 		"6": "railways:block/smokestack/diesel",
 		"fan_casing": "create:block/fan_casing",
-		"particle": "create:block/fan_side",
+		"particle": "railways:block/smokestack/diesel",
 		"axis_top": "create:block/axis_top",
 		"fan_blades": "create:block/fan_blades",
 		"axis": "create:block/axis"

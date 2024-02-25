@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.qol;
 
+import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.SecondaryTrackTargetingBehaviour;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.CreateClient;
@@ -45,7 +46,7 @@ public class TrackEdgePointHighlighter {
         if (player == null || !EntityUtils.isHoldingItem(player, (item) -> item instanceof WrenchItem)) return;
 
         ClientLevel level = mc.level;
-        if (level != null && mc.hitResult != null && mc.hitResult instanceof BlockHitResult blockHit) {
+        if (level != null && mc.hitResult instanceof BlockHitResult blockHit) {
             BlockPos pos = blockHit.getBlockPos();
             BlockEntity be = level.getBlockEntity(pos);
             if (!showOutlinesFrom(be, pos, 0)) {
@@ -107,6 +108,8 @@ public class TrackEdgePointHighlighter {
     }
 
     private static boolean showOutlinesFrom(BlockEntity be, BlockPos pos, int index) {
+        if (be instanceof TrackBufferBlockEntity)
+            return false;
         HolderSet holder;
         if (HOLDERS.size() <= index) {
             holder = new HolderSet();

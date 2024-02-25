@@ -1,28 +1,53 @@
 {
   "variants": {
-    "enabled=false,powered=false,waterlogged=false": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=brass": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 90
     },
-    "enabled=false,powered=false,waterlogged=true": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 90
     },
-    "enabled=false,powered=true,waterlogged=false": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 90
     },
-    "enabled=false,powered=true,waterlogged=true": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=copper": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 90
     },
-    "enabled=true,powered=false,waterlogged=false": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 90
     },
-    "enabled=true,powered=false,waterlogged=true": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 90
     },
-    "enabled=true,powered=true,waterlogged=false": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=x,style=steel": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 90
     },
-    "enabled=true,powered=true,waterlogged=true": {
-      "model": "railways:block/smokestack/block_streamlined"
+    "axis=z,style=brass": {
+      "model": "railways:block/smokestack_streamlined_brass"
+    },
+    "axis=z,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper"
+    },
+    "axis=z,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel"
+    },
+    "axis=z,style=copper": {
+      "model": "railways:block/smokestack_streamlined_copper"
+    },
+    "axis=z,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass"
+    },
+    "axis=z,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel"
+    },
+    "axis=z,style=steel": {
+      "model": "railways:block/smokestack_streamlined_steel"
     }
   }
 }

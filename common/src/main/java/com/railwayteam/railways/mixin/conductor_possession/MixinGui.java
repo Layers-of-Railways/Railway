@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Gui.class)
 public class MixinGui {
     @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
-    private void snr$cancelExperienceBar(PoseStack poseStack, int xPos, CallbackInfo ci) {
+    private void railways$cancelExperienceBar(PoseStack poseStack, int xPos, CallbackInfo ci) {
         if (ClientHandler.isPlayerMountedOnCamera())
             ci.cancel();
     }

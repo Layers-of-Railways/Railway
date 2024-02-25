@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.roller_extensions;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.simibubi.create.content.contraptions.actors.roller.PaveTask;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlock;
@@ -39,7 +40,7 @@ public class TrackReplacePaver {
         }
         if ((replacedState = context.world.getBlockState(trackPos)).getBlock() instanceof ITrackBlock
                 && stateToPaveWith.getBlock() instanceof ITrackBlock newTrackBlock) {
-            ItemStack filter = ItemStack.of(context.blockEntityData.getCompound("Filter"));
+            FilterItemStack filter = FilterItemStack.of(context.blockEntityData.getCompound("Filter"));
             if (replacedState.getBlock() != stateToPaveWith.getBlock()) {
                 boolean restoreBE = false;
                 Pair<SlabBlock, Boolean> casingData = null;
@@ -116,12 +117,12 @@ public class TrackReplacePaver {
         }
     }
 
-    public static ItemStack extract(ItemStack filter, MovementContext context) {
+    public static ItemStack extract(FilterItemStack filter, MovementContext context) {
         return extract(filter, context, 1);
     }
 
     @ExpectPlatform
-    public static ItemStack extract(ItemStack filter, MovementContext context, int amt) {
+    public static ItemStack extract(FilterItemStack filter, MovementContext context, int amt) {
         throw new AssertionError();
     }
 }

@@ -13,7 +13,7 @@ public class MixinTrackMaterial {
     Properly deserialize pre-resourcelocation tracks
      */
     @Redirect(method = "deserialize", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/ResourceLocation;tryParse(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;", remap = true))
-    private static ResourceLocation snr$deserializeLegacyTracks(String location) {
+    private static ResourceLocation railways$deserializeLegacyTracks(String location) {
         ResourceLocation parsed = ResourceLocation.tryParse(location);
         if (parsed.getNamespace().equals("minecraft")) {
             ResourceLocation alternate = Railways.asResource(parsed.getPath());

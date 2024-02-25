@@ -25,9 +25,8 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.FileWriter;
@@ -39,7 +38,7 @@ import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
-  public static final Logger LOGGER = LogManager.getLogger(MODID);
+  public static final Logger LOGGER = LoggerFactory.getLogger("Railways");
   public static final String VERSION = findVersion();
   public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
@@ -85,12 +84,6 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-/*    RegistrationListening.whenBothRegistered(
-            Registry.BLOCK_ENTITY_TYPE, new ResourceLocation("create", "track"),
-            Registry.BLOCK, CRBlocks.MONORAIL_TRACK.getId(), // last track
-            (type, block) -> TrackMaterial.addCustomValidTracks(type)
-    );*/
-
     if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
@@ -103,10 +96,10 @@ public class Railways {
     REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, CRTagGen::generateBlockTags);
     REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, CRTagGen::generateItemTags);
     REGISTRATE.addDataGenerator(ProviderType.LANG, CRLangGen::generate);
+    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, RailwaysSequencedAssemblyRecipeGen.create(gen));
     gen.addProvider(true, RailwaysStandardRecipeGen.create(gen));
     gen.addProvider(true, RailwaysMechanicalCraftingRecipeGen.create(gen));
-    PonderLocalization.provideRegistrateLang(REGISTRATE);
     gen.addProvider(true, new EmiExcludedTagGen(gen));
     gen.addProvider(true, new EmiRecipeDefaultsGen(gen));
   }
@@ -129,26 +122,4 @@ public class Railways {
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
     throw new AssertionError();
   }
-
-  // All the below are helper variables for switch mixins
-  @ApiStatus.Internal
-  public static boolean trackEdgeTemporarilyFlipped = false;
-
-  @ApiStatus.Internal
-  public static boolean trackEdgeCarriageTravelling = false;
-
-  @ApiStatus.Internal
-  public static boolean temporarilySkipSwitches = false;
-
-  @ApiStatus.Internal
-  public static int signalPropagatorCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static int navigationCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static boolean skipUprightCalculation = false;
-
-  @ApiStatus.Internal
-  public static boolean largeGhastFireballExplosion = false;
 }

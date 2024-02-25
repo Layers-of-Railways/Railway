@@ -11,12 +11,12 @@ public class CClient extends ConfigBase {
 
 
     // no group
-    public final ConfigBool disableOptifineWarning = b(false, "disableOptifineWarning", Comments.disableOptifineWarning);
     public final ConfigBool showExtendedCouplerDebug = b(false, "showExtendedCouplerDebug", Comments.showExtendedCouplerDebug);
     public final ConfigBool skipClientDerailing = b(false, "skipClientDerailing", Comments.skipClientDerailing);
     public final ConfigBool useConductorSpyShader = b(true, "useConductorSpyShader", Comments.useConductorSpyShader);
     public final ConfigFloat trackOverlayOffset = f(0.0f, -256.0f, 256.0f, "trackOverlayOffset", Comments.trackOverlayOffset);
     public final ConfigBool useDevCape = b(true, "useDevCape", Comments.useDevCape, Comments.useDevCape2);
+    public final ConfigBool renderNormalCap = b(true, "renderNormalCap", Comments.renderNormalCap);
 
 
     // smoke
@@ -50,13 +50,13 @@ public class CClient extends ConfigBase {
 
         static String client = "Client-only settings - If you're looking for general settings, look inside your worlds serverconfig folder!";
 
-        static String disableOptifineWarning = "Disable the optifine warning screen [DANGER]: Using optifine With Steam 'n' Rails may cause issues and you will not get any support for optifine related issues.";
         static String showExtendedCouplerDebug = "Show extended debug info in coupler goggle overlay";
         static String skipClientDerailing = "Skip clientside train derailing. This prevents stuttering when a train places tracks, but trains will not appear derailed when they crash";
         static String useConductorSpyShader = "Use a scanline shader when spying through a conductor";
         static String trackOverlayOffset = "Vertical offset for track overlays";
         static String useDevCape = "Whether to actually apply the dev cape (ignored for non-devs)";
         static String useDevCape2 = "This setting may require a relog to take effect";
+        static String renderNormalCap = "Should the normal create conductor cap be rendered on top of the conductors existing hat?";
 
         static String smoke = "Smoke Settings";
         static String oldSmoke = "Old-style Smoke Settings";

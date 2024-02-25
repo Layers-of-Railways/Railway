@@ -55,11 +55,11 @@ public class AddTrainEndPacket implements S2CPacket {
                 train.carriageSpacing.addAll(backTrain.carriageSpacing);
                 backTrain.carriageSpacing.clear();
 
-                double[] newStress = new double[((AccessorTrain) train).snr_getStress().length + ((AccessorTrain) backTrain).snr_getStress().length + 1];
-                System.arraycopy(((AccessorTrain) train).snr_getStress(), 0, newStress, 0, ((AccessorTrain) train).snr_getStress().length);
-                newStress[((AccessorTrain) train).snr_getStress().length] = 0;
-                System.arraycopy(((AccessorTrain) backTrain).snr_getStress(), 0, newStress, ((AccessorTrain) train).snr_getStress().length + 1, ((AccessorTrain) backTrain).snr_getStress().length);
-                ((AccessorTrain) train).snr_setStress(newStress);
+                double[] newStress = new double[((AccessorTrain) train).railways$getStress().length + ((AccessorTrain) backTrain).railways$getStress().length + 1];
+                System.arraycopy(((AccessorTrain) train).railways$getStress(), 0, newStress, 0, ((AccessorTrain) train).railways$getStress().length);
+                newStress[((AccessorTrain) train).railways$getStress().length] = 0;
+                System.arraycopy(((AccessorTrain) backTrain).railways$getStress(), 0, newStress, ((AccessorTrain) train).railways$getStress().length + 1, ((AccessorTrain) backTrain).railways$getStress().length);
+                ((AccessorTrain) train).railways$setStress(newStress);
                 train.doubleEnded = doubleEnded;
 
                 train.carriages.forEach(c -> c.setTrain(train));

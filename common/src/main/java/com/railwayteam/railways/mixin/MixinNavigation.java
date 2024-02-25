@@ -5,13 +5,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalDoubleRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -38,7 +38,10 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -59,7 +62,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     @Shadow public abstract TravellingPoint.ITrackSelector controlSignalScout();
 
     @Override
-    public boolean snr$isWaypointMode() {
+    public boolean railways$isWaypointMode() {
         try {
             return !train.manualTick && !train.runtime.paused && !train.runtime.completed && train.runtime.getSchedule() != null && train.runtime.currentEntry < train.runtime.getSchedule().entries.size() &&
                 train.runtime.getSchedule().entries.get(train.runtime.currentEntry).instruction instanceof WaypointDestinationInstruction;
@@ -71,14 +74,14 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"))
     private double fixWaypointDistanceInTick(Navigation instance, Operation<Double> original) {
-        if (((IWaypointableNavigation) instance).snr$isWaypointMode())
+        if (((IWaypointableNavigation) instance).railways$isWaypointMode())
             return 1000;
         return original.call(instance);
     }
 
     @WrapOperation(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;canApproachFrom(Lcom/simibubi/create/content/trains/graph/TrackNode;)Z"))
     private boolean keepScoutingAtWaypoints(GlobalStation instance, TrackNode side, Operation<Boolean> original) {
-        return original.call(instance, side) && !snr$isWaypointMode();
+        return original.call(instance, side) && !railways$isWaypointMode();
     }
 
     @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
@@ -87,24 +90,24 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
     ))
     private Pair<UUID, Boolean> brakeProperlyAtWaypoints(Navigation instance, Operation<Pair<UUID, Boolean>> original) {
-        return snr$isWaypointMode() ? null : original.call(instance);
+        return railways$isWaypointMode() ? null : original.call(instance);
     }
 
     @WrapOperation(method = "currentSignalResolved", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;distanceToDestination:D"), slice =
     @Slice(to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;getPoint(Lcom/simibubi/create/content/trains/graph/EdgePointType;Ljava/util/UUID;)Lcom/simibubi/create/content/trains/signal/TrackEdgePoint;")))
     private double preventSignalClearWithWaypoint(Navigation instance, Operation<Double> original) {
-        if (((IWaypointableNavigation) instance).snr$isWaypointMode())
+        if (((IWaypointableNavigation) instance).railways$isWaypointMode())
             return 10;
         return original.call(instance);
     }
 
-    @WrapOperation(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
+    @WrapOperation(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
     private Train replacePresentTrain(GlobalStation instance, Operation<Train> original) {
         return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);
     }
 
     @SuppressWarnings("unused")
-    @ModifyExpressionValue(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
+    @ModifyExpressionValue(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
         at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
         if (target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL)
@@ -113,12 +116,12 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     }
 
     @Override
-    public void snr$searchGeneral(double maxDistance, boolean forward, PointTest pointTest) {
-        snr$searchGeneral(maxDistance, -1, forward, pointTest);
+    public void railways$searchGeneral(double maxDistance, boolean forward, PointTest pointTest) {
+        railways$searchGeneral(maxDistance, -1, forward, pointTest);
     }
 
     @Override
-    public void snr$searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest) {
+    public void railways$searchGeneral(double maxDistance, double maxCost, boolean forward, PointTest pointTest) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return;
@@ -208,7 +211,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         double distanceToNode2 = forward ? initialEdge.getLength() - startingPoint.position : startingPoint.position;
 
         frontier.add(new FrontierEntry(distanceToNode2, 0, initialNode1, initialNode2, initialEdge));
-        int signalWeight = Mth.clamp(ticksWaitingForSignal * 2, AccessorTrain.AccessorPenalties.getRED_SIGNAL(), 200);
+        int signalWeight = Mth.clamp(ticksWaitingForSignal * 2, AccessorTrain.AccessorPenalties.railways$getRedSignal(), 200);
 
         Search: while (!frontier.isEmpty()) {
             FrontierEntry entry = frontier.poll();
@@ -239,7 +242,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
                         continue Search;
                     if (point instanceof SignalBoundary signal) {
                         if (signal.isForcedRed(node2)) {
-                            penalty += AccessorTrain.AccessorPenalties.getREDSTONE_RED_SIGNAL();
+                            penalty += AccessorTrain.AccessorPenalties.railways$getRedstoneRedSignal();
                             continue;
                         }
                         UUID group = signal.getGroup(node2);
@@ -257,12 +260,12 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
                         Train presentTrain = station.getPresentTrain();
                         boolean isOwnStation = presentTrain == train;
                         if (presentTrain != null && !isOwnStation)
-                            penalty += AccessorTrain.AccessorPenalties.getSTATION_WITH_TRAIN();
+                            penalty += AccessorTrain.AccessorPenalties.railways$getStationWithTrain();
                         if (station.canApproachFrom(node2) && pointTest.test(distance, distance + penalty, reachedVia,
                                 Pair.of(Couple.create(node1, node2), edge), station))
                             return;
                         if (!isOwnStation)
-                            penalty += AccessorTrain.AccessorPenalties.getSTATION();
+                            penalty += AccessorTrain.AccessorPenalties.railways$getStation();
                     }
                     if (pointTest.test(distance, distance + penalty, reachedVia,
                             Pair.of(Couple.create(node1, node2), edge), point))
@@ -300,7 +303,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     }
 
     @Override
-    public Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> snr$findNearestApproachableSwitch(boolean forward) {
+    public Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> railways$findNearestApproachableSwitch(boolean forward) {
         TrackGraph graph = train.graph;
         if (graph == null)
             return null;
@@ -312,7 +315,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         double minDistance = 0;//.75f * (train.speed * train.speed) / (2 * acceleration);
         double maxDistance = Math.max(32, 1.5f * (train.speed * train.speed) / (2 * acceleration));
 
-        snr$searchGeneral(maxDistance, forward, (distance, cost, reachedVia, currentEntry, trackPoint) -> {
+        railways$searchGeneral(maxDistance, forward, (distance, cost, reachedVia, currentEntry, trackPoint) -> {
             if (distance < minDistance)
                 return false;
 
@@ -344,30 +347,30 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return Pair.of(result.getValue(), Pair.of(headOn.getValue(), Optional.ofNullable(targetState.getValue())));
     }
 
-    @Inject(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
-    private void recordSearch(double maxDistance, double maxCost, boolean forward, Navigation.StationTest stationTest, CallbackInfo ci) {
-        Railways.navigationCallDepth += 1;
+    @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
+    private void recordSearch(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
+        MixinVariables.navigationCallDepth += 1;
     }
 
-    @Inject(method = "search(DDZLcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
-    private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, Navigation.StationTest stationTest, CallbackInfo ci) {
-        if (Railways.navigationCallDepth > 0)
-            Railways.navigationCallDepth -= 1;
+    @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
+    private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
+        if (MixinVariables.navigationCallDepth > 0)
+            MixinVariables.navigationCallDepth -= 1;
     }
 
     @Inject(method = "findNearestApproachable", at = @At("HEAD"), cancellable = true)
     private void handcarsCannotApproachStations(boolean forward, CallbackInfoReturnable<GlobalStation> cir) {
-        if (((IHandcarTrain) this.train).snr$isHandcar())
+        if (((IHandcarTrain) this.train).railways$isHandcar())
             cir.setReturnValue(null);
     }
 
     // can't use @Share across methods (lambda$tick$0 and tick count as separate methods)
     @Unique
-    private final ThreadLocal<Double> snr$bufferDistance = ThreadLocal.withInitial(() -> Double.MAX_VALUE);
+    private final ThreadLocal<Double> railways$bufferDistance = ThreadLocal.withInitial(() -> Double.MAX_VALUE);
 
     @Inject(method = "tick", at = @At(value = "HEAD"))
     private void resetBufferDistance(Level level, CallbackInfo ci) {
-        snr$bufferDistance.set(Double.MAX_VALUE);
+        railways$bufferDistance.set(Double.MAX_VALUE);
     }
 
     @Inject(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Pair;getFirst()Ljava/lang/Object;"))
@@ -378,17 +381,17 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         if (couple.getFirst() instanceof TrackBuffer trackBuffer) {
             // don't stop *right* on the buffer block, stop a little bit before
             double bufferedDistance = Math.max(0, distance - TrackBuffer.getBufferRoom(this.train));
-            snr$bufferDistance.set(Math.min(snr$bufferDistance.get(), bufferedDistance));
+            railways$bufferDistance.set(Math.min(railways$bufferDistance.get(), bufferedDistance));
         }
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;burnFuel()V"))
     private void applyBufferSlowdown(Level level, CallbackInfo ci,
                                      @Local(name = "targetDistance") LocalDoubleRef targetDistance) {
-        if (snr$bufferDistance.get() < targetDistance.get())
-            targetDistance.set(snr$bufferDistance.get());
+        if (railways$bufferDistance.get() < targetDistance.get())
+            targetDistance.set(railways$bufferDistance.get());
         // reset buffer distance for next time
-        snr$bufferDistance.set(Double.MAX_VALUE);
+        railways$bufferDistance.set(Double.MAX_VALUE);
     }
 
     @ModifyVariable(method = "tick", at = @At(value = "NEW", target = "(D)Lorg/apache/commons/lang3/mutable/MutableDouble;", ordinal = 0), name = "brakingDistance")
@@ -403,7 +406,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void respectBuffersWithoutSchedule(Level level, CallbackInfo ci) {
-        ((IBufferBlockedTrain) train).snr$setControlBlocked(false);
+        ((IBufferBlockedTrain) train).railways$setControlBlocked(false);
         if (destination == null) {
             double acceleration = train.acceleration();
             double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
@@ -455,7 +458,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             }*/
 
             if (targetDistance < 3)
-                ((IBufferBlockedTrain) train).snr$setControlBlocked(true);
+                ((IBufferBlockedTrain) train).railways$setControlBlocked(true);
 
             if (targetDistance < 10) {
                 double target = train.maxSpeed() * ((targetDistance) / 10);

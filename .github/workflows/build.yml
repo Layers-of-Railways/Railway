@@ -1,27 +1,30 @@
 name: Build
+
 on:
   workflow_dispatch:
   push:
     paths-ignore:
       - .docs/**
-
+  pull_request:
+    paths-ignore:
+      - .docs/**
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: temurin
           cache: gradle
 
       - name: Validate Gradle Wrapper Integrity
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v2
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
@@ -35,7 +38,7 @@ jobs:
         run: ./gradlew moveBuiltJars
 
       - name: Capture build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Artifacts
           path: jars

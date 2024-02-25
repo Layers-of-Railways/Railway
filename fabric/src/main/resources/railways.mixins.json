@@ -5,17 +5,19 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
+    "GoggleOverlayRendererMixin",
     "LevelRendererMixin",
     "TrackBlockOutlineMixin",
-    "TrainHUDMixin",
-    "MixinGoggleOverlayRenderer"
+    "TrainHUDMixin"
   ],
   "mixins": [
+    "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 5
   },
   "plugin": "com.railwayteam.railways.fabric.mixin.CRMixinPlugin"
 }

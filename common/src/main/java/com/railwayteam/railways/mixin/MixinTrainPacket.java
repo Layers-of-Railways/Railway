@@ -17,11 +17,11 @@ public class MixinTrainPacket {
 
     @Inject(method = "write", at = @At(value = "RETURN", ordinal = 1))
     private void writeHandcarStatus(FriendlyByteBuf buffer, CallbackInfo ci) {
-        buffer.writeBoolean(((IHandcarTrain) train).snr$isHandcar());
+        buffer.writeBoolean(((IHandcarTrain) train).railways$isHandcar());
     }
 
     @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At(value = "RETURN", ordinal = 1))
     private void readHandcarStatus(FriendlyByteBuf buffer, CallbackInfo ci) {
-        ((IHandcarTrain) train).snr$setHandcar(buffer.readBoolean());
+        ((IHandcarTrain) train).railways$setHandcar(buffer.readBoolean());
     }
 }

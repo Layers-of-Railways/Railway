@@ -1,5 +1,9 @@
 
 Blocks used for more realistic train infrastructure. Supports up to three track branches.
+### Placing the switch
+
+https://github.com/StarFluxie/Images-archive/assets/140427286/7323f65f-ec69-453c-8496-d872f83c2413
+
 ### **Andesite Switch** 
 ![Andesite Switch](https://github.com/StarFluxie/Images-archive/assets/140427286/1f34cbac-beee-4c54-bb6f-847ed013da76)
 

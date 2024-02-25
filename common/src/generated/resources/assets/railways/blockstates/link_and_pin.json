@@ -16,6 +16,10 @@
       "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
       "y": 90
     },
+    "facing=east,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
+      "y": 90
+    },
     "facing=north,style=knuckle": {
       "model": "railways:block/buffer/single_deco/knuckle_coupler"
     },
@@ -27,6 +31,9 @@
     },
     "facing=north,style=linkless": {
       "model": "railways:block/buffer/single_deco/link_and_pin_linkless"
+    },
+    "facing=north,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler"
     },
     "facing=south,style=knuckle": {
       "model": "railways:block/buffer/single_deco/knuckle_coupler",
@@ -44,6 +51,10 @@
       "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
       "y": 180
     },
+    "facing=south,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
+      "y": 180
+    },
     "facing=west,style=knuckle": {
       "model": "railways:block/buffer/single_deco/knuckle_coupler",
       "y": 270
@@ -58,6 +69,10 @@
     },
     "facing=west,style=linkless": {
       "model": "railways:block/buffer/single_deco/link_and_pin_linkless",
+      "y": 270
+    },
+    "facing=west,style=screwlink": {
+      "model": "railways:block/buffer/single_deco/screwlink_coupler",
       "y": 270
     }
   }

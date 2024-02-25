@@ -29,7 +29,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 	private State state;
 
 	@Inject(method = "lambda$removed$0", at = @At("HEAD"), cancellable = true)
-	private static void railway$sendConductorToolboxDisposeAllPacketsToAll(ToolboxBlockEntity te, CallbackInfo ci) {
+	private static void railways$sendConductorToolboxDisposeAllPacketsToAll(ToolboxBlockEntity te, CallbackInfo ci) {
 		if (te instanceof MountedToolbox mounted) {
 			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
 			ci.cancel(); // lambda only sends packet, skip it
@@ -46,7 +46,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 			),
 			cancellable = true
 	)
-	private void railway$sendConductorToolboxDisposeAllPacket(CallbackInfo ci) {
+	private void railways$sendConductorToolboxDisposeAllPacket(CallbackInfo ci) {
 		if (selectedBox instanceof MountedToolbox mounted) {
 			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
 			ci.cancel(); // returns early anyway after send
@@ -73,7 +73,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 			},
 			cancellable = true
 	)
-	private void railway$sendConductorToolboxEquipPacketOnRemove(CallbackInfo ci) {
+	private void railways$sendConductorToolboxEquipPacketOnRemove(CallbackInfo ci) {
 		if (!(selectedBox instanceof MountedToolbox mounted))
 			return;
 		int selected = (scrollMode ? scrollSlot : hoveredSlot);
@@ -95,7 +95,7 @@ public abstract class MixinRadialToolboxMenu extends AbstractSimiScreen {
 			),
 			cancellable = true
 	)
-	private void railway$sendConductorToolboxEquipPacketOnClick(CallbackInfoReturnable<Boolean> cir) {
+	private void railways$sendConductorToolboxEquipPacketOnClick(CallbackInfoReturnable<Boolean> cir) {
 		if (!(selectedBox instanceof MountedToolbox mounted))
 			return;
 		int selected = (scrollMode ? scrollSlot : hoveredSlot);

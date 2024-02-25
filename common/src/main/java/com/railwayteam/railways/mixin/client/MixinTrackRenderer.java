@@ -97,14 +97,14 @@ public class MixinTrackRenderer {
         cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            snr$renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
+            railways$renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
             ms.popPose(); // clean up pose, since cancelled
             ci.cancel(); // Don't do normal rendering
         }
     }
 
     @Unique
-    private static void snr$renderActualMonorail(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb,
+    private static void railways$renderActualMonorail(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb,
                                                  BlockPos tePosition) {
 
         BlockState air = Blocks.AIR.defaultBlockState();

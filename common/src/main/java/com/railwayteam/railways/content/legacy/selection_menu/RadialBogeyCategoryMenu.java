@@ -15,6 +15,7 @@ import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.railwayteam.railways.util.Utils;
+import com.railwayteam.railways.util.client.ClientUtils;
 import com.simibubi.create.AllKeys;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
@@ -561,7 +562,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
     @Override
     public boolean keyReleased(int code, int scanCode, int modifiers) {
         InputConstants.Key mouseKey = InputConstants.getKey(code, scanCode);
-        if (Utils.isActiveAndMatches(AllKeys.TOOL_MENU.getKeybind(), mouseKey)) {
+        if (ClientUtils.isActiveAndMatches(AllKeys.TOOL_MENU.getKeybind(), mouseKey)) {
             onClose();
             return true;
         }
