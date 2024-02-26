@@ -1,8 +1,8 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerServer;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerClient;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;

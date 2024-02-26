@@ -147,17 +147,18 @@ public class CRShapes {
         return shape.optimize();
     }
 
-    public static VoxelShape boiler() {
+    public static VoxelShape boiler(double offset) {
         VoxelShape shape = Shapes.empty();
 
         for (double i = 0; i < 10; i++) {
-            shape = Shapes.or(shape, Block.box(0, -7 + i, 2 - i, 16, 23 - i, 14 + i));
+            shape = Shapes.or(shape, Block.box(0, -7 + offset + i, 2 - i, 16, 23 + offset - i, 14 + i));
         }
 
         return shape.optimize();
     }
 
-    public static final VoxelShaper BOILER = shape(boiler()).forHorizontal(EAST);
+    public static final VoxelShaper BOILER = shape(boiler(0)).forHorizontal(EAST);
+    public static final VoxelShaper BOILER_RAISED = shape(boiler(8)).forHorizontal(EAST);
 
     public static final VoxelShaper
         NARROW_TRACK_ORTHO = shape(-7, 0, 0, 16 + 7, 4, 16).forHorizontal(NORTH),

@@ -8,7 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRIcons;

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.util.packet;
 
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerServer;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;

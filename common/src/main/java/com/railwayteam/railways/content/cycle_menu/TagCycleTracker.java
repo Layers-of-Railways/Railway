@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.cycle_menu;
+package com.railwayteam.railways.content.cycle_menu;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.registries.BuiltInRegistries;

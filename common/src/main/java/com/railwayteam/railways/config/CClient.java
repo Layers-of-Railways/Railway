@@ -16,6 +16,7 @@ public class CClient extends ConfigBase {
     public final ConfigBool useConductorSpyShader = b(true, "useConductorSpyShader", Comments.useConductorSpyShader);
     public final ConfigFloat trackOverlayOffset = f(0.0f, -256.0f, 256.0f, "trackOverlayOffset", Comments.trackOverlayOffset);
     public final ConfigBool useDevCape = b(true, "useDevCape", Comments.useDevCape, Comments.useDevCape2);
+    public final ConfigBool renderNormalCap = b(true, "renderNormalCap", Comments.renderNormalCap);
 
 
     // smoke
@@ -55,6 +56,7 @@ public class CClient extends ConfigBase {
         static String trackOverlayOffset = "Vertical offset for track overlays";
         static String useDevCape = "Whether to actually apply the dev cape (ignored for non-devs)";
         static String useDevCape2 = "This setting may require a relog to take effect";
+        static String renderNormalCap = "Should the normal create conductor cap be rendered on top of the conductors existing hat?";
 
         static String smoke = "Smoke Settings";
         static String oldSmoke = "Old-style Smoke Settings";

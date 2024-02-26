@@ -24,7 +24,6 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -120,23 +119,4 @@ public class Railways {
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
     throw new AssertionError();
   }
-
-  // All the below are helper variables for switch mixins
-  @ApiStatus.Internal
-  public static boolean trackEdgeTemporarilyFlipped = false;
-
-  @ApiStatus.Internal
-  public static boolean trackEdgeCarriageTravelling = false;
-
-  @ApiStatus.Internal
-  public static boolean temporarilySkipSwitches = false;
-
-  @ApiStatus.Internal
-  public static int signalPropagatorCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static int navigationCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static boolean largeGhastFireballExplosion = false;
 }
