@@ -109,67 +109,75 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     @Override
     public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
                                         @NotNull CollisionContext context) {
-        return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
+        return getShapeForState(state);
     }
 
     @Override
     public @NotNull VoxelShape getCollisionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos,
                                                  @NotNull CollisionContext context) {
-        return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
+        return getShapeForState(state);
     }
 
     @Override
     public @NotNull VoxelShape getInteractionShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos) {
+        return getShapeForState(state);
+    }
+
+    public @NotNull VoxelShape getShapeForState(BlockState state) {
+        if (state.getValue(RAISED))
+            return CRShapes.BOILER_RAISED.get(state.getValue(HORIZONTAL_AXIS));
         return CRShapes.BOILER.get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
     public void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state) {
+        double offset = state.getValue(RAISED) ? 8 : 0;
+
         // First line / direction on right side
-        drawLine(consumer, poseStack, 2, -7, 0, -7, 2, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 2, -7, 0, -7, 2, 0, offset, Axis.Y);
         // Second line | direction on right side
-        drawLine(consumer, poseStack, -7, 2, 0, -7, 14, 0);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 2, 0, -7, 14, 0, offset, Axis.Y);
         // Third line \ direction on right side
-        drawLine(consumer, poseStack, -7, 14, 0, 2, 23, 0);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 14, 0, 2, 23, 0, offset, Axis.Y);
         // Fourth line - direction on middle
-        drawLine(consumer, poseStack, 2, 23, 0, 14, 23, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 2, 23, 0, 14, 23, 0, offset, Axis.Y);
         // Fifth line / direction on left side
-        drawLine(consumer, poseStack, 14, 23, 0, 23, 14, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 14, 23, 0, 23, 14, 0, offset, Axis.Y);
         // Sixth line | direction on left side
-        drawLine(consumer, poseStack, 23, 14, 0, 23, 2, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 14, 0, 23, 2, 0, offset, Axis.Y);
         // Seventh line \ direction on left side
-        drawLine(consumer, poseStack, 23, 2, 0, 14, -7, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 2, 0, 14, -7, 0, offset, Axis.Y);
         // Eighth line - direction on middle
-        drawLine(consumer, poseStack, 14, -7, 0, 2, -7, 0);
+        drawLineWithAxisOffset(consumer, poseStack, 14, -7, 0, 2, -7, 0, offset, Axis.Y);
 
         // -- Backside --
 
         // First line / direction on right side
-        drawLine(consumer, poseStack, 2, -7, 16, -7, 2, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 2, -7, 16, -7, 2, 16, offset, Axis.Y);
         // Second line | direction on right side
-        drawLine(consumer, poseStack, -7, 2, 16, -7, 14, 16);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 2, 16, -7, 14, 16, offset, Axis.Y);
         // Third line \ direction on right side
-        drawLine(consumer, poseStack, -7, 14, 16, 2, 23, 16);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 14, 16, 2, 23, 16, offset, Axis.Y);
         // Fourth line - direction on middle
-        drawLine(consumer, poseStack, 2, 23, 16, 14, 23, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 2, 23, 16, 14, 23, 16, offset, Axis.Y);
         // Fifth line / direction on left side
-        drawLine(consumer, poseStack, 14, 23, 16, 23, 14, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 14, 23, 16, 23, 14, 16, offset, Axis.Y);
         // Sixth line | direction on left side
-        drawLine(consumer, poseStack, 23, 14, 16, 23, 2, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 14, 16, 23, 2, 16, offset, Axis.Y);
         // Seventh line \ direction on left side
-        drawLine(consumer, poseStack, 23, 2, 16, 14, -7, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 2, 16, 14, -7, 16, offset, Axis.Y);
         // Eighth line - direction on middle
-        drawLine(consumer, poseStack, 14, -7, 16, 2, -7, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 14, -7, 16, 2, -7, 16, offset, Axis.Y);
 
         // -- Sides --
-        drawLine(consumer, poseStack, 2, -7, 0, 2, -7, 16);
-        drawLine(consumer, poseStack, -7, 2, 0, -7, 2, 16);
-        drawLine(consumer, poseStack, -7, 14, 0, -7, 14, 16);
-        drawLine(consumer, poseStack, 2, 23, 0, 2, 23, 16);
-        drawLine(consumer, poseStack, 14, 23, 0, 14, 23, 16);
-        drawLine(consumer, poseStack, 23, 14, 0, 23, 14, 16);
-        drawLine(consumer, poseStack, 23, 2, 0, 23, 2, 16);
-        drawLine(consumer, poseStack, 14, -7, 0, 14, -7, 16);
+        drawLineWithAxisOffset(consumer, poseStack, 2, -7, 0, 2, -7, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 2, 0, -7, 2, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, -7, 14, 0, -7, 14, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, 2, 23, 0, 2, 23, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, 14, 23, 0, 14, 23, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 14, 0, 23, 14, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, 23, 2, 0, 23, 2, 16, offset, Axis.Y);
+        drawLineWithAxisOffset(consumer, poseStack, 14, -7, 0, 14, -7, 16, offset, Axis.Y);
     }
 
     @Override

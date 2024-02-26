@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.cycle_menu;
+package com.railwayteam.railways.content.cycle_menu;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.InputConstants;

@@ -2,6 +2,7 @@ package com.railwayteam.railways.mixin_interfaces;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -34,5 +35,17 @@ public interface IHasCustomOutline {
                 .normal(transform.normal(), xDiff, yDiff, zDiff).endVertex();
         vb.vertex(transform.pose(), (float) (x2 / 16), (float) (y2 / 16), (float) (z2 / 16)).color(0F, 0F, 0F, 0.4F)
                 .normal(transform.normal(), xDiff, yDiff, zDiff).endVertex();
+    }
+
+    /**
+     * Draws a line using the provided VertexConsumer, PoseStack, and 2 sets 3D coordinates.
+     * Also adds the specified offset to the specified axis
+     */
+    default void drawLineWithAxisOffset(VertexConsumer vb, PoseStack ms, double x1, double y1, double z1, double x2, double y2, double z2, double offset, Direction.Axis axis) {
+        switch (axis) {
+            case X -> drawLine(vb, ms, x1 + offset, y1, z1, x2 + offset, y2, z2);
+            case Y -> drawLine(vb, ms, x1, y1 + offset, z1, x2, y2 + offset, z2);
+            case Z -> drawLine(vb, ms, x1, y1, z1 + offset, x2, y2, z2 + offset);
+        }
     }
 }
