@@ -146,7 +146,7 @@ public class RadialBogeyCategoryMenu extends AbstractSimiScreen {
             ms.translate(80 + (-5 * (1 - fade) * (1 - fade)), 0, 0);
             AllGuiTextures.TOOLBELT_SLOT.render(ms, -12, -12, this);
             ms.translate(-0.5, 0.5, 0);
-            CRIcons.I_FAVORITE.render(ms, -9, -9, this);
+            CRIcons.I_FAVORITE_DEPRECATED.render(ms, -9, -9, this);
             ms.translate(0.5, -0.5, 0);
             if (!scrollMode && hoveredSlot == MANAGE_FAVORITES) {
                 AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -13, -13, this);

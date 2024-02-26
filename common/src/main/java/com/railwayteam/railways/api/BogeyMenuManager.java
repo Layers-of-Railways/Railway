@@ -18,7 +18,7 @@ public interface BogeyMenuManager {
      * {@code registerCategory(Create.asResource("standard_bogies"), Create.asResource("textures/gui/category")}
      * </pre>
      *
-     * @param id The categories id, Must be unique and must use your modid `create:standard_bogies`
+     * @param id The categories id, Must be unique and must-use your modid `create:standard_bogies`
      * @param iconLocation The <code>{@link ResourceLocation}</code> of the categories icon
      */
     void registerCategory(ResourceLocation id, ResourceLocation iconLocation);

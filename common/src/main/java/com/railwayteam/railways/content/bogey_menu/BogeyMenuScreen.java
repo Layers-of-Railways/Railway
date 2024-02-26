@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.bogey_menu;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRGuiTextures;
+import com.railwayteam.railways.registry.CRIcons;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllIcons;
@@ -12,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 public class BogeyMenuScreen extends AbstractSimiScreen {
-    protected CRGuiTextures background = CRGuiTextures.BOGEY_MENU;
+    private final CRGuiTextures background = CRGuiTextures.BOGEY_MENU;
 
     @Override
     protected void init() {
@@ -23,6 +24,13 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         int x = guiLeft;
         int y = guiTop;
 
+        // Favourite bogey Button
+        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
+        // todo change this
+        favouriteButton.withCallback(this::onClose);
+        addRenderableWidget(favouriteButton);
+
+        // Close Button
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
         closeButton.withCallback(this::onClose);
         addRenderableWidget(closeButton);
