@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///portable_fuel_interface"
+        "recipe": "railways:crafting/portable_fuel_interface"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///portable_fuel_interface"
+      "railways:crafting/portable_fuel_interface"
     ]
   }
 }

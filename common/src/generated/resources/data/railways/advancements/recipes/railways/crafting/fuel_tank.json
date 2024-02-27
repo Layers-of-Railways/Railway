@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting///fuel_tank"
+        "recipe": "railways:crafting/fuel_tank"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting///fuel_tank"
+      "railways:crafting/fuel_tank"
     ]
   }
 }

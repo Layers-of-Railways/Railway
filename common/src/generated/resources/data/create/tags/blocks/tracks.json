@@ -14,33 +14,34 @@
     "railways:track_tieless",
     "railways:track_phantom",
     "railways:track_mangrove",
-    "railways:track_dark_oak_wide",
-    "railways:track_mangrove_wide",
-    "railways:track_warped_wide",
-    "railways:track_tieless_wide",
-    "railways:track_create_andesite_wide",
     "railways:track_acacia_wide",
+    "railways:track_birch_wide",
+    "railways:track_blackstone_wide",
+    "railways:track_create_andesite_wide",
+    "railways:track_crimson_wide",
+    "railways:track_dark_oak_wide",
+    "railways:track_ender_wide",
+    "railways:track_jungle_wide",
+    "railways:track_mangrove_wide",
     "railways:track_oak_wide",
     "railways:track_spruce_wide",
-    "railways:track_ender_wide",
-    "railways:track_crimson_wide",
-    "railways:track_blackstone_wide",
-    "railways:track_birch_wide",
-    "railways:track_jungle_wide",
-    "railways:track_dark_oak_narrow",
-    "railways:track_mangrove_narrow",
-    "railways:track_warped_narrow",
-    "railways:track_tieless_narrow",
-    "railways:track_create_andesite_narrow",
+    "railways:track_tieless_wide",
+    "railways:track_warped_wide",
     "railways:track_acacia_narrow",
+    "railways:track_birch_narrow",
+    "railways:track_blackstone_narrow",
+    "railways:track_create_andesite_narrow",
+    "railways:track_crimson_narrow",
+    "railways:track_dark_oak_narrow",
+    "railways:track_ender_narrow",
+    "railways:track_jungle_narrow",
+    "railways:track_mangrove_narrow",
     "railways:track_oak_narrow",
     "railways:track_spruce_narrow",
-    "railways:track_ender_narrow",
-    "railways:track_crimson_narrow",
-    "railways:track_blackstone_narrow",
-    "railways:track_birch_narrow",
-    "railways:track_jungle_narrow",
+    "railways:track_tieless_narrow",
+    "railways:track_warped_narrow",
     "railways:track_monorail",
+    "railways:generic_crossing",
     {
       "id": "railways:track_hexcasting_edified",
       "required": false
@@ -711,6 +712,90 @@
     },
     {
       "id": "railways:track_biomesoplenty_willow_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rose",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rose_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rose_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rubber",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rubber_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_rubber_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_smoked",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_smoked_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_smoked_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_spirit",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_spirit_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_create_dd_spirit_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_blossom",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_blossom_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_blossom_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_ancient",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_ancient_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_ancient_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_azalea",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_azalea_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_quark_azalea_narrow",
       "required": false
     }
   ]
