@@ -240,7 +240,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
 
     @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
-    private void railways$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local(ordinal = 1) Train train, @Local Pair<Train, Vec3> collision) {
+    private void railways$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local(name = "train") Train train, @Local Pair<Train, Vec3> collision) {
         Vec3 v = collision.getSecond();
 
         // Self Train / Train that collided with the other one

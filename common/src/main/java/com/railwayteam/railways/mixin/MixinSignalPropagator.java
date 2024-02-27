@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.content.trains.graph.EdgeData;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackNode;
@@ -20,12 +20,12 @@ import java.util.function.Predicate;
 public class MixinSignalPropagator {
     @Inject(method = "walkSignals(Lcom/simibubi/create/content/trains/graph/TrackGraph;Ljava/util/List;Ljava/util/function/Predicate;Ljava/util/function/Predicate;Z)V", at = @At("HEAD"), remap = false)
     private static void recordWalkSignals(TrackGraph graph, List<Couple<TrackNode>> frontier, Predicate<Pair<TrackNode, SignalBoundary>> boundaryCallback, Predicate<EdgeData> nonBoundaryCallback, boolean forCollection, CallbackInfo ci) {
-        Railways.signalPropagatorCallDepth += 1;
+        MixinVariables.signalPropagatorCallDepth += 1;
     }
 
     @Inject(method = "walkSignals(Lcom/simibubi/create/content/trains/graph/TrackGraph;Ljava/util/List;Ljava/util/function/Predicate;Ljava/util/function/Predicate;Z)V", at = @At("RETURN"), remap = false)
     private static void recordWalkSignalsReturn(TrackGraph graph, List<Couple<TrackNode>> frontier, Predicate<Pair<TrackNode, SignalBoundary>> boundaryCallback, Predicate<EdgeData> nonBoundaryCallback, boolean forCollection, CallbackInfo ci) {
-        if (Railways.signalPropagatorCallDepth > 0)
-            Railways.signalPropagatorCallDepth -= 1;
+        if (MixinVariables.signalPropagatorCallDepth > 0)
+            MixinVariables.signalPropagatorCallDepth -= 1;
     }
 }

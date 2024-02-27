@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.cycle_menu;
+package com.railwayteam.railways.content.cycle_menu;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRPalettes;

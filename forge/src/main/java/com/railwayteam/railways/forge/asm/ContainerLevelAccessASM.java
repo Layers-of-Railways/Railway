@@ -65,7 +65,7 @@ public class ContainerLevelAccessASM {
 //        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 //        classNode.accept(writer);
 //        byte[] bytes = writer.toByteArray();
-//        File outputFile = new File("/home/ithundxr/Projects/Modding/Railway/common/run/out.class");
+//        File outputFile = new File("/home/ithundxr/Projects/Modding/Railway/forge/run/out.class");
 //        try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
 //            outputStream.write(bytes);
 //        } catch (IOException ignored) {}

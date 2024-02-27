@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
@@ -15,6 +14,7 @@ import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
+import com.railwayteam.railways.util.MixinVariables;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
@@ -106,10 +106,10 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         boolean spaceDown = heldControls.contains(4);
 
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
-        Railways.temporarilySkipSwitches = true;
+        MixinVariables.temporarilySkipSwitches = true;
         boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
         Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).railways$findNearestApproachableSwitch(forward);
-        Railways.temporarilySkipSwitches = false;
+        MixinVariables.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData == null ? null : lookAheadData.getFirst();
         boolean headOn = lookAheadData != null && lookAheadData.getSecond().getFirst();
         Optional<SwitchState> targetState = lookAheadData == null ? Optional.empty() : lookAheadData.getSecond().getSecond();

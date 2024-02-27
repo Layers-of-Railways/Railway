@@ -15,17 +15,17 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.DoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.LargePlatformDoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
@@ -329,12 +329,17 @@ return BLOCK;
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
 
+    // Sorts it by ID to prevent tags moving around for no reason
     static {
-        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
+        List<TrackMaterial> wideMaterials = new ArrayList<>(CRTrackMaterials.WIDE_GAUGE.values());
+        wideMaterials.sort(Comparator.comparing((t -> t.id)));
+        for (TrackMaterial wideMaterial : wideMaterials) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
         }
 
-        for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
+        List<TrackMaterial> narrowMaterials = new ArrayList<>(CRTrackMaterials.NARROW_GAUGE.values());
+        narrowMaterials.sort(Comparator.comparing((t -> t.id)));
+        for (TrackMaterial narrowMaterial : narrowMaterials) {
             NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
         }
     }
@@ -487,7 +492,7 @@ return BLOCK;
      */
     public static final BlockEntry<SmokeStackBlock>
         CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
-        LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Long Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
+        LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Double Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
         OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
         STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", true, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false,true),
