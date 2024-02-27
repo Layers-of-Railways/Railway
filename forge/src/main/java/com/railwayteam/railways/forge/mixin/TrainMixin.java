@@ -29,7 +29,7 @@ public class TrainMixin {
         for (int index = 0; index < carriageCount; index++) {
             int i = iterateFromBack ? carriageCount - 1 - index : index;
             Carriage carriage = carriages.get(i);
-            IFluidHandler fuelItems = ((IFuelInventory) carriage.storage).snr$getFuelFluids();
+            IFluidHandler fuelItems = ((IFuelInventory) carriage.storage).railways$getFuelFluids();
             if (fuelItems == null)
                 continue;
 

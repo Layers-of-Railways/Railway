@@ -25,34 +25,34 @@ import java.util.Map;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MixinMountedStorageManager implements IFuelInventory {
-    @Unique private CombinedTankWrapper snr$fluidFuelInventory;
-    @Unique private Map<BlockPos, MountedFluidStorage> snr$fluidFuelStorage = new HashMap<>();
+    @Unique private CombinedTankWrapper railways$fluidFuelInventory;
+    @Unique private Map<BlockPos, MountedFluidStorage> railways$fluidFuelStorage = new HashMap<>();
 
     @Inject(method = "entityTick", at = @At("TAIL"))
     private void entityTick(AbstractContraptionEntity entity, CallbackInfo ci) {
-        snr$fluidFuelStorage.forEach((pos, mfs) -> mfs.tick(entity, pos, entity.level.isClientSide));
+        railways$fluidFuelStorage.forEach((pos, mfs) -> mfs.tick(entity, pos, entity.level.isClientSide));
     }
 
     @SuppressWarnings({"ConstantConditions"})
     @Inject(method = "addBlock", at = @At("TAIL"))
     private void addBlock(BlockPos localPos, BlockEntity be, CallbackInfo ci) {
         if (be != null && FluidUtils.canUseAsFuelStorage(be))
-            snr$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
+            railways$fluidFuelStorage.put(localPos, new MountedFluidStorage(be));
     }
 
     @Inject(method = "read", at = @At("HEAD"))
     private void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
-        snr$fluidFuelStorage.clear();
-        NBTHelper.iterateCompoundList(nbt.getList("FluidFuelStorage", Tag.TAG_COMPOUND), c -> snr$fluidFuelStorage
+        railways$fluidFuelStorage.clear();
+        NBTHelper.iterateCompoundList(nbt.getList("FluidFuelStorage", Tag.TAG_COMPOUND), c -> railways$fluidFuelStorage
                 .put(NbtUtils.readBlockPos(c.getCompound("Pos")), MountedFluidStorage.deserialize(c.getCompound("Data"))));
     }
 
     @Inject(method = "write", at = @At("TAIL"))
     private void write(CompoundTag nbt, boolean clientPacket, CallbackInfo ci) {
         ListTag fluidFuelStorageNBT = new ListTag();
-        for (BlockPos pos : snr$fluidFuelStorage.keySet()) {
+        for (BlockPos pos : railways$fluidFuelStorage.keySet()) {
             CompoundTag c = new CompoundTag();
-            MountedFluidStorage mountedStorage = snr$fluidFuelStorage.get(pos);
+            MountedFluidStorage mountedStorage = railways$fluidFuelStorage.get(pos);
             if (!mountedStorage.isValid())
                 continue;
             c.put("Pos", NbtUtils.writeBlockPos(pos));
@@ -65,36 +65,36 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
 
     @Inject(method = "removeStorageFromWorld", at = @At("TAIL"))
     public void removeStorageFromWorld(CallbackInfo ci) {
-        snr$fluidFuelStorage.values()
+        railways$fluidFuelStorage.values()
                 .forEach(MountedFluidStorage::removeStorageFromWorld);
     }
 
     @Inject(method = "addStorageToWorld", at = @At("TAIL"))
     private void addStorageToWorld(StructureTemplate.StructureBlockInfo block, BlockEntity blockEntity, CallbackInfo ci) {
-        if (snr$fluidFuelStorage.containsKey(block.pos)) {
-            MountedFluidStorage mountedStorage = snr$fluidFuelStorage.get(block.pos);
+        if (railways$fluidFuelStorage.containsKey(block.pos)) {
+            MountedFluidStorage mountedStorage = railways$fluidFuelStorage.get(block.pos);
             if (mountedStorage.isValid())
                 mountedStorage.addStorageToWorld(blockEntity);
         }
     }
 
     @Override
-    public void snr$setFuelFluids(CombinedTankWrapper combinedTankWrapper) {
-        snr$fluidFuelInventory = combinedTankWrapper;
+    public void railways$setFuelFluids(CombinedTankWrapper combinedTankWrapper) {
+        railways$fluidFuelInventory = combinedTankWrapper;
     }
 
     @Override
-    public CombinedTankWrapper snr$getFuelFluids() {
-        return snr$fluidFuelInventory;
+    public CombinedTankWrapper railways$getFuelFluids() {
+        return railways$fluidFuelInventory;
     }
 
     @Override
-    public void snr$setFluidFuelStorage(Map<BlockPos, MountedFluidStorage> storageMap) {
-        snr$fluidFuelStorage = storageMap;
+    public void railways$setFluidFuelStorage(Map<BlockPos, MountedFluidStorage> storageMap) {
+        railways$fluidFuelStorage = storageMap;
     }
 
     @Override
-    public Map<BlockPos, MountedFluidStorage> snr$getFluidFuelStorage() {
-        return snr$fluidFuelStorage;
+    public Map<BlockPos, MountedFluidStorage> railways$getFluidFuelStorage() {
+        return railways$fluidFuelStorage;
     }
 }

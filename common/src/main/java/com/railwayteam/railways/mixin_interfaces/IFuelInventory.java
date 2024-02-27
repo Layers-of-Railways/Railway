@@ -7,9 +7,9 @@ import net.minecraft.core.BlockPos;
 import java.util.Map;
 
 public interface IFuelInventory {
-    void snr$setFuelFluids(CombinedTankWrapper combinedTankWrapper);
-    CombinedTankWrapper snr$getFuelFluids();
+    void railways$setFuelFluids(CombinedTankWrapper combinedTankWrapper);
+    CombinedTankWrapper railways$getFuelFluids();
 
-    void snr$setFluidFuelStorage(Map<BlockPos, MountedFluidStorage> storageMap);
-    Map<BlockPos, MountedFluidStorage> snr$getFluidFuelStorage();
+    void railways$setFluidFuelStorage(Map<BlockPos, MountedFluidStorage> storageMap);
+    Map<BlockPos, MountedFluidStorage> railways$getFluidFuelStorage();
 }

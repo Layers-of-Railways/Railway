@@ -62,7 +62,7 @@ public class PortableFuelInterfaceBlock extends WrenchableDirectionalBlock imple
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
-        return getBlockEntityOptional(worldIn, pos).map(be -> ((AccessorPortableStorageInterfaceBlockEntity) be).snr$isConnected() ? 15 : 0)
+        return getBlockEntityOptional(worldIn, pos).map(be -> ((AccessorPortableStorageInterfaceBlockEntity) be).railways$isConnected() ? 15 : 0)
                 .orElse(0);
     }
 

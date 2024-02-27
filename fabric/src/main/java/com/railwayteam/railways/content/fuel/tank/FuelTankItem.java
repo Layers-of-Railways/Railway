@@ -19,7 +19,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class FuelTankItem extends BlockItem {
-    // fabric: (#690) because of ordering differences, we need to delay connection by a tick when placing multiblocks with NBT.
+    // fabric: (https://github.com/Fabricators-of-Create/Create/issues/690) because of ordering differences, we need to delay connection by a tick when placing multiblocks with NBT.
     // If the item has NBT, it needs to be applied to a controller. However, ordering is different on fabric.
     // on forge, the block is placed, the data is set, and the tanks connect.
     // on fabric, the block is placed, the tanks connect, and the data is set.

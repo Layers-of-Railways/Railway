@@ -750,19 +750,6 @@ return BLOCK;
             .lang("Generic Crossing")
             .register();
 
-//    public static final BlockEntry<FuelTankBlock> FUEL_TANK = REGISTRATE.block("fuel_tank", FuelTankBlock::regular)
-//            .initialProperties(SharedProperties::copperMetal)
-//            .properties(BlockBehaviour.Properties::noOcclusion)
-//            .properties(p -> p.isRedstoneConductor((p1, p2, p3) -> true))
-//            .transform(pickaxeOnly())
-//            .blockstate(new FuelTankGenerator()::generate)
-//            .onRegister(CreateRegistrate.blockModel(() -> FuelTankModel::standard))
-//            .addLayer(() -> RenderType::cutoutMipped)
-//            .item(FuelTankItem::new)
-//            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
-//            .build()
-//            .register();
-
     @ExpectPlatform
     public static void platformBasedRegistration() {
         throw new AssertionError();

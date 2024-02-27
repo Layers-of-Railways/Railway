@@ -267,7 +267,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
         else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
-            cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20*20));
+            cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
@@ -275,12 +275,12 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
         else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
-            cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20*20));
+            cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
     public void acceleration(CallbackInfoReturnable<Float> cir) {
         if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
-            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400*20));
+            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
     }
 }

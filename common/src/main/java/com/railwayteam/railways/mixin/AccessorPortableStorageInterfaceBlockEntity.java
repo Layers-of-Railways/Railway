@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(PortableStorageInterfaceBlockEntity.class)
 public interface AccessorPortableStorageInterfaceBlockEntity {
     @Invoker("isConnected")
-    boolean snr$isConnected();
+    boolean railways$isConnected();
 }

@@ -29,27 +29,27 @@ public abstract class MountedStorageManagerMixin {
 
     @Inject(method = "createHandlers", at = @At("TAIL"))
     private void createHandler(CallbackInfo ci) {
-        CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+        CombinedTankWrapper combinedTankWrapper = wrapFluids(((IFuelInventory) this).railways$getFluidFuelStorage().values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
                 .collect(Collectors.toList()));
 
-        ((IFuelInventory) this).snr$setFuelFluids(combinedTankWrapper);
+        ((IFuelInventory) this).railways$setFuelFluids(combinedTankWrapper);
     }
 
     @Inject(method = "read", at = @At("TAIL"))
     public void read(CompoundTag nbt, Map<BlockPos, BlockEntity> presentBlockEntities, boolean clientPacket, CallbackInfo ci) {
-        CombinedTankWrapper ctw = wrapFluids(((IFuelInventory) this).snr$getFluidFuelStorage().values()
+        CombinedTankWrapper ctw = wrapFluids(((IFuelInventory) this).railways$getFluidFuelStorage().values()
                 .stream()
                 .map(MountedFluidStorage::getFluidHandler)
                 .toList());
 
-        ((IFuelInventory) this).snr$setFuelFluids(ctw);
+        ((IFuelInventory) this).railways$setFuelFluids(ctw);
     }
 
     @Inject(method = "bindTanks", at = @At("TAIL"))
     public void bindTanks(Map<BlockPos, BlockEntity> presentBlockEntities, CallbackInfo ci) {
-        ((IFuelInventory) this).snr$getFluidFuelStorage().forEach((pos, mfs) -> {
+        ((IFuelInventory) this).railways$getFluidFuelStorage().forEach((pos, mfs) -> {
             BlockEntity blockEntity = presentBlockEntities.get(pos);
             if (!(blockEntity instanceof FuelTankBlockEntity tank))
                 return;
@@ -64,7 +64,7 @@ public abstract class MountedStorageManagerMixin {
 
     @Inject(method = "clear", at = @At("TAIL"))
     private void clear(CallbackInfo ci) {
-        CombinedTankWrapper fuelFluidInventory = ((IFuelInventory) this).snr$getFuelFluids();
+        CombinedTankWrapper fuelFluidInventory = ((IFuelInventory) this).railways$getFuelFluids();
 
         for (int i = 0; i < fuelFluidInventory.getTanks(); i++)
             fuelFluidInventory.drain(fuelFluidInventory.getFluidInTank(i), IFluidHandler.FluidAction.EXECUTE);
@@ -72,7 +72,7 @@ public abstract class MountedStorageManagerMixin {
 
     @Inject(method = "updateContainedFluid", at = @At("TAIL"))
     private void updateContainedFluid(BlockPos localPos, FluidStack containedFluid, CallbackInfo ci) {
-        MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).snr$getFluidFuelStorage().get(localPos);
+        MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).railways$getFluidFuelStorage().get(localPos);
         if (mountedFuelFluidStorage != null)
             mountedFuelFluidStorage.updateFluid(containedFluid);
     }

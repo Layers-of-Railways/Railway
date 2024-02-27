@@ -36,10 +36,10 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
-        CombinedTankWrapper ctw = ((IContraptionFuel) contraption).snr$getSharedFuelTanks();
+        CombinedTankWrapper ctw = ((IContraptionFuel) contraption).railways$getSharedFuelTanks();
         if (contraption instanceof CarriageContraption carriageContraption) {
             MountedStorageManager storageProxy = ((AccessorCarriageContraption) carriageContraption).getStorageProxy();
-            ctw = ((IFuelInventory) storageProxy).snr$getFuelFluids();
+            ctw = ((IFuelInventory) storageProxy).railways$getFuelFluids();
         }
         capability.setWrapped(ctw);
         super.startTransferringTo(contraption, distance);

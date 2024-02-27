@@ -42,11 +42,6 @@ public abstract class MixinContraption implements IContraptionFuel {
             nbt.put("Controller", NbtUtils.writeBlockPos(toLocalPos(NbtUtils.readBlockPos(nbt.getCompound("Controller")))));
     }
 
-    @Override
-    public CombinedTankWrapper snr$getSharedFuelTanks() {
-        return ((IFuelInventory) storage).snr$getFuelFluids();
-    }
-
     @Inject(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
     private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {
         BlockEntity be = world.getBlockEntity(add);
@@ -59,5 +54,10 @@ public abstract class MixinContraption implements IContraptionFuel {
                     preTransformCallback.railways$preAssemble();
             }
         }
+    }
+
+    @Override
+    public CombinedTankWrapper railways$getSharedFuelTanks() {
+        return ((IFuelInventory) storage).railways$getFuelFluids();
     }
 }
