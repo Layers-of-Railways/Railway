@@ -19,15 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = MountedFluidStorage.class, remap = false)
 public abstract class MountedFluidStorageMixin {
     @Shadow protected abstract void onFluidStackChanged(FluidStack fs);
-    @Shadow SmartFluidTank tank;
     @Shadow private BlockEntity blockEntity;
-
-    // This method is only used for normal fluid storage, and we don't want fuel tanks to go into it
-    /*@Inject(method = "canUseAsStorage", at = @At("HEAD"), cancellable = true)
-    private static void canUseAsStorage(BlockEntity be, CallbackInfoReturnable<Boolean> cir) {
-        if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
-            cir.setReturnValue(fuelTankBlockEntity.isController());
-    }*/
+    @Shadow SmartFluidTank tank;
 
     @Inject(method = "createMountedTank", at = @At("HEAD"), cancellable = true)
     private void createMountedTank(BlockEntity be, CallbackInfoReturnable<FuelTankBlockEntity.FuelFluidHandler> cir) {
