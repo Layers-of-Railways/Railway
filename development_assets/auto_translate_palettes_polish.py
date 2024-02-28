@@ -124,7 +124,7 @@ def mk_smokebox() -> callable:
 translations: dict[str, callable] = {
     "slashed_locometal": mk_locometal(None, False, "slashed"),
     "riveted_locometal": mk_locometal(None, False, "riveted"),
-    # todo pillar
+    "locometal_pillar": mk_pillar(),
     "locometal_smokebox": mk_smokebox(),
     "plated_locometal": mk_locometal(None, False, "plated"),
     "flat_slashed_locometal": mk_locometal(None, True, "slashed"),

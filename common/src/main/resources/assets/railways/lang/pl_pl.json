@@ -425,5 +425,22 @@
   "block.railways.white_iron_wrapped_locometal_boiler": "Biały kocioł z lokometalu owinięty żelazem",
   "block.railways.yellow_iron_wrapped_locometal_boiler": "Żółty kocioł z lokometalu owinięty żelazem",
   "block.railways.cyan_iron_wrapped_locometal_boiler": "Błękit kocioł z lokometalu owinięty żelazem",
-  "block.railways.iron_wrapped_locometal_boiler": "Kocioł z lokometalu owinięty żelazem"
+  "block.railways.iron_wrapped_locometal_boiler": "Kocioł z lokometalu owinięty żelazem",
+  "block.railways.black_locometal_pillar": "Czarny filar z lokometalu",
+  "block.railways.blue_locometal_pillar": "Niebieski filar z lokometalu",
+  "block.railways.brown_locometal_pillar": "Brązowy filar z lokometalu",
+  "block.railways.gray_locometal_pillar": "Szary filar z lokometalu",
+  "block.railways.green_locometal_pillar": "Zielony filar z lokometalu",
+  "block.railways.light_blue_locometal_pillar": "Jasnoniebieski filar z lokometalu",
+  "block.railways.light_gray_locometal_pillar": "Jasnoszary filar z lokometalu",
+  "block.railways.lime_locometal_pillar": "Jasnozielony filar z lokometalu",
+  "block.railways.magenta_locometal_pillar": "Karmazynowy filar z lokometalu",
+  "block.railways.orange_locometal_pillar": "Pomarańczowy filar z lokometalu",
+  "block.railways.pink_locometal_pillar": "Różowy filar z lokometalu",
+  "block.railways.purple_locometal_pillar": "Fioletowy filar z lokometalu",
+  "block.railways.red_locometal_pillar": "Czerwony filar z lokometalu",
+  "block.railways.white_locometal_pillar": "Biały filar z lokometalu",
+  "block.railways.yellow_locometal_pillar": "Żółty filar z lokometalu",
+  "block.railways.cyan_locometal_pillar": "Błękit filar z lokometalu",
+  "block.railways.locometal_pillar": "Filar z lokometalu"
 }
