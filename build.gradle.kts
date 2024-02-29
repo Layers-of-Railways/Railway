@@ -62,12 +62,20 @@ allprojects {
 subprojects {
     apply(plugin = "dev.architectury.loom")
 
+    val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
+
+    loom.apply {
+        silentMojangMappingsLicense()
+        runs.configureEach {
+            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.env.remapRefMap=true")
+            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+        }
+    }
+
     setupRepositories()
 
     val capitalizedName = project.name.capitalized()
-
-    val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
-    loom.silentMojangMappingsLicense()
 
     configurations.configureEach {
         resolutionStrategy {
@@ -81,8 +89,8 @@ subprojects {
         // layered mappings - Mojmap names, parchment and QM docs and parameters
         "mappings"(loom.layered {
             mappings("org.quiltmc:quilt-mappings:${"minecraft_version"()}+build.${"qm_version"()}:intermediary-v2")
-            officialMojangMappings { nameSyntheticMembers = false }
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
+            officialMojangMappings { nameSyntheticMembers = false }
         })
     }
 

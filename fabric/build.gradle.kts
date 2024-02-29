@@ -4,14 +4,6 @@ loom {
     val common = project(":common")
     accessWidenerPath = common.loom.accessWidenerPath
 
-    silentMojangMappingsLicense()
-    runs.configureEach {
-        vmArg("-Dmixin.debug.export=true")
-        vmArg("-Dmixin.env.remapRefMap=true")
-        vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-    }
-
-
     runs {
         create("datagen") {
             client()

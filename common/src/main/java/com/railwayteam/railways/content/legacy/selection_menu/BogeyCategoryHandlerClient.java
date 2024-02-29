@@ -310,6 +310,8 @@ public class BogeyCategoryHandlerClient {
             return;
 
         ScreenOpener.open(new BogeyMenuScreen());
+        //fixme
+        //ScreenOpener.open(new RadialBogeyCategoryMenu(RadialBogeyCategoryMenu.State.PICK_CATEGORY))
     }
 
     public static final Map<Pair<BogeyStyle, @Nullable BogeySize>, ResourceLocation> ICONS = new HashMap<>();
