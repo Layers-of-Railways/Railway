@@ -164,7 +164,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         }
 
         if (state.getBlock() instanceof StationBlock || state.getBlock() instanceof ITrackBlock) {
-            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 2f, 1f);
+            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 0.3f, 1f);
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
 
