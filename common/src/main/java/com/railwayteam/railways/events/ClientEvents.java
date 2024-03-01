@@ -5,7 +5,7 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerClient;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.content.qol.TrackEdgePointHighlighter;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.ConfigureDevCapeC2SPacket;

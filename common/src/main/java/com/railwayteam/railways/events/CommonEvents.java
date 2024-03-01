@@ -1,7 +1,7 @@
 package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.config.CRConfigs;
-import com.railwayteam.railways.content.palettes.cycle_menu.TagCycleHandlerServer;
+import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
