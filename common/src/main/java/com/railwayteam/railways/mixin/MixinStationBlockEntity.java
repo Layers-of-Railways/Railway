@@ -47,8 +47,6 @@ import java.util.UUID;
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     @Shadow @Nullable public abstract GlobalStation getStation();
 
-    @Shadow private UUID imminentTrain;
-
     private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }

@@ -326,7 +326,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             condition.getData().putInt("Value", 0);
             instruction.getData().putString("Text", stationName);
             entry.instruction = instruction;
-            if (entry.conditions.size() == 0)
+            if (entry.conditions.isEmpty())
                 entry.conditions.add(new ArrayList<>());
             entry.conditions.get(0).add(condition);
             schedule.entries.add(entry);

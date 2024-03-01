@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 @ConditionalMixin(mods = Mods.VOICECHAT)
 @Mixin(ServerWorldUtils.class)
 public class ServerWorldUtilsMixin {
-    @SuppressWarnings("unused")
     @WrapOperation(method = "getPlayersInRange", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;position()Lnet/minecraft/world/phys/Vec3;"))
     private static Vec3 useConductorSpyPosition(ServerPlayer instance, Operation<Vec3> original) {
         if (ConductorPossessionController.isPossessingConductor(instance)) {

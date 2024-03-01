@@ -152,7 +152,7 @@ public class TrainUtils {
             Railways.LOGGER.info("[DISCARD_SCHEDULE] on train {} called in TrainUtils.splitTrain because it was transferred to a decoupled rear train because the train's schedule index {} was at least the carriage count {}", train.name.getString(), ((IIndexedSchedule) train).railways$getIndex(), train.carriages.size());
         }
 
-        if (train.carriages.size() == 0) {
+        if (train.carriages.isEmpty()) {
             Create.RAILWAYS.removeTrain(train.id);
         }
 
