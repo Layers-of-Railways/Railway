@@ -10,7 +10,6 @@ import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
@@ -72,11 +71,6 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
     public ConductorWhistleItem(Block block, Item.Properties properties) {
         super(block, properties, EdgePointType.STATION);
     }
-
-    static boolean isTrack (Block block) { return AllTags.AllBlockTags.TRACKS.matches(block); }
-    static boolean isTrack (BlockState state) { return AllTags.AllBlockTags.TRACKS.matches(state); }
-    static boolean isTrack (Level level, BlockPos pos) { return isTrack(level.getBlockState(pos)); }
-
     @Override
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) { //Not worth the effort
         return false;
@@ -164,7 +158,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         }
 
         if (state.getBlock() instanceof StationBlock || state.getBlock() instanceof ITrackBlock) {
-            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 2f, 1f);
+            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 0.3f, 1f);
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
 
@@ -261,7 +255,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
             }
 
-            else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {;
+            else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {
                 stationName = Objects.requireNonNull(stationBe.getStation()).name;
             }
 
