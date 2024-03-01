@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.registry.CRBogeyStyles;
@@ -56,7 +56,6 @@ public class MixinCarriageSounds {
         return original.call(instance);
     }
 
-    @SuppressWarnings("unused")
     @WrapWithCondition(method = "tick", at = {
         @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 0),
         @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 1)
@@ -65,7 +64,6 @@ public class MixinCarriageSounds {
         return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
-    @SuppressWarnings("unused")
     @WrapWithCondition(method = "tick", at = {
         @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 2)
     }, remap = true)
@@ -73,7 +71,6 @@ public class MixinCarriageSounds {
         return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
-    @SuppressWarnings("unused")
     @WrapWithCondition(method = "tick", at = {
         @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V")
     }, remap = true)

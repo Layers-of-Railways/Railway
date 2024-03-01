@@ -77,7 +77,6 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         return automatic;
     }
 
-    @SuppressWarnings("unused")
     public boolean isLocked() {
         return locked;
     }

@@ -17,9 +17,8 @@ import java.util.UUID;
 @ConditionalMixin(mods = Mods.VOICECHAT)
 @Mixin(EntityAudioChannelImpl.class)
 public class EntityAudioChannelImplMixin {
-    @SuppressWarnings("unused")
     @WrapOperation(method = "broadcast", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getEyePosition()Lnet/minecraft/world/phys/Vec3;"))
-    private static Vec3 useConductorSpyPosition(Entity instance, Operation<Vec3> original) {
+    private Vec3 useConductorSpyPosition(Entity instance, Operation<Vec3> original) {
         if (instance instanceof ServerPlayer serverPlayer && ConductorPossessionController.isPossessingConductor(instance)) {
             return serverPlayer.getCamera().getEyePosition();
         } else {
@@ -27,7 +26,6 @@ public class EntityAudioChannelImplMixin {
         }
     }
 
-    @SuppressWarnings("unused")
     @WrapOperation(method = {
         "send([B)V",
         "send(Lde/maxhenkel/voicechat/api/packets/MicrophonePacket;)V",
