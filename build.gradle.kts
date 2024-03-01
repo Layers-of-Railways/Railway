@@ -277,34 +277,20 @@ fun Project.setupRepositories() {
                 includeGroup("com.jozufozu.flywheel")
             }
         }
-        maven("https://maven.ithundxr.dev/private") { // Extended Bogeys
-            content { includeGroup("com.rabbitminers") }
-            credentials {
-                if (System.getenv("GITHUB_RUN_NUMBER") != null) {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
-                } else {
-                    username = findProperty("IThundxrMavenUsername").toString()
-                    password = findProperty("IThundxrMavenPassword").toString()
-                }
-            }
-        }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat
-        maven("https://jitpack.io") { // Pehkui (Hex Casting dependency)
+        maven("https://maven.jamieswhiteshirt.com/libs-release") // Reach Entity Attributes
+        exclusiveMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour") // KFF (Hex Casting dependency)
+        maven("https://maven.terraformersmc.com/releases/") // Mod Menu, EMI
+        maven("https://mvn.devos.one/snapshots/") // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+        maven("https://mvn.devos.one/releases/") // Porting Lib
+        maven("https://maven.cafeteria.dev/releases") // Fake Player API
+        maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
+        exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
+        maven("https://jitpack.io/") { // Mixin Extras, Fabric ASM
             content {
                 includeGroupByRegex("com.github.*")
             }
         }
-        exclusiveMaven("https://maven.jamieswhiteshirt.com/libs-release", "com.jameswhiteshirt.reach-entity-attributes")// Reach Entity Attributes
-        exclusiveMaven("https://thedarkcolour.github.io/KotlinForForge/", "thedarkcolour") // KFF (Hex Casting dependency)
-        maven("https://maven.terraformersmc.com/releases/") // Mod Menu, EMI
-        maven("https://mvn.devos.one/snapshots/") // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
-        maven("https://maven.cafeteria.dev/releases") // Fake Player API
-        maven("https://maven.jamieswhiteshirt.com/libs-release") // Reach Entity Attributes
-        maven("https://jitpack.io/") // Mixin Extras, Fabric ASM
-        maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
-        exclusiveMaven("https://maven.blamejared.com", "at.petra-k", "vazkii.patchouli") // JEI, Hex Casting
-        exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
     }
 }
 

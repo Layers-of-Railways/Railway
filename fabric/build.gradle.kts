@@ -93,9 +93,9 @@ dependencies {
         modLocalRuntime("maven.modrinth:iris:${"iris_version"()}")
     }
 
-    if ("enable_eb"().toBoolean()) {
-        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_verison"()}+fabric")
-    }
+//    if ("enable_eb"().toBoolean()) {
+//        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_verison"()}+fabric")
+//    }
 
     annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!)
 }
