@@ -147,13 +147,11 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
         MixinVariables.trackEdgeCarriageTravelling = false;
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 0))
     private boolean allowUniversalTrackLeading(boolean original) {
         return railways$isIncompatible(original, true);
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 1))
     private boolean allowUniversalTrackTrailing(boolean original) {
         return railways$isIncompatible(original, false);

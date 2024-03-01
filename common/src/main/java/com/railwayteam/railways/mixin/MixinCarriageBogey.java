@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = CarriageBogey.class, remap = false)
 public class MixinCarriageBogey {
-    @Shadow private AbstractBogeyBlock<?> type;
+    @Shadow AbstractBogeyBlock<?> type;
 
     @Shadow public Couple<Vec3> couplingAnchors;
 

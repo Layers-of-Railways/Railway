@@ -30,13 +30,13 @@ public class SpriteCopyingBakedModel implements BakedModel {
     TextureAtlasSprite overrideSprite = spriteSourceModel.getParticleIcon();
     BakedQuad overrideQuad = null;
     List<BakedQuad> sourceQuads = spriteSourceModel.getQuads(pState, pSide, pRand);
-    if (sourceQuads.size() > 0) {
+    if (!sourceQuads.isEmpty()) {
       overrideSprite = sourceQuads.get(0).getSprite();
       overrideQuad = sourceQuads.get(0);
       //Railways.LOGGER.warn("Overridesprite: "+ overrideSprite.toString());
     } else if (pSide != null) {
       List<BakedQuad> nullQuads = spriteSourceModel.getQuads(pState, null, pRand);
-      if (nullQuads.size() > 0) {
+      if (!nullQuads.isEmpty()) {
         overrideSprite = nullQuads.get(0).getSprite();
         overrideQuad = nullQuads.get(0);
       }

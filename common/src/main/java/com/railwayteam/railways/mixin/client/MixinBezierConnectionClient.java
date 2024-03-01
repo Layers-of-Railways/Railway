@@ -113,7 +113,6 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
         return bakedMonorails;
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method="getBakedSegments", at = @At(value = "CONSTANT", args = "doubleValue=0.9649999737739563"))
     private double modifyRailWidth(double original) {
         BezierConnection this$ = (BezierConnection) (Object) this;

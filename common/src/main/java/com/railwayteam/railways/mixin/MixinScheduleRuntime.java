@@ -32,7 +32,7 @@ public abstract class MixinScheduleRuntime {
 
     @Shadow public abstract void discardSchedule();
 
-    @Shadow private Train train;
+    @Shadow Train train;
 
     @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
     private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
@@ -46,7 +46,7 @@ public abstract class MixinScheduleRuntime {
 
     @Inject(method = "tickConditions", at = @At("HEAD"), cancellable = true)
     private void tickWhenNoConditions(Level level, CallbackInfo ci) {
-        if (schedule.entries.get(currentEntry).conditions.size() == 0) {
+        if (schedule.entries.get(currentEntry).conditions.isEmpty()) {
             state = ScheduleRuntime.State.PRE_TRANSIT;
             currentEntry++;
             ci.cancel();

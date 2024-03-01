@@ -1456,7 +1456,7 @@ public class ConductorEntity extends AbstractGolem {
       toolbox.write(toolboxTag, false);
       nbt.put("toolboxHolder", toolboxTag);
     }
-    if (getHeldSchedules().size() != 0) {
+    if (!getHeldSchedules().isEmpty()) {
       ListTag schedulesTag = new ListTag();
       boolean hasItem = false;
       for (ItemStack heldSchedule : heldSchedules) {

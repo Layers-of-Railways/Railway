@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+// TODO - Remove when https://github.com/Creators-of-Create/Create/pull/5900 is merged
+@Deprecated
 @Mixin(GoggleOverlayRenderer.class)
 public class GoggleOverlayRendererMixin {
     @WrapOperation(

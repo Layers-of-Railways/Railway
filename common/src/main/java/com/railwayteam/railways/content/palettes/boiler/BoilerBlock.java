@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
+import com.railwayteam.railways.util.IHasBigOutline;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline {
+public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline, IHasBigOutline {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public static final EnumProperty<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
     public static final BooleanProperty RAISED = BooleanProperty.create("raised"); // raise by 1/2 block

@@ -1,0 +1,53 @@
+boiler is "{masc:color?} kocioł z lokometalu {owinięty}(only if wrapped) {wrap_material?}"
+masc:colors are:
+
+    black: czarny
+    blue: niebieski
+    brown: brązowy
+    gray: szary
+    green: zielony
+    light blue: jasnoniebieski
+    light gray: jasnoszary
+    lime: jasnozielony
+    magenta: karmazynowy
+    orange: pomarańczowy
+    pink: różowy
+    purple: fioletowy
+    red: czerwony
+    white: biały
+    yellow: żółty
+
+and wrap_materials are
+
+    brass: mosiądzem
+    copper: miedzią
+    iron: żelazem
+
+
+normal locometal blocks are:
+"{płaski}(only if flat) {masc:color?} {type?} lokometal {owinięty}(only if wrapped) {wrap_material?}"
+types are: 
+
+    slashed: błyszczący
+    riveted: nitowany
+    plated: płytowy
+
+as for the smokebox, that one is feminine so...
+"{fem:color?} dymnica z lokometalu"
+fem:colors are:
+
+    black: czarna
+    blue: niebieska
+    brown: brązowa
+    gray: szara
+    green: zielona
+    light blue: jasnoniebieska
+    light gray: jasnoszara
+    lime: jasnozielona
+    magenta: karmazynowa
+    orange: pomarańczowa
+    pink: różowa
+    purple: fioletowa
+    red: czerwona
+    white: biała
+    yellow: żółta

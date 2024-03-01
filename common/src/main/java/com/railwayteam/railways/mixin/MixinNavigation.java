@@ -106,7 +106,6 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
         at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {

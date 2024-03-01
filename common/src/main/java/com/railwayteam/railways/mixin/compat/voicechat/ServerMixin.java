@@ -17,9 +17,8 @@ import java.util.UUID;
 @ConditionalMixin(mods = Mods.VOICECHAT)
 @Mixin(Server.class)
 public class ServerMixin {
-    @SuppressWarnings("unused")
     @WrapOperation(method = "processProximityPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;position()Lnet/minecraft/world/phys/Vec3;"))
-    private static Vec3 useConductorSpyPosition(ServerPlayer instance, Operation<Vec3> original) {
+    private Vec3 useConductorSpyPosition(ServerPlayer instance, Operation<Vec3> original) {
         if (ConductorPossessionController.isPossessingConductor(instance)) {
             return instance.getCamera().position();
         } else {
@@ -27,7 +26,6 @@ public class ServerMixin {
         }
     }
 
-    @SuppressWarnings("unused")
     @WrapOperation(method = "processProximityPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getUUID()Ljava/util/UUID;"),
         slice = @Slice(
             from = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;isCrouching()Z")
