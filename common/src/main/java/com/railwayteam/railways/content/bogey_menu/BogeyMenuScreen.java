@@ -34,6 +34,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     // I know its cursed
     private CategoryEntry selectedCategory = (CategoryEntry) BogeyMenuManagerImpl.CATEGORIES.toArray()[0];
     List<ResourceLocation> iconList = new ArrayList<>();
+    List<Component> bogeyDisplayNameList = new ArrayList<>();
     // Amount scrolled, 0 = top and 1 = bottom
     private float scrollOffs;
 
@@ -46,7 +47,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         int x = guiLeft;
         int y = guiTop;
 
+        // Initial setup
         setupList(selectedCategory);
+
+        // Scrolling Initial setup
+        scrollOffs = 0.0F;
+        scrollTo(0.0F);
 
         // Category selector START
         Label categoryLabel = new Label(x + 14, y + 25, Components.immutableEmpty()).withShadow();
@@ -73,9 +79,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
         closeButton.withCallback(this::onClose);
         addRenderableWidget(closeButton);
-
-        this.scrollOffs = 0.0F;
-        scrollTo(0.0F);
     }
 
     @Override
@@ -103,21 +106,37 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 .rotateX(-22)
                 .rotateY(63);
 
-        GuiGameElement.of(AllBlocks.RAILWAY_CASING.getDefaultState())
-                .render(ms);
+        GuiGameElement.of(AllBlocks.RAILWAY_CASING.getDefaultState()).render(ms);
 
         ms.popPose();
         // Train casing on right side of screen where arrow is pointing END
 
-        // Render the bogey icons
+        // Render the bogey icons & bogey names
         for (int i = 0; i < 6; i++) {
-            renderIcon(iconList.get(i), ms, x + 20, y + 42 + (i * 18));
+            if (iconList.get(i) != null)
+                renderIcon(iconList.get(i), ms, x + 20, y + 42 + (i * 18));
+
+            if (bogeyDisplayNameList.get(i) != null) {
+                Component text = bogeyDisplayNameList.get(i);
+                if (font.width(text) > 55) {
+                    String substr = font.plainSubstrByWidth(text.getString(), 55);
+                    if (substr.endsWith(" ")) {
+                        substr = substr.substring(0, substr.length() - 1) + "...";
+                    } else {
+                        substr += "...";
+                    }
+
+                    addRenderableWidget(new BogeyButton(x + 40, y + 46 + (i * 18), 10, 20, Component.literal(substr), (e) -> {}));
+                    //font.drawShadow(ms, substr, x + 40, y + 46 + (i * 18), 0xFFFFFF);
+                } else {
+                    //font.drawShadow(ms, text, x + 40, y + 46 + (i * 18), 0xFFFFFF);
+                    addRenderableWidget(new BogeyButton(x + 40, y + 46 + (i * 18), 10, 20, text, (e) -> {}));
+                }
+            }
         }
     }
 
     private void renderIcon(ResourceLocation icon, PoseStack ms, int x, int y) {
-        if (icon == null) return;
-
         ms.pushPose();
         RenderSystem.setShaderTexture(0, icon);
         GuiComponent.blit(ms, x, y, 0, 0, 0, 16, 16, 16, 16);
@@ -129,35 +148,47 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Clear to get ready for adding new bogies
         iconList.clear();
+        bogeyDisplayNameList.clear();
 
         // Max of 6 slots, objects inside the slots will be mutated later
         for (int i = 0; i < 6; i++) {
             if (i < bogies.size()) {
                 iconList.add(bogies.get(i).iconLocation());
+                bogeyDisplayNameList.add(getTrimmedComponent(bogies.get(i).bogeyStyle().displayName));
             } else {
                 // I know, this is silly but its best way to know if rendering should be skipped
                 iconList.add(null);
+                bogeyDisplayNameList.add(null);
             }
         }
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        if (selectedCategory.getBogeyEntryList().size() < 6) {
-            return false;
-        } else {
-            double i = selectedCategory.getBogeyEntryList().size() - 5;
-            float f = (float) (delta / i);
-            this.scrollOffs = Mth.clamp(this.scrollOffs - f, 0.0F, 1.0F);
-            scrollTo(this.scrollOffs);
-            return true;
-        }
+        if (selectedCategory.getBogeyEntryList().size() < 6) return false;
+
+        double listSize = selectedCategory.getBogeyEntryList().size() - 6;
+        float scrollFactor = (float) (delta / listSize);
+        scrollOffs = Mth.clamp(scrollOffs - scrollFactor, 0.0F, 1.0F);
+        scrollTo(scrollOffs);
+
+        return true;
     }
 
     private void scrollTo(float pos) {
-        float i = selectedCategory.getBogeyEntryList().size() - 5;
-        int amount = (int) ((double) (pos * i) + 0.5);
+        List<BogeyEntry> bogies = selectedCategory.getBogeyEntryList();
+        float listSize = bogies.size() - 6;
+        int index = (int) ((double) (pos * listSize) + 0.5);
 
+        for (int i = 0; i < 6; i++) {
+            iconList.set(i, bogies.get(index + i).iconLocation());
+            bogeyDisplayNameList.set(i, getTrimmedComponent(bogies.get(index + i).bogeyStyle().displayName));
+        }
+    }
 
+    private Component getTrimmedComponent(Component component) {
+//        if (component.getString().length() > 9)
+//            return Component.literal(component.getString(9) + "...");
+        return component;
     }
 }
