@@ -3,7 +3,7 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.api.bogeymenu.BogeyMenuManager;
 import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
-import com.railwayteam.railways.impl.bogeymenu.internal.CategoryEntry;
+import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
 import com.railwayteam.railways.registry.*;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;

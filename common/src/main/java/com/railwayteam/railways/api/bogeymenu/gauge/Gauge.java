@@ -1,4 +1,4 @@
-package com.railwayteam.railways.api.bogeymenu;
+package com.railwayteam.railways.api.bogeymenu.gauge;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.Create;

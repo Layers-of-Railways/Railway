@@ -1,8 +1,8 @@
 package com.railwayteam.railways.impl.bogeymenu;
 
 import com.railwayteam.railways.api.bogeymenu.BogeyMenuManager;
-import com.railwayteam.railways.impl.bogeymenu.internal.BogeyEntry;
-import com.railwayteam.railways.impl.bogeymenu.internal.CategoryEntry;
+import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
+import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

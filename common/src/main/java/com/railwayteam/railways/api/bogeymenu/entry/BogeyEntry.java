@@ -1,4 +1,4 @@
-package com.railwayteam.railways.impl.bogeymenu.internal;
+package com.railwayteam.railways.api.bogeymenu.entry;
 
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.resources.ResourceLocation;
