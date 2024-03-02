@@ -20,12 +20,6 @@ public class UpsideDownMonoBogeyFix extends DataFix {
 
     @Override
     public TypeRewriteRule makeRule() {
-        /*Type<Pair<String, String>> type2;
-        Type<?> type = this.getInputSchema().getType(References.BLOCK_NAME);
-        if (!Objects.equals(type, type2 = DSL.named(References.BLOCK_NAME.typeName(), NamespacedSchema.namespacedString()))) {
-            throw new IllegalStateException("block type is not what was expected.");
-        }*/
-        //TypeRewriteRule typeRewriteRule = this.fixTypeEverywhere(this.name + " for block", type2, dynamicOps -> pair -> pair.mapSecond(this::fixBlock));
         return this.fixTypeEverywhereTyped(this.name + " for block_state", this.getInputSchema().getType(References.BLOCK_STATE), typed -> typed.update(DSL.remainderFinder(), dynamic -> {
             Optional<String> optional = dynamic.get("Name").asString().result();
             if (optional.isPresent() && optional.get().equals("railways:mono_bogey_upside_down")) {
@@ -40,13 +34,5 @@ public class UpsideDownMonoBogeyFix extends DataFix {
 
             return dynamic;
         }));
-        //return TypeRewriteRule.seq(typeRewriteRule, typeRewriteRule2);
-    }
-
-    private String fixBlock(String original) {
-        if (original.equals("railways:mono_bogey_upside_down")) {
-            return "railways:mono_bogey";
-        }
-        return original;
     }
 }

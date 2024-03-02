@@ -207,7 +207,7 @@ public class CRShapes {
             .add(0, 2, 2, 16, 4, 14)
             .forHorizontal(Direction.WEST),
         STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
-            .forHorizontal(Direction.WEST),
+            .forHorizontal(Direction.EAST),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
             .forDirectional(Direction.UP);
 

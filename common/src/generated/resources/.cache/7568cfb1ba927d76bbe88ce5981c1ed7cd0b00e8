@@ -1,4 +1,4 @@
-// 1.19.2	2024-02-19T11:34:02.409872629	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-03-02T16:54:22.513992251	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 49895c50bb9ff7ecb89153ff98b3f0fc5097a3cf assets/railways/models/block/track/compat/blue_skies/starlit/diag.json
 3d62ae4bfcb5ca63cd6568c0a4ef4989cf08ddc6 assets/railways/models/block/track/compat/biomesoplenty/umbran/cross_ortho.json
 385fd69403c2b80bcaa63609661bb37f7ed7097e assets/railways/models/block/track/compat/hexcasting/edified/cross_diag.json
@@ -5066,7 +5066,7 @@ a962d2d73ce51e4949b1064540e89b2ea7d7437a assets/railways/models/block/track/comp
 1cc916a0e16a4fef28d34ccb2c28e015a22da2ba assets/railways/blockstates/track_twilightforest_timewood_narrow.json
 5cad8b48718223c0b2f40c55e0ef365929e53b31 data/minecraft/tags/blocks/mineable/pickaxe.json
 a62588709c043d51f3907c11f89b8ab87f58bace assets/railways/models/block/track/compat/byg/ebony_narrow/diag_2.json
-fcdbd6dc8ffbab57701799d7a100276111dce3cc assets/railways/blockstates/smokestack_streamlined.json
+c82fc3c14eb7ed812cc8ee56db0a434c1911e906 assets/railways/blockstates/smokestack_streamlined.json
 614d88e5671c2ec294470ca973baf1757883c984 assets/railways/models/block/track/compat/byg/holly_narrow/cross_ortho.json
 da2076f71839dbad2b123ebba3085a15dd1a2e72 data/railways/loot_tables/blocks/pink_brass_wrapped_locometal_boiler.json
 884471cdc8531c1c0cb8f535cc7db008426c853e assets/railways/models/item/brown_locometal_boiler.json
