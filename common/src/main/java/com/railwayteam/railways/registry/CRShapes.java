@@ -151,7 +151,7 @@ public class CRShapes {
         VoxelShape shape = Shapes.empty();
 
         for (double i = 0; i < 10; i++) {
-            shape = Shapes.or(shape, Block.box(0, -7 + offset + i, 2 - i, 16, 23 + offset - i, 14 + i));
+            shape = Shapes.or(shape, Block.box(0, -8 + offset + i, 1 - i, 16, 24 + offset - i, 15 + i));
         }
 
         return shape.optimize();
