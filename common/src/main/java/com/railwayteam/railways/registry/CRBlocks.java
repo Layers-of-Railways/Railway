@@ -164,6 +164,14 @@ public class CRBlocks {
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, RotationType rotType, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
+        SmokeStackFunction<SmokeStackBlock> blockFunction = SmokeStackBlock::new;
+
+        switch (rotType) {
+            case NONE -> blockFunction = SmokeStackBlock::new;
+            case AXIS -> blockFunction = AxisSmokeStackBlock::new;
+            case FACING -> blockFunction = FacingSmokeStackBlock::new;
+        }
+
         return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke,
                 (c, p) -> p.getVariantBuilder(c.get())
                         .forAllStatesExcept(state -> ConfiguredModel.builder()
@@ -174,13 +182,13 @@ public class CRBlocks {
                                                 .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
                                                 .texture("particle", "#0")
                                 )
-                                .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) : rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                                .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
+                                        rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
                                 .build(),
                             AbstractSmokeStackBlock.ENABLED,
                             AbstractSmokeStackBlock.POWERED,
                             AbstractSmokeStackBlock.WATERLOGGED
-                        ),
-                rotType == RotationType.AXIS ? AxisSmokeStackBlock::new : (rotType == RotationType.FACING ? FacingSmokeStackBlock::new : SmokeStackBlock::new));
+                        ), blockFunction);
     }
 
     public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
