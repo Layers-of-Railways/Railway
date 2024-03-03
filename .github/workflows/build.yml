@@ -5,9 +5,10 @@ on:
   push:
     paths-ignore:
       - .docs/**
-  pull_request:
-    paths-ignore:
-      - .docs/**
+  # Commented out as this is a tad bit broken
+  # pull_request:
+  #   paths-ignore:
+  #     - .docs/**
 
 jobs:
   build:
