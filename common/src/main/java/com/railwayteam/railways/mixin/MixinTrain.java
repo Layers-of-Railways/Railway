@@ -123,7 +123,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Inject(method = "earlyTick", at = @At("HEAD"))
     private void killEmptyTrains(Level level, CallbackInfo ci) { // hopefully help deal with empty trains
-        if (carriages.size() == 0)
+        if (carriages.isEmpty())
             invalid = true;
 
         if (railways$controlBlockedTicks > 0)

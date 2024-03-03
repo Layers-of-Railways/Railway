@@ -151,7 +151,7 @@ public class CRShapes {
         VoxelShape shape = Shapes.empty();
 
         for (double i = 0; i < 10; i++) {
-            shape = Shapes.or(shape, Block.box(0, -7 + offset + i, 2 - i, 16, 23 + offset - i, 14 + i));
+            shape = Shapes.or(shape, Block.box(0, -8 + offset + i, 1 - i, 16, 24 + offset - i, 15 + i));
         }
 
         return shape.optimize();
@@ -207,7 +207,7 @@ public class CRShapes {
             .add(0, 2, 2, 16, 4, 14)
             .forHorizontal(Direction.WEST),
         STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
-            .forHorizontal(Direction.WEST),
+            .forHorizontal(Direction.EAST),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
             .forDirectional(Direction.UP);
 

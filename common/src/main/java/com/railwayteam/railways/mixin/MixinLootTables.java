@@ -19,13 +19,14 @@ These different mappings may all be needed to ensure that this mixin works in al
 @Mixin(value = LootTables.class, priority = 10000)
 public class MixinLootTables {
     private static boolean ignoreNextError = false;
+
+    @SuppressWarnings({"UnresolvedMixinReference", "MixinAnnotationTarget"})
     @Inject(method = "m_upgvhpqp", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"),
             require = 0)
     private static void cancelError(ImmutableMap.Builder<?, ?> builder, ResourceLocation id, JsonElement json, CallbackInfo ci) {
         ignoreNextError = TrackCompatUtils.mixinIgnoreErrorForMissingItem(id);
     }
 
-    @SuppressWarnings({"UnresolvedMixinReference", "MixinAnnotationTarget"})
     @Inject(method = "method_20711", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"),
             require = 0)
     private static void cancelError1(ImmutableMap.Builder<?, ?> builder, ResourceLocation id, JsonElement json, CallbackInfo ci) {
