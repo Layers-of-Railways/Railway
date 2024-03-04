@@ -1,13 +1,16 @@
 package com.railwayteam.railways.fabric.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
+import com.google.common.collect.Iterators;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Mixin(value = Train.class, remap = false)
@@ -24,8 +28,15 @@ public class TrainMixin {
     @Shadow public List<Carriage> carriages;
     @Shadow public int fuelTicks;
 
+    @ModifyExpressionValue(method = "burnFuel", at = @At(value = "INVOKE", target = "Lio/github/fabricators_of_create/porting_lib/transfer/TransferUtil;getNonEmpty(Lnet/fabricmc/fabric/api/transfer/v1/storage/Storage;)Ljava/lang/Iterable;"))
+    private <T> Iterable<? extends StorageView<T>> railways$disableFuelConsumptionBasedOnTag(Iterable<? extends StorageView<T>> original) {
+        return () -> (Iterator) Iterators.filter(original.iterator(), it ->
+                !((ItemVariant) it.getResource()).getItem().getDefaultInstance().is(CRTags.AllItemTags.NOT_TRAIN_FUEL.tag)
+        );
+    }
+
     @Inject(method = "burnFuel", at = @At("TAIL"))
-    private void burnFuel(CallbackInfo ci) {
+    private void railways$burnFuel(CallbackInfo ci) {
         boolean iterateFromBack = speed < 0;
         int carriageCount = carriages.size();
 

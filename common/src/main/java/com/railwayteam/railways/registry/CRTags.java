@@ -39,8 +39,6 @@ public class CRTags {
 
   }
 
-
-
   public enum AllBlockTags {
     SEMAPHORE_POLES,
     TRACK_CASING_BLACKLIST(MOD, MOD.optionalDefault,false),
@@ -108,7 +106,9 @@ public class CRTags {
     COALBURNER_STACK,
     OILBURNER_STACK,
     STREAMLINED_STACK,
-    WOODBURNER_STACK
+    WOODBURNER_STACK,
+
+    NOT_TRAIN_FUEL
     ;
 
     public final TagKey<Item> tag;

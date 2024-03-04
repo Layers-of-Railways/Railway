@@ -19,6 +19,7 @@ Additions
 - Fuel Tanks
 - Fuel Interfaces
 - Liquid Fuel System (liquid fuel can power trains)
+- Tag to disable items from being used as train fuel
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction

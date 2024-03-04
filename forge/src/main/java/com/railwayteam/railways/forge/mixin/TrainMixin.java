@@ -1,9 +1,11 @@
 package com.railwayteam.railways.forge.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -11,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
@@ -21,8 +24,16 @@ public class TrainMixin {
     @Shadow public List<Carriage> carriages;
     @Shadow public int fuelTicks;
 
+    @ModifyArg(method = "burnFuel", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;getBurnTime(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/crafting/RecipeType;)I"))
+    private ItemStack railways$disableFuelConsumptionBasedOnTag(ItemStack stack) {
+        if (stack.is(CRTags.AllItemTags.NOT_TRAIN_FUEL.tag)) {
+            return Items.AIR.getDefaultInstance();
+        }
+        return stack;
+    }
+
     @Inject(method = "burnFuel", at = @At("TAIL"))
-    private void burnFuel(CallbackInfo ci) {
+    private void railways$burnFuel(CallbackInfo ci) {
         boolean iterateFromBack = speed < 0;
         int carriageCount = carriages.size();
 
