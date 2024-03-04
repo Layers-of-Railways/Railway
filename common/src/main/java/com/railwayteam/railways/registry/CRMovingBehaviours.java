@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-public class CRInteractionBehaviours {
+public class CRMovingBehaviours {
     public static void register() {
         add(Blocks.CRAFTING_TABLE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.LOOM, new GuiBlockMovingInteractionBehaviour());
@@ -17,6 +17,8 @@ public class CRInteractionBehaviours {
         add(Blocks.GRINDSTONE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.SMITHING_TABLE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.STONECUTTER, new GuiBlockMovingInteractionBehaviour());
+
+        // Flywheel movement behaviour is added via MixinAllBlocks.java
     }
 
     private static void add(Block block, MovementBehaviour behaviour) {

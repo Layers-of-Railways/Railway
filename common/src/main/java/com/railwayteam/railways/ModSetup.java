@@ -22,7 +22,7 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraRegistration.register();
     CasingCollisionUtils.register();
-    CRInteractionBehaviours.register();
+    CRMovingBehaviours.register();
     CRPortalTracks.register();
 
     // Compat
