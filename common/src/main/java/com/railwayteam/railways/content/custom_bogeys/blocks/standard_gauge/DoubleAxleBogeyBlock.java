@@ -18,6 +18,6 @@ public class DoubleAxleBogeyBlock extends CRBogeyBlock {
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 7 / 32f, 8 / 32f);
+        return new Vec3(0, 7 / 32f, 32 / 32f);
     }
 }
