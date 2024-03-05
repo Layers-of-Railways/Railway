@@ -57,9 +57,9 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     public BoilerBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-            .setValue(STYLE, Style.GULLET)
-            .setValue(HORIZONTAL_AXIS, Axis.X)
-            .setValue(RAISED, false)
+                .setValue(STYLE, Style.GULLET)
+                .setValue(HORIZONTAL_AXIS, Axis.X)
+                .setValue(RAISED, false)
         );
     }
 
@@ -85,8 +85,8 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     @Override
     public boolean skipRendering(@NotNull BlockState state, BlockState adjacentBlockState, @NotNull Direction direction) {
         return adjacentBlockState.is(this)
-            && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS)
-            && adjacentBlockState.getValue(RAISED) == state.getValue(RAISED);
+                && adjacentBlockState.getValue(HORIZONTAL_AXIS) == state.getValue(HORIZONTAL_AXIS)
+                && adjacentBlockState.getValue(RAISED) == state.getValue(RAISED);
     }
 
     @Override
@@ -123,8 +123,8 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
         if (axis == Axis.Y)
             axis = context.getHorizontalDirection().getAxis();
         return defaultBlockState()
-            .setValue(HORIZONTAL_AXIS, axis)
-            .setValue(RAISED, raised);
+                .setValue(HORIZONTAL_AXIS, axis)
+                .setValue(RAISED, raised);
     }
 
     @Override
@@ -225,8 +225,7 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
 
     public enum Style implements StringRepresentable {
         GULLET("boiler_gullet"),
-        SMOKEBOX("smokebox_door")
-        ;
+        SMOKEBOX("smokebox_door");
 
         private final String texture;
 

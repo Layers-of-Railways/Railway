@@ -43,12 +43,12 @@ public class BoilerGenerator extends SpecialBlockStateGen {
         // but when I do it in blockstate there's horrible shading issues for the z rotation
         String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
         return prov.models().withExistingParent(ctx.getName() + "_" + style.getSerializedName() + "_" + axis.getName() + (raised ? "_raised" : ""), prov.modLoc("block/palettes/boiler/boiler"))
-            .customLoader(CustomObjModelBuilder::begin)
-            .flipV(true)
-            .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_"+axis.getName()+(raised ? "_raised" : "")+".obj"))
-            .end()
-            .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
-            .texture("sides", prov.modLoc("block/palettes/" + colorName + "/" + (wrapping != null ? wrapping.prefix("wrapped_boiler_side") : "boiler_side")))
-            .texture("particle", prov.modLoc("block/palettes/" + colorName + "/riveted_pillar_top"));
+                .customLoader(CustomObjModelBuilder::begin)
+                .flipV(true)
+                .modelLocation(prov.modLoc("models/block/palettes/boiler/boiler_" + axis.getName() + (raised ? "_raised" : "") + ".obj"))
+                .end()
+                .texture("front", prov.modLoc("block/palettes/" + colorName + "/" + style.getTexture()))
+                .texture("sides", prov.modLoc("block/palettes/" + colorName + "/" + (wrapping != null ? wrapping.prefix("wrapped_boiler_side") : "boiler_side")))
+                .texture("particle", prov.modLoc("block/palettes/" + colorName + "/riveted_pillar_top"));
     }
 }
