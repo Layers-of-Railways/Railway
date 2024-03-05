@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
+import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -7,13 +8,27 @@ import com.railwayteam.railways.mixin_interfaces.IForceRenderingSodium;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.IHasBigOutline;
+import com.simibubi.create.content.equipment.extendoGrip.ExtendoGripItem;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.placement.IPlacementHelper;
+import com.simibubi.create.foundation.placement.PlacementHelpers;
+import com.simibubi.create.foundation.placement.PlacementOffset;
+import com.simibubi.create.foundation.placement.PoleHelper;
+import com.simibubi.create.infrastructure.config.AllConfigs;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,15 +36,20 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 
 public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium, IHasCustomOutline, IHasBigOutline {
+    public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
+
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public static final EnumProperty<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;
     public static final BooleanProperty RAISED = BooleanProperty.create("raised"); // raise by 1/2 block
@@ -105,6 +125,22 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
         return defaultBlockState()
             .setValue(HORIZONTAL_AXIS, axis)
             .setValue(RAISED, raised);
+    }
+
+    @Override
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                                          Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+        if (player.isShiftKeyDown() || !player.mayBuild())
+            return InteractionResult.PASS;
+
+        ItemStack heldItem = player.getItemInHand(hand);
+
+        IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
+        if (helper.matchesItem(heldItem))
+            return helper.getOffset(player, level, state, pos, hit)
+                    .placeInWorld(level, (BlockItem) heldItem.getItem(), player, hand, hit);
+
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -205,6 +241,52 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
 
         public String getTexture() {
             return texture;
+        }
+    }
+
+    // Boilers can follow shaft placement, it's pretty much 1:1 apart from boilers being Horizontal only
+    @MethodsReturnNonnullByDefault
+    private static class PlacementHelper extends PoleHelper<Direction.Axis> {
+        private PlacementHelper() {
+            super(state -> state.getBlock() instanceof BoilerBlock,
+                    state -> state.getValue(HORIZONTAL_AXIS), HORIZONTAL_AXIS);
+        }
+
+        @Override
+        public Predicate<ItemStack> getItemPredicate() {
+            return i -> i.getItem() instanceof BlockItem
+                    && ((BlockItem) i.getItem()).getBlock() instanceof BoilerBlock;
+        }
+
+        @Override
+        public Predicate<BlockState> getStatePredicate() {
+            return state -> state.getBlock() instanceof BoilerBlock;
+        }
+
+        @Override
+        public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos,
+                                         BlockHitResult ray) {
+            List<Direction> directions = IPlacementHelper.orderedByDistance(pos, ray.getLocation(), dir -> dir.getAxis() == axisFunction.apply(state));
+            for (Direction dir : directions) {
+                int range = AllConfigs.server().equipment.placementAssistRange.get();
+                if (player != null) {
+                    AttributeInstance reach = player.getAttribute(ReachEntityAttributes.REACH);
+                    if (reach != null && reach.hasModifier(ExtendoGripItem.singleRangeAttributeModifier))
+                        range += 4;
+                }
+                int poles = attachedPoles(world, pos, dir);
+                if (poles >= range)
+                    continue;
+
+                BlockPos newPos = pos.relative(dir, poles + 1);
+                BlockState newState = world.getBlockState(newPos);
+
+                if (newState.getMaterial().isReplaceable())
+                    return PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
+
+            }
+
+            return PlacementOffset.fail();
         }
     }
 }
