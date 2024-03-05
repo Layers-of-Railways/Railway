@@ -35,7 +35,7 @@ public class TrainMixin {
         );
     }
 
-    @Inject(method = "burnFuel", at = @At("TAIL"))
+    @Inject(method = "burnFuel", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", shift = At.Shift.AFTER))
     private void railways$burnFuel(CallbackInfo ci) {
         boolean iterateFromBack = speed < 0;
         int carriageCount = carriages.size();
