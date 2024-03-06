@@ -131,7 +131,7 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(ResourceLocation modelLoc, String variant, boolean rotates) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, SmokeStackBlock.RotationType rotType) {
         throw new AssertionError();
     }
 

@@ -25,6 +25,7 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTags;
@@ -180,22 +181,23 @@ public class BuilderTransformersImpl {
                 .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(ResourceLocation modelLoc, String variant, boolean rotates) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, RotationType rotType) {
         return (c, p) -> p.getVariantBuilder(c.get())
-                .forAllStatesExcept(state -> ConfiguredModel.builder()
-                                .modelFile(p.models().withExistingParent(
-                                                        c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
-                                                        Railways.asResource("block/smokestack/block_" + variant)
-                                                )
-                                                .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
-                                                .texture("particle", "#0")
-                                )
-                                .rotationY(rotates ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
-                                .build(),
-                        AbstractSmokeStackBlock.ENABLED,
-                        AbstractSmokeStackBlock.POWERED,
-                        AbstractSmokeStackBlock.WATERLOGGED
-                );
+                        .forAllStatesExcept(state -> ConfiguredModel.builder()
+                                        .modelFile(p.models().withExistingParent(
+                                                                c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
+                                                                Railways.asResource("block/smokestack/block_" + variant)
+                                                        )
+                                                        .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
+                                                        .texture("particle", "#0")
+                                        )
+                                        .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
+                                                rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                                        .build(),
+                                AbstractSmokeStackBlock.ENABLED,
+                                AbstractSmokeStackBlock.POWERED,
+                                AbstractSmokeStackBlock.WATERLOGGED
+                        );
     }
 
     public static <B extends CasingCollisionBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> casingCollision() {

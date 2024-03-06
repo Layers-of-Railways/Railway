@@ -41,7 +41,10 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
-import com.railwayteam.railways.content.smokestack.block.*;
+import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.FacingSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
@@ -71,7 +74,6 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -159,9 +161,16 @@ public class CRBlocks {
         T create(BlockBehaviour.Properties properties, SmokeStackBlock.SmokeStackType type, ShapeWrapper shape, boolean emitStationarySmoke, String variant);
     }
 
-    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
-        ResourceLocation modelLoc = Railways.asResource("block/smokestack/block_" + variant);
-        return makeSmokeStack(variant, type, description, rotates, shape, spawnExtraSmoke, emitStationarySmoke, BuilderTransformers.defaultSmokeStack(modelLoc, variant, rotates), rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
+    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, RotationType rotType, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
+        SmokeStackFunction<SmokeStackBlock> blockFunction = SmokeStackBlock::new;
+
+        switch (rotType) {
+            case NONE -> blockFunction = SmokeStackBlock::new;
+            case AXIS -> blockFunction = AxisSmokeStackBlock::new;
+            case FACING -> blockFunction = FacingSmokeStackBlock::new;
+        }
+
+        return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke, BuilderTransformers.defaultSmokeStack( variant, rotType), blockFunction);
     }
 
     public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
