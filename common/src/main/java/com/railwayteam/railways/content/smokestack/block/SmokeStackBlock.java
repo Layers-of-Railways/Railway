@@ -215,4 +215,8 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
             return particleSpawnDelta;
         }
     }
+
+    public enum RotationType {
+        NONE, AXIS, FACING
+    }
 }

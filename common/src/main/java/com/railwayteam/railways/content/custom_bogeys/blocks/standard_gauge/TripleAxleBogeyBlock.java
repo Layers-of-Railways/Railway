@@ -12,7 +12,7 @@ public class TripleAxleBogeyBlock extends CRBogeyBlock {
 
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 6 / 32f, 42 / 32f);
+        return new Vec3(0, 7 / 32f, 48 / 32f);
     }
 
     @Override

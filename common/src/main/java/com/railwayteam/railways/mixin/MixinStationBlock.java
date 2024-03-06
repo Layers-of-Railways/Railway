@@ -71,7 +71,7 @@ public abstract class MixinStationBlock {
                     Carriage conductorCarriage = null;
                     if(train==null)return;
                     for (Carriage carriage : train.carriages) {
-                        if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
+                        if (((ICarriageConductors) carriage).railways$getControllingConductors().contains(conductorId)) {
                             foundConductor = true;
                             conductorCarriage = carriage;
                             break;

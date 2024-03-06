@@ -11,6 +11,7 @@ import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
 import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
+import com.railwayteam.railways.mixin_interfaces.IDistanceTravelled;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
@@ -47,15 +48,16 @@ import java.util.Optional;
 import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
-public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity {
+public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity implements IDistanceTravelled {
     @Shadow private Carriage carriage;
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
     }
 
-    @Unique
-    private boolean railways$fakePlayer = false;
+    @Unique private boolean railways$fakePlayer = false;
+
+    @Unique private double railways$distanceTravelled;
 
     @Inject(method = "control", at = @At("HEAD"))
     private void recordFakePlayer(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
@@ -212,5 +214,15 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         if (((IBufferBlockedTrain) carriage.train).railways$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).railways$getBlockedSign() == Mth.sign(targetSpeed.get())) {
             targetSpeed.set(0);
         }
+    }
+
+    @Inject(method = "tickContraption", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Couple;getFirst()Ljava/lang/Object;"))
+    private void railways$storeDistanceTravelled(CallbackInfo ci, @Local(name = "distanceTo", ordinal = 0) double distanceTo) {
+        railways$distanceTravelled = distanceTo;
+    }
+
+    @Override
+    public double railways$getDistanceTravelled() {
+        return railways$distanceTravelled;
     }
 }

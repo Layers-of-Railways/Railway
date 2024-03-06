@@ -28,6 +28,7 @@ public enum Mods {
 	TFC("tfc"),
 	MALILIB("malilib"),
 	TWEAKEROO("tweakeroo"),
+	EXTENDEDFLYWHEELS("extendedflywheels")
 	;
 
 	public final boolean isLoaded;

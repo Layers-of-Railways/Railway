@@ -44,11 +44,11 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
 
     @Shadow public abstract TravellingPoint getTrailingPoint();
 
-    private final List<UUID> controllingConductors = new ArrayList<>();
+    private final List<UUID> railways$controllingConductors = new ArrayList<>();
 
     @Override
-    public List<UUID> getControllingConductors() {
-        return controllingConductors;
+    public List<UUID> railways$getControllingConductors() {
+        return railways$controllingConductors;
     }
 
     @Unique
@@ -78,7 +78,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
 
     @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
     private Couple<Boolean> addControllingConductors(CarriageContraptionEntity instance) {
-        controllingConductors.clear();
+        railways$controllingConductors.clear();
         if (instance.getContraption() instanceof CarriageContraption cc) {
             for (Entity passenger : instance.getPassengers()) {
                 if (!(passenger instanceof ConductorEntity))
@@ -90,7 +90,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
                 if (validSides == null)
                     continue;
                 if (validSides.getFirst() || validSides.getSecond())
-                    controllingConductors.add(passenger.getUUID());
+                    railways$controllingConductors.add(passenger.getUUID());
             }
         }
         return instance.checkConductors();
@@ -100,7 +100,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     private void writeControllingConductors(DimensionPalette dimensions, CallbackInfoReturnable<CompoundTag> cir) {
         CompoundTag tag = cir.getReturnValue();
         ListTag listTag = new ListTag();
-        for (UUID uuid : controllingConductors) {
+        for (UUID uuid : railways$controllingConductors) {
             CompoundTag uuidTag = new CompoundTag();
             uuidTag.putUUID("UUID", uuid);
             listTag.add(uuidTag);
@@ -116,7 +116,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     @Inject(method = "read", at = @At("RETURN"))
     private static void readControllingConductors(CompoundTag tag, TrackGraph graph, DimensionPalette dimensions, CallbackInfoReturnable<Carriage> cir) {
         Carriage carriage = cir.getReturnValue();
-        List<UUID> controllingConductors = ((ICarriageConductors) carriage).getControllingConductors();
+        List<UUID> controllingConductors = ((ICarriageConductors) carriage).railways$getControllingConductors();
         controllingConductors.clear();
         if (tag.contains("ControllingConductors", Tag.TAG_LIST)) {
             ListTag listTag = tag.getList("ControllingConductors", Tag.TAG_COMPOUND);
