@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.palettes.boiler;
 
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -15,6 +14,7 @@ import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +22,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -269,7 +270,7 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
             for (Direction dir : directions) {
                 int range = AllConfigs.server().equipment.placementAssistRange.get();
                 if (player != null) {
-                    AttributeInstance reach = player.getAttribute(ReachEntityAttributes.REACH);
+                    AttributeInstance reach = player.getAttribute(getAttribute());
                     if (reach != null && reach.hasModifier(ExtendoGripItem.singleRangeAttributeModifier))
                         range += 4;
                 }
@@ -285,6 +286,11 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
             }
 
             return PlacementOffset.fail();
+        }
+
+        @ExpectPlatform
+        public static Attribute getAttribute() {
+            throw new AssertionError();
         }
     }
 }
