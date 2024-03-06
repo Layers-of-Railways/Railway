@@ -282,7 +282,6 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
 
                 if (newState.getMaterial().isReplaceable())
                     return PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
-
             }
 
             return PlacementOffset.fail();
