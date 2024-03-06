@@ -272,7 +272,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
                 BlockPos newPos = pos.relative(dir, poles + 1);
                 BlockState newState = world.getBlockState(newPos);
 
-                if (newState.getMaterial().isReplaceable())
+                if (newState.canBeReplaced())
                     return PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
 
             }
