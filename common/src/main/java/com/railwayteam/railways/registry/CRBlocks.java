@@ -170,7 +170,7 @@ public class CRBlocks {
             case FACING -> blockFunction = FacingSmokeStackBlock::new;
         }
 
-        return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke, BuilderTransformers.defaultSmokeStack( variant, rotType), blockFunction);
+        return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke, BuilderTransformers.defaultSmokeStack(variant, rotType), blockFunction);
     }
 
     public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
