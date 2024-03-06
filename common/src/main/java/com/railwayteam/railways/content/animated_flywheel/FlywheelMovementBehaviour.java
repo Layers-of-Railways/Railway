@@ -25,7 +25,7 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
         ICarriageFlywheel flywheel = ((ICarriageFlywheel) flywheelBlockEntity);
         double distanceTravelled = ((IDistanceTravelled) carriageContraptionEntity).railways$getDistanceTravelled();
 
-        double angleDiff = (360 * (distanceTravelled / 3) / (Math.PI * 2.8125)) * .3;
+        double angleDiff = (360 * (distanceTravelled / 4) / (Math.PI * 2.8125)) * .3;
         float newWheelAngle = (float) ((flywheel.railways$getAngle() - angleDiff) % 360);
 
         flywheel.railways$setAngle(newWheelAngle);
