@@ -5,6 +5,6 @@ import net.minecraftforge.common.ForgeMod;
 
 public class BoilerBlockPlacementHelperImpl {
     public static Attribute getAttribute() {
-        return ForgeMod.REACH_DISTANCE.get();
+        return ForgeMod.BLOCK_REACH.get();
     }
 }
