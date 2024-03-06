@@ -274,7 +274,6 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
 
                 if (newState.canBeReplaced())
                     return PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
-
             }
 
             return PlacementOffset.fail();
