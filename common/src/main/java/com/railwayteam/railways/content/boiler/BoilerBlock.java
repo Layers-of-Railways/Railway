@@ -116,11 +116,6 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
         };
     }
 
-    @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
-        super.spawnDestroyParticles(level, player, pos, state);
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
