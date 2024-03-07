@@ -1,6 +1,5 @@
-package com.railwayteam.railways.content.palettes.boiler;
+package com.railwayteam.railways.content.boiler;
 
-import com.railwayteam.railways.content.palettes.boiler.BoilerBlock.Style;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -35,7 +34,7 @@ public class BoilerGenerator extends SpecialBlockStateGen {
 
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
-        Style style = state.getValue(BoilerBlock.STYLE);
+        BoilerBlock.Style style = state.getValue(BoilerBlock.STYLE);
         Direction.Axis axis = state.getValue(BoilerBlock.HORIZONTAL_AXIS);
         boolean raised = state.getValue(BoilerBlock.RAISED);
 
