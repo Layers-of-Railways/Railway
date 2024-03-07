@@ -4,6 +4,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.Ingredients;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.content.conductor.remote_lens.RemoteLensItem;
+import com.railwayteam.railways.content.coupling.hand_coupler.HandCouplerItem;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.content.minecarts.MinecartWorkbench;
 import com.railwayteam.railways.multiloader.CommonTags;
@@ -94,6 +95,10 @@ public class CRItems {
 
   public static final ItemEntry<? extends RemoteLensItem> REMOTE_LENS = REGISTRATE.item("remote_lens", RemoteLensItem::new)
       .lang("Remote Lens")
+      .register();
+
+  public static ItemEntry<? extends HandCouplerItem> HAND_COUPLER = REGISTRATE.item("hand_coupler", HandCouplerItem::new)
+      .lang("Hand Coupler")
       .register();
 
   public static final EnumMap<DyeColor, ItemEntry<ConductorCapItem>> ITEM_CONDUCTOR_CAP = new EnumMap<>(DyeColor.class);

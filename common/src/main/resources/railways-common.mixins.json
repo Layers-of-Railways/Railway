@@ -35,6 +35,7 @@
     "MixinCarriageContraptionEntity",
     "MixinConfigHelper",
     "MixinContraption",
+    "MixinContraptionHandlerClient",
     "MixinDeployerHandler",
     "MixinDoorBlock",
     "MixinDoorMovingInteraction",
