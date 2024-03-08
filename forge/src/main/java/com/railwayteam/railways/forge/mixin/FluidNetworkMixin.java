@@ -28,7 +28,7 @@ public class FluidNetworkMixin {
             return;
         if (frontier.isEmpty())
             return;
-        if (handler instanceof InterfaceFluidHandler)
-            ((InterfaceFluidHandler) handler).keepAlive();
+        if (handler instanceof InterfaceFluidHandler fluidHandler)
+            fluidHandler.keepAlive();
     }
 }
