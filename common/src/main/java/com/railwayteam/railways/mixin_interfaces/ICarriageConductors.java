@@ -4,5 +4,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICarriageConductors {
-    List<UUID> getControllingConductors();
+    List<UUID> railways$getControllingConductors();
 }

@@ -1,53 +1,109 @@
 {
   "variants": {
-    "axis=x,style=brass": {
+    "facing=east,style=brass": {
       "model": "railways:block/smokestack_streamlined_brass",
       "y": 90
     },
-    "axis=x,style=brass_cap_copper": {
+    "facing=east,style=brass_cap_copper": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper",
       "y": 90
     },
-    "axis=x,style=brass_cap_steel": {
+    "facing=east,style=brass_cap_steel": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel",
       "y": 90
     },
-    "axis=x,style=copper": {
+    "facing=east,style=copper": {
       "model": "railways:block/smokestack_streamlined_copper",
       "y": 90
     },
-    "axis=x,style=copper_cap_brass": {
+    "facing=east,style=copper_cap_brass": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass",
       "y": 90
     },
-    "axis=x,style=copper_cap_steel": {
+    "facing=east,style=copper_cap_steel": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel",
       "y": 90
     },
-    "axis=x,style=steel": {
+    "facing=east,style=steel": {
       "model": "railways:block/smokestack_streamlined_steel",
       "y": 90
     },
-    "axis=z,style=brass": {
+    "facing=north,style=brass": {
       "model": "railways:block/smokestack_streamlined_brass"
     },
-    "axis=z,style=brass_cap_copper": {
+    "facing=north,style=brass_cap_copper": {
       "model": "railways:block/smokestack_streamlined_brass_cap_copper"
     },
-    "axis=z,style=brass_cap_steel": {
+    "facing=north,style=brass_cap_steel": {
       "model": "railways:block/smokestack_streamlined_brass_cap_steel"
     },
-    "axis=z,style=copper": {
+    "facing=north,style=copper": {
       "model": "railways:block/smokestack_streamlined_copper"
     },
-    "axis=z,style=copper_cap_brass": {
+    "facing=north,style=copper_cap_brass": {
       "model": "railways:block/smokestack_streamlined_copper_cap_brass"
     },
-    "axis=z,style=copper_cap_steel": {
+    "facing=north,style=copper_cap_steel": {
       "model": "railways:block/smokestack_streamlined_copper_cap_steel"
     },
-    "axis=z,style=steel": {
+    "facing=north,style=steel": {
       "model": "railways:block/smokestack_streamlined_steel"
+    },
+    "facing=south,style=brass": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 180
+    },
+    "facing=south,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 180
+    },
+    "facing=south,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 180
+    },
+    "facing=south,style=copper": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 180
+    },
+    "facing=south,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 180
+    },
+    "facing=south,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 180
+    },
+    "facing=south,style=steel": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 180
+    },
+    "facing=west,style=brass": {
+      "model": "railways:block/smokestack_streamlined_brass",
+      "y": 270
+    },
+    "facing=west,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_copper",
+      "y": 270
+    },
+    "facing=west,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_brass_cap_steel",
+      "y": 270
+    },
+    "facing=west,style=copper": {
+      "model": "railways:block/smokestack_streamlined_copper",
+      "y": 270
+    },
+    "facing=west,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_brass",
+      "y": 270
+    },
+    "facing=west,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_copper_cap_steel",
+      "y": 270
+    },
+    "facing=west,style=steel": {
+      "model": "railways:block/smokestack_streamlined_steel",
+      "y": 270
     }
   }
 }

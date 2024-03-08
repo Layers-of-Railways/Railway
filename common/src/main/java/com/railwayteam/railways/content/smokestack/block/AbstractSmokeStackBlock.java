@@ -78,7 +78,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
 
     @Override
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        if (this instanceof DieselSmokeStackBlock)
+        if (variant.equals("diesel") || variant.equals("caboosestyle"))
             return super.getCloneItemStack(level, pos, state);
         return CRBlocks.SMOKESTACK_GROUP.get(variant).get(state.getValue(STYLE)).asStack();
     }

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.boiler;
+package com.railwayteam.railways.content.boiler;
 
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTType;

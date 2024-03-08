@@ -2,8 +2,6 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.moving_bes.GuiBlockMovingInteractionBehaviour;
 import com.simibubi.create.AllInteractionBehaviours;
-import com.simibubi.create.AllMovementBehaviours;
-import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovingInteractionBehaviour;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -17,14 +15,6 @@ public class CRInteractionBehaviours {
         add(Blocks.GRINDSTONE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.SMITHING_TABLE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.STONECUTTER, new GuiBlockMovingInteractionBehaviour());
-    }
-
-    private static void add(Block block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
-    }
-
-    private static void add(ResourceLocation block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
     }
 
     private static void add(Block block, MovingInteractionBehaviour behaviour) {
