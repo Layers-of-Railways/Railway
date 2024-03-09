@@ -67,7 +67,14 @@ subprojects {
     val capitalizedName = project.name.capitalized()
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
-    loom.silentMojangMappingsLicense()
+    loom.apply {
+        silentMojangMappingsLicense()
+        runs.configureEach {
+            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.env.remapRefMap=true")
+            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+        }
+    }
 
     configurations.configureEach {
         resolutionStrategy {
@@ -252,15 +259,6 @@ fun squishJar(jar: File) {
         out.finish()
         out.close()
     }
-}
-
-// Task Dependencies
-tasks.named(":fabric:publishMods") {
-    dependsOn(":fabric:build", ":fabric:publish")
-}
-
-tasks.named(":forge:publishMods") {
-    dependsOn(":forge:build", ":forge:publish")
 }
 
 operator fun String.invoke(): String {

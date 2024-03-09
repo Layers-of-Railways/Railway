@@ -1,16 +1,10 @@
+import dev.ithundxr.silk.ChangelogText
+
 architectury.fabric()
 
 loom {
     val common = project(":common")
     accessWidenerPath = common.loom.accessWidenerPath
-
-    silentMojangMappingsLicense()
-    runs.configureEach {
-        vmArg("-Dmixin.debug.export=true")
-        vmArg("-Dmixin.env.remapRefMap=true")
-        vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-    }
-
 
     runs {
         create("datagen") {
@@ -99,7 +93,7 @@ dependencies {
 publishMods {
     file(tasks.remapJar.get().archiveFile)
     version.set(project.version.toString())
-    changelog = dev.ithundxr.silk.ChangelogText.getChangelogText(rootProject).toString()
+    changelog = ChangelogText.getChangelogText(rootProject).toString()
     type = STABLE
     displayName = "Steam 'n' Rails ${"mod_version"()} Fabric ${"minecraft_version"()}"
     modLoaders.add("fabric")
@@ -124,6 +118,10 @@ publishMods {
             slug = "create-fabric"
         }
     }
+}
+
+tasks.named(":fabric:publishMods") {
+    dependsOn(":fabric:build", ":fabric:publish")
 }
 
 operator fun String.invoke(): String {
