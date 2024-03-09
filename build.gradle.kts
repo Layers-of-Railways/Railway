@@ -62,8 +62,11 @@ allprojects {
 subprojects {
     apply(plugin = "dev.architectury.loom")
 
-    val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
+    setupRepositories()
 
+    val capitalizedName = project.name.capitalized()
+
+    val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
     loom.apply {
         silentMojangMappingsLicense()
         runs.configureEach {
@@ -72,10 +75,6 @@ subprojects {
             vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
         }
     }
-
-    setupRepositories()
-
-    val capitalizedName = project.name.capitalized()
 
     configurations.configureEach {
         resolutionStrategy {
