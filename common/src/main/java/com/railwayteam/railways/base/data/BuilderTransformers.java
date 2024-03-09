@@ -8,8 +8,8 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
-import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
-import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.boiler.BoilerBlock;
+import com.railwayteam.railways.content.boiler.BoilerGenerator;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;

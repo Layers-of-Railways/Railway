@@ -178,7 +178,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             boolean foundConductor = false;
             Carriage conductorCarriage = null;
             for (Carriage carriage : train.carriages) {
-                if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
+                if (((ICarriageConductors) carriage).railways$getControllingConductors().contains(conductorId)) {
                     foundConductor = true;
                     conductorCarriage = carriage;
                     break;

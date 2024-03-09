@@ -1,7 +1,7 @@
 package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.boiler.BoilerBlock;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.railwayteam.railways.content.palettes.boiler.BoilerBlock.HORIZONTAL_AXIS;
+import static com.railwayteam.railways.content.boiler.BoilerBlock.HORIZONTAL_AXIS;
 import static net.minecraft.world.level.block.RotatedPillarBlock.AXIS;
 
 public class PalettesDemoCommand {
