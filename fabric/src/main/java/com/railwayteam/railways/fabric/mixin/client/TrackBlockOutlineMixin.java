@@ -1,4 +1,4 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.fabric.mixin.client;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.CustomTrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;

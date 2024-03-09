@@ -1,4 +1,4 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.fabric.mixin.client;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;

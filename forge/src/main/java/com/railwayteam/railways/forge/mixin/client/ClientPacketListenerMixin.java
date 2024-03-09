@@ -1,4 +1,4 @@
-package com.railwayteam.railways.forge.mixin;
+package com.railwayteam.railways.forge.mixin.client;
 
 import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.multiloader.forge.PacketSetImpl;

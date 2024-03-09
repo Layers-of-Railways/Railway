@@ -224,7 +224,7 @@ public class CRBlocks {
             group.registerDefaultEntry(SmokestackStyle.STEEL, ItemEntry.cast(REGISTRATE.get("smokestack_" + variant, Registry.ITEM_REGISTRY)));
         }
 
-return BLOCK;
+        return BLOCK;
     }
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)

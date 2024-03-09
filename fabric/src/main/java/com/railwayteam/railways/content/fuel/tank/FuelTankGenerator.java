@@ -6,11 +6,11 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 public class FuelTankGenerator extends SpecialBlockStateGen {
-
-    private String prefix;
+    private final String prefix;
 
     public FuelTankGenerator() {
         this("");
@@ -18,6 +18,11 @@ public class FuelTankGenerator extends SpecialBlockStateGen {
 
     public FuelTankGenerator(String prefix) {
         this.prefix = prefix;
+    }
+
+    @Override
+    protected Property<?>[] getIgnoredProperties() {
+        return new Property<?>[] { FuelTankBlock.LIGHT_LEVEL };
     }
 
     @Override

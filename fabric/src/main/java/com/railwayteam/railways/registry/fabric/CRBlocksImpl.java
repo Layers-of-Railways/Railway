@@ -45,15 +45,15 @@ public class CRBlocksImpl {
             .register();
 
     public static final BlockEntry<PortableFuelInterfaceBlock> PORTABLE_FUEL_INTERFACE = REGISTRATE.block("portable_fuel_interface", PortableFuelInterfaceBlock::new)
-                    .initialProperties(SharedProperties::copperMetal)
-                    .properties(p -> p.color(MaterialColor.TERRACOTTA_LIGHT_GRAY))
-                    .transform(axeOrPickaxe())
-                    .blockstate((c, p) -> p.directionalBlock(c.get(), AssetLookup.partialBaseModel(c, p)))
-                    .onRegister(movementBehaviour(new PortableStorageInterfaceMovement()))
-                    .item()
-                    .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
-                    .transform(customItemModel())
-                    .register();
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.color(MaterialColor.TERRACOTTA_LIGHT_GRAY))
+            .transform(axeOrPickaxe())
+            .blockstate((c, p) -> p.directionalBlock(c.get(), AssetLookup.partialBaseModel(c, p)))
+            .onRegister(movementBehaviour(new PortableStorageInterfaceMovement()))
+            .item()
+            .tag(AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag)
+            .transform(customItemModel())
+            .register();
 
     public static void platformBasedRegistration() {
         BlockMovementChecks.registerAttachedCheck((BlockState state, Level world, BlockPos pos, Direction direction) -> {

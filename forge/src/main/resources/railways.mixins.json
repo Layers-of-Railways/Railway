@@ -5,10 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
-    "ClientPacketListenerMixin",
-    "GoggleOverlayRendererMixin",
-    "TrackBlockOutlineMixin",
-    "TrainHUDMixin"
+    "client.ClientPacketListenerMixin",
+    "client.GoggleOverlayRendererMixin",
+    "client.TrackBlockOutlineMixin",
+    "client.TrainHUDMixin"
   ],
   "mixins": [
     "ChunkMapAccessor",
