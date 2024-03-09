@@ -67,7 +67,14 @@ subprojects {
     val capitalizedName = project.name.capitalized()
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
-    loom.silentMojangMappingsLicense()
+    loom.apply {
+        silentMojangMappingsLicense()
+        runs.configureEach {
+            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.env.remapRefMap=true")
+            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+        }
+    }
 
     configurations.configureEach {
         resolutionStrategy {

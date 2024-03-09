@@ -1,15 +1,10 @@
+import dev.ithundxr.silk.ChangelogText
+
 architectury.forge()
 
 loom {
     val common = project(":common")
     accessWidenerPath = common.loom.accessWidenerPath
-
-    silentMojangMappingsLicense()
-    runs.configureEach {
-        vmArg("-Dmixin.debug.export=true")
-        vmArg("-Dmixin.env.remapRefMap=true")
-        vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-    }
 
     forge {
         mixinConfig("railways-common.mixins.json")
@@ -94,7 +89,7 @@ dependencies {
 publishMods {
     file(tasks.remapJar.get().archiveFile)
     version.set(project.version.toString())
-    changelog = dev.ithundxr.silk.ChangelogText.getChangelogText(rootProject).toString()
+    changelog = ChangelogText.getChangelogText(rootProject).toString()
     type = STABLE
     displayName = "Steam 'n' Rails ${"mod_version"()} Forge ${"minecraft_version"()}"
     modLoaders.add("forge")
@@ -119,6 +114,10 @@ publishMods {
             slug = "create"
         }
     }
+}
+
+tasks.publishMods.configure {
+    dependsOn(tasks.build, tasks.publish)
 }
 
 operator fun String.invoke(): String {
