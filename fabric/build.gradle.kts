@@ -120,8 +120,8 @@ publishMods {
     }
 }
 
-tasks.named(":fabric:publishMods") {
-    dependsOn(":fabric:build", ":fabric:publish")
+tasks.publishMods.configure {
+    dependsOn(tasks.build, tasks.publish)
 }
 
 operator fun String.invoke(): String {

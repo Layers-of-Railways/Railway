@@ -116,8 +116,8 @@ publishMods {
     }
 }
 
-tasks.named(":forge:publishMods") {
-    dependsOn(":forge:build", ":forge:publish")
+tasks.publishMods.configure {
+    dependsOn(tasks.build, tasks.publish)
 }
 
 operator fun String.invoke(): String {
