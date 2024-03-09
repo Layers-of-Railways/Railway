@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.boiler.fabric;
+package com.railwayteam.railways.content.boiler.fabric;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
