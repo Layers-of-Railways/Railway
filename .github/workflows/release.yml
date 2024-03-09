@@ -39,8 +39,8 @@ jobs:
 
       - name: Build & Publish Fabric or Forge
         if: ${{ inputs.platform }} == "fabric" || ${{ inputs.platform }} == "forge"
-        run: ./gradlew :${{ inputs.platform }}:build :${{ inputs.platform }}:publish :${{ inputs.platform }}:publishMods
+        run: ./gradlew :${{ inputs.platform }}:publishMods
 
       - name: Build & Publish Both
         if: ${{ inputs.platform }} == "both"
-        run: ./gradlew build :fabric:publish :forge:publish :fabric:publishMods :forge:publishMods
+        run: ./gradlew :fabric:publishMods :forge:publishMods

@@ -254,6 +254,15 @@ fun squishJar(jar: File) {
     }
 }
 
+// Task Dependencies
+tasks.named(":fabric:publishMods") {
+    dependsOn(":fabric:build", ":fabric:publish")
+}
+
+tasks.named(":forge:publishMods") {
+    dependsOn(":forge:build", ":forge:publish")
+}
+
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String
         ?: throw IllegalStateException("Property $this is not defined")
