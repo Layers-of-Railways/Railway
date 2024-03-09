@@ -41,7 +41,8 @@ public class ModSetup {
     CRDataFixers.register();
     CRExtraRegistration.register();
     CasingCollisionUtils.register();
-    CRMovingBehaviours.register();
+    CRInteractionBehaviours.register();
+    CRMovementBehaviours.register();
     CRPortalTracks.register();
 
     // Compat

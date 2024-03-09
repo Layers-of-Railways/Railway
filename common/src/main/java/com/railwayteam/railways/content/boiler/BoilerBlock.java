@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.palettes.boiler;
+package com.railwayteam.railways.content.boiler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -256,8 +256,10 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
         }
 
         @Override
-        public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos,
+        public PlacementOffset getOffset(Player player, Level level, BlockState state, BlockPos pos,
                                          BlockHitResult ray) {
+            PlacementOffset offset = PlacementOffset.fail();
+
             List<Direction> directions = IPlacementHelper.orderedByDistance(pos, ray.getLocation(), dir -> dir.getAxis() == axisFunction.apply(state));
             for (Direction dir : directions) {
                 int range = AllConfigs.server().equipment.placementAssistRange.get();
@@ -266,18 +268,23 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
                     if (reach != null && reach.hasModifier(ExtendoGripItem.singleRangeAttributeModifier))
                         range += 4;
                 }
-                int poles = attachedPoles(world, pos, dir);
+                int poles = attachedPoles(level, pos, dir);
                 if (poles >= range)
                     continue;
 
                 BlockPos newPos = pos.relative(dir, poles + 1);
-                BlockState newState = world.getBlockState(newPos);
+                BlockState newState = level.getBlockState(newPos);
 
                 if (newState.canBeReplaced())
-                    return PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
+                    offset = PlacementOffset.success(newPos, bState -> bState.setValue(HORIZONTAL_AXIS, state.getValue(HORIZONTAL_AXIS)));
             }
 
-            return PlacementOffset.fail();
+            if (offset.isSuccessful()) {
+                offset.withTransform(offset.getTransform()
+                        .andThen(s -> s.setValue(RAISED, state.getValue(RAISED))));
+            }
+
+            return offset;
         }
 
         @ExpectPlatform
