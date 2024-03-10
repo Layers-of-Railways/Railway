@@ -9,7 +9,7 @@ import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.railwayteam.railways.util.TextUtils;
+import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -79,7 +79,7 @@ public class MixinTrackRenderer {
                 }
                 ms.popPose();
             } else {
-                TextUtils.renderDebugText(ms, buffer, light, 1, true, "No casing for shape " + shape);
+                ClientTextUtils.renderDebugText(ms, buffer, light, 1, true, "No casing for shape " + shape);
             }
         }
     }

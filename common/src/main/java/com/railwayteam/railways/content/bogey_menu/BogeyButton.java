@@ -3,18 +3,15 @@ package com.railwayteam.railways.content.bogey_menu;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 public class BogeyButton extends Button {
-    public BogeyButton(int x, int y, int width, int height, Component message, OnPress onPress) {
-        super(x, y, width, height, message, onPress);
-    }
-
-    public BogeyButton(int x, int y, int width, int height, Component message, OnPress onPress, OnTooltip onTooltip) {
-        super(x, y, width, height, message, onPress, onTooltip);
+    public BogeyButton(int x, int y, int width, int height, OnPress onPress) {
+        super(x, y, width, height, Component.empty(), onPress);
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) { super.render(poseStack, mouseX, mouseY, partialTick); } // NO-OP
+    public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) { } // NO-OP
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {

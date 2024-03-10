@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.Constant;
 public class MixinDeployerHandler {
     // target `item instanceof BlockItem`
     @WrapOperation(method = "activateInner", constant = @Constant(classValue = BlockItem.class, ordinal = 0))
-    private static boolean handcarsAreDeployable(Object obj, Operation<Boolean> original) {
-        if (obj instanceof IDeployAnywayBlockItem)
+    private static boolean handcarsAreDeployable(Object object, Operation<Boolean> original) {
+        if (object instanceof IDeployAnywayBlockItem)
             return false;
-        return original.call(obj);
+        return original.call(object);
     }
 }

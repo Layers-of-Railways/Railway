@@ -3,11 +3,12 @@ package com.railwayteam.railways.content.bogey_menu;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
+import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRIcons;
+import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllIcons;
@@ -18,6 +19,7 @@ import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -32,9 +34,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             .map(CategoryEntry::getName)
             .toList();
     // I know its cursed
-    private CategoryEntry selectedCategory = (CategoryEntry) BogeyMenuManagerImpl.CATEGORIES.toArray()[0];
-    List<ResourceLocation> iconList = new ArrayList<>();
-    List<Component> bogeyDisplayNameList = new ArrayList<>();
+    private CategoryEntry selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(0);
+    List<BogeyEntry> bogeyList = new ArrayList<>();
+    BogeyEntry selectedBogey;
     // Amount scrolled, 0 = top and 1 = bottom
     private float scrollOffs;
 
@@ -61,7 +63,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 .titled(Component.translatable("railways.gui.bogey_menu.category"))
                 .writingTo(categoryLabel)
                 .calling(categoryIndex -> {
-                    selectedCategory = (CategoryEntry) BogeyMenuManagerImpl.CATEGORIES.toArray()[categoryIndex];
+                    selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex);
                     setupList(selectedCategory);
                 });
 
@@ -113,25 +115,15 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render the bogey icons & bogey names
         for (int i = 0; i < 6; i++) {
-            if (iconList.get(i) != null)
-                renderIcon(iconList.get(i), ms, x + 20, y + 42 + (i * 18));
+            BogeyEntry bogeyEntry = bogeyList.get(i);
+            if (bogeyEntry != null) {
+                // Icon
+                renderIcon(bogeyEntry.iconLocation(), ms, x + 20, y + 42 + (i * 18));
 
-            if (bogeyDisplayNameList.get(i) != null) {
-                Component text = bogeyDisplayNameList.get(i);
-                if (font.width(text) > 55) {
-                    String substr = font.plainSubstrByWidth(text.getString(), 55);
-                    if (substr.endsWith(" ")) {
-                        substr = substr.substring(0, substr.length() - 1) + "...";
-                    } else {
-                        substr += "...";
-                    }
-
-                    addRenderableWidget(new BogeyButton(x + 40, y + 46 + (i * 18), 10, 20, Component.literal(substr), (e) -> {}));
-                    //font.drawShadow(ms, substr, x + 40, y + 46 + (i * 18), 0xFFFFFF);
-                } else {
-                    //font.drawShadow(ms, text, x + 40, y + 46 + (i * 18), 0xFFFFFF);
-                    addRenderableWidget(new BogeyButton(x + 40, y + 46 + (i * 18), 10, 20, text, (e) -> {}));
-                }
+                // Text
+                Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
+                addRenderableWidget(new BogeyButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+                font.drawShadow(ms, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
             }
         }
     }
@@ -147,18 +139,15 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         List<BogeyEntry> bogies = categoryEntry.getBogeyEntryList();
 
         // Clear to get ready for adding new bogies
-        iconList.clear();
-        bogeyDisplayNameList.clear();
+        bogeyList.clear();
 
         // Max of 6 slots, objects inside the slots will be mutated later
         for (int i = 0; i < 6; i++) {
             if (i < bogies.size()) {
-                iconList.add(bogies.get(i).iconLocation());
-                bogeyDisplayNameList.add(getTrimmedComponent(bogies.get(i).bogeyStyle().displayName));
+                bogeyList.add(bogies.get(i));
             } else {
                 // I know, this is silly but its best way to know if rendering should be skipped
-                iconList.add(null);
-                bogeyDisplayNameList.add(null);
+                bogeyList.add(null);
             }
         }
     }
@@ -181,14 +170,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         int index = (int) ((double) (pos * listSize) + 0.5);
 
         for (int i = 0; i < 6; i++) {
-            iconList.set(i, bogies.get(index + i).iconLocation());
-            bogeyDisplayNameList.set(i, getTrimmedComponent(bogies.get(index + i).bogeyStyle().displayName));
+            bogeyList.set(i, bogies.get(index + i));
         }
     }
 
-    private Component getTrimmedComponent(Component component) {
-//        if (component.getString().length() > 9)
-//            return Component.literal(component.getString(9) + "...");
-        return component;
+    private Button.OnPress bogeySelection(int index) {
+        return b -> selectedBogey = bogeyList.get(index);
     }
 }
