@@ -26,7 +26,9 @@ public enum CRGuiTextures implements ScreenElement {
     TRAIN_HUD_SWITCH_RIGHT_WRONG("widgets", 25, 45, 10, 10),
     TRAIN_HUD_SWITCH_LOCKED("widgets", 37, 45, 10, 10),
 
-    BOGEY_MENU("bogeymenu", 279, 184)
+    BOGEY_MENU("bogeymenu", 279, 184),
+    BOGEY_MENU_SCROLL_BAR("bogeymenu", 280, 0, 8, 16),
+    BOGEY_MENU_SCROLL_BAR_DISABLED("bogeymenu", 288, 0, 8, 16)
     ;
 
     public static final int FONT_COLOR = 0x575F7A;
