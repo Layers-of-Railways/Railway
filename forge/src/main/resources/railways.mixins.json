@@ -13,6 +13,7 @@
   "mixins": [
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
+    "ContainerLevelAccessMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin"
   ],
