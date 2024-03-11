@@ -143,5 +143,5 @@
 
   "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
 
-  "railways.bogey_menu.title": "Bogey Preview"
+  "railways.gui.bogey_menu.title": "Bogey Preview"
 }

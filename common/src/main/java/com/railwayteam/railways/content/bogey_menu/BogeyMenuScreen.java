@@ -11,12 +11,10 @@ import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
+import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
-import com.simibubi.create.foundation.gui.widget.IconButton;
-import com.simibubi.create.foundation.gui.widget.Label;
-import com.simibubi.create.foundation.gui.widget.ScrollInput;
-import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
+import com.simibubi.create.foundation.gui.widget.*;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -64,7 +62,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         Label categoryLabel = new Label(x + 14, y + 25, Components.immutableEmpty()).withShadow();
         ScrollInput categoryScrollInput = new SelectionScrollInput(x + 9, y + 20, 77, 18)
                 .forOptions(categoryComponentList)
-                .titled(Component.translatable("railways.gui.bogey_menu.category"))
                 .writingTo(categoryLabel)
                 .calling(categoryIndex -> setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex)));
 
@@ -79,7 +76,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Close Button
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
-        closeButton.withCallback(this::onClose);
+        closeButton.withCallback(this::onMenuClose);
         addRenderableWidget(closeButton);
     }
 
@@ -135,6 +132,19 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         if (selectedBogey != null) {
             Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
             drawCenteredString(ms, font, bogeyName, x + 189, y + 25, 0xFFFFFF);
+
+            Indicator.State[] states = new Indicator.State[] {Indicator.State.RED,  Indicator.State.GREEN,  Indicator.State.YELLOW
+                    /*narrowState, standardState, wideState*/};
+            for (int i = 0; i < 3; i++) {
+                AllGuiTextures indicator = switch (states[i]) {
+                    case ON -> AllGuiTextures.INDICATOR_WHITE;
+                    case OFF -> AllGuiTextures.INDICATOR;
+                    case RED -> AllGuiTextures.INDICATOR_RED;
+                    case YELLOW -> AllGuiTextures.INDICATOR_YELLOW;
+                    case GREEN -> AllGuiTextures.INDICATOR_GREEN;
+                };
+                indicator.render(ms, x + 163 + (i * 18), y + 128);
+            }
         }
     }
 
@@ -240,5 +250,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
     private Button.OnPress bogeySelection(int index) {
         return b -> selectedBogey = bogeyList.get(index);
+    }
+
+    private void onMenuClose() {
+        //fixme
+//        if (selectedBogey != null)
+//            CRPackets.PACKETS.send(new BogeyStyleSelectionPacket(style, size));
+        onClose();
     }
 }
