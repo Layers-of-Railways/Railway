@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.UUID;
 
@@ -36,34 +37,38 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
     @Override
     public void handle(ServerPlayer sender) {
         ItemStack stack = sender.getItemInHand(sender.getUsedItemHand());
-        if(!stack.is(CRItems.HAND_COUPLER.get())) return;
+        if (!stack.is(CRItems.HAND_COUPLER.get())) return;
 
         Train train = Create.RAILWAYS.trains.get(trainUUID);
         Carriage car = train.carriages.get(carriageIndex);
 
-        if(stack.hasTag()){
-            assert stack.getTag() != null;
+        if (stack.hasTag() && stack.getTag() != null) {
             UUID firstTrainId = stack.getTag().getUUID("TrainId");
             int firstCarriageIndex = stack.getTag().getInt("CarriageIndex");
             Train firstTrain = Create.RAILWAYS.trains.get(firstTrainId);
 
-            if(firstTrain == null) return;
+            if (firstTrain == null) return;
 
-            if(firstTrainId.equals(trainUUID)){
+            if (firstTrainId.equals(trainUUID)){
                 int noe = firstTrain.carriages.size()- Math.min(carriageIndex, firstCarriageIndex) -1;
                 TrainUtils.splitTrain(firstTrain, noe);
 
-            }else{
-                int distance1 = (int) Math.round(car.leadingBogey().getAnchorPosition()
-                        .distanceTo(firstTrain.carriages.get(firstTrain.carriages.size() - 1).trailingBogey().getAnchorPosition()));
-                int distance2 = (int) Math.round(car.trailingBogey().getAnchorPosition()
-                        .distanceTo(firstTrain.carriages.get(firstTrain.carriages.size() - 1).leadingBogey().getAnchorPosition()));
+            } else {
+                Vec3 leadingAnchor = car.leadingBogey().getAnchorPosition();
+                Vec3 trailingAnchor = car.trailingBogey().getAnchorPosition();
 
-                if(distance1 <= distance2)
-                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, distance1);
+                Vec3 carriageLeadingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).leadingBogey().getAnchorPosition();
+                Vec3 carriageTrailingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).trailingBogey().getAnchorPosition();
+
+                if (leadingAnchor == null || trailingAnchor == null || carriageLeadingAnchor == null || carriageTrailingAnchor == null) return;
+
+                int leadingToTrailingDistance = (int) Math.round(leadingAnchor.distanceTo(carriageTrailingAnchor));
+                int trailingToLeadingDistance = (int) Math.round(trailingAnchor.distanceTo(carriageLeadingAnchor));
+
+                if (leadingToTrailingDistance <= trailingToLeadingDistance)
+                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, leadingToTrailingDistance);
                 else
-                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance2);
-
+                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, trailingToLeadingDistance);
             }
             stack.removeTagKey("TrainId");
             stack.removeTagKey("CarriageIndex");
