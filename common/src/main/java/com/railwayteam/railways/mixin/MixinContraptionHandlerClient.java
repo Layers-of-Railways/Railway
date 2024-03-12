@@ -1,7 +1,5 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.hand_coupler.HandCouplerCarriageSelectionPacket;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPackets;

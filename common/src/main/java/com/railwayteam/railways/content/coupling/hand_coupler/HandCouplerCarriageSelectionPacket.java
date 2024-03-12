@@ -1,6 +1,5 @@
 package com.railwayteam.railways.content.coupling.hand_coupler;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.registry.CRItems;
@@ -12,12 +11,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class HandCouplerCarriageSelectionPacket implements C2SPacket {
-    private UUID trainUUID;
-    private int carriageIndex;
+    private final UUID trainUUID;
+    private final int carriageIndex;
 
     public HandCouplerCarriageSelectionPacket(UUID trainUUID, int carriageIndex){
         this.trainUUID = trainUUID;
@@ -44,6 +42,7 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
         Carriage car = train.carriages.get(carriageIndex);
 
         if(stack.hasTag()){
+            assert stack.getTag() != null;
             UUID firstTrainId = stack.getTag().getUUID("TrainId");
             int firstCarriageIndex = stack.getTag().getInt("CarriageIndex");
             Train firstTrain = Create.RAILWAYS.trains.get(firstTrainId);
