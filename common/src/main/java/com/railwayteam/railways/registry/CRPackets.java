@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxDisposeAllPacket;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolboxEquipPacket;
+import com.railwayteam.railways.content.coupling.hand_coupler.HandCouplerCarriageSelectionPacket;
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
 import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.util.packet.*;
@@ -21,6 +22,7 @@ public class CRPackets {
         .c2s(ConfigureDevCapeC2SPacket.class, ConfigureDevCapeC2SPacket::new)
         .c2s(TagCycleSelectionPacket.class, TagCycleSelectionPacket::new)
         .c2s(CurvedTrackHandcarPlacementPacket.class, CurvedTrackHandcarPlacementPacket::new)
+        .c2s(HandCouplerCarriageSelectionPacket.class, HandCouplerCarriageSelectionPacket::new)
 
         .s2c(JukeboxCartPacket.class, JukeboxCartPacket::new)
         .s2c(MountedToolboxSyncPacket.class, MountedToolboxSyncPacket::new)
