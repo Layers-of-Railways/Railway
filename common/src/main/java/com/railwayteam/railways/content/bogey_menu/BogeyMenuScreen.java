@@ -131,7 +131,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         // Draw bogey name and Render bogey
         if (selectedBogey != null) {
             Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
-            drawCenteredString(ms, font, bogeyName, x + 189, y + 25, 0xFFFFFF);
+            drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
 
             Indicator.State[] states = new Indicator.State[] {Indicator.State.RED,  Indicator.State.GREEN,  Indicator.State.YELLOW
                     /*narrowState, standardState, wideState*/};
