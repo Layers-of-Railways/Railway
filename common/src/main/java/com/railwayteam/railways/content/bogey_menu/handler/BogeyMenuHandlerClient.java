@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.bogey_menu;
+package com.railwayteam.railways.content.bogey_menu.handler;
 
 import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
 import com.railwayteam.railways.registry.CRBogeyStyles;
@@ -9,7 +9,7 @@ import com.simibubi.create.foundation.gui.widget.Indicator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BogeyMenuHelper {
+public class BogeyMenuHandlerClient {
     private static final Map<BogeyEntry, Indicator.State[]> CACHED_COMPATS = new HashMap<>();
 
     public static Indicator.State[] getTrackCompat(BogeyEntry bogeyEntry) {

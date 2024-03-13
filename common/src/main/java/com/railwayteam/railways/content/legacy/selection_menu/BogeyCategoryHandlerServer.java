@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Deprecated(forRemoval = true)
 public class BogeyCategoryHandlerServer {
+    @Nullable public static UUID currentPlayer = null;
     public static Map<UUID, Pair<BogeyStyle, @Nullable BogeySize>> selectedStyles = new HashMap<>();
 
     public static Pair<BogeyStyle, @Nullable BogeySize> getStyle(UUID uuid) {
@@ -20,7 +21,4 @@ public class BogeyCategoryHandlerServer {
             return selectedStyles.get(uuid);
         return Pair.of(AllBogeyStyles.STANDARD, BogeySizes.SMALL);
     }
-
-    @Nullable
-    public static UUID currentPlayer = null;
 }

@@ -2,6 +2,7 @@ package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
@@ -39,6 +40,7 @@ public class ClientEvents {
         }
 
         if (isGameActive()) {
+            BogeyMenuEventsHandler.clientTick();
             BogeyCategoryHandlerClient.clientTick();
             TagCycleHandlerClient.clientTick();
             ConductorPossessionController.onClientTick(mc, true);
@@ -64,6 +66,7 @@ public class ClientEvents {
     public static void onKeyInput(int key, boolean pressed) {
         if (Minecraft.getInstance().screen != null)
             return;
+        BogeyMenuEventsHandler.onKeyInput(key, pressed);
         BogeyCategoryHandlerClient.onKeyInput(key, pressed);
         if (Minecraft.getInstance().screen != null)
             return;
