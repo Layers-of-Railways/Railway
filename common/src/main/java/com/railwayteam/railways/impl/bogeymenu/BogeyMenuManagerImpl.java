@@ -19,8 +19,8 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
     public static final List<BogeyEntry> BOGIES = new ArrayList<>();
 
     @Override
-    public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id, @Nullable ResourceLocation iconLocation) {
-        CategoryEntry entry = new CategoryEntry(name, id, iconLocation);
+    public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {
+        CategoryEntry entry = new CategoryEntry(name, id);
         CATEGORIES.add(entry);
         return entry;
     }

@@ -12,7 +12,6 @@ import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
-import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -79,16 +78,20 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         ScrollInput categoryScrollInput = new SelectionScrollInput(x + 9, y + 20, 77, 18)
                 .forOptions(categoryComponentList)
                 .writingTo(categoryLabel)
-                .calling(categoryIndex -> setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex)));
+                .calling(categoryIndex -> {
+                    scrollOffs = 0.0F;
+                    scrollTo(0.0F);
+                    setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
+                });
 
         addRenderableWidget(categoryLabel);
         addRenderableWidget(categoryScrollInput);
 
+        //fixme
         // Favourite bogey Button
-        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
-        // todo change this
-        favouriteButton.withCallback(this::onClose);
-        addRenderableWidget(favouriteButton);
+//        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
+//        favouriteButton.withCallback(this::onFavorite);
+//        addRenderableWidget(favouriteButton);
 
         // Close Button
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
@@ -268,6 +271,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        super.mouseScrolled(mouseX, mouseY, delta);
         if (!canScroll()) return false;
         if (insideCategorySelector(mouseX, mouseY)) return false;
         if (selectedCategory.getBogeyEntryList().size() < 6) return false;
@@ -286,7 +290,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         int index = (int) ((double) (pos * listSize) + 0.5);
 
         for (int i = 0; i < 6; i++) {
-            bogeyList.set(i, bogies.get(index + i));
+            if (i < bogies.size()) {
+                bogeyList.set(i, bogies.get(index + i));
+            } else {
+                bogeyList.add(null);
+            }
         }
     }
 
