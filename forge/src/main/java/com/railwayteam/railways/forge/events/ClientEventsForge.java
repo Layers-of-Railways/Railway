@@ -1,10 +1,12 @@
 package com.railwayteam.railways.forge.events;
 
 import com.railwayteam.railways.events.ClientEvents;
+import com.railwayteam.railways.registry.forge.CRKeysImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -38,5 +40,10 @@ public class ClientEventsForge {
 	public static void onTagsUpdated(TagsUpdatedEvent event) {
 		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED)
 			ClientEvents.onTagsUpdated();
+	}
+
+	@SubscribeEvent
+	public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+		CRKeysImpl.onRegisterKeyMappings(event);
 	}
 }

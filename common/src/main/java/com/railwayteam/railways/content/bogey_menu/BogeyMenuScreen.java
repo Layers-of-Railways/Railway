@@ -1,26 +1,42 @@
 package com.railwayteam.railways.content.bogey_menu;
 
 import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
+import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
 import com.simibubi.create.foundation.gui.widget.*;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +115,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         TransformStack msr = TransformStack.cast(ms);
         msr.pushPose()
-                .translate(guiLeft + background.width + 4, guiTop + background.height + 4, 100)
+                .translate(x + background.width + 4, y + background.height + 4, 100)
                 .scale(40)
                 .rotateX(-22)
                 .rotateY(63);
@@ -123,17 +139,19 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
                 // Text
                 Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
-                addRenderableWidget(new BogeyButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+                addRenderableWidget(new BogeyMenuButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
                 font.drawShadow(ms, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
             }
         }
 
-        // Draw bogey name and Render bogey
+        // Draw bogey name, gauge indicators and render bogey
         if (selectedBogey != null) {
+            // Bogey Name
             Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
             drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
 
-            Indicator.State[] states = BogeyMenuHelper.getTrackCompat(selectedBogey);
+            // Gauge Indicators
+            Indicator.State[] states = BogeyMenuHandlerClient.getTrackCompat(selectedBogey);
             for (int i = 0; i < 3; i++) {
                 AllGuiTextures indicator = switch (states[i]) {
                     case ON -> AllGuiTextures.INDICATOR_WHITE;
@@ -144,6 +162,52 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 };
                 indicator.render(ms, x + 163 + (i * 18), y + 128);
             }
+
+            // Render Bogey
+            //fixme
+            BogeySizes.BogeySize renderSize = BogeySizes.SMALL;
+
+            BogeyStyle style = selectedBogey.bogeyStyle();
+            Block renderBlock = style.getBlockOfSize(renderSize);
+            BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
+            if (!(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock) || minecraft == null) return;
+
+            // Push current pose
+            ms.popPose();
+
+            // Setup model view
+            PoseStack modelViewStack = RenderSystem.getModelViewStack();
+            modelViewStack.pushPose();
+            modelViewStack.translate(x + 205, y + 85, 1050);
+            modelViewStack.scale(1, 1, -1);
+            RenderSystem.applyModelViewMatrix();
+
+            // Setup pose and lighting correctly
+            ms.translate(0, 0, 1000);
+            ms.scale(25, 25, 25);
+            Quaternion zRot = Vector3f.ZP.rotationDegrees(180);
+            Quaternion xRot = Vector3f.XP.rotationDegrees(-20);
+            Quaternion yRot = Vector3f.YP.rotationDegrees(45);
+            zRot.mul(xRot);
+            zRot.mul(yRot);
+            ms.mulPose(zRot);
+            Lighting.setupForEntityInInventory();
+
+            // Setup vars for rendering
+            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+            int light = 0xF000F0;
+            int overlay = OverlayTexture.NO_OVERLAY;
+            float wheelAngle = -3 * AnimationTickHolder.getRenderTime(minecraft.level);
+
+            // Render Bogey Block & Bogey
+            minecraft.getBlockRenderer().renderSingleBlock(bogeyState, ms, bufferSource, light, overlay);
+            bogeyBlock.render(bogeyState, wheelAngle, ms, partialTicks, bufferSource, light, overlay, style, new CompoundTag());
+
+            // End batch, pop modelViewStack & apply and pop the pose
+            bufferSource.endBatch();
+            modelViewStack.popPose();
+            RenderSystem.applyModelViewMatrix();
+            ms.popPose();
         }
     }
 
@@ -201,6 +265,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         return true;
     }
+
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (!canScroll()) return false;

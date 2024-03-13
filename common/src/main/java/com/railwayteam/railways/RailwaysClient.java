@@ -31,6 +31,7 @@ public class RailwaysClient {
 
     CRPonderIndex.register();
 
+    CRKeys.register();
     CRBlockPartials.init();
 
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
