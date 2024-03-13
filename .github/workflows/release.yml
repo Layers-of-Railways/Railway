@@ -12,7 +12,7 @@ on:
           - both
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       RELEASE_BUILD: true
