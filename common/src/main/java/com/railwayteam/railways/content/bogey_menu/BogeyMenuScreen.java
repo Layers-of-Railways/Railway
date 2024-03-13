@@ -133,8 +133,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
             drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
 
-            Indicator.State[] states = new Indicator.State[] {Indicator.State.RED,  Indicator.State.GREEN,  Indicator.State.YELLOW
-                    /*narrowState, standardState, wideState*/};
+            Indicator.State[] states = BogeyMenuHelper.getTrackCompat(selectedBogey);
             for (int i = 0; i < 3; i++) {
                 AllGuiTextures indicator = switch (states[i]) {
                     case ON -> AllGuiTextures.INDICATOR_WHITE;
