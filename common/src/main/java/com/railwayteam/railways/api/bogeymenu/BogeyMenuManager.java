@@ -25,11 +25,10 @@ public interface BogeyMenuManager {
      *
      * @param name The {@link Component#translatable(String)} name of the category
      * @param id The categories id, Must be unique and must-use your modid `create:standard_bogies`
-     * @param iconLocation The {@link ResourceLocation} of the categories icon
      *
      * @return the {@link CategoryEntry} that has been added.
      */
-    CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id, @Nullable ResourceLocation iconLocation);
+    CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id);
 
     /**
      * Add a bogey to a category

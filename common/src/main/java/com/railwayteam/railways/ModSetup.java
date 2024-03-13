@@ -42,7 +42,7 @@ public class ModSetup {
 
     //fixme
     //BogeyMenuManager.INSTANCE.registerCategory(Component.literal("Standard"), Railways.asResource("standard"), null);
-    CategoryEntry e = BogeyMenuManager.INSTANCE.registerCategory(Component.literal("Steam 'n' Rails"), Railways.asResource("railways"), null);
+    CategoryEntry e = BogeyMenuManager.INSTANCE.registerCategory(Component.literal("Steam 'n' Rails"), Railways.asResource("railways"));
 
     //BogeyMenuManager.INSTANCE.addToCategory(e, CRBogeyStyles.ARCHBAR, Railways.asResource("textures/gui/bogey_icons/archbar_icon.png"));
     //BogeyMenuManager.INSTANCE.addToCategory(e, CRBogeyStyles.LEAFSPRING, Railways.asResource("textures/gui/bogey_icons/leafspring_icon.png"));
