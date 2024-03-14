@@ -186,7 +186,7 @@ subprojects {
             include("resourcepacks/")
         }
 
-        val createFabricVersion: String = "create_fabric_version"().replace("(\\d+\\.\\d+\\.\\d+-\\w)", "$1")
+        val createFabricVersion: String = Regex("(\\d+\\.\\d+\\.\\d+-\\w+)").find("create_fabric_version"())!!.value
 
         // set up properties for filling into metadata
         val properties = mapOf(
