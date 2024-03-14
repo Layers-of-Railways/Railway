@@ -5,11 +5,17 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record BogeyEntry(CategoryEntry categoryEntry, BogeyStyle bogeyStyle, ResourceLocation iconLocation) {
-    public BogeyEntry(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation) {
+import java.util.HashMap;
+
+public record BogeyEntry(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
+    public static final HashMap<BogeyStyle, BogeyEntry> STYLE_TO_ENTRY = new HashMap<>();
+
+    public BogeyEntry(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
         this.categoryEntry = categoryEntry;
         this.bogeyStyle = bogeyStyle;
         this.iconLocation = iconLocation;
+        this.scale = scale;
         categoryEntry.addToBogeyEntryList(this);
+        STYLE_TO_ENTRY.put(bogeyStyle, this);
     }
 }

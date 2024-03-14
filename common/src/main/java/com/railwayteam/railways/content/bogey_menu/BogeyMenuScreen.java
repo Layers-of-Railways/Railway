@@ -12,7 +12,9 @@ import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
+import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.client.ClientTextUtils;
+import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -24,6 +26,7 @@ import com.simibubi.create.foundation.gui.element.GuiGameElement;
 import com.simibubi.create.foundation.gui.widget.*;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -56,6 +59,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     private float scrollOffs;
     // True if the scrollbar is being dragged
     private boolean scrolling;
+    private int ticksOpen;
 
     @Override
     protected void init() {
@@ -70,8 +74,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         setupList(selectedCategory);
 
         // Scrolling Initial setup
-        scrollOffs = 0.0F;
-        scrollTo(0.0F);
+        scrollOffs = 0;
+        scrollTo(0);
 
         // Category selector START
         Label categoryLabel = new Label(x + 14, y + 25, Components.immutableEmpty()).withShadow();
@@ -88,7 +92,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         addRenderableWidget(categoryScrollInput);
 
         //fixme
-        // Favourite bogey Button
 //        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
 //        favouriteButton.withCallback(this::onFavorite);
 //        addRenderableWidget(favouriteButton);
@@ -109,7 +112,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         //fixme temp
         //hide favorite button
-        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
+        //CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
@@ -142,7 +145,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             BogeyEntry bogeyEntry = bogeyList.get(i);
             if (bogeyEntry != null) {
                 // Icon
-                renderIcon(bogeyEntry.iconLocation(), ms, x + 20, y + 42 + (i * 18));
+                ResourceLocation icon = bogeyEntry.iconLocation();
+                if (icon != null)
+                    renderIcon(icon, ms, x + 20, y + 42 + (i * 18));
 
                 // Text
                 Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
@@ -171,18 +176,21 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             }
 
             // Render Bogey
-            //fixme
-            BogeySizes.BogeySize renderSize = BogeySizes.SMALL;
-
             BogeyStyle style = selectedBogey.bogeyStyle();
+
+            List<Pair<BogeyStyle, BogeySizes.BogeySize>> renderCycle = BogeyMenuHandlerClient.getRenderCycle(style);
+
+            int cycleIdx = ticksOpen / 40;
+            Pair<BogeyStyle, BogeySizes.BogeySize> renderPair = renderCycle.get(cycleIdx % renderCycle.size());
+            BogeyStyle renderStyle = renderPair.getFirst();
+            BogeySizes.BogeySize renderSize = renderPair.getSecond();
+
             Block renderBlock = style.getBlockOfSize(renderSize);
             BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
             if (!(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock) || minecraft == null) return;
 
-            // Push current pose
+            // Push current pose and Setup model view
             ms.popPose();
-
-            // Setup model view
             PoseStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushPose();
             modelViewStack.translate(x + 205, y + 85, 1050);
@@ -191,7 +199,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
             // Setup pose and lighting correctly
             ms.translate(0, 0, 1000);
-            ms.scale(25, 25, 25);
+            ms.scale(selectedBogey.scale(), selectedBogey.scale(), selectedBogey.scale());
             Quaternion zRot = Vector3f.ZP.rotationDegrees(180);
             Quaternion xRot = Vector3f.XP.rotationDegrees(-20);
             Quaternion yRot = Vector3f.YP.rotationDegrees(45);
@@ -208,7 +216,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
             // Render Bogey Block & Bogey
             minecraft.getBlockRenderer().renderSingleBlock(bogeyState, ms, bufferSource, light, overlay);
-            bogeyBlock.render(bogeyState, wheelAngle, ms, partialTicks, bufferSource, light, overlay, style, new CompoundTag());
+            bogeyBlock.render(bogeyState, wheelAngle, ms, partialTicks, bufferSource, light, overlay, renderStyle, new CompoundTag());
 
             // End batch, pop modelViewStack & apply and pop the pose
             bufferSource.endBatch();
@@ -240,6 +248,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 bogeyList.add(null);
             }
         }
+    }
+
+    @Override
+    public void tick() {
+        ticksOpen++;
+        super.tick();
     }
 
     @Override
@@ -328,10 +342,18 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         return b -> selectedBogey = bogeyList.get(index);
     }
 
+    private void onFavorite() {
+        //if (selectedBogey == null) return;
+    }
+
     private void onMenuClose() {
-        //fixme
-//        if (selectedBogey != null)
-//            CRPackets.PACKETS.send(new BogeyStyleSelectionPacket(style, size));
+        if (selectedBogey == null) return;
+
+        BogeyStyle style = selectedBogey.bogeyStyle();
+        BogeySizes.BogeySize size = BogeyMenuHandlerClient.getSize(style);
+
+        CRPackets.PACKETS.send(new BogeyStyleSelectionPacket(style, size));
+
         onClose();
     }
 }

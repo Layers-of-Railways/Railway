@@ -2,7 +2,6 @@ package com.railwayteam.railways.content.legacy.selection_menu;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.content.bogey_menu.BogeyMenuScreen;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.EntityUtils;
@@ -14,7 +13,6 @@ import com.simibubi.create.AllKeys;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.gui.ScreenOpener;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.fabricmc.api.EnvType;
@@ -309,9 +307,8 @@ public class BogeyCategoryHandlerClient {
         if (!EntityUtils.isHolding(player, AllBlocks.RAILWAY_CASING::isIn))
             return;
 
-        ScreenOpener.open(new BogeyMenuScreen());
         //fixme
-        //ScreenOpener.open(new RadialBogeyCategoryMenu(RadialBogeyCategoryMenu.State.PICK_CATEGORY))
+        //ScreenOpener.open(new RadialBogeyCategoryMenu(RadialBogeyCategoryMenu.State.PICK_CATEGORY));
     }
 
     public static final Map<Pair<BogeyStyle, @Nullable BogeySize>, ResourceLocation> ICONS = new HashMap<>();

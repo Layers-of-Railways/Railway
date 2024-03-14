@@ -3,8 +3,8 @@ package com.railwayteam.railways.content.custom_tracks.monorail;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerServer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
-import com.railwayteam.railways.content.legacy.selection_menu.BogeyCategoryHandlerServer;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRBogeyStyles;
@@ -53,8 +53,8 @@ public class MonorailTrackBlock extends TrackBlock {
     @Override
     public BlockState getBogeyAnchor(BlockGetter world, BlockPos pos, BlockState state) {
         BlockEntry<? extends AbstractMonoBogeyBlock<?>> block = CRBlocks.MONO_BOGEY;
-        if (BogeyCategoryHandlerServer.currentPlayer != null) {
-            Pair<BogeyStyle, BogeySizes.BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(BogeyCategoryHandlerServer.currentPlayer);
+        if (BogeyMenuHandlerServer.getCurrentPlayer() != null) {
+            Pair<BogeyStyle, BogeySizes.BogeySize> styleData = BogeyMenuHandlerServer.getStyle(BogeyMenuHandlerServer.getCurrentPlayer());
             if (styleData.getFirst() == CRBogeyStyles.INVISIBLE || styleData.getFirst() == CRBogeyStyles.INVISIBLE_MONOBOGEY)
                 block = CRBlocks.INVISIBLE_MONO_BOGEY;
         }

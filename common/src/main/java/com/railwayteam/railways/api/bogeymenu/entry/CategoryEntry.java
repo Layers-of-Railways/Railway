@@ -9,29 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryEntry {
-    private final Component name;
-    private final ResourceLocation id;
-    private final List<BogeyEntry> bogeyEntryList = new ArrayList<>();
+    private final @NotNull Component name;
+    private final @NotNull ResourceLocation id;
+    private final @NotNull List<BogeyEntry> bogeyEntryList = new ArrayList<>();
 
     public CategoryEntry(@NotNull Component name, @NotNull ResourceLocation id) {
         this.name = name;
         this.id = id;
     }
 
-    public Component getName() {
+    public @NotNull Component getName() {
         return name;
     }
 
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return id;
     }
 
-    public List<BogeyEntry> getBogeyEntryList() {
+    public @NotNull List<BogeyEntry> getBogeyEntryList() {
         return bogeyEntryList;
     }
 
     @ApiStatus.Internal
-    public void addToBogeyEntryList(BogeyEntry entry) {
+    void addToBogeyEntryList(BogeyEntry entry) {
         bogeyEntryList.add(entry);
     }
 }

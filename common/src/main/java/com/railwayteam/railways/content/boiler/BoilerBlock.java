@@ -254,8 +254,7 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
 
         @Override
         public Predicate<ItemStack> getItemPredicate() {
-            return i -> i.getItem() instanceof BlockItem
-                    && ((BlockItem) i.getItem()).getBlock() instanceof BoilerBlock;
+            return i -> i.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BoilerBlock;
         }
 
         @Override
