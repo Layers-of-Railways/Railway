@@ -26,8 +26,22 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
     }
 
     @Override
-    public BogeyEntry addToCategory(@NotNull  CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation) {
-        BogeyEntry entry = new BogeyEntry(categoryEntry, bogeyStyle, iconLocation);
+    public @Nullable CategoryEntry getCategoryById(@NotNull ResourceLocation id) {
+        for (CategoryEntry categoryEntry : CATEGORIES) {
+            if (categoryEntry.getId().equals(id))
+                return categoryEntry;
+        }
+        return null;
+    }
+
+    @Override
+    public BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation) {
+        return addToCategory(categoryEntry, bogeyStyle, iconLocation, 25);
+    }
+
+    @Override
+    public BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
+        BogeyEntry entry = new BogeyEntry(categoryEntry, bogeyStyle, iconLocation, scale);
         BOGIES.add(entry);
         return entry;
     }

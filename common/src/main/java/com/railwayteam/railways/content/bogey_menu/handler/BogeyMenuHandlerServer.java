@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.legacy.selection_menu;
+package com.railwayteam.railways.content.bogey_menu.handler;
 
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
@@ -8,13 +8,24 @@ import com.simibubi.create.foundation.utility.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
-@Deprecated(forRemoval = true)
-public class BogeyCategoryHandlerServer {
-    @Nullable public static UUID currentPlayer = null;
-    public static Map<UUID, Pair<BogeyStyle, @Nullable BogeySize>> selectedStyles = new HashMap<>();
+public class BogeyMenuHandlerServer {
+    @Nullable private static UUID currentPlayer = null;
+    private static final HashMap<UUID, Pair<BogeyStyle, @Nullable BogeySize>> selectedStyles = new HashMap<>();
+
+
+    public static @Nullable UUID getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public static void setCurrentPlayer(@Nullable UUID uuid) {
+        currentPlayer = uuid;
+    }
+
+    public static void addStyle(UUID uuid, Pair<BogeyStyle, @Nullable BogeySize> pair) {
+        selectedStyles.put(uuid, pair);
+    }
 
     public static Pair<BogeyStyle, @Nullable BogeySize> getStyle(UUID uuid) {
         if (selectedStyles.containsKey(uuid))
