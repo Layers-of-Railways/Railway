@@ -291,6 +291,8 @@ public class CRBogeyStyles {
         registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("singleaxle_icon"));
         registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
         registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
+        registerStyleCategory(QUADRUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quadruple_icon"));
+        registerStyleCategory(QUINTUPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("quintuple_icon"));
         if (Mods.EXTENDEDBOGEYS.isLoaded) {
             registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_triple_axle_icon"));
         }
