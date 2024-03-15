@@ -13,6 +13,12 @@
     "railways:wide_comically_large_bogey",
     "railways:narrow_small_bogey",
     "railways:narrow_scotch_bogey",
-    "railways:narrow_double_scotch_bogey"
+    "railways:narrow_double_scotch_bogey",
+    "railways:medium_bogey",
+    "railways:medium_triple_wheel",
+    "railways:medium_quadruple_wheel",
+    "railways:medium_quintuple_wheel",
+    "railways:medium_2_0_2_trailing",
+    "railways:medium_4_0_4_trailing"
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/medium/quintuple_wheel/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/standard/shared/trailing_bogey_base",
+    "1": "railways:block/bogeys/standard/shared/frame",
+    "2": "railways:block/bogeys/standard/medium/shared/trailing_bogey_base2",
+    "3": "railways:block/bogeys/standard/medium/shared/frame2"
+  }
+}
