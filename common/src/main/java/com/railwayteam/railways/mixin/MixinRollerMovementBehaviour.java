@@ -42,7 +42,7 @@ public abstract class MixinRollerMovementBehaviour {
         BlockState stateToPaveWith = getStateToPaveWith(context);
         BlockState stateToPaveWithAsSlab = getStateToPaveWithAsSlab(context);
         int mode = context.blockEntityData.getInt("ScrollValue");
-        if (mode == 3) { // RAILWAYS_TRACK_REPLACE
+        if (mode == 3) { // TRACK_REPLACE
             ci.cancel();
             TrackReplacePaver.pave(context, pos, stateToPaveWith, createHeightProfileForTracks(context));
         } else if (stateToPaveWith.getBlock() instanceof ITrackBlock) {
