@@ -8,8 +8,8 @@ import static org.objectweb.asm.Opcodes.*;
 public abstract class RollingModeEnumAdder {
     // ~/.jdks/openjdk-17.0.2/bin/javap -v -p out.class
     public static void processRollingMode(ClassNode classNode) {
-        FieldNode TRACK_REPLACE_field = new FieldNode(ACC_PUBLIC | ACC_STATIC | ACC_FINAL | ACC_ENUM, "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;", null, null);
-        classNode.fields.add(3, TRACK_REPLACE_field); // insert after WIDE_FILL but before translationKey
+        FieldNode RAILWAYS_TRACK_REPLACE_field = new FieldNode(ACC_PUBLIC | ACC_STATIC | ACC_FINAL | ACC_ENUM, "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;", null, null);
+        classNode.fields.add(3, RAILWAYS_TRACK_REPLACE_field); // insert after WIDE_FILL but before translationKey
         for (MethodNode node : classNode.methods) {
             if (node.name.equals("<clinit>")) {
                 // Remove the last 3 (and place at the end)
@@ -30,13 +30,13 @@ public abstract class RollingModeEnumAdder {
                 node.visitLineNumber(150, label);
                 node.visitTypeInsn(NEW, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode");
                 node.visitInsn(DUP);
-                node.visitLdcInsn("TRACK_REPLACE");
+                node.visitLdcInsn("RAILWAYS_TRACK_REPLACE");
                 node.visitInsn(ICONST_3);
                 node.visitFieldInsn(GETSTATIC, "com/railwayteam/railways/registry/CRIcons", "I_SWAP_TRACKS", "Lcom/railwayteam/railways/registry/CRIcons;");
                 node.visitMethodInsn(INVOKESPECIAL,
                     "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode",
                     "<init>", "(Ljava/lang/String;ILcom/simibubi/create/foundation/gui/AllIcons;)V", false);
-                node.visitFieldInsn(PUTSTATIC, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode", "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;");
+                node.visitFieldInsn(PUTSTATIC, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode", "RAILWAYS_TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;");
                 for (AbstractInsnNode insnNode : end) {
                     node.instructions.add(insnNode);
                 }
@@ -64,10 +64,10 @@ public abstract class RollingModeEnumAdder {
                 AbstractInsnNode ret = node.instructions.getLast();
                 node.instructions.remove(ret);
 
-                // add TRACK_REPLACE item
+                // add RAILWAYS_TRACK_REPLACE item
                 node.visitInsn(DUP);
                 node.visitInsn(ICONST_3); // index
-                node.visitFieldInsn(GETSTATIC, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode", "TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;");
+                node.visitFieldInsn(GETSTATIC, "com/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode", "RAILWAYS_TRACK_REPLACE", "Lcom/simibubi/create/content/contraptions/actors/roller/RollerBlockEntity$RollingMode;");
                 node.visitInsn(AASTORE);
                 node.instructions.add(ret);
             }
