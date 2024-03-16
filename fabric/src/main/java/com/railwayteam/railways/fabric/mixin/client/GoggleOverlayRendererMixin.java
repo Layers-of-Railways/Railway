@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 // TODO - Remove when https://github.com/Creators-of-Create/Create/pull/5900 is merged
+// Has been merged, awaiting release
 @Deprecated
 @Mixin(GoggleOverlayRenderer.class)
 public class GoggleOverlayRendererMixin {
