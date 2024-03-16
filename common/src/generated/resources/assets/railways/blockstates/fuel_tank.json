@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "bottom=false,shape=plain,top=false": {
+      "model": "railways:block/fuel_tank/block_middle"
+    },
+    "bottom=false,shape=plain,top=true": {
+      "model": "railways:block/fuel_tank/block_top"
+    },
+    "bottom=false,shape=window,top=false": {
+      "model": "railways:block/fuel_tank/block_middle_window"
+    },
+    "bottom=false,shape=window,top=true": {
+      "model": "railways:block/fuel_tank/block_top_window"
+    },
+    "bottom=false,shape=window_ne,top=false": {
+      "model": "railways:block/fuel_tank/block_middle_window_ne"
+    },
+    "bottom=false,shape=window_ne,top=true": {
+      "model": "railways:block/fuel_tank/block_top_window_ne"
+    },
+    "bottom=false,shape=window_nw,top=false": {
+      "model": "railways:block/fuel_tank/block_middle_window_nw"
+    },
+    "bottom=false,shape=window_nw,top=true": {
+      "model": "railways:block/fuel_tank/block_top_window_nw"
+    },
+    "bottom=false,shape=window_se,top=false": {
+      "model": "railways:block/fuel_tank/block_middle_window_se"
+    },
+    "bottom=false,shape=window_se,top=true": {
+      "model": "railways:block/fuel_tank/block_top_window_se"
+    },
+    "bottom=false,shape=window_sw,top=false": {
+      "model": "railways:block/fuel_tank/block_middle_window_sw"
+    },
+    "bottom=false,shape=window_sw,top=true": {
+      "model": "railways:block/fuel_tank/block_top_window_sw"
+    },
+    "bottom=true,shape=plain,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom"
+    },
+    "bottom=true,shape=plain,top=true": {
+      "model": "railways:block/fuel_tank/block_single"
+    },
+    "bottom=true,shape=window,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom_window"
+    },
+    "bottom=true,shape=window,top=true": {
+      "model": "railways:block/fuel_tank/block_single_window"
+    },
+    "bottom=true,shape=window_ne,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom_window_ne"
+    },
+    "bottom=true,shape=window_ne,top=true": {
+      "model": "railways:block/fuel_tank/block_single_window_ne"
+    },
+    "bottom=true,shape=window_nw,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom_window_nw"
+    },
+    "bottom=true,shape=window_nw,top=true": {
+      "model": "railways:block/fuel_tank/block_single_window_nw"
+    },
+    "bottom=true,shape=window_se,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom_window_se"
+    },
+    "bottom=true,shape=window_se,top=true": {
+      "model": "railways:block/fuel_tank/block_single_window_se"
+    },
+    "bottom=true,shape=window_sw,top=false": {
+      "model": "railways:block/fuel_tank/block_bottom_window_sw"
+    },
+    "bottom=true,shape=window_sw,top=true": {
+      "model": "railways:block/fuel_tank/block_single_window_sw"
+    }
+  }
+}

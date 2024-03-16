@@ -88,7 +88,7 @@ dependencies {
     }
 
 //    if ("enable_eb"().toBoolean()) {
-//        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_verison"()}+fabric")
+//        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_version"()}+fabric")
 //    }
 
     annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!)

@@ -6,7 +6,6 @@ import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.TagGen;
-import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.data.tags.TagsProvider.TagAppender;
@@ -56,30 +55,32 @@ public class CRTagGen {
 		}
 	}
 
-	public static void generateItemTags(RegistrateItemTagsProvider tags) {
-		CommonTags.DYES.values().forEach(tag -> tag.generateCommon(tags));
-		CommonTags.IRON_NUGGETS.generateCommon(tags);
-		CommonTags.ZINC_NUGGETS.generateCommon(tags);
-		CommonTags.BRASS_NUGGETS.generateCommon(tags);
-		CommonTags.COPPER_INGOTS.generateCommon(tags);
-		CommonTags.BRASS_INGOTS.generateCommon(tags);
-		CommonTags.IRON_INGOTS.generateCommon(tags);
-		CommonTags.STRING.generateCommon(tags)
-			.generateBoth(tags, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
-		CommonTags.IRON_PLATES.generateCommon(tags);
-		CommonTags.BRASS_PLATES.generateCommon(tags);
-		CommonTags.WORKBENCH.generateCommon(tags)
-				.generateBoth(tags, tag -> tag.add(Items.CRAFTING_TABLE.builtInRegistryHolder().key()));
+	public static void generateItemTags(RegistrateTagsProvider<Item> prov) {
+		CommonTags.DYES.values().forEach(tag -> tag.generateCommon(prov));
+		CommonTags.IRON_NUGGETS.generateCommon(prov);
+		CommonTags.ZINC_NUGGETS.generateCommon(prov);
+		CommonTags.BRASS_NUGGETS.generateCommon(prov);
+		CommonTags.COPPER_INGOTS.generateCommon(prov);
+		CommonTags.BRASS_INGOTS.generateCommon(prov);
+		CommonTags.IRON_INGOTS.generateCommon(prov);
+		CommonTags.STRING.generateCommon(prov)
+			.generateBoth(prov, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
+		CommonTags.IRON_PLATES.generateCommon(prov);
+		CommonTags.BRASS_PLATES.generateCommon(prov);
+		CommonTags.WORKBENCH.generateCommon(prov)
+				.generateBoth(prov, tag -> tag.add(Items.CRAFTING_TABLE.builtInRegistryHolder().key()));
 		CommonTags.TFC_IRON_ROD.generateCommon(tags);
 		CommonTags.TFC_ZINC_ROD.generateCommon(tags);
 
+		prov.tag(AllItemTags.NOT_TRAIN_FUEL.tag);
+
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)
-				tagAppender(tags, tag);
+				tagAppender(prov, tag);
 		}
 	}
 
-	public static TagAppender<Item> tagAppender(RegistrateItemTagsProvider prov, AllItemTags tag) {
+	public static TagAppender<Item> tagAppender(RegistrateTagsProvider<Item> prov, AllItemTags tag) {
 		return tagAppender(prov, tag.tag);
 	}
 

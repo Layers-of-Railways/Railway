@@ -10,6 +10,8 @@ import com.railwayteam.railways.registry.CRPalettes.CyclingStyleList;
 import com.railwayteam.railways.registry.CRPalettes.StyledList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.AbstractionUtils;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -110,7 +112,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         );
 
     GeneratedRecipe SEMAPHORE = create(CRBlocks.SEMAPHORE)
-        .unlockedBy(AllItems.ELECTRON_TUBE::get)
+        .unlockedBy(AllItems.ELECTRON_TUBE)
         .returns(4)
         .viaShaped(b -> b
             .define('C', Ingredients.andesiteCasing())
@@ -301,6 +303,23 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
             .create()
     ));
+
+    GeneratedRecipe FUEL_TANK = create(AbstractionUtils.getFluidTankBlockEntry())
+            .unlockedBy(AllBlocks.FLUID_TANK)
+            .viaShaped(b -> b
+                    .define('S', Ingredients.sturdySheet())
+                    .define('F', AllBlocks.FLUID_TANK.get())
+                    .pattern("S")
+                    .pattern("F")
+                    .pattern("S")
+            );
+
+    GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getPortableFuelInterfaceBlockEntry())
+            .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
+            .viaShapeless(b -> b
+                    .requires(Ingredients.railwayCasing())
+                    .requires(Ingredients.chute())
+            );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);

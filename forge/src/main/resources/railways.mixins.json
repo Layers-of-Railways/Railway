@@ -5,18 +5,22 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
-    "ClientPacketListenerMixin",
-    "GoggleOverlayRendererMixin",
-    "TrackBlockOutlineMixin",
-    "TrainHUDMixin"
+    "client.ClientPacketListenerMixin",
+    "client.GoggleOverlayRendererMixin",
+    "client.TrackBlockOutlineMixin",
+    "client.TrainHUDMixin"
   ],
   "mixins": [
     "MixinLootDataManager",
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
     "ContainerLevelAccessMixin",
+    "FluidNetworkMixin",
+    "MountedFluidStorageMixin",
+    "MountedStorageManagerMixin",
     "RollingModeMixin",
-    "ServerGamePacketListenerImplMixin"
+    "ServerGamePacketListenerImplMixin",
+    "TrainMixin"
   ],
   "injectors": {
     "defaultRequire": 1,

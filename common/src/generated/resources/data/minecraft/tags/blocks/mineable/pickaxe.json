@@ -85,6 +85,8 @@
     "railways:headstock",
     "railways:copycat_headstock",
     "railways:generic_crossing",
+    "railways:fuel_tank",
+    "railways:portable_fuel_interface",
     "railways:slashed_locometal",
     "railways:riveted_locometal",
     "railways:locometal_pillar",
