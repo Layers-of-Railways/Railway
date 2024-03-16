@@ -28,6 +28,9 @@ public abstract class MixinRollerMovementBehaviour {
     @Shadow @Nullable protected abstract PaveTask createHeightProfileForTracks(MovementContext context);
 
     // fixme this is a Create bug
+    // https://github.com/Creators-of-Create/Create/pull/6272 Remove this mixin whenever this is merged
+    // Has been merged, awaiting release
+    @Deprecated
     @Inject(method = "canBreak", at = @At("RETURN"), cancellable = true)
     private void noBreakingTracks(Level world, BlockPos breakingPos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (AllTags.AllBlockTags.TRACKS.matches(state))
@@ -39,7 +42,7 @@ public abstract class MixinRollerMovementBehaviour {
         BlockState stateToPaveWith = getStateToPaveWith(context);
         BlockState stateToPaveWithAsSlab = getStateToPaveWithAsSlab(context);
         int mode = context.blockEntityData.getInt("ScrollValue");
-        if (mode == 3) { // TRACK_REPLACE
+        if (mode == 3) { // RAILWAYS_TRACK_REPLACE
             ci.cancel();
             TrackReplacePaver.pave(context, pos, stateToPaveWith, createHeightProfileForTracks(context));
         } else if (stateToPaveWith.getBlock() instanceof ITrackBlock) {
