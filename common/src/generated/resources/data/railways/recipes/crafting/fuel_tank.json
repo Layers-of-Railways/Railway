@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "F": {
       "item": "create:fluid_tank"
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "railways:fuel_tank"
-  }
+  },
+  "show_notification": true
 }
