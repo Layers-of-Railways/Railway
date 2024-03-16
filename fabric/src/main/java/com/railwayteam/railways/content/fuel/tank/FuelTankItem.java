@@ -2,7 +2,7 @@ package com.railwayteam.railways.content.fuel.tank;
 
 import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -111,8 +111,7 @@ public class FuelTankItem extends BlockItem {
                 BlockState blockState = world.getBlockState(offsetPos);
                 if (FuelTankBlock.isTank(blockState))
                     continue;
-                if (!blockState.getMaterial()
-                        .isReplaceable())
+                if (!blockState.canBeReplaced())
                     return;
                 tanksToPlace++;
             }
@@ -128,12 +127,12 @@ public class FuelTankItem extends BlockItem {
                 if (FuelTankBlock.isTank(blockState))
                     continue;
                 BlockPlaceContext context = BlockPlaceContext.at(ctx, offsetPos, face);
-                player.getExtraCustomData()
+                player.getCustomData()
                         .putBoolean("SilenceTankSound", true);
                 IS_PLACING_NBT = checkPlacingNbt(context);
                 super.place(context);
                 IS_PLACING_NBT = false;
-                player.getExtraCustomData()
+                player.getCustomData()
                         .getBoolean("SilenceTankSound");
             }
         }

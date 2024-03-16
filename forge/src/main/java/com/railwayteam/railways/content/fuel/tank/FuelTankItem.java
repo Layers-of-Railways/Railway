@@ -102,8 +102,7 @@ public class FuelTankItem extends BlockItem {
                 BlockState blockState = world.getBlockState(offsetPos);
                 if (FuelTankBlock.isTank(blockState))
                     continue;
-                if (!blockState.getMaterial()
-                        .isReplaceable())
+                if (!blockState.canBeReplaced())
                     return;
                 tanksToPlace++;
             }

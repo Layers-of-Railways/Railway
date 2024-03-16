@@ -4,8 +4,8 @@ import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
 import io.github.fabricators_of_create.porting_lib.transfer.fluid.FluidTank;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -42,7 +42,7 @@ public abstract class MountedFluidStorageMixin {
 
     @Inject(method = "updateFluid", at = @At(
             value = "INVOKE",
-            target = "Lcom/simibubi/create/foundation/fluid/SmartFluidTank;setFluid(Lio/github/fabricators_of_create/porting_lib/util/FluidStack;)V",
+            target = "Lcom/simibubi/create/foundation/fluid/SmartFluidTank;setFluid(Lio/github/fabricators_of_create/porting_lib/fluids/FluidStack;)V",
             ordinal = 0,
             shift = At.Shift.AFTER
     ), cancellable = true)

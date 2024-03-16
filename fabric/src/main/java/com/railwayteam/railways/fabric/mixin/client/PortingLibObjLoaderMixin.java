@@ -1,4 +1,4 @@
-package com.railwayteam.railways.fabric.mixin;
+package com.railwayteam.railways.fabric.mixin.client;
 
 import com.railwayteam.railways.util.Utils;
 import io.github.fabricators_of_create.porting_lib.PortingLibObjLoader;

@@ -7,8 +7,8 @@
   "client": [
     "client.GoggleOverlayRendererMixin",
     "client.LevelRendererMixin",
-    "PortingLibObjLoaderMixin",
-    "PortingLibModelsMixin",
+    "client.PortingLibModelsMixin",
+    "client.PortingLibObjLoaderMixin",
     "client.TrackBlockOutlineMixin",
     "client.TrainHUDMixin"
   ],
@@ -17,6 +17,7 @@
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "FluidNetworkMixin",
+    "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "TrainMixin"

@@ -4,10 +4,10 @@ import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 public class FuelTankGenerator extends SpecialBlockStateGen {
     private final String prefix;

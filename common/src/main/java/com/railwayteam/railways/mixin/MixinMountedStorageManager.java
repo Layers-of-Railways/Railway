@@ -71,8 +71,8 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
 
     @Inject(method = "addStorageToWorld", at = @At("TAIL"))
     private void addStorageToWorld(StructureTemplate.StructureBlockInfo block, BlockEntity blockEntity, CallbackInfo ci) {
-        if (railways$fluidFuelStorage.containsKey(block.pos)) {
-            MountedFluidStorage mountedStorage = railways$fluidFuelStorage.get(block.pos);
+        if (railways$fluidFuelStorage.containsKey(block.pos())) {
+            MountedFluidStorage mountedStorage = railways$fluidFuelStorage.get(block.pos());
             if (mountedStorage.isValid())
                 mountedStorage.addStorageToWorld(blockEntity);
         }

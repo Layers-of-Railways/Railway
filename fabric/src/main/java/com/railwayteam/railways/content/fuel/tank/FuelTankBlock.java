@@ -11,8 +11,8 @@ import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import io.github.fabricators_of_create.porting_lib.block.CustomSoundTypeBlock;
+import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
@@ -297,7 +297,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
     @Override
     public SoundType getSoundType(BlockState state, LevelReader world, BlockPos pos, Entity entity) {
         SoundType soundType = getSoundType(state);
-        if (entity != null && entity.getExtraCustomData()
+        if (entity != null && entity.getCustomData()
                 .getBoolean("SilenceTankSound"))
             return SILENCED_METAL;
         return soundType;

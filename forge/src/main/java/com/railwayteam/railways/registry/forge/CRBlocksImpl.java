@@ -20,7 +20,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -45,7 +45,7 @@ public class CRBlocksImpl {
 
     public static final BlockEntry<PortableFuelInterfaceBlock> PORTABLE_FUEL_INTERFACE = REGISTRATE.block("portable_fuel_interface", PortableFuelInterfaceBlock::new)
             .initialProperties(SharedProperties::copperMetal)
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_LIGHT_GRAY))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_LIGHT_GRAY))
             .transform(axeOrPickaxe())
             .blockstate((c, p) -> p.directionalBlock(c.get(), AssetLookup.partialBaseModel(c, p)))
             .onRegister(movementBehaviour(new PortableStorageInterfaceMovement()))
