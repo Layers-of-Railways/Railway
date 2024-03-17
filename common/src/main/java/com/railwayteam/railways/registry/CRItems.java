@@ -12,7 +12,6 @@ import com.railwayteam.railways.util.ItemUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
-import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
