@@ -40,7 +40,6 @@ public class RailwaysClient {
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
 
     CRDevCaps.register();
-    CRBogeyStyles.registerClient();
     BufferModelUtils.register();
 
     DevCapeUtils.INSTANCE.init();
