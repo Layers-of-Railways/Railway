@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.bogey_menu;
 
+import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -27,6 +28,7 @@ import com.simibubi.create.foundation.gui.widget.*;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -100,6 +102,19 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
         closeButton.withCallback(this::onMenuClose);
         addRenderableWidget(closeButton);
+
+
+        String[] gaugeText = new String[] {"narrow", "standard", "wide"};
+        for (int i = 0; i < 3; i++) {
+            addRenderableOnly(new TooltipArea(x + 163 + (i * 18), y + 135, 18, 18)
+                    .withTooltip(ImmutableList.of(
+                            Component.translatable("railways.gui.bogey_menu.gauge_description")
+                                    .withStyle(s -> s.withColor(0x5391E1)),
+                            Component.translatable("railways.gui.bogey_menu." + gaugeText[i] + "_gauge")
+                                    .withStyle(ChatFormatting.GRAY)
+                    ))
+            );
+        }
     }
 
     @Override
@@ -112,7 +127,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         //fixme temp
         //hide favorite button
-        //CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
+        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
@@ -180,20 +195,22 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
             List<Pair<BogeyStyle, BogeySizes.BogeySize>> renderCycle = BogeyMenuHandlerClient.getRenderCycle(style);
 
-            int cycleIdx = ticksOpen / 40;
-            Pair<BogeyStyle, BogeySizes.BogeySize> renderPair = renderCycle.get(cycleIdx % renderCycle.size());
+            Pair<BogeyStyle, BogeySizes.BogeySize> renderPair = renderCycle.get((ticksOpen / 40) % renderCycle.size());
             BogeyStyle renderStyle = renderPair.getFirst();
             BogeySizes.BogeySize renderSize = renderPair.getSecond();
 
             Block renderBlock = style.getBlockOfSize(renderSize);
             BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
-            if (!(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock) || minecraft == null) return;
+            if (minecraft == null || !(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock)) return;
 
             // Push current pose and Setup model view
-            ms.popPose();
+            ms.pushPose();
             PoseStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushPose();
-            modelViewStack.translate(x + 205, y + 85, 1050);
+            // fixme This looks weird with bigger bogies START
+            modelViewStack.translate(18, 6, 0);
+            modelViewStack.translate(x + 189.5, y + 80, 1500);
+            // fixme END
             modelViewStack.scale(1, 1, -1);
             RenderSystem.applyModelViewMatrix();
 

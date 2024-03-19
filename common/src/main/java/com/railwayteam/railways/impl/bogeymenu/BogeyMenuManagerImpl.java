@@ -18,6 +18,8 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
     public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
     public static final List<BogeyEntry> BOGIES = new ArrayList<>();
 
+    public static final float defaultScale = 24;
+
     @Override
     public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {
         CategoryEntry entry = new CategoryEntry(name, id);
@@ -36,7 +38,7 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
 
     @Override
     public BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation) {
-        return addToCategory(categoryEntry, bogeyStyle, iconLocation, 25);
+        return addToCategory(categoryEntry, bogeyStyle, iconLocation, defaultScale);
     }
 
     @Override

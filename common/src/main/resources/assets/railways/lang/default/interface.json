@@ -126,12 +126,6 @@
   "railways.style_select.title.favorites.pick_style": "Pick Favorite Style",
   "railways.style_select.category": "Category: ",
 
-  "railways.style_select.category.railways.favorites_category": "Favorites",
-  "railways.style_select.category.create.standard": "Standard Styles",
-  "railways.style_select.category.railways.singleaxles": "Single Axle Styles",
-  "railways.style_select.category.railways.doubleaxles": "Double Axle Styles",
-  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles",
-
   "railways.style_select.category.railways.extendedbogeys": "Extended Bogeys",
 
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
@@ -144,5 +138,15 @@
   "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
 
   "railways.keyinfo.bogey_menu": "Open Bogey Menu",
-  "railways.gui.bogey_menu.title": "Bogey Preview"
+  "railways.gui.bogey_menu.title": "Bogey Preview",
+  "railways.gui.bogey_menu.gauge_description": "Compatible with:",
+  "railways.gui.bogey_menu.narrow_gauge": "Narrow Gauge",
+  "railways.gui.bogey_menu.standard_gauge": "Standard Gauge",
+  "railways.gui.bogey_menu.wide_gauge": "Wide Gauge",
+
+  "railways.gui.bogey_menu.category.favorites": "Favorites",
+  "create.gui.bogey_menu.category.standard": "Standard Styles",
+  "railways.gui.bogey_menu.category.singleaxles": "Single Axle Styles",
+  "railways.gui.bogey_menu.category.doubleaxles": "Double Axle Styles",
+  "railways.gui.bogey_menu.category.tripleaxles": "Triple Axle Styles"
 }

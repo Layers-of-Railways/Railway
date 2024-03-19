@@ -1,4 +1,4 @@
-// 1.19.2	2024-03-11T13:46:41.918184837	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-03-19T18:20:27.789732955	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 49895c50bb9ff7ecb89153ff98b3f0fc5097a3cf assets/railways/models/block/track/compat/blue_skies/starlit/diag.json
 3d62ae4bfcb5ca63cd6568c0a4ef4989cf08ddc6 assets/railways/models/block/track/compat/biomesoplenty/umbran/cross_ortho.json
 385fd69403c2b80bcaa63609661bb37f7ed7097e assets/railways/models/block/track/compat/hexcasting/edified/cross_diag.json
@@ -3096,7 +3096,7 @@ d773f94b593a2940cd35b54fba75d82323b6e4e8 assets/railways/models/block/track/comp
 a7aeef7765a94d64d30ef2210ef160c475f8a593 assets/railways/models/block/track/compat/blue_skies/cherry_narrow/cross_diag.json
 575a3869d89518b456baf15966fec59c3ef4866b data/railways/loot_tables/blocks/track_twilightforest_twilight_oak_narrow.json
 9c12b0c3cc5d362059c5d15b3b6d000174e81a74 assets/railways/models/item/wooden_headstock_link_and_pin.json
-8cba1627477d01efee42625a9f76361f762c59b6 assets/railways/lang/en_us.json
+e1b97a1c97698bd2d9d11f45cc5d16dfd178cb00 assets/railways/lang/en_us.json
 29bed873d684aa7c9ffd270db1ffad211f95e27c data/railways/loot_tables/blocks/track_byg_imparius.json
 e3302e8f1b79fcf0cec8212a1489be1a97f9715a assets/railways/models/block/track/compat/quark/ancient_wide/teleport.json
 c4fea216b855a10a6f2e6fbe409289b7c2bf274f assets/railways/models/block/light_gray_brass_wrapped_locometal_boiler_gullet_x.json
@@ -4665,7 +4665,7 @@ d12586441016d55138425e124f8c569fe22be310 assets/railways/blockstates/track_byg_m
 e62db1a880d468865769307ad19f16d9b7dac7c1 data/railways/tags/items/internal/dyes/light_gray_dyes.json
 9697a08d8a2eb2f4f85c4593535b3d48332c1a11 assets/railways/models/item/track_biomesoplenty_hellbark.json
 5021619e9060fe079687b9a213c5cc5461255799 assets/railways/models/block/black_iron_wrapped_locometal_boiler_gullet_z.json
-70c368c6097a79d832e1ce480b6a8d237f513795 assets/railways/lang/en_ud.json
+eb85900f7fccc1ee6e5c1b285d9a591f90ba5254 assets/railways/lang/en_ud.json
 df592c5c8ccb1958d2514d15df7d4cf2caae0ac6 assets/railways/models/block/track/compat/biomesoplenty/redwood_wide/diag_2.json
 5425acda3cdff4caf0619b0db70820af68046e66 assets/railways/models/block/track/compat/biomesoplenty/fir/cross_diag.json
 8f5d7df43067dc26c3853b62cdb29829a71045f9 assets/railways/models/block/track/compat/byg/maple/tie.json
