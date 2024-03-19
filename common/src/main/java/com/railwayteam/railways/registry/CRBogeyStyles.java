@@ -50,6 +50,8 @@ public class CRBogeyStyles {
     public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(Railways.MODID, SINGLEAXLE_CYCLE_GROUP);
     public static final CategoryEntry DOUBLEAXLE_CATEGORY = registerCategory(Railways.MODID, DOUBLEAXLE_CYCLE_GROUP);
     public static final CategoryEntry TRIPLEAXLE_CATEGORY = registerCategory(Railways.MODID, TRIPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry QUADRUPLEAXLE_CATEGORY = registerCategory(Railways.MODID, QUADRUPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry QUINTUPLEAXLE_CATEGORY = registerCategory(Railways.MODID, QUINTUPLEAXLE_CYCLE_GROUP);
 
     private static final Map<Pair<BogeyStyle, TrackType>, BogeyStyle> STYLES_FOR_GAUGES = new HashMap<>();
     private static final Map<BogeyStyle, BogeyStyle> STYLES_TO_STANDARD_GAUGE = new HashMap<>();
@@ -316,6 +318,8 @@ public class CRBogeyStyles {
         addToCategory(SINGLEAXLE_CATEGORY, SINGLEAXLE);
         addToCategory(SINGLEAXLE_CATEGORY, COILSPRING);
         addToCategory(SINGLEAXLE_CATEGORY, LEAFSPRING);
+        addToCategory(SINGLEAXLE_CATEGORY, MEDIUM_SINGLE_WHEEL);
+        addToCategory(SINGLEAXLE_CATEGORY, MEDIUM_2_0_2_TRAILING);
 
         // Double Axle Category
         addToCategory(DOUBLEAXLE_CATEGORY, MODERN);
@@ -324,9 +328,21 @@ public class CRBogeyStyles {
         addToCategory(DOUBLEAXLE_CATEGORY, FREIGHT);
         addToCategory(DOUBLEAXLE_CATEGORY, PASSENGER);
         addToCategory(DOUBLEAXLE_CATEGORY, ARCHBAR);
+        addToCategory(DOUBLEAXLE_CATEGORY, MEDIUM_STANDARD);
+        addToCategory(DOUBLEAXLE_CATEGORY, MEDIUM_4_0_4_TRAILING);
 
         // Triple Axle Category
         addToCategory(TRIPLEAXLE_CATEGORY, HEAVYWEIGHT);
         addToCategory(TRIPLEAXLE_CATEGORY, RADIAL);
+        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TRAILING);
+        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TENDER);
+
+        // Quadruple Axle Category
+        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_QUADRUPLE_WHEEL);
+        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_8_0_8_TENDER);
+
+        // Quintuple Axle Category
+        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_QUINTUPLE_WHEEL);
+        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_10_0_10_TENDER);
     }
 }
