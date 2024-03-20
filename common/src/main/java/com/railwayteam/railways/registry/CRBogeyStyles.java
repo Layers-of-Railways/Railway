@@ -308,6 +308,8 @@ public class CRBogeyStyles {
         listUnder(WIDE_DEFAULT, AllBogeyStyles.STANDARD);
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
 
+        BogeyMenuManager.INSTANCE.setScaleForBogeySize(WIDE_DEFAULT, BogeySizes.SMALL, 20);
+
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);
         addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 19);
