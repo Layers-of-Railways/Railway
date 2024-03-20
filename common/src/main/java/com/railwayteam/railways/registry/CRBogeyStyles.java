@@ -235,16 +235,20 @@ public class CRBogeyStyles {
         return BogeyMenuManager.INSTANCE.registerCategory(categoryName, categoryId);
     }
 
-    public static void addToCategory(CategoryEntry category, BogeyStyle style) {
+    private static void addToCategory(CategoryEntry category, BogeyStyle style) {
         addToCategory(category, style, BogeyMenuManagerImpl.defaultScale);
     }
 
-    public static void addToCategory(CategoryEntry category, BogeyStyle style, float scale) {
+    private static void addToCategory(CategoryEntry category, BogeyStyle style, float scale) {
         String bogeyName = style.name.getPath();
         if (style == STANDARD) bogeyName = "default";
         ResourceLocation icon = Railways.asResource("textures/gui/bogey_icons/" + bogeyName + "_icon.png");
 
         BogeyMenuManager.INSTANCE.addToCategory(category, style, icon, scale);
+    }
+
+    private static void setScaleForSize(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
+        BogeyMenuManager.INSTANCE.setScaleForBogeySize(style, size, scale);
     }
 
     public static void register() {
@@ -258,7 +262,8 @@ public class CRBogeyStyles {
         listUnder(WIDE_DEFAULT, AllBogeyStyles.STANDARD);
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
 
-        BogeyMenuManager.INSTANCE.setScaleForBogeySize(WIDE_DEFAULT, BogeySizes.SMALL, 20);
+        // Set scale's for BogeySize's
+        setScaleForSize(WIDE_DEFAULT, BogeySizes.SMALL, 20);
 
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);
