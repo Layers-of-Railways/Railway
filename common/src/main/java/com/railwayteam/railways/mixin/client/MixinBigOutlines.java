@@ -24,6 +24,7 @@ public class MixinBigOutlines {
     }
 
     // TODO - Remove when https://github.com/Creators-of-Create/Create/pull/6187 is merged
+    // Has been merged, awaiting release
     // targets the `instanceof SlidingDoorBlock` and add's one for IHasBigOutline
     @Deprecated
     @WrapOperation(method = "lambda$pick$0", constant = @Constant(classValue = SlidingDoorBlock.class))

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "railways:block/portable_fuel_interface/block",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "railways:block/portable_fuel_interface/block",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "railways:block/portable_fuel_interface/block",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "railways:block/portable_fuel_interface/block",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "railways:block/portable_fuel_interface/block"
+    },
+    "facing=west": {
+      "model": "railways:block/portable_fuel_interface/block",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

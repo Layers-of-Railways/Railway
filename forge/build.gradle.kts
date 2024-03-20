@@ -75,7 +75,7 @@ dependencies {
     }
 
     if ("enable_eb"().toBoolean()) {
-        modImplementation("com.rabbitminers:extendedbogeys-forge:${"EB_verison"()}+forge-patch-")
+        modImplementation("com.rabbitminers:extendedbogeys-forge:${"EB_version"()}+forge-patch-")
     }
 
     if ("enable_sc"().toBoolean()) {
