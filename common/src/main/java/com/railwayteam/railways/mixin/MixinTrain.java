@@ -1,6 +1,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
@@ -22,6 +23,7 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
@@ -44,10 +46,11 @@ import java.util.*;
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain {
     @Shadow public TrackGraph graph;
     @Shadow public Navigation navigation;
-    @Shadow public double speed;
     @Shadow public abstract void arriveAt(GlobalStation station);
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
+    @Shadow public double speed;
+    @Shadow public int fuelTicks;
 
     @Unique public Set<UUID> railways$occupiedCouplers;
     @Unique protected int railways$index = 0;
@@ -251,14 +254,24 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
 
     @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcars(CallbackInfoReturnable<Float> cir) {
+    public void maxSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcarsOnTurns(CallbackInfoReturnable<Float> cir) {
+    public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20 * 20));
+    }
+
+    @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
+    public void acceleration(CallbackInfoReturnable<Float> cir) {
+        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
     }
 }

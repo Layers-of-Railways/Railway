@@ -26,6 +26,7 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class CRBlockEntities {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -126,7 +127,12 @@ public class CRBlockEntities {
         .validBlocks(CRBlocks.COPYCAT_HEADSTOCK)
         .register();
 
+    @ExpectPlatform
+    public static void platformBasedRegistration() {
+        throw new AssertionError();
+    }
 
-    @SuppressWarnings("EmptyMethod")
-    public static void register() {}
+    public static void register() {
+        platformBasedRegistration();
+    }
 }

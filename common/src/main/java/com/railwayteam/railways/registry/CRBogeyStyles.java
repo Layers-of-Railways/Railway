@@ -45,6 +45,8 @@ public class CRBogeyStyles {
     public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
     public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
+    public static final String QUADRUPLEAXLE_CYCLE_GROUP = "quadrupleaxles";
+    public static final String QUINTUPLEAXLE_CYCLE_GROUP = "quintupleaxles"
 
     public static final CategoryEntry STANDARD_CATEGORY = registerCategory(Create.ID, STANDARD_CYCLE_GROUP);
     public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(Railways.MODID, SINGLEAXLE_CYCLE_GROUP);

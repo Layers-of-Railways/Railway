@@ -459,6 +459,12 @@ public class CRBlockPartials {
     ;
 
     public static final PartialModel
+            PORTABLE_FUEL_INTERFACE_MIDDLE = block("portable_fuel_interface/block_middle"),
+            PORTABLE_FUEL_INTERFACE_MIDDLE_POWERED = block("portable_fuel_interface/block_middle_powered"),
+            PORTABLE_FUEL_INTERFACE_TOP = block("portable_fuel_interface/block_top")
+    ;
+
+    public static final PartialModel
             MEDIUM_SHARED_WHEELS = block("bogey/medium/shared/wheels"),
 
 
