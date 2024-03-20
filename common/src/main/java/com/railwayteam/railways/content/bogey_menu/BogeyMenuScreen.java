@@ -193,30 +193,37 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             // Render Bogey
             BogeyStyle style = selectedBogey.bogeyStyle();
 
+            float bogeyScale = selectedBogey.scale();
+
             List<Pair<BogeyStyle, BogeySizes.BogeySize>> renderCycle = BogeyMenuHandlerClient.getRenderCycle(style);
 
             Pair<BogeyStyle, BogeySizes.BogeySize> renderPair = renderCycle.get((ticksOpen / 40) % renderCycle.size());
             BogeyStyle renderStyle = renderPair.getFirst();
             BogeySizes.BogeySize renderSize = renderPair.getSecond();
 
+            if (BogeyMenuManagerImpl.SIZES_TO_SCALE.containsKey(renderPair)) {
+                bogeyScale = BogeyMenuManagerImpl.SIZES_TO_SCALE.get(renderPair);
+            }
+
             Block renderBlock = style.getBlockOfSize(renderSize);
             BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
             if (minecraft == null || !(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock)) return;
+
+            float defaultScale = BogeyMenuManagerImpl.defaultScale;
+            float scalePercentage = bogeyScale / defaultScale;
 
             // Push current pose and Setup model view
             ms.pushPose();
             PoseStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushPose();
-            // fixme This looks weird with bigger bogies START
-            modelViewStack.translate(18, 6, 0);
-            modelViewStack.translate(x + 189.5, y + 80, 1500);
-            // fixme END
+            modelViewStack.translate(18 * scalePercentage, 6 * scalePercentage, 0);
+            modelViewStack.translate(x + 189.5, y + 86, 1500);
             modelViewStack.scale(1, 1, -1);
             RenderSystem.applyModelViewMatrix();
 
             // Setup pose and lighting correctly
             ms.translate(0, 0, 1000);
-            ms.scale(selectedBogey.scale(), selectedBogey.scale(), selectedBogey.scale());
+            ms.scale(bogeyScale, bogeyScale, bogeyScale);
             Quaternion zRot = Vector3f.ZP.rotationDegrees(180);
             Quaternion xRot = Vector3f.XP.rotationDegrees(-20);
             Quaternion yRot = Vector3f.YP.rotationDegrees(45);

@@ -3,6 +3,7 @@ package com.railwayteam.railways.api.bogeymenu;
 import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -57,4 +58,13 @@ public interface BogeyMenuManager {
      * @param scale The scale to render the bogey at in the bogey menu
      */
     BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale);
+
+    /**
+     * Set a custom scale for when rendering this BogeySize in the Bogey Menu
+     *
+     * @param style The bogey style you want to set this custom scale for
+     * @param size The bogey size you want to set this custom scale for
+     * @param scale The scale you want this bogey size to render at in the bogey menu
+     */
+    void setScaleForBogeySize(BogeyStyle style, BogeySizes.BogeySize size, float scale);
 }
