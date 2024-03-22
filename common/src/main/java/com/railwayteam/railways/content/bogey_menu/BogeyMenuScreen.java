@@ -74,6 +74,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Initial setup
         setupList(selectedCategory);
+        selectedBogey = selectedCategory.getBogeyEntryList().get(0);
 
         // Scrolling Initial setup
         scrollOffs = 0;
@@ -88,6 +89,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     scrollOffs = 0.0F;
                     scrollTo(0.0F);
                     setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
+
+                    selectedBogey = selectedCategory.getBogeyEntryList().get(0);
                 });
 
         addRenderableWidget(categoryLabel);

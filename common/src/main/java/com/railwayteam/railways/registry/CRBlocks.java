@@ -24,6 +24,7 @@ import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.Trip
 import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.large.LargeCreateStyle040BogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -505,6 +506,14 @@ public class CRBlocks {
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium 4-0-4 Trailing Bogey")
                     .register();
+
+    public static final BlockEntry<LargeCreateStyle040BogeyBlock> LARGE_CREATE_STYLE_0_4_0 =
+            REGISTRATE.block("large_create_styled_0_4_0", LargeCreateStyle040BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-4-0")
+                    .register();
+
 
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =

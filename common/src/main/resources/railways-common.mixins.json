@@ -94,7 +94,6 @@
     "NbtUtilsMixin",
     "PlayerEntityMixin",
     "StructureMixin",
-    "client.MixinOrientedContraptionEntity",
     "compat.voicechat.EntityAudioChannelImplMixin",
     "compat.voicechat.ServerMixin",
     "compat.voicechat.ServerWorldUtilsMixin",

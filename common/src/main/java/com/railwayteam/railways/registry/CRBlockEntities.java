@@ -85,7 +85,7 @@ public class CRBlockEntities {
                 CRBlocks.WIDE_COMICALLY_LARGE_BOGEY, CRBlocks.NARROW_SMALL_BOGEY, CRBlocks.NARROW_SCOTCH_BOGEY,
                 CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY, CRBlocks.HANDCAR, CRBlocks.MEDIUM_BOGEY,
                 CRBlocks.MEDIUM_TRIPLE_WHEEL, CRBlocks.MEDIUM_QUADRUPLE_WHEEL, CRBlocks.MEDIUM_QUINTUPLE_WHEEL,
-                CRBlocks.MEDIUM_2_0_2_TRAILING, CRBlocks.MEDIUM_4_0_4_TRAILING)
+                CRBlocks.MEDIUM_2_0_2_TRAILING, CRBlocks.MEDIUM_4_0_4_TRAILING, CRBlocks.LARGE_CREATE_STYLE_0_4_0)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)

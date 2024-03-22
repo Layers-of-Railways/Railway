@@ -24,7 +24,7 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
 
     public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new HashMap<>();
 
-    public static final float defaultScale = 24;
+    public static final float defaultScale = 23;
 
     @Override
     public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {
