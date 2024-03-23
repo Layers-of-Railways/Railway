@@ -9,8 +9,6 @@ newmtl m_d6023a26-dd9f-98f2-bc39-4bb7cdee6175
 map_Kd #3
 newmtl m_0488466f-fae2-8c6d-b06b-c6b7b4bc8342
 map_Kd #4
-newmtl m_04a6fa53-1279-32e6-7219-d4560b0aaf6d
-map_Kd #5
 newmtl m_cef2cace-d399-3312-f09c-a6fc20c5d500
-map_Kd #6
+map_Kd #5
 newmtl none
