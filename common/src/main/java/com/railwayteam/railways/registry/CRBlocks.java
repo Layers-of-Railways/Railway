@@ -25,6 +25,7 @@ import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaug
 import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.large.LargeCreateStyle040BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.large.LargeCreateStyle060BogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
@@ -512,6 +513,13 @@ public class CRBlocks {
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-4-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle060BogeyBlock> LARGE_CREATE_STYLE_0_6_0 =
+            REGISTRATE.block("large_create_styled_0_6_0", LargeCreateStyle060BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-6-0")
                     .register();
 
 

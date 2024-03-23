@@ -13,6 +13,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.Narr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.HandcarBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.double_axle.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled040Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled060Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.LeafspringBogeyRenderer;
@@ -272,6 +273,10 @@ public class CRBogeyStyles {
         LARGE_CREATE_STYLED_0_4_0 = create("large_create_style_0_4_0", DOUBLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_4_0"))
             .size(BogeySizes.LARGE, () -> LargeCreateStyled040Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_4_0)
+            .build(),
+        LARGE_CREATE_STYLED_0_6_0 = create("large_create_style_0_6_0", DOUBLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_6_0"))
+            .size(BogeySizes.LARGE, () -> LargeCreateStyled060Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_6_0)
             .build();
 
 
@@ -354,6 +359,7 @@ public class CRBogeyStyles {
         addToCategory(TRIPLEAXLE_CATEGORY, RADIAL);
         addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TRAILING);
         addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TENDER);
+        addToCategory(TRIPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_6_0);
 
         // Quadruple Axle Category
         addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_QUADRUPLE_WHEEL);
