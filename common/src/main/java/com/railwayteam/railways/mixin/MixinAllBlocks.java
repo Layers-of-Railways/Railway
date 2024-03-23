@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 // Prevent future conflicts if EF updates
-@ConditionalMixin(mods = Mods.EXTENDEDFLYWHEELS)
+@ConditionalMixin(mods = Mods.EXTENDEDFLYWHEELS, applyIfPresent = false)
 @Mixin(AllBlocks.class)
 public class MixinAllBlocks {
     @WrapOperation(
