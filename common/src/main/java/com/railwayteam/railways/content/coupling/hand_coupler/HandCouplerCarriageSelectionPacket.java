@@ -62,13 +62,13 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
 
                 if (leadingAnchor == null || trailingAnchor == null || carriageLeadingAnchor == null || carriageTrailingAnchor == null) return;
 
-                int leadingToTrailingDistance = (int) Math.round(leadingAnchor.distanceTo(carriageTrailingAnchor));
-                int trailingToLeadingDistance = (int) Math.round(trailingAnchor.distanceTo(carriageLeadingAnchor));
+                double leadingToTrailingDistanceSqr = leadingAnchor.distanceToSqr(carriageTrailingAnchor);
+                double trailingToLeadingDistanceSqr = trailingAnchor.distanceToSqr(carriageLeadingAnchor);
 
-                if (leadingToTrailingDistance <= trailingToLeadingDistance)
-                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, leadingToTrailingDistance);
+                if (leadingToTrailingDistanceSqr <= trailingToLeadingDistanceSqr)
+                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, (int)Math.round(Math.sqrt(leadingToTrailingDistanceSqr)));
                 else
-                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, trailingToLeadingDistance);
+                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, (int)Math.round(Math.sqrt(trailingToLeadingDistanceSqr)));
             }
             stack.removeTagKey("TrainId");
             stack.removeTagKey("CarriageIndex");
