@@ -44,7 +44,6 @@ public class TrainUtils {
      * @return The new train.
      */
     public static Train splitTrain(Train train, int numberOffEnd) {
-        double speed = train.speed;
         if (((IHandcarTrain) train).railways$isHandcar()) return train;
         if (numberOffEnd == 0)
             return train;
@@ -89,6 +88,8 @@ public class TrainUtils {
             newTrain.name = Components.literal("Split off from: "+train.name.getString());
         }
         else newTrain.name = Components.literal(train.name.getString());
+
+        newTrain.speed = train.speed;
 
 
 
@@ -160,10 +161,6 @@ public class TrainUtils {
         // park at nearby stations
         tryToParkNearby(newTrain, 0.75);
         newTrain.collectInitiallyOccupiedSignalBlocks();
-
-        if(speed != 0)
-            newTrain.speed = speed;
-
         return newTrain;
     }
 
