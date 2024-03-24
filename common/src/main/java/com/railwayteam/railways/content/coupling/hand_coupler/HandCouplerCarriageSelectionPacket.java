@@ -56,12 +56,14 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
             if (firstTrain == null) return;
 
             if (firstTrainId.equals(trainUUID)){
+                if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1) return; //checks if the difference between the indices of the carriages is equal to 1 (if they're next to each other)
                 int noe = firstTrain.carriages.size()- Math.min(carriageIndex, firstCarriageIndex) -1;
                 TrainUtils.splitTrain(firstTrain, noe);
 
             } else {
                 Vec3 leadingAnchor = car.leadingBogey().getAnchorPosition();
                 Vec3 trailingAnchor = car.trailingBogey().getAnchorPosition();
+
 
                 Vec3 carriageLeadingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).leadingBogey().getAnchorPosition();
                 Vec3 carriageTrailingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).trailingBogey().getAnchorPosition();
