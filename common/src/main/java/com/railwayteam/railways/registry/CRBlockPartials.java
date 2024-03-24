@@ -489,7 +489,10 @@ public class CRBlockPartials {
         LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0-4-0/piston/piston"),
 
         LARGE_CREATE_STYLED_0_6_0_FRAME = block("bogey/large/create_styled_0-6-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_6_0_PISTON = block("bogey/large/create_styled_0-6-0/piston/piston")
+        LARGE_CREATE_STYLED_0_6_0_PISTON = block("bogey/large/create_styled_0-6-0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_8_0_FRAME = block("bogey/large/create_styled_0-8-0/frame/frame"),
+        LARGE_CREATE_STYLED_0_8_0_PISTON = block("bogey/large/create_styled_0-8-0/piston/piston")
     ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");

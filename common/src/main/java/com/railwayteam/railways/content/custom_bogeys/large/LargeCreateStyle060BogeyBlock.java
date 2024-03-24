@@ -15,6 +15,7 @@ public class LargeCreateStyle060BogeyBlock extends CRBogeyBlock {
         super(props, defaultStyle, size);
     }
 
+    //fixme fix offset
     @Override
     public Vec3 getConnectorAnchorOffset() {
         return new Vec3(0, 7 / 32f, 60 / 32f);
