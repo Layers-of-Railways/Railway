@@ -42,12 +42,6 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
         Train train = Create.RAILWAYS.trains.get(trainUUID);
         Carriage car = train.carriages.get(carriageIndex);
 
-        if(sender.isShiftKeyDown()){
-            stack.removeTagKey("TrainId");
-            stack.removeTagKey("CarriageIndex");
-            return;
-        }
-
         if (stack.hasTag() && stack.getTag() != null) {
             UUID firstTrainId = stack.getTag().getUUID("TrainId");
             int firstCarriageIndex = stack.getTag().getInt("CarriageIndex");
@@ -55,8 +49,10 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
 
             if (firstTrain == null) return;
 
+            if(firstTrain.graph.id != train.graph.id) return;
+
             if (firstTrainId.equals(trainUUID)){
-                if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1) return; //checks if the difference between the indices of the carriages is equal to 1 (if they're next to each other)
+                if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1) return;
                 int noe = firstTrain.carriages.size()- Math.min(carriageIndex, firstCarriageIndex) -1;
                 TrainUtils.splitTrain(firstTrain, noe);
 
@@ -73,10 +69,16 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                 double leadingToTrailingDistanceSqr = leadingAnchor.distanceToSqr(carriageTrailingAnchor);
                 double trailingToLeadingDistanceSqr = trailingAnchor.distanceToSqr(carriageLeadingAnchor);
 
-                if (leadingToTrailingDistanceSqr <= trailingToLeadingDistanceSqr)
-                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, (int)Math.round(Math.sqrt(leadingToTrailingDistanceSqr)));
-                else
-                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, (int)Math.round(Math.sqrt(trailingToLeadingDistanceSqr)));
+                if (leadingToTrailingDistanceSqr <= trailingToLeadingDistanceSqr){
+                    int distance = (int) Math.round(Math.sqrt(leadingToTrailingDistanceSqr));
+                    if(distance > 10) return;
+                    TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, distance);
+                }
+                else{
+                    int distance = (int) Math.round(Math.sqrt(trailingToLeadingDistanceSqr));
+                    if(distance > 10) return;
+                    TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance);
+                }
             }
             stack.removeTagKey("TrainId");
             stack.removeTagKey("CarriageIndex");
