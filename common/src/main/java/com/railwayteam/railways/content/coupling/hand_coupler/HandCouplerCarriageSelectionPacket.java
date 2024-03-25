@@ -80,14 +80,20 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                     TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance);
                 }
             }
-            stack.removeTagKey("TrainId");
-            stack.removeTagKey("CarriageIndex");
+            clearHandCouplerTags(stack);
             return;
-
         }
+        setHandCouplerTags(stack, trainUUID, carriageIndex);
+    }
+
+    void setHandCouplerTags(ItemStack stack, UUID trainUUID, int carriageIndex){
         CompoundTag tag = new CompoundTag();
         tag.putUUID("TrainId", trainUUID);
         tag.putInt("CarriageIndex", carriageIndex);
         stack.setTag(tag);
+    }
+    void clearHandCouplerTags(ItemStack stack){
+        stack.removeTagKey("TrainId");
+        stack.removeTagKey("CarriageIndex");
     }
 }
