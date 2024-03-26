@@ -36,28 +36,26 @@ import java.util.Map;
 public abstract class MixinAbstractBogeyBlock {
     @Shadow protected abstract BlockState copyProperties(BlockState source, BlockState target);
 
+    @Shadow public abstract BlockState getStateOfSize(AbstractBogeyBlockEntity sbte, BogeySizes.BogeySize size);
+
     // fixme this is a Create bug, file a report (styles not placing the correct block)
+    // Has been merged, awaiting release
     @Inject(method = "use",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;displayClientMessage(Lnet/minecraft/network/chat/Component;Z)V", remap = true, ordinal = 0),
             locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, remap = true)
     private void placeCorrectedBlock(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
                                      BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir, ItemStack stack,
-                                     BlockEntity be, AbstractBogeyBlockEntity sbte, BogeyStyle currentStyle,
+                                     BlockEntity be, AbstractBogeyBlockEntity sbbe, BogeyStyle currentStyle,
                                      BogeySizes.BogeySize size, BogeyStyle style) {
         if (state.getBlock() != style.getBlockOfSize(size)) {
-            // need to place block
-            CompoundTag oldData = sbte.getBogeyData();
-
-            BlockState targetState = style.getBlockOfSize(size).defaultBlockState();
-            targetState = copyProperties(state, targetState);
-            level.setBlock(pos, targetState, 3);
-
+            CompoundTag oldData = sbbe.getBogeyData();
+            level.setBlock(pos, copyProperties(state, getStateOfSize(sbbe, size)), 3);
             BlockEntity newBlockEntity = level.getBlockEntity(pos);
-            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity bogeyBlockEntity)) {
+            if (!(newBlockEntity instanceof AbstractBogeyBlockEntity newBlockEntity1)) {
                 cir.setReturnValue(InteractionResult.FAIL);
                 return;
             }
-            bogeyBlockEntity.setBogeyData(oldData);
+            newBlockEntity1.setBogeyData(oldData);
         }
     }
 

@@ -4,6 +4,7 @@ import com.simibubi.create.AllItems;
 import net.minecraft.world.item.ItemStack;
 
 // TODO - Remove when https://github.com/Creators-of-Create/Create/pull/5900 is merged
+// Has been merged, awaiting release
 @Deprecated
 public interface IHaveCustomGoggleIcon {
     /**
