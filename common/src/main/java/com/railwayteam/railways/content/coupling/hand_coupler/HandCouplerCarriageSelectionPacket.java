@@ -7,7 +7,7 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -53,23 +53,23 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
             Train firstTrain = Create.RAILWAYS.trains.get(firstTrainId);
 
             if (firstTrain == null){
-                endWithReason("hand_coupler.no_train", false, sender, stack);
+                endWithReason("railways.hand_coupler.no_train", false, sender, stack);
                 return;
             }
 
             if(firstTrain.graph.id != train.graph.id){
-                endWithReason("hand_coupler.different_graph", false, sender, stack);
+                endWithReason("railways.hand_coupler.different_graph", false, sender, stack);
                 return;
             }
 
             if (firstTrainId.equals(trainUUID)){
                 if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1){
-                    endWithReason("hand_coupler.not_adjacent", false, sender, stack);
+                    endWithReason("railways.hand_coupler.not_adjacent", false, sender, stack);
                     return;
                 }
                 int noe = firstTrain.carriages.size()- Math.min(carriageIndex, firstCarriageIndex) -1;
                 TrainUtils.splitTrain(firstTrain, noe);
-                endWithReason("hand_coupler.uncoupled", true, sender, stack);
+                endWithReason("railways.hand_coupler.uncoupled", true, sender, stack);
                 return;
             } else {
                 Vec3 leadingPosition = train.carriages.get(0).leadingBogey().leading().getPosition(train.graph);
@@ -85,7 +85,7 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                 double closestDistance = Math.min(leadingToTrailingDistanceSqr, trailingToLeadingDistanceSqr);
                 if(leadingPosition.distanceToSqr(firstLeadingPosition) < closestDistance
                 || trailingPosition.distanceToSqr(firstTrailingPosition) < closestDistance){
-                    endWithReason("hand_coupler.wrong_direction", false, sender, stack);
+                    endWithReason("railways.hand_coupler.wrong_direction", false, sender, stack);
                     return;
                 }
 
@@ -104,7 +104,7 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                     TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance);
                 }
             }
-            endWithReason("hand_coupler.coupled", true, sender, stack);
+            endWithReason("railways.hand_coupler.coupled", true, sender, stack);
             return;
         }
         setHandCouplerTags(stack, trainUUID, carriageIndex);
@@ -112,7 +112,7 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
 
     void endWithReason(String key, boolean success, Player player, ItemStack stack){
         (success ? AllSoundEvents.CONTRAPTION_DISASSEMBLE : AllSoundEvents.DENY).playFrom(player);
-        endWithReason(Lang.translateDirect(key).withStyle(success ? ChatFormatting.GREEN : ChatFormatting.RED),
+        endWithReason(Components.translatable(key).withStyle(success ? ChatFormatting.GREEN : ChatFormatting.RED),
                 player, stack);
     }
     void endWithReason(Component reason, Player player, ItemStack stack){
