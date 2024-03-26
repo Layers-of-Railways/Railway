@@ -22,6 +22,7 @@ import java.util.UUID;
 public class HandCouplerCarriageSelectionPacket implements C2SPacket {
     private final UUID trainUUID;
     private final int carriageIndex;
+    private final int maxCouplerDistance = 15;
 
     public HandCouplerCarriageSelectionPacket(UUID trainUUID, int carriageIndex){
         this.trainUUID = trainUUID;
@@ -97,14 +98,20 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                     int distance = (int) Math.round(train.carriages.get(0).leadingBogey().getAnchorPosition()
                             .distanceTo(firstTrain.carriages.get(firstTrain.carriages.size()-1).trailingBogey().getAnchorPosition())
                     );
-                    if(distance > 10) return;
+                    if(distance > maxCouplerDistance){
+                        endWithReason("railways.hand_coupler.too_far", false, sender, stack);
+                        return;
+                    }
                     TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, distance);
                 }
                 else{
                     int distance = (int) Math.round(train.carriages.get(train.carriages.size()-1).trailingBogey().getAnchorPosition()
                             .distanceTo(firstTrain.carriages.get(0).leadingBogey().getAnchorPosition())
                     );
-                    if(distance > 10) return;
+                    if(distance > maxCouplerDistance){
+                        endWithReason("railways.hand_coupler.too_far", false, sender, stack);
+                        return;
+                    }
                     TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance);
                 }
             }
