@@ -21,13 +21,12 @@ import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.Doub
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.LargePlatformDoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle040BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle060BogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle040BogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle060BogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
