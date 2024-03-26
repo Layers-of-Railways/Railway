@@ -19,7 +19,7 @@ Create: Steam 'n' Rails is an addon mod for Create that aims to extend Create's 
 | 0.5.1.f           | 1.4.8                   | 1.18.2            | Forge/Fabric                |
 | 0.5.1.c-0.5.1.e\* | 1.5.1                   | 1.19.2, 1.20.1    | Forge/Fabric/Quilt/NeoForge |
 | 0.5.1.e           | 1.5.2                   | 1.20.1            | Forge/NeoForge              |
-| 0.5.1.f           | 1.5.3                   | 1.19.2, 1.20.1    | Forge/NeoForge              |
+| 0.5.1.f           | 1.5.3                   | 1.19.2, 1.20.1    | Forge/Fabric/Quilt/NeoForge |
 
 \*excluding Create 0.5.1.e in minecraft 1.20.1 on Forge and NeoForge
 

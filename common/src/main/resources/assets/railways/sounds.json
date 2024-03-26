@@ -5,7 +5,7 @@
       "railways:conductor_whistle"
     ]
   },
-  "handcar_cog": {
+  "handcar_cogs": {
     "sounds": [
       {
         "type": "file",

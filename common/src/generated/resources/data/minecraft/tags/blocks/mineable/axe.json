@@ -10,6 +10,7 @@
     "railways:big_buffer",
     "railways:small_buffer",
     "railways:headstock",
-    "railways:copycat_headstock"
+    "railways:copycat_headstock",
+    "railways:portable_fuel_interface"
   ]
 }

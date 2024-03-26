@@ -31,8 +31,6 @@ dependencies {
 
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
     modCompileOnly("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
-    modCompileOnly("curse.maven:malilib-303119:${"malilib_version"()}")
-    modCompileOnly("curse.maven:tweakeroo-297344:${"tweakeroo_version"()}")
     modCompileOnly("maven.modrinth:sodium:${"sodium_version"()}")
 
     // mod compat for tracks

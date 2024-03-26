@@ -5,7 +5,6 @@ import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;

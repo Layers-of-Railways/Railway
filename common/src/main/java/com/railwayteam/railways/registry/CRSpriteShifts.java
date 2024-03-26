@@ -15,6 +15,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CRSpriteShifts {
+    public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
+        FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
+        FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
+
     public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
         SLASHED_LOCOMETAL = new HashMap<>(17, 2),
         RIVETED_LOCOMETAL = new HashMap<>(17, 2),
@@ -25,7 +29,7 @@ public class CRSpriteShifts {
         BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
         COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
         IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
-    
+
     private static void initLocometal(@Nullable DyeColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
