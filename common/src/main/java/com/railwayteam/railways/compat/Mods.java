@@ -32,16 +32,8 @@ public enum Mods {
 	public final boolean requiredForDataGen;
 	public final @Nullable String fabricId;
 
-	Mods() {
-		this(null, false);
-	}
-
 	Mods(@Nullable String fabricId) {
 		this(fabricId, false);
-	}
-
-	Mods(boolean requiredForDataGen) {
-		this(null, requiredForDataGen);
 	}
 
 	Mods(@Nullable String fabricId, boolean requiredForDataGen) {

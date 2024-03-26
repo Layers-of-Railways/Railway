@@ -11,9 +11,9 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRe
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;

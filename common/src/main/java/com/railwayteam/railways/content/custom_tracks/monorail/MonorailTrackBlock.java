@@ -4,7 +4,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerServer;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.AbstractMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRBogeyStyles;
