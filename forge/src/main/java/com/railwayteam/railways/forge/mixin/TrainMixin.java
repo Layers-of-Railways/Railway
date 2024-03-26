@@ -1,11 +1,14 @@
 package com.railwayteam.railways.forge.mixin;
 
+import com.railwayteam.railways.content.fuel.LiquidFuelManager;
+import com.railwayteam.railways.content.fuel.LiquidFuelType;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -47,9 +50,19 @@ public class TrainMixin {
             for (int tanks = 0; tanks < fuelItems.getTanks(); tanks++) {
                 // Extract 100 Mb worth of fluid (1/10th of a bucket)
                 FluidStack fluidStack = fuelItems.drain(100, IFluidHandler.FluidAction.EXECUTE);
-                int burnTime = ForgeHooks.getBurnTime(fluidStack.getFluid().getBucket().getDefaultInstance(), null);
+
+                int burnTime;
+                Fluid fluid = fluidStack.getFluid();
+                LiquidFuelType fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+                if (fuelType != null) {
+                    burnTime = fuelType.getFuelTicks();
+                } else {
+                    burnTime = ForgeHooks.getBurnTime(fluid.getBucket().getDefaultInstance(), null);
+                }
+
                 if (burnTime <= 0)
                     continue;
+
                 // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
                 // so it isn't so strong
                 fuelTicks += (burnTime / 100) / 4;
