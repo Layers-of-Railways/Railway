@@ -51,18 +51,20 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
 
             if(firstTrain.graph.id != train.graph.id) return;
 
+
+
             if (firstTrainId.equals(trainUUID)){
                 if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1) return;
                 int noe = firstTrain.carriages.size()- Math.min(carriageIndex, firstCarriageIndex) -1;
                 TrainUtils.splitTrain(firstTrain, noe);
 
             } else {
-                Vec3 leadingAnchor = car.leadingBogey().getAnchorPosition();
-                Vec3 trailingAnchor = car.trailingBogey().getAnchorPosition();
+                Vec3 leadingAnchor = train.carriages.get(0).leadingBogey().leading().getPosition(train.graph);
+                Vec3 trailingAnchor = train.carriages.get(train.carriages.size()-1).trailingBogey().trailing().getPosition(train.graph);
 
 
-                Vec3 carriageLeadingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).leadingBogey().getAnchorPosition();
-                Vec3 carriageTrailingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).trailingBogey().getAnchorPosition();
+                Vec3 carriageLeadingAnchor = firstTrain.carriages.get(0).leadingBogey().leading().getPosition(firstTrain.graph);
+                Vec3 carriageTrailingAnchor = firstTrain.carriages.get(firstTrain.carriages.size() - 1).trailingBogey().trailing().getPosition(firstTrain.graph);
 
                 if (leadingAnchor == null || trailingAnchor == null || carriageLeadingAnchor == null || carriageTrailingAnchor == null) return;
 
@@ -70,12 +72,16 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                 double trailingToLeadingDistanceSqr = trailingAnchor.distanceToSqr(carriageLeadingAnchor);
 
                 if (leadingToTrailingDistanceSqr <= trailingToLeadingDistanceSqr){
-                    int distance = (int) Math.round(Math.sqrt(leadingToTrailingDistanceSqr));
+                    int distance = (int) Math.round(train.carriages.get(0).leadingBogey().getAnchorPosition()
+                            .distanceTo(firstTrain.carriages.get(firstTrain.carriages.size()-1).trailingBogey().getAnchorPosition())
+                    );
                     if(distance > 10) return;
                     TrainUtils.combineTrains(firstTrain, train, sender.position(), sender.level, distance);
                 }
                 else{
-                    int distance = (int) Math.round(Math.sqrt(trailingToLeadingDistanceSqr));
+                    int distance = (int) Math.round(train.carriages.get(train.carriages.size()-1).trailingBogey().getAnchorPosition()
+                            .distanceTo(firstTrain.carriages.get(0).leadingBogey().getAnchorPosition())
+                    );
                     if(distance > 10) return;
                     TrainUtils.combineTrains(train, firstTrain, sender.position(), sender.level, distance);
                 }
