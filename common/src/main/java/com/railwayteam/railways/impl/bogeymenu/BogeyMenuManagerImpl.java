@@ -1,8 +1,8 @@
 package com.railwayteam.railways.impl.bogeymenu;
 
-import com.railwayteam.railways.api.bogeymenu.BogeyMenuManager;
-import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
-import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
+import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
+import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
+import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.utility.Pair;

@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.bogey_menu.handler;
 
-import com.railwayteam.railways.api.bogeymenu.entry.BogeyEntry;
+import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;

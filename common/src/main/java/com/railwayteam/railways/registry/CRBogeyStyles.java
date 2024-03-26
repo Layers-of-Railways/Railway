@@ -2,8 +2,8 @@ package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.api.bogeymenu.BogeyMenuManager;
-import com.railwayteam.railways.api.bogeymenu.entry.CategoryEntry;
+import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
+import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
