@@ -61,6 +61,11 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
                 return;
             }
 
+            if(!TrainUtils.allCarriagesLoaded(train) || !TrainUtils.allCarriagesLoaded(firstTrain)){
+                endWithReason("railways.hand_coupler.carriages_unloaded", false, sender, stack);
+                return;
+            }
+
             if (firstTrainId.equals(trainUUID)){
                 if((carriageIndex-firstCarriageIndex)*(carriageIndex-firstCarriageIndex) != 1){
                     endWithReason("railways.hand_coupler.not_adjacent", false, sender, stack);
