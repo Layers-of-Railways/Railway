@@ -45,7 +45,6 @@ public class HandCouplerCarriageSelectionPacket implements C2SPacket {
         if (!stack.is(CRItems.HAND_COUPLER.get())) return;
 
         Train train = Create.RAILWAYS.trains.get(trainUUID);
-        Carriage car = train.carriages.get(carriageIndex);
 
         if (stack.hasTag() && stack.getTag() != null) {
             UUID firstTrainId = stack.getTag().getUUID("TrainId");
