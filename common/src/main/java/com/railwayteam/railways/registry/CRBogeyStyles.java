@@ -4,8 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
-import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled0100Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled080Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.*;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyRenderer;
@@ -14,8 +13,6 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.Narr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.narrow.NarrowSmallBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.HandcarBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.double_axle.*;
-import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled040Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled060Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.single_axle.LeafspringBogeyRenderer;
@@ -51,13 +48,15 @@ public class CRBogeyStyles {
     public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
     public static final String QUADRUPLEAXLE_CYCLE_GROUP = "quadrupleaxles";
     public static final String QUINTUPLEAXLE_CYCLE_GROUP = "quintupleaxles";
+    public static final String SEXTUPLEAXLE_CYCLE_GROUP = "sextupleaxles";
 
     public static final CategoryEntry STANDARD_CATEGORY = registerCategory(Create.ID, STANDARD_CYCLE_GROUP);
-    public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(Railways.MODID, SINGLEAXLE_CYCLE_GROUP);
-    public static final CategoryEntry DOUBLEAXLE_CATEGORY = registerCategory(Railways.MODID, DOUBLEAXLE_CYCLE_GROUP);
-    public static final CategoryEntry TRIPLEAXLE_CATEGORY = registerCategory(Railways.MODID, TRIPLEAXLE_CYCLE_GROUP);
-    public static final CategoryEntry QUADRUPLEAXLE_CATEGORY = registerCategory(Railways.MODID, QUADRUPLEAXLE_CYCLE_GROUP);
-    public static final CategoryEntry QUINTUPLEAXLE_CATEGORY = registerCategory(Railways.MODID, QUINTUPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(SINGLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry DOUBLEAXLE_CATEGORY = registerCategory(DOUBLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry TRIPLEAXLE_CATEGORY = registerCategory(TRIPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry QUADRUPLEAXLE_CATEGORY = registerCategory(QUADRUPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry QUINTUPLEAXLE_CATEGORY = registerCategory(QUINTUPLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry SEXTUPLEAXLE_CATEGORY = registerCategory(SEXTUPLEAXLE_CYCLE_GROUP);
 
     private static final Map<Pair<BogeyStyle, TrackType>, BogeyStyle> STYLES_FOR_GAUGES = new HashMap<>();
     private static final Map<BogeyStyle, BogeyStyle> STYLES_TO_STANDARD_GAUGE = new HashMap<>();
@@ -287,6 +286,10 @@ public class CRBogeyStyles {
         LARGE_CREATE_STYLED_0_10_0 = create("large_create_style_0_10_0", QUINTUPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_10_0"))
             .size(BogeySizes.LARGE, () -> LargeCreateStyled0100Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_10_0)
+            .build(),
+        LARGE_CREATE_STYLED_0_12_0 = create("large_create_style_0_12_0", SEXTUPLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_12_0"))
+            .size(BogeySizes.LARGE, () -> LargeCreateStyled0120Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_12_0)
             .build();
 
 
@@ -301,6 +304,10 @@ public class CRBogeyStyles {
 
     public static AllBogeyStyles.BogeyStyleBuilder create(ResourceLocation name, ResourceLocation cycleGroup) {
         return new AllBogeyStyles.BogeyStyleBuilder(name, cycleGroup);
+    }
+
+    public static CategoryEntry registerCategory(String name) {
+        return registerCategory(Railways.MODID, name);
     }
 
     public static CategoryEntry registerCategory(String modid, String name) {
@@ -380,5 +387,8 @@ public class CRBogeyStyles {
         addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_QUINTUPLE_WHEEL);
         addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_10_0_10_TENDER);
         addToCategory(QUINTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_10_0);
+
+        // Sextuple Axle Category
+        addToCategory(SEXTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_12_0);
     }
 }

@@ -45,7 +45,7 @@ public class LargeCreateStyled040Renderer extends BogeyRenderer {
 
         for (int i : Iterate.zeroAndOne) {
             secondaryShafts[i]
-                    .translate(-.5f, .25f, 1.372f + i * 3.742)
+                    .translate(-.5f, .25f, -2.371f + i * 3.744)
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()

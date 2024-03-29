@@ -21,10 +21,7 @@ import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.Doub
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.LargePlatformDoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.TripleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle0100BogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle040BogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle060BogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.LargeCreateStyle080BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.*;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.medium.*;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeComicallyLargeBogeyBlock;
@@ -536,6 +533,13 @@ public class CRBlocks {
                     .properties(p -> p.color(MaterialColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-10-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle0120BogeyBlock> LARGE_CREATE_STYLE_0_12_0 =
+            REGISTRATE.block("large_create_styled_0_12_0", LargeCreateStyle0120BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-12-0")
                     .register();
 
 

@@ -483,7 +483,8 @@ public class CRBlockPartials {
     ;
 
     public static final PartialModel
-        LARGE_CREATE_STYLED_WHEELS = block("bogey/large/wheels/smaller_wheels"),
+        LC_STYLE_SEMI_BLIND_WHEELS = block("bogey/large/wheels/semi_blind_wheels"),
+        LC_STYLE_FULLY_BLIND_WHEELS = block("bogey/large/wheels/fully_blind_wheels"),
 
         LARGE_CREATE_STYLED_0_4_0_FRAME = block("bogey/large/create_styled_0-4-0/frame/frame"),
         LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0-4-0/piston/piston"),
@@ -495,7 +496,10 @@ public class CRBlockPartials {
         LARGE_CREATE_STYLED_0_8_0_PISTON = block("bogey/large/create_styled_0-8-0/piston/piston"),
 
         LARGE_CREATE_STYLED_0_10_0_FRAME = block("bogey/large/create_styled_0-10-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_10_0_PISTON = block("bogey/large/create_styled_0-10-0/piston/piston")
+        LARGE_CREATE_STYLED_0_10_0_PISTON = block("bogey/large/create_styled_0-10-0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_12_0_FRAME = block("bogey/large/create_styled_0-12-0/frame/frame"),
+        LARGE_CREATE_STYLED_0_12_0_PISTON = block("bogey/large/create_styled_0-12-0/piston/piston")
     ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");

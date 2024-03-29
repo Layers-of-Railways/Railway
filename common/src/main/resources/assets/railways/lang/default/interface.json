@@ -163,5 +163,8 @@
   "create.gui.bogey_menu.category.standard": "Standard Styles",
   "railways.gui.bogey_menu.category.singleaxles": "Single Axles",
   "railways.gui.bogey_menu.category.doubleaxles": "Double Axles",
-  "railways.gui.bogey_menu.category.tripleaxles": "Triple Axles"
+  "railways.gui.bogey_menu.category.tripleaxles": "Triple Axles",
+  "railways.gui.bogey_menu.category.quadrupleaxles": "Quadruple Axles",
+  "railways.gui.bogey_menu.category.quintupleaxles": "Quintuple Axles",
+  "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles"
 }

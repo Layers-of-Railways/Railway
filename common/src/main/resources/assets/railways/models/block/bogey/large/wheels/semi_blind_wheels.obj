@@ -1,6 +1,6 @@
 # Blender 4.0.2
 # www.blender.org
-mtllib smaller_wheels.mtl
+mtllib semi_blind_wheels.mtl
 o Cube.001_110
 v 1.062500 0.375000 -0.000000
 v 1.062500 0.437500 -0.000000

@@ -19,7 +19,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 public class LargeCreateStyled060Renderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, LARGE_CREATE_STYLED_WHEELS, LARGE_CREATE_STYLED_0_6_0_FRAME, LARGE_CREATE_STYLED_0_6_0_PISTON);
+        createModelInstance(materialManager, LC_STYLE_SEMI_BLIND_WHEELS, LARGE_CREATE_STYLED_0_6_0_FRAME, LARGE_CREATE_STYLED_0_6_0_PISTON);
         createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 3);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
@@ -72,7 +72,7 @@ public class LargeCreateStyled060Renderer extends BogeyRenderer {
         if (!inInstancedContraption)
             ms.pushPose();
 
-        getTransform(LARGE_CREATE_STYLED_WHEELS, ms, inInstancedContraption)
+        getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption)
                 .translate(0, 1, 0)
                 .rotateX(wheelAngle)
                 .translate(0, -1, 0)

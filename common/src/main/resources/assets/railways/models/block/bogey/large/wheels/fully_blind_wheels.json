@@ -2,7 +2,7 @@
   "parent": "block/block",
   "loader": "forge:obj",
   "flip_v": true,
-  "model": "railways:models/block/bogey/large/wheels/smaller_wheels.obj",
+  "model": "railways:models/block/bogey/large/wheels/fully_blind_wheels.obj",
   "textures": {
     "0": "create:block/bogey/wheel"
   }
