@@ -10,7 +10,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.GameType;
 
 public class BogeyMenuEventsHandler {
-    private static int COOLDOWN = 0;
+    public static int COOLDOWN = 0;
 
     public static void clientTick() {
         if (COOLDOWN > 0 && !CRKeys.BOGEY_MENU.isPressed())
