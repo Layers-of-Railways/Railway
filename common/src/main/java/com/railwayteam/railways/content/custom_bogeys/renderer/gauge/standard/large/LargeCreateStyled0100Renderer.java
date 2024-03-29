@@ -16,17 +16,17 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class LargeCreateStyled080Renderer extends BogeyRenderer {
+public class LargeCreateStyled0100Renderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_8_0_FRAME, LARGE_CREATE_STYLED_0_8_0_PISTON);
-        createModelInstance(materialManager, LARGE_CREATE_STYLED_WHEELS, 2);
+        createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_10_0_FRAME, LARGE_CREATE_STYLED_0_10_0_PISTON);
+        createModelInstance(materialManager, LARGE_CREATE_STYLED_WHEELS, 3);
         createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);
-        createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 4);
+        createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 5);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.X), 2);
         createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 4);
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 6);
     }
 
     @Override
@@ -41,59 +41,58 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
         BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.X), ms, inInstancedContraption, 2);
         BogeyModelData[] middleShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 4);
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 6);
 
         for (int side : Iterate.positiveAndNegative) {
             BogeyModelData shaft = secondaryShafts[(side + 1) / 2];
-            shaft.translate(-.5f, .25f, -.5f + side * 3.617)
+            shaft.translate(-.5, .25, -.5f + side * 4.3675)
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
                     .render(ms, light, vb);
         }
 
-        for (int side = -2; side < 3; side++) {
-            // look mom, i saved on rendering 1 shaft!
-            if (side == 0) continue;
-            int shaftNum = side > 0 ? side + 1 : side + 2;
-            BogeyModelData shaft = middleShafts[shaftNum];
-            shaft.translate(-.5f, .25f, -.5f + side * -1.6)
+        for (int side = -3; side < 3; side++) {
+            BogeyModelData shaft = middleShafts[side + 3];
+            shaft.translate(-.5f, .25f, -1.3f + side * -1.6)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
                     .render(ms, light, vb);
         }
 
-        getTransform(LARGE_CREATE_STYLED_0_8_0_FRAME, ms, inInstancedContraption)
+        getTransform(LARGE_CREATE_STYLED_0_10_0_FRAME, ms, inInstancedContraption)
                 .render(ms, light, vb);
 
-        getTransform(LARGE_CREATE_STYLED_0_8_0_PISTON, ms, inInstancedContraption)
+        getTransform(LARGE_CREATE_STYLED_0_10_0_PISTON, ms, inInstancedContraption)
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
                 .render(ms, light, vb);
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
-        BogeyModelData[] innerWheels = getTransform(LARGE_CREATE_STYLED_WHEELS, ms, inInstancedContraption, 2);
-        BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 4);
+        BogeyModelData[] innerWheels = getTransform(LARGE_CREATE_STYLED_WHEELS, ms, inInstancedContraption, 3);
+        BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 5);
 
         if (!inInstancedContraption)
             ms.pushPose();
 
         for (int side : Iterate.positiveAndNegative) {
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * 2.6215)
+            wheel.translate(0, 1, side * 3.367)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
+        }
 
-            BogeyModelData innerWheel = innerWheels[(side + 1) / 2];
-            innerWheel.translate(0, 1, side * .874)
+        for (int side = -1; side < 2; side++) {
+            BogeyModelData innerWheel = innerWheels[side + 1];
+            innerWheel.translate(0, 1, side * 1.684)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
                     .render(ms, light, vb);
         }
 
-        for (int side = 0; side < 4; side++) {
-            BogeyModelData pin = pins[side];
-            pin.translate(0, 1, -2.62f + side * 1.7467)
+        for (int side = -2; side < 3; side++) {
+            BogeyModelData pin = pins[side + 2];
+            pin.translate(0, 1, side * 1.684)
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)

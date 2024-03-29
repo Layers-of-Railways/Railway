@@ -15,9 +15,13 @@ public class LargeCreateStyle080BogeyBlock extends CRBogeyBlock {
         super(props, defaultStyle, size);
     }
 
-    //fixme fix offset
     @Override
     public Vec3 getConnectorAnchorOffset() {
-        return new Vec3(0, 7 / 32f, 86 / 32f);
+        return new Vec3(0, 7 / 32f, 115 / 32f);
+    }
+
+    @Override
+    public double getWheelPointSpacing() {
+        return 4;
     }
 }

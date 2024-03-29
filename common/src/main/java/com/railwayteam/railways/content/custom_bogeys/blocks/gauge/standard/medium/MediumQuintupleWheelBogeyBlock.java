@@ -19,4 +19,9 @@ public class MediumQuintupleWheelBogeyBlock extends CRBogeyBlock {
     public Vec3 getConnectorAnchorOffset() {
         return new Vec3(0, 7 / 32f, 96 / 32f);
     }
+
+    @Override
+    public double getWheelPointSpacing() {
+        return 5;
+    }
 }

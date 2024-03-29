@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
+import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled0100Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.large.LargeCreateStyled080Renderer;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
@@ -275,13 +276,17 @@ public class CRBogeyStyles {
             .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_4_0"))
             .size(BogeySizes.LARGE, () -> LargeCreateStyled040Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_4_0)
             .build(),
-        LARGE_CREATE_STYLED_0_6_0 = create("large_create_style_0_6_0", DOUBLEAXLE_CYCLE_GROUP)
+        LARGE_CREATE_STYLED_0_6_0 = create("large_create_style_0_6_0", TRIPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_6_0"))
             .size(BogeySizes.LARGE, () -> LargeCreateStyled060Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_6_0)
             .build(),
-        LARGE_CREATE_STYLED_0_8_0 = create("large_create_style_0_8_0", DOUBLEAXLE_CYCLE_GROUP)
+        LARGE_CREATE_STYLED_0_8_0 = create("large_create_style_0_8_0", QUADRUPLEAXLE_CYCLE_GROUP)
             .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_8_0"))
             .size(BogeySizes.LARGE, () -> LargeCreateStyled080Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_8_0)
+            .build(),
+        LARGE_CREATE_STYLED_0_10_0 = create("large_create_style_0_10_0", QUINTUPLEAXLE_CYCLE_GROUP)
+            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_10_0"))
+            .size(BogeySizes.LARGE, () -> LargeCreateStyled0100Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_10_0)
             .build();
 
 
@@ -374,5 +379,6 @@ public class CRBogeyStyles {
         // Quintuple Axle Category
         addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_QUINTUPLE_WHEEL);
         addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_10_0_10_TENDER);
+        addToCategory(QUINTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_10_0);
     }
 }
