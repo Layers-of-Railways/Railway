@@ -2,17 +2,24 @@ package com.railwayteam.railways.fabric.mixin;
 
 import com.google.common.collect.Iterators;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.railwayteam.railways.content.fuel.LiquidFuelManager;
+import com.railwayteam.railways.content.fuel.LiquidFuelType;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
+import com.simibubi.create.foundation.utility.Pair;
 import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,10 +30,12 @@ import java.util.Iterator;
 import java.util.List;
 
 @Mixin(value = Train.class, remap = false)
-public class TrainMixin {
+public abstract class TrainMixin {
     @Shadow public double speed;
     @Shadow public List<Carriage> carriages;
     @Shadow public int fuelTicks;
+
+    @Shadow public abstract Pair<Train, Vec3> findCollidingTrain(Level level, Vec3 start, Vec3 end, ResourceKey<Level> dimension);
 
     @ModifyExpressionValue(method = "burnFuel", at = @At(value = "INVOKE", target = "Lio/github/fabricators_of_create/porting_lib/transfer/TransferUtil;getNonEmpty(Lnet/fabricmc/fabric/api/transfer/v1/storage/Storage;)Ljava/lang/Iterable;"))
     private <T> Iterable<? extends StorageView<T>> railways$disableFuelConsumptionBasedOnTag(Iterable<? extends StorageView<T>> original) {
@@ -51,12 +60,22 @@ public class TrainMixin {
                 for (StorageView<FluidVariant> view : TransferUtil.getNonEmpty(fuelFluids)) {
                     FluidVariant held = view.getResource();
 
-                    Integer burnTime = FuelRegistry.INSTANCE.get(held.getFluid().getBucket());
+                    Integer burnTime;
+                    Fluid fluid = held.getFluid();
+                    LiquidFuelType fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+                    if (fuelType != null) {
+                        burnTime = fuelType.getFuelTicks();
+                    } else {
+                        burnTime = FuelRegistry.INSTANCE.get(fluid.getBucket());
+                    }
+
                     if (burnTime == null || burnTime <= 0)
                         continue;
+
                     // Extract 100 Mb worth of fluid (1/10th of a bucket)
                     if (view.extract(held, 8100, t) != 8100)
                         continue;
+
                     // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
                     // so it isn't so strong
                     fuelTicks += (burnTime / 100) / 4;
