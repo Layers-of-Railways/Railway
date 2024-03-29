@@ -5,7 +5,9 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
 import com.railwayteam.railways.util.ShapeUtils;
+import com.railwayteam.railways.util.client.OcclusionTestWorld;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.WaterloggedCopycatBlock;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -51,6 +53,8 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
     public static final BooleanProperty UPSIDE_DOWN = HeadstockBlock.UPSIDE_DOWN;
 
+    private final OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
+
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
@@ -63,6 +67,11 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder.add(FACING, STYLE, UPSIDE_DOWN));
+    }
+
+    @Override
+    public boolean isAcceptedRegardless(BlockState material) {
+        return CopycatSpecialCases.isBarsMaterial(material);
     }
 
     @Override
@@ -109,14 +118,6 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction direction) {
-        if (state.is(this) && adjacentBlockState.is(this))
-            return isOccluded(state, adjacentBlockState, direction);
-        return false;
-    }
-
     @Override
     public boolean canFaceBeOccluded(BlockState state, Direction face) {
         return state.getValue(FACING)
@@ -125,14 +126,50 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
 
     @Override
     public boolean shouldFaceAlwaysRender(BlockState state, Direction face) {
-        return canFaceBeOccluded(state, face.getOpposite());
+        if (state.getValue(FACING) == face)
+            return true;
+
+        return face.getAxis().isVertical() && (face == Direction.DOWN ^ state.getValue(UPSIDE_DOWN));
+    }
+
+    // Can't use @Override because PortingLib's interface injection doesn't exist in common, but this method is supported cross-platform because of it anyway
+    @SuppressWarnings("unused")
+    public boolean supportsExternalFaceHiding(BlockState state) {
+        return true;
+    }
+
+    // Can't use @Override because PortingLib's interface injection doesn't exist in common, but this method is supported cross-platform because of it anyway
+    @SuppressWarnings("unused")
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
+                                     Direction dir) {
+        BlockState material = getMaterial(level, pos);
+        if (state.is(this) == neighborState.is(this)) {
+            BlockState otherMaterial = getMaterial(level, pos.relative(dir));
+            if (CopycatSpecialCases.isBarsMaterial(material)
+                && CopycatSpecialCases.isBarsMaterial(otherMaterial))
+                return state.getValue(FACING) == neighborState.getValue(FACING)
+                    && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
+            if (material.skipRendering(otherMaterial, dir.getOpposite()))
+                return isOccluded(state, neighborState, dir.getOpposite());
+
+            // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
+            occlusionTestWorld.clear();
+            occlusionTestWorld.setBlock(pos, material);
+            occlusionTestWorld.setBlock(pos.relative(dir), otherMaterial);
+            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, pos.relative(dir)))
+                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), pos.relative(dir)))
+                    return isOccluded(state, neighborState, dir.getOpposite());
+        }
+
+        return state.getValue(FACING) == dir.getOpposite()
+            && material.skipRendering(neighborState, dir.getOpposite());
     }
 
     private static boolean isOccluded(BlockState state, BlockState other, Direction pDirection) {
         state = state.setValue(WATERLOGGED, false);
         other = other.setValue(WATERLOGGED, false);
         Direction facing = state.getValue(FACING);
-        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing.getOpposite())
+        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing)
             return true;
         if (other.getValue(FACING) != facing)
             return false;
