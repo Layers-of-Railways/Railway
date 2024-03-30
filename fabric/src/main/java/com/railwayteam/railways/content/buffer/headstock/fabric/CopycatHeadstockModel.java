@@ -1,10 +1,13 @@
 package com.railwayteam.railways.content.buffer.headstock.fabric;
 
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlockEntity;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
@@ -128,6 +131,18 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
         boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
+
+        if (CopycatSpecialCases.isBarsMaterial(material)) {
+            BlockState specialState = CRBlocks.COPYCAT_HEADSTOCK_BARS.getDefaultState()
+                .setValue(CopycatHeadstockBarsBlock.FACING, facing)
+                .setValue(CopycatHeadstockBarsBlock.UPSIDE_DOWN, upsideDown);
+
+            BakedModel specialModel = getModelOf(specialState);
+            if (specialModel instanceof CopycatHeadstockBarsModel cm) {
+                cm.emitBlockQuadsInner(blockView, state, pos, randomSupplier, context, material, cullFaceRemovalData.shouldRemove, occlusionData.occluded);
+                return;
+            }
+        }
 
         BakedModel model = getModelOf(material);
 
@@ -315,7 +330,7 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             occluded[face.get3DDataValue()] = true;
         }
 
-        public boolean isOccluded(Direction face) {
+        public boolean isOccluded(@Nullable Direction face) {
             return face == null ? false : occluded[face.get3DDataValue()];
         }
     }
@@ -331,7 +346,7 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             shouldRemove[face.get3DDataValue()] = true;
         }
 
-        public boolean shouldRemove(Direction face) {
+        public boolean shouldRemove(@Nullable Direction face) {
             return face == null ? false : shouldRemove[face.get3DDataValue()];
         }
     }

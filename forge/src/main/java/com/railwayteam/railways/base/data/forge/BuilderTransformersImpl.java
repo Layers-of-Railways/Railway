@@ -4,7 +4,9 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.forge.BufferModel;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
+import com.railwayteam.railways.content.buffer.headstock.forge.CopycatHeadstockBarsModel;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.forge.CopycatHeadstockModel;
 import com.railwayteam.railways.content.buffer.single_deco.GenericDyeableSingleBufferBlock;
@@ -63,6 +65,7 @@ import java.util.function.Function;
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class BuilderTransformersImpl {
     /*
@@ -276,6 +279,22 @@ public class BuilderTransformersImpl {
 
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
         return i -> i.onRegister(CreateRegistrate.itemModel(() -> BufferModel::new));
+    }
+
+    public static <B extends CopycatHeadstockBarsBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstockBars() {
+        return b -> b
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                    .modelFile(p.models()
+                        .getExistingFile(p.modLoc("block/buffer/headstock/copycat_headstock_bars"+
+                            (state.getValue(CopycatHeadstockBarsBlock.UPSIDE_DOWN) ? "_upside_down" : "")
+                        ))
+                    )
+                    .rotationY(((int) state.getValue(CopycatHeadstockBarsBlock.FACING).toYRot() + 180) % 360)
+                    .build()
+                )
+            )
+            .onRegister(CreateRegistrate.blockModel(() -> CopycatHeadstockBarsModel::new));
     }
 
     private static String colorName(@Nullable DyeColor color) {

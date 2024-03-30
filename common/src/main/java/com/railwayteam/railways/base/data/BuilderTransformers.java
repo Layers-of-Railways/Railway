@@ -1,5 +1,8 @@
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.content.boiler.BoilerBlock;
+import com.railwayteam.railways.content.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
@@ -16,8 +19,6 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
-import com.railwayteam.railways.content.boiler.BoilerBlock;
-import com.railwayteam.railways.content.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
@@ -187,6 +188,11 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends CopycatHeadstockBarsBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstockBars() {
         throw new AssertionError();
     }
 
