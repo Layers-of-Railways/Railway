@@ -484,7 +484,7 @@ public class CRBlockPartials {
 
     public static final PartialModel
         LC_STYLE_SEMI_BLIND_WHEELS = block("bogey/large/wheels/semi_blind_wheels"),
-        LC_STYLE_FULLY_BLIND_WHEELS = block("bogey/large/wheels/fully_blind_wheels"),
+        LC_STYLE_FULL_BLIND_WHEELS = block("bogey/large/wheels/full_blind_wheels"),
 
         LARGE_CREATE_STYLED_0_4_0_FRAME = block("bogey/large/create_styled_0-4-0/frame/frame"),
         LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0-4-0/piston/piston"),

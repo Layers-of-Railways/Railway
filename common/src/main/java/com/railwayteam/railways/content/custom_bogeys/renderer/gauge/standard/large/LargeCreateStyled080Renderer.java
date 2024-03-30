@@ -53,7 +53,6 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
         }
 
         for (int side = -2; side < 3; side++) {
-            // look mom, i saved on rendering 1 shaft!
             if (side == 0) continue;
             int shaftNum = side > 0 ? side + 1 : side + 2;
             BogeyModelData shaft = middleShafts[shaftNum];
@@ -80,12 +79,12 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
 
         for (int side : Iterate.positiveAndNegative) {
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * 2.6215)
+            wheel.translate(0, 1, side * 2.62)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
 
             BogeyModelData innerWheel = innerWheels[(side + 1) / 2];
-            innerWheel.translate(0, 1, side * .874)
+            innerWheel.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
                     .render(ms, light, vb);

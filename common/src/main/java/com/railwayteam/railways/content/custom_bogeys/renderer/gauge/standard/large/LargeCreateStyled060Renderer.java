@@ -42,18 +42,20 @@ public class LargeCreateStyled060Renderer extends BogeyRenderer {
         BogeyModelData[] middleShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 4);
 
-        for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i]
-                    .translate(-.5f, .25f, 2.1835f + i * -5.365)
+        for (int side : Iterate.positiveAndNegative) {
+            BogeyModelData shaft = secondaryShafts[(side + 1) / 2];
+            shaft.translate(-.5f, .25f, -.5f + side * 2.681)
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
                     .render(ms, light, vb);
         }
 
-        for (int side = 0; side < 4; side++) {
-            middleShafts[side]
-                    .translate(-.5f, .25f, 1.75f + side * -1.5)
+        for (int side = -2; side < 3; side++) {
+            if (side == 0) continue;
+            int shaftNum = side > 0 ? side + 1 : side + 2;
+            BogeyModelData shaft = middleShafts[shaftNum];
+            shaft.translate(-.5f, .25f, -.5f + side)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
@@ -69,8 +71,8 @@ public class LargeCreateStyled060Renderer extends BogeyRenderer {
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 3);
-        if (!inInstancedContraption)
-            ms.pushPose();
+
+        if (!inInstancedContraption) ms.pushPose();
 
         getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption)
                 .translate(0, 1, 0)
@@ -78,27 +80,22 @@ public class LargeCreateStyled060Renderer extends BogeyRenderer {
                 .translate(0, -1, 0)
                 .render(ms, light, vb);
 
-        pins[2].translate(0, 1, 0)
-                .rotateX(wheelAngle)
-                .translate(0, 1 / 4f, 0)
-                .rotateX(-wheelAngle)
-                .render(ms, light, vb);
-
         for (int side : Iterate.positiveAndNegative) {
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * 1.6824)
+            wheel.translate(0, 1, side * 1.6842)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
+        }
 
-            BogeyModelData pin = pins[(side + 1) / 2];
-            pin.translate(0, 1, side * 1.6824)
+        for (int side = -1; side < 2; side++) {
+            BogeyModelData pin = pins[side + 1];
+            pin.translate(0, 1, side * 1.6842)
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)
                     .render(ms, light, vb);
         }
 
-        if (!inInstancedContraption)
-            ms.popPose();
+        if (!inInstancedContraption) ms.popPose();
     }
 }

@@ -20,6 +20,11 @@ Additions
 - Fuel Interfaces
 - Liquid Fuel System (liquid fuel can power trains)
 - Tag to disable items from being used as train fuel
+- Large Create Styled 0-4-0 Bogey
+- Large Create Styled 0-6-0 Bogey
+- Large Create Styled 0-8-0 Bogey
+- Large Create Styled 0-10-0 Bogey
+- Large Create Styled 0-12-0 Bogey
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction

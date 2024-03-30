@@ -20,7 +20,7 @@ public class LargeCreateStyled0100Renderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_10_0_FRAME,
-                LARGE_CREATE_STYLED_0_10_0_PISTON,LC_STYLE_FULLY_BLIND_WHEELS);
+                LARGE_CREATE_STYLED_0_10_0_PISTON, LC_STYLE_FULL_BLIND_WHEELS);
         createModelInstance(materialManager, LC_STYLE_SEMI_BLIND_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 5);
@@ -69,35 +69,35 @@ public class LargeCreateStyled0100Renderer extends BogeyRenderer {
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
                 .render(ms, light, vb);
 
+        BogeyModelData[] semiBlindWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
-        BogeyModelData[] innerWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 5);
 
         if (!inInstancedContraption)
             ms.pushPose();
 
-        getTransform(LC_STYLE_FULLY_BLIND_WHEELS, ms, inInstancedContraption)
+        getTransform(LC_STYLE_FULL_BLIND_WHEELS, ms, inInstancedContraption)
                 .translate(0, 1, 0)
                 .rotateX(wheelAngle)
                 .translate(0, -1, 0)
                 .render(ms, light, vb);
 
         for (int side : Iterate.positiveAndNegative) {
-            BogeyModelData innerWheel = innerWheels[(side + 1) / 2];
-            innerWheel.translate(0, 1, side * 1.684)
+            BogeyModelData semiBlindWheel = semiBlindWheels[(side + 1) / 2];
+            semiBlindWheel.translate(0, 1, side * 1.684)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
                     .render(ms, light, vb);
 
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * 3.367)
+            wheel.translate(0, 1, side * 3.3684)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
         }
 
         for (int side = -2; side < 3; side++) {
             BogeyModelData pin = pins[side + 2];
-            pin.translate(0, 1, side * 1.684)
+            pin.translate(0, 1, side * 1.6842)
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)

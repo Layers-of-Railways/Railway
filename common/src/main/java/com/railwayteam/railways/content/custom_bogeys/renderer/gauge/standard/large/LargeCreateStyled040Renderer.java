@@ -43,15 +43,16 @@ public class LargeCreateStyled040Renderer extends BogeyRenderer {
         BogeyModelData[] middleShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
 
-        for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i]
-                    .translate(-.5f, .25f, -2.371f + i * 3.744)
+        for (int side : Iterate.positiveAndNegative) {
+            BogeyModelData secondaryShaft = secondaryShafts[(side + 1) / 2];
+            secondaryShaft.translate(-.5f, .25f, -.5f + side * 1.87)
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
                     .render(ms, light, vb);
 
-            middleShafts[i].translate(-.5f, .25f, -2f + i * 3)
+            BogeyModelData middleShaft = middleShafts[(side + 1) / 2];
+            middleShaft.translate(-.5f, .25f, -.5f + side * 1.2)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
@@ -67,24 +68,23 @@ public class LargeCreateStyled040Renderer extends BogeyRenderer {
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 2);
+
         for (int side : Iterate.positiveAndNegative) {
-            if (!inInstancedContraption)
-                ms.pushPose();
+            if (!inInstancedContraption) ms.pushPose();
 
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * .8715)
+            wheel.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
 
             BogeyModelData pin = pins[(side + 1) / 2];
-            pin.translate(0, 1, side * .8715)
+            pin.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)
                     .render(ms, light, vb);
 
-            if (!inInstancedContraption)
-                ms.popPose();
+            if (!inInstancedContraption) ms.popPose();
         }
     }
 }

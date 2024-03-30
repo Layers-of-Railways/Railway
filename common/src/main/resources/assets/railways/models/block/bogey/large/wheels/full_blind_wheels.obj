@@ -1,6 +1,6 @@
 # Blender 4.1.0
 # www.blender.org
-mtllib fully_blind_wheels.mtl
+mtllib full_blind_wheels.mtl
 o Cube.001_0
 v 0.750000 1.000000 -0.000000
 v 0.750000 0.375000 -0.258883
