@@ -57,15 +57,17 @@ public class TrainMixin {
                 if (fuelType != null) {
                     burnTime = fuelType.getFuelTicks();
                 } else {
-                    burnTime = ForgeHooks.getBurnTime(fluid.getBucket().getDefaultInstance(), null);
+                    int bucketBurnTime = ForgeHooks.getBurnTime(fluid.getBucket().getDefaultInstance(), null);
+
+                    // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
+                    // so it isn't so strong
+                    burnTime = (bucketBurnTime / 100) / 4;
                 }
 
                 if (burnTime <= 0)
                     continue;
 
-                // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
-                // so it isn't so strong
-                fuelTicks += (burnTime / 100) / 4;
+                fuelTicks += burnTime;
                 return;
             }
         }
