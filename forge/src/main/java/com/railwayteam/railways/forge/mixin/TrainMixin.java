@@ -43,13 +43,12 @@ public class TrainMixin {
         for (int index = 0; index < carriageCount; index++) {
             int i = iterateFromBack ? carriageCount - 1 - index : index;
             Carriage carriage = carriages.get(i);
-            IFluidHandler fuelItems = ((IFuelInventory) carriage.storage).railways$getFuelFluids();
-            if (fuelItems == null)
+            IFluidHandler fuelFluids = ((IFuelInventory) carriage.storage).railways$getFuelFluids();
+            if (fuelFluids == null)
                 continue;
 
-            for (int tanks = 0; tanks < fuelItems.getTanks(); tanks++) {
-                // Extract 100 Mb worth of fluid (1/10th of a bucket)
-                FluidStack fluidStack = fuelItems.drain(100, IFluidHandler.FluidAction.EXECUTE);
+            for (int tanks = 0; tanks < fuelFluids.getTanks(); tanks++) {
+                FluidStack fluidStack = fuelFluids.drain(100, IFluidHandler.FluidAction.SIMULATE);
 
                 int burnTime;
                 Fluid fluid = fluidStack.getFluid();
@@ -66,6 +65,9 @@ public class TrainMixin {
 
                 if (burnTime <= 0)
                     continue;
+
+                // Extract 100 Mb worth of fluid (1/10th of a bucket)
+                fuelFluids.drain(100, IFluidHandler.FluidAction.EXECUTE);
 
                 fuelTicks += burnTime;
                 return;
