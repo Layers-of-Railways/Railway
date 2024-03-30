@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 
@@ -39,7 +39,7 @@ public class LiquidFuelType {
                         JsonPrimitive primitive = element.getAsJsonPrimitive();
                         if (primitive.isString()) {
                             try {
-                                Fluid fluid = Registry.FLUID.get(new ResourceLocation(primitive.getAsString()));
+                                Fluid fluid = BuiltInRegistries.FLUID.get(new ResourceLocation(primitive.getAsString()));
                                 if (fluid != null) {
                                     type.fluids.add(() -> fluid);
                                 }

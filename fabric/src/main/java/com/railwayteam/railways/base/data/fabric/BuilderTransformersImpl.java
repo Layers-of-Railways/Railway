@@ -66,7 +66,6 @@ import java.util.function.Function;
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class BuilderTransformersImpl {
     /*

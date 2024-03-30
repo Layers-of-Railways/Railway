@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.Fluid;
 public class LiquidFuelTrainHandlerImpl {
     public static int handleFuelDraining(CombinedTankWrapper fuelFluids) {
         try (Transaction t = TransferUtil.getTransaction()) {
-            for (StorageView<FluidVariant> view : TransferUtil.getNonEmpty(fuelFluids)) {
+            for (StorageView<FluidVariant> view : fuelFluids.nonEmptyViews()) {
                 FluidVariant held = view.getResource();
 
                 int burnTime;
