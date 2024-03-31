@@ -6,6 +6,7 @@ import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
 import com.railwayteam.railways.util.ShapeUtils;
 import com.railwayteam.railways.util.client.OcclusionTestWorld;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
 import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.WaterloggedCopycatBlock;
@@ -143,8 +144,13 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
                                      Direction dir) {
         BlockState material = getMaterial(level, pos);
+        BlockState otherMaterial = getMaterial(level, pos.relative(dir));
+
+        // should hopefully never happen, but just in case
+        if (material == null) material = AllBlocks.COPYCAT_BASE.getDefaultState();
+        if (otherMaterial == null) otherMaterial = AllBlocks.COPYCAT_BASE.getDefaultState();
+
         if (state.is(this) == neighborState.is(this)) {
-            BlockState otherMaterial = getMaterial(level, pos.relative(dir));
             if (CopycatSpecialCases.isBarsMaterial(material)
                 && CopycatSpecialCases.isBarsMaterial(otherMaterial))
                 return state.getValue(FACING) == neighborState.getValue(FACING)
