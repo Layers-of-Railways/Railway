@@ -3,9 +3,11 @@ package com.railwayteam.railways.content.buffer.headstock.forge;
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatModel;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.FilteredBlockAndTintGetter;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import com.simibubi.create.foundation.model.BakedQuadHelper;
@@ -171,6 +173,17 @@ public class CopycatHeadstockModel implements BakedModel {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
         boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
+
+        if (CopycatSpecialCases.isBarsMaterial(material)) {
+            BlockState specialState = CRBlocks.COPYCAT_HEADSTOCK_BARS.getDefaultState()
+                .setValue(CopycatHeadstockBlock.FACING, facing)
+                .setValue(CopycatHeadstockBlock.UPSIDE_DOWN, upsideDown);
+
+            BakedModel specialModel = getModelOf(specialState);
+            if (specialModel instanceof CopycatHeadstockBarsModel cm) {
+                return cm.getCroppedQuads(state, side, rand, material, wrappedData, renderType);
+            }
+        }
 
         BakedModel model = getModelOf(material);
         List<BakedQuad> templateQuads = model.getQuads(material, side, rand, wrappedData, renderType);

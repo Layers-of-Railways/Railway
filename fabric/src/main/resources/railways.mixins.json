@@ -17,7 +17,8 @@
     "FluidNetworkMixin",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
-    "TrainMixin"
+    "TrainMixin",
+    "self.LiquidFuelManagerReloadListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1,

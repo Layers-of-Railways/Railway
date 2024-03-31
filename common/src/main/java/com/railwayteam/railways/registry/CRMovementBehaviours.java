@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Block;
 
 public class CRMovementBehaviours {
     public static void register() {
-        // Flywheel movement behaviour is added via MixinAllBlocks.java
     }
 
     private static void add(Block block, MovementBehaviour behaviour) {

@@ -1,6 +1,5 @@
 {
 	"credit": "Made by StarFluxie in Blockbench",
-	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
 		"3": "create:block/copycat_base",
