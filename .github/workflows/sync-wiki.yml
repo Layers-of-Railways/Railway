@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --global user.name $USER_NAME
           git config --global user.email $USER_EMAIL
+          git config pull.rebase false
 
       - name: Pull content from wiki
         run: |
@@ -37,7 +38,7 @@ jobs:
           cd tmp_wiki
           git init
           git remote add origin https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
-          git pull origin master --allow-unrelated-histories  # Allow merging unrelated histories
+          git pull origin master --allow-unrelated-histories
 
       - name: Sync .docs to tmp_wiki
         run: |
