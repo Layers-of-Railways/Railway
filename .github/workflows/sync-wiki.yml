@@ -26,38 +26,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Git Config
-        run: |
-          git config --global user.name $USER_NAME
-          git config --global user.email $USER_EMAIL
-          git config pull.rebase false
-
       - name: Pull content from wiki
         run: |
           mkdir tmp_wiki
           cd tmp_wiki
           git init
-          git remote add origin https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
-          git pull origin master --allow-unrelated-histories
+          git config --global user.name $USER_NAME
+          git config --global user.email $USER_EMAIL
+          git pull https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
-      - name: Sync .docs to tmp_wiki
+      - name: Update .docs folder
         run: |
-          rsync -av --delete --exclude .git .docs/ tmp_wiki/
+          rsync -av --delete tmp_wiki/ .docs/ --exclude .git
 
-      - name: Merge changes from Wiki to .docs
+      - name: Check for changes in .docs
         run: |
           cd .docs
-          git pull --no-edit https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
+          git status
 
-      - name: Commit and push changes to the repo if any
+      - name: Commit and push changes
         run: |
           git add .
-          git commit -m "Merge Wiki updates into .docs" || echo "No changes to commit to .docs"
-          git push origin 1.19/dev
+          git diff-index --quiet HEAD || git commit -m "Update docs from Wiki" && git push https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git 1.19/dev
 
-      - name: Merge changes from .docs to tmp_wiki and push
+      - name: Check for changes in tmp_wiki
+        run: |
+          cd tmp_wiki
+          git status
+
+      - name: Push content to wiki
         run: |
           cd tmp_wiki
           git add .
-          git commit -m "Sync changes from .docs to Wiki" || echo "No changes to commit to Wiki"
-          git push origin master
+          git diff-index --quiet HEAD || git commit -m "Update Wiki content" && git push -f --set-upstream https://$REPOSITORY_NAME:$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git master
