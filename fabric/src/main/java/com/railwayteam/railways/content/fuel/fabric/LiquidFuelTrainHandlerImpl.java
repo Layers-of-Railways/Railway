@@ -18,7 +18,13 @@ public class LiquidFuelTrainHandlerImpl {
 
                 int burnTime;
                 Fluid fluid = held.getFluid();
-                LiquidFuelType fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+
+                LiquidFuelType fuelType = LiquidFuelManager.isInTag(fluid);
+
+                if (fuelType == null) {
+                    fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+                }
+
                 if (fuelType != null) {
                     burnTime = fuelType.getFuelTicks();
                 } else {

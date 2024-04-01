@@ -16,9 +16,15 @@ public class FluidUtilsImpl {
     }
 
     public static boolean isFuel(Fluid fluid) {
-        // If realistic fuel tanks is enabled check if the fluid/item is valid fuel
+        // If realistic fuel tanks are enabled, check if the fluid/item is valid fuel
         if (CRConfigs.server().realism.realisticFuelTanks.get()) {
-            LiquidFuelType fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+
+            LiquidFuelType fuelType = LiquidFuelManager.isInTag(fluid);
+
+            if (fuelType == null) {
+                fuelType = LiquidFuelManager.getTypeForFluid(fluid);
+            }
+
             if (fuelType != null) {
                 return true;
             } else {
