@@ -6,6 +6,7 @@ import com.google.gson.JsonPrimitive;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.function.Supplier;
 
 public class LiquidFuelType {
     private final List<Supplier<Fluid>> fluids = new ArrayList<>();
+    private final List<Supplier<TagKey<Fluid>>> fluidTags = new ArrayList<>();
 
     private int fuelTicks = 40;
 
@@ -23,6 +25,10 @@ public class LiquidFuelType {
 
     public List<Supplier<Fluid>> getFluids() {
         return fluids;
+    }
+
+    public List<Supplier<TagKey<Fluid>>> getFluidTags() {
+        return fluidTags;
     }
 
     public int getFuelTicks() {
@@ -39,14 +45,25 @@ public class LiquidFuelType {
                         JsonPrimitive primitive = element.getAsJsonPrimitive();
                         if (primitive.isString()) {
                             try {
-                                Fluid fluid = BuiltInRegistries.FLUID.get(new ResourceLocation(primitive.getAsString()));
-                                if (fluid != null) {
-                                    type.fluids.add(() -> fluid);
+                                String string = primitive.getAsString();
+
+                                if (string.startsWith("#")) {
+                                    TagKey<Fluid> tag = TagKey.create(Registries.FLUID, new ResourceLocation(primitive.getAsString().substring(1)));
+                                    if (tag != null) {
+                                        type.fluidTags.add(() -> tag);
+                                    }
+                                } else {
+                                    Fluid fluid = BuiltInRegistries.FLUID.get(new ResourceLocation(primitive.getAsString()));
+                                    if (fluid != null) {
+                                        type.fluids.add(() -> fluid);
+                                    }
                                 }
                             } catch (ResourceLocationException ignored) {}
                         }
                     }
                 }
+            } else {
+                return null;
             }
 
             parseJsonPrimitive(object, "fuel_ticks", JsonPrimitive::isNumber, primitive -> type.fuelTicks = primitive.getAsInt());

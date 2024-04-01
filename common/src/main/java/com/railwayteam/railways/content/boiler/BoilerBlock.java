@@ -262,6 +262,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
 
             List<Direction> directions = IPlacementHelper.orderedByDistance(pos, ray.getLocation(), dir -> dir.getAxis() == axisFunction.apply(state));
             for (Direction dir : directions) {
+                dir = dir.getOpposite();
                 int range = AllConfigs.server().equipment.placementAssistRange.get();
                 if (player != null) {
                     AttributeInstance reach = player.getAttribute(getAttribute());
