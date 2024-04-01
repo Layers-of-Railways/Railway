@@ -173,9 +173,16 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Draw bogey name, gauge indicators and render bogey
         if (selectedBogey != null) {
+            Component displayName = selectedBogey.bogeyStyle().displayName;
             // Bogey Name
-            Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
+            Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(displayName, 126);
             drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
+
+            if (font.width(displayName) > 126) {
+                addRenderableOnly(new TooltipArea(x + 122, y + 20, 136, 18)
+                        .withTooltip(ImmutableList.of(displayName))
+                );
+            }
 
             // Gauge Indicators
             Indicator.State[] states = BogeyMenuHandlerClient.getTrackCompat(selectedBogey);
