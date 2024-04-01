@@ -20,7 +20,7 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_12_0_FRAME, LARGE_CREATE_STYLED_0_12_0_PISTON);
-        createModelInstance(materialManager, LC_STYLE_FULLY_BLIND_WHEELS, 2);
+        createModelInstance(materialManager, LC_STYLE_FULL_BLIND_WHEELS, 2);
         createModelInstance(materialManager, LC_STYLE_SEMI_BLIND_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 6);
@@ -46,16 +46,18 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
 
         for (int side : Iterate.positiveAndNegative) {
             BogeyModelData shaft = secondaryShafts[(side + 1) / 2];
-            shaft.translate(-.5, .25, -.5f + side * 4.3675)
+            shaft.translate(-.5, .25, -.5f + side * 5.364)
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
                     .render(ms, light, vb);
         }
 
-        for (int side = -3; side < 3; side++) {
-            BogeyModelData shaft = middleShafts[side + 3];
-            shaft.translate(-.5f, .25f, -1.3f + side * -1.6)
+        for (int side = -3; side < 4; side++) {
+            if (side == 0) continue;
+            int shaftNum = side > 0 ? side + 2 : side + 3;
+            BogeyModelData shaft = middleShafts[shaftNum];
+            shaft.translate(-.5f, .25f, -.5f + side * -1.7)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
@@ -69,35 +71,40 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
                 .render(ms, light, vb);
 
+        BogeyModelData[] fullBlindWheels = getTransform(LC_STYLE_FULL_BLIND_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] semiBlindWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
-        BogeyModelData[] innerWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 4);
         BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 6);
 
         if (!inInstancedContraption)
             ms.pushPose();
 
         for (int side : Iterate.positiveAndNegative) {
+            BogeyModelData fullBlindWheel = fullBlindWheels[(side + 1) / 2];
+            fullBlindWheel.translate(0, 1, side * .8733)
+                    .rotateX(wheelAngle)
+                    .translate(0, -1, 0)
+                    .render(ms, light, vb);
+
+            BogeyModelData semiBlindWheel = semiBlindWheels[(side + 1) / 2];
+            semiBlindWheel.translate(0, 1, side * 2.62)
+                    .rotateX(wheelAngle)
+                    .translate(0, -1, 0)
+                    .render(ms, light, vb);
+
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 1, side * 4.367)
+            wheel.translate(0, 1, side * 4.3665)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
         }
 
-        for (int side = -2; side < 2; side++) {
-//            BogeyModelData innerWheel = innerWheels[side + 2];
-//            innerWheel.translate(0, 1, .89654f + side * 1.7235)
-//                    .rotateX(wheelAngle)
-//                    .translate(0, -1, 0)
-//                    .render(ms, light, vb);
-        }
-
         for (int side = -3; side < 3; side++) {
             BogeyModelData pin = pins[side + 3];
-//            pin.translate(0, 1, .6856f + side * 1.7)
-//                    .rotateX(wheelAngle)
-//                    .translate(0, 1 / 4f, 0)
-//                    .rotateX(-wheelAngle)
-//                    .render(ms, light, vb);
+            pin.translate(0, 1, .8733f + side * 1.74657)
+                    .rotateX(wheelAngle)
+                    .translate(0, 1 / 4f, 0)
+                    .rotateX(-wheelAngle)
+                    .render(ms, light, vb);
         }
 
         if (!inInstancedContraption)
