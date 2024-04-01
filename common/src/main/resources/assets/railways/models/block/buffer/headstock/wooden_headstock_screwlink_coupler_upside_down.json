@@ -1,6 +1,5 @@
 {
 	"credit": "Made by StarFluxie in Blockbench",
-	"ambientocclusion": false,
 	"textures": {
 		"3": "block/spruce_planks",
 		"4": "railways:block/buffer/small_buffer",

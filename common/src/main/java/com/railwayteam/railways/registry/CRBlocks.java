@@ -3,6 +3,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockStyle;
@@ -795,6 +796,10 @@ public class CRBlocks {
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
         BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag);
+
+    public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
+        .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
+        .register();
 
     public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
         .initialProperties(SharedProperties::softMetal)

@@ -5,6 +5,7 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
+import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -20,6 +21,8 @@ import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
@@ -28,6 +31,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -43,7 +47,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.*;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement {
     @Shadow public TrackGraph graph;
     @Shadow public Navigation navigation;
     @Shadow public abstract void arriveAt(GlobalStation station);
@@ -51,6 +55,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Shadow public boolean invalid;
     @Shadow public double speed;
     @Shadow public int fuelTicks;
+    @Shadow public Player backwardsDriver;
 
     @Unique public Set<UUID> railways$occupiedCouplers;
     @Unique protected int railways$index = 0;
@@ -240,6 +245,9 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
                 TrainUtils.discardTrain((Train) (Object) this);
                 Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
             }
+
+            ((ICrashAdvancement) this).railways$awardCrashAdvancements();
+
             ci.cancel();
         }
 
@@ -249,7 +257,26 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
                 TrainUtils.discardTrain(train);
                 Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
             }
+
+            ((ICrashAdvancement) train).railways$awardCrashAdvancements();
+
             ci.cancel();
+        }
+    }
+
+    @Inject(method = "burnFuel", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", shift = At.Shift.AFTER))
+    private void railways$fluidFuelsSystem(CallbackInfo ci) {
+        boolean iterateFromBack = speed < 0;
+        int carriageCount = carriages.size();
+
+        for (int index = 0; index < carriageCount; index++) {
+            int i = iterateFromBack ? carriageCount - 1 - index : index;
+            Carriage carriage = carriages.get(i);
+            CombinedTankWrapper fuelFluids = ((IFuelInventory) carriage.storage).railways$getFuelFluids();
+
+            if (fuelFluids == null) continue;
+
+            fuelTicks += LiquidFuelTrainHandler.handleFuelDraining(fuelFluids);
         }
     }
 
@@ -273,5 +300,24 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     public void acceleration(CallbackInfoReturnable<Float> cir) {
         if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
             cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
+    }
+
+    // Award crash advancements when a train has crashed with a handcar
+    @Override
+    public void railways$awardCrashAdvancements() {
+        for (Carriage carriage : carriages)
+            carriage.forEachPresentEntity(e -> e.getIndirectPassengers()
+                    .forEach(entity -> {
+                        if (!(entity instanceof Player p))
+                            return;
+                        Optional<UUID> controllingPlayer = e.getControllingPlayer();
+                        if (controllingPlayer.isPresent() && controllingPlayer.get()
+                                .equals(p.getUUID()))
+                            return;
+                        AllAdvancements.TRAIN_CRASH.awardTo(p);
+                    }));
+
+        if (backwardsDriver != null)
+            AllAdvancements.TRAIN_CRASH_BACKWARDS.awardTo(backwardsDriver);
     }
 }

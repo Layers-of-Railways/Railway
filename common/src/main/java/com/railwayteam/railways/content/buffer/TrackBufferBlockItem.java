@@ -10,6 +10,8 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -146,6 +148,7 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
         return InteractionResult.PASS;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) {
         Minecraft mc = Minecraft.getInstance();

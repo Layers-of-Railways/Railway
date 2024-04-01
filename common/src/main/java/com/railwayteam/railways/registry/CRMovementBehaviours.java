@@ -6,9 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 public class CRMovementBehaviours {
-    /**
-     * Flywheel movement behaviour is added via {@link com.railwayteam.railways.mixin.MixinAllBlocks}
-     */
     public static void register() { }
 
     private static void add(Block block, MovementBehaviour behaviour) {
