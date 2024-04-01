@@ -17,6 +17,7 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -33,6 +34,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -62,6 +64,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     // True if the scrollbar is being dragged
     private boolean scrolling;
     private int ticksOpen;
+    private boolean soundPlayed;
 
     @Override
     protected void init() {
@@ -284,6 +287,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     @Override
     public void tick() {
         ticksOpen++;
+        soundPlayed = false;
         super.tick();
     }
 
@@ -327,8 +331,18 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         double listSize = selectedCategory.getBogeyEntryList().size() - 6;
         float scrollFactor = (float) (delta / listSize);
+
+        final float oldScrollOffs = scrollOffs;
+
         scrollOffs = Mth.clamp(scrollOffs - scrollFactor, 0.0F, 1.0F);
         scrollTo(scrollOffs);
+
+        if (!soundPlayed && scrollOffs != oldScrollOffs)
+            Minecraft.getInstance()
+                    .getSoundManager()
+                    .play(SimpleSoundInstance.forUI(AllSoundEvents.SCROLL_VALUE.getMainEvent(),
+                            1.5f + 0.1f * scrollOffs));
+        soundPlayed = true;
 
         return true;
     }
