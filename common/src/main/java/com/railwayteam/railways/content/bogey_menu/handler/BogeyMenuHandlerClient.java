@@ -54,6 +54,13 @@ public class BogeyMenuHandlerClient {
     }
 
     private static Indicator.State styleFits(BogeyEntry bogeyEntry, TrackMaterial.TrackType trackType) {
-        return CRBogeyStyles.styleFitsTrack(bogeyEntry.bogeyStyle(), trackType) ? Indicator.State.GREEN : Indicator.State.RED;
+        if (CRBogeyStyles.styleFitsTrack(bogeyEntry.bogeyStyle(), trackType))
+            return Indicator.State.GREEN;
+
+        for (BogeyStyle subStyle : CRBogeyStyles.getSubStyles(bogeyEntry.bogeyStyle()))
+            if (CRBogeyStyles.styleFitsTrack(subStyle, trackType))
+                return Indicator.State.GREEN;
+
+        return Indicator.State.RED;
     }
 }

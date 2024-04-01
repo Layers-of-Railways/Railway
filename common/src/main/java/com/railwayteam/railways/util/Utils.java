@@ -5,6 +5,7 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.chunk.LevelChunk;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 import java.util.Locale;
@@ -32,6 +33,16 @@ public class Utils {
 		} catch (SecurityException e) {
 			Railways.LOGGER.warn("Caught a security exception while trying to access environment variable `{}`.", name);
 			return false;
+		}
+	}
+
+	public static @Nullable String getEnvVar(String name) {
+		try {
+			String result = System.getenv(name);
+			return result != null && !result.isEmpty() ? result : null;
+		} catch (SecurityException e) {
+			Railways.LOGGER.warn("Caught a security exception while trying to access environment variable `{}`.", name);
+			return null;
 		}
 	}
 

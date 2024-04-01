@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * Handles adding bogies and categories to the Bogey UI
  */
 public interface BogeyMenuManager {
-    BogeyMenuManagerImpl INSTANCE = new BogeyMenuManagerImpl();
+    BogeyMenuManager INSTANCE = new BogeyMenuManagerImpl();
 
     /**
      * Register a Bogey Category

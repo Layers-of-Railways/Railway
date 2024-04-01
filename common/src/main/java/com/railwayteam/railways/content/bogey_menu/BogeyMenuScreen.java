@@ -5,6 +5,7 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
@@ -14,6 +15,7 @@ import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClien
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.registry.CRRenderTypes;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
@@ -256,6 +258,28 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             bufferSource.endBatch();
             modelViewStack.popPose();
             RenderSystem.applyModelViewMatrix();
+            ms.popPose();
+
+            // Draw depth rectangle to allow proper tooltips
+            ms.pushPose();
+
+            {
+                VertexConsumer vc = bufferSource.getBuffer(CRRenderTypes.DEPTH_CLEAR);
+                RenderSystem.clearDepth(100.0);
+
+                double x0 = x + 120;
+                double y0 = y + 48;
+                double w = 140;
+                double h = 77;
+
+                vc.vertex(x0, y0, 0).color(255, 0, 0, 255).endVertex();
+                vc.vertex(x0, y0 + h, 0).color(255, 0, 0, 255).endVertex();
+                vc.vertex(x0 + w, y0 + h, 0).color(255, 0, 0, 255).endVertex();
+                vc.vertex(x0 + w, y0, 0).color(255, 0, 0, 255).endVertex();
+
+                bufferSource.endBatch(CRRenderTypes.DEPTH_CLEAR);
+            }
+
             ms.popPose();
         }
     }

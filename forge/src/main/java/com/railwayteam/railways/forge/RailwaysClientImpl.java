@@ -5,6 +5,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.railwayteam.railways.registry.CRParticleTypes;
+import com.railwayteam.railways.registry.CRRenderTypes;
 import com.simibubi.create.foundation.ModFilePackResources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -13,10 +14,12 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -24,6 +27,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.forgespi.locating.IModFile;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -36,6 +40,7 @@ public class RailwaysClientImpl {
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onBuiltinPackRegistration);
 		RailwaysImpl.bus.addListener(RailwaysClientImpl::onClientSetup);
 		RailwaysImpl.bus.addListener((RegisterParticleProvidersEvent event) -> CRParticleTypes.registerFactories());
+		RailwaysImpl.bus.addListener(RailwaysClientImpl::onRegisterShaders);
 	}
 
 	public static void onClientSetup(FMLClientSetupEvent event) {
@@ -103,4 +108,14 @@ public class RailwaysClientImpl {
 	}
 
 	// endregion
+
+	public static void onRegisterShaders(RegisterShadersEvent event) {
+		ResourceManager resourceManager = event.getResourceManager();
+
+		try {
+			CRRenderTypes.CRRenderStateShards.onRegisterShaders(resourceManager, event::registerShader);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

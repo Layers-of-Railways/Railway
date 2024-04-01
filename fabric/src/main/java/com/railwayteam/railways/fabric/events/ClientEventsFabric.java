@@ -3,9 +3,11 @@ package com.railwayteam.railways.fabric.events;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.registry.CRParticleTypes;
+import com.railwayteam.railways.registry.CRRenderTypes;
 import io.github.fabricators_of_create.porting_lib.event.client.ClientWorldEvents;
 import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
 import io.github.fabricators_of_create.porting_lib.event.client.ParticleManagerRegistrationCallback;
+import io.github.fabricators_of_create.porting_lib.event.client.RegisterShadersCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
@@ -34,5 +36,9 @@ public class ClientEventsFabric {
 				ClientEvents.onTagsUpdated();
 			}
 		});
+
+		RegisterShadersCallback.EVENT.register((resourceManager, registry) ->
+			CRRenderTypes.CRRenderStateShards.onRegisterShaders(resourceManager, registry::registerShader)
+		);
 	}
 }
