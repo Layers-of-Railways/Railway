@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --global user.name $USER_NAME
           git config --global user.email $USER_EMAIL
+          git config pull.rebase false  # Configure to merge divergent branches
 
       - name: Pull content from wiki
         run: |
@@ -60,4 +61,3 @@ jobs:
           git add .
           git commit -m "Sync changes from .docs to Wiki" || echo "No changes to commit to Wiki"
           git push origin master
-
