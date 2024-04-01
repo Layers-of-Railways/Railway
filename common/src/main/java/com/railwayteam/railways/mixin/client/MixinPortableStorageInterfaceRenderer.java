@@ -1,9 +1,8 @@
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.mixin.client;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.util.AbstractionUtils;
-import com.railwayteam.railways.util.FluidUtils;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceRenderer;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;

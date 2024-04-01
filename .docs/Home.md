@@ -23,6 +23,9 @@ Create: Steam 'n' Rails is an addon mod for Create that aims to extend Create's 
 
 \*excluding Create 0.5.1.e in minecraft 1.20.1 on Forge and NeoForge
 
+## For Developers/Modpack Developers
+- [Registering a custom Fluid Fuel Type](Registering-a-fluid-as-a-Liquid-Fuel-Type)
+
 <!-- ## Features
 
 ### Blocks
