@@ -267,7 +267,7 @@ public class CRBogeyStyles {
 
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);
-        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 19);
+        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 18);
         addToCategory(STANDARD_CATEGORY, STANDARD);
         addToCategory(STANDARD_CATEGORY, NARROW_DOUBLE_SCOTCH);
 
