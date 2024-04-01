@@ -81,6 +81,8 @@ dependencies {
     }
     if ("enable_iris"().toBoolean()) {
         modLocalRuntime("maven.modrinth:iris:${"iris_version"()}")
+        modLocalRuntime("org.anarres:jcpp:1.4.14")
+        modLocalRuntime("io.github.douira:glsl-transformer:2.0.0-pre13")
     }
 
     if ("enable_eb"().toBoolean()) {
