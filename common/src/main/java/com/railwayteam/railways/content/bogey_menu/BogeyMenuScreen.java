@@ -3,9 +3,9 @@ package com.railwayteam.railways.content.bogey_menu;
 import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
@@ -15,7 +15,6 @@ import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClien
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.registry.CRRenderTypes;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
@@ -45,6 +44,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,7 +245,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             Lighting.setupForEntityInInventory();
 
             // Setup vars for rendering
-            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+            Minecraft mc = Minecraft.getInstance();
+            MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
             int light = 0xF000F0;
             int overlay = OverlayTexture.NO_OVERLAY;
             float wheelAngle = -3 * AnimationTickHolder.getRenderTime(minecraft.level);
@@ -260,27 +261,25 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             RenderSystem.applyModelViewMatrix();
             ms.popPose();
 
-            // Draw depth rectangle to allow proper tooltips
-            ms.pushPose();
-
+            // Clear depth rectangle to allow proper tooltips
             {
-                VertexConsumer vc = bufferSource.getBuffer(CRRenderTypes.DEPTH_CLEAR);
-                RenderSystem.clearDepth(100.0);
-
                 double x0 = x + 120;
                 double y0 = y + 48;
                 double w = 140;
                 double h = 77;
+                double bottom = y0+h;
 
-                vc.vertex(x0, y0, 0).color(255, 0, 0, 255).endVertex();
-                vc.vertex(x0, y0 + h, 0).color(255, 0, 0, 255).endVertex();
-                vc.vertex(x0 + w, y0 + h, 0).color(255, 0, 0, 255).endVertex();
-                vc.vertex(x0 + w, y0, 0).color(255, 0, 0, 255).endVertex();
+                Window window = mc.getWindow();
+                double scale = window.getGuiScale();
 
-                bufferSource.endBatch(CRRenderTypes.DEPTH_CLEAR);
+                RenderSystem.clearDepth(0.5); // same depth as gui
+                RenderSystem.enableScissor((int) (x0*scale), window.getHeight() - (int) (bottom*scale), (int) (w*scale), (int) (h*scale));
+
+                RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
+
+                RenderSystem.disableScissor();
+                RenderSystem.clearDepth(1.0);
             }
-
-            ms.popPose();
         }
     }
 
