@@ -67,6 +67,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     private boolean scrolling;
     private int ticksOpen;
     private boolean soundPlayed;
+    private TooltipArea longBogeyTooltipArea;
 
     @Override
     protected void init() {
@@ -120,6 +121,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     ))
             );
         }
+
+        longBogeyTooltipArea = new TooltipArea(x + 122, y + 20, 136, 18);
+        addRenderableOnly(longBogeyTooltipArea);
     }
 
     @Override
@@ -184,9 +188,10 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
 
             if (font.width(displayName) > 126) {
-                addRenderableOnly(new TooltipArea(x + 122, y + 20, 136, 18)
-                        .withTooltip(ImmutableList.of(displayName))
-                );
+                longBogeyTooltipArea.withTooltip(ImmutableList.of(displayName));
+                longBogeyTooltipArea.visible = true;
+            } else {
+                longBogeyTooltipArea.visible = false;
             }
 
             // Gauge Indicators
