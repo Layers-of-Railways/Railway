@@ -40,7 +40,7 @@ public class CRPalettes {
         for (Styles style : Styles.values())
             style.register(null);
 
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : DyeColorsOrdered) {
             for (Styles style : Styles.values())
                 style.register(dyeColor);
         }
@@ -52,10 +52,29 @@ public class CRPalettes {
 
     static {
         CYCLE_GROUPS.put(null, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/base")));
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : DyeColorsOrdered) {
             CYCLE_GROUPS.put(dyeColor, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/" + dyeColor.name().toLowerCase(Locale.ROOT))));
         }
     }
+
+    public static List<DyeColor> DyeColorsOrdered = List.of(
+            DyeColor.WHITE,
+            DyeColor.LIGHT_GRAY,
+            DyeColor.GRAY,
+            DyeColor.BLACK,
+            DyeColor.BROWN,
+            DyeColor.RED,
+            DyeColor.ORANGE,
+            DyeColor.YELLOW,
+            DyeColor.LIME,
+            DyeColor.GREEN,
+            DyeColor.CYAN,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.BLUE,
+            DyeColor.PURPLE,
+            DyeColor.MAGENTA,
+            DyeColor.PINK
+    );
 
     public static void provideLangEntries(BiConsumer<String, String> consumer) {
         for (DyeColor color : DyeColor.values()) {
