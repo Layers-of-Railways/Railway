@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -54,21 +53,19 @@ public class MixinTrackTargetingBlockItem {
                                            BiConsumer<TrackTargetingBlockItem.OverlapResult, TrackGraphLocation> callback, CallbackInfo ci) {
         if (type != CREdgePointTypes.COUPLER && type != CREdgePointTypes.SWITCH) // prevent coupler on turns
             return;
-        TrackTargetingBlockItem.OverlapResult not_straight = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");
+        TrackTargetingBlockItem.OverlapResult NOT_STRAIGHT = TrackTargetingBlockItem.OverlapResult.valueOf("NOT_STRAIGHT");
         if (targetBezier != null) {
-            callback.accept(not_straight, null);
+            callback.accept(NOT_STRAIGHT, null);
             ci.cancel();
         }
 
         TrackShape shape = level.getBlockState(pos).getValue(TrackBlock.SHAPE);
         if (!acceptableShapes.contains(shape) || (type == CREdgePointTypes.SWITCH && shape.getAxes().stream().anyMatch(v -> v.y > 0))) { // prevent switch placement on slopes
-            callback.accept(not_straight, null);
+            callback.accept(NOT_STRAIGHT, null);
             ci.cancel();
         }
     }
 
-    //Ripped from LudoCrypt's Noteblock Expansion
-    // (https://github.com/LudoCrypt/Noteblock-Expansion-Forge/blob/main/src/main/java/net/ludocrypt/nbexpand/mixin/NoteblockInstrumentMixin.java)
     @Mixin(value = TrackTargetingBlockItem.OverlapResult.class, remap = false)
     public static class MixinOverlapResult {
         @Shadow
@@ -76,19 +73,19 @@ public class MixinTrackTargetingBlockItem {
         @Mutable
         private static TrackTargetingBlockItem.OverlapResult[] $VALUES;
 
-        private static final TrackTargetingBlockItem.OverlapResult NOT_STRAIGHT = railways$addResult("NOT_STRAIGHT", "track_target.not_straight");
-
         @Invoker("<init>")
-        public static TrackTargetingBlockItem.OverlapResult railways$invokeInit(String internalName, int internalId, String feedback) {
+        public static TrackTargetingBlockItem.OverlapResult railways$createType(String internalName, int ordinal, String feedback) {
             throw new AssertionError();
         }
 
-        private static TrackTargetingBlockItem.OverlapResult railways$addResult(String internalName, String feedback) {
-            ArrayList<TrackTargetingBlockItem.OverlapResult> results = new ArrayList<>(Arrays.asList($VALUES));
-            TrackTargetingBlockItem.OverlapResult result = railways$invokeInit(internalName, results.get(results.size() - 1).ordinal() + 1, feedback);
-            results.add(result);
-            $VALUES = results.toArray(new TrackTargetingBlockItem.OverlapResult[0]);
-            return result;
+        @Inject(
+                method = "<clinit>",
+                at = @At("TAIL")
+        )
+        private static void railways$addTypes(CallbackInfo ci) {
+            ArrayList<TrackTargetingBlockItem.OverlapResult> types = new ArrayList<>(List.of($VALUES));
+            types.add(railways$createType("NOT_STRAIGHT", $VALUES.length, "track_target.not_straight"));
+            $VALUES = types.toArray(TrackTargetingBlockItem.OverlapResult[]::new);
         }
     }
 }

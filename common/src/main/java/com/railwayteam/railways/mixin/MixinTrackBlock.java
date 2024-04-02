@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerServer;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
@@ -53,9 +53,9 @@ public class MixinTrackBlock {
 
   @Inject(method = "getBogeyAnchor", at = @At("HEAD"), cancellable = true)
   private void placeCustomStyle(BlockGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir) {
-    if (BogeyCategoryHandlerServer.currentPlayer == null)
+    if (BogeyMenuHandlerServer.getCurrentPlayer() == null)
       return;
-    Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(BogeyCategoryHandlerServer.currentPlayer);
+    Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(BogeyMenuHandlerServer.getCurrentPlayer());
     BogeyStyle style = styleData.getFirst();
 
     TrackType trackType = ((TrackBlock) (Object) this).getMaterial().trackType;

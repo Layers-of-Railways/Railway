@@ -88,8 +88,8 @@ subprojects {
         // layered mappings - Mojmap names, parchment and QM docs and parameters
         "mappings"(loom.layered {
             mappings("org.quiltmc:quilt-mappings:${"minecraft_version"()}+build.${"qm_version"()}:intermediary-v2")
-            officialMojangMappings { nameSyntheticMembers = false }
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
+            officialMojangMappings { nameSyntheticMembers = false }
         })
     }
 

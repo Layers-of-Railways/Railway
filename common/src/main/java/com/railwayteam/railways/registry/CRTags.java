@@ -20,10 +20,9 @@ import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
 
 public class CRTags {
   public enum NameSpace {
+    MOD(Railways.MODID, false, true),
+    FORGE("forge");
 
-    MOD(Railways.MODID, false, true), FORGE("forge")
-
-    ;
 
     public final String id;
     public final boolean optionalDefault;

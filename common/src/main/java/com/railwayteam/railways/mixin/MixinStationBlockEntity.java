@@ -3,7 +3,7 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerServer;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.registry.CRBogeyStyles;
@@ -53,12 +53,12 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
 
     @Inject(method = "trackClicked", at = @At("HEAD"))
     private void storePlayer(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        BogeyCategoryHandlerServer.currentPlayer = player.getUUID();
+        BogeyMenuHandlerServer.setCurrentPlayer(player.getUUID());
     }
 
     @Inject(method = "trackClicked", at = @At("RETURN"))
     private void clearPlayer(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        BogeyCategoryHandlerServer.currentPlayer = null;
+        BogeyMenuHandlerServer.setCurrentPlayer(null);
     }
 
     @SuppressWarnings("InvalidInjectorMethodSignature")
@@ -71,7 +71,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
                               int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
         if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
             return;
-        Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(player.getUUID());
+        Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(player.getUUID());
         BogeyStyle style = styleData.getFirst();
 
         TrackMaterial.TrackType trackType = track.getMaterial().trackType;
