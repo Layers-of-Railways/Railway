@@ -46,7 +46,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BogeyMenuScreen extends AbstractSimiScreen {
@@ -57,8 +56,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             .toList();
     // The category that is currently selected
     private CategoryEntry selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(0);
-    // The list of bogies being displayed, cannot ever be over 6
-    List<BogeyEntry> bogeyList = new ArrayList<>(6);
+    private int categoryIndex = 0; // for the scroll input on window resize
+    // The list of bogies being displayed
+    BogeyEntry[] bogeyList = new BogeyEntry[6];
+    // The list of bogey selection buttons
+    BogeyMenuButton[] bogeyMenuButtons = new BogeyMenuButton[6];
     // The bogey that is currently selected
     BogeyEntry selectedBogey;
     // Amount scrolled, 0 = top and 1 = bottom
@@ -78,6 +80,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         int x = guiLeft;
         int y = guiTop;
 
+        // Need buttons first, otherwise setupList will crash
+        for (int i = 0; i < 6; i++) {
+            addRenderableWidget(bogeyMenuButtons[i] = new BogeyMenuButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+        }
+
         // Initial setup
         setupList(selectedCategory);
 
@@ -90,9 +97,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         ScrollInput categoryScrollInput = new SelectionScrollInput(x + 9, y + 20, 77, 18)
                 .forOptions(categoryComponentList)
                 .writingTo(categoryLabel)
+                .setState(categoryIndex)
                 .calling(categoryIndex -> {
                     scrollOffs = 0.0F;
                     scrollTo(0.0F);
+                    this.categoryIndex = categoryIndex;
                     setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
                 });
 
@@ -166,7 +175,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render the bogey icons & bogey names
         for (int i = 0; i < 6; i++) {
-            BogeyEntry bogeyEntry = bogeyList.get(i);
+            BogeyEntry bogeyEntry = bogeyList[i];
             if (bogeyEntry != null) {
                 // Icon
                 ResourceLocation icon = bogeyEntry.iconLocation();
@@ -175,7 +184,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
                 // Text
                 Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
-                addRenderableWidget(new BogeyMenuButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+                // button has already been added in init, now just draw text
                 font.drawShadow(ms, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
             }
         }
@@ -296,18 +305,21 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     private void setupList(CategoryEntry categoryEntry) {
-        List<BogeyEntry> bogies = categoryEntry.getBogeyEntryList();
+        setupList(categoryEntry, 0);
+    }
 
-        // Clear to get ready for adding new bogies
-        bogeyList.clear();
+    private void setupList(CategoryEntry categoryEntry, int offset) {
+        List<BogeyEntry> bogies = categoryEntry.getBogeyEntryList();
 
         // Max of 6 slots, objects inside the slots will be mutated later
         for (int i = 0; i < 6; i++) {
             if (i < bogies.size()) {
-                bogeyList.add(bogies.get(i));
+                bogeyList[i] = bogies.get(i+offset);
+                bogeyMenuButtons[i].active = true;
             } else {
                 // I know, this is silly but its best way to know if rendering should be skipped
-                bogeyList.add(null);
+                bogeyList[i] = null;
+                bogeyMenuButtons[i].active = false;
             }
         }
     }
@@ -380,13 +392,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         float listSize = bogies.size() - 6;
         int index = (int) ((double) (pos * listSize) + 0.5);
 
-        for (int i = 0; i < 6; i++) {
-            if (i < bogies.size()) {
-                bogeyList.set(i, bogies.get(index + i));
-            } else {
-                bogeyList.add(null);
-            }
-        }
+        setupList(selectedCategory, index);
     }
 
     private boolean canScroll() {
@@ -412,7 +418,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     private Button.OnPress bogeySelection(int index) {
-        return b -> selectedBogey = bogeyList.get(index);
+        return b -> selectedBogey = bogeyList[index];
     }
 
     private void onFavorite() {

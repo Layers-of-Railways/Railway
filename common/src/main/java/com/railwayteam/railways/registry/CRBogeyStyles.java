@@ -22,6 +22,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDe
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
@@ -287,5 +288,13 @@ public class CRBogeyStyles {
         // Triple Axle Category
         addToCategory(TRIPLEAXLE_CATEGORY, HEAVYWEIGHT);
         addToCategory(TRIPLEAXLE_CATEGORY, RADIAL);
+
+        if (Utils.isDevEnv()) {
+            CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MODID, "all_test");
+            for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+                if (hideInSelectionMenu(style)) continue;
+                addToCategory(ALL_TEST_CATEGORY, style);
+            }
+        }
     }
 }

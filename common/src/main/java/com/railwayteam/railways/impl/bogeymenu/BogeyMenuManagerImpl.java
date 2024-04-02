@@ -19,6 +19,7 @@ import java.util.Map;
 
 @ApiStatus.Internal
 public class BogeyMenuManagerImpl implements BogeyMenuManager {
+    // fixme should these even be public? Probably should add methods to the interface instead...
     public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
     public static final List<BogeyEntry> BOGIES = new ArrayList<>();
 
