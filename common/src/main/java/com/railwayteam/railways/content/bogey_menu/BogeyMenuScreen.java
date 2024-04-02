@@ -289,7 +289,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 Window window = mc.getWindow();
                 double scale = window.getGuiScale();
 
-                RenderSystem.clearDepth(0.5); // same depth as gui
+                RenderSystem.clearDepth(0.86); // same depth as gui
                 RenderSystem.enableScissor((int) (x0*scale), window.getHeight() - (int) (bottom*scale), (int) (w*scale), (int) (h*scale));
 
                 RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
