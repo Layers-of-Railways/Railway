@@ -84,9 +84,8 @@ public enum CRGuiTextures implements ScreenElement {
     }
 
     @Environment(EnvType.CLIENT)
-    public void render(PoseStack ms, int x, int y, int textureWidth, int textureHeight) {
-        bind();
-        GuiComponent.blit(ms, x, y, startX, startY, width, height, textureWidth, textureHeight);
+    public void render(GuiGraphics graphics, int x, int y, int textureWidth, int textureHeight) {
+        graphics.blit(location, x, y, startX, startY, width, height, textureWidth, textureHeight);
     }
 
     @Environment(EnvType.CLIENT)

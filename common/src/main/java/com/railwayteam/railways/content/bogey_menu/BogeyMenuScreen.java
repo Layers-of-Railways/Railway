@@ -6,8 +6,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
@@ -32,6 +31,7 @@ import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -44,6 +44,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -136,22 +137,24 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     @Override
-    protected void renderWindow(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+    protected void renderWindow(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        PoseStack ms = guiGraphics.pose();
+
         int x = guiLeft;
         int y = guiTop;
 
         // Render Background
-        background.render(ms, x, y, 512, 512);
+        background.render(guiGraphics, x, y, 512, 512);
 
         //fixme temp
         //hide favorite button
-        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
+        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(guiGraphics, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
         int halfWidth = background.width / 2;
         int halfHeaderWidth = font.width(header) / 2;
-        font.draw(ms, header, x + halfWidth - halfHeaderWidth, y + 4, 0x582424);
+        guiGraphics.drawString(font, header, x + halfWidth - halfHeaderWidth, y + 4, 0x582424, false);
 
         // Train casing on right side of screen where arrow is pointing START
         ms.pushPose();
@@ -163,7 +166,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 .rotateX(-22)
                 .rotateY(63);
 
-        GuiGameElement.of(AllBlocks.RAILWAY_CASING.getDefaultState()).render(ms);
+        GuiGameElement.of(AllBlocks.RAILWAY_CASING.getDefaultState()).render(guiGraphics);
 
         ms.popPose();
 
@@ -171,7 +174,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         // Formula is barPos = startLoc + (endLoc - startLoc) * scrollOffs
         int scrollBarPos = (int) (41 + (133 - 41) * scrollOffs);
         CRGuiTextures barTexture = canScroll() ? CRGuiTextures.BOGEY_MENU_SCROLL_BAR : CRGuiTextures.BOGEY_MENU_SCROLL_BAR_DISABLED;
-        barTexture.render(ms, x + 11, y + scrollBarPos, 512, 512);
+        barTexture.render(guiGraphics, x + 11, y + scrollBarPos, 512, 512);
 
         // Render the bogey icons & bogey names
         for (int i = 0; i < 6; i++) {
@@ -180,12 +183,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 // Icon
                 ResourceLocation icon = bogeyEntry.iconLocation();
                 if (icon != null)
-                    renderIcon(icon, ms, x + 20, y + 42 + (i * 18));
+                    renderIcon(guiGraphics, ms, icon, x + 20, y + 42 + (i * 18));
 
                 // Text
                 Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
                 // button has already been added in init, now just draw text
-                font.drawShadow(ms, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
+                guiGraphics.drawString(font, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
             }
         }
 
@@ -194,7 +197,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             Component displayName = selectedBogey.bogeyStyle().displayName;
             // Bogey Name
             Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(displayName, 126);
-            drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
+            guiGraphics.drawCenteredString(font, bogeyName, x + 190, y + 25, 0xFFFFFF);
 
             if (font.width(displayName) > 126) {
                 longBogeyTooltipArea.withTooltip(ImmutableList.of(displayName));
@@ -213,7 +216,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     case YELLOW -> AllGuiTextures.INDICATOR_YELLOW;
                     case GREEN -> AllGuiTextures.INDICATOR_GREEN;
                 };
-                indicator.render(ms, x + 163 + (i * 18), y + 128);
+                indicator.render(guiGraphics, x + 163 + (i * 18), y + 128);
             }
 
             // Render Bogey
@@ -250,9 +253,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             // Setup pose and lighting correctly
             ms.translate(0, 0, 1000);
             ms.scale(bogeyScale, bogeyScale, bogeyScale);
-            Quaternion zRot = Vector3f.ZP.rotationDegrees(180);
-            Quaternion xRot = Vector3f.XP.rotationDegrees(-20);
-            Quaternion yRot = Vector3f.YP.rotationDegrees(45);
+            Quaternionf zRot = Axis.ZP.rotationDegrees(180);
+            Quaternionf xRot = Axis.XP.rotationDegrees(-20);
+            Quaternionf yRot = Axis.YP.rotationDegrees(45);
             zRot.mul(xRot);
             zRot.mul(yRot);
             ms.mulPose(zRot);
@@ -297,10 +300,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         }
     }
 
-    private void renderIcon(ResourceLocation icon, PoseStack ms, int x, int y) {
+    private void renderIcon(GuiGraphics guiGraphics, PoseStack ms, ResourceLocation icon, int x, int y) {
         ms.pushPose();
-        RenderSystem.setShaderTexture(0, icon);
-        blit(ms, x, y, 0, 0, 0, 16, 16, 16, 16);
+        guiGraphics.blit(icon, x, y, 0, 0, 0, 16, 16, 16, 16);
         ms.popPose();
     }
 
