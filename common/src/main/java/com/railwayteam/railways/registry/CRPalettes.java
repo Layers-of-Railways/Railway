@@ -31,6 +31,25 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
+    
+    public static List<DyeColor> DyeColorsOrdered = List.of(
+            DyeColor.WHITE,
+            DyeColor.LIGHT_GRAY,
+            DyeColor.GRAY,
+            DyeColor.BLACK,
+            DyeColor.BROWN,
+            DyeColor.RED,
+            DyeColor.ORANGE,
+            DyeColor.YELLOW,
+            DyeColor.LIME,
+            DyeColor.GREEN,
+            DyeColor.CYAN,
+            DyeColor.LIGHT_BLUE,
+            DyeColor.BLUE,
+            DyeColor.PURPLE,
+            DyeColor.MAGENTA,
+            DyeColor.PINK
+    );
 
     public static void register() { // registration order is important for a clean inventory layout
         // set creative mode tab here so as not to break with classloading order
@@ -56,25 +75,6 @@ public class CRPalettes {
             CYCLE_GROUPS.put(dyeColor, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/" + dyeColor.name().toLowerCase(Locale.ROOT))));
         }
     }
-
-    public static List<DyeColor> DyeColorsOrdered = List.of(
-            DyeColor.WHITE,
-            DyeColor.LIGHT_GRAY,
-            DyeColor.GRAY,
-            DyeColor.BLACK,
-            DyeColor.BROWN,
-            DyeColor.RED,
-            DyeColor.ORANGE,
-            DyeColor.YELLOW,
-            DyeColor.LIME,
-            DyeColor.GREEN,
-            DyeColor.CYAN,
-            DyeColor.LIGHT_BLUE,
-            DyeColor.BLUE,
-            DyeColor.PURPLE,
-            DyeColor.MAGENTA,
-            DyeColor.PINK
-    );
 
     public static void provideLangEntries(BiConsumer<String, String> consumer) {
         for (DyeColor color : DyeColor.values()) {
