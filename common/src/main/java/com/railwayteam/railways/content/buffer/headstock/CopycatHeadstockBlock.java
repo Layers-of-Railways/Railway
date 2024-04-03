@@ -54,8 +54,6 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
     public static final BooleanProperty UPSIDE_DOWN = HeadstockBlock.UPSIDE_DOWN;
 
-    private final OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
-
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
@@ -143,8 +141,10 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     @SuppressWarnings("unused")
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
                                      Direction dir) {
+        pos = pos.immutable();
+        BlockPos otherPos = pos.relative(dir);
         BlockState material = getMaterial(level, pos);
-        BlockState otherMaterial = getMaterial(level, pos.relative(dir));
+        BlockState otherMaterial = getMaterial(level, otherPos);
 
         // should hopefully never happen, but just in case
         if (material == null) material = AllBlocks.COPYCAT_BASE.getDefaultState();
@@ -159,11 +159,11 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
                 return isOccluded(state, neighborState, dir.getOpposite());
 
             // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
-            occlusionTestWorld.clear();
+            OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
             occlusionTestWorld.setBlock(pos, material);
-            occlusionTestWorld.setBlock(pos.relative(dir), otherMaterial);
-            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, pos.relative(dir)))
-                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), pos.relative(dir)))
+            occlusionTestWorld.setBlock(otherPos, otherMaterial);
+            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, otherPos))
+                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
                     return isOccluded(state, neighborState, dir.getOpposite());
         }
 
