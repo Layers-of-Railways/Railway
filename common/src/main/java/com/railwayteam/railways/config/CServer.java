@@ -30,7 +30,7 @@ public class CServer extends ConfigBase {
         static String flipDistantSwitches = "Allow controlling Brass Switches remotely when approaching them on a train";
         static String switchPlacementRange = "Max distance between targeted track and placed switch stand";
         static String explosiveTrackDamage = "Allow creepers and ghast fireballs to damage tracks";
-        static String handcarHungerMultiplier = "multiplier used for calculating exhaustion from speed when a handcar is used.";
+        static String handcarHungerMultiplier = "Multiplier used for calculating exhaustion from speed when a handcar is used.";
 
         static String semaphores = "Semaphore settings";
         static String conductors = "Conductor settings";
