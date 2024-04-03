@@ -248,8 +248,8 @@ public class CRBogeyStyles {
         BogeyMenuManager.INSTANCE.addToCategory(category, style, icon, scale);
     }
 
-    private static void setScaleForSize(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
-        BogeyMenuManager.INSTANCE.setScaleForBogeySize(style, size, scale);
+    private static void setScalesForSizes(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
+        BogeyMenuManager.INSTANCE.setScalesForBogeySizes(style, size, scale);
     }
 
     public static void register() {
@@ -264,7 +264,7 @@ public class CRBogeyStyles {
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
 
         // Set scale's for BogeySize's
-        setScaleForSize(WIDE_DEFAULT, BogeySizes.SMALL, 20);
+        setScalesForSizes(WIDE_DEFAULT, BogeySizes.SMALL, 20);
 
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);

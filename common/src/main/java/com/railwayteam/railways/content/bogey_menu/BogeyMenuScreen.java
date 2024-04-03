@@ -13,6 +13,7 @@ import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
+import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
@@ -71,6 +72,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     private int ticksOpen;
     private boolean soundPlayed;
     private TooltipArea longBogeyTooltipArea;
+    private IconButton favouriteButton;
 
     @Override
     protected void init() {
@@ -110,9 +112,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         addRenderableWidget(categoryScrollInput);
 
         //fixme
-//        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
-//        favouriteButton.withCallback(this::onFavorite);
-//        addRenderableWidget(favouriteButton);
+        favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
+        favouriteButton.withCallback(this::onFavorite);
+        addRenderableWidget(favouriteButton);
 
         // Close Button
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
@@ -148,7 +150,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         //fixme temp
         //hide favorite button
-        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(guiGraphics, x + 111, y + 134, 512, 512);
+        //CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(guiGraphics, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
@@ -420,11 +422,28 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     private Button.OnPress bogeySelection(int index) {
-        return b -> selectedBogey = bogeyList[index];
+        return b -> {
+            selectedBogey = bogeyList[index];
+            updateFavorites();
+        };
     }
 
     private void onFavorite() {
-        //if (selectedBogey == null) return;
+        if (selectedBogey != null) {
+            BogeyMenuHandlerClient.toggleFavorite(selectedBogey.bogeyStyle());
+            updateFavorites();
+        }
+    }
+
+    private void updateFavorites() {
+        favouriteButton.setIcon(BogeyMenuHandlerClient.isFavorited(selectedBogey.bogeyStyle())
+            ? CRIcons.I_FAVORITED
+            : CRIcons.I_FAVORITE
+        );
+
+        if (selectedCategory == CategoryEntry.FavoritesCategory.INSTANCE) {
+            scrollTo(scrollOffs);
+        }
     }
 
     private void onMenuClose() {

@@ -66,5 +66,5 @@ public interface BogeyMenuManager {
      * @param size The bogey size you want to set this custom scale for
      * @param scale The scale you want this bogey size to render at in the bogey menu
      */
-    void setScaleForBogeySize(BogeyStyle style, BogeySizes.BogeySize size, float scale);
+    void setScalesForBogeySizes(BogeyStyle style, BogeySizes.BogeySize size, float scale);
 }

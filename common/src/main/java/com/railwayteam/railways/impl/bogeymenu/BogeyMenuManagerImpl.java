@@ -19,18 +19,22 @@ import java.util.Map;
 
 @ApiStatus.Internal
 public class BogeyMenuManagerImpl implements BogeyMenuManager {
-    // fixme should these even be public? Probably should add methods to the interface instead...
-    public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
-    public static final List<BogeyEntry> BOGIES = new ArrayList<>();
+     /** Internal use only, do NOT touch. */
+    @ApiStatus.Internal public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
+    /** Internal use only, do NOT touch. */
+    @ApiStatus.Internal public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new HashMap<>();
 
-    public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new HashMap<>();
+    static {
+        CATEGORIES.add(CategoryEntry.FavoritesCategory.INSTANCE);
+    }
 
     public static final float defaultScale = 24;
 
     @Override
     public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {
         CategoryEntry entry = new CategoryEntry(name, id);
-        CATEGORIES.add(entry);
+        // maintain favorites category at the end
+        CATEGORIES.add(CATEGORIES.size() - 1, entry);
         return entry;
     }
 
@@ -50,13 +54,11 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
 
     @Override
     public BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
-        BogeyEntry entry = new BogeyEntry(categoryEntry, bogeyStyle, iconLocation, scale);
-        BOGIES.add(entry);
-        return entry;
+        return BogeyEntry.getOrCreate(categoryEntry, bogeyStyle, iconLocation, scale);
     }
 
     @Override
-    public void setScaleForBogeySize(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
+    public void setScalesForBogeySizes(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
         SIZES_TO_SCALE.put(Pair.of(style, size), scale);
     }
 }
