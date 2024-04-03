@@ -145,10 +145,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         // Render Background
         background.render(ms, x, y, 512, 512);
 
-        //fixme temp
-        //hide favorite button
-        //CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
-
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
         int halfWidth = background.width / 2;
