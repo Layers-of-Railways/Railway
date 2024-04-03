@@ -16,6 +16,7 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
 import com.railwayteam.railways.util.MixinVariables;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -26,6 +27,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -127,6 +129,12 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             displayApproachSwitchMessage(player, lookAhead, wrong);
         } else
             cleanUpApproachSwitchMessage(player);
+    }
+
+    @Inject(method = "control", at = @At("TAIL"))
+    private void railways$handcarHungerDepletion(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(AllItems.EXTENDO_GRIP.get()))
+            player.causeFoodExhaustion((float) carriage.train.speed * CRConfigs.server().handcarHungerMultiplier.getF());
     }
 
     @Unique
