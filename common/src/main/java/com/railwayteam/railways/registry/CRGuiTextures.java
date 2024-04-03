@@ -29,7 +29,6 @@ public enum CRGuiTextures implements ScreenElement {
     BOGEY_MENU("bogeymenu", 279, 184),
     BOGEY_MENU_SCROLL_BAR("bogeymenu", 280, 0, 8, 16),
     BOGEY_MENU_SCROLL_BAR_DISABLED("bogeymenu", 288, 0, 8, 16),
-    BOGEY_MENU_DISABLED_FAVORITE_TEMP("bogeymenu", 280, 16, 20, 20)
     ;
 
     public static final int FONT_COLOR = 0x575F7A;

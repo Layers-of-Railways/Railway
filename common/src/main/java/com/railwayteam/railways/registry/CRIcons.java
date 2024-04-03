@@ -43,7 +43,6 @@ public class CRIcons extends AllIcons {
         I_SWITCH_AUTO = next();
 
     public static final CRIcons
-        I_FAVORITE_DEPRECATED = newRow(),
         I_SWAP_TRACKS = next();
 
     public static final CRIcons
