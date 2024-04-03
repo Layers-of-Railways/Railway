@@ -23,6 +23,10 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
     public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
     public static final List<BogeyEntry> BOGIES = new ArrayList<>();
 
+    static {
+        CATEGORIES.add(CategoryEntry.FavoritesCategory.INSTANCE);
+    }
+
     public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new HashMap<>();
 
     public static final float defaultScale = 24;
@@ -30,7 +34,8 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
     @Override
     public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {
         CategoryEntry entry = new CategoryEntry(name, id);
-        CATEGORIES.add(entry);
+        // maintain favorites category at the end
+        CATEGORIES.add(CATEGORIES.size() - 1, entry);
         return entry;
     }
 
@@ -50,7 +55,7 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
 
     @Override
     public BogeyEntry addToCategory(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
-        BogeyEntry entry = new BogeyEntry(categoryEntry, bogeyStyle, iconLocation, scale);
+        BogeyEntry entry = BogeyEntry.getOrCreate(categoryEntry, bogeyStyle, iconLocation, scale);
         BOGIES.add(entry);
         return entry;
     }

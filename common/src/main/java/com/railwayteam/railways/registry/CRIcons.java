@@ -50,7 +50,8 @@ public class CRIcons extends AllIcons {
         I_NARROW = newRow(),
         I_STANDARD = next(),
         I_WIDE = next(),
-        I_FAVORITE = next();
+        I_FAVORITE = next(),
+        I_FAVORITED = next();
 
     public CRIcons(int x, int y) {
         super(x, y);
