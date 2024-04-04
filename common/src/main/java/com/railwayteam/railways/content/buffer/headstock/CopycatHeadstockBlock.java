@@ -5,7 +5,6 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
-import com.railwayteam.railways.util.ShapeUtils;
 import com.railwayteam.railways.util.client.OcclusionTestWorld;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
@@ -201,18 +200,10 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
     }
 
     @Override
-    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-        if (targetedFace.getAxis().isVertical()) {
-            return super.getRotatedBlockState(originalState, targetedFace);
-        } else {
-            return originalState.cycle(STYLE);
-        }
-    }
-
-    @Override
     public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
         // call the super method to only pop out the copycatted block, not cycling the style
-        super.onWrenched(state, context);
+        InteractionResult result = super.onWrenched(state, context);
+        if (result.consumesAction()) return result;
 
         // IWrenchable default implementation, to not accidentally call onWrenched twice
         Level world = context.getLevel();
@@ -234,17 +225,16 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
     // copied directly from {@link IWrenchable}, because java doesn't support IWrenchable.super if we're not directly implementing it...
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        // if the headstock part is wrenched, apply the 'super' wrench behaviour
-        if (ShapeUtils.isTouching(context.getClickLocation(), context.getClickedPos(), getHeadstockShape(state))) {
-            // If the style is PLAIN (so that the only place that *can* be clicked is the headstock,
-            // then only allow material extraction if the clicked face is the 'back'
-            if (state.getValue(STYLE) != HeadstockStyle.PLAIN || context.getClickedFace() == state.getValue(FACING).getOpposite()) {
-                InteractionResult result = super.onWrenched(state, context);
-                if (result.consumesAction()) return result;
-            }
-        }
+        InteractionResult result = IWrenchable$onWrenched(state, context);
+        if (result.consumesAction()) return result;
+        return super.onWrenched(state, context);
+    }
+
+    private InteractionResult IWrenchable$onWrenched(BlockState state, UseOnContext context) {
         Level world = context.getLevel();
         BlockState rotated = getRotatedBlockState(state, context.getClickedFace());
+        if (rotated == state)
+            return InteractionResult.PASS;
         if (!rotated.canSurvive(world, context.getClickedPos()))
             return InteractionResult.PASS;
 
