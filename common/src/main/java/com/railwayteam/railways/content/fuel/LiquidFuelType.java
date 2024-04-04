@@ -22,7 +22,7 @@ public class LiquidFuelType {
     private int fuelTicks = 40;
     private boolean invalid = false;
 
-    public LiquidFuelType() {}
+    public LiquidFuelType() { }
 
     public List<Supplier<Fluid>> getFluids() {
         return fluids;
