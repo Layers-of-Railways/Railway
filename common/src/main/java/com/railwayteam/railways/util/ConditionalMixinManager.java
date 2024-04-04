@@ -24,8 +24,8 @@
 
 package com.railwayteam.railways.util;
 
-import com.railwayteam.railways.annotation.ConditionalMixin;
-import com.railwayteam.railways.annotation.DevMixin;
+import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
+import com.railwayteam.railways.annotation.mixin.DevMixin;
 import com.railwayteam.railways.compat.Mods;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;

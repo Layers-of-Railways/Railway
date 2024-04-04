@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.bogey_menu.handler;
 
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.content.bogey_menu.BogeyMenuScreen;
 import com.railwayteam.railways.registry.CRKeys;
 import com.railwayteam.railways.util.EntityUtils;
@@ -12,11 +13,13 @@ import net.minecraft.world.level.GameType;
 public class BogeyMenuEventsHandler {
     public static int COOLDOWN = 0;
 
+    @MultiLoaderEvent
     public static void clientTick() {
         if (COOLDOWN > 0 && !CRKeys.BOGEY_MENU.isPressed())
             COOLDOWN--;
     }
 
+    @MultiLoaderEvent
     public static void onKeyInput(int key, boolean pressed) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)

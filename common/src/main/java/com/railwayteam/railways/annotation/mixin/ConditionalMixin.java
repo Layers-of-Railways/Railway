@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.railwayteam.railways.annotation;
+package com.railwayteam.railways.annotation.mixin;
 
 import com.railwayteam.railways.compat.Mods;
 

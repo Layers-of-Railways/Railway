@@ -2,7 +2,7 @@ package com.railwayteam.railways.mixin.compat.voicechat;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.railwayteam.railways.annotation.ConditionalMixin;
+import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import de.maxhenkel.voicechat.voice.server.Server;

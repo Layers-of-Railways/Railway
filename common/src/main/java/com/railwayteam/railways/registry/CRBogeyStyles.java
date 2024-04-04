@@ -20,7 +20,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.tr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideComicallyLargeScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDefaultBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBogeyStyles;

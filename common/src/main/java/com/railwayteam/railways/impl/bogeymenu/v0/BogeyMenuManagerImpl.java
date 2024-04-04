@@ -1,4 +1,4 @@
-package com.railwayteam.railways.impl.bogeymenu;
+package com.railwayteam.railways.impl.bogeymenu.v0;
 
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;

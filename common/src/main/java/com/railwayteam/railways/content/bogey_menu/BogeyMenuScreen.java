@@ -12,7 +12,7 @@ import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
