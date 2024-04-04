@@ -32,7 +32,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
     
-    public static List<DyeColor> DyeColorsOrdered = List.of(
+    private static final List<DyeColor> ORDERED_DYE_COLORS = List.of(
             DyeColor.WHITE,
             DyeColor.LIGHT_GRAY,
             DyeColor.GRAY,
@@ -59,7 +59,7 @@ public class CRPalettes {
         for (Styles style : Styles.values())
             style.register(null);
 
-        for (DyeColor dyeColor : DyeColorsOrdered) {
+        for (DyeColor dyeColor : ORDERED_DYE_COLORS) {
             for (Styles style : Styles.values())
                 style.register(dyeColor);
         }
@@ -71,7 +71,7 @@ public class CRPalettes {
 
     static {
         CYCLE_GROUPS.put(null, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/base")));
-        for (DyeColor dyeColor : DyeColorsOrdered) {
+        for (DyeColor dyeColor : ORDERED_DYE_COLORS) {
             CYCLE_GROUPS.put(dyeColor, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/" + dyeColor.name().toLowerCase(Locale.ROOT))));
         }
     }
