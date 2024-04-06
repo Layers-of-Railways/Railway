@@ -1,7 +1,5 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.boiler.BoilerBlock;
-import com.railwayteam.railways.content.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
@@ -11,6 +9,9 @@ import com.railwayteam.railways.content.custom_bogeys.special.monobogey.Invisibl
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
@@ -24,6 +25,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -31,7 +33,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -138,13 +142,22 @@ public class BuilderTransformers {
             ));
     }
 
-    // not done
-    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-            .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + colorName(color) + "/tank_side"),
-                p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top")
-            ));
+                .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStates(state -> {
+                    Direction dir = state.getValue(BlockStateProperties.FACING);
+                    String name = dir.getAxis().isVertical() ? "smokebox" : "smokebox_horizontal";
+
+                    return ConfiguredModel.builder()
+                            .modelFile(
+                                    p.models().withExistingParent(colorNameUnderscore(color) + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
+                                            .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
+                                            .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
+                            )
+                            .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                            .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                            .build();
+                }));
     }
 
     public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
@@ -164,6 +177,10 @@ public class BuilderTransformers {
 
     private static String colorName(@Nullable DyeColor color) {
         return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    }
+
+    private static String colorNameUnderscore(@Nullable DyeColor color) {
+        return color == null ? "" : color.name().toLowerCase(Locale.ROOT) + "_";
     }
 
     @ExpectPlatform

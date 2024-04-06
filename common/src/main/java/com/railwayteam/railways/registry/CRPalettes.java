@@ -3,8 +3,9 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
-import com.railwayteam.railways.content.boiler.BoilerBlock;
-import com.railwayteam.railways.content.boiler.BoilerCTBehaviour;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
+import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -211,7 +212,7 @@ public class CRPalettes {
 
     @SafeVarargs
     public static BlockEntry<?> locometalSmokebox(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
-        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), RotatedPillarBlock::new)
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), PalettesSmokeboxBlock::new)
             .transform(BuilderTransformers.locoMetalSmokeBox(color))
             .lang(joinSpace(colorName, "Locometal Smokebox"))
             .item()
