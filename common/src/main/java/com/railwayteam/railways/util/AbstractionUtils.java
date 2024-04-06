@@ -2,13 +2,12 @@ package com.railwayteam.railways.util;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Used for when you register blocks on a per-loader
- * basis usually due to doing fluids
+ * basis, usually due to doing fluids
  */
 public class AbstractionUtils {
     @ExpectPlatform
