@@ -1,8 +1,8 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.buffer.single_deco.GenericDyeableSingleBufferBlock;
@@ -39,7 +39,6 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -51,11 +50,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.ApiStatus;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Locale;
 import java.util.function.Function;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -166,24 +163,8 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
-    //fixme
-    //         return b -> b.transform(locoMetalBase(color, null))
-    //                .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStates(state -> {
-    //                    Direction dir = state.getValue(BlockStateProperties.FACING);
-    //                    String name = dir.getAxis().isVertical() ? "smokebox" : "smokebox_horizontal";
-    //
-    //                    return ConfiguredModel.builder()
-    //                            .modelFile(
-    //                                    p.models().withExistingParent(colorNameUnderscore(color) + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
-    //                                            .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
-    //                                            .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
-    //                            )
-    //                            .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
-    //                            .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-    //                            .build();
-    //                }));
     @ExpectPlatform
-    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
         throw new AssertionError();
     }
 
@@ -202,7 +183,7 @@ public class BuilderTransformers {
             .blockstate(BoilerGenerator.create(color, wrapping)::generate);
     }
 
-    private static String colorNameUnderscore(@Nullable DyeColor color) {
+    public static String colorNameUnderscore(@Nullable DyeColor color) {
         return color == null ? "" : color.name().toLowerCase(Locale.ROOT) + "_";
     }
 

@@ -1,7 +1,7 @@
 package com.railwayteam.railways.util.fabric;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
-import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;

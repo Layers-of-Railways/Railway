@@ -1,7 +1,7 @@
-package com.railwayteam.railways.content.boiler.forge;
+package com.railwayteam.railways.content.palettes.boiler.forge;
 
-import com.railwayteam.railways.content.boiler.BoilerBlock;
-import com.railwayteam.railways.content.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
