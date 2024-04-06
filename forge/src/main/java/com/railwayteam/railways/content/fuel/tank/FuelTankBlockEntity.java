@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.fuel.tank;
 
-import com.railwayteam.railways.util.FluidUtils;
+import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -563,8 +563,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
     @Override
     public FluidStack getFluid(int tank) {
-        return tankInventory.getFluid()
-                .copy();
+        return tankInventory.getFluid().copy();
     }
 
     public static class FuelFluidHandler extends SmartFluidTank {
@@ -574,7 +573,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         }
 
         public boolean isFluidValid(FluidStack stack) {
-            return FluidUtils.isFuel(stack.getFluid());
+            return LiquidFuelTrainHandler.isFuel(stack.getFluid());
         }
 
         @Override

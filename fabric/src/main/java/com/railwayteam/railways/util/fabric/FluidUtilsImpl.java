@@ -1,10 +1,8 @@
 package com.railwayteam.railways.util.fabric;
 
-import com.railwayteam.railways.config.CRConfigs;
-import com.railwayteam.railways.content.fuel.LiquidFuelManager;
-import com.railwayteam.railways.content.fuel.LiquidFuelType;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 
@@ -15,23 +13,17 @@ public class FluidUtilsImpl {
         return false;
     }
 
-    public static boolean isFuel(Fluid fluid) {
-        // If realistic fuel tanks are enabled, check if the fluid/item is valid fuel
-        if (CRConfigs.server().realism.realisticFuelTanks.get()) {
+    public static Fluid getFluid(Object o) {
+        Fluid fluid;
 
-            LiquidFuelType fuelType = LiquidFuelManager.isInTag(fluid);
-
-            if (fuelType == null) {
-                fuelType = LiquidFuelManager.getTypeForFluid(fluid);
-            }
-
-            if (fuelType != null) {
-                return true;
-            } else {
-                return FuelRegistry.INSTANCE.get(fluid.getBucket()) != null;
-            }
+        if (o instanceof FluidVariant fluidVariant) {
+            fluid = fluidVariant.getFluid();
+        } else if (o instanceof FluidStack fluidStack) {
+            fluid = fluidStack.getFluid();
+        } else {
+            throw new IllegalArgumentException("FluidUtils#getFluid expected to get a FluidVariant or FluidStack but got " + o.getClass().getName());
         }
-        // else just return true
-        return true;
+
+        return fluid;
     }
 }
