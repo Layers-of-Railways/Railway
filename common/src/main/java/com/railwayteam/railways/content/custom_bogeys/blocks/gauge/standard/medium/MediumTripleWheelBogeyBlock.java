@@ -22,6 +22,6 @@ public class MediumTripleWheelBogeyBlock extends CRBogeyBlock {
 
     @Override
     public double getWheelPointSpacing() {
-        return 3;
+        return 2; // needs to be even, otherwise station alignment is bad (was 3)
     }
 }

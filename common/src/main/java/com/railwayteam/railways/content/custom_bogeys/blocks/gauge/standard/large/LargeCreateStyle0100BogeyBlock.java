@@ -22,6 +22,6 @@ public class LargeCreateStyle0100BogeyBlock extends CRBogeyBlock {
 
     @Override
     public double getWheelPointSpacing() {
-        return 5;
+        return 4; // needs to be even, otherwise station alignment is bad (was 5)
     }
 }
