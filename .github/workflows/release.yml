@@ -37,10 +37,8 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build & Publish Fabric or Forge
-        if: ${{ inputs.platform }} == "fabric" || ${{ inputs.platform }} == "forge"
-        run: ./gradlew :${{ inputs.platform }}:publishMods
+      - name: Set Platform environment variable
+        run: echo "PLATFORM=${{ inputs.platform }}" >> $GITHUB_ENV
 
-      - name: Build & Publish Both
-        if: ${{ inputs.platform }} == "both"
-        run: ./gradlew build :fabric:publishMods :forge:publishMods :common:publish
+      - name: Build & Publish
+        run: ./gradlew railwaysPublish

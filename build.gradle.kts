@@ -252,6 +252,17 @@ fun squishJar(jar: File) {
     }
 }
 
+tasks.create("railwaysPublish") {
+    when (val platform = System.getenv("PLATFORM")) {
+        "both" -> {
+            dependsOn(tasks.build, tasks.publish, ":fabric:publishMods", ":forge:publishMods")
+        }
+        "fabric", "forge" -> {
+            dependsOn("${platform}:build", "${platform}:publish", "${platform}:publishMods")
+        }
+    }
+}
+
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String
         ?: throw IllegalStateException("Property $this is not defined")
