@@ -1,5 +1,6 @@
 package com.railwayteam.railways.events;
 
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;
@@ -18,6 +19,7 @@ public class ClientEvents {
     @ApiStatus.Internal
     public static boolean previousDevCapeSetting = false;
 
+    @MultiLoaderEvent
     public static void onClientTickStart(Minecraft mc) {
         PhantomSpriteManager.tick(mc);
 
@@ -46,12 +48,14 @@ public class ClientEvents {
         }
     }
 
+    @MultiLoaderEvent
     public static void onClientTickEnd(Minecraft mc) {
         if (isGameActive()) {
             ConductorPossessionController.onClientTick(mc, false);
         }
     }
 
+    @MultiLoaderEvent
     public static void onClientWorldLoad(Level level) {
         DummyRailwayMarkerHandler.getInstance().onJoinWorld();
         PhantomSpriteManager.firstRun = true;
@@ -61,6 +65,7 @@ public class ClientEvents {
         return !(Minecraft.getInstance().level == null || Minecraft.getInstance().player == null);
     }
 
+    @MultiLoaderEvent
     public static void onKeyInput(int key, boolean pressed) {
         if (Minecraft.getInstance().screen != null)
             return;
@@ -70,6 +75,7 @@ public class ClientEvents {
         TagCycleHandlerClient.onKeyInput(key, pressed);
     }
 
+    @MultiLoaderEvent
     public static void onTagsUpdated() {
         TagCycleHandlerClient.onTagsUpdated();
     }

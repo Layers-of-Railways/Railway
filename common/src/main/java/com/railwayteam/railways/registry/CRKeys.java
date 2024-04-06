@@ -2,7 +2,6 @@ package com.railwayteam.railways.registry;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.Create;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
@@ -11,7 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
 public enum CRKeys {
-    BOGEY_MENU("bogey_menu", GLFW.GLFW_KEY_LEFT_ALT);
+    BOGEY_MENU("bogey_menu", GLFW.GLFW_KEY_LEFT_ALT),
+    CYCLE_MENU("cycle_menu", GLFW.GLFW_KEY_LEFT_ALT);
 
     private KeyMapping keybind;
     private final String description;
@@ -28,7 +28,7 @@ public enum CRKeys {
         for (CRKeys key : values()) {
             if (!key.modifiable)
                 continue;
-            key.keybind = new KeyMapping(key.description, key.key, Create.NAME);
+            key.keybind = new KeyMapping(key.description, key.key, Railways.NAME);
             registerKeyBinding(key.keybind);
         }
     }

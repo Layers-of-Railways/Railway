@@ -2,7 +2,7 @@ package com.railwayteam.railways.api.bogeymenu.v0;
 
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import net.minecraft.network.chat.Component;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * Handles adding bogies and categories to the Bogey UI
  */
 public interface BogeyMenuManager {
-    BogeyMenuManagerImpl INSTANCE = new BogeyMenuManagerImpl();
+    BogeyMenuManager INSTANCE = new BogeyMenuManagerImpl();
 
     /**
      * Register a Bogey Category
@@ -66,5 +66,5 @@ public interface BogeyMenuManager {
      * @param size The bogey size you want to set this custom scale for
      * @param scale The scale you want this bogey size to render at in the bogey menu
      */
-    void setScaleForBogeySize(BogeyStyle style, BogeySizes.BogeySize size, float scale);
+    void setScalesForBogeySizes(BogeyStyle style, BogeySizes.BogeySize size, float scale);
 }

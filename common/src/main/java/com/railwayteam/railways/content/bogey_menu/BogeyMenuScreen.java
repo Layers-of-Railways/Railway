@@ -3,6 +3,7 @@ package com.railwayteam.railways.content.bogey_menu;
 import com.google.common.collect.ImmutableList;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
@@ -11,12 +12,14 @@ import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
+import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.client.ClientTextUtils;
 import com.railwayteam.railways.util.packet.BogeyStyleSelectionPacket;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -33,6 +36,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -41,8 +45,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.lwjgl.opengl.GL11;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BogeyMenuScreen extends AbstractSimiScreen {
@@ -53,8 +57,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             .toList();
     // The category that is currently selected
     private CategoryEntry selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(0);
-    // The list of bogies being displayed, cannot ever be over 6
-    List<BogeyEntry> bogeyList = new ArrayList<>(6);
+    private int categoryIndex = 0; // for the scroll input on window resize
+    // The list of bogies being displayed
+    BogeyEntry[] bogeyList = new BogeyEntry[6];
+    // The list of bogey selection buttons
+    BogeyMenuButton[] bogeyMenuButtons = new BogeyMenuButton[6];
     // The bogey that is currently selected
     BogeyEntry selectedBogey;
     // Amount scrolled, 0 = top and 1 = bottom
@@ -62,6 +69,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     // True if the scrollbar is being dragged
     private boolean scrolling;
     private int ticksOpen;
+    private boolean soundPlayed;
+    private TooltipArea longBogeyTooltipArea;
+    private IconButton favouriteButton;
 
     @Override
     protected void init() {
@@ -71,6 +81,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         int x = guiLeft;
         int y = guiTop;
+
+        // Need buttons first, otherwise setupList will crash
+        for (int i = 0; i < 6; i++) {
+            addRenderableWidget(bogeyMenuButtons[i] = new BogeyMenuButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+        }
 
         // Initial setup
         setupList(selectedCategory);
@@ -85,9 +100,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         ScrollInput categoryScrollInput = new SelectionScrollInput(x + 9, y + 20, 77, 18)
                 .forOptions(categoryComponentList)
                 .writingTo(categoryLabel)
+                .setState(categoryIndex)
                 .calling(categoryIndex -> {
                     scrollOffs = 0.0F;
                     scrollTo(0.0F);
+                    this.categoryIndex = categoryIndex;
                     setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
 
                     selectedBogey = selectedCategory.getBogeyEntryList().get(0);
@@ -97,9 +114,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         addRenderableWidget(categoryScrollInput);
 
         //fixme
-//        IconButton favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
-//        favouriteButton.withCallback(this::onFavorite);
-//        addRenderableWidget(favouriteButton);
+        favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
+        favouriteButton.withCallback(this::onFavorite);
+        addRenderableWidget(favouriteButton);
 
         // Close Button
         IconButton closeButton = new IconButton(x + background.width - 33, y + background.height - 24, AllIcons.I_CONFIRM);
@@ -118,6 +135,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     ))
             );
         }
+
+        longBogeyTooltipArea = new TooltipArea(x + 122, y + 20, 136, 18);
+        addRenderableOnly(longBogeyTooltipArea);
     }
 
     @Override
@@ -127,10 +147,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render Background
         background.render(ms, x, y, 512, 512);
-
-        //fixme temp
-        //hide favorite button
-        CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(ms, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");
@@ -160,7 +176,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render the bogey icons & bogey names
         for (int i = 0; i < 6; i++) {
-            BogeyEntry bogeyEntry = bogeyList.get(i);
+            BogeyEntry bogeyEntry = bogeyList[i];
             if (bogeyEntry != null) {
                 // Icon
                 ResourceLocation icon = bogeyEntry.iconLocation();
@@ -169,16 +185,24 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
                 // Text
                 Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(bogeyEntry.bogeyStyle().displayName, 55);
-                addRenderableWidget(new BogeyMenuButton(x + 19, y + 41 + (i * 18), 82, 17, bogeySelection(i)));
+                // button has already been added in init, now just draw text
                 font.drawShadow(ms, bogeyName, x + 40, y + 46 + (i * 18), 0xFFFFFF);
             }
         }
 
         // Draw bogey name, gauge indicators and render bogey
         if (selectedBogey != null) {
+            Component displayName = selectedBogey.bogeyStyle().displayName;
             // Bogey Name
-            Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(selectedBogey.bogeyStyle().displayName, 126);
+            Component bogeyName = ClientTextUtils.getComponentWithWidthCutoff(displayName, 126);
             drawCenteredString(ms, font, bogeyName, x + 190, y + 25, 0xFFFFFF);
+
+            if (font.width(displayName) > 126) {
+                longBogeyTooltipArea.withTooltip(ImmutableList.of(displayName));
+                longBogeyTooltipArea.visible = true;
+            } else {
+                longBogeyTooltipArea.visible = false;
+            }
 
             // Gauge Indicators
             Indicator.State[] states = BogeyMenuHandlerClient.getTrackCompat(selectedBogey);
@@ -236,7 +260,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             Lighting.setupForEntityInInventory();
 
             // Setup vars for rendering
-            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+            Minecraft mc = Minecraft.getInstance();
+            MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
             int light = 0xF000F0;
             int overlay = OverlayTexture.NO_OVERLAY;
             float wheelAngle = -3 * AnimationTickHolder.getRenderTime(minecraft.level);
@@ -250,6 +275,26 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             modelViewStack.popPose();
             RenderSystem.applyModelViewMatrix();
             ms.popPose();
+
+            // Clear depth rectangle to allow proper tooltips
+            {
+                double x0 = x + 120;
+                double y0 = y + 48;
+                double w = 140;
+                double h = 77;
+                double bottom = y0+h;
+
+                Window window = mc.getWindow();
+                double scale = window.getGuiScale();
+
+                RenderSystem.clearDepth(0.5); // same depth as gui
+                RenderSystem.enableScissor((int) (x0*scale), window.getHeight() - (int) (bottom*scale), (int) (w*scale), (int) (h*scale));
+
+                RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
+
+                RenderSystem.disableScissor();
+                RenderSystem.clearDepth(1.0);
+            }
         }
     }
 
@@ -261,18 +306,21 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     private void setupList(CategoryEntry categoryEntry) {
-        List<BogeyEntry> bogies = categoryEntry.getBogeyEntryList();
+        setupList(categoryEntry, 0);
+    }
 
-        // Clear to get ready for adding new bogies
-        bogeyList.clear();
+    private void setupList(CategoryEntry categoryEntry, int offset) {
+        List<BogeyEntry> bogies = categoryEntry.getBogeyEntryList();
 
         // Max of 6 slots, objects inside the slots will be mutated later
         for (int i = 0; i < 6; i++) {
             if (i < bogies.size()) {
-                bogeyList.add(bogies.get(i));
+                bogeyList[i] = bogies.get(i+offset);
+                bogeyMenuButtons[i].active = true;
             } else {
                 // I know, this is silly but its best way to know if rendering should be skipped
-                bogeyList.add(null);
+                bogeyList[i] = null;
+                bogeyMenuButtons[i].active = false;
             }
         }
     }
@@ -280,6 +328,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     @Override
     public void tick() {
         ticksOpen++;
+        soundPlayed = false;
         super.tick();
     }
 
@@ -323,8 +372,18 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         double listSize = selectedCategory.getBogeyEntryList().size() - 6;
         float scrollFactor = (float) (delta / listSize);
+
+        final float oldScrollOffs = scrollOffs;
+
         scrollOffs = Mth.clamp(scrollOffs - scrollFactor, 0.0F, 1.0F);
         scrollTo(scrollOffs);
+
+        if (!soundPlayed && scrollOffs != oldScrollOffs)
+            Minecraft.getInstance()
+                    .getSoundManager()
+                    .play(SimpleSoundInstance.forUI(AllSoundEvents.SCROLL_VALUE.getMainEvent(),
+                            1.5f + 0.1f * scrollOffs));
+        soundPlayed = true;
 
         return true;
     }
@@ -334,13 +393,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         float listSize = bogies.size() - 6;
         int index = (int) ((double) (pos * listSize) + 0.5);
 
-        for (int i = 0; i < 6; i++) {
-            if (i < bogies.size()) {
-                bogeyList.set(i, bogies.get(index + i));
-            } else {
-                bogeyList.add(null);
-            }
-        }
+        setupList(selectedCategory, index);
     }
 
     private boolean canScroll() {
@@ -366,11 +419,28 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
     }
 
     private Button.OnPress bogeySelection(int index) {
-        return b -> selectedBogey = bogeyList.get(index);
+        return b -> {
+            selectedBogey = bogeyList[index];
+            updateFavorites();
+        };
     }
 
     private void onFavorite() {
-        //if (selectedBogey == null) return;
+        if (selectedBogey != null) {
+            BogeyMenuHandlerClient.toggleFavorite(selectedBogey.bogeyStyle());
+            updateFavorites();
+        }
+    }
+
+    private void updateFavorites() {
+        favouriteButton.setIcon(BogeyMenuHandlerClient.isFavorited(selectedBogey.bogeyStyle())
+            ? CRIcons.I_FAVORITED
+            : CRIcons.I_FAVORITE
+        );
+
+        if (selectedCategory == CategoryEntry.FavoritesCategory.INSTANCE) {
+            scrollTo(scrollOffs);
+        }
     }
 
     private void onMenuClose() {

@@ -166,5 +166,7 @@
   "railways.gui.bogey_menu.category.tripleaxles": "Triple Axles",
   "railways.gui.bogey_menu.category.quadrupleaxles": "Quadruple Axles",
   "railways.gui.bogey_menu.category.quintupleaxles": "Quintuple Axles",
-  "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles"
+  "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles",
+
+  "railways.keyinfo.cycle_menu": "Open Cycle Menu"
 }

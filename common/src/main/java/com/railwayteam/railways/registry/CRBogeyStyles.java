@@ -22,8 +22,9 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.tr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideComicallyLargeScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDefaultBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
@@ -323,8 +324,8 @@ public class CRBogeyStyles {
         BogeyMenuManager.INSTANCE.addToCategory(category, style, icon, scale);
     }
 
-    private static void setScaleForSize(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
-        BogeyMenuManager.INSTANCE.setScaleForBogeySize(style, size, scale);
+    private static void setScalesForSizes(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
+        BogeyMenuManager.INSTANCE.setScalesForBogeySizes(style, size, scale);
     }
 
     public static void register() {
@@ -339,11 +340,11 @@ public class CRBogeyStyles {
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
 
         // Set scale's for BogeySize's
-        setScaleForSize(WIDE_DEFAULT, BogeySizes.SMALL, 20);
+        setScalesForSizes(WIDE_DEFAULT, BogeySizes.SMALL, 20);
 
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);
-        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 19);
+        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 18);
         addToCategory(STANDARD_CATEGORY, STANDARD);
         addToCategory(STANDARD_CATEGORY, NARROW_DOUBLE_SCOTCH);
 
@@ -384,5 +385,13 @@ public class CRBogeyStyles {
 
         // Sextuple Axle Category
         addToCategory(SEXTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_12_0);
+
+        if (Utils.isDevEnv()) {
+            CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MODID, "all_test");
+            for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+                if (hideInSelectionMenu(style)) continue;
+                addToCategory(ALL_TEST_CATEGORY, style);
+            }
+        }
     }
 }

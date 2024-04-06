@@ -1,6 +1,7 @@
 package com.railwayteam.railways.compat.journeymap;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.display.MarkerOverlay;
 import journeymap.client.api.model.MapImage;
@@ -69,6 +70,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         trainData.remove(uuid);
     }
 
+    @MultiLoaderEvent
     @Override
     public void removeObsolete() {
         for (UUID uuid : markers.keySet().stream().toList()) { //Prevent modifying while iterating
@@ -128,6 +130,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         }
     }
 
+    @MultiLoaderEvent
     @Override
     public void runUpdates() {
         if (!enabled)
@@ -150,6 +153,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         this.needingUpdates.add(uuid);
     }
 
+    @MultiLoaderEvent
     @Override
     public void reloadMarkers() {
         reload = true;
@@ -157,6 +161,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
         removeObsolete();
     }
 
+    @MultiLoaderEvent
     @Override
     public void onJoinWorld() {
         reload = true;
