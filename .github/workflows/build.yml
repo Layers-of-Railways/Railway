@@ -33,12 +33,3 @@ jobs:
         env:
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
         run: ./gradlew build :fabric:publish :forge:publish
-
-      - name: Collect built jars
-        run: ./gradlew moveBuiltJars
-
-      - name: Capture build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: Artifacts
-          path: jars

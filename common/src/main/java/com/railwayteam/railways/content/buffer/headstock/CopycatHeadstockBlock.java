@@ -4,8 +4,8 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
-import com.railwayteam.railways.util.ShapeUtils;
 import com.railwayteam.railways.util.client.OcclusionTestWorld;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
 import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.WaterloggedCopycatBlock;
@@ -52,8 +52,6 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
     public static final BooleanProperty UPSIDE_DOWN = HeadstockBlock.UPSIDE_DOWN;
-
-    private final OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
 
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
@@ -142,9 +140,16 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     @SuppressWarnings("unused")
     public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
                                      Direction dir) {
+        pos = pos.immutable();
+        BlockPos otherPos = pos.relative(dir);
         BlockState material = getMaterial(level, pos);
+        BlockState otherMaterial = getMaterial(level, otherPos);
+
+        // should hopefully never happen, but just in case
+        if (material == null) material = AllBlocks.COPYCAT_BASE.getDefaultState();
+        if (otherMaterial == null) otherMaterial = AllBlocks.COPYCAT_BASE.getDefaultState();
+
         if (state.is(this) == neighborState.is(this)) {
-            BlockState otherMaterial = getMaterial(level, pos.relative(dir));
             if (CopycatSpecialCases.isBarsMaterial(material)
                 && CopycatSpecialCases.isBarsMaterial(otherMaterial))
                 return state.getValue(FACING) == neighborState.getValue(FACING)
@@ -153,11 +158,11 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
                 return isOccluded(state, neighborState, dir.getOpposite());
 
             // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
-            occlusionTestWorld.clear();
+            OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
             occlusionTestWorld.setBlock(pos, material);
-            occlusionTestWorld.setBlock(pos.relative(dir), otherMaterial);
-            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, pos.relative(dir)))
-                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), pos.relative(dir)))
+            occlusionTestWorld.setBlock(otherPos, otherMaterial);
+            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, otherPos))
+                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
                     return isOccluded(state, neighborState, dir.getOpposite());
         }
 
@@ -194,18 +199,10 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     }
 
     @Override
-    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-        if (targetedFace.getAxis().isVertical()) {
-            return super.getRotatedBlockState(originalState, targetedFace);
-        } else {
-            return originalState.cycle(STYLE);
-        }
-    }
-
-    @Override
     public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
         // call the super method to only pop out the copycatted block, not cycling the style
-        super.onWrenched(state, context);
+        InteractionResult result = super.onWrenched(state, context);
+        if (result.consumesAction()) return result;
 
         // IWrenchable default implementation, to not accidentally call onWrenched twice
         Level world = context.getLevel();
@@ -227,17 +224,16 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     // copied directly from {@link IWrenchable}, because java doesn't support IWrenchable.super if we're not directly implementing it...
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        // if the headstock part is wrenched, apply the 'super' wrench behaviour
-        if (ShapeUtils.isTouching(context.getClickLocation(), context.getClickedPos(), getHeadstockShape(state))) {
-            // If the style is PLAIN (so that the only place that *can* be clicked is the headstock,
-            // then only allow material extraction if the clicked face is the 'back'
-            if (state.getValue(STYLE) != HeadstockStyle.PLAIN || context.getClickedFace() == state.getValue(FACING).getOpposite()) {
-                InteractionResult result = super.onWrenched(state, context);
-                if (result.consumesAction()) return result;
-            }
-        }
+        InteractionResult result = IWrenchable$onWrenched(state, context);
+        if (result.consumesAction()) return result;
+        return super.onWrenched(state, context);
+    }
+
+    private InteractionResult IWrenchable$onWrenched(BlockState state, UseOnContext context) {
         Level world = context.getLevel();
         BlockState rotated = getRotatedBlockState(state, context.getClickedFace());
+        if (rotated == state)
+            return InteractionResult.PASS;
         if (!rotated.canSurvive(world, context.getClickedPos()))
             return InteractionResult.PASS;
 

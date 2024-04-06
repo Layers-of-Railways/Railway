@@ -113,22 +113,13 @@ subprojects {
 
         repositories {
             val mavenToken = System.getenv("MAVEN_TOKEN")
+            val maven = if (isRelease) "releases" else "snapshots"
             if (mavenToken != null && mavenToken.isNotEmpty()) {
-                if (isRelease) {
-                    maven {
-                        url = uri("https://maven.ithundxr.dev/releases")
-                        credentials {
-                            username = "railways-github"
-                            password = mavenToken
-                        }
-                    }
-                } else {
-                    maven {
-                        url = uri("https://maven.ithundxr.dev/snapshots")
-                        credentials {
-                            username = "railways-github"
-                            password = mavenToken
-                        }
+                maven {
+                    url = uri("https://maven.ithundxr.dev/${maven}")
+                    credentials {
+                        username = "railways-github"
+                        password = mavenToken
                     }
                 }
             }
@@ -260,6 +251,17 @@ fun squishJar(jar: File) {
         }
         out.finish()
         out.close()
+    }
+}
+
+tasks.create("railwaysPublish") {
+    when (val platform = System.getenv("PLATFORM")) {
+        "both" -> {
+            dependsOn(tasks.build, tasks.publish, ":fabric:publishMods", ":forge:publishMods")
+        }
+        "fabric", "forge" -> {
+            dependsOn("${platform}:build", "${platform}:publish", "${platform}:publishMods")
+        }
     }
 }
 

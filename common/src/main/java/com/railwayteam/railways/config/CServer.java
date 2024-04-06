@@ -11,6 +11,7 @@ public class CServer extends ConfigBase {
     public final ConfigBool flipDistantSwitches = b(true, "flipDistantSwitches", Comments.flipDistantSwitches);
     public final ConfigInt switchPlacementRange = i(64, 16, 128, "switchPlacementRange", Comments.switchPlacementRange);
     public final ConfigBool explosiveTrackDamage = b(false, "creeperTrackDamage", Comments.explosiveTrackDamage);
+    public final ConfigFloat handcarHungerMultiplier = f(.01f, 0, 1, "handcarHungerMultiplier", Comments.handcarHungerMultiplier);
 
     public final CSemaphores semaphores = nested(0, CSemaphores::new, Comments.semaphores);
     public final CConductors conductors = nested(0, CConductors::new, Comments.conductors);
@@ -29,6 +30,7 @@ public class CServer extends ConfigBase {
         static String flipDistantSwitches = "Allow controlling Brass Switches remotely when approaching them on a train";
         static String switchPlacementRange = "Max distance between targeted track and placed switch stand";
         static String explosiveTrackDamage = "Allow creepers and ghast fireballs to damage tracks";
+        static String handcarHungerMultiplier = "Multiplier used for calculating exhaustion from speed when a handcar is used.";
 
         static String semaphores = "Semaphore settings";
         static String conductors = "Conductor settings";

@@ -25,7 +25,7 @@ public class OcclusionTestWorld implements BlockGetter {
     public OcclusionTestWorld() {}
 
     public void setBlock(BlockPos pos, BlockState state) {
-        blocks.put(pos, state);
+        blocks.put(pos.immutable(), state);
     }
 
     public void clear() {

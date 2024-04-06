@@ -17,6 +17,6 @@ public class SingleAxleBogeyBlock extends CRBogeyBlock {
 
     @Override
     public double getWheelPointSpacing() {
-        return 1;
+        return 2; //needs to be even, otherwise station alignment is bad (was 1)
     }
 }

@@ -330,7 +330,7 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
         }
 
         public boolean isOccluded(@Nullable Direction face) {
-            return face == null ? false : occluded[face.get3DDataValue()];
+            return face != null && occluded[face.get3DDataValue()];
         }
     }
 
@@ -346,7 +346,7 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
         }
 
         public boolean shouldRemove(@Nullable Direction face) {
-            return face == null ? false : shouldRemove[face.get3DDataValue()];
+            return face != null && shouldRemove[face.get3DDataValue()];
         }
     }
 }
