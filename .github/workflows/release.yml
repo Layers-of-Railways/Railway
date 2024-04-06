@@ -1,4 +1,4 @@
-name: Build Release
+name: Publish Release
 
 on:
   workflow_dispatch:
@@ -43,4 +43,4 @@ jobs:
 
       - name: Build & Publish Both
         if: ${{ inputs.platform }} == "both"
-        run: ./gradlew :fabric:publishMods :forge:publishMods
+        run: ./gradlew build :fabric:publishMods :forge:publishMods :common:publish
