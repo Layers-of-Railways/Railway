@@ -5,16 +5,16 @@
       "x": 180
     },
     "facing=east": {
-      "model": "railways:block/gray_locometal_smokebox",
+      "model": "railways:block/gray_locometal_smokebox_horizontal",
       "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "railways:block/gray_locometal_smokebox",
+      "model": "railways:block/gray_locometal_smokebox_horizontal",
       "x": 90
     },
     "facing=south": {
-      "model": "railways:block/gray_locometal_smokebox",
+      "model": "railways:block/gray_locometal_smokebox_horizontal",
       "x": 90,
       "y": 180
     },
@@ -22,7 +22,7 @@
       "model": "railways:block/gray_locometal_smokebox"
     },
     "facing=west": {
-      "model": "railways:block/gray_locometal_smokebox",
+      "model": "railways:block/gray_locometal_smokebox_horizontal",
       "x": 90,
       "y": 270
     }

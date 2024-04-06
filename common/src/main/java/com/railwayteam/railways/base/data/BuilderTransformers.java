@@ -25,6 +25,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -32,7 +33,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -141,11 +144,20 @@ public class BuilderTransformers {
 
     public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-                .blockstate((c, p) -> p.directionalBlock(c.get(),
-                    p.models().withExistingParent(colorNameUnderscore(color) + "locometal_smokebox", p.modLoc("block/palettes/smokebox/smokebox"))
-                            .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
-                            .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
-                ));
+                .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStates(state -> {
+                    Direction dir = state.getValue(BlockStateProperties.FACING);
+                    String name = dir.getAxis().isVertical() ? "smokebox" : "smokebox_horizontal";
+
+                    return ConfiguredModel.builder()
+                            .modelFile(
+                                    p.models().withExistingParent(colorNameUnderscore(color) + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
+                                            .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
+                                            .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
+                            )
+                            .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                            .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                            .build();
+                }));
     }
 
     public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {

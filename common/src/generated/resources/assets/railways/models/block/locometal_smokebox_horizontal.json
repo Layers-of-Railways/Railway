@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/palettes/smokebox/smokebox_horizontal",
+  "textures": {
+    "side": "railways:block/palettes/netherite/tank_side",
+    "top": "railways:block/palettes/netherite/smokebox_tank_top"
+  }
+}
