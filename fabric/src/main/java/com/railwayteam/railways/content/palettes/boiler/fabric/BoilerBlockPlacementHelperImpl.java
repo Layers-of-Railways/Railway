@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler.fabric;
+package com.railwayteam.railways.content.palettes.boiler.fabric;
 
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.minecraft.world.entity.ai.attributes.Attribute;

@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler.forge;
+package com.railwayteam.railways.content.palettes.boiler.forge;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.common.ForgeMod;
