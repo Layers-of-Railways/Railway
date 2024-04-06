@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cube_column",
+  "parent": "railways:block/palettes/smokebox/smokebox",
   "textures": {
-    "end": "railways:block/palettes/cyan/smokebox_tank_top",
-    "side": "railways:block/palettes/cyan/tank_side"
+    "side": "railways:block/palettes/cyan/tank_side",
+    "top": "railways:block/palettes/cyan/smokebox_tank_top"
   }
 }

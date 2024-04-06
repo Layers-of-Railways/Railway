@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler;
+package com.railwayteam.railways.content.palettes.boiler;
 
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;

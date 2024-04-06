@@ -1,7 +1,5 @@
 package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.boiler.BoilerBlock;
-import com.railwayteam.railways.content.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
@@ -11,6 +9,9 @@ import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBog
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
@@ -138,13 +139,13 @@ public class BuilderTransformers {
             ));
     }
 
-    // not done
-    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-            .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + colorName(color) + "/tank_side"),
-                p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top")
-            ));
+                .blockstate((c, p) -> p.directionalBlock(c.get(),
+                    p.models().paneNoSide(colorName(color) + "_locometal_smokebox", p.modLoc("block/palettes/smokebox/smokebox"))
+                            .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
+                            .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
+                ));
     }
 
     public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {

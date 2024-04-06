@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler;
+package com.railwayteam.railways.content.palettes.boiler;
 
 import com.google.gson.JsonObject;
 import net.minecraftforge.client.model.generators.ModelBuilder;

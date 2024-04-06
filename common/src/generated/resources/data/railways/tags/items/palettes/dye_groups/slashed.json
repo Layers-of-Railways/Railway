@@ -3,20 +3,20 @@
   "values": [
     "railways:slashed_locometal",
     "railways:white_slashed_locometal",
+    "railways:light_gray_slashed_locometal",
+    "railways:gray_slashed_locometal",
+    "railways:black_slashed_locometal",
+    "railways:brown_slashed_locometal",
+    "railways:red_slashed_locometal",
     "railways:orange_slashed_locometal",
-    "railways:magenta_slashed_locometal",
-    "railways:light_blue_slashed_locometal",
     "railways:yellow_slashed_locometal",
     "railways:lime_slashed_locometal",
-    "railways:pink_slashed_locometal",
-    "railways:gray_slashed_locometal",
-    "railways:light_gray_slashed_locometal",
-    "railways:cyan_slashed_locometal",
-    "railways:purple_slashed_locometal",
-    "railways:blue_slashed_locometal",
-    "railways:brown_slashed_locometal",
     "railways:green_slashed_locometal",
-    "railways:red_slashed_locometal",
-    "railways:black_slashed_locometal"
+    "railways:cyan_slashed_locometal",
+    "railways:light_blue_slashed_locometal",
+    "railways:blue_slashed_locometal",
+    "railways:purple_slashed_locometal",
+    "railways:magenta_slashed_locometal",
+    "railways:pink_slashed_locometal"
   ]
 }

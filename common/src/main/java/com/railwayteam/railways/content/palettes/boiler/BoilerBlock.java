@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler;
+package com.railwayteam.railways.content.palettes.boiler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
