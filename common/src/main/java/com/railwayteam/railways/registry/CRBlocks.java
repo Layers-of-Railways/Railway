@@ -19,7 +19,6 @@ import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.DoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.LargePlatformDoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.TripleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.*;
@@ -398,8 +397,10 @@ public class CRBlocks {
             .lang("Double Axle Bogey")
             .register();
 
-    public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
+    //fixme todo Implement Datafixer for this and remove it.
+    @Deprecated
+    public static final BlockEntry<DoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
+        REGISTRATE.block("large_platform_doubleaxle_bogey", DoubleAxleBogeyBlock::new)
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.standardBogey())
             .lang("Large Platform Double Axle Bogey")

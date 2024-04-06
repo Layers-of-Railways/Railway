@@ -113,18 +113,12 @@ public class CRBogeyStyles {
         return mapped;
     }
 
-    private static final Set<BogeyStyle> SUB_LISTED_STYLES = new HashSet<>();
     private static final Map<BogeyStyle, List<BogeyStyle>> SUB_STYLES = new HashMap<>();
 
     public static void listUnder(BogeyStyle target, BogeyStyle parent) {
-        SUB_LISTED_STYLES.add(target);
         List<BogeyStyle> sub = SUB_STYLES.computeIfAbsent(parent, s -> new ArrayList<>());
         if (!sub.contains(target))
             sub.add(target);
-    }
-
-    public static boolean hideInSelectionMenu(BogeyStyle style) {
-        return SUB_LISTED_STYLES.contains(style);
     }
 
     private static final List<BogeyStyle> EMPTY = ImmutableList.of();
