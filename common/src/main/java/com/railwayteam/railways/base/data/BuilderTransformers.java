@@ -142,7 +142,7 @@ public class BuilderTransformers {
     public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
         return b -> b.transform(locoMetalBase(color, null))
                 .blockstate((c, p) -> p.directionalBlock(c.get(),
-                    p.models().paneNoSide(colorName(color) + "_locometal_smokebox", p.modLoc("block/palettes/smokebox/smokebox"))
+                    p.models().withExistingParent(colorNameUnderscore(color) + "locometal_smokebox", p.modLoc("block/palettes/smokebox/smokebox"))
                             .texture("side", p.modLoc("block/palettes/" + colorName(color) + "/tank_side"))
                             .texture("top", p.modLoc("block/palettes/" + colorName(color) + "/smokebox_tank_top"))
                 ));
@@ -165,6 +165,10 @@ public class BuilderTransformers {
 
     private static String colorName(@Nullable DyeColor color) {
         return color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    }
+
+    private static String colorNameUnderscore(@Nullable DyeColor color) {
+        return color == null ? "" : color.name().toLowerCase(Locale.ROOT) + "_";
     }
 
     @ExpectPlatform

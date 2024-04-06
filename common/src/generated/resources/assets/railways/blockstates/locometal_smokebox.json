@@ -1,28 +1,28 @@
 {
   "variants": {
     "facing=down": {
-      "model": "railways:block/netherite_locometal_smokebox",
+      "model": "railways:block/locometal_smokebox",
       "x": 180
     },
     "facing=east": {
-      "model": "railways:block/netherite_locometal_smokebox",
+      "model": "railways:block/locometal_smokebox",
       "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "railways:block/netherite_locometal_smokebox",
+      "model": "railways:block/locometal_smokebox",
       "x": 90
     },
     "facing=south": {
-      "model": "railways:block/netherite_locometal_smokebox",
+      "model": "railways:block/locometal_smokebox",
       "x": 90,
       "y": 180
     },
     "facing=up": {
-      "model": "railways:block/netherite_locometal_smokebox"
+      "model": "railways:block/locometal_smokebox"
     },
     "facing=west": {
-      "model": "railways:block/netherite_locometal_smokebox",
+      "model": "railways:block/locometal_smokebox",
       "x": 90,
       "y": 270
     }
