@@ -6,34 +6,58 @@ Adding a custom type is quite simple - just set up a basic datapack (more inform
 
 ## JSON Specification
 
-| Key          | Value Type   | Default Value | Description                                                                                                                                                                     |
-|--------------|--------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `fluids`     | string array | N/A           | Each string represents the namespaced identifier of an fluid that will have this type applied to it.                                                                            |
-| `fuel_ticks` | integer      | `40`          | The amount of ticks of fuel time this the fluids above add to the timer, based on one tenth of a bucket, 100mb = 40 ticks by default (for context: 50 ticks is the default for lava buckets) |
+| Key           | Value Type   | Default Value | Description                                                                                                                                                                                  |
+|---------------|--------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `fluids`      | string array | N/A           | Each string represents the namespaced identifier of an fluid or tag that holds fluids that will have this type applied to it.                                                                |     
+| `fuel_ticks`  | integer      | `40`          | The amount of ticks of fuel time this the fluids above add to the timer, based on one tenth of a bucket, 100mb = 40 ticks by default (for context: 50 ticks is the default for lava buckets) |
+| `invalid` | boolean      | `false`       | Should this fluid type be marked as invalid and removed as a fuel type.                                                                                                                      |
 
 ## Other Information
+The `fluids` array can contain either fluid id's `minecraft:water` or fluid tag id's `#c:water`.
 
-Custom types will always override builtin types (types added through code) but behavior is undefined if multiple custom types define the same fluid. In the future, custom types defining the same fluid will override each other in alphabetical order.
+Custom types will always override builtin types (types added through code),
+but behavior is undefined if multiple custom types define the same fluid.
+In the future, custom types defining the same fluid will override each other in alphabetical order.
 
 ## Examples
 
 `data/example/railways_liquid_fuel/biofuel.json`
 ```json
 {
-  "items": [
+  "fluids": [
     "createaddition:bioethanol",
     "garnished:peanut_oil"
   ],
-  "fuel_ticks": 10,
+  "fuel_ticks": 10
 }
 ```
 
 `data/example/railways_liquid_fuel/steam.json`
 ```json
 {
-  "items": [
+  "fluids": [
     "mekanism:steam"
   ],
-  "fuel_ticks": 20,
+  "fuel_ticks": 20
+}
+```
+
+`data/example/railways_liquid_fuel/water.json`
+```json
+{
+  "fluids": [
+    "#c:water"
+  ],
+  "fuel_ticks": 20
+}
+```
+
+`data/example/railways_liquid_fuel/remove_lava.json`
+```json
+{
+  "fluids": [
+    "minecraft:lava"
+  ],
+  "invalid": true
 }
 ```

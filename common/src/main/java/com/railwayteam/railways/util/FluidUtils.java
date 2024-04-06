@@ -5,17 +5,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 
 public class FluidUtils {
-    /**
-     * All isFuel checks for anything else should go through this.
-     * @return true if it is a valid fuel item, false if it isn't
-     */
     @ExpectPlatform
-    public static boolean isFuel(Fluid fluid) {
+    public static boolean canUseAsFuelStorage(BlockEntity be) {
         throw new AssertionError();
     }
 
+    /**
+     * @param o Either a FluidStack (forge & fabric) or FluidVariant (fabric)
+     * @return The fluid
+     * @throws IllegalArgumentException If any object that isn't an instance of FluidStack or FluidVariant is passed.
+     */
     @ExpectPlatform
-    public static boolean canUseAsFuelStorage(BlockEntity be) {
+    public static Fluid getFluid(Object o) {
         throw new AssertionError();
     }
 }

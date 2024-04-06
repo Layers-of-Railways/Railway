@@ -1,10 +1,7 @@
 package com.railwayteam.railways.content.fuel.forge;
 
-import com.railwayteam.railways.content.fuel.LiquidFuelManager;
-import com.railwayteam.railways.content.fuel.LiquidFuelType;
+import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -13,18 +10,10 @@ public class LiquidFuelTrainHandlerImpl {
         for (int tanks = 0; tanks < fuelFluids.getTanks(); tanks++) {
             FluidStack fluidStack = fuelFluids.drain(100, IFluidHandler.FluidAction.SIMULATE);
 
-            int burnTime;
-            Fluid fluid = fluidStack.getFluid();
-            LiquidFuelType fuelType = LiquidFuelManager.getTypeForFluid(fluid);
-            if (fuelType != null) {
-                burnTime = fuelType.getFuelTicks();
-            } else {
-                int bucketBurnTime = ForgeHooks.getBurnTime(fluid.getBucket().getDefaultInstance(), null);
+            if (fluidStack.getAmount() != 100)
+                continue;
 
-                // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
-                // so it isn't so strong
-                burnTime = (bucketBurnTime / 100) / 4;
-            }
+            int burnTime = LiquidFuelTrainHandler.handleFuelChecking(fluidStack);
 
             if (burnTime <= 0)
                 continue;

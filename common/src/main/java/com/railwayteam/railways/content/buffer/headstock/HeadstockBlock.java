@@ -64,15 +64,6 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
         IBE.onRemove(state, worldIn, pos, newState);
     }
 
-    @Override
-    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-        if (targetedFace.getAxis().isVertical()) {
-            return IWrenchable.super.getRotatedBlockState(originalState, targetedFace);
-        } else {
-            return originalState.cycle(STYLE);
-        }
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
