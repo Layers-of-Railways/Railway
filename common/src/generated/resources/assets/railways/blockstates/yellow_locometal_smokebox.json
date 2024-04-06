@@ -1,16 +1,30 @@
 {
   "variants": {
-    "axis=x": {
+    "facing=down": {
+      "model": "railways:block/yellow_locometal_smokebox",
+      "x": 180
+    },
+    "facing=east": {
       "model": "railways:block/yellow_locometal_smokebox_horizontal",
       "x": 90,
       "y": 90
     },
-    "axis=y": {
-      "model": "railways:block/yellow_locometal_smokebox"
-    },
-    "axis=z": {
+    "facing=north": {
       "model": "railways:block/yellow_locometal_smokebox_horizontal",
       "x": 90
+    },
+    "facing=south": {
+      "model": "railways:block/yellow_locometal_smokebox_horizontal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "railways:block/yellow_locometal_smokebox"
+    },
+    "facing=west": {
+      "model": "railways:block/yellow_locometal_smokebox_horizontal",
+      "x": 90,
+      "y": 270
     }
   }
 }

@@ -6,6 +6,7 @@ import com.mojang.datafixers.schemas.Schema;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
 import com.railwayteam.railways.base.datafixers.CompatCherryTrackFix;
+import com.railwayteam.railways.base.datafixers.LocoMetalSmokeboxFacingFix;
 import com.railwayteam.railways.base.datafixers.StreamlinedSmokeStackFacingFix;
 import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
 import com.railwayteam.railways.config.CRConfigs;
@@ -47,10 +48,14 @@ public class CRDataFixers {
         // For v1, need to upgrade railways:mono_bogey_upside_down to railways:mono_bogey[upside_down=true]
         Schema schemaV1 = builder.addSchema(1, SAME_NAMESPACED);
         builder.addFixer(new UpsideDownMonoBogeyFix(schemaV1, "Merge railways:mono_bogey_upside_down into railways:mono_bogey[upside_down=true]"));
-        // For v2, need to upgrade BOP & Blueskies cherry compat tracks to railways:track_cherry[_narrow||_wide]
+
+        // For v2,
+        // need to upgrade BOP & Blueskies cherry compat tracks to railways:track_cherry[_narrow||_wide]
         // and need to change the streamlined smokestack's AXIS property to a HORIZONTAL_FACING property
+        // and need to change the locometal smokebox's AXIS property to a FACING property
         Schema schemaV2 = builder.addSchema(2, SAME_NAMESPACED);
         builder.addFixer(new CompatCherryTrackFix(schemaV2, "Convert Compat Cherry Tracks to Default Cherry Tracks"));
         builder.addFixer(new StreamlinedSmokeStackFacingFix(schemaV2, "Convert railways:smokestack_streamlined[axis=\"*\"] to railways:smokestack_streamlined[facing=\"*\"]"));
+        builder.addFixer(new LocoMetalSmokeboxFacingFix(schemaV2, "Convert railways:${*}_locometal_smokebox[axis=\"*\"] to railways:${*}_locometal_smokebox[facing=\"*\"]"));
     }
 }

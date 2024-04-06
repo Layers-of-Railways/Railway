@@ -3,20 +3,20 @@
   "values": [
     "railways:iron_wrapped_locometal",
     "railways:white_iron_wrapped_locometal",
+    "railways:light_gray_iron_wrapped_locometal",
+    "railways:gray_iron_wrapped_locometal",
+    "railways:black_iron_wrapped_locometal",
+    "railways:brown_iron_wrapped_locometal",
+    "railways:red_iron_wrapped_locometal",
     "railways:orange_iron_wrapped_locometal",
-    "railways:magenta_iron_wrapped_locometal",
-    "railways:light_blue_iron_wrapped_locometal",
     "railways:yellow_iron_wrapped_locometal",
     "railways:lime_iron_wrapped_locometal",
-    "railways:pink_iron_wrapped_locometal",
-    "railways:gray_iron_wrapped_locometal",
-    "railways:light_gray_iron_wrapped_locometal",
-    "railways:cyan_iron_wrapped_locometal",
-    "railways:purple_iron_wrapped_locometal",
-    "railways:blue_iron_wrapped_locometal",
-    "railways:brown_iron_wrapped_locometal",
     "railways:green_iron_wrapped_locometal",
-    "railways:red_iron_wrapped_locometal",
-    "railways:black_iron_wrapped_locometal"
+    "railways:cyan_iron_wrapped_locometal",
+    "railways:light_blue_iron_wrapped_locometal",
+    "railways:blue_iron_wrapped_locometal",
+    "railways:purple_iron_wrapped_locometal",
+    "railways:magenta_iron_wrapped_locometal",
+    "railways:pink_iron_wrapped_locometal"
   ]
 }
