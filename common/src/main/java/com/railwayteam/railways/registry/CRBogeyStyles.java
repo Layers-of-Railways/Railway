@@ -350,7 +350,7 @@ public class CRBogeyStyles {
 
         // Standard Category
         addToCategory(STANDARD_CATEGORY, INVISIBLE);
-        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 18);
+        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 17);
         addToCategory(STANDARD_CATEGORY, STANDARD);
         addToCategory(STANDARD_CATEGORY, NARROW_DOUBLE_SCOTCH);
 
@@ -373,24 +373,24 @@ public class CRBogeyStyles {
         addToCategory(DOUBLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_4_0);
 
         // Triple Axle Category
-        addToCategory(TRIPLEAXLE_CATEGORY, HEAVYWEIGHT);
-        addToCategory(TRIPLEAXLE_CATEGORY, RADIAL);
-        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TRAILING);
-        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TENDER);
-        addToCategory(TRIPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_6_0);
+        addToCategory(TRIPLEAXLE_CATEGORY, HEAVYWEIGHT, 20);
+        addToCategory(TRIPLEAXLE_CATEGORY, RADIAL, 20);
+        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TRAILING, 20);
+        addToCategory(TRIPLEAXLE_CATEGORY, MEDIUM_6_0_6_TENDER, 20);
+        addToCategory(TRIPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_6_0, 20);
 
         // Quadruple Axle Category
-        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_QUADRUPLE_WHEEL);
-        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_8_0_8_TENDER);
-        addToCategory(QUADRUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_8_0);
+        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_QUADRUPLE_WHEEL, 19);
+        addToCategory(QUADRUPLEAXLE_CATEGORY, MEDIUM_8_0_8_TENDER, 19);
+        addToCategory(QUADRUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_8_0, 17);
 
         // Quintuple Axle Category
-        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_QUINTUPLE_WHEEL);
-        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_10_0_10_TENDER);
-        addToCategory(QUINTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_10_0);
+        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_QUINTUPLE_WHEEL, 17);
+        addToCategory(QUINTUPLEAXLE_CATEGORY, MEDIUM_10_0_10_TENDER, 17);
+        addToCategory(QUINTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_10_0, 15);
 
         // Sextuple Axle Category
-        addToCategory(SEXTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_12_0);
+        addToCategory(SEXTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_12_0, 13);
 
         if (Utils.isDevEnv()) {
             CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MODID, "all_test");
