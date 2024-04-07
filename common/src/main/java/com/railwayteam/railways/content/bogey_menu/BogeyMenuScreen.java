@@ -107,8 +107,11 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     this.categoryIndex = categoryIndex;
                     setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
 
-                    if (!selectedCategory.getBogeyEntryList().isEmpty())
+                    if (!selectedCategory.getBogeyEntryList().isEmpty()) {
                         selectedBogey = selectedCategory.getBogeyEntryList().get(0);
+                    } else {
+                        selectedBogey = null;
+                    }
                 });
 
         addRenderableWidget(categoryLabel);
