@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.custom_tracks.phantom;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleSpriteContents;
 import com.railwayteam.railways.registry.CRTags;
 import net.minecraft.client.Minecraft;
@@ -34,6 +35,7 @@ public abstract class PhantomSpriteManager {
         return false;
     }
 
+    @MultiLoaderEvent
     public static void tick(Minecraft mc) {
         visible = mc.player != null
             && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())

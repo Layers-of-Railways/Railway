@@ -1,6 +1,7 @@
 package com.railwayteam.railways.content.cycle_menu;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,6 +38,7 @@ public class TagCycleHandlerServer {
         }
     }
 
+    @MultiLoaderEvent
     public static void onTagsUpdated() {
         CYCLE_TRACKER.scheduleRecompute();
     }

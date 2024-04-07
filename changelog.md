@@ -22,6 +22,8 @@ Additions
 - Fuel Interfaces
 - Liquid Fuel System (liquid fuel can power trains)
 - Tag to disable items from being used as train fuel
+- Medium Standard, Single Wheel, Triple Wheel, Quadruple Wheel, Quintuple Wheel, 2-0-2 Trailing, 4-0-4 Trailing, 6-0-6 Trailing, 6-0-6 Tender, 8-0-8 Tender, 10-0-10 Tender Bogies
+- Large Create Styled 0-4-0, 0-6-0, 0-8-0, 0-10-0, 0-12-0 Bogies
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction

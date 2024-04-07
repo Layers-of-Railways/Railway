@@ -15,6 +15,10 @@ import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBl
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.AbstractMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;

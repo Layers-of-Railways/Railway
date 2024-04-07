@@ -11,7 +11,7 @@ import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.bogey_menu.components.BogeyMenuButton;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
-import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRGuiTextures;
 import com.railwayteam.railways.registry.CRIcons;
 import com.railwayteam.railways.registry.CRPackets;
@@ -90,6 +90,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Initial setup
         setupList(selectedCategory);
+        selectedBogey = selectedCategory.getBogeyEntryList().get(0);
 
         // Scrolling Initial setup
         scrollOffs = 0;
@@ -106,6 +107,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                     scrollTo(0.0F);
                     this.categoryIndex = categoryIndex;
                     setupList(selectedCategory = BogeyMenuManagerImpl.CATEGORIES.get(categoryIndex));
+
+                    if (!selectedCategory.getBogeyEntryList().isEmpty()) {
+                        selectedBogey = selectedCategory.getBogeyEntryList().get(0);
+                    } else {
+                        selectedBogey = null;
+                    }
                 });
 
         addRenderableWidget(categoryLabel);
@@ -147,10 +154,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render Background
         background.render(guiGraphics, x, y, 512, 512);
-
-        //fixme temp
-        //hide favorite button
-        //CRGuiTextures.BOGEY_MENU_DISABLED_FAVORITE_TEMP.render(guiGraphics, x + 111, y + 134, 512, 512);
 
         // Header (Bogey Preview Text) START
         MutableComponent header = Component.translatable("railways.gui.bogey_menu.title");

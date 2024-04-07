@@ -1,0 +1,9 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/large/wheels/full_blind_wheels.obj",
+  "textures": {
+    "0": "create:block/bogey/wheel"
+  }
+}

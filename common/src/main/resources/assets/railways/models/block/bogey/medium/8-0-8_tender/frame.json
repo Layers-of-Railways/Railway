@@ -1,0 +1,13 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/medium/8-0-8_tender/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/standard/medium/shared/tender_bogey_outer",
+    "1": "railways:block/bogeys/standard/medium/shared/trailing_bogey_outer",
+    "2": "railways:block/bogeys/standard/shared/trailing_bogey_base",
+    "3": "railways:block/bogeys/standard/shared/frame",
+    "4": "railways:block/bogeys/standard/medium/shared/trailing_bogey_base2"
+  }
+}

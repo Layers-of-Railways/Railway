@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin;
 
-import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.foundation.utility.Couple;

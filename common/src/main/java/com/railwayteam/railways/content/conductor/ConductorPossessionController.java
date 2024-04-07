@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.conductor;
 
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tweakeroo.TweakerooCompat;
 import com.railwayteam.railways.registry.CRPackets;
@@ -43,7 +44,8 @@ public class ConductorPossessionController {
 
     private static int ticksSincePacket = 0;
     private static int positionReminder = 0;
-    
+
+    @MultiLoaderEvent
     @SuppressWarnings("AssignmentUsedAsCondition") // we are doing this intentionally
     @Environment(EnvType.CLIENT)
     public static void onClientTick(Minecraft mc, boolean start) {
