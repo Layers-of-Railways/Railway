@@ -9,6 +9,7 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
+import com.railwayteam.railways.mixin_interfaces.IBufferBlockCheckableNavigation;
 import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
 import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
@@ -215,9 +216,22 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
     private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
-                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeed) {
-        if (((IBufferBlockedTrain) carriage.train).railways$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).railways$getBlockedSign() == Mth.sign(targetSpeed.get())) {
-            targetSpeed.set(0);
+                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeedRef) {
+        double targetSpeed = targetSpeedRef.get();
+        if (targetSpeed == 0) return;
+
+        IBufferBlockedTrain bufferBlockedTrain = (IBufferBlockedTrain) carriage.train;
+
+        // The control blocked update in Navigation assumes the train is going forward if it is stationary, so we need an extra check here
+        if (!bufferBlockedTrain.railways$isControlBlocked() && bufferBlockedTrain.railways$getBlockedSign() == 0 && targetSpeed < 0) {
+            ((IBufferBlockCheckableNavigation) carriage.train.navigation).railways$updateControlsBlock(true);
+        }
+
+        if (bufferBlockedTrain.railways$isControlBlocked()) {
+            double blockedSign = bufferBlockedTrain.railways$getBlockedSign();
+            if (blockedSign == 0 || blockedSign == Mth.sign(targetSpeed)) {
+                targetSpeedRef.set(0);
+            }
         }
     }
 }

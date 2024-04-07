@@ -48,7 +48,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.*;
 
 @Mixin(value = Navigation.class, remap = false)
-public abstract class MixinNavigation implements IWaypointableNavigation, IGenerallySearchableNavigation {
+public abstract class MixinNavigation implements IWaypointableNavigation, IGenerallySearchableNavigation, IBufferBlockCheckableNavigation {
 
     @Shadow
     public Train train;
@@ -405,14 +405,23 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void respectBuffersWithoutSchedule(Level level, CallbackInfo ci) {
+        railways$updateControlsBlockInternal(false, false);
+    }
+
+    @Unique
+    public void railways$updateControlsBlock(boolean forceBackwards) {
+        railways$updateControlsBlockInternal(true, forceBackwards);
+    }
+
+    @Unique
+    private void railways$updateControlsBlockInternal(boolean simulate, boolean forceBackwards) {
         ((IBufferBlockedTrain) train).railways$setControlBlocked(false);
         if (destination == null) {
             double acceleration = train.acceleration();
             double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
-            boolean currentlyBackwards = train.speed < 0;
+            boolean currentlyBackwards = train.speed < 0 || forceBackwards;
             double speedMod = currentlyBackwards ? -1 : 1;
             double preDepartureLookAhead = train.getCurrentStation() != null ? 4.5 : 0;
-            double distanceToNextCurve = -1;
 
             if (train.graph == null) return;
 
@@ -459,10 +468,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             if (targetDistance < 3)
                 ((IBufferBlockedTrain) train).railways$setControlBlocked(true);
 
+            if (simulate)
+                return;
+
             if (targetDistance < 10) {
                 double target = train.maxSpeed() * ((targetDistance) / 10);
                 if (target < Math.abs(train.speed)) {
-                    train.speed += (target - Math.abs(train.speed)) * .5f * speedMod;
+                    train.speed += (target - Math.abs(train.speed)) * .5f * Math.signum(train.speed);
                     return;
                 }
             }
