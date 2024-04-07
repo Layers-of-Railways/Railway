@@ -111,7 +111,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        boolean raised = context.getPlayer() != null && context.getPlayer().isCrouching();
+        boolean raised = context.getPlayer() != null && context.getPlayer().isShiftKeyDown();
         Axis axis = context.getClickedFace().getAxis();
         if (axis == Axis.Y)
             axis = context.getHorizontalDirection().getAxis();
@@ -246,8 +246,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
 
         @Override
         public Predicate<ItemStack> getItemPredicate() {
-            return i -> i.getItem() instanceof BlockItem
-                    && ((BlockItem) i.getItem()).getBlock() instanceof BoilerBlock;
+            return i -> i.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof BoilerBlock;
         }
 
         @Override

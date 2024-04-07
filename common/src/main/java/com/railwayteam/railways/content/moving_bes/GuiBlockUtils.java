@@ -19,6 +19,7 @@ public class GuiBlockUtils {
     }
 
     // Called Via ASM, do not remove
+    @SuppressWarnings("unused")
     @Nullable
     public static GuiBlockLevelAccess createNewGuiContraptionWorld(Level level) {
         if (level instanceof GuiBlockContraptionWorld guiBlockContraptionWorld) {

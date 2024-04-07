@@ -24,6 +24,10 @@ public enum CRGuiTextures implements ScreenElement {
     TRAIN_HUD_SWITCH_STRAIGHT_WRONG("widgets", 13, 45, 10, 10),
     TRAIN_HUD_SWITCH_RIGHT_WRONG("widgets", 25, 45, 10, 10),
     TRAIN_HUD_SWITCH_LOCKED("widgets", 37, 45, 10, 10),
+
+    BOGEY_MENU("bogeymenu", 279, 184),
+    BOGEY_MENU_SCROLL_BAR("bogeymenu", 280, 0, 8, 16),
+    BOGEY_MENU_SCROLL_BAR_DISABLED("bogeymenu", 288, 0, 8, 16),
     ;
 
     public static final int FONT_COLOR = 0x575F7A;
@@ -32,15 +36,15 @@ public enum CRGuiTextures implements ScreenElement {
     public final int width, height;
     public final int startX, startY;
 
-    private CRGuiTextures(String location, int width, int height) {
+    CRGuiTextures(String location, int width, int height) {
         this(location, 0, 0, width, height);
     }
 
-    private CRGuiTextures(int startX, int startY) {
+    CRGuiTextures(int startX, int startY) {
         this("icons", startX * 16, startY * 16, 16, 16);
     }
 
-    private CRGuiTextures(String location, int startX, int startY, int width, int height) {
+    CRGuiTextures(String location, int startX, int startY, int width, int height) {
         this(Railways.MODID, location, startX, startY, width, height);
     }
 
@@ -76,6 +80,11 @@ public enum CRGuiTextures implements ScreenElement {
     @Environment(EnvType.CLIENT)
     public void render(GuiGraphics graphics, int x, int y) {
         graphics.blit(location, x, y, startX, startY, width, height);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void render(GuiGraphics graphics, int x, int y, int textureWidth, int textureHeight) {
+        graphics.blit(location, x, y, startX, startY, width, height, textureWidth, textureHeight);
     }
 
     @Environment(EnvType.CLIENT)

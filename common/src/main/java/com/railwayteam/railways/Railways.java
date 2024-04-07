@@ -37,7 +37,9 @@ import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
-  public static final Logger LOGGER = LoggerFactory.getLogger("Railways");
+  public static final String ID_NAME = "Railways";
+  public static final String NAME = "Steam 'n' Rails";
+  public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
   public static final String VERSION = findVersion();
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;

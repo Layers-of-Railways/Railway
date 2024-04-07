@@ -2,8 +2,8 @@ package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.content.qol.TrackEdgePointHighlighter;
@@ -39,7 +39,7 @@ public class ClientEvents {
         }
 
         if (isGameActive()) {
-            BogeyCategoryHandlerClient.clientTick();
+            BogeyMenuEventsHandler.clientTick();
             TagCycleHandlerClient.clientTick();
             ConductorPossessionController.onClientTick(mc, true);
             TrackEdgePointHighlighter.clientTick(mc);
@@ -64,7 +64,7 @@ public class ClientEvents {
     public static void onKeyInput(int key, boolean pressed) {
         if (Minecraft.getInstance().screen != null)
             return;
-        BogeyCategoryHandlerClient.onKeyInput(key, pressed);
+        BogeyMenuEventsHandler.onKeyInput(key, pressed);
         if (Minecraft.getInstance().screen != null)
             return;
         TagCycleHandlerClient.onKeyInput(key, pressed);

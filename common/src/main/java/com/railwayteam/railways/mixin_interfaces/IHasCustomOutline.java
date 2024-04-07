@@ -7,7 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Implemented was inspired/derived from <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/src/main/java/xfacthd/framedblocks/api/render/OutlineRenderer.java">Framed Blocks</a>
+ * Implementation was inspired/derived from <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/src/main/java/xfacthd/framedblocks/api/render/OutlineRenderer.java">Framed Blocks</a>
  * <p>
  * Which is licensed under <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/LICENSE">LGPL</a>
  */

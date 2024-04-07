@@ -2,8 +2,8 @@ package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.compat.Mods;
-import com.railwayteam.railways.content.custom_bogeys.CategoryIcon;
+import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
+import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyRenderer;
@@ -20,7 +20,9 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.standard.tr
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideComicallyLargeScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideDefaultBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.gauge.wide.WideScotchYokeBogeyRenderer;
+import com.railwayteam.railways.impl.bogeymenu.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.Create;
@@ -31,16 +33,23 @@ import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
 
-import static com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient.registerStyleCategory;
+import static com.simibubi.create.AllBogeyStyles.STANDARD;
 import static com.simibubi.create.AllBogeyStyles.STANDARD_CYCLE_GROUP;
 
 public class CRBogeyStyles {
+    public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
+    public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
+    public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
+
+    public static final CategoryEntry STANDARD_CATEGORY = registerCategory(Create.ID, STANDARD_CYCLE_GROUP);
+    public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(Railways.MODID, SINGLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry DOUBLEAXLE_CATEGORY = registerCategory(Railways.MODID, DOUBLEAXLE_CYCLE_GROUP);
+    public static final CategoryEntry TRIPLEAXLE_CATEGORY = registerCategory(Railways.MODID, TRIPLEAXLE_CYCLE_GROUP);
 
     private static final Map<Pair<BogeyStyle, TrackType>, BogeyStyle> STYLES_FOR_GAUGES = new HashMap<>();
     private static final Map<BogeyStyle, BogeyStyle> STYLES_TO_STANDARD_GAUGE = new HashMap<>();
@@ -134,10 +143,6 @@ public class CRBogeyStyles {
         .contactParticle(new CubeParticleData())
         .build();
 
-    public static final String SINGLEAXLE_CYCLE_GROUP = "singleaxles";
-    public static final String DOUBLEAXLE_CYCLE_GROUP = "doubleaxles";
-    public static final String TRIPLEAXLE_CYCLE_GROUP = "tripleaxles";
-
     // Single Axles
     public static final BogeyStyle
         SINGLEAXLE = create("singleaxle", SINGLEAXLE_CYCLE_GROUP)
@@ -224,8 +229,32 @@ public class CRBogeyStyles {
         return new AllBogeyStyles.BogeyStyleBuilder(name, cycleGroup);
     }
 
+    public static CategoryEntry registerCategory(String modid, String name) {
+        Component categoryName = Component.translatable(modid + ".gui.bogey_menu.category." + name);
+        ResourceLocation categoryId = new ResourceLocation(modid, "bogey_menu/category/" + name);
+
+        return BogeyMenuManager.INSTANCE.registerCategory(categoryName, categoryId);
+    }
+
+    private static void addToCategory(CategoryEntry category, BogeyStyle style) {
+        addToCategory(category, style, BogeyMenuManagerImpl.defaultScale);
+    }
+
+    private static void addToCategory(CategoryEntry category, BogeyStyle style, float scale) {
+        String bogeyName = style.name.getPath();
+        if (style == STANDARD) bogeyName = "default";
+        ResourceLocation icon = Railways.asResource("textures/gui/bogey_icons/" + bogeyName + "_icon.png");
+
+        BogeyMenuManager.INSTANCE.addToCategory(category, style, icon, scale);
+    }
+
+    private static void setScalesForSizes(BogeyStyle style, BogeySizes.BogeySize size, float scale) {
+        BogeyMenuManager.INSTANCE.setScalesForBogeySizes(style, size, scale);
+    }
+
     public static void register() {
         Railways.LOGGER.info("Registered bogey styles from " + Railways.MODID);
+
         map(AllBogeyStyles.STANDARD, CRTrackType.WIDE_GAUGE, WIDE_DEFAULT);
         map(AllBogeyStyles.STANDARD, CRTrackType.NARROW_GAUGE, NARROW_DEFAULT);
         mapReverse(NARROW_DOUBLE_SCOTCH, AllBogeyStyles.STANDARD);
@@ -233,16 +262,39 @@ public class CRBogeyStyles {
 
         listUnder(WIDE_DEFAULT, AllBogeyStyles.STANDARD);
         listUnder(NARROW_DEFAULT, AllBogeyStyles.STANDARD);
-    }
 
-    @Environment(EnvType.CLIENT)
-    public static void registerClient() {
-        registerStyleCategory(Create.asResource(STANDARD_CYCLE_GROUP), CategoryIcon.standardSupplier("default_icon"));
-        registerStyleCategory(SINGLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("singleaxle_icon"));
-        registerStyleCategory(DOUBLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("freight_icon"));
-        registerStyleCategory(TRIPLEAXLE_CYCLE_GROUP, CategoryIcon.standardSupplier("radial_icon"));
-        if (Mods.EXTENDEDBOGEYS.isLoaded) {
-            registerStyleCategory("extendedbogeys", CategoryIcon.standardSupplier("eb_triple_axle_icon"));
+        // Set scale's for BogeySize's
+        setScalesForSizes(WIDE_DEFAULT, BogeySizes.SMALL, 20);
+
+        // Standard Category
+        addToCategory(STANDARD_CATEGORY, INVISIBLE);
+        addToCategory(STANDARD_CATEGORY, WIDE_COMICALLY_LARGE, 18);
+        addToCategory(STANDARD_CATEGORY, STANDARD);
+        addToCategory(STANDARD_CATEGORY, NARROW_DOUBLE_SCOTCH);
+
+        // Single Axle Category
+        addToCategory(SINGLEAXLE_CATEGORY, SINGLEAXLE);
+        addToCategory(SINGLEAXLE_CATEGORY, COILSPRING);
+        addToCategory(SINGLEAXLE_CATEGORY, LEAFSPRING);
+
+        // Double Axle Category
+        addToCategory(DOUBLEAXLE_CATEGORY, MODERN);
+        addToCategory(DOUBLEAXLE_CATEGORY, BLOMBERG);
+        addToCategory(DOUBLEAXLE_CATEGORY, Y25);
+        addToCategory(DOUBLEAXLE_CATEGORY, FREIGHT);
+        addToCategory(DOUBLEAXLE_CATEGORY, PASSENGER);
+        addToCategory(DOUBLEAXLE_CATEGORY, ARCHBAR);
+
+        // Triple Axle Category
+        addToCategory(TRIPLEAXLE_CATEGORY, HEAVYWEIGHT);
+        addToCategory(TRIPLEAXLE_CATEGORY, RADIAL);
+
+        if (Utils.isDevEnv()) {
+            CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MODID, "all_test");
+            for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
+                if (hideInSelectionMenu(style)) continue;
+                addToCategory(ALL_TEST_CATEGORY, style);
+            }
         }
     }
 }

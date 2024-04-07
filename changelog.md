@@ -41,6 +41,7 @@ Changes
 - Creeper explosions and Ghast Fireballs no longer break tracks
 - Remastered Monobogeys, Single Axle, Double Axle and Triple Axle Bogies
 - Removed optifine warning screen
+- New Bogey Menu for selecting bogies
 
 Fixes
 - Mixin conflict with VS2

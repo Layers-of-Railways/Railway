@@ -49,29 +49,20 @@ import java.util.*;
 @Mixin(value = Train.class, remap = false)
 public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement {
     @Shadow public TrackGraph graph;
-
     @Shadow public Navigation navigation;
-
     @Shadow public abstract void arriveAt(GlobalStation station);
-
-
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
     @Shadow public double speed;
     @Shadow public int fuelTicks;
     @Shadow public Player backwardsDriver;
-    @Unique
-    public Set<UUID> railways$occupiedCouplers;
-    @Unique
-    protected int railways$index = 0;
-    @Unique
-    protected boolean railways$isHandcar = false;
-    @Unique
-    protected boolean railways$isStrictSignalTrain = false;
-    @Unique
-    protected int railways$controlBlockedTicks = -1;
-    @Unique
-    protected int railways$controlBlockedSign = 0;
+
+    @Unique public Set<UUID> railways$occupiedCouplers;
+    @Unique protected int railways$index = 0;
+    @Unique protected boolean railways$isHandcar = false;
+    @Unique protected boolean railways$isStrictSignalTrain = false;
+    @Unique protected int railways$controlBlockedTicks = -1;
+    @Unique protected int railways$controlBlockedSign = 0;
 
     @Override
     public boolean railways$isControlBlocked() {

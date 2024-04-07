@@ -31,6 +31,7 @@ public class RailwaysClient {
 
     CRPonderIndex.register();
 
+    CRKeys.register();
     CRBlockPartials.init();
 
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
@@ -39,7 +40,6 @@ public class RailwaysClient {
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
 
     CRDevCaps.register();
-    CRBogeyStyles.registerClient();
     BufferModelUtils.register();
 
     DevCapeUtils.INSTANCE.init();
