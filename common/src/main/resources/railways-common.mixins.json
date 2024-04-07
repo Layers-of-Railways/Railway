@@ -120,6 +120,7 @@
     "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
     "client.MixinDebugRenderer",
+    "client.MixinGameRenderer",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
     "client.MixinLevelRenderer",
