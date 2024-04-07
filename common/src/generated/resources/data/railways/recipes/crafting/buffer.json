@@ -10,13 +10,10 @@
     },
     ">": {
       "tag": "railways:wooden_headstocks"
-    },
-    "_": {
-      "tag": "minecraft:wooden_slabs"
     }
   },
   "pattern": [
-    ">_>",
+    ">>>",
     "===",
     "# #"
   ],

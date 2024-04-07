@@ -21,8 +21,9 @@ public class LiquidFuelType {
     private final List<Supplier<TagKey<Fluid>>> fluidTags = new ArrayList<>();
 
     private int fuelTicks = 40;
+    private boolean invalid = false;
 
-    public LiquidFuelType() {}
+    public LiquidFuelType() { }
 
     public List<Supplier<Fluid>> getFluids() {
         return fluids;
@@ -34,6 +35,10 @@ public class LiquidFuelType {
 
     public int getFuelTicks() {
         return fuelTicks;
+    }
+
+    public boolean getInvalid() {
+        return invalid;
     }
 
     public static LiquidFuelType fromJson(JsonObject object) {
@@ -68,6 +73,7 @@ public class LiquidFuelType {
             }
 
             parseJsonPrimitive(object, "fuel_ticks", JsonPrimitive::isNumber, primitive -> type.fuelTicks = primitive.getAsInt());
+            parseJsonPrimitive(object, "invalid", JsonPrimitive::isBoolean, primitive -> type.invalid = primitive.getAsBoolean());
         } catch (Exception ignored) {}
 
         return type;

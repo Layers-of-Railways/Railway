@@ -14,6 +14,8 @@ Additions
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
 - Buffer blocks
+- Headstocks
+- Decorative Couplers
 - Crafting tables work on trains
 - Hovering over a track-related block (couplers, signals, stations, etc.) with a wrench will highlight the track it is bound to and vice versa
 - Fuel Tanks
@@ -41,6 +43,7 @@ Changes
 - Creeper explosions and Ghast Fireballs no longer break tracks
 - Remastered Monobogeys, Single Axle, Double Axle and Triple Axle Bogies
 - Removed optifine warning screen
+- New model for brass switch
 
 Fixes
 - Mixin conflict with VS2
