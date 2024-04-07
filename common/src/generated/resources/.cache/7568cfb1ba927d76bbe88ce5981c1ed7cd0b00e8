@@ -1,4 +1,4 @@
-// 1.19.2	2024-04-06T18:51:16.134517892	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-04-07T12:17:35.113971613	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 49895c50bb9ff7ecb89153ff98b3f0fc5097a3cf assets/railways/models/block/track/compat/blue_skies/starlit/diag.json
 3d62ae4bfcb5ca63cd6568c0a4ef4989cf08ddc6 assets/railways/models/block/track/compat/biomesoplenty/umbran/cross_ortho.json
 d7467241e8db763684674e0d86882686535cd3da assets/railways/models/block/track/compat/byg/holly_narrow/cross_d1_xo.json
@@ -4603,7 +4603,7 @@ a548987c87784a10f13e2b74c4bf8ae586c9fdc0 assets/railways/models/block/purple_cop
 8df3c4221f636a711c90be398da7d20ee203d4ec assets/railways/models/block/track/compat/byg/aspen_narrow/z_ortho.json
 a7aeef7765a94d64d30ef2210ef160c475f8a593 assets/railways/models/block/track/compat/blue_skies/cherry_narrow/cross_diag.json
 575a3869d89518b456baf15966fec59c3ef4866b data/railways/loot_tables/blocks/track_twilightforest_twilight_oak_narrow.json
-6a0f5c41dfc31a059b1d384fa3f61c54fbf57483 assets/railways/lang/en_us.json
+86ccffb2395611b10fdb9e7cc228fa2a008a8c00 assets/railways/lang/en_us.json
 29bed873d684aa7c9ffd270db1ffad211f95e27c data/railways/loot_tables/blocks/track_byg_imparius.json
 e3302e8f1b79fcf0cec8212a1489be1a97f9715a assets/railways/models/block/track/compat/quark/ancient_wide/teleport.json
 c4b31736e10318f54e5749688ad4bfcc68cb5cb3 assets/railways/models/block/track/compat/byg/embur_wide/cross_diag.json
@@ -5400,7 +5400,7 @@ ea904b0455fc7a6bc872a1239e1e15e4d0933c0e assets/railways/models/block/track/comp
 9bdc087f5e929adbe3049e5ff0f0176de5d4b88a assets/railways/models/block/track/compat/byg/zelkova_wide/ascending.json
 d12586441016d55138425e124f8c569fe22be310 assets/railways/blockstates/track_byg_maple_wide.json
 e62db1a880d468865769307ad19f16d9b7dac7c1 data/railways/tags/items/internal/dyes/light_gray_dyes.json
-9d90af8749bdf6e927713047b20adb32bda6e163 assets/railways/lang/en_ud.json
+c9f22bdc160a9d010feb6b268a5555ba745b61fc assets/railways/lang/en_ud.json
 df592c5c8ccb1958d2514d15df7d4cf2caae0ac6 assets/railways/models/block/track/compat/biomesoplenty/redwood_wide/diag_2.json
 5425acda3cdff4caf0619b0db70820af68046e66 assets/railways/models/block/track/compat/biomesoplenty/fir/cross_diag.json
 c561b8d002a82995d5fe7a08a14928e5bac25e5c assets/railways/models/block/track/ender/x_ortho.json
