@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.content.boiler.BoilerBigOutlines;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBigOutlines;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

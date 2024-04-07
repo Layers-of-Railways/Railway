@@ -430,77 +430,77 @@ public class CRBlocks {
 
     public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
             REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Bogey")
                     .register();
 
     public static final BlockEntry<MediumTripleWheelBogeyBlock> MEDIUM_TRIPLE_WHEEL =
             REGISTRATE.block("medium_triple_wheel", MediumTripleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Triple Wheel Bogey")
                     .register();
 
     public static final BlockEntry<MediumQuadrupleWheelBogeyBlock> MEDIUM_QUADRUPLE_WHEEL =
             REGISTRATE.block("medium_quadruple_wheel", MediumQuadrupleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Quadruple Wheel Bogey")
                     .register();
 
     public static final BlockEntry<MediumQuintupleWheelBogeyBlock> MEDIUM_QUINTUPLE_WHEEL =
             REGISTRATE.block("medium_quintuple_wheel", MediumQuintupleWheelBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium Quintuple Wheel Bogey")
                     .register();
 
     public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
             REGISTRATE.block("medium_2_0_2_trailing", Medium202TrailingBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium 2-0-2 Trailing Bogey")
                     .register();
 
     public static final BlockEntry<Medium404TrailingBogeyBlock> MEDIUM_4_0_4_TRAILING =
             REGISTRATE.block("medium_4_0_4_trailing", Medium404TrailingBogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Medium 4-0-4 Trailing Bogey")
                     .register();
 
     public static final BlockEntry<LargeCreateStyle040BogeyBlock> LARGE_CREATE_STYLE_0_4_0 =
             REGISTRATE.block("large_create_styled_0_4_0", LargeCreateStyle040BogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-4-0")
                     .register();
 
     public static final BlockEntry<LargeCreateStyle060BogeyBlock> LARGE_CREATE_STYLE_0_6_0 =
             REGISTRATE.block("large_create_styled_0_6_0", LargeCreateStyle060BogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-6-0")
                     .register();
 
     public static final BlockEntry<LargeCreateStyle080BogeyBlock> LARGE_CREATE_STYLE_0_8_0 =
             REGISTRATE.block("large_create_styled_0_8_0", LargeCreateStyle080BogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-8-0")
                     .register();
 
     public static final BlockEntry<LargeCreateStyle0100BogeyBlock> LARGE_CREATE_STYLE_0_10_0 =
             REGISTRATE.block("large_create_styled_0_10_0", LargeCreateStyle0100BogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-10-0")
                     .register();
 
     public static final BlockEntry<LargeCreateStyle0120BogeyBlock> LARGE_CREATE_STYLE_0_12_0 =
             REGISTRATE.block("large_create_styled_0_12_0", LargeCreateStyle0120BogeyBlock::new)
-                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(BuilderTransformers.standardBogey())
                     .lang("Large Create Styled 0-12-0")
                     .register();
@@ -587,7 +587,7 @@ public class CRBlocks {
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
         .transform(BuilderTransformers.variantBufferItem())
         .transform(customItemModel())
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
         .register();
 
     public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
@@ -660,7 +660,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
         .build()
         .register();
 
@@ -674,7 +674,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
         .build()
         .register();
 
