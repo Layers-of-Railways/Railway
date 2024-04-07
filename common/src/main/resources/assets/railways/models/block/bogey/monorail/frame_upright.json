@@ -7,7 +7,7 @@
     "0": "railways:block/bogeys/standard/shared/frame",
     "1": "railways:block/monorail/mono_body",
     "2": "railways:block/monorail/mono_casing",
-    "3": "railways:block/bogeys/standard/shared/frame2",
+    "3": "railways:block/bogeys/standard/medium/shared/frame2",
     "4": "create:block/bogey/wheel"
   }
 }

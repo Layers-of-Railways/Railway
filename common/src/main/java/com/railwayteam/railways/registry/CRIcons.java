@@ -43,7 +43,7 @@ public class CRIcons extends AllIcons {
         I_SWITCH_AUTO = next();
 
     public static final CRIcons
-        I_SWAP_TRACKS = next();
+        I_SWAP_TRACKS = newRow();
 
     public static final CRIcons
         I_NARROW = newRow(),

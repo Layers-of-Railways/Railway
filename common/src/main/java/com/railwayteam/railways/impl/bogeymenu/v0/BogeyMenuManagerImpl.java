@@ -28,7 +28,7 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
         CATEGORIES.add(CategoryEntry.FavoritesCategory.INSTANCE);
     }
 
-    public static final float defaultScale = 24;
+    public static final float defaultScale = 23;
 
     @Override
     public CategoryEntry registerCategory(@NotNull Component name, @NotNull ResourceLocation id) {

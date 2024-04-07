@@ -18,4 +18,8 @@ public class CRKeysImpl {
             event.register(keyMapping);
         }
     }
+
+    public static int getBoundCode(KeyMapping keyMapping) {
+        return keyMapping.getKey().getValue();
+    }
 }

@@ -16,17 +16,18 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.DoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.LargePlatformDoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.SingleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.TripleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.medium.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeComicallyLargeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
@@ -396,8 +397,10 @@ public class CRBlocks {
             .lang("Double Axle Bogey")
             .register();
 
-    public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
+    //fixme todo Implement Datafixer for this and remove it.
+    @Deprecated
+    public static final BlockEntry<DoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
+        REGISTRATE.block("large_platform_doubleaxle_bogey", DoubleAxleBogeyBlock::new)
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.standardBogey())
             .lang("Large Platform Double Axle Bogey")
@@ -463,6 +466,85 @@ public class CRBlocks {
             .build()
             .lang("Handcar")
             .register();
+
+    public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
+            REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumTripleWheelBogeyBlock> MEDIUM_TRIPLE_WHEEL =
+            REGISTRATE.block("medium_triple_wheel", MediumTripleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Triple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumQuadrupleWheelBogeyBlock> MEDIUM_QUADRUPLE_WHEEL =
+            REGISTRATE.block("medium_quadruple_wheel", MediumQuadrupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quadruple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumQuintupleWheelBogeyBlock> MEDIUM_QUINTUPLE_WHEEL =
+            REGISTRATE.block("medium_quintuple_wheel", MediumQuintupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quintuple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
+            REGISTRATE.block("medium_2_0_2_trailing", Medium202TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 2-0-2 Trailing Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium404TrailingBogeyBlock> MEDIUM_4_0_4_TRAILING =
+            REGISTRATE.block("medium_4_0_4_trailing", Medium404TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 4-0-4 Trailing Bogey")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle040BogeyBlock> LARGE_CREATE_STYLE_0_4_0 =
+            REGISTRATE.block("large_create_styled_0_4_0", LargeCreateStyle040BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-4-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle060BogeyBlock> LARGE_CREATE_STYLE_0_6_0 =
+            REGISTRATE.block("large_create_styled_0_6_0", LargeCreateStyle060BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-6-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle080BogeyBlock> LARGE_CREATE_STYLE_0_8_0 =
+            REGISTRATE.block("large_create_styled_0_8_0", LargeCreateStyle080BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-8-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle0100BogeyBlock> LARGE_CREATE_STYLE_0_10_0 =
+            REGISTRATE.block("large_create_styled_0_10_0", LargeCreateStyle0100BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-10-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle0120BogeyBlock> LARGE_CREATE_STYLE_0_12_0 =
+            REGISTRATE.block("large_create_styled_0_12_0", LargeCreateStyle0120BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-12-0")
+                    .register();
+
+
 
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
         REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)

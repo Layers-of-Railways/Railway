@@ -11,9 +11,9 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagRe
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerRenderer;
 import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlockEntity;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlockEntity;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlockEntity;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
@@ -80,10 +80,14 @@ public class CRBlockEntities {
     public static final BlockEntityEntry<CRBogeyBlockEntity> BOGEY = REGISTRATE
             .blockEntity("bogey", CRBogeyBlockEntity::new)
             .renderer(() -> BogeyBlockEntityRenderer::new)
-            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,
+            .validBlocks(CRBlocks.SINGLEAXLE_BOGEY, CRBlocks.DOUBLEAXLE_BOGEY,CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,
                 CRBlocks.TRIPLEAXLE_BOGEY, CRBlocks.WIDE_DOUBLEAXLE_BOGEY, CRBlocks.WIDE_SCOTCH_BOGEY,
                 CRBlocks.WIDE_COMICALLY_LARGE_BOGEY, CRBlocks.NARROW_SMALL_BOGEY, CRBlocks.NARROW_SCOTCH_BOGEY,
-                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY, CRBlocks.HANDCAR)
+                CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY, CRBlocks.HANDCAR, CRBlocks.MEDIUM_BOGEY,
+                CRBlocks.MEDIUM_TRIPLE_WHEEL, CRBlocks.MEDIUM_QUADRUPLE_WHEEL, CRBlocks.MEDIUM_QUINTUPLE_WHEEL,
+                CRBlocks.MEDIUM_2_0_2_TRAILING, CRBlocks.MEDIUM_4_0_4_TRAILING, CRBlocks.LARGE_CREATE_STYLE_0_4_0,
+                CRBlocks.LARGE_CREATE_STYLE_0_6_0, CRBlocks.LARGE_CREATE_STYLE_0_8_0, CRBlocks.LARGE_CREATE_STYLE_0_10_0,
+                CRBlocks.LARGE_CREATE_STYLE_0_12_0)
             .register();
 
     public static final BlockEntityEntry<ConductorWhistleFlagBlockEntity> CONDUCTOR_WHISTLE_FLAG = REGISTRATE.blockEntity("conductor_whistle", ConductorWhistleFlagBlockEntity::new)

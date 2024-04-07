@@ -1,7 +1,7 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

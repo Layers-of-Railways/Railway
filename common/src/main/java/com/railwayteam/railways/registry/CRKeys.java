@@ -3,7 +3,6 @@ package com.railwayteam.railways.registry;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -50,8 +49,7 @@ public enum CRKeys {
     }
 
     public int getBoundCode() {
-        return KeyBindingHelper.getBoundKeyOf(keybind)
-                .getValue();
+        return getBoundCode(keybind);
     }
 
     public static boolean isKeyDown(int key) {
@@ -80,6 +78,11 @@ public enum CRKeys {
 
     @ExpectPlatform
     private static void registerKeyBinding(KeyMapping keyMapping) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    private static int getBoundCode(KeyMapping keyMapping) {
         throw new AssertionError();
     }
 }

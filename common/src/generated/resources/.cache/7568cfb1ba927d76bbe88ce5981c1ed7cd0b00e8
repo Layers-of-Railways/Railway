@@ -1,4 +1,4 @@
-// 1.19.2	2024-04-06T18:50:07.903140818	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-04-07T12:19:51.357968795	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 49895c50bb9ff7ecb89153ff98b3f0fc5097a3cf assets/railways/models/block/track/compat/blue_skies/starlit/diag.json
 3d62ae4bfcb5ca63cd6568c0a4ef4989cf08ddc6 assets/railways/models/block/track/compat/biomesoplenty/umbran/cross_ortho.json
 d7467241e8db763684674e0d86882686535cd3da assets/railways/models/block/track/compat/byg/holly_narrow/cross_d1_xo.json
@@ -36,6 +36,7 @@ ba19ab3a888db8d6713183b35a81479545b8b7ba data/railways/loot_tables/blocks/track_
 cb661f75362eee37f51a18dbfe5c66e533998e87 data/railways/loot_tables/blocks/track_twilightforest_canopy_wide.json
 256e52fee74da52c12aadd47d8dd6940b33ab75c assets/railways/models/block/track/dark_oak/teleport.json
 ffcac5de891f7b758ab7075bb8a13be6ae7ad766 data/railways/loot_tables/blocks/track_jungle.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_bogey.json
 186f0365b9d648b7d0f153a30985117e8b60dc48 assets/railways/models/block/track/compat/biomesoplenty/redwood/cross_diag.json
 74daded9f622d997374e1090000bcd23aa1daa4f assets/railways/models/block/track/compat/quark/ancient_wide/cross_d2_xo.json
 d698d87086d46319484c111be1eec3b501934568 data/railways/loot_tables/blocks/track_twilightforest_twilight_oak_wide.json
@@ -103,6 +104,7 @@ de560ea60834dded20e70f04721537e1a33e64eb data/railways/loot_tables/blocks/track_
 49c10397c04c789e442ec97b85dfb65deedfe811 assets/railways/models/block/track/jungle/ascending.json
 613ab1850ae758ba7e1c4908898309c7f07cdb09 assets/railways/models/block/gray_copper_wrapped_locometal_boiler_smokebox_x.json
 e555644568c43c0b97d37cdb3e2b1bb19eda5c3f assets/railways/models/block/track/compat/biomesoplenty/cherry_narrow/z_ortho.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_4_0_4_trailing.json
 0cb4af9293b8b2984f515007038764dc46f9beaf assets/railways/models/block/track/compat/byg/nightshade_narrow/cross_ortho.json
 dab8d83893690a9674cf4deb8cb3c0d774053885 assets/railways/models/block/track/compat/biomesoplenty/fir/z_ortho.json
 5983f1194078b346ec9ed3b4c783d9b9ffa7bd8a assets/railways/models/item/track_byg_redwood_narrow.json
@@ -130,6 +132,7 @@ d06ed71f65c7d6de578f78385d0c5622237df350 assets/railways/models/item/track_incom
 bb4dbcb81cf0675961bfeb7e8aeefe5049be4840 assets/railways/blockstates/white_slashed_locometal.json
 d9f599aa125e6dc20ba7db0f8192d4575897a440 data/railways/loot_tables/blocks/green_riveted_locometal.json
 d20982aa6ea5bf5a4dee4438e81fed886b104b9f assets/railways/models/block/track/compat/byg/nightshade/cross_diag.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_quintuple_wheel.json
 6ec9ea5d36a0c216ece908b95d9ffecabb588d9e assets/railways/models/block/track/ender/diag.json
 6200c697303a3467a44820793f7b5f54571c9a0f assets/railways/blockstates/track_biomesoplenty_willow_narrow.json
 87fdb97095aca1f64871781cdbd6763db59ef3f9 assets/railways/blockstates/flat_slashed_locometal.json
@@ -609,6 +612,7 @@ aeab7183cce2071a3a83312074814580dbf88203 assets/railways/models/block/pink_coppe
 2d1ade82820569936fd3021a877283474ced09d0 assets/railways/models/block/casing_collision.json
 4f2e5b3221687fce8ff3b994b2e09f5d057cbd8c assets/railways/models/block/track/compat/quark/azalea/ascending.json
 0383c38ae14e58b0a10e11b1dd453698816e87d0 assets/railways/blockstates/magenta_brass_wrapped_locometal_boiler.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/large_create_styled_0_4_0.json
 4de9f5f74e7a4246d22b21159a267228d239bbcb assets/railways/models/block/track/spruce_narrow/ascending.json
 bcdfc96ae971cc12e75013756d1f2705c8e2dc8b data/railways/loot_tables/blocks/track_biomesoplenty_palm_narrow.json
 911314fe2080f0368ad967653597592b1bd9af78 assets/railways/blockstates/lime_copper_wrapped_locometal.json
@@ -936,6 +940,7 @@ d8a67aa26b8aad5bad5c51810406c9ca16b7a511 assets/railways/models/block/track/warp
 be409d0bdeaec52685e95f24c4e42bb6eea70478 assets/railways/models/block/track/compat/byg/aspen/teleport.json
 a86899aab2bd0ae0e3e746ac369d568ec527f513 assets/railways/models/block/track/compat/create_dd/spirit_narrow/cross_d1_zo.json
 f8f40b9714815b6377e8be2ff3d8930b6e42a42b assets/railways/models/block/track/compat/byg/jacaranda_wide/cross_diag.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_triple_wheel.json
 2fc90078c33c3927c9be64e34586343c09052110 assets/railways/models/block/track/spruce/x_ortho.json
 741a2f2cc6ab8e865146e5c2e7db3e583b55a354 assets/railways/models/block/track/compat/create_dd/rubber/teleport.json
 34f01fd096e83bb82ec545e68412c4b6d6d83f4b data/railways/loot_tables/blocks/brown_locometal_pillar.json
@@ -1118,6 +1123,7 @@ add50e4ac876613427cfca4f7f4ab804ba1cd4e8 assets/railways/blockstates/conductor_w
 a73a60b7ae9191f3df605e50999441982a01fc36 assets/railways/models/block/yellow_iron_wrapped_locometal_boiler_smokebox_x_raised.json
 7c570cbf9eb32f7a5c92e99eb97b9bbd9851d2f9 assets/railways/models/block/track/compat/create_dd/smoked_narrow/cross_diag.json
 89f33a60c79c2c2c2de0b6b5f704f20a5f4458da assets/railways/models/block/track/compat/twilightforest/canopy/cross_d2_xo.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/large_create_styled_0_6_0.json
 a34ac9d189c40e51caeea5a35ecd642bffb427d4 assets/railways/models/block/track/crimson_wide/cross_ortho.json
 04b46d6fd0fd2f3d8b8ab731ae4dea9902a7616d assets/railways/models/item/gray_conductor_cap.json
 aad3c54b408e0a192c5571aa2c90da13fd4fde30 assets/railways/models/block/track/dark_oak_narrow/cross_d1_xo.json
@@ -1487,6 +1493,7 @@ acf1d0c04fd409b0aabed19dfd5e85c41bc13ed6 assets/railways/models/block/track/comp
 4603f51f4f995c1786923cee05324b36e56372b6 assets/railways/models/block/track/dark_oak_narrow/cross_d1_zo.json
 796b1ac23f46882ae8aaab2f772805e249bfa4e7 assets/railways/blockstates/cyan_brass_wrapped_locometal.json
 8153844efb58d44903e21cc34b1b4464c824d888 assets/railways/models/block/track/compat/biomesoplenty/hellbark_narrow/cross_d1_zo.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_create_styled_0_6_0.json
 26287c85f2868f82dbbdbf12c7784d57396ed9b2 assets/railways/blockstates/track_blue_skies_cherry_narrow.json
 a0e69bbff0074c481c36f55412c9866599be3cff assets/railways/models/item/track_byg_cherry.json
 934e7bf6f7d9369e3b74e293a0c16fdab3af356f assets/railways/models/block/track/compat/twilightforest/sortingwood/diag_2.json
@@ -1500,6 +1507,7 @@ e7aa0bfa8e32e4363299ab69961b1c57bea0c76f assets/railways/models/item/track_incom
 d00c5fd6f2704871816302d94bee5a12daf28897 assets/railways/models/block/track/compat/byg/aspen_narrow/x_ortho.json
 79048d504196f7de2ca7c3375a449272124aa87c assets/railways/models/block/track/compat/twilightforest/canopy_wide/z_ortho.json
 bb016de76659d5cb78e8f5a5a1ba9d79cb75334a assets/railways/models/block/track/compat/byg/palm_wide/cross_d2_xo.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_create_styled_0_10_0.json
 49959131197ac2e505930d64a81c46ddec11b119 assets/railways/models/block/track/acacia/tie.json
 3ac77969f124eba099237c2d3bc3b29410ed0430 assets/railways/blockstates/copper_wrapped_locometal_boiler.json
 b94d59dfd68b3d132a52d32dcd4067d4b0bae62c assets/railways/models/block/track/compat/quark/ancient/teleport.json
@@ -1580,6 +1588,7 @@ f2d2a560231ae91286cd0886699fcc26bdf34dcb data/railways/loot_tables/blocks/track_
 b195f70209377014bd36f05c5157c7a66f32f934 assets/railways/models/block/track/compat/blue_skies/lunar/cross_d2_zo.json
 1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/doubleaxle_bogey.json
 58c3ef9c58ce3b000cadea5e18a04c2f37b5b74a assets/railways/models/block/track/compat/create_dd/rose/cross_d2_xo.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/large_create_styled_0_10_0.json
 02f57ed6ffc0d46ee4b7aa0ff9747b13ec7646d8 assets/railways/models/block/track/compat/twilightforest/twilight_oak_narrow/cross_d1_xo.json
 775f6ec853cf4e7f15f64758b679aabc0ff6ae94 assets/railways/models/block/brown_copper_wrapped_locometal_boiler_smokebox_x.json
 22b118e78558fdecdacce87b80364247840b5309 assets/railways/models/block/track/compat/create_dd/rubber/cross_diag.json
@@ -2101,6 +2110,7 @@ aa48e0677f1a7787f6991776404dc7ead75ebac8 assets/railways/models/block/track/comp
 1b995b2c7ac08411f059580f1aee0d2408161d14 data/railways/advancements/recipes/railways/dying_existing_cap_orange.json
 962d8d5a5f5a87d5c681e90a6e46ed640b06f5d5 assets/railways/models/item/track_incomplete_twilightforest_sortingwood_wide.json
 26c28e7fd5b83ae6b0c200df81287a999949fd75 assets/railways/models/block/track/ender_wide/cross_ortho.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_bogey.json
 c76672ecfc97a23bbbda13d07690a056b3293037 assets/railways/models/block/track/compat/byg/lament/cross_ortho.json
 8a615b66d94b1e008bd99ac892e14cdbbd674b53 assets/railways/models/block/track/compat/biomesoplenty/fir/tie.json
 f5073af479db2767461b0d9f62ecaddff6c986e7 assets/railways/models/block/track/compat/byg/pine_narrow/teleport.json
@@ -2319,6 +2329,7 @@ b7bddc21f7ed4455c785b91ef587f06c93da891a assets/railways/models/block/track/comp
 e758f47ec84c62d1a05b3ac8c29bf45c39238779 assets/railways/models/block/track/compat/byg/blue_enchanted_narrow/segment_left.json
 bb88223cfbda9bc50efc31352d49adfaeb16a070 assets/railways/models/block/track/compat/quark/ancient_narrow/cross_d2_zo.json
 cba4e067a230d3d8e79a5b3f09fb1adb38188bbe assets/railways/models/block/track/compat/byg/aspen/diag.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_2_0_2_trailing.json
 1382bc18140284e4b029076e14b4ef77397838e5 assets/railways/models/item/track_incomplete_byg_palm_wide.json
 49bf31fcd93a74af1cba90e3310fdb2ec1e3661e assets/railways/models/block/track/compat/quark/blossom_narrow/x_ortho.json
 a57ab0700b36cbfc5fee1396ec5b3bfe3ecc599f assets/railways/models/block/track/compat/blue_skies/bluebright/cross_d1_xo.json
@@ -2345,6 +2356,7 @@ ccd70beb19b9a8b73d7e54ca849aabe970e5afec assets/railways/models/block/track/comp
 694abdf807480aa9501f1111247f3294bb1623d4 assets/railways/models/block/track/dark_oak/cross_d2_zo.json
 aa7f61f3584c706722da023721d2eaad16eeaa9d assets/railways/models/block/track/compat/byg/embur/cross_d2_xo.json
 5997d8d9c44734bd2c1374e2f39d8722281bfa7b assets/railways/models/item/track_twilightforest_mangrove.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_create_styled_0_4_0.json
 42881da185144951aed0996b28d177da02e297c7 assets/railways/models/block/track/compat/twilightforest/twilight_oak/teleport.json
 d314186bef0989904b118ff16f0e87dea26a2ad9 assets/railways/models/block/track/compat/twilightforest/darkwood/cross_ortho.json
 008f9a977ec9f0b0c85e0f00e746fd2e25a029cc data/railways/advancements/recipes/railways/dying_existing_cap_blue.json
@@ -2691,6 +2703,7 @@ f2e36c32ddb5a01718d222d1a962074530fd49dc assets/railways/models/block/track/comp
 47c5d16aa3a9b01d848c0dd98e13b993743e0809 assets/railways/models/block/track/compat/byg/skyris_narrow/segment_right.json
 6883be7514fed8c8fe0ebbcda769de7de22381e6 assets/railways/models/block/track/compat/byg/redwood_wide/teleport.json
 d53ad4193fb292a4d711033351076a606e4be4a0 assets/railways/models/block/track/acacia_narrow/diag_2.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_quadruple_wheel.json
 446dd8628edef663326c04526626b1889df6b6b9 assets/railways/models/block/track/compat/byg/bulbis_wide/cross_diag.json
 b0dfa6d6d704a92a525f34b04bc354e37f1a084f assets/railways/models/block/track/compat/byg/redwood_narrow/cross_d2_zo.json
 539efa360fab65a57a885f86a52301d1c220a93e assets/railways/models/block/track/compat/twilightforest/timewood/segment_left.json
@@ -2810,6 +2823,7 @@ ae7fbde9c8d582ed060587ddc0ce75d139503c15 assets/railways/models/block/track/comp
 e269adf96a7cb18459266e6b5c49d3098af44fad assets/railways/models/block/track/compat/biomesoplenty/redwood/ascending.json
 08dec63082f2cc9f35c094fde3bf254b472b925d data/railways/loot_tables/blocks/blue_copper_wrapped_locometal_boiler.json
 3b6fcf72ef5858c006d00c2ef8c635ff64311fe6 assets/railways/models/block/track/compat/byg/pine/diag_2.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/medium_triple_wheel.json
 fe02363b61aa163bffdc0804b05826d77082b63b assets/railways/models/block/track/compat/byg/cika_wide/z_ortho.json
 301774c1cc9603b746ee8c6c0bbcd062927fa314 assets/railways/models/block/track/compat/create_dd/spirit_wide/diag_2.json
 627feb1664025c05193c1fbf82285b48f01ed97b assets/railways/models/block/track/compat/create_dd/rose_wide/cross_d1_xo.json
@@ -3116,6 +3130,7 @@ ed255eba9e78da71481ca95e0e8962a9c494de57 assets/railways/models/block/track/comp
 039c66fcf437f4e0e2e746881178945f4edf9351 data/railways/loot_tables/blocks/track_create_dd_smoked_wide.json
 3f017478199ec1a0993c97887ddb6bd13ee4e8d9 assets/railways/models/block/track/compat/biomesoplenty/dead_wide/tie.json
 e8fb5f766c526b84c6600d699742434a68bf75e9 assets/railways/models/block/track/compat/byg/blue_enchanted_wide/z_ortho.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_quadruple_wheel.json
 6c91255ef752f1c6a364b1039c61550ba7e3ede7 assets/railways/models/item/track_byg_redwood.json
 cb336a129ad4eac818a987d1331a56827e330fe2 assets/railways/models/block/track/ender_narrow/cross_d1_xo.json
 a35d35e748e8c2ce2e11ba34ef0077d11570cc5f assets/railways/models/block/track/compat/byg/ebony_narrow/x_ortho.json
@@ -3494,6 +3509,7 @@ f9ffb6667b4734da7c13933486cdff6d495e3b29 assets/railways/models/block/gray_locom
 ba324434bf777c1d922473e0759f477d9539541d data/railways/loot_tables/blocks/gray_flat_riveted_locometal.json
 f84c011f55a8032311ba26e7af76938e8e52e8ec assets/railways/models/block/track/compat/byg/bulbis_wide/cross_d1_zo.json
 71ee0a0cecd99736fc3b131ed7e8823cfdf4437a assets/railways/models/block/pink_iron_wrapped_locometal_boiler_gullet_x_raised.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_4_0_4_trailing.json
 df39f48e854fadb166e530b785570fb59152c38e assets/railways/models/block/light_blue_brass_wrapped_locometal_boiler_smokebox_x.json
 f4bbbcce6ff6df60eb8d374b3196aec6c43dc890 assets/railways/models/item/black_locometal_pillar.json
 9a1e8619e0299a8e3b54d0824c3ad1f2e92bcd48 assets/railways/models/block/track/compat/twilightforest/minewood_narrow/cross_d2_zo.json
@@ -4358,6 +4374,7 @@ af5e6a29ed56b0639bd9cc678690c19851d87b16 assets/railways/models/block/track/comp
 564321e7a0d70feefcf504da2358044d3123504e assets/railways/blockstates/light_blue_iron_wrapped_locometal_boiler.json
 96fc9297ba167a55d606cb23a25f00d2d26555ab assets/railways/models/block/track/compat/twilightforest/mangrove_narrow/cross_ortho.json
 84483c74b60df1b82fcd4e7e4fff62ab4a5c581a data/railways/loot_tables/blocks/lime_plated_locometal.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_2_0_2_trailing.json
 34dcc1b827f47e80cafe42860bcd236f81d24c56 assets/railways/blockstates/gray_copper_wrapped_locometal.json
 127a94308a7c971390fddcb11ae8d29dbd6158e6 assets/railways/models/block/track/compat/blue_skies/dusk/segment_left.json
 e3561a538279fd637e349559da13ae35cb61743b assets/railways/models/block/track/compat/byg/lament_narrow/cross_ortho.json
@@ -4586,7 +4603,7 @@ a548987c87784a10f13e2b74c4bf8ae586c9fdc0 assets/railways/models/block/purple_cop
 8df3c4221f636a711c90be398da7d20ee203d4ec assets/railways/models/block/track/compat/byg/aspen_narrow/z_ortho.json
 a7aeef7765a94d64d30ef2210ef160c475f8a593 assets/railways/models/block/track/compat/blue_skies/cherry_narrow/cross_diag.json
 575a3869d89518b456baf15966fec59c3ef4866b data/railways/loot_tables/blocks/track_twilightforest_twilight_oak_narrow.json
-62fc0ce4b3fe57b550a577a24b06c424f3bd2769 assets/railways/lang/en_us.json
+14db99e534c6d2aa9e168421bad664021e76289e assets/railways/lang/en_us.json
 29bed873d684aa7c9ffd270db1ffad211f95e27c data/railways/loot_tables/blocks/track_byg_imparius.json
 e3302e8f1b79fcf0cec8212a1489be1a97f9715a assets/railways/models/block/track/compat/quark/ancient_wide/teleport.json
 c4b31736e10318f54e5749688ad4bfcc68cb5cb3 assets/railways/models/block/track/compat/byg/embur_wide/cross_diag.json
@@ -4952,7 +4969,7 @@ d219840467df2ed26a42009ccadf97e1637795a7 assets/railways/blockstates/yellow_flat
 3e599e913d2f905e85622b7285941ac324812ff6 assets/railways/models/block/track/compat/byg/cherry/teleport.json
 42eb0d605b51a4a797f8cc3f52c26f4cf624f60f assets/railways/models/block/track/compat/byg/cika/cross_ortho.json
 d38d7d40599c66ac84ef7dd2c1635d3ba7794871 data/railways/tags/items/internal/nuggets/brass_nuggets.json
-12fb1ff157236a89a3829c544b0401f1d53119e4 data/create/tags/blocks/safe_nbt.json
+f48c1069e3832f28820d2a739694a4c1d94d9c8b data/create/tags/blocks/safe_nbt.json
 3664a5cb244831d158364118cfdef8ac72e047ac assets/railways/models/block/track/birch/diag_2.json
 776eb6ad37f3fc59438739bf0abf6c8e41b66487 assets/railways/models/block/track/compat/byg/pine_narrow/diag_2.json
 bf59d9b60a004816941c79ddb15e64b88f836e8f assets/railways/models/block/track/compat/byg/aspen_narrow/cross_diag.json
@@ -5112,6 +5129,7 @@ f16c13f5cf61d218865be264c0c5b09746cbd3e8 assets/railways/models/block/track/comp
 9599a70daa10b67fb284f74c373776d2b6a9992a assets/railways/models/block/track/compat/biomesoplenty/dead_wide/segment_left.json
 13c95442f4d63314b450987f65096e66593db7f7 assets/railways/models/block/cyan_locometal_boiler_gullet_z.json
 a6ef76e45a96b5f9de3244f9217f640da5e0c97d data/railways/loot_tables/blocks/black_riveted_locometal.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_create_styled_0_8_0.json
 de773e1824fbd6398c19a93623d396f0933b6ace assets/railways/models/item/track_create_dd_spirit_narrow.json
 af550d4e6d4b4d096d8d686a71b76844cdb78e2d assets/railways/models/block/track/compat/biomesoplenty/mahogany/segment_left.json
 b387dca26c2843be86fa3538432767c764be99e3 assets/railways/models/block/track/blackstone/cross_diag.json
@@ -5382,7 +5400,7 @@ ea904b0455fc7a6bc872a1239e1e15e4d0933c0e assets/railways/models/block/track/comp
 9bdc087f5e929adbe3049e5ff0f0176de5d4b88a assets/railways/models/block/track/compat/byg/zelkova_wide/ascending.json
 d12586441016d55138425e124f8c569fe22be310 assets/railways/blockstates/track_byg_maple_wide.json
 e62db1a880d468865769307ad19f16d9b7dac7c1 data/railways/tags/items/internal/dyes/light_gray_dyes.json
-cb015c14cd8c1a77d03609dfa06c6c9543eb7304 assets/railways/lang/en_ud.json
+7263bfa3138b0994e32bb82e3e2aff7ba256ca26 assets/railways/lang/en_ud.json
 df592c5c8ccb1958d2514d15df7d4cf2caae0ac6 assets/railways/models/block/track/compat/biomesoplenty/redwood_wide/diag_2.json
 5425acda3cdff4caf0619b0db70820af68046e66 assets/railways/models/block/track/compat/biomesoplenty/fir/cross_diag.json
 c561b8d002a82995d5fe7a08a14928e5bac25e5c assets/railways/models/block/track/ender/x_ortho.json
@@ -5523,6 +5541,7 @@ dd9e0e699a962822f6127acd4a76e24301f5eb72 assets/railways/models/block/track/comp
 10844279c956d1bf743f4f4d61689484ce1639cc assets/railways/blockstates/blue_slashed_locometal.json
 1062a6d2b70528e9459c399e80f433856ff92984 assets/railways/models/block/track/compat/biomesoplenty/hellbark/cross_d2_zo.json
 3833b826164660e5c7c05d199eada05c7688d269 assets/railways/models/block/track/compat/create_dd/rubber_wide/tie.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/large_create_styled_0_12_0.json
 f2ad1d300e62f2849639fd0dd7fa3981ebce94d7 assets/railways/models/item/track_byg_blue_enchanted_narrow.json
 46cd6a84b4f16afa50097e252f0cdf6c678f490b assets/railways/models/block/track/compat/quark/azalea_narrow/cross_diag.json
 ec04aeda6b37674ace22f1db68fd615b31f23ab0 assets/railways/blockstates/track_spruce.json
@@ -5583,9 +5602,10 @@ d0ac1f7905b2d2c0367cf168116a0e91ea956714 assets/railways/blockstates/track_byg_c
 1b1a97ce427d0c846371650932012d23018df002 assets/railways/models/block/track/compat/quark/azalea_narrow/cross_d1_xo.json
 87d4249de21fd7eb0544984731b2ce366bb833a9 assets/railways/models/block/track/compat/twilightforest/canopy_wide/segment_right.json
 10cec0f9bce263d7a316ffe6ae5f0827776e02f8 assets/railways/models/block/track/compat/byg/fir_wide/x_ortho.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/large_create_styled_0_8_0.json
 a962d2d73ce51e4949b1064540e89b2ea7d7437a assets/railways/models/block/track/compat/byg/zelkova/diag_2.json
 1cc916a0e16a4fef28d34ccb2c28e015a22da2ba assets/railways/blockstates/track_twilightforest_timewood_narrow.json
-816e036f0da21636919f007b329c37cecb1b3086 data/minecraft/tags/blocks/mineable/pickaxe.json
+76b584734e4def4820385c42b57387e25d8cc42c data/minecraft/tags/blocks/mineable/pickaxe.json
 a62588709c043d51f3907c11f89b8ab87f58bace assets/railways/models/block/track/compat/byg/ebony_narrow/diag_2.json
 884471cdc8531c1c0cb8f535cc7db008426c853e assets/railways/models/item/brown_locometal_boiler.json
 e95646fce6553f764dfa8719ccaabc95aeabffce assets/railways/models/block/track/compat/byg/green_enchanted_wide/segment_left.json
@@ -5685,6 +5705,7 @@ bd90ec58e696e9012e8cc0751b4225c3737f53fe data/railways/loot_tables/blocks/lime_l
 2880ec18a71940618ac22a2877b651349282469a assets/railways/models/block/track/compat/byg/baobab_wide/diag_2.json
 96f05fa89d6002656cdbe346ce7e3bf20a74d700 assets/railways/models/block/track/compat/byg/witch_hazel_wide/cross_diag.json
 49db41749e867c7a5b3d49b89c046770c82422ef assets/railways/models/block/track/compat/byg/lament/segment_left.json
+fee742e0fcd8c3e6e5553d4290cc698fb0a7679f data/railways/loot_tables/blocks/medium_quintuple_wheel.json
 732cd3702635af54db5c4143fd08dc38c73953e6 assets/railways/models/block/track/mangrove/tie.json
 42a165e25a5018534c5cbf9ea8f596fff24d2b72 assets/railways/models/item/track_incomplete_blue_skies_maple_narrow.json
 db8e87959af55daacd7a118bd242f817f39fe4a6 assets/railways/models/block/track/compat/byg/cypress_wide/cross_d2_zo.json
@@ -5742,6 +5763,7 @@ c3fe9a0745c3153904aaacc2bf16569d6237abe2 assets/railways/models/block/track/comp
 46568c19596c6a80c44ea9a3ba8e32c5bd24cc04 assets/railways/models/block/track/compat/blue_skies/starlit/cross_d1_zo.json
 42eb3e32fe3a2848c693ca0be368be2b3eaf2978 assets/railways/models/block/track/compat/blue_skies/starlit_wide/cross_d1_zo.json
 5b1ff76d7d9f6f6e032dccb6f00a56e125032ab0 assets/railways/models/block/track/compat/biomesoplenty/hellbark/cross_ortho.json
+1db975c0182f6eb2af47df134d4119e89d83ee54 assets/railways/blockstates/large_create_styled_0_12_0.json
 3f56ac91f8f1c23fc2bdd31a6672b607091740c4 assets/railways/models/block/track/compat/byg/cika_wide/x_ortho.json
 3984272ff070c82129920d7fe0cf7421a60219df assets/railways/models/block/track/compat/biomesoplenty/umbran_narrow/cross_d1_zo.json
 765429faf009d108efc1faab8608fcfa0203c5e4 assets/railways/models/block/track/compat/twilightforest/mangrove/teleport.json
