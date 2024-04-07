@@ -333,7 +333,7 @@
   "block.railways.track_blue_skies_starlit_narrow": "Narrow Starlit Train Track",
   "block.railways.track_blue_skies_starlit_wide": "Wide Starlit Train Track",
   "block.railways.track_buffer.tooltip": "TRACK BUFFER",
-  "block.railways.track_buffer.tooltip.summary": "Can be dyed by _clicking_ with dye.",
+  "block.railways.track_buffer.tooltip.summary": "_Variant_ can be changed by clicking the front face and can be dyed by _clicking_ with dye.",
   "block.railways.track_byg_aspen": "Aspen Train Track",
   "block.railways.track_byg_aspen_narrow": "Narrow Aspen Train Track",
   "block.railways.track_byg_aspen_wide": "Wide Aspen Train Track",
