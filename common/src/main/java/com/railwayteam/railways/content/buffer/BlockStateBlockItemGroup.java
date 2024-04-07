@@ -26,16 +26,12 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     private final C context;
-    @NotNull
-    private final Property<T> property;
-    @NotNull
-    private final T[] values;
-    @NotNull
-    private final BlockEntry<?> blockEntry;
-    @NotNull
-    private final TagKey<Item> cycleTag;
-    @Nullable
-    private final T excluded;
+    @NotNull private final Property<T> property;
+    @NotNull private final T[] values;
+    @NotNull private final BlockEntry<?> blockEntry;
+    @NotNull private final TagKey<Item> cycleTag;
+    @Nullable private final T excluded;
+    @Nullable private final String tooltipTranslationKey;
 
     @NotNull
     private final NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer;
@@ -46,13 +42,19 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
                                     @NotNull TagKey<Item> cycleTag) {
-        this(context, property, values, blockEntry, itemTransformer, cycleTag, null);
+        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, null);
+    }
+
+    public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values, @NotNull BlockEntry<?> blockEntry,
+                                    @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
+                                    @NotNull TagKey<Item> cycleTag, @Nullable String tooltipTranslationKey) {
+        this(context, property, values, blockEntry, itemTransformer, cycleTag, null, tooltipTranslationKey);
     }
 
     public BlockStateBlockItemGroup(C context, @NotNull Property<T> property, @NotNull T[] values,
                                     @NotNull BlockEntry<?> blockEntry,
                                     @NotNull NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer,
-                                    @NotNull TagKey<Item> cycleTag, @Nullable T excluded) {
+                                    @NotNull TagKey<Item> cycleTag, @Nullable T excluded, @Nullable String tooltipTranslationKey) {
         this.context = context;
         this.property = property;
         this.values = values;
@@ -60,6 +62,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
         this.itemTransformer = itemTransformer;
         this.cycleTag = cycleTag;
         this.excluded = excluded;
+        this.tooltipTranslationKey = tooltipTranslationKey;
 
         this.register();
     }
@@ -81,6 +84,8 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             TagCycleHandlerClient.CYCLE_TRACKER.scheduleRecompute();
         });
 
+        String tooltipKey = tooltipTranslationKey == null ? "block.railways.generic_radial" : tooltipTranslationKey;
+
         boolean primary = true;
         for (T v : values) {
             if (excluded != null && v == excluded) {
@@ -91,7 +96,7 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, primary))
                 .properties(p -> p.tab(CRItems.mainCreativeTab))
                 .lang(v.getLangName(context))
-                .onRegisterAfter(Registry.ITEM_REGISTRY, i -> ItemDescription.useKey(i, "block.railways.generic_radial"))
+                .onRegisterAfter(Registry.ITEM_REGISTRY, i -> ItemDescription.useKey(i, tooltipKey))
                 .transform(itemTransformer)
                 .tag(cycleTag)
                 .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))
