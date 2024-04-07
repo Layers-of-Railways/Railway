@@ -1,4 +1,4 @@
-package com.railwayteam.railways.content.boiler;
+package com.railwayteam.railways.content.palettes.boiler;
 
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.RaycastHelper;
