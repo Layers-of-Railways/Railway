@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
-import com.railwayteam.railways.util.IHasBigOutline;
 import com.simibubi.create.content.equipment.extendoGrip.ExtendoGripItem;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
@@ -46,7 +45,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline, IHasBigOutline {
+public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline {
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
     public static final EnumProperty<Axis> HORIZONTAL_AXIS = BlockStateProperties.HORIZONTAL_AXIS;

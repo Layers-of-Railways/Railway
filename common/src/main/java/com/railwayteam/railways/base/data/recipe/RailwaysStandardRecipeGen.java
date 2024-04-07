@@ -216,10 +216,9 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .unlockedBy(Ingredients::headstock)
         .viaShaped(b -> b
             .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.woodenSlab())
             .define('>', Ingredients.headstockTag())
             .define('=', Ingredients.girder())
-            .pattern(">_>")
+            .pattern(">>>")
             .pattern("===")
             .pattern("# #")
         );

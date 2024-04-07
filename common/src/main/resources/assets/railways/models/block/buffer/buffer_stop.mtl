@@ -1,0 +1,17 @@
+# Blender 4.1.0 MTL File: 'None'
+# www.blender.org
+
+newmtl 3
+map_Kd #3
+
+newmtl 4
+map_Kd #4
+
+newmtl 9
+map_Kd #9
+
+newmtl 10
+map_Kd #10
+
+newmtl none
+illum 1
