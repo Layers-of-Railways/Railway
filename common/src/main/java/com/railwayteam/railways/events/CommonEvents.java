@@ -1,5 +1,6 @@
 package com.railwayteam.railways.events;
 
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
@@ -21,6 +22,7 @@ public class CommonEvents {
 
     public static final Set<UUID> journeymapUsers = new HashSet<>();
 
+    @MultiLoaderEvent
     public static void onWorldTickStart(Level level) {
         if (level.isClientSide)
             return;
@@ -43,10 +45,12 @@ public class CommonEvents {
         }
     }
 
+    @MultiLoaderEvent
     public static void onPlayerJoin(ServerPlayer player) {
         PacketSender.notifyServerVersion(player);
     }
 
+    @MultiLoaderEvent
     public static void onTagsUpdated() {
         TagCycleHandlerServer.onTagsUpdated();
     }

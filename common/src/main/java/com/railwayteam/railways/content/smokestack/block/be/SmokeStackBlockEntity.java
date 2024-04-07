@@ -4,7 +4,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.IHaveCustomGoggleIcon;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -87,7 +86,9 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
 
         if (isSoul || color == null) {
             Lang.builder(Railways.MODID)
-                    .translate("smokestack.goggle.tooltip", isSoul ? "Soul" : "Default")
+                    .translate("smokestack.goggle.tooltip",
+                            isSoul ? "Soul" : ColorUtils.coloredName(DyeColor.BLACK.toString())
+                    )
                     .forGoggles(tooltip);
         }
 
@@ -99,7 +100,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
         if (color != null)
             return ColorUtils.getDyeColorDyeItem(color).getDefaultInstance();
 
-        return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : AllItems.GOGGLES.asStack();
+        return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : Items.BLACK_DYE.getDefaultInstance();
     }
 
     @Override

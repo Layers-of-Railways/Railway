@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin.compat.malilib;
 
-import com.railwayteam.railways.annotation.ConditionalMixin;
+import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.compat.Mods;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;

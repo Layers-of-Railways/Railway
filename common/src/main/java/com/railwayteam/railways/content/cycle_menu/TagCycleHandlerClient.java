@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.cycle_menu;
 
+import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.util.EntityUtils;
@@ -29,6 +30,7 @@ public class TagCycleHandlerClient {
         CYCLE_TRACKER.scheduleRecompute();
     }
 
+    @MultiLoaderEvent
     public static void clientTick() {
         if (COOLDOWN > 0 && !AllKeys.TOOL_MENU.isPressed())
             COOLDOWN--;
@@ -38,6 +40,7 @@ public class TagCycleHandlerClient {
         CRPackets.PACKETS.send(new TagCycleSelectionPacket(target));
     }
 
+    @MultiLoaderEvent
     public static void onKeyInput(int key, boolean pressed) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)
@@ -66,6 +69,7 @@ public class TagCycleHandlerClient {
         ScreenOpener.open(new RadialTagCycleMenu(cycleTag.getValue(), CYCLE_TRACKER.getCycle(cycleTag.getValue()), stackTag.getValue()));
     }
 
+    @MultiLoaderEvent
     public static void onTagsUpdated() {
         CYCLE_TRACKER.scheduleRecompute();
     }

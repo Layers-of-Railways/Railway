@@ -1,6 +1,6 @@
 package com.railwayteam.railways.mixin.compat.voicechat;
 
-import com.railwayteam.railways.annotation.ConditionalMixin;
+import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.conductor.ClientHandler;
 import de.maxhenkel.voicechat.integration.freecam.FreecamUtil;

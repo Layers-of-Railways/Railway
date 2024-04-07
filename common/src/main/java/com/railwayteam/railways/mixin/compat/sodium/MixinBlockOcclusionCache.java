@@ -1,7 +1,7 @@
 package com.railwayteam.railways.mixin.compat.sodium;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.railwayteam.railways.annotation.ConditionalMixin;
+import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.mixin_interfaces.IForceRenderingSodium;
 import me.jellysquid.mods.sodium.client.render.occlusion.BlockOcclusionCache;

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerClient;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.util.client.ClientUtils;
 import com.simibubi.create.AllKeys;
@@ -178,7 +178,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
             if (selected >= 0 && selected < cycle.size()) {
                 TagCycleHandlerClient.select(cycle.get(selected));
                 onClose();
-                BogeyCategoryHandlerClient.COOLDOWN = 2;
+                BogeyMenuEventsHandler.COOLDOWN = 2;
                 TagCycleHandlerClient.COOLDOWN = 2;
                 AccessorToolboxHandlerClient.setCOOLDOWN(2);
                 return true;
