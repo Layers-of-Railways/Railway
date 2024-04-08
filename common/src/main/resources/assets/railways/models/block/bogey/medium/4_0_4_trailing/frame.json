@@ -1,6 +1,7 @@
 {
   "parent": "block/block",
   "loader": "forge:obj",
+  "porting_lib:loader": "porting_lib:obj",
   "flip_v": true,
   "model": "railways:models/block/bogey/medium/4_0_4_trailing/frame.obj",
   "textures": {
