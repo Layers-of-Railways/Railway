@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/large/create_styled_0_12_0/piston/piston.obj",
+  "textures": {
+    "0": "create:block/bogey/piston",
+    "1": "railways:block/bogeys/standard/large/shared/piston_rods"
+  }
+}
