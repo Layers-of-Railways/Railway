@@ -474,32 +474,32 @@ public class CRBlockPartials {
         MEDIUM_QUADRUPLE_WHEEL_FRAME = block("bogey/medium/quadruple_wheel/frame"),
         MEDIUM_QUINTUPLE_WHEEL_FRAME = block("bogey/medium/quintuple_wheel/frame"),
 
-        MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2-0-2_trailing/frame"),
-        MEDIUM_4_0_4_TRAILING_FRAME = block("bogey/medium/4-0-4_trailing/frame"),
-        MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6-0-6_trailing/frame"),
-        MEDIUM_6_0_6_TENDER_FRAME = block("bogey/medium/6-0-6_tender/frame"),
-        MEDIUM_8_0_8_TENDER_FRAME = block("bogey/medium/8-0-8_tender/frame"),
-        MEDIUM_10_0_10_TENDER_FRAME = block("bogey/medium/10-0-10_tender/frame")
+        MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2_0_2_trailing/frame"),
+        MEDIUM_4_0_4_TRAILING_FRAME = block("bogey/medium/4_0_4_trailing/frame"),
+        MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6_0_6_trailing/frame"),
+        MEDIUM_6_0_6_TENDER_FRAME = block("bogey/medium/6_0_6_tender/frame"),
+        MEDIUM_8_0_8_TENDER_FRAME = block("bogey/medium/8_0_8_tender/frame"),
+        MEDIUM_10_0_10_TENDER_FRAME = block("bogey/medium/10_0_10_tender/frame")
     ;
 
     public static final PartialModel
         LC_STYLE_SEMI_BLIND_WHEELS = block("bogey/large/wheels/semi_blind_wheels"),
         LC_STYLE_FULL_BLIND_WHEELS = block("bogey/large/wheels/full_blind_wheels"),
 
-        LARGE_CREATE_STYLED_0_4_0_FRAME = block("bogey/large/create_styled_0-4-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0-4-0/piston/piston"),
+        LARGE_CREATE_STYLED_0_4_0_FRAME = block("bogey/large/create_styled_0_4_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0_4_0/piston/piston"),
 
-        LARGE_CREATE_STYLED_0_6_0_FRAME = block("bogey/large/create_styled_0-6-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_6_0_PISTON = block("bogey/large/create_styled_0-6-0/piston/piston"),
+        LARGE_CREATE_STYLED_0_6_0_FRAME = block("bogey/large/create_styled_0_6_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_6_0_PISTON = block("bogey/large/create_styled_0_6_0/piston/piston"),
 
-        LARGE_CREATE_STYLED_0_8_0_FRAME = block("bogey/large/create_styled_0-8-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_8_0_PISTON = block("bogey/large/create_styled_0-8-0/piston/piston"),
+        LARGE_CREATE_STYLED_0_8_0_FRAME = block("bogey/large/create_styled_0_8_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_8_0_PISTON = block("bogey/large/create_styled_0_8_0/piston/piston"),
 
-        LARGE_CREATE_STYLED_0_10_0_FRAME = block("bogey/large/create_styled_0-10-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_10_0_PISTON = block("bogey/large/create_styled_0-10-0/piston/piston"),
+        LARGE_CREATE_STYLED_0_10_0_FRAME = block("bogey/large/create_styled_0_10_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_10_0_PISTON = block("bogey/large/create_styled_0_10_0/piston/piston"),
 
-        LARGE_CREATE_STYLED_0_12_0_FRAME = block("bogey/large/create_styled_0-12-0/frame/frame"),
-        LARGE_CREATE_STYLED_0_12_0_PISTON = block("bogey/large/create_styled_0-12-0/piston/piston")
+        LARGE_CREATE_STYLED_0_12_0_FRAME = block("bogey/large/create_styled_0_12_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_12_0_PISTON = block("bogey/large/create_styled_0_12_0/piston/piston")
     ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
