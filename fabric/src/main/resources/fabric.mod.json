@@ -40,9 +40,6 @@
     "fabric-api": ">=${fabric_api_version}",
     "create": "${create_fabric_version}"
   },
-  "breaks": {
-    "sodium": "<0.5.6"
-  },
   "custom": {
     "modmenu": {
       "links": {
