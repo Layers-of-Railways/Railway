@@ -3,10 +3,11 @@ package com.railwayteam.railways.content.palettes.boiler;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.RaycastHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.foundation.utility.fabric.ReachUtil;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -31,7 +32,7 @@ public class BoilerBigOutlines {
                 : mc.hitResult.getLocation()
                 .distanceToSqr(origin);
 
-        double range = ReachUtil.reach(player);
+        double range = getRange(player);
         Vec3 target = RaycastHelper.getTraceTarget(player, Math.min(maxRange, range) + 1, origin);
 
         RaycastHelper.rayTraceUntil(origin, target, pos -> {
@@ -78,5 +79,10 @@ public class BoilerBigOutlines {
 
         if (result != null)
             mc.hitResult = result;
+    }
+
+    @ExpectPlatform
+    public static double getRange(Player player) {
+        throw new AssertionError();
     }
 }
