@@ -25,9 +25,9 @@ public class LiquidFuelTrainHandler {
         } else {
             int bucketBurnTime = PlatformAbstractionHelper.getBurnTime(fluid.getBucket());
 
-            // Divide burnTime by 100 to get burnTime for 1/10th of a bucket and then by divide by 4,
+            // Divide burnTime by 10 to get burnTime for 1/10th of a bucket and then by divide by 4,
             // so it isn't so strong
-            burnTime = (bucketBurnTime / 100) / 4;
+            burnTime = (bucketBurnTime / 10) / 4;
         }
 
         return burnTime;
