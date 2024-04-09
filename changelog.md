@@ -1,7 +1,12 @@
 ------------------------------------------------------
-Version 1.6.1
+Version 1.6.2
 ------------------------------------------------------
+- Fix narrow mono buffer model
 - Fix Quark compat recipes
+- Fix crash when deploying a whistle onto a station when unbound
+- Fix trying to insert water or invalid fuels into fuel tanks crashing (fabric)
+- Fix Moving Block Entities not working on forge
+- Fix Trains burning liquid fuel excessively quick
 ------------------------------------------------------
 Version 1.6.1
 ------------------------------------------------------
