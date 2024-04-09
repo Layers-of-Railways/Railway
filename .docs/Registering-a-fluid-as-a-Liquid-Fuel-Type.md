@@ -1,6 +1,3 @@
-> [!CAUTION] <h1>
-> **This is 1.6.0 Feature**
-
 ## How to add a new type
 Adding a custom type is quite simple - just set up a basic datapack (more information [here](https://minecraft.wiki/w/Data_pack)) and add some files under the `data/[namespace]/railways_liquid_fuel` directory. Files must end in `.json` but can be located in any sub-directory, as long as the full path does not violate Minecraft's ResourceLocation path check. The full specification for these JSON files can be found in the table below.
 

@@ -1,7 +1,3 @@
-
-> [!CAUTION] <h1>
-> **This block is 1.6.0 Feature**
-
 Its a block that slows incoming trains to the stop. Commonly used at the end of the track.  
 # Customizing the appearance.
 ![2024-01-04_23 28 23](https://github.com/StarFluxie/Images-archive/assets/140427286/f3c50661-da68-40cc-b67c-b66899ee63f5)
