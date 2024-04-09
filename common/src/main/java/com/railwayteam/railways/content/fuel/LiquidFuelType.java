@@ -20,7 +20,7 @@ public class LiquidFuelType {
     private final List<Supplier<Fluid>> fluids = new ArrayList<>();
     private final List<Supplier<TagKey<Fluid>>> fluidTags = new ArrayList<>();
 
-    private int fuelTicks = 40;
+    private int fuelTicks = 400;
     private boolean invalid = false;
 
     public LiquidFuelType() { }
