@@ -1,5 +1,6 @@
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
@@ -54,9 +55,10 @@ public abstract class MixinStationBlock {
                 GlobalStation station = stationBe.getStation();
                 if (station != null && station.getPresentTrain() == null) {
                     CompoundTag stackTag = itemInHand.getTag();
-                    if (stackTag == null || !stackTag.hasUUID("SelectedTrain") || !stackTag.hasUUID("SelectedConductor"))
+                    if (stackTag == null || !stackTag.hasUUID("SelectedTrain") || !stackTag.hasUUID("SelectedConductor")) {
                         cir.setReturnValue(InteractionResult.FAIL);
-
+                        return;
+                    }
                     BlockPos pos = stationBe.edgePoint.getPos();
                     Level level = pPlayer.getLevel();
 
