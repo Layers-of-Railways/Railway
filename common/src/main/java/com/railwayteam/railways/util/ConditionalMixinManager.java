@@ -27,10 +27,9 @@ package com.railwayteam.railways.util;
 import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.annotation.mixin.DevMixin;
 import com.railwayteam.railways.compat.Mods;
+import com.railwayteam.railways.mixin.CRMixinPlugin;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.service.MixinService;
 import org.spongepowered.asm.util.Annotations;
 
@@ -38,8 +37,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class ConditionalMixinManager {
-    public static final Logger LOGGER = LoggerFactory.getLogger("Railways/MixinPlugin");
-
     public static boolean shouldApply(String className) {
         try {
             List<AnnotationNode> annotationNodes = MixinService.getService().getBytecodeProvider().getClassNode(className).visibleAnnotations;
@@ -52,7 +49,7 @@ public class ConditionalMixinManager {
                     boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
                     boolean anyModsLoaded = anyModsLoaded(mods);
                     shouldApply = anyModsLoaded == applyIfPresent;
-                    LOGGER.info("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
+                    CRMixinPlugin.LOGGER.info("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
                 }
                 if (node.desc.equals(Type.getDescriptor(DevMixin.class))) {
                     shouldApply &= Utils.isDevEnv();
