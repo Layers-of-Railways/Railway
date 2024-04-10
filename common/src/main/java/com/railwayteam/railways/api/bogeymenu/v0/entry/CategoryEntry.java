@@ -2,6 +2,7 @@ package com.railwayteam.railways.api.bogeymenu.v0.entry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
+import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
@@ -62,7 +63,7 @@ public class CategoryEntry {
                         cachedEntryList.add(BogeyEntry.STYLE_TO_ENTRY.get(style));
                     } else {
                         // uh oh, we're going to have to guess values here...
-                        cachedEntryList.add(BogeyEntry.getOrCreate(style, null, 24));
+                        cachedEntryList.add(BogeyEntry.getOrCreate(style, null, BogeyMenuManagerImpl.defaultScale));
                     }
                 }
                 cachedVersion = version;
