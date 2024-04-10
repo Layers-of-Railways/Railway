@@ -24,7 +24,8 @@ public enum Mods {
 	CREATE_DD("create_dd"),
 	QUARK("quark"),
 	MALILIB("malilib"),
-	TWEAKEROO("tweakeroo")
+	TWEAKEROO("tweakeroo"),
+	EXTENDEDFLYWHEELS("extendedflywheels")
 	;
 
 	public final boolean isLoaded;
