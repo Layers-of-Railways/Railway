@@ -71,10 +71,10 @@ public class GenericTrackCompat {
             if (baseBlock.isEmpty()) {
                 if (!shouldRegisterMissing()) continue; // skip if we shouldn't register tracks for missing base blocks
                 if (isDataGen() || Utils.isDevEnv())
-                    Railways.LOGGER.error("Failed to locate base block at "+getSlabLocation(name)+" for "+asResource(name));
+                    Railways.LOGGER.error("Failed to locate base block at {} for {}", getSlabLocation(name), asResource(name));
             }
             // standard gauge
-            TrackMaterial standardMaterial = buildCompatModels(make(asResource(name))
+            TrackMaterial standardMaterial = buildCompatModels(this, make(asResource(name))
                 .lang(langName(name))
                 .block(() -> BLOCKS.get(name))
                 .particle(asResource("block/track/"+name+"/standard_track_crossing_"+name))
@@ -135,6 +135,10 @@ public class GenericTrackCompat {
         return asResource(name+"_slab");
     }
 
+    protected String getLang(String name) {
+        return name;
+    }
+
     protected Ingredient getIngredientForRail() {
         return Ingredient.fromValues(Stream.of(
                 AccessorIngredient_TagValue.railways$create(CommonTags.IRON_NUGGETS.tag),
@@ -144,7 +148,7 @@ public class GenericTrackCompat {
 
     private TrackMaterial wideVariant(TrackMaterial material) {
         String path = material.id.getPath() + "_wide";
-        return buildCompatModels(make(asResource(path))
+        return buildCompatModels(this, make(asResource(path))
             .lang("Wide " + material.langName)
             .trackType(CRTrackType.WIDE_GAUGE)
             .block(() -> CRBlocks.WIDE_GAUGE_TRACKS.get(CRTrackMaterials.WIDE_GAUGE.get(material)))
@@ -154,7 +158,7 @@ public class GenericTrackCompat {
 
     private TrackMaterial narrowVariant(TrackMaterial material) {
         String path = material.id.getPath() + "_narrow";
-        return buildCompatModels(make(asResource(path))
+        return buildCompatModels(this, make(asResource(path))
             .lang("Narrow " + material.langName)
             .trackType(CRTrackType.NARROW_GAUGE)
             .block(() -> CRBlocks.NARROW_GAUGE_TRACKS.get(CRTrackMaterials.NARROW_GAUGE.get(material)))

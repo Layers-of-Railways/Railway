@@ -19,10 +19,22 @@ public class QuarkTrackCompat extends GenericTrackCompat {
             "azalea", "azalea_planks_slab"
     );
 
+    private static final Map<String, String> lang_map = ImmutableMap.of(
+            "blossom", "Trumpet",
+            "ancient", "Ashen"
+    );
+
     @Override
     protected ResourceLocation getSlabLocation(String name) {
         if (slab_map.containsKey(name)) return asResource(slab_map.get(name));
         return super.getSlabLocation(name);
+    }
+
+    @Override
+    protected String getLang(String name) {
+        if (lang_map.containsKey(name))
+            return lang_map.get(name);
+        return super.getLang(name);
     }
 
     private static boolean registered = false;

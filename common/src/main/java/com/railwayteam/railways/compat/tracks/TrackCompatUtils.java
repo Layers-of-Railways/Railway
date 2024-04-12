@@ -125,14 +125,21 @@ public abstract class TrackCompatUtils {
             .register();
     }
 
-    public static TrackMaterial buildCompatModels(TrackMaterialFactory factory) {
+    public static TrackMaterial buildCompatModels(GenericTrackCompat trackCompat, TrackMaterialFactory factory) {
         String namespace = ((AccessorTrackMaterialFactory)factory).getId().getNamespace();
         String path = ((AccessorTrackMaterialFactory)factory).getId().getPath();
         String prefix = "block/track/compat/" + namespace + "/" + path + "/";
-        return factory.customModels(
-            () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
-            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
-            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
-        ).build();
+
+        TrackMaterialFactory materialFactory = factory.customModels(
+                () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
+                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
+                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
+        );
+
+        String customLang = trackCompat.getLang(path);
+        if (!path.equals(customLang))
+            materialFactory.lang(customLang);
+
+        return materialFactory.build();
     }
 }
