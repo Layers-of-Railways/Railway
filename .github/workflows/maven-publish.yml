@@ -1,17 +1,23 @@
-name: Build
+name: Publish Maven Release
 
 on:
   workflow_dispatch:
-  push:
-    paths-ignore:
-      - .docs/**
-  pull_request:
-    paths-ignore:
-      - .docs/**
+    inputs:
+      platform:
+        type: choice
+        description: Platform
+        options:
+          - fabric
+          - forge
+          - common
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_BUILD: true
+      MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -30,6 +36,4 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build & Publish to Maven
-        env:
-          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-        run: ./gradlew build publish
+        run: ./gradlew build :${{ inputs.platform }}:publish
