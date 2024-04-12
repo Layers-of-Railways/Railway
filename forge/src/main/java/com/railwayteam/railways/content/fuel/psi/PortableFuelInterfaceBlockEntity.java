@@ -96,8 +96,7 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            if (!isConnected())
-                return 0;
+            if (!isConnected() || wrapped == null) return 0;
             int fill = wrapped.fill(resource, action);
             if (fill > 0 && action.execute())
                 keepAlive();

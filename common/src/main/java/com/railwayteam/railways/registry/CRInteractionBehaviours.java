@@ -9,10 +9,10 @@ import net.minecraft.world.level.block.Blocks;
 
 public class CRInteractionBehaviours {
     public static void register() {
-        add(Blocks.CRAFTING_TABLE, new GuiBlockMovingInteractionBehaviour());
-        add(Blocks.LOOM, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.CARTOGRAPHY_TABLE, new GuiBlockMovingInteractionBehaviour());
+        add(Blocks.CRAFTING_TABLE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.GRINDSTONE, new GuiBlockMovingInteractionBehaviour());
+        add(Blocks.LOOM, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.SMITHING_TABLE, new GuiBlockMovingInteractionBehaviour());
         add(Blocks.STONECUTTER, new GuiBlockMovingInteractionBehaviour());
     }
