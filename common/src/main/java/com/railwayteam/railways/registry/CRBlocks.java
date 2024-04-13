@@ -213,7 +213,10 @@ public class CRBlocks {
                 .tab(() -> CRItems.mainCreativeTab)
                 .model((c, p) -> p.withExistingParent(c.getName(), Railways.asResource("block/smokestack_" + variant + "_steel")))
                 .tag(cycleTag)
-            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.smokestack"))
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> {
+                if (!variant.equals("caboosestyle"))
+                    ItemDescription.useKey(v, "block.railways.smokestack");
+            })
             .build()
             .register();
 
