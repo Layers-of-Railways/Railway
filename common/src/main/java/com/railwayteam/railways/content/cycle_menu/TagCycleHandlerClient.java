@@ -1,11 +1,11 @@
 package com.railwayteam.railways.content.cycle_menu;
 
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.registry.CRKeys;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.packet.TagCycleSelectionPacket;
-import com.simibubi.create.AllKeys;
 import com.simibubi.create.foundation.gui.ScreenOpener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,7 +32,7 @@ public class TagCycleHandlerClient {
 
     @MultiLoaderEvent
     public static void clientTick() {
-        if (COOLDOWN > 0 && !AllKeys.TOOL_MENU.isPressed())
+        if (COOLDOWN > 0 && !CRKeys.CYCLE_MENU.isPressed())
             COOLDOWN--;
     }
 
@@ -46,7 +46,7 @@ public class TagCycleHandlerClient {
         if (mc.gameMode == null || mc.gameMode.getPlayerMode() == GameType.SPECTATOR)
             return;
 
-        if (key != AllKeys.TOOL_MENU.getBoundCode() || !pressed)
+        if (key != CRKeys.CYCLE_MENU.getBoundCode() || !pressed)
             return;
         if (COOLDOWN > 0)
             return;
