@@ -1,6 +1,7 @@
 ------------------------------------------------------
 Version 1.6.2
 ------------------------------------------------------
+Fixes
 - Fix narrow mono buffer model
 - Fix Quark compat recipes
 - Fix crash when deploying a whistle onto a station when unbound
@@ -9,6 +10,10 @@ Version 1.6.2
 - Fix Trains burning liquid fuel excessively quick
 - Fix semi-blind and fully-blind wheels having a 180 degrees rotated texture on one side
 - Fix random mono-bogey frame rendering
+- Fix Track Buffer tooltip
+- Fix Caboose Style tooltip
+- Fix Bogey Menu & Cycle Menu keybinding not showing up on forge
+- Fix generic radial menus not respecting keybind
 ------------------------------------------------------
 Version 1.6.1
 ------------------------------------------------------
