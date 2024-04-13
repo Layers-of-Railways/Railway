@@ -4,8 +4,9 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
-import com.railwayteam.railways.multiloader.CommonTags;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.stream.Stream;
@@ -18,8 +19,8 @@ public class TFCTrackCompat extends GenericTrackCompat {
     @Override
     protected Ingredient getIngredientForRail() {
         return Ingredient.fromValues(Stream.of(
-                AccessorIngredient_TagValue.railways$create(CommonTags.TFC_IRON_ROD.tag),
-                AccessorIngredient_TagValue.railways$create(CommonTags.TFC_ZINC_ROD.tag)
+                AccessorIngredient_TagValue.railways$create(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "rods/wrought_iron"))),
+                AccessorIngredient_TagValue.railways$create(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "rods/zinc")))
         ));
     }
 

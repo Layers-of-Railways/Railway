@@ -69,8 +69,6 @@ public class CRTagGen {
 		CommonTags.BRASS_PLATES.generateCommon(prov);
 		CommonTags.WORKBENCH.generateCommon(prov)
 				.generateBoth(prov, tag -> tag.add(Items.CRAFTING_TABLE.builtInRegistryHolder().key()));
-		CommonTags.TFC_IRON_ROD.generateCommon(prov);
-		CommonTags.TFC_ZINC_ROD.generateCommon(prov);
 
 		prov.addTag(AllItemTags.NOT_TRAIN_FUEL.tag);
 

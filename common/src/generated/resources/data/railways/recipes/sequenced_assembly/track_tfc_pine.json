@@ -32,10 +32,10 @@
         },
         [
           {
-            "tag": "railways:internal/rods/wrought_iron"
+            "tag": "forge:rods/wrought_iron"
           },
           {
-            "tag": "railways:internal/rods/zinc"
+            "tag": "forge:rods/zinc"
           }
         ]
       ],
@@ -53,10 +53,10 @@
         },
         [
           {
-            "tag": "railways:internal/rods/wrought_iron"
+            "tag": "forge:rods/wrought_iron"
           },
           {
-            "tag": "railways:internal/rods/zinc"
+            "tag": "forge:rods/zinc"
           }
         ]
       ],

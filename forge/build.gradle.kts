@@ -24,10 +24,7 @@ dependencies {
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
 
     // Development QOL
-//    modLocalRuntime("mezz.jei:jei-${minecraft_version}-forge:${jei_forge_version}")
-
-    // if you would like to add integration with JEI, uncomment this line.
-//    modCompileOnly("mezz.jei:jei-${minecraft_version}:${jei_forge_version}:api")
+    modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
 
     // Test with JourneyMap in dev
     modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
@@ -71,7 +68,7 @@ dependencies {
     }
 
     if ("enable_tfc"().toBoolean()) {
-        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}-FORGE")
         modLocalRuntime("maven.modrinth:terrafirmacraft:${"tfc_version"()}")
     }
 

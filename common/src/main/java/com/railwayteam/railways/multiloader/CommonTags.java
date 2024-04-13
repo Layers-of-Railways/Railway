@@ -27,12 +27,6 @@ public class CommonTags {
 			IRON_INGOTS = item("ingots/iron_ingots", "iron_ingots", "ingots/iron"),
 			WORKBENCH = item("workbench");
 
-
-	// TFC Compat Tags
-	public static final CommonTag<Item>
-			TFC_IRON_ROD = item("rods/wrought_iron"),
-			TFC_ZINC_ROD = item("rods/zinc");
-
 	public static final Map<DyeColor, CommonTag<Item>> DYES = Util.make(new EnumMap<>(DyeColor.class), dyes -> {
 		for (DyeColor color : DyeColor.values()) {
 			String name = color.getName();
