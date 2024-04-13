@@ -42,8 +42,11 @@ public class ClientEventsForge {
 			ClientEvents.onTagsUpdated();
 	}
 
-	@SubscribeEvent
-	public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-		CRKeysImpl.onRegisterKeyMappings(event);
+	@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+	public static class ModBusEvents {
+		@SubscribeEvent
+		public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+			CRKeysImpl.onRegisterKeyMappings(event);
+		}
 	}
 }
