@@ -739,7 +739,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Void, LinkPinBlock.Style> LINK_AND_PIN_GROUP
         = new BlockStateBlockItemGroup<>(null, LinkPinBlock.STYLE, LinkPinBlock.Style.values(), LINK_AND_PIN,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.buffer");
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
         .initialProperties(SharedProperties::softMetal)
@@ -757,7 +757,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -777,7 +777,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -802,7 +802,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.buffer_wood");
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.headstock_wood");
 
     public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
         .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
@@ -829,7 +829,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
-        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.buffer");
+        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
         REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)

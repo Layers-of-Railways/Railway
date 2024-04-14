@@ -28,11 +28,14 @@
   "block.railways.smokestack.tooltip.condition2": "When you use soul sand or soul soil on a smokestack",
   "block.railways.smokestack.tooltip.behaviour2": "The _emitted smoke_ will change to _soul smoke_",
 
-  "block.railways.buffer.tooltip": "BUFFER",
-  "block.railways.buffer.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block. Can be dyed by _clicking_ with dye.",
+  "block.railways.headstock.tooltip": "HEADSTOCK",
+  "block.railways.headstock.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block. Can be dyed by _clicking_ with dye.",
 
-  "block.railways.buffer_wood.tooltip": "BUFFER WOOD",
-  "block.railways.buffer_wood.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block. Can be dyed by _clicking_ with dye. Wood backboard can be changed by _clicking_ with planks.",
+  "block.railways.headstock_wood.tooltip": "HEADSTOCK WOOD",
+  "block.railways.headstock_wood.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block. Can be dyed by _clicking_ with dye. Wood backboard can be changed by _clicking_ with planks.",
+
+  "block.railways.buffer.tooltip": "BUFFER",
+  "block.railways.buffer.tooltip.summary": "Can be dyed by _clicking_ with dye.",
 
   "block.railways.track_buffer.tooltip": "TRACK BUFFER",
   "block.railways.track_buffer.tooltip.summary": "_Variant_ can be changed by _wrenching the front face_, can be dyed by _clicking_ with dye and the wood board can be changed by _clicking_ with planks."
