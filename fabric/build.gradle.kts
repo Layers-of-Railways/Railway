@@ -52,6 +52,14 @@ dependencies {
         modLocalRuntime("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
     }
 
+    if ("enable_xaeros_maps"().toBoolean()) {
+        modImplementation("maven.modrinth:xaeros-minimap:${"xaeros_minimap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
+        modImplementation("maven.modrinth:xaeros-world-map:${"xaeros_worldmap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
+    } else {
+        modCompileOnly("maven.modrinth:xaeros-minimap:${"xaeros_minimap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
+        modCompileOnly("maven.modrinth:xaeros-world-map:${"xaeros_worldmap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
+    }
+
     // because create fabric is a bit broken I think
     modImplementation("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
 
@@ -79,6 +87,7 @@ dependencies {
         modLocalRuntime("org.joml:joml:1.10.2")
         modLocalRuntime("maven.modrinth:indium:${"indium_version"()}")
     }
+
     if ("enable_iris"().toBoolean()) {
         modLocalRuntime("maven.modrinth:iris:${"iris_version"()}")
         modLocalRuntime("org.anarres:jcpp:1.4.14")

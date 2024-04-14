@@ -39,6 +39,14 @@ dependencies {
         modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${"voicechat_version"()}")
     }
 
+    if ("enable_xaeros_maps"().toBoolean()) {
+        modImplementation("maven.modrinth:xaeros-minimap:${"xaeros_minimap_version"()}_Forge_${"xaeros_maps_mc_version"()}")
+        modImplementation("maven.modrinth:xaeros-world-map:${"xaeros_worldmap_version"()}_Forge_${"xaeros_maps_mc_version"()}")
+    } else {
+        modCompileOnly("maven.modrinth:xaeros-minimap:${"xaeros_minimap_version"()}_Forge_${"xaeros_maps_mc_version"()}")
+        modCompileOnly("maven.modrinth:xaeros-world-map:${"xaeros_worldmap_version"()}_Forge_${"xaeros_maps_mc_version"()}")
+    }
+
     // mod compat for tracks
     if ("enable_hexcasting"().toBoolean()) {
         modLocalRuntime("at.petra-k.paucal:paucal-forge-${"minecraft_version"()}:${"paucal_version"()}")
@@ -56,15 +64,19 @@ dependencies {
     if ("enable_byg"().toBoolean()) {
         modLocalRuntime("maven.modrinth:biomesyougo:${"byg_version"()}-forge")
     }
+
     if ("enable_byg"().toBoolean() || "enable_bop"().toBoolean()) {
         modLocalRuntime("maven.modrinth:terrablender:${"terrablender_version_forge"()}")
     }
+
     if ("enable_bop"().toBoolean()) {
         modLocalRuntime("curse.maven:biomesoplenty-220318:${"bop_version"()}")
     }
+
     if ("enable_dnd"().toBoolean()) {
         modLocalRuntime("maven.modrinth:create-dreams-and-desires:${"dnd_version"()}")
     }
+
     if ("enable_quark"().toBoolean()) {
         modLocalRuntime("maven.modrinth:quark:${"minecraft_version"()}-${"quark_version"()}")
         modLocalRuntime("vazkii.autoreglib:AutoRegLib:${"arl_version"()}")

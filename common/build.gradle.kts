@@ -33,12 +33,9 @@ dependencies {
     modCompileOnly("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
     modCompileOnly("maven.modrinth:sodium:${"sodium_version"()}")
 
-    // mod compat for tracks
-
-    // Hex Casting
-/*    modCompileOnly("at.petra-k.paucal:paucal-common-${minecraft_version}:${paucal_version}")
-    modCompileOnly("at.petra-k.hexcasting:hexcasting-common-${minecraft_version}:${hexcasting_version}")
-    modCompileOnly("vazkii.patchouli:Patchouli-xplat:${minecraft_version}-${patchouli_version}")*/
+    // Xaeros compat
+    modCompileOnly("maven.modrinth:xaeros-minimap:${"xaeros_minimap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
+    modCompileOnly("maven.modrinth:xaeros-world-map:${"xaeros_worldmap_version"()}_Fabric_${"xaeros_maps_mc_version"()}")
 
     annotationProcessor(implementation("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
 }
