@@ -33,7 +33,7 @@
   "block.railways.blue_riveted_locometal": "Blue Riveted Locometal",
   "block.railways.blue_slashed_locometal": "Blue Slashed Locometal",
   "block.railways.boiler.tooltip": "BOILER",
-  "block.railways.boiler.tooltip.summary": "Use a wrench to change the style, or sneak while placing to raise the boiler half a block.",
+  "block.railways.boiler.tooltip.summary": "_Wrench_ the face of boiler to change it to a _smokebox door_, Sneak while placing to _raise_ the boiler up _half_ a block.",
   "block.railways.brass_wrapped_locometal": "Brass Wrapped Locometal",
   "block.railways.brass_wrapped_locometal_boiler": "Brass Wrapped Locometal Boiler",
   "block.railways.brown_brass_wrapped_locometal": "Brown Brass Wrapped Locometal",
