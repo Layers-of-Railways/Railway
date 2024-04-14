@@ -11,6 +11,7 @@ Fixes
 - Fix semi-blind and fully-blind wheels having a 180 degrees rotated texture on one side
 - Fix random mono-bogey frame rendering
 - Fix Track Buffer tooltip
+- Fix Wooden Headstock tooltip
 - Fix Caboose Style tooltip
 - Fix Bogey Menu & Cycle Menu keybinding not showing up on forge
 - Fix generic radial menus not respecting keybind
