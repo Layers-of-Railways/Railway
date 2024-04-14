@@ -14,6 +14,7 @@ Fixes
 - Fix Caboose Style tooltip
 - Fix Bogey Menu & Cycle Menu keybinding not showing up on forge
 - Fix generic radial menus not respecting keybind
+- Fix texture for double smokestack
 ------------------------------------------------------
 Version 1.6.1
 ------------------------------------------------------
