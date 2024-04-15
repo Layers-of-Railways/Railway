@@ -1,4 +1,10 @@
 {
   "parent": "create:block/large_wheels",
-  "ambient_occlusion": false
+  "ambient_occlusion": false,
+  "display": {
+    "gui": {
+      "rotation": [30, 90, 0],
+      "scale": [0.4, 0.4, 0.4]
+    }
+  }
 }
