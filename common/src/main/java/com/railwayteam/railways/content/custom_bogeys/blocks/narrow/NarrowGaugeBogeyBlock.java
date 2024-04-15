@@ -1,6 +1,6 @@
 package com.railwayteam.railways.content.custom_bogeys.blocks.narrow;
 
-import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.content.trains.bogey.BogeySizes;

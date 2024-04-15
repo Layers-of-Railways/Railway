@@ -2,7 +2,7 @@ package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
-import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.AbstractMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;

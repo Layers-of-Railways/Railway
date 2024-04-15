@@ -1,11 +1,11 @@
 package com.railwayteam.railways.content.custom_bogeys.blocks.standard.large;
 
-import com.railwayteam.railways.content.custom_bogeys.CRBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.base.size.LargeBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import net.minecraft.world.phys.Vec3;
 
-public class LargeCreateStyle0100BogeyBlock extends CRBogeyBlock {
+public class LargeCreateStyle0100BogeyBlock extends LargeBogeyBlock {
     public LargeCreateStyle0100BogeyBlock(Properties props) {
         super(props, CRBogeyStyles.LARGE_CREATE_STYLED_0_10_0, BogeySizes.LARGE);
     }

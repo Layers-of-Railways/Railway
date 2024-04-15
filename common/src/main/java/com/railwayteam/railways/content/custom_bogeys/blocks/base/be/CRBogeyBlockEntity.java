@@ -1,5 +1,6 @@
-package com.railwayteam.railways.content.custom_bogeys;
+package com.railwayteam.railways.content.custom_bogeys.blocks.base.be;
 
+import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
