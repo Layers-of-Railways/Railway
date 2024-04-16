@@ -49,7 +49,7 @@ public class ConditionalMixinManager {
                     boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
                     boolean anyModsLoaded = anyModsLoaded(mods);
                     shouldApply = anyModsLoaded == applyIfPresent;
-                    CRMixinPlugin.LOGGER.info("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
+                    CRMixinPlugin.LOGGER.debug("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
                 }
                 if (node.desc.equals(Type.getDescriptor(DevMixin.class))) {
                     shouldApply &= Utils.isDevEnv();
