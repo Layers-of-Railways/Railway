@@ -1,4 +1,4 @@
-# Bogies Menu
+# OLD Bogies Menu
 Menu is used to select bogies, to access it hold the button that is used for Focus Schematic Overlay (assigned primary to the left **ALT** button) while having **Train Casing** in the main hand.
 
 ![Bogie Menu ver. 1.5](https://github.com/StarFluxie/Images-archive/assets/140427286/8d4b6598-45c7-4492-a432-e2391ea820cf)
