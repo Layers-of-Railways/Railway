@@ -2,7 +2,7 @@
 Its a block that slows incoming trains to the stop. Commonly used at the end of the track.  
 
 # Recipe
-3x Any Wooden Headstock + 3x Metal Girder + 2x Industrial Iron Block
+3x Any [Wooden Headstocks](https://github.com/Layers-of-Railways/Railway/wiki/Deco-Blocks#wooden-headstocks) + 3x Metal Girder + 2x Industrial Iron Block
 ![track buffer stop recipe](https://github.com/StarFluxie/Images-archive/assets/140427286/8f5686af-174d-40c3-9a6d-a645f0252454)
 
 
