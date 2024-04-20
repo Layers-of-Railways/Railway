@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AllKeys.class)
 public class AllKeysMixin {
-    @Inject(method = "register", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/event/RegisterKeyMappingsEvent;register(Lnet/minecraft/client/KeyMapping;)V"))
+    @Inject(method = "register", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/client/event/RegisterKeyMappingsEvent;register(Lnet/minecraft/client/KeyMapping;)V"), remap = false)
     private static void railways$addCreateKeysToNonConflictSet(CallbackInfo ci, @Local AllKeys key) {
         CRKeys.NON_CONFLICTING_KEYMAPPINGS.add(key.getKeybind());
     }
