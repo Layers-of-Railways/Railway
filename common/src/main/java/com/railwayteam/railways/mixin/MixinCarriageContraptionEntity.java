@@ -229,7 +229,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
         if (bufferBlockedTrain.railways$isControlBlocked()) {
             double blockedSign = bufferBlockedTrain.railways$getBlockedSign();
-            if (blockedSign == 0 || blockedSign == Mth.sign(targetSpeed)) {
+            if ((blockedSign == 0 && targetSpeed > 0) || blockedSign == Mth.sign(targetSpeed)) {
                 targetSpeedRef.set(0);
             }
         }
