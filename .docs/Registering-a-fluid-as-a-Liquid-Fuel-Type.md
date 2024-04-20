@@ -6,7 +6,7 @@ Adding a custom type is quite simple - just set up a basic datapack (more inform
 | Key           | Value Type   | Default Value | Description                                                                                                                                                                                  |
 |---------------|--------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `fluids`      | string array | N/A           | Each string represents the namespaced identifier of an fluid or tag that holds fluids that will have this type applied to it.                                                                |     
-| `fuel_ticks`  | integer      | `40`          | The amount of ticks of fuel time this the fluids above add to the timer, based on one tenth of a bucket, 100mb = 40 ticks by default (for context: 50 ticks is the default for lava buckets) |
+| `fuel_ticks`  | integer      | `400`           | The amount of ticks of fuel time this the fluids above add to the timer, based on one tenth of a bucket, 100mb = 400 ticks by default (for context: 500 ticks is the default for lava buckets) |
 | `invalid` | boolean      | `false`       | Should this fluid type be marked as invalid and removed as a fuel type.                                                                                                                      |
 
 ## Other Information

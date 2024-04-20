@@ -1,6 +1,13 @@
+
 Its a block that slows incoming trains to the stop. Commonly used at the end of the track.  
+
+# Recipe
+3x Any [Wooden Headstocks](https://github.com/Layers-of-Railways/Railway/wiki/Deco-Blocks#wooden-headstocks) + 3x Metal Girder + 2x Industrial Iron Block
+![track buffer stop recipe](https://github.com/StarFluxie/Images-archive/assets/140427286/8f5686af-174d-40c3-9a6d-a645f0252454)
+
+
 # Customizing the appearance.
-![2024-01-04_23 28 23](https://github.com/StarFluxie/Images-archive/assets/140427286/f3c50661-da68-40cc-b67c-b66899ee63f5)
+![colored track buffer](https://github.com/StarFluxie/Images-archive/assets/140427286/192b8e12-d7f0-4a08-a4ca-5014be4a790e)
 
 * You can click with any plank to change the wood type of the board.
 * You can dye its buffers by clicking it with a dye.
@@ -10,33 +17,35 @@ Its a block that slows incoming trains to the stop. Commonly used at the end of 
 
 ### Narrow gauge track
 Version with two buffers.
-![Buffer_Stop_Narrow_2buff](https://github.com/StarFluxie/Images-archive/assets/140427286/6cf56903-3517-4e77-acee-1cd09033d7f6)  
+![narrow gauge track buffer duo](https://github.com/StarFluxie/Images-archive/assets/140427286/c0804c29-d42e-4379-aa8a-28eea3c1319d)
 
 Version with one buffer.
-![Buffer_Stop_Narrow_1buff](https://github.com/StarFluxie/Images-archive/assets/140427286/a6101afe-69ba-4115-ae8f-3e34dbff724f)
+![narrow gauge track buffer mono](https://github.com/StarFluxie/Images-archive/assets/140427286/e4661106-a89e-455a-a673-aa1701630534)
 ***
 
 ### Standard gauge track
 Version with long base.
-![Buffer_Stop_Standard_long](https://github.com/StarFluxie/Images-archive/assets/140427286/cdd98391-7f66-4fbd-ae57-83643757af9f)  
+![standard gauge track buffer](https://github.com/StarFluxie/Images-archive/assets/140427286/f2a4ebda-9e64-48ae-8c4a-2420235abb9d)
 
 Version with short base.
-![Buffer_Stop_Standard_short](https://github.com/StarFluxie/Images-archive/assets/140427286/46a137a0-103a-4a56-b60b-14722f9d8c16)
+![standard gauge track buffer short supp](https://github.com/StarFluxie/Images-archive/assets/140427286/f5b629ce-bd0d-4664-8357-77b632ab4d87)
 ***
 
 ### Wide gauge track
-![Buffer_Stop_Wide](https://github.com/StarFluxie/Images-archive/assets/140427286/9c93ec9e-4b94-4129-83fd-cd6d4fd46f8d)
+![wide gauge track buffer](https://github.com/StarFluxie/Images-archive/assets/140427286/3dc9acf4-dabb-4077-bc02-fb2ceb8613ad)
 
 ***
 ### Monorail Track
-Version with two buffers.
-![Buffer_Stop_Monorail_2buff](https://github.com/StarFluxie/Images-archive/assets/140427286/e3a3b728-e394-460c-8510-12ba0bff9c17) 
- 
-Version with one buffer.
-![Buffer_Stop_Monorail_1buff](https://github.com/StarFluxie/Images-archive/assets/140427286/e1d679cb-b6ed-4eab-9078-09850a6b8b5e)  
+Version with two buffers. Can be also placed underneath the track.
+![monorail track buffer duo](https://github.com/StarFluxie/Images-archive/assets/140427286/ed371dc8-dc70-4cd7-bfca-3b1e02347a8e)
+![monorail track buffer duo upsidedown](https://github.com/StarFluxie/Images-archive/assets/140427286/8922c465-15fa-4172-b4e0-0c8505a14e45)
 
-Version with buffers on the sides of the track.
-![Buffer_Stop_Monorail_sides](https://github.com/StarFluxie/Images-archive/assets/140427286/257919e4-47b2-4c2f-bf4c-2a7c59dc62f2)
+Version with one buffer. Can be also placed underneath the track.
+![monorail track buffer mono](https://github.com/StarFluxie/Images-archive/assets/140427286/02cdb39c-082c-4bb9-a565-1035a9e92acb) 
+![monorail track buffer mono upsidedown](https://github.com/StarFluxie/Images-archive/assets/140427286/3858e562-9d82-4544-8986-33cd38194e4b) 
+
+Version with buffers on the sides of the track. Can be also placed underneath the track.
+![monorail track buffer on sides](https://github.com/StarFluxie/Images-archive/assets/140427286/a7f56108-e232-4c6b-9616-64381ca63c82)
 
 
 

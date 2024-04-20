@@ -70,9 +70,9 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
 
     @Override
-    public void railways$setControlBlocked(boolean controlBlocked) {
+    public void railways$setControlBlocked(boolean controlBlocked, boolean forceBackwards) {
         railways$controlBlockedTicks = controlBlocked ? 3 : -1;
-        railways$controlBlockedSign = Mth.sign(speed);
+        railways$controlBlockedSign = forceBackwards ? -1 : Mth.sign(speed);
     }
 
     @Override

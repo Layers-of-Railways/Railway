@@ -17,15 +17,15 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.narrow.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.DoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.SingleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.TripleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.large.*;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.standard.medium.*;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.gauge.wide.WideGaugeComicallyLargeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
@@ -651,7 +651,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Void, LinkPinBlock.Style> LINK_AND_PIN_GROUP
         = new BlockStateBlockItemGroup<>(null, LinkPinBlock.STYLE, LinkPinBlock.Style.values(), LINK_AND_PIN,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.buffer");
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
         .initialProperties(SharedProperties::softMetal)
@@ -663,7 +663,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
-        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -677,7 +677,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
-        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+        .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -696,7 +696,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.buffer_wood");
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.headstock_wood");
 
     public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
         .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
@@ -716,7 +716,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
-        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.buffer");
+        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
         REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)

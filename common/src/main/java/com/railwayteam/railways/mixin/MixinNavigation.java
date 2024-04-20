@@ -415,7 +415,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Unique
     private void railways$updateControlsBlockInternal(boolean simulate, boolean forceBackwards) {
-        ((IBufferBlockedTrain) train).railways$setControlBlocked(false);
+        ((IBufferBlockedTrain) train).railways$setControlBlocked(false, forceBackwards);
         if (destination == null) {
             double acceleration = train.acceleration();
             double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
@@ -466,7 +466,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             }*/
 
             if (targetDistance < 3)
-                ((IBufferBlockedTrain) train).railways$setControlBlocked(true);
+                ((IBufferBlockedTrain) train).railways$setControlBlocked(true, forceBackwards);
 
             if (simulate)
                 return;

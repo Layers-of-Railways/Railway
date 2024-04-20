@@ -8,6 +8,9 @@ https://github.com/StarFluxie/Images-archive/assets/140427286/7323f65f-ec69-453c
 ![Andesite Switch](https://github.com/StarFluxie/Images-archive/assets/140427286/1f34cbac-beee-4c54-bb6f-847ed013da76)
 
 Andesite switch can be switched by hand, arrow or redstone.
+#### Recipe
+![andesite switch recipe](https://github.com/StarFluxie/Images-archive/assets/140427286/f04d2a09-37f2-46f1-8208-fb29012f5b0b)
+
 
 #### **Manual Switching**
 To switch it by hand,
@@ -53,8 +56,12 @@ If switch you are approaching is locked, lock symbol will be light up.
 ***
 
 ### **Brass Switch**
-![Brass Switch](https://github.com/StarFluxie/Images-archive/assets/140427286/b182a7b2-0777-4393-8f2f-7e5f65ecdd64)  
-Brass switch has all the functions of the Andesite one and few more. 
+![Brass Switch](https://github.com/StarFluxie/Images-archive/assets/140427286/b182a7b2-0777-4393-8f2f-7e5f65ecdd64)
+
+Brass switch has all the functions of the Andesite one and few more.
+#### Recipe
+![brass switch recipe](https://github.com/StarFluxie/Images-archive/assets/140427286/040c3fc2-fb1a-4b1e-b812-4ca54915430f)
+
 
 #### **Switching from the train**
 When you get brass switch pop up, while driving,
