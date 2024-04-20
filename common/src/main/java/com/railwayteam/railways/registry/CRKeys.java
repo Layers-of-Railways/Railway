@@ -8,6 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public enum CRKeys {
     BOGEY_MENU("bogey_menu", GLFW.GLFW_KEY_LEFT_ALT),
     CYCLE_MENU("cycle_menu", GLFW.GLFW_KEY_LEFT_ALT);
@@ -16,6 +19,9 @@ public enum CRKeys {
     private final String description;
     private final int key;
     private final boolean modifiable;
+
+    // Needed to make keys not appear to conflict between Steam 'n' Rails & Create
+    public static final Set<KeyMapping> NON_CONFLICTING_KEYMAPPINGS = new HashSet<>();
 
     CRKeys(String description, int defaultKey) {
         this.description = Railways.MODID + ".keyinfo." + description;
@@ -28,6 +34,7 @@ public enum CRKeys {
             if (!key.modifiable)
                 continue;
             key.keybind = new KeyMapping(key.description, key.key, Railways.NAME);
+            NON_CONFLICTING_KEYMAPPINGS.add(key.keybind);
             registerKeyBinding(key.keybind);
         }
     }
