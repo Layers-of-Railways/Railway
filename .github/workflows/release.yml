@@ -7,9 +7,9 @@ on:
         type: choice
         description: Platform
         options:
+          - both
           - fabric
           - forge
-          - both
 
 jobs:
   release:
