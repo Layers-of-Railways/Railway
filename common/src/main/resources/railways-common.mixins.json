@@ -30,7 +30,6 @@
     "MixinAbstractContainerMenu",
     "MixinAbstractMinecart",
     "MixinAbstractMinecart_Type",
-    "MixinAllKeys",
     "MixinBezierConnection",
     "MixinBlazeBurnerInteractionBehaviour",
     "MixinBlockBehaviour",

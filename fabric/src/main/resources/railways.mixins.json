@@ -13,6 +13,7 @@
     "client.TrainHUDMixin"
   ],
   "mixins": [
+    "AllKeysMixin",
     "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",

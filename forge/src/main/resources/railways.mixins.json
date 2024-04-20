@@ -11,11 +11,12 @@
     "client.TrainHUDMixin"
   ],
   "mixins": [
-    "MixinLootDataManager",
+    "AllKeysMixin",
     "ChunkMapAccessor",
     "ChunkMapAccessor$TrackedEntityAccessor",
     "ContainerLevelAccessMixin",
     "FluidNetworkMixin",
+    "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "RollingModeMixin",
