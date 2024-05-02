@@ -91,6 +91,9 @@ subprojects {
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
             officialMojangMappings { nameSyntheticMembers = false }
         })
+
+        // Used to decompile mixin dumps, needs to be on the classpath
+        implementation("org.vineflower:vineflower:1.10.0")
     }
 
     tasks.register<Copy>("moveBuiltJars") {
