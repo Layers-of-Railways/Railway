@@ -29,8 +29,8 @@ public class MixinPlayerInfo {
     @Unique private boolean railways$texturesLoaded;
     @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
-    // Replaces skin inside the dev env with the conductor skin
-    @Inject(method = "getSkinLocation", at = @At("HEAD"))
+    // Replaces skin inside the dev env with the conductor skin, won't crash if it fails to apply
+    @Inject(method = "getSkinLocation", at = @At("HEAD"), require = 0)
     private void registerSkinTextures(CallbackInfoReturnable<ResourceLocation> cir) {
         if (Utils.isDevEnv()) {
             this.textureLocations.put(
@@ -56,10 +56,13 @@ public class MixinPlayerInfo {
     }
 
     // Replaces skin model inside the dev env with the default "steve" skin model
-    @Inject(method = "registerTextures", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
-    ))
+    @Inject(method = "registerTextures",
+            at = @At(
+                value = "INVOKE",
+                target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
+            ),
+            require = 0 // Dev Env Mixin, Shouldn't crash if it fails
+    )
     private void railways$setModelToLarge(CallbackInfo ci) {
         if (Utils.isDevEnv()) {
             skinModel = "default";
