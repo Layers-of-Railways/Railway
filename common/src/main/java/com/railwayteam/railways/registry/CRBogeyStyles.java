@@ -35,6 +35,7 @@ import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -399,5 +400,12 @@ public class CRBogeyStyles {
                 addToCategory(ALL_TEST_CATEGORY, style);
             }
         }
+
+        fireReadyForRegistrationEvent();
+    }
+
+    @ExpectPlatform
+    public static void fireReadyForRegistrationEvent() {
+        throw new AssertionError();
     }
 }
