@@ -259,6 +259,10 @@ tasks.create("railwaysPublish") {
     }
 }
 
+tasks.create("railwaysBuild") {
+    dependsOn(tasks.build, tasks.publish)
+}
+
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String
         ?: throw IllegalStateException("Property $this is not defined")
