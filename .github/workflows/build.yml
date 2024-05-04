@@ -32,4 +32,4 @@ jobs:
       - name: Build & Publish to Maven
         env:
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-        run: ./gradlew build :fabric:publishMavenFabricPublicationToMavenRepository :forge:publishMavenForgePublicationToMavenRepository :common:publishMavenCommonPublicationToMavenRepository
+        run: ./gradlew build publish
