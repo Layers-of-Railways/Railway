@@ -91,16 +91,10 @@ subprojects {
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
             officialMojangMappings { nameSyntheticMembers = false }
         })
-    }
 
-    tasks.register<Copy>("moveBuiltJars") {
-        if (project.path != ":common") {
-            val remapJar by project.tasks.named<RemapJarTask>("remapJar")
-            dependsOn(remapJar)
-            from(remapJar)
-        }
-
-        into(rootProject.file("jars"))
+        // Used to decompile mixin dumps, needs to be on the classpath
+        // Uncomment if you want it to decompile mixin exports, beware it has very verbose logging.
+        //implementation("org.vineflower:vineflower:1.10.0")
     }
 
     publishing {
@@ -263,6 +257,10 @@ tasks.create("railwaysPublish") {
             dependsOn("${platform}:build", "${platform}:publish", "${platform}:publishMods")
         }
     }
+}
+
+tasks.create("railwaysBuild") {
+    dependsOn(tasks.build, tasks.publish)
 }
 
 operator fun String.invoke(): String {

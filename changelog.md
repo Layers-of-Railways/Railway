@@ -1,12 +1,10 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------
-Additions
-
 Fixes
-
-Removals
-
+- Fix Copycat headstock's being transparent when using shaders
+- Fix archbar bogey axle locations & Texture
+- Fix bad texture name causing a warning in logs
 ------------------------------------------------------
 Steam 'n' Rails 1.6.3
 ------------------------------------------------------

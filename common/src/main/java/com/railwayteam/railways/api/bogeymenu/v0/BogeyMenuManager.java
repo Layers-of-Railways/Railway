@@ -12,7 +12,12 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Handles adding bogies and categories to the Bogey UI
+ * <p>
+ * <b> IMPORTANT: </b> If you are depending on or using categories provided by Steam 'n' Rails you need to
+ * use the events we provide to load your class otherwise you risk unpredictable mod loading causing issues. {@link BogeyMenuEvents}
+ * An alternative to using this event on forge is setting a dependency on Steam 'n' Rails and settings ordering to AFTER so your mod loads after Steam 'n' Rails
  */
+@SuppressWarnings("JavadocReference")
 public interface BogeyMenuManager {
     BogeyMenuManager INSTANCE = new BogeyMenuManagerImpl();
 

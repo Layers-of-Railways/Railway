@@ -89,10 +89,6 @@ dependencies {
         modLocalRuntime("io.github.douira:glsl-transformer:2.0.0-pre13")
     }
 
-//    if ("enable_eb"().toBoolean()) {
-//        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_version"()}+fabric")
-//    }
-
     annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!)
 }
 

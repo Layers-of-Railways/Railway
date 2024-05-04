@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.buffer.headstock.fabric;
 
+import com.jozufozu.flywheel.fabric.model.FabricModelUtil;
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
@@ -13,8 +14,11 @@ import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
+import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
+import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
@@ -22,6 +26,8 @@ import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -48,6 +54,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -124,7 +131,18 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             }
         }
 
+        // fabric: If it is the default state do not push transformations, will cause issues with GhostBlockRenderer
+        boolean shouldTransform = material != AllBlocks.COPYCAT_BASE.getDefaultState();
+
+        // fabric: need to change the default render material
+        if (shouldTransform)
+            context.pushTransform(MaterialFixer.create(material));
+
         emitBlockQuadsInner(blockView, state, pos, randomSupplier, context, material, cullFaceRemovalData, occlusionData);
+
+        // fabric: pop the material changer transform
+        if (shouldTransform)
+            context.popTransform();
     }
 
     protected void emitBlockQuadsInner(@Nullable BlockAndTintGetter blockView, @Nullable BlockState state, @Nullable BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context, BlockState material, CullFaceRemovalData cullFaceRemovalData, OcclusionData occlusionData) {
@@ -348,6 +366,26 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
 
         public boolean shouldRemove(@Nullable Direction face) {
             return face != null && shouldRemove[face.get3DDataValue()];
+        }
+    }
+
+    private record MaterialFixer(RenderMaterial materialDefault) implements RenderContext.QuadTransform {
+        @Override
+        public boolean transform(MutableQuadView quad) {
+            BlendMode quadBlendMode = FabricModelUtil.getBlendMode(quad);
+            if (quadBlendMode == BlendMode.DEFAULT) {
+                // default needs to be changed from the Copycat's default (cutout) to the wrapped material's default.
+                quad.material(materialDefault);
+            }
+            return true;
+        }
+
+        public static MaterialFixer create(BlockState materialState) {
+            RenderType type = ItemBlockRenderTypes.getChunkRenderType(materialState);
+            BlendMode blendMode = BlendMode.fromRenderLayer(type);
+            MaterialFinder finder = Objects.requireNonNull(RendererAccess.INSTANCE.getRenderer()).materialFinder();
+            RenderMaterial renderMaterial = finder.blendMode(0, blendMode).find();
+            return new MaterialFixer(renderMaterial);
         }
     }
 }
