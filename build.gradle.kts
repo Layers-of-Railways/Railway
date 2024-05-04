@@ -274,7 +274,6 @@ fun Project.setupRepositories() {
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
-        exclusiveMaven("https://ldtteam.jfrog.io/artifactory/parchmentmc-public/", "org.parchmentmc.data")
         exclusiveMaven("https://maven.quiltmc.org/repository/release", "org.quiltmc") // Quilt Mappings
         maven("https://jm.gserv.me/repository/maven-public/") // JourneyMap API
         exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU, JourneyMap
@@ -303,6 +302,7 @@ fun Project.setupRepositories() {
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
         exclusiveMaven("https://maven.blamejared.com", "at.petra-k", "vazkii.patchouli") // JEI, Hex Casting
         exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
+        exclusiveMaven("https://maven.ithundxr.dev/mirror", "org.parchmentmc.data")
     }
 }
 
