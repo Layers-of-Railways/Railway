@@ -274,6 +274,7 @@ fun Project.setupRepositories() {
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
+        exclusiveMaven("https://ldtteam.jfrog.io/artifactory/parchmentmc-public/", "org.parchmentmc.data")
         exclusiveMaven("https://maven.quiltmc.org/repository/release", "org.quiltmc") // Quilt Mappings
         maven("https://jm.gserv.me/repository/maven-public/") // JourneyMap API
         exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU, JourneyMap
@@ -284,18 +285,6 @@ fun Project.setupRepositories() {
                 includeGroup("com.simibubi.create")
                 includeGroup("com.tterrag.registrate")
                 includeGroup("com.jozufozu.flywheel")
-            }
-        }
-        maven("https://maven.ithundxr.dev/private") { // Extended Bogeys
-            content { includeGroup("com.rabbitminers") }
-            credentials {
-                if (System.getenv("GITHUB_RUN_NUMBER") != null) {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
-                } else {
-                    username = findProperty("IThundxrMavenUsername").toString()
-                    password = findProperty("IThundxrMavenPassword").toString()
-                }
             }
         }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat

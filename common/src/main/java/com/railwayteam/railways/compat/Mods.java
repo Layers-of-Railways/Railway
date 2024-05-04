@@ -11,7 +11,6 @@ import java.util.function.Supplier;
  * For compatibility with and without another mod present, we have to define load conditions of the specific code
  */
 public enum Mods {
-	EXTENDEDBOGEYS("extendedbogeys"),
 	JOURNEYMAP("journeymap-fabric"),
 	BIOMESOPLENTY("biomesoplenty"),
 	BLUE_SKIES("blue_skies"),

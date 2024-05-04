@@ -74,10 +74,6 @@ dependencies {
         modLocalRuntime("maven.modrinth:rubidium:${"rubidium_version"()}")
     }
 
-    if ("enable_eb"().toBoolean()) {
-        modImplementation("com.rabbitminers:extendedbogeys-forge:${"EB_version"()}+forge-patch-")
-    }
-
     if ("enable_sc"().toBoolean()) {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
