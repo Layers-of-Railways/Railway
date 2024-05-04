@@ -53,7 +53,7 @@ public class ArchbarBogeyRenderer extends BogeyRenderer {
             if (!inInstancedContraption)
                 ms.pushPose();
             BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 11.975 / 16f, side * 0.8735)
+            wheel.translate(0, 11.975 / 16f, side * 0.998)
                     .rotateX(wheelAngle)
                     .render(ms, light, vb);
             if (!inInstancedContraption)

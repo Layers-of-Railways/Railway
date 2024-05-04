@@ -71,7 +71,6 @@ subprojects {
         silentMojangMappingsLicense()
         runs.configureEach {
             vmArg("-Dmixin.debug.export=true")
-            vmArg("-Dmixin.debug.decompile=false")
             vmArg("-Dmixin.env.remapRefMap=true")
             vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
         }
@@ -94,7 +93,8 @@ subprojects {
         })
 
         // Used to decompile mixin dumps, needs to be on the classpath
-        implementation("org.vineflower:vineflower:1.10.0")
+        // Uncomment if you want it to decompile mixin exports, beware it has very verbose logging.
+        //implementation("org.vineflower:vineflower:1.10.0")
     }
 
     tasks.register<Copy>("moveBuiltJars") {
