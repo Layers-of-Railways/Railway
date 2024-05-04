@@ -97,16 +97,6 @@ subprojects {
         //implementation("org.vineflower:vineflower:1.10.0")
     }
 
-    tasks.register<Copy>("moveBuiltJars") {
-        if (project.path != ":common") {
-            val remapJar by project.tasks.named<RemapJarTask>("remapJar")
-            dependsOn(remapJar)
-            from(remapJar)
-        }
-
-        into(rootProject.file("jars"))
-    }
-
     publishing {
         publications {
             create<MavenPublication>("maven${capitalizedName}") {
