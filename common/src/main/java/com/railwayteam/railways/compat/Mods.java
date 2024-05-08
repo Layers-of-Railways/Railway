@@ -26,7 +26,8 @@ public enum Mods {
 	QUARK("quark"),
 	TFC("tfc"),
 	MALILIB("malilib"),
-	TWEAKEROO("tweakeroo")
+	TWEAKEROO("tweakeroo"),
+	EXTENDEDFLYWHEELS("extendedflywheels")
 	;
 
 	public final boolean isLoaded;

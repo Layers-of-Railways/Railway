@@ -17,7 +17,7 @@ public class CClient extends ConfigBase {
     public final ConfigFloat trackOverlayOffset = f(0.0f, -256.0f, 256.0f, "trackOverlayOffset", Comments.trackOverlayOffset);
     public final ConfigBool useDevCape = b(true, "useDevCape", Comments.useDevCape, Comments.useDevCape2);
     public final ConfigBool renderNormalCap = b(true, "renderNormalCap", Comments.renderNormalCap);
-
+    public final ConfigBool animatedFlywheels = b(true, "animatedFlywheels", Comments.animatedFlywheels);
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
@@ -32,7 +32,6 @@ public class CClient extends ConfigBase {
     public final ConfigGroup cartoonSmoke = group(2, "cartoon", Comments.cartoonSmoke);
     public final ConfigBool spawnFasterPuffs = b(true, "spawnFasterPuffs", Comments.spawnFasterPuffs);
     public final ConfigBool spawnSteam = b(false, "spawnSteam", Comments.spawnSteam);
-
 
     // journeymap
     public final ConfigGroup journeymap = group(1, "journeymap", Comments.journeymap);
@@ -57,6 +56,7 @@ public class CClient extends ConfigBase {
         static String useDevCape = "Whether to actually apply the dev cape (ignored for non-devs)";
         static String useDevCape2 = "This setting may require a relog to take effect";
         static String renderNormalCap = "Should the normal create conductor cap be rendered on top of the conductors existing hat?";
+        static String animatedFlywheels = "Should flywheels and blocks extending the FlywheelBlock class be animated when apart of trains?";
 
         static String smoke = "Smoke Settings";
         static String oldSmoke = "Old-style Smoke Settings";
