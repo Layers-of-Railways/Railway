@@ -41,18 +41,10 @@ public class CRCreativeModeTabsImpl {
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.TRACK))
             .build());
 
-    public static final RegistryObject<CreativeModeTab> CAPS_TAB = TAB_REGISTER.register("caps",
-        () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.railways_caps"))
-            .withTabsBefore(TRACKS_TAB.getKey())
-            .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.GREEN).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
-            .build());
-
     public static final RegistryObject<CreativeModeTab> PALETTES_TAB = TAB_REGISTER.register("palettes",
         () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.railways_palettes"))
-            .withTabsBefore(CAPS_TAB.getKey())
+            .withTabsBefore(TRACKS_TAB.getKey())
             .icon(() -> CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack())
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
             .build());
@@ -61,32 +53,12 @@ public class CRCreativeModeTabsImpl {
         TAB_REGISTER.register(modEventBus);
     }
 
-    public static CreativeModeTab getBaseTab() {
-        return MAIN_TAB.get();
-    }
-
-    public static CreativeModeTab getTracksTab() {
-        return TRACKS_TAB.get();
-    }
-
-    public static CreativeModeTab getCapsTab() {
-        return CAPS_TAB.get();
-    }
-
-    public static CreativeModeTab getPalettesTab() {
-        return PALETTES_TAB.get();
-    }
-
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         return MAIN_TAB.getKey();
     }
 
     public static ResourceKey<CreativeModeTab> getTracksTabKey() {
         return TRACKS_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
-        return CAPS_TAB.getKey();
     }
 
     public static ResourceKey<CreativeModeTab> getPalettesTabKey() {

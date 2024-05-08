@@ -5,8 +5,6 @@ import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
 import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -19,32 +17,15 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.TabVisibility;
 import net.minecraft.world.level.block.Block;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class CRCreativeModeTabs {
-    @ExpectPlatform
-    public static CreativeModeTab getBaseTab() {
-        throw new AssertionError();
-    }
-    
-    @ExpectPlatform
-    public static CreativeModeTab getTracksTab() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static CreativeModeTab getCapsTab() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static CreativeModeTab getPalettesTab() {
-        throw new AssertionError();
-    }
-
     @ExpectPlatform
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         throw new AssertionError();
@@ -52,11 +33,6 @@ public class CRCreativeModeTabs {
 
     @ExpectPlatform
     public static ResourceKey<CreativeModeTab> getTracksTabKey() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
         throw new AssertionError();
     }
 
@@ -72,7 +48,6 @@ public class CRCreativeModeTabs {
     public enum Tabs {
         MAIN(CRCreativeModeTabs::getBaseTabKey),
         TRACK(CRCreativeModeTabs::getTracksTabKey),
-        CAPS(CRCreativeModeTabs::getCapsTabKey),
         PALETTES(CRCreativeModeTabs::getPalettesTabKey);
 
         private final Supplier<ResourceKey<CreativeModeTab>> keySupplier;
@@ -212,34 +187,6 @@ public class CRCreativeModeTabs {
 
         @Override
         public void accept(CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output output) {
-            if (Env.CLIENT.isCurrent() && this.tab == Tabs.CAPS) {
-                for (boolean prefixSus : Iterate.falseAndTrue) {
-                    for (DyeColor color : COLOR_ORDER) {
-                        ItemEntry<ConductorCapItem> entry = CRItems.ITEM_CONDUCTOR_CAP.get(color);
-                        if (prefixSus) {
-                            output.accept(entry.asStack().setHoverName(
-                                Components.literal("[sus]").append(entry.get().getDescription())
-                            ));
-                        } else {
-                            output.accept(entry.get());
-                        }
-                    }
-
-                        Set<String> customCapNames = new HashSet<>();
-                        customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_CAPS.keySet());
-                        customCapNames.addAll(CRBlockPartials.CUSTOM_CONDUCTOR_SKINS.keySet());
-
-                        int i = 0;
-                        for (String name : customCapNames) {
-                            ItemStack capStack = CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.values()[i++ % DyeColor.values().length]).asStack();
-                            capStack.setHoverName(Components.literal((prefixSus ? "[sus]" : "") + name));
-
-                            output.accept(capStack);
-                        }
-                }
-                return;
-            }
-
             Predicate<Item> exclusionPredicate = makeExclusionPredicate();
             List<ItemOrdering> orderings = makeOrderings();
             Function<Item, ItemStack> stackFunc = makeStackFunc();

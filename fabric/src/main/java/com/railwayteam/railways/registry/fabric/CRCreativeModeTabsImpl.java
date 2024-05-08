@@ -37,13 +37,6 @@ public class CRCreativeModeTabsImpl {
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.TRACK))
             .build());
 
-    private static final TabInfo CAPS_TAB = register("caps",
-        () -> FabricItemGroup.builder()
-            .title(Component.translatable("itemGroup.railways_caps"))
-            .icon(() -> ITEM_CONDUCTOR_CAP.get(DyeColor.GREEN).asStack())
-            .displayItems(new RegistrateDisplayItemsGenerator(Tabs.CAPS))
-            .build());
-
     private static final TabInfo PALETTES_TAB = register("palettes",
             () -> FabricItemGroup.builder()
                     .title(Component.translatable("itemGroup.railways_palettes"))
@@ -51,32 +44,12 @@ public class CRCreativeModeTabsImpl {
                     .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
                     .build());
 
-    public static CreativeModeTab getBaseTab() {
-        return MAIN_TAB.tab();
-    }
-
-    public static CreativeModeTab getTracksTab() {
-        return TRACKS_TAB.tab();
-    }
-
-    public static CreativeModeTab getCapsTab() {
-        return CAPS_TAB.tab();
-    }
-
-    public static CreativeModeTab getPalettesTab() {
-        return PALETTES_TAB.tab();
-    }
-
     public static ResourceKey<CreativeModeTab> getBaseTabKey() {
         return MAIN_TAB.key();
     }
 
     public static ResourceKey<CreativeModeTab> getTracksTabKey() {
         return TRACKS_TAB.key();
-    }
-
-    public static ResourceKey<CreativeModeTab> getCapsTabKey() {
-        return CAPS_TAB.key();
     }
 
     private static TabInfo register(String name, Supplier<CreativeModeTab> supplier) {
