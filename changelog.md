@@ -1,9 +1,4 @@
 ------------------------------------------------------
-Steam 'n' Rails 1.6.x
-------------------------------------------------------
-Removals
-- Conductor caps tab
-------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------
 Additions:
@@ -15,6 +10,9 @@ Fixes
 - Fix archbar bogey axle locations & Texture
 - Fix bad texture name causing a warning in logs
 - Fix crash when running setStation({}) (https://github.com/Creators-of-Create/Create/issues/5818)
+
+Removals
+- Conductor caps tab
 ------------------------------------------------------
 Steam 'n' Rails 1.6.3
 ------------------------------------------------------
