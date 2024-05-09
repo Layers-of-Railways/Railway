@@ -32,4 +32,4 @@ jobs:
       - name: Build & Publish to Maven
         env:
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-        run: ./gradlew railwaysBuild
+        run: ./gradlew build publish
