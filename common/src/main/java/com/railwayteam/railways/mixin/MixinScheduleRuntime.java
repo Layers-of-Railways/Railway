@@ -36,6 +36,9 @@ public abstract class MixinScheduleRuntime {
 
     @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
     private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
+        // https://github.com/Creators-of-Create/Create/issues/5818
+        if (schedule.entries.size() < currentEntry) return;
+
         ScheduleEntry entry = schedule.entries.get(currentEntry);
         ScheduleInstruction instruction = entry.instruction;
 
