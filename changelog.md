@@ -1,10 +1,15 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------
+Additions:
+- Custom icons for narrow/wide gauge track items (vanilla wood tracks only) (Thanks Adeline!!)
+- Animated flywheels: Flywheels will now move when apart of a train (configurable by clients)
+
 Fixes
 - Fix Copycat headstock's being transparent when using shaders
 - Fix archbar bogey axle locations & Texture
 - Fix bad texture name causing a warning in logs
+- Fix crash when running setStation({}) (https://github.com/Creators-of-Create/Create/issues/5818)
 ------------------------------------------------------
 Steam 'n' Rails 1.6.2
 ------------------------------------------------------
