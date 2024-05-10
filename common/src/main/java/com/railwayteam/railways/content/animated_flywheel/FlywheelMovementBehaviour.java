@@ -10,6 +10,7 @@ import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlockEntity;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
@@ -40,7 +41,7 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
         ICarriageFlywheel flywheel = ((ICarriageFlywheel) flywheelBlockEntity);
         double distanceTravelled = ((IDistanceTravelled) carriageContraptionEntity).railways$getDistanceTravelled();
 
-        double angleDiff = 360 * (distanceTravelled / 3f) / (Math.PI *  2.8125);
+        double angleDiff = 360 * (distanceTravelled / AnimationTickHolder.getPartialTicks()) / (Math.PI *  2.8125);
 
         if (dir == Direction.SOUTH || dir == Direction.WEST)
             angleDiff = -angleDiff;
