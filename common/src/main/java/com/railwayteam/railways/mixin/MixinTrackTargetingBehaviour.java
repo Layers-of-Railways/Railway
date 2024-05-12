@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(TrackTargetingBehaviour.class)
 public abstract class MixinTrackTargetingBehaviour<T extends TrackEdgePoint> extends BlockEntityBehaviour implements IPreAssembleCallback {
-    @Shadow private T edgePoint;
+    @Shadow(remap = false) private T edgePoint;
 
     private MixinTrackTargetingBehaviour(SmartBlockEntity be) {
         super(be);

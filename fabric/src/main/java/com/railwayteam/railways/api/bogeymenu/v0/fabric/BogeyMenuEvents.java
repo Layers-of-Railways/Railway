@@ -1,4 +1,4 @@
-package com.railwayteam.railways.api.bogeymenu.v0;
+package com.railwayteam.railways.api.bogeymenu.v0.fabric;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
