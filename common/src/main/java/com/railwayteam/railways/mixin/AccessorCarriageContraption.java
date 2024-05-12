@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(CarriageContraption.class)
 public interface AccessorCarriageContraption {
-    @Accessor
-    MountedStorageManager getStorageProxy();
+    @Accessor(value = "storageProxy", remap = false)
+    MountedStorageManager railways$getStorageProxy();
 }

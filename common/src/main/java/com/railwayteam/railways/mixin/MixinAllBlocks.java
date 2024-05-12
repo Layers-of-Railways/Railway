@@ -28,7 +28,8 @@ public class MixinAllBlocks {
             ),
             slice = @Slice(
                     from = @At(value = "CONSTANT", args = "stringValue=sequenced_gearshift")
-            )
+            ),
+            remap = false
     )
     private static <T extends Block, P> BlockBuilder<T, P> railways$addFlywheelMovementBehaviour(BlockBuilder<T, P> instance, NonNullUnaryOperator<BlockBehaviour.Properties> func, Operation<BlockBuilder<T, P>> original) {
         return original.call(instance, func).onRegister(AllMovementBehaviours.movementBehaviour(new FlywheelMovementBehaviour()));

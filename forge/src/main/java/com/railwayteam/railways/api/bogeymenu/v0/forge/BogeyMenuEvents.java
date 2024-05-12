@@ -1,4 +1,4 @@
-package com.railwayteam.railways.api.bogeymenu.v0;
+package com.railwayteam.railways.api.bogeymenu.v0.forge;
 
 import net.minecraftforge.eventbus.api.Event;
 

@@ -7,5 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(MountedFluidStorage.class)
 public interface AccessorMountedFluidStorage {
-    @Accessor SmartFluidTank getTank();
+    @Accessor(value = "tank", remap = false)
+    SmartFluidTank railways$getTank();
 }

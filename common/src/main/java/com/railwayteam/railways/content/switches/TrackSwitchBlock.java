@@ -274,6 +274,8 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
    * BlockStateBase#hasAnalogOutputSignal} whenever possible.
    * Implementing/overriding is fine.
    */
+  @SuppressWarnings("deprecation")
+  @Deprecated
   @Override
   public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
     return true;
@@ -284,6 +286,8 @@ public abstract class TrackSwitchBlock extends HorizontalDirectionalBlock implem
    * BlockStateBase#getAnalogOutputSignal} whenever possible.
    * Implementing/overriding is fine.
    */
+  @SuppressWarnings("deprecation")
+  @Deprecated
   @Override
   public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
     if (level.getBlockEntity(pos) instanceof TrackSwitchBlockEntity te)

@@ -20,8 +20,7 @@ import java.util.List;
 
 @Mixin(TrainStatus.class)
 public class MixinTrainStatus {
-    @Shadow
-    Train train;
+    @Shadow(remap = false) Train train;
 
     @WrapOperation(method = "displayInformation", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), remap = false)
     private boolean addPositionInfo(List<?> instance, Object e, Operation<Boolean> original) {

@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Contraption.class)
 public abstract class MixinContraption implements IContraptionFuel {
-    @Shadow protected MountedStorageManager storage;
+    @Shadow(remap = false) protected MountedStorageManager storage;
 
     @Shadow protected abstract BlockPos toLocalPos(BlockPos globalPos);
 

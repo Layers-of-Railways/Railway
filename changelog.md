@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.6.5
+------------------------------------------------------
+Fixes
+- Animated flywheels spinning too slow
+------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------
 Additions:
@@ -12,7 +17,7 @@ Fixes
 - Fix crash when running setStation({}) (https://github.com/Creators-of-Create/Create/issues/5818)
 
 Removals
-- Conductor caps tab
+- Conductor caps tab (1.20.1)
 ------------------------------------------------------
 Steam 'n' Rails 1.6.3
 ------------------------------------------------------

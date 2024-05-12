@@ -1,6 +1,6 @@
 package com.railwayteam.railways.registry.forge;
 
-import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuEvents;
+import com.railwayteam.railways.api.bogeymenu.v0.forge.BogeyMenuEvents;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CRBogeyStylesImpl {
