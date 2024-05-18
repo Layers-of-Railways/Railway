@@ -1,8 +1,13 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.5
 ------------------------------------------------------
+Additions
+- Escape and Enter buttons can be used to select bogies in the bogey menu
+
 Fixes
 - Animated flywheels spinning too slow
+
+Changes
 - Lower particle count for boiler blocks being broken
 ------------------------------------------------------
 Steam 'n' Rails 1.6.4
