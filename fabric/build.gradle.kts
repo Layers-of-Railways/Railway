@@ -52,8 +52,7 @@ dependencies {
         modLocalRuntime("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
     }
 
-    // because create fabric is a bit broken I think
-    modImplementation("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")
+    modImplementation(include("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")!!)
 
     // mod compat for tracks
     if ("enable_hexcasting"().toBoolean()) {
