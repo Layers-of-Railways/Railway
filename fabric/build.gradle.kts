@@ -35,6 +35,9 @@ dependencies {
 
     include("com.github.Chocohead:Fabric-ASM:v2.3")
 
+    // Forge Config API Port
+    modImplementation(include("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")!!)
+
     // Development QOL
     modLocalRuntime("maven.modrinth:lazydfu:${"lazydfu_version"()}")
     modLocalRuntime("com.terraformersmc:modmenu:${"modmenu_version"()}")
@@ -51,8 +54,6 @@ dependencies {
     if ("enable_simple_voice_chat"().toBoolean()) {
         modLocalRuntime("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
     }
-
-    modImplementation(include("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")!!)
 
     // mod compat for tracks
     if ("enable_hexcasting"().toBoolean()) {
