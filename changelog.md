@@ -3,6 +3,7 @@ Steam 'n' Rails 1.6.5
 ------------------------------------------------------
 Fixes
 - Animated flywheels spinning too slow
+- Lower particle count for boiler blocks being broken
 ------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------
