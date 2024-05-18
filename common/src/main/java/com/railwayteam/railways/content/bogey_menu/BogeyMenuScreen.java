@@ -46,6 +46,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Quaternionf;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -118,7 +119,6 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         addRenderableWidget(categoryLabel);
         addRenderableWidget(categoryScrollInput);
 
-        //fixme
         favouriteButton = new IconButton(x + background.width - 167, y + background.height - 49, CRIcons.I_FAVORITE);
         favouriteButton.withCallback(this::onFavorite);
         addRenderableWidget(favouriteButton);
@@ -336,6 +336,24 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         ticksOpen++;
         soundPlayed = false;
         super.tick();
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            if (selectedBogey == null)
+                onClose();
+            else
+                onMenuClose();
+
+            return true;
+        } else if (keyCode == GLFW.GLFW_KEY_ENTER) {
+            onMenuClose();
+
+            return true;
+        } else {
+            return super.keyPressed(keyCode, scanCode, modifiers);
+        }
     }
 
     @Override
