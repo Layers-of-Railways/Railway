@@ -56,6 +56,7 @@ allprojects {
 
     java {
         withSourcesJar()
+        withJavadocJar()
     }
 }
 
@@ -206,6 +207,16 @@ subprojects {
         val commonSources = project(":common").tasks.getByName<Jar>("sourcesJar")
         dependsOn(commonSources)
         from(commonSources.archiveFile.map { zipTree(it) })
+
+        manifest {
+            attributes(mapOf("Git-Hash" to gitHash))
+        }
+    }
+
+    tasks.named<Jar>("javadocJar") {
+        val commonJavadocs = project(":common").tasks.getByName<Jar>("javadocJar")
+        dependsOn(commonJavadocs)
+        from(commonJavadocs.archiveFile.map { zipTree(it) })
 
         manifest {
             attributes(mapOf("Git-Hash" to gitHash))
