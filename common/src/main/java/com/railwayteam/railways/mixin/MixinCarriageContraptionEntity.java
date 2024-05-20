@@ -9,11 +9,7 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
-import com.railwayteam.railways.mixin_interfaces.IBufferBlockCheckableNavigation;
-import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
-import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
-import com.railwayteam.railways.mixin_interfaces.IDistanceTravelled;
-import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
+import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
 import com.railwayteam.railways.util.MixinVariables;
@@ -47,12 +43,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
 public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity implements IDistanceTravelled {
     @Shadow private Carriage carriage;
+
+    @Shadow public UUID trainId;
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
@@ -137,7 +136,8 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "control", at = @At("TAIL"))
     private void railways$handcarHungerDepletion(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
-        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(AllItems.EXTENDO_GRIP.get()))
+        if (((IHandcarTrain) this.carriage.train).railways$isHandcar()
+                && !player.getItemInHand(InteractionHand.MAIN_HAND).is(AllItems.EXTENDO_GRIP.get()))
             player.causeFoodExhaustion((float) carriage.train.speed * CRConfigs.server().handcarHungerMultiplier.getF());
     }
 
