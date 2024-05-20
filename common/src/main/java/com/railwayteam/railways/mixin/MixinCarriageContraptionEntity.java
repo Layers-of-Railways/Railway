@@ -43,15 +43,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
 public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity implements IDistanceTravelled {
     @Shadow private Carriage carriage;
-
-    @Shadow public UUID trainId;
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
