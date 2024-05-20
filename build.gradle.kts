@@ -5,7 +5,15 @@ import groovy.json.JsonSlurper
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.configurationcache.extensions.capitalized
+import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.tree.AnnotationNode
+import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.FieldNode
+import org.objectweb.asm.tree.MethodNode
 import java.io.ByteArrayOutputStream
+import java.util.*
+import java.util.function.Predicate
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
@@ -141,7 +149,7 @@ subprojects {
         dependsOn(shadowJar)
         archiveClassifier = null
         doLast {
-            squishJar(outputs.files.singleFile)
+            transformJar(outputs.files.singleFile)
         }
     }
 
@@ -219,7 +227,7 @@ subprojects {
     }
 }
 
-fun squishJar(jar: File) {
+fun transformJar(jar: File) {
     val contents = linkedMapOf<String, ByteArray>()
     JarFile(jar).use {
         it.entries().asIterator().forEach { entry ->
@@ -239,6 +247,8 @@ fun squishJar(jar: File) {
 
             if (name.endsWith(".json") || name.endsWith(".mcmeta")) {
                 data = (JsonOutput.toJson(JsonSlurper().parse(data)).toByteArray())
+            } else if (name.endsWith(".class")) {
+                data = transformClass(data)
             }
 
             out.putNextEntry(JarEntry(name))
@@ -248,6 +258,35 @@ fun squishJar(jar: File) {
         out.finish()
         out.close()
     }
+}
+
+fun transformClass(bytes: ByteArray): ByteArray {
+    val node = ClassNode()
+    ClassReader(bytes).accept(node, 0)
+
+    // Remove Methods & Field Annotated with @DevEnvMixin
+    node.methods.removeIf { methodNode: MethodNode -> removeIfDevMixin(node.name, methodNode.visibleAnnotations) }
+    // Disabled as I don't feel ok with people being able to remove these
+    //node.fields.removeIf { fieldNode: FieldNode -> removeIfDevMixin(fieldNode.visibleAnnotations) }
+
+    return ClassWriter(0).also { node.accept(it) }.toByteArray()
+}
+
+fun removeIfDevMixin(nodeName: String, visibleAnnotations: List<AnnotationNode>?): Boolean {
+    // Don't remove methods if it's not a GHA build/Release build
+    if (buildNumber == null || !nodeName.lowercase(Locale.ROOT).matches(Regex(".*\\/mixin\\/.*Mixin")))
+        return false
+
+    if (visibleAnnotations != null) {
+        for (annotationNode in visibleAnnotations) {
+            if (annotationNode.desc == "Lcom/railwayteam/railways/annotation/mixin/DevEnvMixin;") {
+                println("Removed Method/Field Annotated With @DevEnvMixin from: $nodeName")
+                return true
+            }
+        }
+    }
+
+    return false
 }
 
 tasks.create("railwaysPublish") {

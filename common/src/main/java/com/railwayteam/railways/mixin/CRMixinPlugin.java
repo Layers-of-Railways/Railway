@@ -1,7 +1,5 @@
 package com.railwayteam.railways.mixin;
 
-import com.llamalad7.mixinextras.utils.MixinInternals;
-import com.railwayteam.railways.asm.CRMixinExtension;
 import com.railwayteam.railways.util.ConditionalMixinManager;
 import org.objectweb.asm.tree.ClassNode;
 import org.slf4j.Logger;
@@ -16,9 +14,7 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOGGER = LoggerFactory.getLogger("Railways/MixinPlugin");
 
     @Override
-    public void onLoad(String mixinPackage) {
-        MixinInternals.registerExtension(new CRMixinExtension());
-    } // NO-OP
+    public void onLoad(String mixinPackage) { } // NO-OP
 
     @Override
     public String getRefMapperConfig() { return null; } // DEFAULT
