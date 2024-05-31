@@ -434,8 +434,7 @@ public class CRBlockPartials {
         BLOMBERG_FRAME = block("bogey/blomberg/frame"),
         Y25_FRAME = block("bogey/y25/frame"),
         HEAVYWEIGHT_FRAME = block("bogey/heavyweight/frame"),
-        RADIAL_FRAME = block("bogey/radial/radial_frame"),
-        CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels"),
+        RADIAL_FRAME = block("bogey/radial/frame"),
         CR_WIDE_BOGEY_WHEELS = block("bogey/wide/wheels"),
         WIDE_DEFAULT_FRAME = block("bogey/wide/default/frame")
     ;
