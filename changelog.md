@@ -10,6 +10,7 @@ Fixes
 - Fix Double Smokestack Radial Menu name appearing as "Long Stack"
 - Fix hunger depletion when controlling trains
 - Texture inconsistency with the white color used for the favourites button
+- Bogey Menu scrollbar not having ridges like other scroll bars in Minecraft
 
 Changes
 - Lower particle count for boiler blocks being broken

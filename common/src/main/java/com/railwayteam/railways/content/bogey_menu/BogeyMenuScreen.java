@@ -192,7 +192,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Render scroll bar
         // Formula is barPos = startLoc + (endLoc - startLoc) * scrollOffs
-        int scrollBarPos = (int) (41 + (133 - 41) * scrollOffs);
+        int scrollBarPos = (int) (41 + (134 - 41) * scrollOffs);
         CRGuiTextures barTexture = canScroll() ? CRGuiTextures.BOGEY_MENU_SCROLL_BAR : CRGuiTextures.BOGEY_MENU_SCROLL_BAR_DISABLED;
         barTexture.render(ms, x + 11, y + scrollBarPos, 512, 512);
 
