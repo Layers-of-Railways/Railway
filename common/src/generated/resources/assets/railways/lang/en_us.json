@@ -1,6 +1,6 @@
 {
   "block.create.railway_casing.tooltip": "TRAIN CASING",
-  "block.create.railway_casing.tooltip.summary": "Press and hold the _Open Bogey Menu_ key (default _ALT_) to select the _bogey style_ to place.",
+  "block.create.railway_casing.tooltip.summary": "Press the _Open Bogey Menu_ key (default _ALT_) to select the _bogey style_ to place.",
   "block.create.track_station.tooltip": "TRAIN STATION",
   "block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
   "block.railways.big_buffer": "Big Buffer",
@@ -1060,7 +1060,7 @@
   "tag.item.railways.conductor_caps": "Conductor Caps",
   "tag.item.railways.copycat_headstocks": "Copycat Headstocks",
   "tag.item.railways.deco_couplers": "Deco Couplers",
-  "tag.item.railways.long_stack": "Double Stack",
+  "tag.item.railways.long_stack": "Long Stack",
   "tag.item.railways.not_train_fuel": "Not Train Fuel",
   "tag.item.railways.oilburner_stack": "Oilburner Stack",
   "tag.item.railways.palettes.cycle_groups.base": "Locometal",
