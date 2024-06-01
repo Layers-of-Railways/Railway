@@ -438,21 +438,21 @@ public class CRBlocks {
         REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeBogeyBlock.create(false))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Double Axle Bogey")
+            .lang("Broad Gauge Double Axle Bogey")
             .register();
 
     public static final BlockEntry<WideGaugeBogeyBlock> WIDE_SCOTCH_BOGEY =
         REGISTRATE.block("wide_scotch_bogey", WideGaugeBogeyBlock.create(true))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Scotch Yoke Bogey")
+            .lang("Broad Gauge Scotch Yoke Bogey")
             .register();
 
     public static final BlockEntry<WideGaugeComicallyLargeBogeyBlock> WIDE_COMICALLY_LARGE_BOGEY =
         REGISTRATE.block("wide_comically_large_bogey", WideGaugeComicallyLargeBogeyBlock::new)
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Comically Large Bogey")
+            .lang("Broad Gauge Comically Large Bogey")
             .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SMALL_BOGEY =
