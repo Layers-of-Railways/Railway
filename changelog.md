@@ -6,6 +6,9 @@ Additions
 
 Fixes
 - Animated flywheels spinning too slow
+- Fix train casing tooltip telling you to hold alt for the bogey menu
+- Fix Double Smokestack Radial Menu name appearing as "Long Stack"
+- Fix hunger depletion when controlling trains
 
 Changes
 - Lower particle count for boiler blocks being broken
