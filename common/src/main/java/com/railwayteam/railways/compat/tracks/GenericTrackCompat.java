@@ -102,7 +102,7 @@ public class GenericTrackCompat {
                 .lang("Incomplete " + standardMaterial.langName + " Track")
                 .register());
 
-            // broad gauge
+            // wide gauge
             TrackMaterial wideMaterial = wideVariant(standardMaterial);
             MATERIALS.put(name+"_wide", wideMaterial);
             CRTrackMaterials.WIDE_GAUGE.put(standardMaterial, wideMaterial);
