@@ -21,8 +21,8 @@ package com.railwayteam.railways.mixin.client;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.mixin.DevEnvMixin;
 import com.railwayteam.railways.util.DevCapeUtils;
-import com.railwayteam.railways.util.Utils;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -47,15 +47,14 @@ public class MixinPlayerInfo {
     @Unique private boolean railways$texturesLoaded;
     @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
-    // Replaces skin inside the dev env with the conductor skin, won't crash if it fails to apply
-    @Inject(method = "getSkinLocation", at = @At("HEAD"), require = 0)
+    // Replaces skin inside the dev env with the conductor skin
+    @DevEnvMixin
+    @Inject(method = "getSkinLocation", at = @At("HEAD"))
     private void registerSkinTextures(CallbackInfoReturnable<ResourceLocation> cir) {
-        if (Utils.isDevEnv()) {
-            this.textureLocations.put(
-                    MinecraftProfileTexture.Type.SKIN,
-                    Railways.asResource("textures/misc/devenv_skin.png")
-            );
-        }
+        this.textureLocations.put(
+                MinecraftProfileTexture.Type.SKIN,
+                Railways.asResource("textures/misc/devenv_skin.png")
+        );
     }
 
     @Inject(method = "getCapeLocation", at = @At("HEAD"))
@@ -74,16 +73,14 @@ public class MixinPlayerInfo {
     }
 
     // Replaces skin model inside the dev env with the default "steve" skin model
+    @DevEnvMixin
     @Inject(method = "registerTextures",
             at = @At(
                 value = "INVOKE",
                 target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
-            ),
-            require = 0 // Dev Env Mixin, Shouldn't crash if it fails
+            )
     )
     private void railways$setModelToLarge(CallbackInfo ci) {
-        if (Utils.isDevEnv()) {
-            skinModel = "default";
-        }
+        skinModel = "default";
     }
 }
