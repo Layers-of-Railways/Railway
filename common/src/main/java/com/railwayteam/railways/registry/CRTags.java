@@ -190,10 +190,14 @@ public class CRTags {
     }
 
     for (AllItemTags itemTag : AllItemTags.values()) {
+      if (itemTag == AllItemTags.LONG_STACK)
+        continue;
+
       ResourceLocation loc = itemTag.tag.location();
       consumer.accept("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
           TextUtils.titleCaseConversion(itemTag.name().replace('_', ' ')));
     }
+    consumer.accept("tag.item.railways.long_stack", "Double Stack");
     consumer.accept("tag.item.forge.string", "String");
   }
 }

@@ -25,7 +25,7 @@
 package com.railwayteam.railways.util;
 
 import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
-import com.railwayteam.railways.annotation.mixin.DevMixin;
+import com.railwayteam.railways.annotation.mixin.DevEnvMixin;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.mixin.CRMixinPlugin;
 import org.objectweb.asm.Type;
@@ -51,7 +51,7 @@ public class ConditionalMixinManager {
                     shouldApply = anyModsLoaded == applyIfPresent;
                     CRMixinPlugin.LOGGER.debug("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
                 }
-                if (node.desc.equals(Type.getDescriptor(DevMixin.class))) {
+                if (node.desc.equals(Type.getDescriptor(DevEnvMixin.class))) {
                     shouldApply &= Utils.isDevEnv();
                 }
             }
