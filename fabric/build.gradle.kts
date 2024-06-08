@@ -54,7 +54,7 @@ dependencies {
     include("com.github.Chocohead:Fabric-ASM:v2.3")
 
     // Forge Config API Port
-    modImplementation(include("net.minecraftforge:forgeconfigapiport-fabric:4.2.9")!!)
+    modImplementation(include("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${"forge_config_api_port_version"()}")!!)
 
     // Development QOL
     modLocalRuntime("maven.modrinth:lazydfu:${"lazydfu_version"()}")
