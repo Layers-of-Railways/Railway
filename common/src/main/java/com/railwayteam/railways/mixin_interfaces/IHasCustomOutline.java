@@ -20,6 +20,8 @@ package com.railwayteam.railways.mixin_interfaces;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,13 +32,16 @@ import net.minecraft.world.level.block.state.BlockState;
  * Which is licensed under <a href="https://github.com/XFactHD/FramedBlocks/blob/17c8274ca380c3a868763b1b05657d07860c364b/LICENSE">LGPL</a>
  */
 public interface IHasCustomOutline {
+    @Environment(EnvType.CLIENT)
     void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state);
 
+    @Environment(EnvType.CLIENT)
     void matrixRotation(PoseStack poseStack, BlockState state);
 
     /**
      * Draws a line using the provided VertexConsumer, PoseStack, and 2 sets 3D coordinates.
      */
+    @Environment(EnvType.CLIENT)
     default void drawLine(VertexConsumer vb, PoseStack ms, double x1, double y1, double z1, double x2, double y2, double z2) {
         PoseStack.Pose transform = ms.last();
 
@@ -59,6 +64,7 @@ public interface IHasCustomOutline {
      * Draws a line using the provided VertexConsumer, PoseStack, and 2 sets 3D coordinates.
      * Also adds the specified offset to the specified axis
      */
+    @Environment(EnvType.CLIENT)
     default void drawLineWithAxisOffset(VertexConsumer vb, PoseStack ms, double x1, double y1, double z1, double x2, double y2, double z2, double offset, Direction.Axis axis) {
         switch (axis) {
             case X -> drawLine(vb, ms, x1 + offset, y1, z1, x2 + offset, y2, z2);

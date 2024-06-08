@@ -34,6 +34,8 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.VecHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -135,11 +137,13 @@ public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBl
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack transform, TrackTargetingBehaviour.RenderedTrackOverlayType type) {
         return AllBlocks.TRACK.get().prepareTrackOverlay(world, pos, state, bezierPoint, direction, transform, type);
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public PartialModel prepareAssemblyOverlay(BlockGetter world, BlockPos pos, BlockState state, Direction direction, PoseStack ms) {
         return AllBlocks.TRACK.get().prepareAssemblyOverlay(world, pos, state, direction, ms);
     }

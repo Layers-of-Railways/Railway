@@ -24,6 +24,8 @@ import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBloc
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -35,6 +37,7 @@ public class PhantomTrackBlock extends NoCollisionCustomTrackBlock {
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type) {
         if (bezierPoint == null && !PhantomSpriteManager.isVisible())
             return null;

@@ -31,6 +31,8 @@ import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -178,6 +180,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state) {
         double offset = state.getValue(RAISED) ? 8 : 0;
 
@@ -229,6 +232,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void matrixRotation(PoseStack poseStack, BlockState state) {
         if (state.getValue(HORIZONTAL_AXIS) == Axis.X)
             poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));
