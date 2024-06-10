@@ -26,6 +26,7 @@ import com.railwayteam.railways.content.conductor.ConductorPossessionController;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerClient;
 import com.railwayteam.railways.content.qol.TrackEdgePointHighlighter;
+import com.railwayteam.railways.registry.CRKeys;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.ConfigureDevCapeC2SPacket;
 import net.minecraft.client.Minecraft;
@@ -39,6 +40,7 @@ public class ClientEvents {
 
     @MultiLoaderEvent
     public static void onClientTickStart(Minecraft mc) {
+        CRKeys.fixBinds();
         PhantomSpriteManager.tick(mc);
 
         Level level = mc.level;
