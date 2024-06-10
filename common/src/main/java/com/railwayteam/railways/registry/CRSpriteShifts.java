@@ -19,6 +19,7 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
@@ -62,7 +63,7 @@ public class CRSpriteShifts {
 
     static {
         initLocometal(null);
-        for (DyeColor color : DyeColor.values()) {
+        for (DyeColor color : ColorUtils.ORDERED_DYE_COLORS) {
             initLocometal(color);
         }
     }

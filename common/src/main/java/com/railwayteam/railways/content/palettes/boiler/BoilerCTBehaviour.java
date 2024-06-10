@@ -26,6 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.Nullable;
 
 public class BoilerCTBehaviour extends ConnectedTextureBehaviour {
@@ -55,7 +56,7 @@ public class BoilerCTBehaviour extends ConnectedTextureBehaviour {
         if (other.getBlock() != state.getBlock())
             return false;
 
-        return other.getValue(BoilerBlock.HORIZONTAL_AXIS) == state.getValue(BoilerBlock.HORIZONTAL_AXIS);
+        return isSameState(other, state, BoilerBlock.HORIZONTAL_AXIS, BoilerBlock.RAISED);
     }
 
     @Override
@@ -69,5 +70,14 @@ public class BoilerCTBehaviour extends ConnectedTextureBehaviour {
         context.left = connectsTo(reader, pos, state, offset2);
 
         return context;
+    }
+
+    private boolean isSameState(BlockState state, BlockState otherState, Property<?>... properties) {
+        for (Property<?> property : properties) {
+            if (state.getValue(property) != otherState.getValue(property))
+                return false;
+        }
+
+        return true;
     }
 }

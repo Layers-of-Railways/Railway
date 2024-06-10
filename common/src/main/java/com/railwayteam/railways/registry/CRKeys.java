@@ -20,6 +20,7 @@ package com.railwayteam.railways.registry;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.AllKeys;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -54,6 +55,15 @@ public enum CRKeys {
             key.keybind = new KeyMapping(key.description, key.key, Railways.NAME);
             NON_CONFLICTING_KEYMAPPINGS.add(key.keybind);
             registerKeyBinding(key.keybind);
+        }
+    }
+
+    public static void fixBinds() {
+        long window = Minecraft.getInstance().getWindow().getWindow();
+        for (CRKeys key : values()) {
+            if (key.keybind == null || key.keybind.isUnbound())
+                continue;
+            key.keybind.setDown(InputConstants.isKeyDown(window, key.getBoundCode()));
         }
     }
 
