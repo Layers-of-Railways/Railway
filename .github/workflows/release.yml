@@ -12,30 +12,35 @@ on:
           - forge
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
-    env:
-      RELEASE_BUILD: true
-      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-      MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v4
+      - name: Setup Java
+        run: echo "JAVA_HOME=$JAVA_HOME_17_X64" >> "$GITHUB_ENV"
+
+      - name: Loom Cache
+        uses: actions/cache@v4
         with:
-          java-version: '17'
-          distribution: temurin
-          cache: gradle
+          path: "**/.gradle/loom-cache"
+          key: "${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}"
+          restore-keys: "${{ runner.os }}-gradle-"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-home-cache-cleanup: true
+          cache-read-only: true
 
       - name: Validate Gradle Wrapper Integrity
         uses: gradle/wrapper-validation-action@v2
 
-      - name: Set Platform environment variable
-        run: echo "PLATFORM=${{ inputs.platform }}" >> $GITHUB_ENV
-
       - name: Build & Publish
+        env:
+          RELEASE_BUILD: true
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
         run: ./gradlew railwaysPublish
