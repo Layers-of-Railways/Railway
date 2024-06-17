@@ -14,6 +14,7 @@ jobs:
 
       - name: Loom Cache
         uses: actions/cache@v4
+        if: ${{ !endsWith(github.ref, '/dev') }}
         with:
           path: "**/.gradle/loom-cache"
           key: "${{ runner.os }}-gradle-${{ hashFiles('**/libs.versions.*', '**/*.gradle*', '**/gradle-wrapper.properties') }}"
