@@ -19,6 +19,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.content.coupling.TrainUtils;
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainRelocator;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
@@ -36,7 +37,7 @@ public class MixinTrainRelocator {
     private static void tryToApproachStation(Train train, Level level, BlockPos pos, BezierTrackPointLocation bezier,
                                              boolean bezierDirection, Vec3 lookAngle, boolean simulate,
                                              CallbackInfoReturnable<Boolean> cir) {
-        if (!simulate && !level.isClientSide)
+        if (!simulate && !level.isClientSide && !((IHandcarTrain) train).railways$isHandcar())
             TrainUtils.tryToParkNearby(train, 1.25);
     }
 }
