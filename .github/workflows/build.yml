@@ -14,7 +14,6 @@ jobs:
 
       - name: Loom Cache
         uses: actions/cache@v4
-        if: ${{ !endsWith(github.ref, '/dev') }}
         with:
           path: "**/.gradle/loom-cache"
           key: "${{ runner.os }}-gradle-${{ hashFiles('**/libs.versions.*', '**/*.gradle*', '**/gradle-wrapper.properties') }}"
@@ -24,7 +23,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-home-cache-cleanup: true
-          cache-read-only: ${{ !endsWith(github.ref, '/dev') }}
 
       - name: Validate Gradle Wrapper Integrity
         uses: gradle/wrapper-validation-action@v2
