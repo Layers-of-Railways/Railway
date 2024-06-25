@@ -18,6 +18,7 @@
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "TrainMixin",
+    "self.BoilerBlockMixin",
     "self.LiquidFuelManagerReloadListenerMixin"
   ],
   "injectors": {

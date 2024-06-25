@@ -287,25 +287,6 @@ fun transformClass(bytes: ByteArray): ByteArray {
     // Disabled as I don't feel ok with people being able to remove these
     //node.fields.removeIf { fieldNode: FieldNode -> removeIfDevMixin(fieldNode.visibleAnnotations) }
 
-    if (node.visibleAnnotations != null) {
-        // Cache the field, so we don't CME the list during the remove
-        val annotationNodes = node.visibleAnnotations.toList()
-        for (annotationNode in annotationNodes) {
-            if (annotationNode.desc.equals("Lcom/railwayteam/railways/annotation/compiletime/ImplementsToExtends;")) {
-                node.visibleAnnotations.remove(annotationNode)
-
-                val type = getValueFromAnnotation<Type>(annotationNode, "value")!!
-                val loaderEnum = getValueFromAnnotation<Array<String>>(annotationNode, "loader")!!
-
-                if (project.name == loaderEnum[1]) {
-                    node.interfaces.remove(type.internalName)
-
-                    node.superName = type.internalName
-                }
-            }
-        }
-    }
-
     return ClassWriter(0).also { node.accept(it) }.toByteArray()
 }
 

@@ -16,22 +16,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.annotation.compiletime;
+package com.railwayteam.railways.fabric.mixin.self;
 
-import com.railwayteam.railways.multiloader.Loader;
+import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.simibubi.create.foundation.block.render.ReducedDestroyEffects;
+import org.spongepowered.asm.mixin.Mixin;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- * Remapping doesn't exist for this hell, don't expect this to work with minecraft classes/interfaces
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
-public @interface ImplementsToExtends {
-    Class<?> value();
-    
-    Loader loader();
-}
+@Mixin(BoilerBlock.class)
+public class BoilerBlockMixin implements ReducedDestroyEffects {}
