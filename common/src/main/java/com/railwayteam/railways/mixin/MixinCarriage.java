@@ -1,12 +1,30 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
 import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRTrackMaterials;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.content.trains.entity.*;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
@@ -44,11 +62,11 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
 
     @Shadow public abstract TravellingPoint getTrailingPoint();
 
-    private final List<UUID> controllingConductors = new ArrayList<>();
+    private final List<UUID> railways$controllingConductors = new ArrayList<>();
 
     @Override
-    public List<UUID> getControllingConductors() {
-        return controllingConductors;
+    public List<UUID> railways$getControllingConductors() {
+        return railways$controllingConductors;
     }
 
     @Unique
@@ -78,7 +96,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
 
     @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
     private Couple<Boolean> addControllingConductors(CarriageContraptionEntity instance) {
-        controllingConductors.clear();
+        railways$controllingConductors.clear();
         if (instance.getContraption() instanceof CarriageContraption cc) {
             for (Entity passenger : instance.getPassengers()) {
                 if (!(passenger instanceof ConductorEntity))
@@ -90,7 +108,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
                 if (validSides == null)
                     continue;
                 if (validSides.getFirst() || validSides.getSecond())
-                    controllingConductors.add(passenger.getUUID());
+                    railways$controllingConductors.add(passenger.getUUID());
             }
         }
         return instance.checkConductors();
@@ -100,7 +118,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     private void writeControllingConductors(DimensionPalette dimensions, CallbackInfoReturnable<CompoundTag> cir) {
         CompoundTag tag = cir.getReturnValue();
         ListTag listTag = new ListTag();
-        for (UUID uuid : controllingConductors) {
+        for (UUID uuid : railways$controllingConductors) {
             CompoundTag uuidTag = new CompoundTag();
             uuidTag.putUUID("UUID", uuid);
             listTag.add(uuidTag);
@@ -116,7 +134,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     @Inject(method = "read", at = @At("RETURN"))
     private static void readControllingConductors(CompoundTag tag, TrackGraph graph, DimensionPalette dimensions, CallbackInfoReturnable<Carriage> cir) {
         Carriage carriage = cir.getReturnValue();
-        List<UUID> controllingConductors = ((ICarriageConductors) carriage).getControllingConductors();
+        List<UUID> controllingConductors = ((ICarriageConductors) carriage).railways$getControllingConductors();
         controllingConductors.clear();
         if (tag.contains("ControllingConductors", Tag.TAG_LIST)) {
             ListTag listTag = tag.getList("ControllingConductors", Tag.TAG_COMPOUND);
@@ -138,22 +156,20 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
     private void markTravelStart(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                  TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
         if (train.navigation.isActive()) // only do automatic stuff when automatically operated
-            Railways.trackEdgeCarriageTravelling = true;
+            MixinVariables.trackEdgeCarriageTravelling = true;
     }
 
     @Inject(method = "travel", at = @At("RETURN"))
     private void markTravelEnd(Level level, TrackGraph graph, double distance, TravellingPoint toFollowForward,
                                TravellingPoint toFollowBackward, int type, CallbackInfoReturnable<Double> cir) {
-        Railways.trackEdgeCarriageTravelling = false;
+        MixinVariables.trackEdgeCarriageTravelling = false;
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 0))
     private boolean allowUniversalTrackLeading(boolean original) {
         return railways$isIncompatible(original, true);
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "isOnIncompatibleTrack", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/AbstractBogeyBlock;isOnIncompatibleTrack(Lcom/simibubi/create/content/trains/entity/Carriage;Z)Z", ordinal = 1))
     private boolean allowUniversalTrackTrailing(boolean original) {
         return railways$isIncompatible(original, false);

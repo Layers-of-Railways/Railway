@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.architectury.plugin.ArchitectPluginExtension
 import groovy.json.JsonOutput
@@ -5,7 +23,15 @@ import groovy.json.JsonSlurper
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.configurationcache.extensions.capitalized
+import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.tree.AnnotationNode
+import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.FieldNode
+import org.objectweb.asm.tree.MethodNode
 import java.io.ByteArrayOutputStream
+import java.util.*
+import java.util.function.Predicate
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
@@ -15,7 +41,7 @@ plugins {
     java
     `maven-publish`
     id("architectury-plugin") version "3.4-SNAPSHOT" apply false
-    id("dev.architectury.loom") version "1.4.+" apply false
+    id("dev.architectury.loom") version "1.6.+" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
@@ -67,7 +93,16 @@ subprojects {
     val capitalizedName = project.name.capitalized()
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
-    loom.silentMojangMappingsLicense()
+    loom.apply {
+        silentMojangMappingsLicense()
+        runs.configureEach {
+            vmArg("-XX:+AllowEnhancedClassRedefinition")
+            vmArg("-XX:+IgnoreUnrecognizedVMOptions")
+            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.env.remapRefMap=true")
+            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+        }
+    }
 
     configurations.configureEach {
         resolutionStrategy {
@@ -81,19 +116,13 @@ subprojects {
         // layered mappings - Mojmap names, parchment and QM docs and parameters
         "mappings"(loom.layered {
             mappings("org.quiltmc:quilt-mappings:${"minecraft_version"()}+build.${"qm_version"()}:intermediary-v2")
-            officialMojangMappings { nameSyntheticMembers = false }
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
+            officialMojangMappings { nameSyntheticMembers = false }
         })
-    }
 
-    tasks.register<Copy>("moveBuiltJars") {
-        if (project.path != ":common") {
-            val remapJar by project.tasks.named<RemapJarTask>("remapJar")
-            dependsOn(remapJar)
-            from(remapJar)
-        }
-
-        into(rootProject.file("jars"))
+        // Used to decompile mixin dumps, needs to be on the classpath
+        // Uncomment if you want it to decompile mixin exports, beware it has very verbose logging.
+        //implementation("org.vineflower:vineflower:1.10.0")
     }
 
     publishing {
@@ -106,22 +135,13 @@ subprojects {
 
         repositories {
             val mavenToken = System.getenv("MAVEN_TOKEN")
+            val maven = if (isRelease) "releases" else "snapshots"
             if (mavenToken != null && mavenToken.isNotEmpty()) {
-                if (isRelease) {
-                    maven {
-                        url = uri("https://maven.ithundxr.dev/releases")
-                        credentials {
-                            username = "railways-github"
-                            password = mavenToken
-                        }
-                    }
-                } else {
-                    maven {
-                        url = uri("https://maven.ithundxr.dev/snapshots")
-                        credentials {
-                            username = "railways-github"
-                            password = mavenToken
-                        }
+                maven {
+                    url = uri("https://maven.ithundxr.dev/${maven}")
+                    credentials {
+                        username = "railways-github"
+                        password = mavenToken
                     }
                 }
             }
@@ -141,13 +161,14 @@ subprojects {
     }
 
     tasks.named<RemapJarTask>("remapJar") {
+        from("${rootProject.projectDir}/LICENSE")
         val shadowJar = project.tasks.named<ShadowJar>("shadowJar").get()
         inputFile.set(shadowJar.archiveFile)
         injectAccessWidener = true
         dependsOn(shadowJar)
         archiveClassifier = null
         doLast {
-            squishJar(outputs.files.singleFile)
+            transformJar(outputs.files.singleFile)
         }
     }
 
@@ -179,6 +200,8 @@ subprojects {
             include("resourcepacks/")
         }
 
+        val createFabricVersion: String = "create_fabric_version"().replace("(\\d+\\.\\d+\\.\\d+-\\w)", "$1")
+
         // set up properties for filling into metadata
         val properties = mapOf(
                 "version" to version,
@@ -188,7 +211,7 @@ subprojects {
                 "voicechat_api_version" to "voicechat_api_version"(),
                 "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
                 "create_forge_version" to "create_forge_version"().split("-")[0], // cut off build number
-                "create_fabric_version" to "create_fabric_version"().split("+")[0] // Trim +mcX.XX.X from version string
+                "create_fabric_version" to createFabricVersion // Trim -build.X+mcX.XX.X from version string
         )
 
         inputs.properties(properties)
@@ -223,7 +246,7 @@ subprojects {
     }
 }
 
-fun squishJar(jar: File) {
+fun transformJar(jar: File) {
     val contents = linkedMapOf<String, ByteArray>()
     JarFile(jar).use {
         it.entries().asIterator().forEach { entry ->
@@ -243,6 +266,8 @@ fun squishJar(jar: File) {
 
             if (name.endsWith(".json") || name.endsWith(".mcmeta")) {
                 data = (JsonOutput.toJson(JsonSlurper().parse(data)).toByteArray())
+            } else if (name.endsWith(".class")) {
+                data = transformClass(data)
             }
 
             out.putNextEntry(JarEntry(name))
@@ -251,6 +276,46 @@ fun squishJar(jar: File) {
         }
         out.finish()
         out.close()
+    }
+}
+
+fun transformClass(bytes: ByteArray): ByteArray {
+    val node = ClassNode()
+    ClassReader(bytes).accept(node, 0)
+
+    // Remove Methods & Field Annotated with @DevEnvMixin
+    node.methods.removeIf { methodNode: MethodNode -> removeIfDevMixin(node.name, methodNode.visibleAnnotations) }
+    // Disabled as I don't feel ok with people being able to remove these
+    //node.fields.removeIf { fieldNode: FieldNode -> removeIfDevMixin(fieldNode.visibleAnnotations) }
+
+    return ClassWriter(0).also { node.accept(it) }.toByteArray()
+}
+
+fun removeIfDevMixin(nodeName: String, visibleAnnotations: List<AnnotationNode>?): Boolean {
+    // Don't remove methods if it's not a GHA build/Release build
+    if (buildNumber == null || !nodeName.lowercase(Locale.ROOT).matches(Regex(".*\\/mixin\\/.*Mixin")))
+        return false
+
+    if (visibleAnnotations != null) {
+        for (annotationNode in visibleAnnotations) {
+            if (annotationNode.desc == "Lcom/railwayteam/railways/annotation/mixin/DevEnvMixin;") {
+                println("Removed Method/Field Annotated With @DevEnvMixin from: $nodeName")
+                return true
+            }
+        }
+    }
+
+    return false
+}
+
+tasks.create("railwaysPublish") {
+    when (val platform = System.getenv("PLATFORM")) {
+        "both" -> {
+            dependsOn(tasks.build, ":fabric:publish", ":forge:publish", ":common:publish", ":fabric:publishMods", ":forge:publishMods")
+        }
+        "fabric", "forge" -> {
+            dependsOn("${platform}:build", "${platform}:publish", "${platform}:publishMods")
+        }
     }
 }
 
@@ -275,18 +340,6 @@ fun Project.setupRepositories() {
                 includeGroup("com.simibubi.create")
                 includeGroup("com.tterrag.registrate")
                 includeGroup("com.jozufozu.flywheel")
-            }
-        }
-        maven("https://maven.ithundxr.dev/private") { // Extended Bogeys
-            content { includeGroup("com.rabbitminers") }
-            credentials {
-                if (System.getenv("GITHUB_RUN_NUMBER") != null) {
-                    username = "railways-github"
-                    password = System.getenv("MAVEN_TOKEN")
-                } else {
-                    username = findProperty("IThundxrMavenUsername").toString()
-                    password = findProperty("IThundxrMavenPassword").toString()
-                }
             }
         }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat

@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.buffer.single_deco;
 
 import com.railwayteam.railways.Railways;
@@ -47,6 +65,7 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock {
         return switch (state.getValue(STYLE)) {
             case LINK, LINKLESS -> CRShapes.LINK_PIN;
             case KNUCKLE, KNUCKLE_SPLIT -> CRShapes.KNUCKLE;
+            case SCREWLINK -> CRShapes.SCREWLINK;
         };
     }
 
@@ -54,7 +73,8 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock {
         LINK("link_and_pin", "Link 'n Pin"),
         LINKLESS("link_and_pin_linkless", "Linkless Link 'n Pin"),
         KNUCKLE("knuckle_coupler", "Knuckle Coupler"),
-        KNUCKLE_SPLIT("split_knuckle_coupler", "Split Knuckle Coupler")
+        KNUCKLE_SPLIT("split_knuckle_coupler", "Split Knuckle Coupler"),
+        SCREWLINK("screwlink_coupler", "Screwlink Coupler")
         ;
 
         private final String model;

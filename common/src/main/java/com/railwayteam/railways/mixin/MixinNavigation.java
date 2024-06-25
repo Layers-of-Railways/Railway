@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -5,13 +23,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalDoubleRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.railwayteam.railways.util.MixinVariables;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -38,14 +56,17 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.*;
 
 @Mixin(value = Navigation.class, remap = false)
-public abstract class MixinNavigation implements IWaypointableNavigation, IGenerallySearchableNavigation {
+public abstract class MixinNavigation implements IWaypointableNavigation, IGenerallySearchableNavigation, IBufferBlockCheckableNavigation {
 
     @Shadow
     public Train train;
@@ -103,7 +124,6 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);
     }
 
-    @SuppressWarnings("unused")
     @ModifyExpressionValue(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
         at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
@@ -346,13 +366,13 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("HEAD"))
     private void recordSearch(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
-        Railways.navigationCallDepth += 1;
+        MixinVariables.navigationCallDepth += 1;
     }
 
     @Inject(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At("RETURN"))
     private void recordSearchReturn(double maxDistance, double maxCost, boolean forward, ArrayList<GlobalStation> destinations, Navigation.StationTest stationTest, CallbackInfo ci) {
-        if (Railways.navigationCallDepth > 0)
-            Railways.navigationCallDepth -= 1;
+        if (MixinVariables.navigationCallDepth > 0)
+            MixinVariables.navigationCallDepth -= 1;
     }
 
     @Inject(method = "findNearestApproachable", at = @At("HEAD"), cancellable = true)
@@ -384,7 +404,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;burnFuel()V"))
     private void applyBufferSlowdown(Level level, CallbackInfo ci,
-                                     @Local(ordinal = 5) LocalDoubleRef targetDistance) {
+                                     @Local(name = "targetDistance") LocalDoubleRef targetDistance) {
         if (railways$bufferDistance.get() < targetDistance.get())
             targetDistance.set(railways$bufferDistance.get());
         // reset buffer distance for next time
@@ -403,14 +423,23 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void respectBuffersWithoutSchedule(Level level, CallbackInfo ci) {
-        ((IBufferBlockedTrain) train).railways$setControlBlocked(false);
+        railways$updateControlsBlockInternal(false, false);
+    }
+
+    @Unique
+    public void railways$updateControlsBlock(boolean forceBackwards) {
+        railways$updateControlsBlockInternal(true, forceBackwards);
+    }
+
+    @Unique
+    private void railways$updateControlsBlockInternal(boolean simulate, boolean forceBackwards) {
+        ((IBufferBlockedTrain) train).railways$setControlBlocked(false, forceBackwards);
         if (destination == null) {
             double acceleration = train.acceleration();
             double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
-            boolean currentlyBackwards = train.speed < 0;
+            boolean currentlyBackwards = train.speed < 0 || forceBackwards;
             double speedMod = currentlyBackwards ? -1 : 1;
             double preDepartureLookAhead = train.getCurrentStation() != null ? 4.5 : 0;
-            double distanceToNextCurve = -1;
 
             if (train.graph == null) return;
 
@@ -455,12 +484,15 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             }*/
 
             if (targetDistance < 3)
-                ((IBufferBlockedTrain) train).railways$setControlBlocked(true);
+                ((IBufferBlockedTrain) train).railways$setControlBlocked(true, forceBackwards);
+
+            if (simulate)
+                return;
 
             if (targetDistance < 10) {
                 double target = train.maxSpeed() * ((targetDistance) / 10);
                 if (target < Math.abs(train.speed)) {
-                    train.speed += (target - Math.abs(train.speed)) * .5f * speedMod;
+                    train.speed += (target - Math.abs(train.speed)) * .5f * Math.signum(train.speed);
                     return;
                 }
             }

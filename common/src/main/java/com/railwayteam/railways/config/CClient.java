@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.config;
 
 import com.railwayteam.railways.content.smokestack.SmokeType;
@@ -16,7 +34,8 @@ public class CClient extends ConfigBase {
     public final ConfigBool useConductorSpyShader = b(true, "useConductorSpyShader", Comments.useConductorSpyShader);
     public final ConfigFloat trackOverlayOffset = f(0.0f, -256.0f, 256.0f, "trackOverlayOffset", Comments.trackOverlayOffset);
     public final ConfigBool useDevCape = b(true, "useDevCape", Comments.useDevCape, Comments.useDevCape2);
-
+    public final ConfigBool renderNormalCap = b(true, "renderNormalCap", Comments.renderNormalCap);
+    public final ConfigBool animatedFlywheels = b(true, "animatedFlywheels", Comments.animatedFlywheels);
 
     // smoke
     public final ConfigGroup smoke = group(1, "smoke", Comments.smoke);
@@ -31,7 +50,6 @@ public class CClient extends ConfigBase {
     public final ConfigGroup cartoonSmoke = group(2, "cartoon", Comments.cartoonSmoke);
     public final ConfigBool spawnFasterPuffs = b(true, "spawnFasterPuffs", Comments.spawnFasterPuffs);
     public final ConfigBool spawnSteam = b(false, "spawnSteam", Comments.spawnSteam);
-
 
     // journeymap
     public final ConfigGroup journeymap = group(1, "journeymap", Comments.journeymap);
@@ -55,6 +73,8 @@ public class CClient extends ConfigBase {
         static String trackOverlayOffset = "Vertical offset for track overlays";
         static String useDevCape = "Whether to actually apply the dev cape (ignored for non-devs)";
         static String useDevCape2 = "This setting may require a relog to take effect";
+        static String renderNormalCap = "Should the normal create conductor cap be rendered on top of the conductors existing hat?";
+        static String animatedFlywheels = "Should flywheels and blocks extending the FlywheelBlock class be animated when apart of trains?";
 
         static String smoke = "Smoke Settings";
         static String oldSmoke = "Old-style Smoke Settings";

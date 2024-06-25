@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -26,6 +44,7 @@ public class RailwaysClient {
 
     registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
     registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
+    registerBuiltinPack("legacy_palettes", "Steam 'n' Rails Legacy Palettes Textures");
 
     registerClientCommands(CRCommandsClient::register);
 
@@ -34,6 +53,7 @@ public class RailwaysClient {
     // Register Ponders
     PonderIndex.addPlugin(new CRPonderPlugin());
 
+    CRKeys.register();
     CRBlockPartials.init();
 
     CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
@@ -42,7 +62,6 @@ public class RailwaysClient {
     Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
 
     CRDevCaps.register();
-    CRBogeyStyles.registerClient();
     BufferModelUtils.register();
 
     DevCapeUtils.INSTANCE.init();

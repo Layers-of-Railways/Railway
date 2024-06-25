@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -25,7 +43,6 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.MixinEnvironment;
@@ -39,9 +56,11 @@ import java.util.function.Function;
 
 public class Railways {
   public static final String MODID = "railways";
-  public static final Logger LOGGER = LoggerFactory.getLogger("Railways");
+  public static final String ID_NAME = "Railways";
+  public static final String NAME = "Steam 'n' Rails";
+  public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
   public static final String VERSION = findVersion();
-  public static final int DATA_FIXER_VERSION = 1; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
+  public static final int DATA_FIXER_VERSION = 2; // Only used for datafixers, bump whenever a block changes id etc (should not be bumped multiple times within a release)
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
           .creativeModeTab(() -> CRItems.mainCreativeTab, "Create Steam 'n' Rails");
@@ -85,11 +104,7 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-    if (Mods.isModLoaded("embeddium", null)) {
-      LOGGER.info("there is a brick about to fall through your roof at terminal velocity");
-    }
-
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
+    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 
@@ -127,23 +142,4 @@ public class Railways {
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
     throw new AssertionError();
   }
-
-  // All the below are helper variables for switch mixins
-  @ApiStatus.Internal
-  public static boolean trackEdgeTemporarilyFlipped = false;
-
-  @ApiStatus.Internal
-  public static boolean trackEdgeCarriageTravelling = false;
-
-  @ApiStatus.Internal
-  public static boolean temporarilySkipSwitches = false;
-
-  @ApiStatus.Internal
-  public static int signalPropagatorCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static int navigationCallDepth = 0;
-
-  @ApiStatus.Internal
-  public static boolean largeGhastFireballExplosion = false;
 }

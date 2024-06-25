@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.conductor.whistle;
 
 import com.railwayteam.railways.config.CRConfigs;
@@ -10,7 +28,6 @@ import com.railwayteam.railways.registry.CREntities;
 import com.railwayteam.railways.registry.CRSounds;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
@@ -72,11 +89,6 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
     public ConductorWhistleItem(Block block, Item.Properties properties) {
         super(block, properties, EdgePointType.STATION);
     }
-
-    static boolean isTrack (Block block) { return AllTags.AllBlockTags.TRACKS.matches(block); }
-    static boolean isTrack (BlockState state) { return AllTags.AllBlockTags.TRACKS.matches(state); }
-    static boolean isTrack (Level level, BlockPos pos) { return isTrack(level.getBlockState(pos)); }
-
     @Override
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) { //Not worth the effort
         return false;
@@ -164,7 +176,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         }
 
         if (state.getBlock() instanceof StationBlock || state.getBlock() instanceof ITrackBlock) {
-            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 2f, 1f);
+            level.playSound(null, pos, CRSounds.CONDUCTOR_WHISTLE.get(), SoundSource.BLOCKS, 0.3f, 1f);
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
 
@@ -184,7 +196,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             boolean foundConductor = false;
             Carriage conductorCarriage = null;
             for (Carriage carriage : train.carriages) {
-                if (((ICarriageConductors) carriage).getControllingConductors().contains(conductorId)) {
+                if (((ICarriageConductors) carriage).railways$getControllingConductors().contains(conductorId)) {
                     foundConductor = true;
                     conductorCarriage = carriage;
                     break;
@@ -261,7 +273,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
 
             }
 
-            else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {;
+            else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {
                 stationName = Objects.requireNonNull(stationBe.getStation()).name;
             }
 
@@ -326,7 +338,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             condition.getData().putInt("Value", 0);
             instruction.getData().putString("Text", stationName);
             entry.instruction = instruction;
-            if (entry.conditions.size() == 0)
+            if (entry.conditions.isEmpty())
                 entry.conditions.add(new ArrayList<>());
             entry.conditions.get(0).add(condition);
             schedule.entries.add(entry);

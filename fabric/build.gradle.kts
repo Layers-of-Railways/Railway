@@ -1,16 +1,28 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import dev.ithundxr.silk.ChangelogText
+
 architectury.fabric()
 
 loom {
     val common = project(":common")
     accessWidenerPath = common.loom.accessWidenerPath
-
-    silentMojangMappingsLicense()
-    runs.configureEach {
-        vmArg("-Dmixin.debug.export=true")
-        vmArg("-Dmixin.env.remapRefMap=true")
-        vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
-    }
-
 
     runs {
         create("datagen") {
@@ -90,19 +102,15 @@ dependencies {
     }
     if ("enable_iris"().toBoolean()) {
         modLocalRuntime("maven.modrinth:iris:${"iris_version"()}")
+        modLocalRuntime("org.anarres:jcpp:1.4.14")
+        modLocalRuntime("io.github.douira:glsl-transformer:2.0.0-pre13")
     }
-
-    if ("enable_eb"().toBoolean()) {
-        modImplementation("com.rabbitminers:extendedbogeys-fabric:${"EB_verison"()}+fabric")
-    }
-
-    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!)
 }
 
 publishMods {
-    file(tasks.remapJar.get().archiveFile)
+    file = tasks.remapJar.get().archiveFile
     version.set(project.version.toString())
-    changelog = dev.ithundxr.silk.ChangelogText.getChangelogText(rootProject).toString()
+    changelog = ChangelogText.getChangelogText(rootProject).toString()
     type = STABLE
     displayName = "Steam 'n' Rails ${"mod_version"()} Fabric ${"minecraft_version"()}"
     modLoaders.add("fabric")

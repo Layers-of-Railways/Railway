@@ -1,21 +1,38 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
-import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
-import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
-import com.railwayteam.railways.mixin_interfaces.IGenerallySearchableNavigation;
+import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.BlockPosUtils;
+import com.railwayteam.railways.util.MixinVariables;
 import com.railwayteam.railways.util.packet.SwitchDataUpdatePacket;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.contraptions.OrientedContraptionEntity;
 import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
@@ -26,6 +43,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -47,15 +65,16 @@ import java.util.Optional;
 import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
-public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity {
+public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity implements IDistanceTravelled {
     @Shadow private Carriage carriage;
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
     }
 
-    @Unique
-    private boolean railways$fakePlayer = false;
+    @Unique private boolean railways$fakePlayer = false;
+
+    @Unique private double railways$distanceTravelled;
 
     @Inject(method = "control", at = @At("HEAD"))
     private void recordFakePlayer(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
@@ -106,10 +125,10 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         boolean spaceDown = heldControls.contains(4);
 
         double directedSpeed = targetSpeed != 0 ? targetSpeed : carriage.train.speed;
-        Railways.temporarilySkipSwitches = true;
+        MixinVariables.temporarilySkipSwitches = true;
         boolean forward = !carriage.train.doubleEnded || (directedSpeed != 0 ? directedSpeed > 0 : !inverted);
         Pair<TrackSwitch, Pair<Boolean, Optional<SwitchState>>> lookAheadData = ((IGenerallySearchableNavigation) nav).railways$findNearestApproachableSwitch(forward);
-        Railways.temporarilySkipSwitches = false;
+        MixinVariables.temporarilySkipSwitches = false;
         TrackSwitch lookAhead = lookAheadData == null ? null : lookAheadData.getFirst();
         boolean headOn = lookAheadData != null && lookAheadData.getSecond().getFirst();
         Optional<SwitchState> targetState = lookAheadData == null ? Optional.empty() : lookAheadData.getSecond().getSecond();
@@ -128,6 +147,13 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             displayApproachSwitchMessage(player, lookAhead, wrong);
         } else
             cleanUpApproachSwitchMessage(player);
+    }
+
+    @Inject(method = "control", at = @At("TAIL"))
+    private void railways$handcarHungerDepletion(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (((IHandcarTrain) this.carriage.train).railways$isHandcar()
+                && !player.getItemInHand(InteractionHand.MAIN_HAND).is(AllItems.EXTENDO_GRIP.get()))
+            player.causeFoodExhaustion((float) carriage.train.speed * CRConfigs.server().handcarHungerMultiplier.getF());
     }
 
     @Unique
@@ -208,9 +234,32 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
     private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
-                                 CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 0) LocalIntRef targetSpeed) {
-        if (((IBufferBlockedTrain) carriage.train).railways$isControlBlocked() && ((IBufferBlockedTrain) carriage.train).railways$getBlockedSign() == Mth.sign(targetSpeed.get())) {
-            targetSpeed.set(0);
+                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeedRef) {
+        double targetSpeed = targetSpeedRef.get();
+        if (targetSpeed == 0) return;
+
+        IBufferBlockedTrain bufferBlockedTrain = (IBufferBlockedTrain) carriage.train;
+
+        // The control blocked update in Navigation assumes the train is going forward if it is stationary, so we need an extra check here
+        if (!bufferBlockedTrain.railways$isControlBlocked() && bufferBlockedTrain.railways$getBlockedSign() == 0 && targetSpeed < 0) {
+            ((IBufferBlockCheckableNavigation) carriage.train.navigation).railways$updateControlsBlock(true);
         }
+
+        if (bufferBlockedTrain.railways$isControlBlocked()) {
+            double blockedSign = bufferBlockedTrain.railways$getBlockedSign();
+            if ((blockedSign == 0 && targetSpeed > 0) || blockedSign == Mth.sign(targetSpeed)) {
+                targetSpeedRef.set(0);
+            }
+        }
+    }
+
+    @Inject(method = "tickContraption", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Couple;getFirst()Ljava/lang/Object;"))
+    private void railways$storeDistanceTravelled(CallbackInfo ci, @Local(name = "distanceTo", ordinal = 0) double distanceTo) {
+        railways$distanceTravelled = distanceTo;
+    }
+
+    @Override
+    public double railways$getDistanceTravelled() {
+        return railways$distanceTravelled;
     }
 }

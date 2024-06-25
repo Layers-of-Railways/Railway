@@ -1,10 +1,27 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.smokestack.block.be;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.util.ColorUtils;
 import com.railwayteam.railways.util.IHaveCustomGoggleIcon;
-import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -87,7 +104,9 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
 
         if (isSoul || color == null) {
             Lang.builder(Railways.MODID)
-                    .translate("smokestack.goggle.tooltip", isSoul ? "Soul" : "Default")
+                    .translate("smokestack.goggle.tooltip",
+                            isSoul ? "Soul" : ColorUtils.coloredName(DyeColor.BLACK.toString())
+                    )
                     .forGoggles(tooltip);
         }
 
@@ -99,7 +118,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
         if (color != null)
             return ColorUtils.getDyeColorDyeItem(color).getDefaultInstance();
 
-        return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : AllItems.GOGGLES.asStack();
+        return isSoul ? Items.SOUL_SOIL.getDefaultInstance() : Items.BLACK_DYE.getDefaultInstance();
     }
 
     @Override

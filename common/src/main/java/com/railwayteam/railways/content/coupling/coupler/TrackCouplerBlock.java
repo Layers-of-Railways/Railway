@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.coupling.coupler;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
@@ -53,6 +71,8 @@ public abstract class TrackCouplerBlock extends Block implements IBE<TrackCouple
 	 * BlockStateBase#hasAnalogOutputSignal} whenever possible.
 	 * Implementing/overriding is fine.
 	 */
+	@SuppressWarnings("deprecation")
+	@Deprecated
 	@Override
 	public boolean hasAnalogOutputSignal(@NotNull BlockState state) {
 		return true;
@@ -63,7 +83,9 @@ public abstract class TrackCouplerBlock extends Block implements IBE<TrackCouple
 	 * BlockStateBase#getAnalogOutputSignal} whenever possible.
 	 * Implementing/overriding is fine.
 	 */
-	@Override
+	@SuppressWarnings("deprecation")
+	@Deprecated
+    @Override
 	public int getAnalogOutputSignal(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos) {
 		if (level.getBlockEntity(pos) instanceof TrackCouplerBlockEntity te)
 			return te.getTargetAnalogOutput();

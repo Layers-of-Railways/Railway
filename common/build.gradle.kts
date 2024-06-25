@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 loom {
     accessWidenerPath = file("src/main/resources/railways.accesswidener")
 }
@@ -34,8 +52,6 @@ dependencies {
 
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
     modCompileOnly("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
-    modCompileOnly("curse.maven:malilib-303119:${"malilib_version"()}")
-    modCompileOnly("curse.maven:tweakeroo-297344:${"tweakeroo_version"()}")
     modCompileOnly("maven.modrinth:sodium:${"sodium_version"()}")
 
     // mod compat for tracks

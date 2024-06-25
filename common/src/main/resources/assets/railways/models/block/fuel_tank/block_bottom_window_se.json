@@ -1,0 +1,73 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "railways:block/fuel_tank_top",
+		"1": "railways:block/fuel_tank",
+		"3": "railways:block/fuel_tank_window",
+		"4": "railways:block/fuel_tank_inner",
+		"particle": "railways:block/fuel_tank"
+	},
+	"elements": [
+		{
+			"name": "SideRight",
+			"from": [4, 4, 15],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 12], "texture": "#1"},
+				"south": {"uv": [4, 0, 16, 12], "texture": "#1"},
+				"west": {"uv": [4, 0, 5, 12], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Window",
+			"from": [15.05, 4, 0],
+			"to": [15.05, 16, 4],
+			"faces": {
+				"east": {"uv": [0, 4, 4, 16], "texture": "#3"},
+				"west": {"uv": [4, 4, 8, 16], "texture": "#3"}
+			}
+		},
+		{
+			"name": "Window",
+			"from": [0, 4, 15.05],
+			"to": [4, 16, 15.05],
+			"faces": {
+				"north": {"uv": [0, 4, 4, 16], "texture": "#3"},
+				"south": {"uv": [4, 4, 8, 16], "texture": "#3"}
+			}
+		},
+		{
+			"name": "SideLeft",
+			"from": [15, 4, 4],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [11, 0, 12, 12], "texture": "#1"},
+				"east": {"uv": [0, 0, 12, 12], "texture": "#1"},
+				"west": {"uv": [4, 0, 16, 12], "texture": "#1"}
+			}
+		},
+		{
+			"name": "Bottom",
+			"from": [0, 0, 0],
+			"to": [16, 4, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, -23]},
+			"faces": {
+				"north": {"uv": [0, 12, 16, 16], "texture": "#1"},
+				"east": {"uv": [0, 12, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 12, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 12, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0", "cullface": "down"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "tank",
+			"origin": [8, 8, -23],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		}
+	]
+}

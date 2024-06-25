@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -30,16 +48,18 @@ import static com.simibubi.create.content.trains.track.TrackBlock.SHAPE;
 
 @Mixin(value = TrackPlacement.class)
 public class MixinTrackPlacement {
-    // minimum curve length for wide gauge
-    @SuppressWarnings("unused")
+    // minimum curve length for gauges
     @ModifyExpressionValue(method = "tryConnect", at = {
         @At(value = "CONSTANT", args = "doubleValue=7"),
         @At(value = "CONSTANT", args = "doubleValue=3.25")
     })
-    private static double widerCurveForWideGauge(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
+    private static double modifiedCurvesForGauges(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
+        // Wide Gauge
         if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE)
             return value * 2;
-        else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE)
+        // Narrow Gauge and Phantom Tracks
+        else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE ||
+                TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return value * 0.5;
 
         return value;
@@ -49,7 +69,7 @@ public class MixinTrackPlacement {
     private static void placeGenericCrossing0(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(ordinal = 4) BlockState toPlace) {
+                                             @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(name="toPlace") BlockState toPlace) {
         oldToPlace.set(toPlace);
     }
 
@@ -57,8 +77,8 @@ public class MixinTrackPlacement {
     private static void placeGenericCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Local(ordinal = 3) BlockState stateAtPos,
-                                             @Local(ordinal = 4) LocalRef<BlockState> toPlace,
+                                             @Local(name="stateAtPos") BlockState stateAtPos,
+                                             @Local(name="toPlace") LocalRef<BlockState> toPlace,
                                              @Share("oldToPlace") LocalRef<BlockState> oldToPlace,
                                              @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingData) {
         crossingData.set(null);
@@ -83,7 +103,7 @@ public class MixinTrackPlacement {
     private static void maybePlaceCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                            BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                            CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                           @Local(ordinal = 3) BlockPos offsetPos,
+                                           @Local(name="offsetPos") BlockPos offsetPos,
                                            @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingDataRef) {
         @Nullable GenericCrossingData crossingData = crossingDataRef.get();
         if (crossingData != null && level.getBlockEntity(offsetPos) instanceof GenericCrossingBlockEntity genericCrossingBE) {

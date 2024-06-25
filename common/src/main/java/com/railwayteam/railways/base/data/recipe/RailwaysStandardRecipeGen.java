@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
@@ -10,6 +28,8 @@ import com.railwayteam.railways.registry.CRPalettes.CyclingStyleList;
 import com.railwayteam.railways.registry.CRPalettes.StyledList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.AbstractionUtils;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -111,7 +131,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         );
 
     GeneratedRecipe SEMAPHORE = create(CRBlocks.SEMAPHORE)
-        .unlockedBy(AllItems.ELECTRON_TUBE::get)
+        .unlockedBy(AllItems.ELECTRON_TUBE)
         .returns(4)
         .viaShaped(b -> b
             .define('C', Ingredients.andesiteCasing())
@@ -215,10 +235,9 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .unlockedBy(Ingredients::headstock)
         .viaShaped(b -> b
             .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.woodenSlab())
             .define('>', Ingredients.headstockTag())
             .define('=', Ingredients.girder())
-            .pattern(">_>")
+            .pattern(">>>")
             .pattern("===")
             .pattern("# #")
         );
@@ -302,6 +321,23 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
             .create()
     ));
+
+    GeneratedRecipe FUEL_TANK = create(AbstractionUtils.getFluidTankBlockEntry())
+            .unlockedBy(AllBlocks.FLUID_TANK)
+            .viaShaped(b -> b
+                    .define('S', Ingredients.sturdySheet())
+                    .define('F', AllBlocks.FLUID_TANK.get())
+                    .pattern("S")
+                    .pattern("F")
+                    .pattern("S")
+            );
+
+    GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getPortableFuelInterfaceBlockEntry())
+            .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
+            .viaShapeless(b -> b
+                    .requires(Ingredients.railwayCasing())
+                    .requires(Ingredients.chute())
+            );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);

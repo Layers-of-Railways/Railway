@@ -1,9 +1,29 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
+import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.railwayteam.railways.mixin_interfaces.*;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -19,13 +39,17 @@ import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SignalEdgeGroup;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -41,28 +65,22 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.*;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement {
     @Shadow public TrackGraph graph;
-
     @Shadow public Navigation navigation;
-    @Shadow public double speed;
-
     @Shadow public abstract void arriveAt(GlobalStation station);
-
     @Shadow public List<Carriage> carriages;
     @Shadow public boolean invalid;
-    @Unique
-    public Set<UUID> railways$occupiedCouplers;
-    @Unique
-    protected int railways$index = 0;
-    @Unique
-    protected boolean railways$isHandcar = false;
-    @Unique
-    protected boolean railways$isStrictSignalTrain = false;
-    @Unique
-    protected int railways$controlBlockedTicks = -1;
-    @Unique
-    protected int railways$controlBlockedSign = 0;
+    @Shadow public double speed;
+    @Shadow public int fuelTicks;
+    @Shadow public Player backwardsDriver;
+
+    @Unique public Set<UUID> railways$occupiedCouplers;
+    @Unique protected int railways$index = 0;
+    @Unique protected boolean railways$isHandcar = false;
+    @Unique protected boolean railways$isStrictSignalTrain = false;
+    @Unique protected int railways$controlBlockedTicks = -1;
+    @Unique protected int railways$controlBlockedSign = 0;
 
     @Override
     public boolean railways$isControlBlocked() {
@@ -70,16 +88,14 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
 
     @Override
-    public void railways$setControlBlocked(boolean controlBlocked) {
+    public void railways$setControlBlocked(boolean controlBlocked, boolean forceBackwards) {
         railways$controlBlockedTicks = controlBlocked ? 3 : -1;
-        if (controlBlocked && Mth.sign(speed) != 0) {
-            railways$controlBlockedSign = Mth.sign(speed);
-        }
+        railways$controlBlockedSign = forceBackwards ? -1 : Mth.sign(speed);
     }
 
     @Override
     public int railways$getBlockedSign() {
-        return railways$isControlBlocked() ? railways$controlBlockedSign : 0;
+        return railways$controlBlockedSign;
     }
 
     @Override
@@ -119,7 +135,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
     @Inject(method = "earlyTick", at = @At("HEAD"))
     private void killEmptyTrains(Level level, CallbackInfo ci) { // hopefully help deal with empty trains
-        if (carriages.size() == 0)
+        if (carriages.isEmpty())
             invalid = true;
 
         if (railways$controlBlockedTicks > 0)
@@ -236,7 +252,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
 
     @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
-    private void railways$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local(ordinal = 1) Train train, @Local Pair<Train, Vec3> collision) {
+    private void railways$handcarCollision(Level level, Carriage carriage, CallbackInfo ci, @Local(name = "train") Train train, @Local Pair<Train, Vec3> collision) {
         Vec3 v = collision.getSecond();
 
         // Self Train / Train that collided with the other one
@@ -245,6 +261,9 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
                 TrainUtils.discardTrain((Train) (Object) this);
                 Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
             }
+
+            ((ICrashAdvancement) this).railways$awardCrashAdvancements();
+
             ci.cancel();
         }
 
@@ -254,19 +273,67 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
                 TrainUtils.discardTrain(train);
                 Containers.dropItemStack(level, v.x, v.y, v.z, CRBlocks.HANDCAR.asStack());
             }
+
+            ((ICrashAdvancement) train).railways$awardCrashAdvancements();
+
             ci.cancel();
         }
     }
 
+    @Inject(method = "burnFuel", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", shift = At.Shift.AFTER))
+    private void railways$fluidFuelsSystem(CallbackInfo ci) {
+        boolean iterateFromBack = speed < 0;
+        int carriageCount = carriages.size();
+
+        for (int index = 0; index < carriageCount; index++) {
+            int i = iterateFromBack ? carriageCount - 1 - index : index;
+            Carriage carriage = carriages.get(i);
+            CombinedTankWrapper fuelFluids = ((IFuelInventory) carriage.storage).railways$getFuelFluids();
+
+            if (fuelFluids == null) continue;
+
+            fuelTicks += LiquidFuelTrainHandler.handleFuelDraining(fuelFluids);
+        }
+    }
+
     @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcars(CallbackInfoReturnable<Float> cir) {
+    public void maxSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
-    private void slowDownHandcarsOnTurns(CallbackInfoReturnable<Float> cir) {
+    public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
+        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20 * 20));
+    }
+
+    @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
+    public void acceleration(CallbackInfoReturnable<Float> cir) {
+        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
+    }
+
+    // Award crash advancements when a train has crashed with a handcar
+    @Override
+    public void railways$awardCrashAdvancements() {
+        for (Carriage carriage : carriages)
+            carriage.forEachPresentEntity(e -> e.getIndirectPassengers()
+                    .forEach(entity -> {
+                        if (!(entity instanceof Player p))
+                            return;
+                        Optional<UUID> controllingPlayer = e.getControllingPlayer();
+                        if (controllingPlayer.isPresent() && controllingPlayer.get()
+                                .equals(p.getUUID()))
+                            return;
+                        AllAdvancements.TRAIN_CRASH.awardTo(p);
+                    }));
+
+        if (backwardsDriver != null)
+            AllAdvancements.TRAIN_CRASH_BACKWARDS.awardTo(backwardsDriver);
     }
 }

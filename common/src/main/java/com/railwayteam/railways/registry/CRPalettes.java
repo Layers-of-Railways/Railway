@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
@@ -5,9 +23,11 @@ import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
+import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
@@ -39,7 +59,7 @@ public class CRPalettes {
         for (Styles style : Styles.values())
             style.register(null);
 
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : ColorUtils.ORDERED_DYE_COLORS) {
             for (Styles style : Styles.values())
                 style.register(dyeColor);
         }
@@ -51,7 +71,7 @@ public class CRPalettes {
 
     static {
         CYCLE_GROUPS.put(null, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/base")));
-        for (DyeColor dyeColor : DyeColor.values()) {
+        for (DyeColor dyeColor : ColorUtils.ORDERED_DYE_COLORS) {
             CYCLE_GROUPS.put(dyeColor, CRTags.optionalTag(Registry.ITEM, Railways.asResource("palettes/cycle_groups/" + dyeColor.name().toLowerCase(Locale.ROOT))));
         }
     }
@@ -151,12 +171,6 @@ public class CRPalettes {
         BlockEntry<?> register(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags);
     }
 
-    // no textures for these yet
-//            COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-//            COPPER_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class),
-//            IRON_WRAPPED_LOCOMETAL = new EnumMap<>(DyeColor.class),
-//            IRON_WRAPPED_LOCOMETAL_BOILER = new EnumMap<>(DyeColor.class);
-
     @SafeVarargs
     private static BlockEntry<?> slashedLocometal(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "slashed_locometal"), Block::new)
@@ -165,6 +179,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Slashed Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -177,6 +192,7 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Riveted Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -188,17 +204,19 @@ public class CRPalettes {
             .lang(joinSpace(colorName, "Locometal Pillar"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
 
     @SafeVarargs
     public static BlockEntry<?> locometalSmokebox(@Nullable DyeColor color, String colorString, String colorName, TagKey<Item>... tags) {
-        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), RotatedPillarBlock::new)
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), PalettesSmokeboxBlock::new)
             .transform(BuilderTransformers.locoMetalSmokeBox(color))
             .lang(joinSpace(colorName, "Locometal Smokebox"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -210,6 +228,7 @@ public class CRPalettes {
             .lang(joinSpace("Plated", colorName, "Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -221,6 +240,7 @@ public class CRPalettes {
             .lang(joinSpace("Flat", colorName, "Slashed Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
@@ -232,6 +252,7 @@ public class CRPalettes {
             .lang(joinSpace("Flat", colorName, "Riveted Locometal"))
             .item()
             .tag(tags)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }

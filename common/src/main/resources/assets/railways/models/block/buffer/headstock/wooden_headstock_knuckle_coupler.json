@@ -1,6 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"ambientocclusion": false,
 	"textures": {
 		"1": "railways:block/buffer/small_buffer",
 		"2": "railways:block/buffer/knuckle_coupler",
@@ -89,8 +88,8 @@
 			}
 		},
 		{
-			"from": [10.5, 4.998, 1.5],
-			"to": [11.5, 11.002, 2.5],
+			"from": [10.5, 4.996, 1.5],
+			"to": [11.5, 11.004, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7, 8.5, 0]},
 			"faces": {
 				"up": {"uv": [10.5, 0, 11, 0.5], "texture": "#1"},
@@ -146,8 +145,8 @@
 			}
 		},
 		{
-			"from": [7.5, 5.498, 0.5],
-			"to": [8.5, 10.502, 1.5],
+			"from": [7.5, 5.49, 0.5],
+			"to": [8.5, 10.51, 1.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [11, 8, 5]},
 			"faces": {
 				"up": {"uv": [4, 1, 5, 2], "texture": "#2"},

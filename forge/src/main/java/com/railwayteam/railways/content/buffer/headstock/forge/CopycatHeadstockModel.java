@@ -1,11 +1,31 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.buffer.headstock.forge;
 
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatModel;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.FilteredBlockAndTintGetter;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import com.simibubi.create.foundation.model.BakedQuadHelper;
@@ -170,6 +190,18 @@ public class CopycatHeadstockModel implements BakedModel {
                                               ModelData wrappedData, @Nullable RenderType renderType) {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
+        boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
+
+        if (CopycatSpecialCases.isBarsMaterial(material)) {
+            BlockState specialState = CRBlocks.COPYCAT_HEADSTOCK_BARS.getDefaultState()
+                .setValue(CopycatHeadstockBlock.FACING, facing)
+                .setValue(CopycatHeadstockBlock.UPSIDE_DOWN, upsideDown);
+
+            BakedModel specialModel = getModelOf(specialState);
+            if (specialModel instanceof CopycatHeadstockBarsModel cm) {
+                return cm.getCroppedQuads(state, side, rand, material, wrappedData, renderType);
+            }
+        }
 
         BakedModel model = getModelOf(material);
         List<BakedQuad> templateQuads = model.getQuads(material, side, rand, wrappedData, renderType);
@@ -192,6 +224,9 @@ public class CopycatHeadstockModel implements BakedModel {
                     bb = bb.move(0, 10 / 16., 0);
                 else
                     offset = offset.add(0, 4 / 16., 0);
+
+                if (upsideDown)
+                    offset = offset.add(0, -4 / 16., 0);
 
                 //noinspection ConstantValue
                 if (false) { // debug explode

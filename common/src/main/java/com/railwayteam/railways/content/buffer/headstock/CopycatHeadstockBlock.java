@@ -1,11 +1,31 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.buffer.headstock;
 
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
-import com.railwayteam.railways.util.ShapeUtils;
+import com.railwayteam.railways.util.client.OcclusionTestWorld;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.WaterloggedCopycatBlock;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -34,6 +54,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -48,16 +69,25 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<HeadstockStyle> STYLE = HeadstockBlock.STYLE;
+    public static final BooleanProperty UPSIDE_DOWN = HeadstockBlock.UPSIDE_DOWN;
+
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
             .setValue(FACING, Direction.NORTH)
-            .setValue(STYLE, HeadstockStyle.BUFFER));
+            .setValue(STYLE, HeadstockStyle.BUFFER)
+            .setValue(UPSIDE_DOWN, false)
+        );
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(FACING, STYLE));
+        super.createBlockStateDefinition(builder.add(FACING, STYLE, UPSIDE_DOWN));
+    }
+
+    @Override
+    public boolean isAcceptedRegardless(BlockState material) {
+        return CopycatSpecialCases.isBarsMaterial(material);
     }
 
     @Override
@@ -104,14 +134,6 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction direction) {
-        if (state.is(this) && adjacentBlockState.is(this))
-            return isOccluded(state, adjacentBlockState, direction);
-        return false;
-    }
-
     @Override
     public boolean canFaceBeOccluded(BlockState state, Direction face) {
         return state.getValue(FACING)
@@ -120,16 +142,61 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
 
     @Override
     public boolean shouldFaceAlwaysRender(BlockState state, Direction face) {
-        return canFaceBeOccluded(state, face.getOpposite());
+        if (state.getValue(FACING) == face)
+            return true;
+
+        return face.getAxis().isVertical() && (face == Direction.DOWN ^ state.getValue(UPSIDE_DOWN));
+    }
+
+    // Can't use @Override because PortingLib's interface injection doesn't exist in common, but this method is supported cross-platform because of it anyway
+    @SuppressWarnings("unused")
+    public boolean supportsExternalFaceHiding(BlockState state) {
+        return true;
+    }
+
+    // Can't use @Override because PortingLib's interface injection doesn't exist in common, but this method is supported cross-platform because of it anyway
+    @SuppressWarnings("unused")
+    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState,
+                                     Direction dir) {
+        pos = pos.immutable();
+        BlockPos otherPos = pos.relative(dir);
+        BlockState material = getMaterial(level, pos);
+        BlockState otherMaterial = getMaterial(level, otherPos);
+
+        // should hopefully never happen, but just in case
+        if (material == null) material = AllBlocks.COPYCAT_BASE.getDefaultState();
+        if (otherMaterial == null) otherMaterial = AllBlocks.COPYCAT_BASE.getDefaultState();
+
+        if (state.is(this) == neighborState.is(this)) {
+            if (CopycatSpecialCases.isBarsMaterial(material)
+                && CopycatSpecialCases.isBarsMaterial(otherMaterial))
+                return state.getValue(FACING) == neighborState.getValue(FACING)
+                    && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
+            if (material.skipRendering(otherMaterial, dir.getOpposite()))
+                return isOccluded(state, neighborState, dir.getOpposite());
+
+            // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
+            OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
+            occlusionTestWorld.setBlock(pos, material);
+            occlusionTestWorld.setBlock(otherPos, otherMaterial);
+            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, otherPos))
+                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
+                    return isOccluded(state, neighborState, dir.getOpposite());
+        }
+
+        return state.getValue(FACING) == dir.getOpposite()
+            && material.skipRendering(neighborState, dir.getOpposite());
     }
 
     private static boolean isOccluded(BlockState state, BlockState other, Direction pDirection) {
         state = state.setValue(WATERLOGGED, false);
         other = other.setValue(WATERLOGGED, false);
         Direction facing = state.getValue(FACING);
-        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing.getOpposite())
+        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing)
             return true;
         if (other.getValue(FACING) != facing)
+            return false;
+        if (other.getValue(UPSIDE_DOWN) != state.getValue(UPSIDE_DOWN))
             return false;
         return pDirection.getAxis() != facing.getAxis() && pDirection.getAxis().isHorizontal();
     }
@@ -150,18 +217,10 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     }
 
     @Override
-    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-        if (targetedFace.getAxis().isVertical()) {
-            return super.getRotatedBlockState(originalState, targetedFace);
-        } else {
-            return originalState.cycle(STYLE);
-        }
-    }
-
-    @Override
     public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
         // call the super method to only pop out the copycatted block, not cycling the style
-        super.onWrenched(state, context);
+        InteractionResult result = super.onWrenched(state, context);
+        if (result.consumesAction()) return result;
 
         // IWrenchable default implementation, to not accidentally call onWrenched twice
         Level world = context.getLevel();
@@ -183,17 +242,16 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     // copied directly from {@link IWrenchable}, because java doesn't support IWrenchable.super if we're not directly implementing it...
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
-        // if the headstock part is wrenched, apply the 'super' wrench behaviour
-        if (ShapeUtils.isTouching(context.getClickLocation(), context.getClickedPos(), getHeadstockShape(state))) {
-            // If the style is PLAIN (so that the only place that *can* be clicked is the headstock,
-            // then only allow material extraction if the clicked face is the 'back'
-            if (state.getValue(STYLE) != HeadstockStyle.PLAIN || context.getClickedFace() == state.getValue(FACING).getOpposite()) {
-                InteractionResult result = super.onWrenched(state, context);
-                if (result.consumesAction()) return result;
-            }
-        }
+        InteractionResult result = IWrenchable$onWrenched(state, context);
+        if (result.consumesAction()) return result;
+        return super.onWrenched(state, context);
+    }
+
+    private InteractionResult IWrenchable$onWrenched(BlockState state, UseOnContext context) {
         Level world = context.getLevel();
         BlockState rotated = getRotatedBlockState(state, context.getClickedFace());
+        if (rotated == state)
+            return InteractionResult.PASS;
         if (!rotated.canSurvive(world, context.getClickedPos()))
             return InteractionResult.PASS;
 
@@ -220,6 +278,9 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
                 state = state.setValue(FACING, context.getHorizontalDirection().getOpposite());
             } else {
                 state = state.setValue(FACING, context.getClickedFace());
+                if (context.getClickLocation().y - (double) context.getClickedPos().getY() < 0.5) {
+                    state = state.setValue(UPSIDE_DOWN, true);
+                }
             }
         }
         return state; // withWater() is already handled by super
@@ -228,12 +289,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (switch (state.getValue(STYLE)) {
-            case PLAIN -> CRShapes.HEADSTOCK_PLAIN;
-            case BUFFER -> CRShapes.HEADSTOCK_BUFFER;
-            case LINK, LINKLESS -> CRShapes.HEADSTOCK_LINK_PIN;
-            case KNUCKLE, KNUCKLE_SPLIT -> CRShapes.HEADSTOCK_KNUCKLE;
-        }).get(state.getValue(FACING));
+        return CRBlocks.HEADSTOCK.get().getShape(state, level, pos, context);
     }
 
     protected VoxelShape getHeadstockShape(BlockState state) {

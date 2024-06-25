@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
@@ -18,10 +36,9 @@ import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
 
 public class CRTags {
   public enum NameSpace {
+    MOD(Railways.MODID, false, true),
+    FORGE("forge");
 
-    MOD(Railways.MODID, false, true), FORGE("forge")
-
-    ;
 
     public final String id;
     public final boolean optionalDefault;
@@ -38,8 +55,6 @@ public class CRTags {
     }
 
   }
-
-
 
   public enum AllBlockTags {
     SEMAPHORE_POLES,
@@ -108,7 +123,9 @@ public class CRTags {
     COALBURNER_STACK,
     OILBURNER_STACK,
     STREAMLINED_STACK,
-    WOODBURNER_STACK
+    WOODBURNER_STACK,
+
+    NOT_TRAIN_FUEL
     ;
 
     public final TagKey<Item> tag;
@@ -171,10 +188,14 @@ public class CRTags {
     }
 
     for (AllItemTags itemTag : AllItemTags.values()) {
+      if (itemTag == AllItemTags.LONG_STACK)
+        continue;
+
       ResourceLocation loc = itemTag.tag.location();
       consumer.accept("tag.item." + loc.getNamespace() + "." + loc.getPath().replace('/', '.'),
           TextUtils.titleCaseConversion(itemTag.name().replace('_', ' ')));
     }
+    consumer.accept("tag.item.railways.long_stack", "Double Stack");
     consumer.accept("tag.item.forge.string", "String");
   }
 }

@@ -1,7 +1,27 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.base.data.fabric;
 
 import com.railwayteam.railways.content.buffer.fabric.BufferModel;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
+import com.railwayteam.railways.content.buffer.headstock.fabric.CopycatHeadstockBarsModel;
 import com.railwayteam.railways.content.buffer.headstock.fabric.CopycatHeadstockModel;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.fabric.GenericCrossingModel;
@@ -14,6 +34,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class BuilderTransformersImpl {
     public static <B extends GenericCrossingBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> genericCrossing() {
@@ -26,6 +47,22 @@ public class BuilderTransformersImpl {
 
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> variantBufferItem() {
         return i -> i.onRegister(CreateRegistrate.itemModel(() -> BufferModel::new));
+    }
+
+    public static <B extends CopycatHeadstockBarsBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstockBars() {
+        return b -> b
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                .forAllStates(state -> ConfiguredModel.builder()
+                    .modelFile(p.models()
+                        .getExistingFile(p.modLoc("block/buffer/headstock/copycat_headstock_bars"+
+                                (state.getValue(CopycatHeadstockBarsBlock.UPSIDE_DOWN) ? "_upside_down" : "")
+                        ))
+                    )
+                    .rotationY(((int) state.getValue(CopycatHeadstockBarsBlock.FACING).toYRot() + 180) % 360)
+                    .build()
+                )
+            )
+            .onRegister(CreateRegistrate.blockModel(() -> CopycatHeadstockBarsModel::new));
     }
 
     public static <B extends CopycatHeadstockBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> copycatHeadstock() {

@@ -1,6 +1,25 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.util.ColorUtils;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
@@ -15,6 +34,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CRSpriteShifts {
+    public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
+        FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
+        FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
+
     public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
         SLASHED_LOCOMETAL = new HashMap<>(17, 2),
         RIVETED_LOCOMETAL = new HashMap<>(17, 2),
@@ -25,7 +48,7 @@ public class CRSpriteShifts {
         BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
         COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
         IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
-    
+
     private static void initLocometal(@Nullable DyeColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
@@ -40,7 +63,7 @@ public class CRSpriteShifts {
 
     static {
         initLocometal(null);
-        for (DyeColor color : DyeColor.values()) {
+        for (DyeColor color : ColorUtils.ORDERED_DYE_COLORS) {
             initLocometal(color);
         }
     }

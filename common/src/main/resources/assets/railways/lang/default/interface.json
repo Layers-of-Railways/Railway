@@ -101,6 +101,8 @@
   "create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
+  "railways.bogeys.styles.handcar": "Handcar",
+  
   "railways.bogeys.styles.invisible": "Invisible",
   "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
   "railways.bogeys.styles.monobogey": "Monobogey",
@@ -120,19 +122,22 @@
   "railways.bogeys.styles.wide_comically_large": "Comically Large",
   "railways.bogeys.styles.narrow_default": "Narrow",
   "railways.bogeys.styles.narrow_double_scotch": "Narrow Double Scotch Yoke",
-
-  "railways.style_select.manage_favorites": "Manage Favorites",
-  "railways.style_select.title.favorites.pick_slot": "Pick Slot",
-  "railways.style_select.title.favorites.pick_style": "Pick Favorite Style",
-  "railways.style_select.category": "Category: ",
-
-  "railways.style_select.category.railways.favorites_category": "Favorites",
-  "railways.style_select.category.create.standard": "Standard Styles",
-  "railways.style_select.category.railways.singleaxles": "Single Axle Styles",
-  "railways.style_select.category.railways.doubleaxles": "Double Axle Styles",
-  "railways.style_select.category.railways.tripleaxles": "Triple Axle Styles",
-
-  "railways.style_select.category.railways.extendedbogeys": "Extended Bogeys",
+  "railways.bogeys.styles.medium_standard": "Medium Standard",
+  "railways.bogeys.styles.medium_single_wheel": "Medium Single Wheel",
+  "railways.bogeys.styles.medium_triple_wheel": "Medium Triple Wheel",
+  "railways.bogeys.styles.medium_quadruple_wheel": "Medium Quadruple Wheel",
+  "railways.bogeys.styles.medium_quintuple_wheel": "Medium Quintuple Wheel",
+  "railways.bogeys.styles.medium_2_0_2_trailing": "Medium 2-0-2 Trailing",
+  "railways.bogeys.styles.medium_4_0_4_trailing": "Medium 4-0-4 Trailing",
+  "railways.bogeys.styles.medium_6_0_6_trailing": "Medium 6-0-6 Trailing",
+  "railways.bogeys.styles.medium_6_0_6_tender": "Medium 6-0-6 Tender",
+  "railways.bogeys.styles.medium_8_0_8_tender": "Medium 8-0-8 Tender",
+  "railways.bogeys.styles.medium_10_0_10_tender": "Medium 10-0-10 Tender",
+  "railways.bogeys.styles.large_create_style_0_4_0": "Large Create Styled 0-4-0",
+  "railways.bogeys.styles.large_create_style_0_6_0": "Large Create Styled 0-6-0",
+  "railways.bogeys.styles.large_create_style_0_8_0": "Large Create Styled 0-8-0",
+  "railways.bogeys.styles.large_create_style_0_10_0": "Large Create Styled 0-10-0",
+  "railways.bogeys.styles.large_create_style_0_12_0": "Large Create Styled 0-12-0",
 
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
 
@@ -141,5 +146,23 @@
   "railways.smokestack.goggle.tooltip": "Selected Style: %s",
   "railways.smokestack.goggle.tooltip.color": "Selected Dye Color: %s",
 
-  "railways.buffer.invalid_shape": "Buffers must be placed on a straight track"
+  "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
+
+  "railways.keyinfo.bogey_menu": "Open Bogey Menu",
+  "railways.gui.bogey_menu.title": "Bogey Preview",
+  "railways.gui.bogey_menu.gauge_description": "Compatible with:",
+  "railways.gui.bogey_menu.narrow_gauge": "Narrow Gauge",
+  "railways.gui.bogey_menu.standard_gauge": "Standard Gauge",
+  "railways.gui.bogey_menu.wide_gauge": "Wide Gauge",
+
+  "railways.gui.bogey_menu.category.favorites": "Favorites",
+  "create.gui.bogey_menu.category.standard": "Standard Styles",
+  "railways.gui.bogey_menu.category.singleaxles": "Single Axles",
+  "railways.gui.bogey_menu.category.doubleaxles": "Double Axles",
+  "railways.gui.bogey_menu.category.tripleaxles": "Triple Axles",
+  "railways.gui.bogey_menu.category.quadrupleaxles": "Quadruple Axles",
+  "railways.gui.bogey_menu.category.quintupleaxles": "Quintuple Axles",
+  "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles",
+
+  "railways.keyinfo.cycle_menu": "Open Cycle Menu"
 }

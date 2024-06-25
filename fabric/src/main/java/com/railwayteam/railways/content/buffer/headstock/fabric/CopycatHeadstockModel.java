@@ -1,17 +1,42 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.buffer.headstock.fabric;
 
+import com.jozufozu.flywheel.fabric.model.FabricModelUtil;
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlockEntity;
+import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
+import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
+import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
+import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
+import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
@@ -19,6 +44,8 @@ import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -44,6 +71,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -120,12 +148,36 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             }
         }
 
+        // fabric: If it is the default state do not push transformations, will cause issues with GhostBlockRenderer
+        boolean shouldTransform = material != AllBlocks.COPYCAT_BASE.getDefaultState();
+
+        // fabric: need to change the default render material
+        if (shouldTransform)
+            context.pushTransform(MaterialFixer.create(material));
+
         emitBlockQuadsInner(blockView, state, pos, randomSupplier, context, material, cullFaceRemovalData, occlusionData);
+
+        // fabric: pop the material changer transform
+        if (shouldTransform)
+            context.popTransform();
     }
 
     protected void emitBlockQuadsInner(@Nullable BlockAndTintGetter blockView, @Nullable BlockState state, @Nullable BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context, BlockState material, CullFaceRemovalData cullFaceRemovalData, OcclusionData occlusionData) {
         Direction facing = state == null ? Direction.NORTH : state.getOptionalValue(CopycatHeadstockBlock.FACING)
             .orElse(Direction.NORTH);
+        boolean upsideDown = state != null && state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN);
+
+        if (CopycatSpecialCases.isBarsMaterial(material)) {
+            BlockState specialState = CRBlocks.COPYCAT_HEADSTOCK_BARS.getDefaultState()
+                .setValue(CopycatHeadstockBarsBlock.FACING, facing)
+                .setValue(CopycatHeadstockBarsBlock.UPSIDE_DOWN, upsideDown);
+
+            BakedModel specialModel = getModelOf(specialState);
+            if (specialModel instanceof CopycatHeadstockBarsModel cm) {
+                cm.emitBlockQuadsInner(blockView, state, pos, randomSupplier, context, material, cullFaceRemovalData.shouldRemove, occlusionData.occluded);
+                return;
+            }
+        }
 
         BakedModel model = getModelOf(material);
 
@@ -162,6 +214,9 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
                         bb = bb.move(0, 10 / 16., 0);
                     else
                         offset = offset.add(0, 4 / 16., 0);
+
+                    if (upsideDown)
+                        offset = offset.add(0, -4 / 16., 0);
 
                     //noinspection ConstantValue
                     if (false) { // debug explode
@@ -310,8 +365,8 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             occluded[face.get3DDataValue()] = true;
         }
 
-        public boolean isOccluded(Direction face) {
-            return face == null ? false : occluded[face.get3DDataValue()];
+        public boolean isOccluded(@Nullable Direction face) {
+            return face != null && occluded[face.get3DDataValue()];
         }
     }
 
@@ -326,8 +381,28 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             shouldRemove[face.get3DDataValue()] = true;
         }
 
-        public boolean shouldRemove(Direction face) {
-            return face == null ? false : shouldRemove[face.get3DDataValue()];
+        public boolean shouldRemove(@Nullable Direction face) {
+            return face != null && shouldRemove[face.get3DDataValue()];
+        }
+    }
+
+    private record MaterialFixer(RenderMaterial materialDefault) implements RenderContext.QuadTransform {
+        @Override
+        public boolean transform(MutableQuadView quad) {
+            BlendMode quadBlendMode = FabricModelUtil.getBlendMode(quad);
+            if (quadBlendMode == BlendMode.DEFAULT) {
+                // default needs to be changed from the Copycat's default (cutout) to the wrapped material's default.
+                quad.material(materialDefault);
+            }
+            return true;
+        }
+
+        public static MaterialFixer create(BlockState materialState) {
+            RenderType type = ItemBlockRenderTypes.getChunkRenderType(materialState);
+            BlendMode blendMode = BlendMode.fromRenderLayer(type);
+            MaterialFinder finder = Objects.requireNonNull(RendererAccess.INSTANCE.getRenderer()).materialFinder();
+            RenderMaterial renderMaterial = finder.blendMode(0, blendMode).find();
+            return new MaterialFixer(renderMaterial);
         }
     }
 }

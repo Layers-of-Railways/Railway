@@ -1,0 +1,63 @@
+{
+	"credit": "Made by StarFluxie in Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"3": "block/spruce_planks",
+		"particle": "railways:block/buffer/small_buffer"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 13],
+			"to": [16, 12, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -16, 0]},
+			"faces": {
+				"north": {"uv": [0, 4, 16, 16], "texture": "#3"},
+				"east": {"uv": [0, 4, 3, 16], "texture": "#3"},
+				"south": {"uv": [0, 4, 16, 16], "texture": "#3"},
+				"west": {"uv": [13, 4, 16, 16], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 3], "rotation": 180, "texture": "#3"},
+				"down": {"uv": [0, 0, 16, 3], "texture": "#3"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.25, -1, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"fixed": {
+			"rotation": [0, 90, 0]
+		}
+	},
+	"groups": [
+		{
+			"name": "Board",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

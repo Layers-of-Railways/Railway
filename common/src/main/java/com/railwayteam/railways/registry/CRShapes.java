@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackVoxelShapes;
@@ -74,6 +92,12 @@ public class CRShapes {
             .add(4, 5, 12, 6, 11, 15)
             .add(5, 5.5, 14, 9, 10.5, 16)
             .add(0, 4, 0, 16, 16, 3)
+            .forHorizontal(Direction.SOUTH),
+        HEADSTOCK_SCREWLINK = shape(4, 6, 3, 12, 10, 4)
+            .add(5, 6, 4, 11, 10, 6)
+            .add(7, 7, 6, 9, 9, 8)
+            .add(7, 6.5, 7, 9, 9.5, 11)
+            .add(0, 4, 0, 16, 16, 3)
             .forHorizontal(Direction.SOUTH);
 
     public static final VoxelShaper LINK_PIN =
@@ -99,6 +123,11 @@ public class CRShapes {
             .add(4, 5, 6, 12, 11, 9)
             .add(4, 5, 9, 6, 11, 12)
             .add(5, 5.5, 11, 9, 10.5, 13)
+            .forHorizontal(Direction.SOUTH),
+        SCREWLINK = shape(4, 6, 0, 12, 10, 1)
+            .add(5, 6, 1, 11, 10, 3)
+            .add(7, 7, 3, 9, 9, 5)
+            .add(7, 6.5, 4, 9, 9.5, 8)
             .forHorizontal(Direction.SOUTH);
 
     private static VoxelShape narrowAscending() {
@@ -115,7 +144,7 @@ public class CRShapes {
     public static VoxelShape narrowDiagonal() {
         VoxelShape shape = Block.box(0, 0, 0, 16, 4, 16);
         VoxelShape[] shapes = new VoxelShape[6];
-        int off = 0;
+        int off;
 
         for (int i = 0; i < 3; i++) {
             off = (i + 1) * 2;
@@ -135,6 +164,19 @@ public class CRShapes {
 
         return shape.optimize();
     }
+
+    public static VoxelShape boiler(double offset) {
+        VoxelShape shape = Shapes.empty();
+
+        for (double i = 0; i < 10; i++) {
+            shape = Shapes.or(shape, Block.box(0, -8 + offset + i, 1 - i, 16, 24 + offset - i, 15 + i));
+        }
+
+        return shape.optimize();
+    }
+
+    public static final VoxelShaper BOILER = shape(boiler(0)).forHorizontal(EAST);
+    public static final VoxelShaper BOILER_RAISED = shape(boiler(8)).forHorizontal(EAST);
 
     public static final VoxelShaper
         NARROW_TRACK_ORTHO = shape(-7, 0, 0, 16 + 7, 4, 16).forHorizontal(NORTH),
@@ -183,7 +225,7 @@ public class CRShapes {
             .add(0, 2, 2, 16, 4, 14)
             .forHorizontal(Direction.WEST),
         STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
-            .forHorizontal(Direction.WEST),
+            .forHorizontal(Direction.EAST),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
             .forDirectional(Direction.UP);
 

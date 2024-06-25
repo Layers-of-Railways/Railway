@@ -1,8 +1,27 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockStyle;
@@ -15,17 +34,18 @@ import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
 import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.DoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.LargePlatformDoubleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.SingleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard_gauge.TripleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.invisible.InvisibleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.InvisibleMonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.monobogey.MonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.narrow_gauge.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.wide_gauge.WideGaugeComicallyLargeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeBogeyBlock.NarrowGaugeStandardStyle;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.DoubleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.SingleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.TripleAxleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeComicallyLargeBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
@@ -40,10 +60,8 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreItem;
 import com.railwayteam.railways.content.smokestack.SmokeStackMovementBehaviour;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
-import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.AxisSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.*;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
 import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
@@ -60,6 +78,7 @@ import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
@@ -69,6 +88,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
@@ -152,11 +172,11 @@ public class CRBlocks {
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, VoxelShape shape, boolean emitStationarySmoke) {
-        return makeSmokeStack(variant, type, description, false, ShapeWrapper.wrapped(shape), true, emitStationarySmoke);
+        return makeSmokeStack(variant, type, description, RotationType.NONE, ShapeWrapper.wrapped(shape), true, emitStationarySmoke);
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, VoxelShape shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
-        return makeSmokeStack(variant, type, description, false, ShapeWrapper.wrapped(shape), spawnExtraSmoke, emitStationarySmoke);
+        return makeSmokeStack(variant, type, description, RotationType.NONE, ShapeWrapper.wrapped(shape), spawnExtraSmoke, emitStationarySmoke);
     }
 
     @FunctionalInterface
@@ -164,8 +184,16 @@ public class CRBlocks {
         T create(BlockBehaviour.Properties properties, SmokeStackBlock.SmokeStackType type, ShapeWrapper shape, boolean emitStationarySmoke, String variant);
     }
 
-    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
-        return makeSmokeStack(variant, type, description, rotates, shape, spawnExtraSmoke, emitStationarySmoke,
+    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, RotationType rotType, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke) {
+        SmokeStackFunction<SmokeStackBlock> blockFunction = SmokeStackBlock::new;
+
+        switch (rotType) {
+            case NONE -> blockFunction = SmokeStackBlock::new;
+            case AXIS -> blockFunction = AxisSmokeStackBlock::new;
+            case FACING -> blockFunction = FacingSmokeStackBlock::new;
+        }
+
+        return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke,
                 (c, p) -> p.getVariantBuilder(c.get())
                         .forAllStatesExcept(state -> ConfiguredModel.builder()
                                 .modelFile(p.models().withExistingParent(
@@ -175,18 +203,18 @@ public class CRBlocks {
                                                 .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
                                                 .texture("particle", "#0")
                                 )
-                                .rotationY(rotates ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                                .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
+                                        rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
                                 .build(),
                             AbstractSmokeStackBlock.ENABLED,
                             AbstractSmokeStackBlock.POWERED,
                             AbstractSmokeStackBlock.WATERLOGGED
-                        ),
-                rotates ? AxisSmokeStackBlock::new : SmokeStackBlock::new);
+                        ), blockFunction);
     }
 
     public static final HashMap<String, BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> SMOKESTACK_GROUP = new HashMap<>();
 
-    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, boolean rotates, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke, NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> blockStateProvider, SmokeStackFunction<SmokeStackBlock> blockFunction) {
+    private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke, NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> blockStateProvider, SmokeStackFunction<SmokeStackBlock> blockFunction) {
         TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
         BlockEntry<SmokeStackBlock> BLOCK = REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, type, shape, emitStationarySmoke, variant))
             .initialProperties(SharedProperties::softMetal)
@@ -203,12 +231,18 @@ public class CRBlocks {
                 .tab(() -> CRItems.mainCreativeTab)
                 .model((c, p) -> p.withExistingParent(c.getName(), Railways.asResource("block/smokestack_" + variant + "_steel")))
                 .tag(cycleTag)
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> {
+                if (!variant.equals("caboosestyle"))
+                    ItemDescription.useKey(v, "block.railways.smokestack");
+            })
             .build()
             .register();
 
         if (!variant.equals("caboosestyle")) {
             BlockStateBlockItemGroup<Couple<String>, SmokestackStyle> group = new BlockStateBlockItemGroup<>(Couple.create("smokestack_" + variant + "_", description), SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
-                    i -> i.tab(() -> null), cycleTag, SmokestackStyle.STEEL);
+                i -> i.tab(() -> null)
+                    .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.smokestack")),
+                cycleTag, SmokestackStyle.STEEL, null);
             SMOKESTACK_GROUP.put(variant, group);
             group.registerDefaultEntry(SmokestackStyle.STEEL, ItemEntry.cast(REGISTRATE.get("smokestack_" + variant, Registry.ITEM_REGISTRY)));
         }
@@ -324,12 +358,17 @@ public class CRBlocks {
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> WIDE_GAUGE_TRACKS = new HashMap<>();
     public static final Map<TrackMaterial, NonNullSupplier<TrackBlock>> NARROW_GAUGE_TRACKS = new HashMap<>();
 
+    // Sorts it by ID to prevent tags moving around for no reason
     static {
-        for (TrackMaterial wideMaterial : CRTrackMaterials.WIDE_GAUGE.values()) {
+        List<TrackMaterial> wideMaterials = new ArrayList<>(CRTrackMaterials.WIDE_GAUGE.values());
+        wideMaterials.sort(Comparator.comparing((t -> t.id)));
+        for (TrackMaterial wideMaterial : wideMaterials) {
             WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, new WideGaugeTrackBlockStateGenerator()::generate));
         }
 
-        for (TrackMaterial narrowMaterial : CRTrackMaterials.NARROW_GAUGE.values()) {
+        List<TrackMaterial> narrowMaterials = new ArrayList<>(CRTrackMaterials.NARROW_GAUGE.values());
+        narrowMaterials.sort(Comparator.comparing((t -> t.id)));
+        for (TrackMaterial narrowMaterial : narrowMaterials) {
             NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, new NarrowGaugeTrackBlockStateGenerator()::generate));
         }
     }
@@ -379,8 +418,10 @@ public class CRBlocks {
             .lang("Double Axle Bogey")
             .register();
 
-    public static final BlockEntry<LargePlatformDoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("large_platform_doubleaxle_bogey", LargePlatformDoubleAxleBogeyBlock::new)
+    //fixme todo Implement Datafixer for this and remove it.
+    @Deprecated
+    public static final BlockEntry<DoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
+        REGISTRATE.block("large_platform_doubleaxle_bogey", DoubleAxleBogeyBlock::new)
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(BuilderTransformers.standardBogey())
             .lang("Large Platform Double Axle Bogey")
@@ -447,6 +488,85 @@ public class CRBlocks {
             .lang("Handcar")
             .register();
 
+    public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
+            REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumTripleWheelBogeyBlock> MEDIUM_TRIPLE_WHEEL =
+            REGISTRATE.block("medium_triple_wheel", MediumTripleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Triple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumQuadrupleWheelBogeyBlock> MEDIUM_QUADRUPLE_WHEEL =
+            REGISTRATE.block("medium_quadruple_wheel", MediumQuadrupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quadruple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<MediumQuintupleWheelBogeyBlock> MEDIUM_QUINTUPLE_WHEEL =
+            REGISTRATE.block("medium_quintuple_wheel", MediumQuintupleWheelBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium Quintuple Wheel Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium202TrailingBogeyBlock> MEDIUM_2_0_2_TRAILING =
+            REGISTRATE.block("medium_2_0_2_trailing", Medium202TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 2-0-2 Trailing Bogey")
+                    .register();
+
+    public static final BlockEntry<Medium404TrailingBogeyBlock> MEDIUM_4_0_4_TRAILING =
+            REGISTRATE.block("medium_4_0_4_trailing", Medium404TrailingBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Medium 4-0-4 Trailing Bogey")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle040BogeyBlock> LARGE_CREATE_STYLE_0_4_0 =
+            REGISTRATE.block("large_create_styled_0_4_0", LargeCreateStyle040BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-4-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle060BogeyBlock> LARGE_CREATE_STYLE_0_6_0 =
+            REGISTRATE.block("large_create_styled_0_6_0", LargeCreateStyle060BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-6-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle080BogeyBlock> LARGE_CREATE_STYLE_0_8_0 =
+            REGISTRATE.block("large_create_styled_0_8_0", LargeCreateStyle080BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-8-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle0100BogeyBlock> LARGE_CREATE_STYLE_0_10_0 =
+            REGISTRATE.block("large_create_styled_0_10_0", LargeCreateStyle0100BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-10-0")
+                    .register();
+
+    public static final BlockEntry<LargeCreateStyle0120BogeyBlock> LARGE_CREATE_STYLE_0_12_0 =
+            REGISTRATE.block("large_create_styled_0_12_0", LargeCreateStyle0120BogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Create Styled 0-12-0")
+                    .register();
+
+
+
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
         REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
             .initialProperties(SharedProperties::wooden)
@@ -481,11 +601,11 @@ public class CRBlocks {
     woodburner
      */
     public static final BlockEntry<SmokeStackBlock>
-        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", true, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
-        LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Long Smokestack", true, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
+        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
+        LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Double Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
         COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
-        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", false, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
-        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", true, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false,true),
+        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", RotationType.NONE, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
+        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", RotationType.FACING, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false,true),
         WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK, true);
 
     public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, ShapeWrapper.wrapped(CRShapes.DIESEL_STACK)))
@@ -548,6 +668,7 @@ public class CRBlocks {
         .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
         .transform(BuilderTransformers.variantBufferItem())
         .transform(customItemModel())
+        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
         .register();
 
     public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
@@ -636,7 +757,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Void, LinkPinBlock.Style> LINK_AND_PIN_GROUP
         = new BlockStateBlockItemGroup<>(null, LinkPinBlock.STYLE, LinkPinBlock.Style.values(), LINK_AND_PIN,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag);
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
         .initialProperties(SharedProperties::softMetal)
@@ -654,6 +775,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
+        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -673,6 +795,7 @@ public class CRBlocks {
         .item()
         .transform(BuilderTransformers.variantBufferItem())
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
+        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
         .build()
         .register();
 
@@ -681,7 +804,7 @@ public class CRBlocks {
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false)))
+                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
                 .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), HeadstockBlock.WATERLOGGED
             )
@@ -697,14 +820,18 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag);
+        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.headstock_wood");
+
+    public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
+        .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
+        .register();
 
     public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
         .initialProperties(SharedProperties::softMetal)
         .properties(p -> p.sound(SoundType.COPPER))
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true)))
+                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
                 .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
                 .build(), CopycatHeadstockBlock.WATERLOGGED
             )
@@ -720,7 +847,7 @@ public class CRBlocks {
 
     public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
         = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
-        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag);
+        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.headstock");
 
     public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
         REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
@@ -740,7 +867,12 @@ public class CRBlocks {
             .lang("Generic Crossing")
             .register();
 
-    @SuppressWarnings("EmptyMethod")
+    @ExpectPlatform
+    public static void platformBasedRegistration() {
+        throw new AssertionError();
+    }
+
     public static void register() {
+        platformBasedRegistration();
     }
 }

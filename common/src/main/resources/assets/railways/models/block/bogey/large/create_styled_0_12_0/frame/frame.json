@@ -1,0 +1,15 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "porting_lib:loader": "porting_lib:obj",
+  "flip_v": true,
+  "model": "railways:models/block/bogey/large/create_styled_0_12_0/frame/frame.obj",
+  "textures": {
+    "0": "railways:block/bogeys/standard/large/shared/xl_belts",
+    "1": "create:block/bogey/piston",
+    "2": "railways:block/bogeys/standard/shared/frame",
+    "3": "create:block/bogey/wheel",
+    "4": "railways:block/bogeys/standard/shared/trailing_bogey_base",
+    "5": "railways:block/bogeys/standard/large/shared/support"
+  }
+}

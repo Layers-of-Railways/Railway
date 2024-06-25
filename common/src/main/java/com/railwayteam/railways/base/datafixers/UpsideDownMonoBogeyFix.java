@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.base.datafixers;
 
 import com.mojang.datafixers.DSL;
@@ -20,12 +38,6 @@ public class UpsideDownMonoBogeyFix extends DataFix {
 
     @Override
     public TypeRewriteRule makeRule() {
-        /*Type<Pair<String, String>> type2;
-        Type<?> type = this.getInputSchema().getType(References.BLOCK_NAME);
-        if (!Objects.equals(type, type2 = DSL.named(References.BLOCK_NAME.typeName(), NamespacedSchema.namespacedString()))) {
-            throw new IllegalStateException("block type is not what was expected.");
-        }*/
-        //TypeRewriteRule typeRewriteRule = this.fixTypeEverywhere(this.name + " for block", type2, dynamicOps -> pair -> pair.mapSecond(this::fixBlock));
         return this.fixTypeEverywhereTyped(this.name + " for block_state", this.getInputSchema().getType(References.BLOCK_STATE), typed -> typed.update(DSL.remainderFinder(), dynamic -> {
             Optional<String> optional = dynamic.get("Name").asString().result();
             if (optional.isPresent() && optional.get().equals("railways:mono_bogey_upside_down")) {
@@ -40,13 +52,5 @@ public class UpsideDownMonoBogeyFix extends DataFix {
 
             return dynamic;
         }));
-        //return TypeRewriteRule.seq(typeRewriteRule, typeRewriteRule2);
-    }
-
-    private String fixBlock(String original) {
-        if (original.equals("railways:mono_bogey_upside_down")) {
-            return "railways:mono_bogey";
-        }
-        return original;
     }
 }

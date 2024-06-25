@@ -1,10 +1,28 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin.client;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.mixin.DevEnvMixin;
 import com.railwayteam.railways.util.DevCapeUtils;
-import com.railwayteam.railways.util.Utils;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -30,14 +48,13 @@ public class MixinPlayerInfo {
     @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
     // Replaces skin inside the dev env with the conductor skin
+    @DevEnvMixin
     @Inject(method = "getSkinLocation", at = @At("HEAD"))
     private void registerSkinTextures(CallbackInfoReturnable<ResourceLocation> cir) {
-        if (Utils.isDevEnv()) {
-            this.textureLocations.put(
-                    MinecraftProfileTexture.Type.SKIN,
-                    Railways.asResource("textures/misc/devenv_skin.png")
-            );
-        }
+        this.textureLocations.put(
+                MinecraftProfileTexture.Type.SKIN,
+                Railways.asResource("textures/misc/devenv_skin.png")
+        );
     }
 
     @Inject(method = "getCapeLocation", at = @At("HEAD"))
@@ -56,13 +73,14 @@ public class MixinPlayerInfo {
     }
 
     // Replaces skin model inside the dev env with the default "steve" skin model
-    @Inject(method = "registerTextures", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
-    ))
+    @DevEnvMixin
+    @Inject(method = "registerTextures",
+            at = @At(
+                value = "INVOKE",
+                target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
+            )
+    )
     private void railways$setModelToLarge(CallbackInfo ci) {
-        if (Utils.isDevEnv()) {
-            skinModel = "default";
-        }
+        skinModel = "default";
     }
 }

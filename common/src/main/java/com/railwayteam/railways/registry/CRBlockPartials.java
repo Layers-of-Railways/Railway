@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
@@ -400,8 +418,7 @@ public class CRBlockPartials {
         MONORAIL_SEGMENT_BOTTOM = block("monorail/monorail/segment_bottom"),
         MONORAIL_SEGMENT_MIDDLE = block("monorail/monorail/segment_middle"),
         MONORAIL_TRACK_ASSEMBLING_OVERLAY = block("monorail/monorail/assembling_overlay"),
-        MONOBOGEY_FRAME_UPRIGHT = block("bogey/monorail/frame_upright"),
-        MONOBOGEY_FRAME_UPSIDE_DOWN = block("bogey/monorail/frame_upside_down"),
+        MONOBOGEY_FRAME = block("bogey/monorail/frame"),
         MONOBOGEY_WHEEL = block("bogey/monorail/wheel");
 
     public static final PartialModel
@@ -416,7 +433,7 @@ public class CRBlockPartials {
         MODERN_FRAME = block("bogey/modern/frame"),
         BLOMBERG_FRAME = block("bogey/blomberg/frame"),
         Y25_FRAME = block("bogey/y25/frame"),
-        HEAVYWEIGHT_FRAME = block("bogey/heavyweight/heavyweight_frame"),
+        HEAVYWEIGHT_FRAME = block("bogey/heavyweight/frame"),
         RADIAL_FRAME = block("bogey/radial/radial_frame"),
         CR_BOGEY_WHEELS = block("bogey/wheels/cr_bogey_wheels"),
         CR_WIDE_BOGEY_WHEELS = block("bogey/wide/wheels"),
@@ -458,6 +475,49 @@ public class CRBlockPartials {
         HANDCAR_SMALL_COG = block("bogey/handcar/small_cog")
     ;
 
+    public static final PartialModel
+        PORTABLE_FUEL_INTERFACE_MIDDLE = block("portable_fuel_interface/block_middle"),
+        PORTABLE_FUEL_INTERFACE_MIDDLE_POWERED = block("portable_fuel_interface/block_middle_powered"),
+        PORTABLE_FUEL_INTERFACE_TOP = block("portable_fuel_interface/block_top")
+    ;
+
+    public static final PartialModel
+        MEDIUM_SHARED_WHEELS = block("bogey/medium/shared/wheels"),
+
+
+        MEDIUM_STANDARD_FRAME = block("bogey/medium/standard/frame"),
+        MEDIUM_SINGLE_WHEEL_FRAME = block("bogey/medium/single_wheel/frame"),
+        MEDIUM_TRIPLE_WHEEL_FRAME = block("bogey/medium/triple_wheel/frame"),
+        MEDIUM_QUADRUPLE_WHEEL_FRAME = block("bogey/medium/quadruple_wheel/frame"),
+        MEDIUM_QUINTUPLE_WHEEL_FRAME = block("bogey/medium/quintuple_wheel/frame"),
+
+        MEDIUM_2_0_2_TRAILING_FRAME = block("bogey/medium/2_0_2_trailing/frame"),
+        MEDIUM_4_0_4_TRAILING_FRAME = block("bogey/medium/4_0_4_trailing/frame"),
+        MEDIUM_6_0_6_TRAILING_FRAME = block("bogey/medium/6_0_6_trailing/frame"),
+        MEDIUM_6_0_6_TENDER_FRAME = block("bogey/medium/6_0_6_tender/frame"),
+        MEDIUM_8_0_8_TENDER_FRAME = block("bogey/medium/8_0_8_tender/frame"),
+        MEDIUM_10_0_10_TENDER_FRAME = block("bogey/medium/10_0_10_tender/frame")
+    ;
+
+    public static final PartialModel
+        LC_STYLE_SEMI_BLIND_WHEELS = block("bogey/large/wheels/semi_blind_wheels"),
+        LC_STYLE_FULL_BLIND_WHEELS = block("bogey/large/wheels/full_blind_wheels"),
+
+        LARGE_CREATE_STYLED_0_4_0_FRAME = block("bogey/large/create_styled_0_4_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_4_0_PISTON = block("bogey/large/create_styled_0_4_0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_6_0_FRAME = block("bogey/large/create_styled_0_6_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_6_0_PISTON = block("bogey/large/create_styled_0_6_0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_8_0_FRAME = block("bogey/large/create_styled_0_8_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_8_0_PISTON = block("bogey/large/create_styled_0_8_0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_10_0_FRAME = block("bogey/large/create_styled_0_10_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_10_0_PISTON = block("bogey/large/create_styled_0_10_0/piston/piston"),
+
+        LARGE_CREATE_STYLED_0_12_0_FRAME = block("bogey/large/create_styled_0_12_0/frame/frame"),
+        LARGE_CREATE_STYLED_0_12_0_PISTON = block("bogey/large/create_styled_0_12_0/piston/piston")
+    ;
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");

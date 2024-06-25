@@ -1,5 +1,59 @@
 ------------------------------------------------------
-Version 1.6.0
+Steam 'n' Rails 1.6.5
+------------------------------------------------------
+Additions
+- Escape and Enter buttons can be used to select bogies in the bogey menu
+
+Fixes
+- Animated flywheels spinning too slow
+- Fix train casing tooltip telling you to hold alt for the bogey menu
+- Fix Double Smokestack Radial Menu name appearing as "Long Stack"
+- Fix hunger depletion when controlling trains
+- Texture inconsistency with the white color used for the favourites button
+- Bogey Menu scrollbar not having ridges like other scroll bars in Minecraft
+- Fix handcars parking at stations allowing them to be disassembled
+
+Changes
+- Lower particle count for boiler blocks being broken
+------------------------------------------------------
+Steam 'n' Rails 1.6.4
+------------------------------------------------------
+Additions:
+- Custom icons for narrow/wide gauge track items (vanilla wood tracks only) (Thanks Adeline!!)
+- Animated flywheels: Flywheels will now move when apart of a train (configurable by clients)
+
+Fixes
+- Fix Copycat headstock's being transparent when using shaders
+- Fix archbar bogey axle locations & Texture
+- Fix bad texture name causing a warning in logs
+- Fix crash when running setStation({}) (https://github.com/Creators-of-Create/Create/issues/5818)
+
+Removals
+- Conductor caps tab (1.20.1)
+------------------------------------------------------
+Steam 'n' Rails 1.6.2
+------------------------------------------------------
+Fixes
+- Fix narrow mono buffer model
+- Fix Quark compat recipes
+- Fix crash when deploying a whistle onto a station when unbound
+- Fix trying to insert water or invalid fuels into fuel tanks crashing (fabric)
+- Fix Moving Block Entities not working on forge
+- Fix Trains burning liquid fuel excessively quick
+- Fix semi-blind and fully-blind wheels having a 180 degrees rotated texture on one side
+- Fix random mono-bogey frame rendering
+- Fix Track Buffer tooltip
+- Fix Wooden Headstock tooltip
+- Fix Caboose Style tooltip
+- Fix Bogey Menu & Cycle Menu keybinding not showing up on forge
+- Fix generic radial menus not respecting keybind
+- Fix texture for double smokestack
+------------------------------------------------------
+Steam 'n' Rails 1.6.1
+------------------------------------------------------
+- Fix crash from fabric class on forge
+------------------------------------------------------
+Steam 'n' Rails 1.6.0
 ------------------------------------------------------
 Additions
 - Cherry, Bamboo & Stripped Bamboo Tracks (1.20.1)
@@ -14,8 +68,16 @@ Additions
 - Config option to use old-style smoke (campfire particles) for smokestacks
 - Locometal block series
 - Buffer blocks
+- Headstocks
+- Decorative Couplers
 - Crafting tables work on trains
 - Hovering over a track-related block (couplers, signals, stations, etc.) with a wrench will highlight the track it is bound to and vice versa
+- Fuel Tanks
+- Fuel Interfaces
+- Liquid Fuel System (liquid fuel can power trains)
+- Tag to disable items from being used as train fuel
+- Medium Standard, Single Wheel, Triple Wheel, Quadruple Wheel, Quintuple Wheel, 2-0-2 Trailing, 4-0-4 Trailing, 6-0-6 Trailing, 6-0-6 Tender, 8-0-8 Tender, 10-0-10 Tender Bogies
+- Large Create Styled 0-4-0, 0-6-0, 0-8-0, 0-10-0, 0-12-0 Bogies
 
 Changes
 - Generic Crossing Tracks—any two tracks can now cross at a junction
@@ -37,6 +99,8 @@ Changes
 - Creeper explosions and Ghast Fireballs no longer break tracks
 - Remastered Monobogeys, Single Axle, Double Axle and Triple Axle Bogies
 - Removed optifine warning screen
+- New Bogey Menu for selecting bogies
+- New model for brass switch
 
 Fixes
 - Mixin conflict with VS2
@@ -50,7 +114,7 @@ Fixes
 - Offset train assembly overlay on encased tracks
 - Made the mod work with optifine again
 ------------------------------------------------------
-Version 1.5.1
+Steam 'n' Rails 1.5.1
 ------------------------------------------------------
 Additions
 - Optifine Warning Screen
@@ -58,7 +122,7 @@ Additions
 Bug Fixes
 - Fix NPE in ConductorCapItem
 ------------------------------------------------------
-Version 1.5.0
+Steam 'n' Rails 1.5.0
 ------------------------------------------------------
 Additions
 - Smoke dying: place wool under a smokestack to change the smoke color
@@ -89,7 +153,7 @@ Optimizations
 - Remove expensive call to get stack trace in performance-critical navigation code
 - Optimize: Config option to disable train collision
 ------------------------------------------------------
-Version 1.4.x
+Steam 'n' Rails 1.4.x
 ------------------------------------------------------
 Additions
 - SecurityCraft compat (#172)
@@ -113,7 +177,7 @@ Bug Fixes
 - Fixed display links targeting nixie tube signals
 - Fixed coupler trying to couple/decouple partially loaded trains
 ------------------------------------------------------
-Version 1.3.x
+Steam 'n' Rails 1.3.x
 ------------------------------------------------------
 Additions
 - Add Display Link functionality to allow remote signalling
@@ -135,7 +199,7 @@ Bug Fixes
 - (1.19 only) fixed mangrove tracks
 - fixed sloped tracks
 ------------------------------------------------------
-Version 1.2.x
+Steam 'n' Rails 1.2.x
 ------------------------------------------------------
 Bug Fixes
 - Fix track placement issue (consuming base Create tracks instead of custom ones)

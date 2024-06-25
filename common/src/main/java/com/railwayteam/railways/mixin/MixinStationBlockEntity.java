@@ -1,9 +1,27 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_bogeys.selection_menu.BogeyCategoryHandlerServer;
+import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerServer;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.registry.CRBogeyStyles;
@@ -47,20 +65,18 @@ import java.util.UUID;
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     @Shadow @Nullable public abstract GlobalStation getStation();
 
-    @Shadow private UUID imminentTrain;
-
     private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Inject(method = "trackClicked", at = @At("HEAD"))
     private void storePlayer(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        BogeyCategoryHandlerServer.currentPlayer = player.getUUID();
+        BogeyMenuHandlerServer.setCurrentPlayer(player.getUUID());
     }
 
     @Inject(method = "trackClicked", at = @At("RETURN"))
     private void clearPlayer(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        BogeyCategoryHandlerServer.currentPlayer = null;
+        BogeyMenuHandlerServer.setCurrentPlayer(null);
     }
 
     @SuppressWarnings("InvalidInjectorMethodSignature")
@@ -73,7 +89,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
                               int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
         if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
             return;
-        Pair<BogeyStyle, BogeySize> styleData = BogeyCategoryHandlerServer.getStyle(player.getUUID());
+        Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(player.getUUID());
         BogeyStyle style = styleData.getFirst();
 
         TrackMaterial.TrackType trackType = track.getMaterial().trackType;
@@ -113,7 +129,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", ordinal = 0), require = 0)
-    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local AbstractBogeyBlock<?> typeOfFirstBogey, @Local(ordinal = 0) LocalBooleanRef atLeastOneForwardControls) {
+    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
         if (typeOfFirstBogey instanceof HandcarBlock) {
             atLeastOneForwardControls.set(true);
         }

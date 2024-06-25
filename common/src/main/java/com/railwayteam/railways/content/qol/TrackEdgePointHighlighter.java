@@ -1,5 +1,24 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2022-2024 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.qol;
 
+import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.SecondaryTrackTargetingBehaviour;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.CreateClient;
@@ -45,7 +64,7 @@ public class TrackEdgePointHighlighter {
         if (player == null || !EntityUtils.isHoldingItem(player, (item) -> item instanceof WrenchItem)) return;
 
         ClientLevel level = mc.level;
-        if (level != null && mc.hitResult != null && mc.hitResult instanceof BlockHitResult blockHit) {
+        if (level != null && mc.hitResult instanceof BlockHitResult blockHit) {
             BlockPos pos = blockHit.getBlockPos();
             BlockEntity be = level.getBlockEntity(pos);
             if (!showOutlinesFrom(be, pos, 0)) {
@@ -107,6 +126,8 @@ public class TrackEdgePointHighlighter {
     }
 
     private static boolean showOutlinesFrom(BlockEntity be, BlockPos pos, int index) {
+        if (be instanceof TrackBufferBlockEntity)
+            return false;
         HolderSet holder;
         if (HOLDERS.size() <= index) {
             holder = new HolderSet();
