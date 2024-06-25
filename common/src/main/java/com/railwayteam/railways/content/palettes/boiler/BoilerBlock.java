@@ -21,8 +21,10 @@ package com.railwayteam.railways.content.palettes.boiler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import com.railwayteam.railways.annotation.compiletime.ImplementsToExtends;
 import com.railwayteam.railways.mixin_interfaces.IForceRenderingSodium;
 import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
+import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.equipment.extendoGrip.ExtendoGripItem;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -67,6 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+@ImplementsToExtends(value = ReducedDestroyEffects.class, loader = Loader.FORGE)
 public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium, IHasCustomOutline, ReducedDestroyEffects {
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
 
