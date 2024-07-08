@@ -23,11 +23,11 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public record BogeyEntry(@NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
-    public static final Map<BogeyStyle, BogeyEntry> STYLE_TO_ENTRY = new HashMap<>();
+    public static final Map<BogeyStyle, BogeyEntry> STYLE_TO_ENTRY = new ConcurrentHashMap<>();
 
     public static BogeyEntry getOrCreate(@NotNull CategoryEntry categoryEntry, @NotNull BogeyStyle bogeyStyle, @Nullable ResourceLocation iconLocation, float scale) {
         BogeyEntry entry = getOrCreate(bogeyStyle, iconLocation, scale);
