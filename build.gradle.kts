@@ -25,13 +25,12 @@ import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.configurationcache.extensions.capitalized
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.Type
 import org.objectweb.asm.tree.AnnotationNode
 import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.FieldNode
 import org.objectweb.asm.tree.MethodNode
 import java.io.ByteArrayOutputStream
 import java.util.*
-import java.util.function.Predicate
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
@@ -293,19 +292,38 @@ fun transformClass(bytes: ByteArray): ByteArray {
 
 fun removeIfDevMixin(nodeName: String, visibleAnnotations: List<AnnotationNode>?): Boolean {
     // Don't remove methods if it's not a GHA build/Release build
-    if (buildNumber == null || !nodeName.lowercase(Locale.ROOT).matches(Regex(".*\\/mixin\\/.*Mixin")))
+    if (buildNumber == null && !nodeName.lowercase(Locale.ROOT).matches(Regex(".*\\/mixin\\/.*Mixin")))
         return false
 
     if (visibleAnnotations != null) {
         for (annotationNode in visibleAnnotations) {
-            if (annotationNode.desc == "Lcom/railwayteam/railways/annotation/mixin/DevEnvMixin;") {
-                println("Removed Method/Field Annotated With @DevEnvMixin from: $nodeName")
+            if (annotationNode.desc == "Lcom/railwayteam/railways/annotation/mixin/DevEnvMixin;")
                 return true
-            }
         }
     }
 
     return false
+}
+
+fun <T> getValueFromAnnotation(annotation: AnnotationNode?, key: String): T? {
+    var getNextValue = false
+
+    if (annotation?.values == null) {
+        return null
+    }
+
+    // Keys and value are stored in successive pairs, search for the key and if found return the following entry
+    for (value in annotation.values) {
+        if (getNextValue) {
+            @Suppress("UNCHECKED_CAST")
+            return value as T
+        }
+        if (value == key) {
+            getNextValue = true
+        }
+    }
+
+    return null
 }
 
 tasks.create("railwaysPublish") {

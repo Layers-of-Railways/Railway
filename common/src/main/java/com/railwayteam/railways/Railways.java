@@ -101,7 +101,7 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded) // force all mixins to load in dev
+    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 

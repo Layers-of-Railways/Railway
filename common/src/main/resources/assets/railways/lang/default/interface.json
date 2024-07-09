@@ -101,6 +101,8 @@
   "create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
+  "railways.bogeys.styles.handcar": "Handcar",
+  
   "railways.bogeys.styles.invisible": "Invisible",
   "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
   "railways.bogeys.styles.monobogey": "Monobogey",

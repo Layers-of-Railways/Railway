@@ -21,7 +21,8 @@
     "MountedStorageManagerMixin",
     "RollingModeMixin",
     "ServerGamePacketListenerImplMixin",
-    "TrainMixin"
+    "TrainMixin",
+    "self.BoilerBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1,
