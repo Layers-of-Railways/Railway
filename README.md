@@ -1,5 +1,5 @@
 <div align="center">
-  <img src=".idea/icon.png" width="192" height="192">
+  <img src=".idea/icon.png" width="192" height="192" alt="Logo of mod">
   <h1>Create Steam 'n' Rails</h1>
 
 [![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/create-steam-n-rails-706277846389227612)
