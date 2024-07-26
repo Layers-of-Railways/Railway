@@ -22,8 +22,8 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
-public class GarnishedCompat extends GenericTrackCompat {
-    GarnishedCompat() {
+public class HibernalHerbsTrackCompat extends GenericTrackCompat {
+    HibernalHerbsTrackCompat() {
         super(Mods.HIBERNAL_HERBS);
     }
 
