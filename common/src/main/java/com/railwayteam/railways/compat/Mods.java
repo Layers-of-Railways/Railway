@@ -44,7 +44,8 @@ public enum Mods {
 	TWEAKEROO("tweakeroo"),
 	EXTENDEDFLYWHEELS("extendedflywheels"),
 	// Create: Garnished
-	GARNISHED("garnished")
+	GARNISHED("garnished"),
+	HIBERNAL_HERBS("hibernalherbs")
 	;
 
 	public final boolean isLoaded;
