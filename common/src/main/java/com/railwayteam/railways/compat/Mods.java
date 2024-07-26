@@ -45,6 +45,8 @@ public enum Mods {
 	EXTENDEDFLYWHEELS("extendedflywheels"),
 	// Create: Garnished
 	GARNISHED("garnished"),
+	// Garnished Additions
+	GARNISHED_ADD("garnished_additions"),
 	HIBERNAL_HERBS("hibernalherbs")
 	;
 
