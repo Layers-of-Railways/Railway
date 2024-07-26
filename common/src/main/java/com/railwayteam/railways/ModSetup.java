@@ -52,5 +52,7 @@ public class ModSetup {
     BiomesOPlentyTrackCompat.register();
     DreamsAndDesiresTrackCompat.register();
     QuarkTrackCompat.register();
+    GarnishedTrackCompat.register();
+    HibernalHerbsTrackCompat.register();
   }
 }
