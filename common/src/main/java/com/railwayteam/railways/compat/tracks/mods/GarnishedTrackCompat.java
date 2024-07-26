@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.dakotapride.garnishedrails;
+package com.railwayteam.railways.compat.tracks.mods;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
