@@ -42,7 +42,9 @@ public enum Mods {
 	QUARK("quark"),
 	MALILIB("malilib"),
 	TWEAKEROO("tweakeroo"),
-	EXTENDEDFLYWHEELS("extendedflywheels")
+	EXTENDEDFLYWHEELS("extendedflywheels"),
+	// Create: Garnished
+	GARNISHED("garnished")
 	;
 
 	public final boolean isLoaded;
