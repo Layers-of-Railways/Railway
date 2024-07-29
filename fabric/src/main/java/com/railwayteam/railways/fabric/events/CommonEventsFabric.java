@@ -18,10 +18,14 @@
 
 package com.railwayteam.railways.fabric.events;
 
+import com.railwayteam.railways.content.fuel.LiquidFuelManager;
 import com.railwayteam.railways.events.CommonEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.server.packs.PackType;
 
 public class CommonEventsFabric {
 	public static void init() {
@@ -30,5 +34,7 @@ public class CommonEventsFabric {
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register(((server, resourceManager, success) -> {
 			CommonEvents.onTagsUpdated();
 		}));
+		// This is fine at runtime, there's a mixin implementing that interface
+		ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener((IdentifiableResourceReloadListener) LiquidFuelManager.ReloadListener.INSTANCE);
 	}
 }
