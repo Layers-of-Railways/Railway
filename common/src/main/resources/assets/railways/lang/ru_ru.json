@@ -8,6 +8,7 @@
   "block.railways.boiler.tooltip.summary": "Используйте ключ, чтобы изменить форму, или присядьте во время размещения, чтобы установить бойлер в виде полу блока.",
   "block.railways.buffer": "Железнодорожный барьер",
   "block.railways.buffer.tooltip": "Тормозной упор",
+  "block.railways.buffer.tooltip.summary": "Можно раскрасить, _нажав на него_ красителем.",
   "block.railways.conductor_vent": "Вентиляционный блок",
   "block.railways.conductor_whistle": "Свисток кондуктора",
   "block.railways.doubleaxle_bogey": "Двухосная вагонная тележка",
