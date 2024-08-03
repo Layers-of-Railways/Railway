@@ -21,6 +21,9 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.registry.*;
+import com.railwayteam.railways.comapt.tracks.mods.GarnishedTrackCompat;
+import com.railwayteam.railways.comapt.tracks.mods.GarnishedAdditionsTrackCompat;
+import com.railwayteam.railways.comapt.tracks.mods.HibernalHerbsTrackCompat;
 
 public class ModSetup {
   public static void register() {
@@ -53,6 +56,7 @@ public class ModSetup {
     DreamsAndDesiresTrackCompat.register();
     QuarkTrackCompat.register();
     GarnishedTrackCompat.register();
+    GarnishedAdditionsTrackCompat.register();
     HibernalHerbsTrackCompat.register();
   }
 }
