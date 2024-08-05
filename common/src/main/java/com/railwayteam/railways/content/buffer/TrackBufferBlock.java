@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -52,9 +53,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extends HorizontalDirectionalBlock implements IBE<BE>, IWrenchable, ProperWaterloggedBlock {
+
+	public static final BooleanProperty DIAGONAL = BooleanProperty.create("diagonal");
+
 	protected TrackBufferBlock(Properties pProperties) {
 		super(pProperties);
-		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		registerDefaultState(defaultBlockState()
+				.setValue(FACING, Direction.NORTH)
+				.setValue(WATERLOGGED, false)
+				.setValue(DIAGONAL, false));
 	}
 
 	@Override
@@ -65,13 +72,13 @@ public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extend
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED));
+		super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED, DIAGONAL));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void onRemove(@NotNull BlockState state, @NotNull Level worldIn,
-						 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
+											 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
 		IBE.onRemove(state, worldIn, pos, newState);
 	}
 
@@ -97,7 +104,7 @@ public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extend
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState state = super.getStateForPlacement(context);
 		if (state != null && context instanceof BufferBlockPlaceContext bufferBlockPlaceContext) {
-			state = state.setValue(FACING, bufferBlockPlaceContext.facing);
+			state = state.setValue(FACING, bufferBlockPlaceContext.facing).setValue(DIAGONAL, bufferBlockPlaceContext.diagonal);
 		}
 		return withWater(state, context);
 	}
@@ -123,9 +130,20 @@ public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extend
 	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
-								 BlockHitResult pHit) {
+															 BlockHitResult pHit) {
 		if (AdventureUtils.isAdventure(pPlayer))
 			return InteractionResult.PASS;
 		return onBlockEntityUse(pLevel, pPos, be -> be.applyDyeIfValid(pPlayer.getItemInHand(pHand)));
 	}
+
+	public static int getBaseModelYRotationOf(BlockState state) {
+		return getBaseModelYRotationOf(state, 0);
+	}
+	
+	public static int getBaseModelYRotationOf(BlockState state, int offset) {
+		return (int) (
+				(state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) + offset
+		) % 360;
+	}
+	
 }
