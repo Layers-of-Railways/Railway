@@ -657,7 +657,7 @@ public class CRBlocks {
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
                 .forAllStatesExcept(state -> ConfiguredModel.builder()
                         .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
-                        .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                        .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                         .build(), StandardTrackBufferBlock.WATERLOGGED
                 )
         )
@@ -680,7 +680,7 @@ public class CRBlocks {
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                 .build(), NarrowTrackBufferBlock.WATERLOGGED
             )
         )
@@ -703,7 +703,7 @@ public class CRBlocks {
                 return ConfiguredModel.builder()
                     .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
                     .rotationX(hanging ? 180 : 0)
-                    .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
+                    .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state, hanging ? 0 : 180))
                     .build();
                 }, MonoTrackBufferBlock.WATERLOGGED
             )
@@ -724,7 +724,7 @@ public class CRBlocks {
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
+                .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                 .build(), WideTrackBufferBlock.WATERLOGGED
             )
         )
@@ -765,7 +765,7 @@ public class CRBlocks {
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                 .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
             )
         )
@@ -785,7 +785,7 @@ public class CRBlocks {
         .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                 .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
             )
         )

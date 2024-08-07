@@ -1,17 +1,32 @@
 {
   "variants": {
-    "facing=east": {
+    "diagonal=false,facing=east": {
       "model": "railways:block/buffer/wide_buffer_stop",
       "y": 90
     },
-    "facing=north": {
+    "diagonal=false,facing=north": {
       "model": "railways:block/buffer/wide_buffer_stop"
     },
-    "facing=south": {
+    "diagonal=false,facing=south": {
       "model": "railways:block/buffer/wide_buffer_stop",
       "y": 180
     },
-    "facing=west": {
+    "diagonal=false,facing=west": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 270
+    },
+    "diagonal=true,facing=east": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=north": {
+      "model": "railways:block/buffer/wide_buffer_stop"
+    },
+    "diagonal=true,facing=south": {
+      "model": "railways:block/buffer/wide_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=west": {
       "model": "railways:block/buffer/wide_buffer_stop",
       "y": 270
     }
