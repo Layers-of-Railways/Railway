@@ -20,7 +20,10 @@ package com.railwayteam.railways.content.buffer.forge;
 
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.IMaterialAdaptingBuffer;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
+import com.simibubi.create.foundation.collision.Matrix3d;
 import com.simibubi.create.foundation.model.BakedModelHelper;
+import com.simibubi.create.foundation.model.BakedQuadHelper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -39,13 +42,16 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import static com.railwayteam.railways.content.buffer.BufferModelUtils.combineSwappers;
@@ -88,12 +94,42 @@ public class BufferModel implements BakedModel {
         BlockState material = data.get(MATERIAL);
         DyeColor color = data.get(COLOR);
         if (material != null || color != null) {
-            return BakedModelHelper.swapSprites(wrapped.getQuads(state, side, rand), combineSwappers(getSwapper(material), getSwapper(color)));
+            return BakedModelHelper.swapSprites(transformQuads(wrapped.getQuads(state, side, rand), state), combineSwappers(getSwapper(material), getSwapper(color)));
         } else {
-            return wrapped.getQuads(state, side, rand);
+            return transformQuads(wrapped.getQuads(state, side, rand), state);
         }
     }
 
+    private static final Matrix3d diagonalTransform = new Matrix3d()
+        .asYRotation((float) Math.toRadians(-45));
+
+    private BakedQuad applyDiagonalTransform(BakedQuad quad) {
+        BakedQuad newQuad = BakedQuadHelper.clone(quad);
+        int[] vertexData = newQuad.getVertices();
+
+        for (int vertex = 0; vertex < 4; vertex++) {
+            Vec3 vertexPos = BakedQuadHelper.getXYZ(vertexData, vertex);
+            vertexPos = vertexPos.subtract(0.5, 0.5, 0.5);
+            vertexPos = diagonalTransform.transform(vertexPos);
+            vertexPos = vertexPos.add(0.5, 0.5, 0.5);
+            BakedQuadHelper.setXYZ(vertexData, vertex, vertexPos);
+        }
+        return newQuad;
+    }
+
+    private List<BakedQuad> transformQuads(List<BakedQuad> quads, @Nullable BlockState state) {
+        if (state == null) return quads;
+        boolean diagonal = state.getValue(TrackBufferBlock.DIAGONAL);
+        if (!diagonal) return quads;
+
+        ArrayList<BakedQuad> transformedQuads = new ArrayList<>();
+        for (BakedQuad quad : quads) {
+            transformedQuads.add(applyDiagonalTransform(quad));
+        }
+        return transformedQuads;
+    }
+
+    @SuppressWarnings("deprecation")
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
         return Collections.emptyList();

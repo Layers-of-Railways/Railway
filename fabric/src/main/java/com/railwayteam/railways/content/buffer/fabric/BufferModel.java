@@ -18,8 +18,11 @@
 
 package com.railwayteam.railways.content.buffer.fabric;
 
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Vector3f;
 import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.IMaterialAdaptingBuffer;
+import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -56,17 +59,32 @@ import static com.railwayteam.railways.content.buffer.BufferModelUtils.getSwappe
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class BufferModel extends ForwardingBakedModel {
+    
     public BufferModel(BakedModel wrapped) {
-        this.wrapped = wrapped;
+        this.wrapped  = wrapped;
     }
-
-    @Override
-    public boolean isVanillaAdapter() {
-        return false;
-    }
-
+    
+    private static final Matrix3f diagonalTransform = getDiagonalRotationMatrix();
+    private static final RenderContext.QuadTransform diagonalTransformer = quad -> {
+        Vector3f faceNormal = quad.faceNormal();
+        faceNormal.transform(diagonalTransform);
+        for (int i = 0; i < 4; i++) {
+            Vector3f vertexPos = quad.copyPos(i, new Vector3f());
+            vertexPos.sub(new Vector3f(0.5f, 0.5f, 0.5f));
+            vertexPos.transform(diagonalTransform);
+            vertexPos.add(new Vector3f(0.5f, 0.5f, 0.5f));
+            quad.pos(i, vertexPos);
+            quad.normal(i, faceNormal);
+        }
+        
+        return true;
+    };
+    
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
+        boolean isDiagonal = state.getValue(TrackBufferBlock.DIAGONAL);
+        if (isDiagonal) context.pushTransform(diagonalTransformer);
+        
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;
         UnaryOperator<TextureAtlasSprite> colorSwapper = null;
 
@@ -83,8 +101,16 @@ public class BufferModel extends ForwardingBakedModel {
         } else {
             super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
         }
+        if (isDiagonal) context.popTransform();
     }
-
+    
+    private static Matrix3f getDiagonalRotationMatrix() {
+        Matrix3f matrix = Matrix3f.createScaleMatrix(1, 1, 1);
+        matrix.mul(Vector3f.YP.rotationDegrees(-45));
+        return matrix;
+    }
+    
+    
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;

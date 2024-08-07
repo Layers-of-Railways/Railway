@@ -1,32 +1,62 @@
 {
   "variants": {
-    "facing=east,style=mono": {
+    "diagonal=false,facing=east,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 90
     },
-    "facing=east,style=standard": {
+    "diagonal=false,facing=east,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 90
     },
-    "facing=north,style=mono": {
+    "diagonal=false,facing=north,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop"
     },
-    "facing=north,style=standard": {
+    "diagonal=false,facing=north,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop"
     },
-    "facing=south,style=mono": {
+    "diagonal=false,facing=south,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 180
     },
-    "facing=south,style=standard": {
+    "diagonal=false,facing=south,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 180
     },
-    "facing=west,style=mono": {
+    "diagonal=false,facing=west,style=mono": {
       "model": "railways:block/buffer/narrow_mono_buffer_stop",
       "y": 270
     },
-    "facing=west,style=standard": {
+    "diagonal=false,facing=west,style=standard": {
+      "model": "railways:block/buffer/narrow_buffer_stop",
+      "y": 270
+    },
+    "diagonal=true,facing=east,style=mono": {
+      "model": "railways:block/buffer/narrow_mono_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=east,style=standard": {
+      "model": "railways:block/buffer/narrow_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=north,style=mono": {
+      "model": "railways:block/buffer/narrow_mono_buffer_stop"
+    },
+    "diagonal=true,facing=north,style=standard": {
+      "model": "railways:block/buffer/narrow_buffer_stop"
+    },
+    "diagonal=true,facing=south,style=mono": {
+      "model": "railways:block/buffer/narrow_mono_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=south,style=standard": {
+      "model": "railways:block/buffer/narrow_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=west,style=mono": {
+      "model": "railways:block/buffer/narrow_mono_buffer_stop",
+      "y": 270
+    },
+    "diagonal=true,facing=west,style=standard": {
       "model": "railways:block/buffer/narrow_buffer_stop",
       "y": 270
     }

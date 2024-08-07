@@ -1,106 +1,208 @@
 {
   "variants": {
-    "facing=east,style=mono,upside_down=false": {
+    "diagonal=false,facing=east,style=mono,upside_down=false": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
-      "y": 90
+      "y": 270
     },
-    "facing=east,style=mono,upside_down=true": {
+    "diagonal=false,facing=east,style=mono,upside_down=true": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
       "x": 180,
-      "y": 270
-    },
-    "facing=east,style=side,upside_down=false": {
-      "model": "railways:block/buffer/monorail_side_buffer_stop",
       "y": 90
     },
-    "facing=east,style=side,upside_down=true": {
+    "diagonal=false,facing=east,style=side,upside_down=false": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "y": 270
+    },
+    "diagonal=false,facing=east,style=side,upside_down=true": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
       "x": 180,
-      "y": 270
-    },
-    "facing=east,style=standard,upside_down=false": {
-      "model": "railways:block/buffer/monorail_buffer_stop",
       "y": 90
     },
-    "facing=east,style=standard,upside_down=true": {
+    "diagonal=false,facing=east,style=standard,upside_down=false": {
       "model": "railways:block/buffer/monorail_buffer_stop",
-      "x": 180,
       "y": 270
     },
-    "facing=north,style=mono,upside_down=false": {
+    "diagonal=false,facing=east,style=standard,upside_down=true": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "x": 180,
+      "y": 90
+    },
+    "diagonal=false,facing=north,style=mono,upside_down=false": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "y": 180
+    },
+    "diagonal=false,facing=north,style=mono,upside_down=true": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "x": 180
+    },
+    "diagonal=false,facing=north,style=side,upside_down=false": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "y": 180
+    },
+    "diagonal=false,facing=north,style=side,upside_down=true": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "x": 180
+    },
+    "diagonal=false,facing=north,style=standard,upside_down=false": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "y": 180
+    },
+    "diagonal=false,facing=north,style=standard,upside_down=true": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "x": 180
+    },
+    "diagonal=false,facing=south,style=mono,upside_down=false": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop"
     },
-    "facing=north,style=mono,upside_down=true": {
+    "diagonal=false,facing=south,style=mono,upside_down=true": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
       "x": 180,
       "y": 180
     },
-    "facing=north,style=side,upside_down=false": {
+    "diagonal=false,facing=south,style=side,upside_down=false": {
       "model": "railways:block/buffer/monorail_side_buffer_stop"
     },
-    "facing=north,style=side,upside_down=true": {
+    "diagonal=false,facing=south,style=side,upside_down=true": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
       "x": 180,
       "y": 180
     },
-    "facing=north,style=standard,upside_down=false": {
+    "diagonal=false,facing=south,style=standard,upside_down=false": {
       "model": "railways:block/buffer/monorail_buffer_stop"
     },
-    "facing=north,style=standard,upside_down=true": {
+    "diagonal=false,facing=south,style=standard,upside_down=true": {
       "model": "railways:block/buffer/monorail_buffer_stop",
       "x": 180,
       "y": 180
     },
-    "facing=south,style=mono,upside_down=false": {
+    "diagonal=false,facing=west,style=mono,upside_down=false": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
-      "y": 180
+      "y": 90
     },
-    "facing=south,style=mono,upside_down=true": {
+    "diagonal=false,facing=west,style=mono,upside_down=true": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
-      "x": 180
+      "x": 180,
+      "y": 270
     },
-    "facing=south,style=side,upside_down=false": {
+    "diagonal=false,facing=west,style=side,upside_down=false": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
-      "y": 180
+      "y": 90
     },
-    "facing=south,style=side,upside_down=true": {
+    "diagonal=false,facing=west,style=side,upside_down=true": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
-      "x": 180
+      "x": 180,
+      "y": 270
     },
-    "facing=south,style=standard,upside_down=false": {
+    "diagonal=false,facing=west,style=standard,upside_down=false": {
       "model": "railways:block/buffer/monorail_buffer_stop",
-      "y": 180
+      "y": 90
     },
-    "facing=south,style=standard,upside_down=true": {
+    "diagonal=false,facing=west,style=standard,upside_down=true": {
       "model": "railways:block/buffer/monorail_buffer_stop",
-      "x": 180
+      "x": 180,
+      "y": 270
     },
-    "facing=west,style=mono,upside_down=false": {
+    "diagonal=true,facing=east,style=mono,upside_down=false": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
       "y": 270
     },
-    "facing=west,style=mono,upside_down=true": {
+    "diagonal=true,facing=east,style=mono,upside_down=true": {
       "model": "railways:block/buffer/monorail_mono_buffer_stop",
       "x": 180,
       "y": 90
     },
-    "facing=west,style=side,upside_down=false": {
+    "diagonal=true,facing=east,style=side,upside_down=false": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
       "y": 270
     },
-    "facing=west,style=side,upside_down=true": {
+    "diagonal=true,facing=east,style=side,upside_down=true": {
       "model": "railways:block/buffer/monorail_side_buffer_stop",
       "x": 180,
       "y": 90
     },
-    "facing=west,style=standard,upside_down=false": {
+    "diagonal=true,facing=east,style=standard,upside_down=false": {
       "model": "railways:block/buffer/monorail_buffer_stop",
       "y": 270
     },
-    "facing=west,style=standard,upside_down=true": {
+    "diagonal=true,facing=east,style=standard,upside_down=true": {
       "model": "railways:block/buffer/monorail_buffer_stop",
       "x": 180,
       "y": 90
+    },
+    "diagonal=true,facing=north,style=mono,upside_down=false": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=north,style=mono,upside_down=true": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "x": 180
+    },
+    "diagonal=true,facing=north,style=side,upside_down=false": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=north,style=side,upside_down=true": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "x": 180
+    },
+    "diagonal=true,facing=north,style=standard,upside_down=false": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "y": 180
+    },
+    "diagonal=true,facing=north,style=standard,upside_down=true": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "x": 180
+    },
+    "diagonal=true,facing=south,style=mono,upside_down=false": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop"
+    },
+    "diagonal=true,facing=south,style=mono,upside_down=true": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "x": 180,
+      "y": 180
+    },
+    "diagonal=true,facing=south,style=side,upside_down=false": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop"
+    },
+    "diagonal=true,facing=south,style=side,upside_down=true": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "x": 180,
+      "y": 180
+    },
+    "diagonal=true,facing=south,style=standard,upside_down=false": {
+      "model": "railways:block/buffer/monorail_buffer_stop"
+    },
+    "diagonal=true,facing=south,style=standard,upside_down=true": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "x": 180,
+      "y": 180
+    },
+    "diagonal=true,facing=west,style=mono,upside_down=false": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=west,style=mono,upside_down=true": {
+      "model": "railways:block/buffer/monorail_mono_buffer_stop",
+      "x": 180,
+      "y": 270
+    },
+    "diagonal=true,facing=west,style=side,upside_down=false": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=west,style=side,upside_down=true": {
+      "model": "railways:block/buffer/monorail_side_buffer_stop",
+      "x": 180,
+      "y": 270
+    },
+    "diagonal=true,facing=west,style=standard,upside_down=false": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "y": 90
+    },
+    "diagonal=true,facing=west,style=standard,upside_down=true": {
+      "model": "railways:block/buffer/monorail_buffer_stop",
+      "x": 180,
+      "y": 270
     }
   }
 }
