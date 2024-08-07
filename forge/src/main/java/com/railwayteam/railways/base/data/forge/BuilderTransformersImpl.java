@@ -334,7 +334,7 @@ public class BuilderTransformersImpl {
         return b -> b.blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(p.models().getExistingFile(modelFunc.apply(state)))
-                .rotationY(((int) facingFunc.apply(state).toYRot() + 180) % 360)
+                .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
                 .build(), BlockStateProperties.WATERLOGGED
             )
         );
@@ -347,7 +347,7 @@ public class BuilderTransformersImpl {
                     return ConfiguredModel.builder()
                         .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
                         .rotationX(hanging ? 180 : 0)
-                        .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
+                        .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state, hanging ? 0 : 180))
                         .build();
                 }, MonoTrackBufferBlock.WATERLOGGED
             )

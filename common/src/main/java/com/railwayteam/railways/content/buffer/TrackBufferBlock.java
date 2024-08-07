@@ -49,7 +49,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-// fixme handle 45 degree turns
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extends HorizontalDirectionalBlock implements IBE<BE>, IWrenchable, ProperWaterloggedBlock {
@@ -139,11 +138,18 @@ public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extend
 	public static int getBaseModelYRotationOf(BlockState state) {
 		return getBaseModelYRotationOf(state, 0);
 	}
-	
+
+	public static int getBaseModelYRotationOf(Direction facing) {
+		return getBaseModelYRotationOf(facing, 0);
+	}
+
 	public static int getBaseModelYRotationOf(BlockState state, int offset) {
+		return getBaseModelYRotationOf(state.getValue(NarrowTrackBufferBlock.FACING), offset);
+	}
+
+	public static int getBaseModelYRotationOf(Direction facing, int offset) {
 		return (int) (
-				(state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) + offset
+			(facing.toYRot() + 180) + offset
 		) % 360;
 	}
-	
 }
