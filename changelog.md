@@ -12,6 +12,7 @@ Fixes
 - Texture inconsistency with the white color used for the favourites button
 - Bogey Menu scrollbar not having ridges like other scroll bars in Minecraft
 - Fix handcars parking at stations allowing them to be disassembled
+- Tracking encasing having the wrong texture after changing resource packs or reloading resources
 
 Changes
 - Lower particle count for boiler blocks being broken

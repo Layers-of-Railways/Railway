@@ -62,6 +62,10 @@ public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockE
 	public boolean isOnIncompatibleTrack(Carriage carriage, boolean leading) {
 		TravellingPoint point = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
 		CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
+		
+		if (point.edge == null)
+			return false;
+		
 		return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle())
 			&& point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
 			&& point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE

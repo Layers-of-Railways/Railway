@@ -19,12 +19,14 @@
 package com.railwayteam.railways.fabric.events;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingResourceReloadListener;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.registry.CRParticleTypes;
 import io.github.fabricators_of_create.porting_lib.event.client.ClientWorldEvents;
 import io.github.fabricators_of_create.porting_lib.event.client.KeyInputCallback;
 import io.github.fabricators_of_create.porting_lib.event.client.ParticleManagerRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resources.ResourceLocation;
@@ -52,5 +54,7 @@ public class ClientEventsFabric {
 				ClientEvents.onTagsUpdated();
 			}
 		});
+		
+		ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) CasingResourceReloadListener.INSTANCE);
 	}
 }
