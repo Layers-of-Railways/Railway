@@ -42,7 +42,12 @@ public enum Mods {
 	QUARK("quark"),
 	MALILIB("malilib"),
 	TWEAKEROO("tweakeroo"),
-	EXTENDEDFLYWHEELS("extendedflywheels")
+	EXTENDEDFLYWHEELS("extendedflywheels"),
+	// Create: Garnished
+	GARNISHED("garnished"),
+	// Garnished Additions
+	GARNISHED_ADD("garnished_additions"),
+	HIBERNAL_HERBS("hibernalherbs")
 	;
 
 	public final boolean isLoaded;
