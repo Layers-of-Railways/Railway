@@ -30,6 +30,7 @@ import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.mixin.CRMixinPlugin;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AnnotationNode;
+import org.slf4j.event.Level;
 import org.spongepowered.asm.service.MixinService;
 import org.spongepowered.asm.util.Annotations;
 
@@ -38,6 +39,7 @@ import java.util.List;
 
 public class ConditionalMixinManager {
     public static boolean shouldApply(String className) {
+        var logger = CRMixinPlugin.LOGGER.atLevel(Utils.isDevEnv() ? Level.INFO : Level.DEBUG);
         try {
             List<AnnotationNode> annotationNodes = MixinService.getService().getBytecodeProvider().getClassNode(className).visibleAnnotations;
             if (annotationNodes == null) return true;
@@ -49,10 +51,11 @@ public class ConditionalMixinManager {
                     boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
                     boolean anyModsLoaded = anyModsLoaded(mods);
                     shouldApply = anyModsLoaded == applyIfPresent;
-                    CRMixinPlugin.LOGGER.debug("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
+                    logger.log("{} is{}being applied because the mod(s) {} are{}loaded", className, shouldApply ? " " : " not ", mods, anyModsLoaded ? " " : " not ");
                 }
                 if (node.desc.equals(Type.getDescriptor(DevEnvMixin.class))) {
                     shouldApply &= Utils.isDevEnv();
+                    logger.log("{} is {}being applied because we are {}in a development environment", className, shouldApply ? "" : "not ", Utils.isDevEnv() ? "" : "not ");
                 }
             }
             return shouldApply;

@@ -21,8 +21,8 @@ package com.railwayteam.railways.mixin.client;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.annotation.mixin.DevEnvMixin;
 import com.railwayteam.railways.util.DevCapeUtils;
+import com.railwayteam.railways.util.Utils;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -48,9 +48,10 @@ public class MixinPlayerInfo {
     @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
     // Replaces skin inside the dev env with the conductor skin
-    @DevEnvMixin
+    //@DevEnvMixin
     @Inject(method = "getSkinLocation", at = @At("HEAD"))
     private void registerSkinTextures(CallbackInfoReturnable<ResourceLocation> cir) {
+        if (!Utils.isDevEnv()) return;
         this.textureLocations.put(
                 MinecraftProfileTexture.Type.SKIN,
                 Railways.asResource("textures/misc/devenv_skin.png")
@@ -73,7 +74,7 @@ public class MixinPlayerInfo {
     }
 
     // Replaces skin model inside the dev env with the default "steve" skin model
-    @DevEnvMixin
+    //@DevEnvMixin
     @Inject(method = "registerTextures",
             at = @At(
                 value = "INVOKE",
@@ -81,6 +82,7 @@ public class MixinPlayerInfo {
             )
     )
     private void railways$setModelToLarge(CallbackInfo ci) {
+        if (!Utils.isDevEnv()) return;
         skinModel = "default";
     }
 }
