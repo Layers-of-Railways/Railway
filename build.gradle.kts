@@ -199,7 +199,8 @@ subprojects {
             include("resourcepacks/")
         }
 
-        val createFabricVersion: String = "create_fabric_version"().replace("(\\d+\\.\\d+\\.\\d+-\\w)", "$1")
+        // Trim -build.X+mcX.XX.X from version string
+        //val createFabricVersion: String = Regex("(\\d+\\.\\d+\\.\\d+-\\w)").find("create_fabric_version"())?.value.toString()
 
         // set up properties for filling into metadata
         val properties = mapOf(
@@ -210,7 +211,7 @@ subprojects {
                 "voicechat_api_version" to "voicechat_api_version"(),
                 "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
                 "create_forge_version" to "create_forge_version"().split("-")[0], // cut off build number
-                "create_fabric_version" to createFabricVersion // Trim -build.X+mcX.XX.X from version string
+                "create_fabric_version" to "create_fabric_version"()
         )
 
         inputs.properties(properties)
