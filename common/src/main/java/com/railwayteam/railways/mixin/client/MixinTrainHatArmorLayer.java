@@ -20,7 +20,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.registry.CREntities;
-import com.simibubi.create.content.trains.schedule.TrainHatArmorLayer;
+import com.simibubi.create.content.trains.schedule.hat.TrainHatArmorLayer;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
