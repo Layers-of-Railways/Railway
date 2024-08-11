@@ -46,8 +46,8 @@ public enum Mods {
 	// Create: Garnished
 	GARNISHED("garnished"),
 	// Garnished Additions
-	GARNISHED_ADD("garnished_additions"),
-	HIBERNAL_HERBS("hibernalherbs")
+	GARNISHED_ADDITIONS("garnished_additions"),
+	HIBERNALHERBS("hibernalherbs")
 	;
 
 	public final boolean isLoaded;

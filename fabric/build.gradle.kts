@@ -87,6 +87,22 @@ dependencies {
         modLocalRuntime("maven.modrinth:corgilib:${"corgilib_version_fabric"()}")
     }
 
+    if ("enable_garnished"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:create-garnished:${"garnished_version"()}-fabric")
+        modLocalRuntime("plus.dragons.createdragonlib:create_dragon_lib-fabric-${"minecraft_version"()}:1.0.1")
+        modLocalRuntime("com.terraformersmc.terraform-api:terraform-wood-api-v1:4.2.0")
+    }
+
+    if ("enable_garnished_additions"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:garnished-additions:${"garnished_add_version"()}")
+    }
+
+    if ("enable_hibernal_herbs"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:hibernal-herbs:${"hibernal_herbs_version"()}-fabric")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}-FABRIC")
+        modLocalRuntime("dev.emi:trinkets:${"trinkets_version"()}")
+    }
+
     if ("enable_tweakeroo"().toBoolean()) {
         modLocalRuntime("curse.maven:tweakeroo-297344:${"tweakeroo_version"()}")
         modLocalRuntime("curse.maven:malilib-303119:${"malilib_version"()}")

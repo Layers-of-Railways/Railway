@@ -24,7 +24,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class GarnishedAdditionsTrackCompat extends GenericTrackCompat {
     GarnishedAdditionsTrackCompat() {
-        super(Mods.GARNISHED_ADD);
+        super(Mods.GARNISHED_ADDITIONS);
     }
 
     private static boolean registered = false;
@@ -35,7 +35,7 @@ public class GarnishedAdditionsTrackCompat extends GenericTrackCompat {
         }
         registered = true;
         Railways.LOGGER.info("Registering tracks for Garnished Additions");
-        new GarnishedCompat().register(
+        new GarnishedAdditionsTrackCompat().register(
                 "ethereal"
         );
     }

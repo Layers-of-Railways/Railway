@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "garnished_additions:block/track/ethereal/standard_track_ethereal",
+    "1": "garnished_additions:block/track/ethereal/standard_track_mip_ethereal",
+    "particle": "garnished_additions:block/track/ethereal/standard_track_crossing_ethereal"
+  }
+}

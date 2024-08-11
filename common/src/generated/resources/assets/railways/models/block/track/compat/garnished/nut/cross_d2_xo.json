@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d2_xo",
+  "textures": {
+    "0": "garnished:block/track/nut/standard_track_nut",
+    "1": "garnished:block/track/nut/standard_track_mip_nut",
+    "2": "garnished:block/track/nut/standard_track_crossing_nut",
+    "particle": "garnished:block/track/nut/standard_track_crossing_nut"
+  }
+}

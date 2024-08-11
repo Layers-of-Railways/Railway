@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/cross_d2_zo",
+  "textures": {
+    "1": "garnished_additions:block/track/ethereal/standard_track_ethereal",
+    "2": "garnished_additions:block/track/ethereal/standard_track_mip_ethereal",
+    "3": "garnished_additions:block/track/ethereal/standard_track_crossing_ethereal",
+    "particle": "garnished_additions:block/track/ethereal/standard_track_crossing_ethereal"
+  }
+}

@@ -87,6 +87,18 @@ dependencies {
         modLocalRuntime("maven.modrinth:quark:${"minecraft_version"()}-${"quark_version"()}")
         modLocalRuntime("vazkii.autoreglib:AutoRegLib:${"arl_version"()}")
     }
+    if ("enable_garnished"().toBoolean()) {
+        // Utilizes 'neoforged' instead of 'forge' in 1.20.x+
+        modLocalRuntime("maven.modrinth:create-garnished:${"garnished_version"()}-forge")
+    }
+    if ("enable_garnished_additions"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:garnished-additions:${"garnished_add_version_forge"()}")
+    }
+    if ("enable_hibernal_herbs"().toBoolean()) {
+        modLocalRuntime("maven.modrinth:hibernal-herbs:${"hibernal_herbs_version"()}-forge")
+        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}")
+        modLocalRuntime("top.theillusivec4.curios:curios-forge:${"minecraft_version"()}-${"curios_version"()}")
+    }
 
     if ("enable_sodium_rubidium"().toBoolean()) {
         modLocalRuntime("maven.modrinth:rubidium:${"rubidium_version"()}")

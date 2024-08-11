@@ -797,6 +797,54 @@
     {
       "id": "railways:track_quark_azalea_narrow",
       "required": false
+    },
+    {
+      "id": "railways:track_garnished_nut",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_nut_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_nut_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_sepia",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_sepia_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_sepia_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_additions_ethereal",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_additions_ethereal_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_garnished_additions_ethereal_narrow",
+      "required": false
+    },
+    {
+      "id": "railways:track_hibernalherbs_myqueste",
+      "required": false
+    },
+    {
+      "id": "railways:track_hibernalherbs_myqueste_wide",
+      "required": false
+    },
+    {
+      "id": "railways:track_hibernalherbs_myqueste_narrow",
+      "required": false
     }
   ]
 }

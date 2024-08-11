@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/tie",
+  "textures": {
+    "0": "garnished:block/track/nut/standard_track_nut",
+    "1": "garnished:block/track/nut/standard_track_mip_nut",
+    "particle": "garnished:block/track/nut/standard_track_crossing_nut"
+  }
+}

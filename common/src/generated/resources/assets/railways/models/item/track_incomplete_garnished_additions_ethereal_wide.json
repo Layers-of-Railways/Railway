@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "garnished_additions:item/track_incomplete/track_incomplete_ethereal_wide"
+  }
+}

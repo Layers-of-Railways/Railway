@@ -24,7 +24,7 @@ import com.railwayteam.railways.compat.tracks.GenericTrackCompat;
 
 public class HibernalHerbsTrackCompat extends GenericTrackCompat {
     HibernalHerbsTrackCompat() {
-        super(Mods.HIBERNAL_HERBS);
+        super(Mods.HIBERNALHERBS);
     }
 
     private static boolean registered = false;
@@ -35,7 +35,7 @@ public class HibernalHerbsTrackCompat extends GenericTrackCompat {
         }
         registered = true;
         Railways.LOGGER.info("Registering tracks for Hibernal Herbs");
-        new GarnishedCompat().register(
+        new HibernalHerbsTrackCompat().register(
                 "myqueste"
         );
     }

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/cross_d1_xo",
+  "textures": {
+    "1": "garnished:block/track/sepia/standard_track_sepia",
+    "2": "garnished:block/track/sepia/standard_track_mip_sepia",
+    "3": "garnished:block/track/sepia/standard_track_crossing_sepia",
+    "particle": "garnished:block/track/sepia/standard_track_crossing_sepia"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/x_ortho",
+  "textures": {
+    "1": "hibernalherbs:block/track/myqueste/standard_track_myqueste",
+    "2": "hibernalherbs:block/track/myqueste/standard_track_mip_myqueste",
+    "3": "hibernalherbs:block/track/myqueste/standard_track_crossing_myqueste",
+    "particle": "hibernalherbs:block/track/myqueste/standard_track_crossing_myqueste"
+  }
+}

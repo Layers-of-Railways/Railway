@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "garnished:block/track/nut/portal_track_nut",
+    "2": "garnished:block/track/nut/portal_track_mip_nut",
+    "3": "garnished:block/track/nut/standard_track_nut",
+    "particle": "garnished:block/track/nut/standard_track_crossing_nut"
+  }
+}

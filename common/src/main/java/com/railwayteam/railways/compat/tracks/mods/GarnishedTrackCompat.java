@@ -35,7 +35,7 @@ public class GarnishedTrackCompat extends GenericTrackCompat {
         }
         registered = true;
         Railways.LOGGER.info("Registering tracks for Garnished");
-        new GarnishedCompat().register(
+        new GarnishedTrackCompat().register(
                 "nut",
                 "sepia"//,
 

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hibernalherbs:item/track_incomplete/track_incomplete_myqueste_wide"
+  }
+}

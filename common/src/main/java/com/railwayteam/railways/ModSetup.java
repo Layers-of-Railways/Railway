@@ -21,9 +21,6 @@ package com.railwayteam.railways;
 import com.railwayteam.railways.compat.tracks.mods.*;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.registry.*;
-import com.railwayteam.railways.compat.tracks.mods.GarnishedTrackCompat;
-import com.railwayteam.railways.compat.tracks.mods.GarnishedAdditionsTrackCompat;
-import com.railwayteam.railways.compat.tracks.mods.HibernalHerbsTrackCompat;
 
 public class ModSetup {
   public static void register() {

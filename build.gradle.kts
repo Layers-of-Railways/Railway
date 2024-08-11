@@ -375,7 +375,11 @@ fun Project.setupRepositories() {
         maven("https://jitpack.io/") // Mixin Extras, Fabric ASM
         maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // forge config api port
         exclusiveMaven("https://maven.blamejared.com", "at.petra-k", "vazkii.patchouli") // JEI, Hex Casting
-        exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
+        //exclusiveMaven("https://maven.ladysnake.org/releases", "dev.onyxstudios.cardinal-components-api") // Cardinal Components (Hex Casting dependency)
+        maven("https://maven.ladysnake.org/releases") // Cardinal Components, Trinkets
+
+        maven("https://maven.dragons.plus/releases") // DragonLib
+        maven("https://maven.dragons.plus/snapshots") // DragonLib snapshot
     }
 }
 
