@@ -21,7 +21,6 @@ package com.railwayteam.railways.content.smokestack.block.be;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.util.ColorUtils;
-import com.railwayteam.railways.util.IHaveCustomGoggleIcon;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -39,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveCustomGoggleIcon {
+public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
     public @Nullable DyeColor getColor() {
         return color;
@@ -114,7 +113,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     }
 
     @Override
-    public ItemStack railways$setGoggleIcon(boolean isPlayerSneaking) {
+    public ItemStack getIcon(boolean isPlayerSneaking) {
         if (color != null)
             return ColorUtils.getDyeColorDyeItem(color).getDefaultInstance();
 
