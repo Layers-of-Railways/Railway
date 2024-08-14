@@ -6,7 +6,6 @@
   "refmap": "Steam_Rails-forge-refmap.json",
   "client": [
     "client.ClientPacketListenerMixin",
-    "client.GoggleOverlayRendererMixin",
     "client.TrackBlockOutlineMixin",
     "client.TrainHUDMixin"
   ],

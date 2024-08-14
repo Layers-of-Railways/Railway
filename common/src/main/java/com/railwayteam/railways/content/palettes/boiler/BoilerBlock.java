@@ -26,6 +26,7 @@ import com.railwayteam.railways.mixin_interfaces.IHasCustomOutline;
 import com.railwayteam.railways.registry.CRShapes;
 import com.simibubi.create.content.equipment.extendoGrip.ExtendoGripItem;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.block.IHaveBigOutline;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
@@ -66,7 +67,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium, IHasCustomOutline {
+public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSodium, IHasCustomOutline, IHaveBigOutline {
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
 
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
