@@ -96,7 +96,7 @@ public abstract class MixinAbstractBogeyBlock {
         try {
             return original.call(list, style);
         } catch (IllegalArgumentException e) {
-            return list.getFirst();
+            return list.get(0);
         }
     }
 }
