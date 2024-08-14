@@ -100,7 +100,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         int coord = facing.getAxis()
             .choose(diff.getX(), diff.getY(), diff.getZ());
 
-        if (!toState.is(this))
+        if (!(toState.getBlock() instanceof CopycatHeadstockBlock))
             return facing != face.getOpposite();
 //            return !(coord != 0 && coord == facing.getAxisDirection().getStep());
 
@@ -122,7 +122,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         int coord = facing.getAxis()
             .choose(diff.getX(), diff.getY(), diff.getZ());
 
-        if (!toState.is(this))
+        if (!(toState.getBlock() instanceof CopycatHeadstockBlock))
             return coord != -facing.getAxisDirection()
                 .getStep();
 
