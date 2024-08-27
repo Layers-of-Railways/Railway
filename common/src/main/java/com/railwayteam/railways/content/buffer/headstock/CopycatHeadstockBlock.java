@@ -174,9 +174,8 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
                     && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
             if (material.skipRendering(otherMaterial, dir.getOpposite()))
                 return isOccluded(state, neighborState, dir.getOpposite());
-
-            // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
-            OcclusionTestLevel occlusionTestLevel = new OcclusionTestLevel();
+            
+            OcclusionTestLevel occlusionTestLevel = new OcclusionTestLevel(level);
             occlusionTestLevel.setBlock(pos, material);
             occlusionTestLevel.setBlock(otherPos, otherMaterial);
             if (material.isSolidRender(occlusionTestLevel, pos) && otherMaterial.isSolidRender(occlusionTestLevel, otherPos))
