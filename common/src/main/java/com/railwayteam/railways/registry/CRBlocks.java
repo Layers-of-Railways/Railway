@@ -159,14 +159,15 @@ public class CRBlocks {
             .transform(pickaxeOnly())
             .blockstate(blockstateGen)
             .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
-            .tag((TagKey<Block>[]) trackTags.toArray(new TagKey[0])) // keep the cast, or stuff breaks
+            .tag((TagKey<Block>[]) trackTags.toArray(TagKey[]::new)) // keep the cast, or stuff breaks
             .lang(material.langName + " Train Track")
             .onRegister(onRegister)
             .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
             .onRegister(CRTrackMaterials::addToBlockEntityType)
             .item(TrackBlockItem::new)
             .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
-            .tag((TagKey<Item>[]) itemTags.toArray(new TagKey[0]))
+            .tag((TagKey<Item>[]) itemTags.toArray(TagKey[]::new))
+            .tag(AllTags.AllItemTags.TRACKS.tag)
             .build()
             .register();
     }
