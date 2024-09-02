@@ -32,4 +32,9 @@ public class RailwaysHatOffsetGenerator extends TrainHatInfoProvider {
     protected void createOffsets() {
         makeInfoFor(CREntities.CONDUCTOR.get(), new Vec3(0f, -1f, 0f));
     }
+
+    @Override
+    public String getName() {
+        return "Steam 'n' Rails Train Hat Information";
+    }
 }
