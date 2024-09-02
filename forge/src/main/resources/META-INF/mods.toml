@@ -25,14 +25,14 @@ side = "BOTH"
 [[dependencies.railways]]
 modId = "minecraft"
 mandatory = true
-versionRange = "${minecraft_version}"
+versionRange = "[${minecraft_version}]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.railways]]
 modId="create"
 mandatory=true
-versionRange="${create_forge_version}"
+versionRange="[${create_forge_version}]"
 ordering="NONE"
 side="BOTH"
 

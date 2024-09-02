@@ -23,7 +23,7 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.util.AdventureUtils;
-import com.railwayteam.railways.util.client.OcclusionTestWorld;
+import com.railwayteam.railways.util.client.OcclusionTestLevel;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
 import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
@@ -101,7 +101,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
         int coord = facing.getAxis()
             .choose(diff.getX(), diff.getY(), diff.getZ());
 
-        if (!toState.is(this))
+        if (!(toState.getBlock() instanceof CopycatHeadstockBlock))
             return facing != face.getOpposite();
 //            return !(coord != 0 && coord == facing.getAxisDirection().getStep());
 
@@ -123,7 +123,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
         int coord = facing.getAxis()
             .choose(diff.getX(), diff.getY(), diff.getZ());
 
-        if (!toState.is(this))
+        if (!(toState.getBlock() instanceof CopycatHeadstockBlock))
             return coord != -facing.getAxisDirection()
                 .getStep();
 
@@ -175,14 +175,17 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
                     && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
             if (material.skipRendering(otherMaterial, dir.getOpposite()))
                 return isOccluded(state, neighborState, dir.getOpposite());
-
-            // todo maybe PR this extra occlusion check to Create - vanilla Create renders solid faces between copycat panels etc
-            OcclusionTestWorld occlusionTestWorld = new OcclusionTestWorld();
-            occlusionTestWorld.setBlock(pos, material);
-            occlusionTestWorld.setBlock(otherPos, otherMaterial);
-            if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, otherPos))
-                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
+            
+            OcclusionTestLevel occlusionTestLevel = new OcclusionTestLevel(level);
+            occlusionTestLevel.setBlock(pos, material);
+            occlusionTestLevel.setBlock(otherPos, otherMaterial);
+            if (material.isSolidRender(occlusionTestLevel, pos) && otherMaterial.isSolidRender(occlusionTestLevel, otherPos))
+                if(!Block.shouldRenderFace(otherMaterial, occlusionTestLevel, pos, dir.getOpposite(), otherPos)) {
+                    occlusionTestLevel.clear();
                     return isOccluded(state, neighborState, dir.getOpposite());
+                }
+            
+            occlusionTestLevel.clear();
         }
 
         return state.getValue(FACING) == dir.getOpposite()
