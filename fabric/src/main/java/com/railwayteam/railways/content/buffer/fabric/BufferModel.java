@@ -81,7 +81,11 @@ public class BufferModel extends ForwardingBakedModel {
     
     @Override
     public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
-        boolean isDiagonal = state.getValue(TrackBufferBlock.DIAGONAL);
+        boolean isDiagonal = false;
+        
+        if (state.getBlock() instanceof TrackBufferBlock)
+            isDiagonal = state.getValue(TrackBufferBlock.DIAGONAL);
+        
         if (isDiagonal) context.pushTransform(diagonalTransformer);
         
         UnaryOperator<TextureAtlasSprite> materialSwapper = null;
