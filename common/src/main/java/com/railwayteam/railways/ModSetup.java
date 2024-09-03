@@ -23,37 +23,37 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtil
 import com.railwayteam.railways.registry.*;
 
 public class ModSetup {
-  public static void register() {
-    CRTrackMaterials.register();
-    CRBogeyStyles.register();
-    CRItems.register();
-    CRSpriteShifts.register();
-    CRBlockEntities.register();
-    CRBlocks.register();
-    CRPalettes.register();
-    CRContainerTypes.register();
-    CREntities.register();
-    CRSounds.register();
-    CRTags.register();
-    CREdgePointTypes.register();
-    CRSchedule.register();
-    CRDataFixers.register();
-    CRExtraRegistration.register();
-    CasingCollisionUtils.register();
-    CRInteractionBehaviours.register();
-    CRMovementBehaviours.register();
-    CRPortalTracks.register();
+    public static void register() {
+        CRTrackMaterials.register();
+        CRBogeyStyles.register();
+        CRItems.register();
+        CRSpriteShifts.register();
+        CRBlockEntities.register();
+        CRBlocks.register();
+        CRPalettes.register();
+        CRContainerTypes.register();
+        CREntities.register();
+        CRSounds.register();
+        CRTags.register();
+        CREdgePointTypes.register();
+        CRSchedule.register();
+        CRDataFixers.register();
+        CRExtraRegistration.register();
+        CasingCollisionUtils.register();
+        CRInteractionBehaviours.register();
+        CRMovementBehaviours.register();
+        CRPortalTracks.register();
 
-    // Compat
-    HexCastingTrackCompat.register();
-    BygTrackCompat.register();
-    BlueSkiesTrackCompat.register();
-    TwilightForestTrackCompat.register();
-    BiomesOPlentyTrackCompat.register();
-    DreamsAndDesiresTrackCompat.register();
-    QuarkTrackCompat.register();
-    GarnishedTrackCompat.register();
-    GarnishedAdditionsTrackCompat.register();
-    HibernalHerbsTrackCompat.register();
-  }
+        // Compat
+        HexCastingTrackCompat.register();
+        BygTrackCompat.register();
+        BlueSkiesTrackCompat.register();
+        TwilightForestTrackCompat.register();
+        BiomesOPlentyTrackCompat.register();
+        DreamsAndDesiresTrackCompat.register();
+        QuarkTrackCompat.register();
+        GarnishedTrackCompat.register();
+        GarnishedAdditionsTrackCompat.register();
+        HibernalHerbsTrackCompat.register();
+    }
 }

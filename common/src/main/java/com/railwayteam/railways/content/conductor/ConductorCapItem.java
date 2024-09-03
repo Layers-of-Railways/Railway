@@ -41,85 +41,93 @@ import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public abstract class ConductorCapItem extends ArmorItem {
-  public final DyeColor color;
-  public final ResourceLocation textureId;
-  public final String textureStr;
+    public final DyeColor color;
+    public final ResourceLocation textureId;
+    public final String textureStr;
 
-  protected ConductorCapItem(Properties props, DyeColor color) {
-    super(new ConductorArmorMaterial(), EquipmentSlot.HEAD, props);
-    this.color  = color;
-    String colorName = color.getName().toLowerCase(Locale.ROOT);
-    this.textureId = Railways.asResource("textures/entity/caps/%s_conductor_cap.png".formatted(colorName));
-    this.textureStr = textureId.toString();
-  }
-
-  @ExpectPlatform
-  public static ConductorCapItem create(Properties props, DyeColor color) {
-    throw new AssertionError();
-  }
-
-  static boolean isCasing (Block block) { return block.equals( AllBlocks.ANDESITE_CASING.get()); }
-  static boolean isCasing (BlockState state) { return isCasing(state.getBlock()); }
-  static boolean isCasing (Level level, BlockPos pos) { return isCasing(level.getBlockState(pos)); }
-
-  @Nonnull
-  @Override
-  public InteractionResult useOn (UseOnContext ctx) {
-    Level level  = ctx.getLevel();
-    BlockPos pos = ctx.getClickedPos();
-    if (isCasing(level, pos)) {
-      if (level.isClientSide)
-        return InteractionResult.SUCCESS;
-      level.removeBlock(pos, false);
-      ConductorEntity.spawn(level, pos, ctx.getItemInHand().copy());
-      if (ctx.getPlayer() != null && !ctx.getPlayer().isCreative()) {
-        ctx.getItemInHand().shrink(1);
-        return InteractionResult.CONSUME;
-      }
-      return InteractionResult.SUCCESS;
+    protected ConductorCapItem(Properties props, DyeColor color) {
+        super(new ConductorArmorMaterial(), EquipmentSlot.HEAD, props);
+        this.color = color;
+        String colorName = color.getName().toLowerCase(Locale.ROOT);
+        this.textureId = Railways.asResource("textures/entity/caps/%s_conductor_cap.png".formatted(colorName));
+        this.textureStr = textureId.toString();
     }
-    return super.useOn(ctx);
-  }
 
-  static class ConductorArmorMaterial implements ArmorMaterial {
+    @ExpectPlatform
+    public static ConductorCapItem create(Properties props, DyeColor color) {
+        throw new AssertionError();
+    }
+
+    static boolean isCasing(Block block) {
+        return block.equals(AllBlocks.ANDESITE_CASING.get());
+    }
+
+    static boolean isCasing(BlockState state) {
+        return isCasing(state.getBlock());
+    }
+
+    static boolean isCasing(Level level, BlockPos pos) {
+        return isCasing(level.getBlockState(pos));
+    }
+
+    @Nonnull
     @Override
-    public int getDurabilityForSlot (@NotNull EquipmentSlot slot) {
-      return 0;
+    public InteractionResult useOn(UseOnContext ctx) {
+        Level level = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        if (isCasing(level, pos)) {
+            if (level.isClientSide)
+                return InteractionResult.SUCCESS;
+            level.removeBlock(pos, false);
+            ConductorEntity.spawn(level, pos, ctx.getItemInHand().copy());
+            if (ctx.getPlayer() != null && !ctx.getPlayer().isCreative()) {
+                ctx.getItemInHand().shrink(1);
+                return InteractionResult.CONSUME;
+            }
+            return InteractionResult.SUCCESS;
+        }
+        return super.useOn(ctx);
     }
 
-    @Override
-    public int getDefenseForSlot (@NotNull EquipmentSlot slot) {
-      return 0;
-    }
+    static class ConductorArmorMaterial implements ArmorMaterial {
+        @Override
+        public int getDurabilityForSlot(@NotNull EquipmentSlot slot) {
+            return 0;
+        }
 
-    @Override
-    public int getEnchantmentValue () {
-      return 0;
-    }
+        @Override
+        public int getDefenseForSlot(@NotNull EquipmentSlot slot) {
+            return 0;
+        }
 
-    @Override
-    public @NotNull SoundEvent getEquipSound() {
-      return SoundEvents.ARMOR_EQUIP_LEATHER;
-    }
+        @Override
+        public int getEnchantmentValue() {
+            return 0;
+        }
 
-    @Override
-    public @NotNull Ingredient getRepairIngredient() {
-      return Ingredient.EMPTY;
-    }
+        @Override
+        public @NotNull SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_LEATHER;
+        }
 
-    @Override
-    public @NotNull String getName() {
-      return "conductor_cap";
-    }
+        @Override
+        public @NotNull Ingredient getRepairIngredient() {
+            return Ingredient.EMPTY;
+        }
 
-    @Override
-    public float getToughness() {
-      return 0;
-    }
+        @Override
+        public @NotNull String getName() {
+            return "conductor_cap";
+        }
 
-    @Override
-    public float getKnockbackResistance() {
-      return 0;
+        @Override
+        public float getToughness() {
+            return 0;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0;
+        }
     }
-  }
 }

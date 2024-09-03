@@ -53,7 +53,7 @@ public class RadialBogeyRenderer extends BogeyRenderer {
             if (!inInstancedContraption)
                 ms.pushPose();
             BogeyModelData wheel = wheels[side + 1];
-            wheel.translate(0, 12 / 16f, side*1.5)
+            wheel.translate(0, 12 / 16f, side * 1.5)
                     .rotateX(wheelAngle)
                     .translate(0, -7 / 16f, 0)
                     .render(ms, light, vb);

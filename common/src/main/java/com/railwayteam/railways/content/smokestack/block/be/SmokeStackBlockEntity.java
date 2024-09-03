@@ -72,7 +72,8 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     @Override
     protected void read(CompoundTag tag, boolean clientPacket) {

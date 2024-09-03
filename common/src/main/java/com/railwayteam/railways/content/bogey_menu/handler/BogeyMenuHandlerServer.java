@@ -29,7 +29,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class BogeyMenuHandlerServer {
-    @Nullable private static UUID currentPlayer = null;
+    @Nullable
+    private static UUID currentPlayer = null;
     private static final HashMap<UUID, Pair<BogeyStyle, @Nullable BogeySize>> selectedStyles = new HashMap<>();
 
 

@@ -45,9 +45,9 @@ public class EntityAudioChannelImplMixin {
     }
 
     @WrapOperation(method = {
-        "send([B)V",
-        "send(Lde/maxhenkel/voicechat/api/packets/MicrophonePacket;)V",
-        "flush"
+            "send([B)V",
+            "send(Lde/maxhenkel/voicechat/api/packets/MicrophonePacket;)V",
+            "flush"
     }, at = @At(value = "INVOKE", target = "Lde/maxhenkel/voicechat/api/Entity;getUuid()Ljava/util/UUID;"), remap = false)
     private UUID useConductorSpyUUID(de.maxhenkel.voicechat.api.Entity instance, Operation<UUID> original) {
         if (instance.getEntity() instanceof ServerPlayer serverPlayer && ConductorPossessionController.isPossessingConductor(serverPlayer)) {

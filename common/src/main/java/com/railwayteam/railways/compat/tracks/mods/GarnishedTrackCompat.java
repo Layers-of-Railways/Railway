@@ -28,6 +28,7 @@ public class GarnishedTrackCompat extends GenericTrackCompat {
     }
 
     private static boolean registered = false;
+
     public static void register() {
         if (registered) {
             Railways.LOGGER.error("Duplicate registration of Garnished compat");

@@ -35,19 +35,19 @@ import java.util.Map;
 
 public class CRSpriteShifts {
     public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
-        FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
-        FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
+            FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
+            FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
 
     public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
-        SLASHED_LOCOMETAL = new HashMap<>(17, 2),
-        RIVETED_LOCOMETAL = new HashMap<>(17, 2),
-        BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        COPPER_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        IRON_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        BOILER_SIDE = new HashMap<>(17, 2),
-        BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
-        COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
-        IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
+            SLASHED_LOCOMETAL = new HashMap<>(17, 2),
+            RIVETED_LOCOMETAL = new HashMap<>(17, 2),
+            BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+            COPPER_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+            IRON_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
+            BOILER_SIDE = new HashMap<>(17, 2),
+            BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
+            COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
+            IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
 
     private static void initLocometal(@Nullable DyeColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
@@ -111,5 +111,6 @@ public class CRSpriteShifts {
         return getCT(type, blockTextureName, blockTextureName);
     }
 
-    public static void register() {}
+    public static void register() {
+    }
 }

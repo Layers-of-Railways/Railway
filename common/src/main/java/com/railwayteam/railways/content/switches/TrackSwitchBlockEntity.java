@@ -83,7 +83,8 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
         this.state = state;
     }
 
-    public record PonderData(Vec3 basePos, @Nullable Vec3 leftBranch, @Nullable Vec3 straightBranch, @Nullable Vec3 rightBranch) {
+    public record PonderData(Vec3 basePos, @Nullable Vec3 leftBranch, @Nullable Vec3 straightBranch,
+                             @Nullable Vec3 rightBranch) {
         Map<SwitchState, Vec3> getBranches() {
             Map<SwitchState, Vec3> branches = new HashMap<>();
             if (leftBranch != null)
@@ -95,13 +96,13 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
             return branches;
         }
     }
+
     @ApiStatus.Internal
     public @Nullable PonderData ponderData;
 
     enum AutoMode implements INamedIconOptions {
         MANUAL_ONLY(CRIcons.I_SWITCH_MANUAL),
-        AUTO(CRIcons.I_SWITCH_AUTO)
-        ;
+        AUTO(CRIcons.I_SWITCH_AUTO);
 
         private final String translationKey;
         private final AllIcons icon;
@@ -282,7 +283,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
                 .map(e -> e.node2.getLocation())
                 .collect(toSet());
 
-        if (Math.abs(loc.position - (edge.getLength()-0.5)) > 0.5) {
+        if (Math.abs(loc.position - (edge.getLength() - 0.5)) > 0.5) {
             exits = Set.of();
         }
 
@@ -463,7 +464,8 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
         try {
             if (getSwitch() != null && edgePoint.determineGraphLocation() != null)
                 getSwitch().updateEdges(edgePoint.determineGraphLocation().graph);
-        } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
+        } catch (ClassCastException ignored) {
+        } // if we are targeting air, catch the crash
     }
 
     /*protected void followAutomaticSwitching() {
@@ -476,7 +478,8 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
         try {
             if (edgePoint.getEdgePoint() != null && edgePoint.determineGraphLocation() != null)
                 edgePoint.getEdgePoint().setEdgesActive(edgePoint.determineGraphLocation().graph);
-        } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
+        } catch (ClassCastException ignored) {
+        } // if we are targeting air, catch the crash
     }
 
     @Override
@@ -543,6 +546,6 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
     @Override
     protected AABB createRenderBoundingBox() {
         return new AABB(worldPosition, edgePoint.getGlobalPosition())
-            .inflate(2);
+                .inflate(2);
     }
 }

@@ -29,34 +29,34 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
 public class MountedToolboxSyncPacket implements S2CPacket {
-  final int id;
-  final CompoundTag nbt;
+    final int id;
+    final CompoundTag nbt;
 
-  public MountedToolboxSyncPacket(Entity target, CompoundTag nbt) {
-    this.id = target.getId();
-    this.nbt = nbt;
-  }
-
-  public MountedToolboxSyncPacket(FriendlyByteBuf buf) {
-    id = buf.readInt();
-    nbt = buf.readNbt();
-  }
-
-  @Override
-  public void write(FriendlyByteBuf buffer) {
-    buffer.writeInt(this.id);
-    buffer.writeNbt(this.nbt);
-  }
-
-  @Override
-  @Environment(EnvType.CLIENT)
-  public void handle(Minecraft mc) {
-    Level level = mc.level;
-    if (level != null) {
-      Entity target = level.getEntity(this.id);
-      if (target instanceof ConductorEntity conductor) {
-        conductor.getOrCreateToolboxHolder().read(this.nbt, true);
-      }
+    public MountedToolboxSyncPacket(Entity target, CompoundTag nbt) {
+        this.id = target.getId();
+        this.nbt = nbt;
     }
-  }
+
+    public MountedToolboxSyncPacket(FriendlyByteBuf buf) {
+        id = buf.readInt();
+        nbt = buf.readNbt();
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buffer) {
+        buffer.writeInt(this.id);
+        buffer.writeNbt(this.nbt);
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void handle(Minecraft mc) {
+        Level level = mc.level;
+        if (level != null) {
+            Entity target = level.getEntity(this.id);
+            if (target instanceof ConductorEntity conductor) {
+                conductor.getOrCreateToolboxHolder().read(this.nbt, true);
+            }
+        }
+    }
 }

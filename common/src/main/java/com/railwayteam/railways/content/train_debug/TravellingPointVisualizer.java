@@ -41,7 +41,7 @@ public class TravellingPointVisualizer {
             Color color = Color.rainbowColor(carriage.hashCode());
             AABB box = (carriage.getDimensional(cameraEntity.level).entity.get() == null) ? null : carriage.getDimensional(cameraEntity.level).entity.get().getBoundingBox();
             if (true || box == null || box.intersects(cameraEntity.getBoundingBox()
-                .inflate(50))) {
+                    .inflate(50))) {
                 for (CarriageBogey bogey : carriage.bogeys) {
                     if (bogey != null && bogey.leading() != null && bogey.trailing() != null && bogey.leading().edge != null && bogey.trailing().edge != null) {
                     /*for (TravellingPoint travellingPoint : new TravellingPoint[]{bogey.leading(), bogey.trailing()}) {
@@ -52,11 +52,11 @@ public class TravellingPointVisualizer {
                     }*/
                         Vec3 leadPos = bogey.leading().getPosition(train.graph);
                         Vec3 trailPos = bogey.trailing().getPosition(train.graph);
-                        mc.level.addParticle(new DustParticleOptions(new Vector3f(0, 1, 0), 2.0f), leadPos.x, leadPos.y+2, leadPos.z, 0, 0, 0);
-                        mc.level.addParticle(new DustParticleOptions(new Vector3f(1, 0, 0), 2.0f), trailPos.x, trailPos.y+2, trailPos.z, 0, 0, 0);
+                        mc.level.addParticle(new DustParticleOptions(new Vector3f(0, 1, 0), 2.0f), leadPos.x, leadPos.y + 2, leadPos.z, 0, 0, 0);
+                        mc.level.addParticle(new DustParticleOptions(new Vector3f(1, 0, 0), 2.0f), trailPos.x, trailPos.y + 2, trailPos.z, 0, 0, 0);
                         CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 2 + (bogey == carriage.leadingBogey() ? 0 : 1)), bogey.leading().getPosition(train.graph), bogey.trailing().getPosition(train.graph))
-                            .colored(color)
-                            .lineWidth(2/16f);
+                                .colored(color)
+                                .lineWidth(2 / 16f);
                         /*int extent = 2;
                         CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 0),
                                 bogey.getAnchorPosition().add(0, extent, 0), bogey.getAnchorPosition().add(0, -extent, 0))

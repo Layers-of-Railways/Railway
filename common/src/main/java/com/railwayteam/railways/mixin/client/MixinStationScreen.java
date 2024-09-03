@@ -47,7 +47,8 @@ import java.util.List;
 
 @Mixin(value = StationScreen.class, remap = false)
 public abstract class MixinStationScreen extends AbstractStationScreen {
-    @Shadow private EditBox trainNameBox;
+    @Shadow
+    private EditBox trainNameBox;
     private Checkbox limitEnableCheckbox;
     private List<ResourceLocation> iconTypes;
     private ScrollInput iconTypeScroll;

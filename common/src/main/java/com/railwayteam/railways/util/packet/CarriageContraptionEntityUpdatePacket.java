@@ -33,42 +33,42 @@ import net.minecraft.world.level.Level;
 import java.util.UUID;
 
 public class CarriageContraptionEntityUpdatePacket implements S2CPacket {
-  final int id;
-  final int carriageIndex;
-  final UUID trainId;
+    final int id;
+    final int carriageIndex;
+    final UUID trainId;
 
-  public CarriageContraptionEntityUpdatePacket(CarriageContraptionEntity target, Train train) {
-    id = target.getId();
-    carriageIndex = target.carriageIndex;
-    trainId = train.id;
-  }
-
-  public CarriageContraptionEntityUpdatePacket(FriendlyByteBuf buf) {
-    id = buf.readInt();
-    carriageIndex = buf.readInt();
-    trainId = buf.readUUID();
-  }
-
-  @Override
-  public void write(FriendlyByteBuf buffer) {
-    buffer.writeInt(this.id);
-    buffer.writeInt(this.carriageIndex);
-    buffer.writeUUID(this.trainId);
-  }
-
-  @Override
-  @Environment(EnvType.CLIENT)
-  public void handle(Minecraft mc) {
-    Level level = mc.level;
-    if (level != null) {
-      Entity target = level.getEntity(this.id);
-      if (target instanceof CarriageContraptionEntity cce) {
-        cce.trainId = trainId;
-        ((AccessorCarriageContraptionEntity) cce).railways$setCarriage(null);
-        cce.carriageIndex = carriageIndex;
-        ((AccessorCarriageContraptionEntity) cce).railways$bindCarriage();
-        ((IUpdateCount) cce).railways$markUpdate();
-      }
+    public CarriageContraptionEntityUpdatePacket(CarriageContraptionEntity target, Train train) {
+        id = target.getId();
+        carriageIndex = target.carriageIndex;
+        trainId = train.id;
     }
-  }
+
+    public CarriageContraptionEntityUpdatePacket(FriendlyByteBuf buf) {
+        id = buf.readInt();
+        carriageIndex = buf.readInt();
+        trainId = buf.readUUID();
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buffer) {
+        buffer.writeInt(this.id);
+        buffer.writeInt(this.carriageIndex);
+        buffer.writeUUID(this.trainId);
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void handle(Minecraft mc) {
+        Level level = mc.level;
+        if (level != null) {
+            Entity target = level.getEntity(this.id);
+            if (target instanceof CarriageContraptionEntity cce) {
+                cce.trainId = trainId;
+                ((AccessorCarriageContraptionEntity) cce).railways$setCarriage(null);
+                cce.carriageIndex = carriageIndex;
+                ((AccessorCarriageContraptionEntity) cce).railways$bindCarriage();
+                ((IUpdateCount) cce).railways$markUpdate();
+            }
+        }
+    }
 }

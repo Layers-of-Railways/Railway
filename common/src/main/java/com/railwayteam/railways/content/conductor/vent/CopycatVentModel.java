@@ -26,6 +26,7 @@ import net.minecraft.world.phys.AABB;
 
 public abstract class CopycatVentModel extends CopycatModel {
     protected static final AABB CUBE_AABB = new AABB(BlockPos.ZERO);
+
     public CopycatVentModel(BakedModel originalModel) {
         super(originalModel);
     }

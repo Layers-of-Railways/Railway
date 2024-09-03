@@ -25,11 +25,11 @@ import com.simibubi.create.infrastructure.ponder.AllPonderTags;
 public class CRExtraDisplayTags {
     public static void register() {
         PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_SOURCES)
-            .add(AllBlocks.TRACK_SIGNAL)
-            .add(CRBlocks.TRACK_COUPLER)
-            .add(CRBlocks.ANDESITE_SWITCH)
-            .add(CRBlocks.BRASS_SWITCH);
+                .add(AllBlocks.TRACK_SIGNAL)
+                .add(CRBlocks.TRACK_COUPLER)
+                .add(CRBlocks.ANDESITE_SWITCH)
+                .add(CRBlocks.BRASS_SWITCH);
         PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_TARGETS)
-            .add(CRBlocks.SEMAPHORE);
+                .add(CRBlocks.SEMAPHORE);
     }
 }

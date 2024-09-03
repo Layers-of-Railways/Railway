@@ -39,7 +39,8 @@ public abstract class DataFixesInternals {
         return get().createBaseSchema();
     };
 
-    public record DataFixerEntry(DataFixer dataFixer, int currentVersion) {}
+    public record DataFixerEntry(DataFixer dataFixer, int currentVersion) {
+    }
 
     @Contract(pure = true)
     @Range(from = 0, to = Integer.MAX_VALUE)
@@ -54,7 +55,7 @@ public abstract class DataFixesInternals {
             Schema latestVanillaSchema;
             try {
                 latestVanillaSchema = DataFixers.getDataFixer()
-                    .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()));
+                        .getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()));
             } catch (Exception e) {
                 latestVanillaSchema = null;
             }

@@ -47,7 +47,7 @@ public class EmiExcludedTagGen implements DataProvider {
     @Override
     public void run(CachedOutput output) throws IOException {
         Path path = this.gen.getOutputFolder()
-            .resolve("assets/emi/tag/exclusions/railways.json");
+                .resolve("assets/emi/tag/exclusions/railways.json");
 
         ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
         HashingOutputStream hashingoutputstream = new HashingOutputStream(Hashing.sha1(), bytearrayoutputstream);
@@ -62,8 +62,8 @@ public class EmiExcludedTagGen implements DataProvider {
     private String run() {
         StringBuilder builder = new StringBuilder();
         builder.append("{\n")
-            .append(INDENT)
-            .append("\"item\": [\n");
+                .append(INDENT)
+                .append("\"item\": [\n");
         // fill in items
         Iterator<CommonTag<Item>> itemIterator = CommonTags.ALL_ITEMS.iterator();
         while (itemIterator.hasNext()) {
@@ -77,9 +77,9 @@ public class EmiExcludedTagGen implements DataProvider {
             builder.append("\n");
         }
         builder.append(INDENT)
-            .append("],\n")
-            .append(INDENT)
-            .append("\"block\": [\n");
+                .append("],\n")
+                .append(INDENT)
+                .append("\"block\": [\n");
         // fill in blocks
         Iterator<CommonTag<Block>> blockIterator = CommonTags.ALL_BLOCKS.iterator();
         while (blockIterator.hasNext()) {

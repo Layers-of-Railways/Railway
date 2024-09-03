@@ -22,5 +22,6 @@ import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.Nullable;
 
 public interface IDyedBuffer {
-    @Nullable DyeColor getColor();
+    @Nullable
+    DyeColor getColor();
 }

@@ -37,9 +37,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrackEdgePoint.class, remap = false)
 public abstract class MixinTrackEdgePoint {
-    @Shadow public abstract void write(CompoundTag nbt, DimensionPalette dimensions);
+    @Shadow
+    public abstract void write(CompoundTag nbt, DimensionPalette dimensions);
 
-    @Shadow public abstract EdgePointType<?> getType();
+    @Shadow
+    public abstract EdgePointType<?> getType();
 
     @Inject(method = "invalidateAt", at = @At("RETURN"))
     private void invalidateSecondaryEdgePoint(LevelAccessor level, BlockPos tilePos, CallbackInfo ci) {

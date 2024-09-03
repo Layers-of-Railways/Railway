@@ -32,6 +32,7 @@ public class TrackBuffer extends SingleBlockEntityEdgePoint {
 
     /**
      * Prevent trains from stopping directly on buffers
+     *
      * @return padding to add to the train's stopping distance
      */
     public static int getBufferRoom(Train train) {
@@ -40,16 +41,17 @@ public class TrackBuffer extends SingleBlockEntityEdgePoint {
 
     /**
      * Prevent trains from stopping directly on buffers
+     *
      * @return padding to add to the train's stopping distance
      */
     public static int getBufferRoom(Train train, boolean backwards) {
         Carriage leadingCarriage = backwards
-            ? train.carriages.get(train.carriages.size() - 1)
-            : train.carriages.get(0);
+                ? train.carriages.get(train.carriages.size() - 1)
+                : train.carriages.get(0);
         if (leadingCarriage instanceof ICarriageBufferDistanceTracker bufferDistanceTracker) {
             Integer distance = backwards
-                ? bufferDistanceTracker.railways$getTrailingDistance()
-                : bufferDistanceTracker.railways$getLeadingDistance();
+                    ? bufferDistanceTracker.railways$getTrailingDistance()
+                    : bufferDistanceTracker.railways$getLeadingDistance();
             if (distance != null)
                 return distance + 1;
         }

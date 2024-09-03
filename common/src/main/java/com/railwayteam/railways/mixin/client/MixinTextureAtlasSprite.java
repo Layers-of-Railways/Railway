@@ -35,7 +35,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(TextureAtlasSprite.class)
 public abstract class MixinTextureAtlasSprite implements IPotentiallyInvisibleTextureAtlasSprite {
 
-    @Shadow @Final @Nullable private TextureAtlasSprite.AnimatedTexture animatedTexture;
+    @Shadow
+    @Final
+    @Nullable
+    private TextureAtlasSprite.AnimatedTexture animatedTexture;
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void railways$onInit(TextureAtlas atlas, TextureAtlasSprite.Info spriteInfo, int mipLevel, int storageX, int storageY, int x, int y, NativeImage image, CallbackInfo ci) {

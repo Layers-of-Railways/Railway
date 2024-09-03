@@ -97,7 +97,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
 
             Vec3 lookAngle = player.getLookAngle();
             boolean front = track.getNearestTrackAxis(level, pos, state, lookAngle)
-                .getSecond() == Direction.AxisDirection.POSITIVE;
+                    .getSecond() == Direction.AxisDirection.POSITIVE;
 
             MutableObject<OverlapResult> result = new MutableObject<>(null);
             MutableObject<TrackGraphLocation> resultLoc = new MutableObject<>(null);
@@ -108,7 +108,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
 
             if (result.getValue().feedback != null) {
                 player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                    .withStyle(ChatFormatting.RED), true);
+                        .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
@@ -152,11 +152,11 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
         if (!(level instanceof ServerLevel serverLevel))
             return false;
         makeTrain(
-            player.getUUID(),
-            graph,
-            tp1,
-            tp2,
-            serverLevel
+                player.getUUID(),
+                graph,
+                tp1,
+                tp2,
+                serverLevel
         );
 
 
@@ -171,7 +171,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
         TrackBlockEntity be = selection.blockEntity();
         BezierTrackPointLocation loc = selection.loc();
         boolean front = player.getLookAngle()
-            .dot(selection.direction()) < 0;
+                .dot(selection.direction()) < 0;
 
         BezierConnection bc = be.getConnections().get(loc.curveTarget());
 
@@ -180,7 +180,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
             return false;
 
         CRPackets.PACKETS.send(new CurvedTrackHandcarPlacementPacket(be.getBlockPos(), loc.curveTarget(),
-            loc.segment(), front, player.getInventory().selected));
+                loc.segment(), front, player.getInventory().selected));
         return true;
     }
 
@@ -241,8 +241,8 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
 
         Direction.AxisDirection targetDirection = front ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
         TrackGraphLocation location =
-            targetBezier != null ? TrackGraphHelper.getBezierGraphLocationAt(level, pos, targetDirection, targetBezier)
-                : TrackGraphHelper.getGraphLocationAt(level, pos, targetDirection, trackAxes.get(0));
+                targetBezier != null ? TrackGraphHelper.getBezierGraphLocationAt(level, pos, targetDirection, targetBezier)
+                        : TrackGraphHelper.getGraphLocationAt(level, pos, targetDirection, trackAxes.get(0));
 
         if (location == null) {
             callback.accept(OverlapResult.NO_TRACK, null);

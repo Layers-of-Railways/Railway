@@ -45,10 +45,10 @@ public class DieselSmokeStackRenderer extends SmartBlockEntityRenderer<DieselSmo
         byteBuffer.light(light);
 
         byteBuffer.translate(0.5, 0.5, 0.5)
-            .rotateX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
-            .rotateZ(dir.getAxis().isVertical() ? 0 : ((int) dir.toYRot()) % 360)
-            .rotateY(be.getFanRotation(be.getRpm(partialTicks)))
-            .translate(-0.5, -0.5, -0.5);
+                .rotateX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                .rotateZ(dir.getAxis().isVertical() ? 0 : ((int) dir.toYRot()) % 360)
+                .rotateY(be.getFanRotation(be.getRpm(partialTicks)))
+                .translate(-0.5, -0.5, -0.5);
 
         byteBuffer.renderInto(ms, buffer.getBuffer(RenderType.cutout()));
     }

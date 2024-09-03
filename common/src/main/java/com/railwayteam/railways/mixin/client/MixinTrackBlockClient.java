@@ -45,14 +45,15 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class MixinTrackBlockClient {
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/jozufozu/flywheel/util/transform/TransformStack;translate(DDD)Ljava/lang/Object;", ordinal = 0),
-        locals = LocalCapture.CAPTURE_FAILSOFT, remap = false) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
+            locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+    // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
     private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint,
-                                         Direction.AxisDirection direction,PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type,
+                                         Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type,
                                          CallbackInfoReturnable<PartialModel> cir, TransformStack msr, Vec3 axis, Vec3 diff, Vec3 normal,
-                                         Vec3 offset,TrackBlockEntity trackTE, BezierConnection bc) {
+                                         Vec3 offset, TrackBlockEntity trackTE, BezierConnection bc) {
         IHasTrackCasing casingBc = (IHasTrackCasing) bc;
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            msr.translate(0, 14/16f, 0);
+            msr.translate(0, 14 / 16f, 0);
             return;
         }
         // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
@@ -66,10 +67,10 @@ public class MixinTrackBlockClient {
     }
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true),
-        locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+            locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
     private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, TransformStack msr) {
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            msr.translate(0, 14/16f, 0);
+            msr.translate(0, 14 / 16f, 0);
             return;
         }
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
@@ -80,9 +81,9 @@ public class MixinTrackBlockClient {
                 TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
                     msr.translate(
-                        spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2)/16f,
-                        spec.getZShift(trackType)
+                            spec.getXShift(trackType),
+                            (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2) / 16f,
+                            spec.getZShift(trackType)
                     );
             }
         }

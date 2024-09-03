@@ -34,9 +34,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = CarriageBogey.class, remap = false)
 public class MixinCarriageBogey {
-    @Shadow AbstractBogeyBlock<?> type;
+    @Shadow
+    AbstractBogeyBlock<?> type;
 
-    @Shadow public Couple<Vec3> couplingAnchors;
+    @Shadow
+    public Couple<Vec3> couplingAnchors;
 
     /*
             ensure that railways:mono_bogey_upside_down is updated to railways:mono_bogey and upside_down is set to true
@@ -54,7 +56,7 @@ public class MixinCarriageBogey {
 
     @Inject(method = "updateCouplingAnchor", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Couple;set(ZLjava/lang/Object;)V"), cancellable = true)
     private void railways$hideInvisibleCoupler(Vec3 entityPos, float entityXRot, float entityYRot, int bogeySpacing,
-                                          float partialTicks, boolean leading, CallbackInfo ci) {
+                                               float partialTicks, boolean leading, CallbackInfo ci) {
         if (type instanceof InvisibleBogeyBlock || type instanceof InvisibleMonoBogeyBlock) {
             couplingAnchors.set(leading, null);
             ci.cancel();

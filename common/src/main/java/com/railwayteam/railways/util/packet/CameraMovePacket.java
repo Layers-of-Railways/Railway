@@ -52,7 +52,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
         this.id = entity.getId();
         this.packet = packet;
     }
-    
+
     public CameraMovePacket(FriendlyByteBuf buf) {
         this.id = buf.readVarInt();
         this.packet = ServerboundMovePlayerPacket.PosRot.read(buf);
@@ -74,8 +74,8 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
             conductor.syncPacketPositionCodec(d0, d1, d2);
             if (true) {
                 conductor.setPos(d0, d1, d2);
-                float f = (float)(packet.getYRot(conductor.getYRot()) * 360) / 256.0F;
-                float f1 = (float)(packet.getXRot(conductor.getXRot()) * 360) / 256.0F;
+                float f = (float) (packet.getYRot(conductor.getYRot()) * 360) / 256.0F;
+                float f1 = (float) (packet.getXRot(conductor.getXRot()) * 360) / 256.0F;
                 conductor.lerpTo(d0, d1, d2, f, f1, 3, true);
                 conductor.setOnGround(packet.isOnGround());
             }
@@ -156,7 +156,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
             if (true) {
                 float s;
                 float f2 = s = conductor.isFallFlying() ? 300.0f : 100.0f;
-                if (q - p > (double)(s * (float)r)) {// && !sender1.server.isSingleplayerOwner(sender1.getGameProfile())) {
+                if (q - p > (double) (s * (float) r)) {// && !sender1.server.isSingleplayerOwner(sender1.getGameProfile())) {
                     Railways.LOGGER.warn("{} moved too quickly! {},{},{}", sender1.getName().getString(), m, n, o);
                     teleport(sender1, conductor, conductor.getX(), conductor.getY(), conductor.getZ(), conductor.getYRot(), conductor.getXRot());
                     return;

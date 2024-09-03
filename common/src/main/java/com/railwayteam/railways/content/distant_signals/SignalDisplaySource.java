@@ -55,7 +55,7 @@ public class SignalDisplaySource extends SingleLineDisplaySource {
 
     public static boolean isSignalTarget(DisplayLinkContext context) {
         return context.getTargetBlockEntity() instanceof NixieTubeBlockEntity
-            || context.getTargetBlockEntity() instanceof SemaphoreBlockEntity;
+                || context.getTargetBlockEntity() instanceof SemaphoreBlockEntity;
     }
 
     public void updateState(DisplayLinkBlockEntity be) {

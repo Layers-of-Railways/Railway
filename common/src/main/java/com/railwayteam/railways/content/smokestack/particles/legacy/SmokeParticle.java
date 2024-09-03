@@ -39,149 +39,150 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmokeParticle extends SimpleAnimatedParticle {
 
-	public enum SmokeQuality {
-		LOW("smoke_16"),
-		MEDIUM("smoke_32"),
-		HIGH("smoke_64"),
-		ULTRA("smoke");
-		public final String name;
+    public enum SmokeQuality {
+        LOW("smoke_16"),
+        MEDIUM("smoke_32"),
+        HIGH("smoke_64"),
+        ULTRA("smoke");
+        public final String name;
 
 
-		SmokeQuality(String name) {
-			this.name = name;
-		}
-	}
+        SmokeQuality(String name) {
+            this.name = name;
+        }
+    }
 
-	public static final ParticleRenderType TRANSPARENT_SMOKE = new ParticleRenderType() {
-		@Override
-		public void begin(BufferBuilder builder, TextureManager manager) {
-			RenderSystem.depthMask(false);
-			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
-			RenderSystem.enableBlend();
-			RenderSystem.enableDepthTest();
-			RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-			builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
-		}
+    public static final ParticleRenderType TRANSPARENT_SMOKE = new ParticleRenderType() {
+        @Override
+        public void begin(BufferBuilder builder, TextureManager manager) {
+            RenderSystem.depthMask(false);
+            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
+            RenderSystem.enableBlend();
+            RenderSystem.enableDepthTest();
+            RenderSystem.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+            builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+        }
 
-		@Override
-		public void end(Tesselator tesselator) {
-			tesselator.end();
-			RenderSystem.depthMask(true);
-			RenderSystem.disableBlend();
-			RenderSystem.defaultBlendFunc();
-		}
+        @Override
+        public void end(Tesselator tesselator) {
+            tesselator.end();
+            RenderSystem.depthMask(true);
+            RenderSystem.disableBlend();
+            RenderSystem.defaultBlendFunc();
+        }
 
-		@Override
-		public String toString() {
-			return "TRANSPARENT_SMOKE";
-		}
-	};
+        @Override
+        public String toString() {
+            return "TRANSPARENT_SMOKE";
+        }
+    };
 
-	private LerpedFloat ascendScale = LerpedFloat.linear().startWithValue(1.0);
-	private double baseYd;
-	private final boolean stationarySource;
+    private LerpedFloat ascendScale = LerpedFloat.linear().startWithValue(1.0);
+    private double baseYd;
+    private final boolean stationarySource;
 
-	protected SmokeParticle(ClientLevel world, SmokeParticleData data, double x, double y, double z, double dx,
-							double dy, double dz, SpriteSet sprite) {
-		super(world, x, y, z, sprite, world.random.nextFloat() * .5f);
-		double scale = 0.1;
-		xd = dx*scale;
-		yd = dy*scale + (double)(this.random.nextFloat() / 500.0F);;
-		baseYd = yd;
-		zd = dz*scale;
-		this.gravity = 3.0E-6f;
-		quadSize = .375f*4;
-		setLifetime(data.stationary ? 400 : CRConfigs.client().smokeLifetime.get());
-		setPos(x, y, z);
-		roll = oRoll = world.random.nextFloat() * Mth.PI;
-		//this.setSpriteFromAge(sprite);
-		this.setSprite(sprite.get(CRConfigs.client().smokeQuality.get().ordinal(), SmokeQuality.values().length - 1));
-		alpha = data.stationary ? 0.25f : 0.1f;
-		ascendScale.chase(data.stationary ? 0.3 : 0.1, data.stationary ? 0.001 : 0.03, LerpedFloat.Chaser.EXP);
-		rCol = data.red;
-		gCol = data.green;
-		bCol = data.blue;
-		stationarySource = data.stationary;
-	}
+    protected SmokeParticle(ClientLevel world, SmokeParticleData data, double x, double y, double z, double dx,
+                            double dy, double dz, SpriteSet sprite) {
+        super(world, x, y, z, sprite, world.random.nextFloat() * .5f);
+        double scale = 0.1;
+        xd = dx * scale;
+        yd = dy * scale + (double) (this.random.nextFloat() / 500.0F);
+        ;
+        baseYd = yd;
+        zd = dz * scale;
+        this.gravity = 3.0E-6f;
+        quadSize = .375f * 4;
+        setLifetime(data.stationary ? 400 : CRConfigs.client().smokeLifetime.get());
+        setPos(x, y, z);
+        roll = oRoll = world.random.nextFloat() * Mth.PI;
+        //this.setSpriteFromAge(sprite);
+        this.setSprite(sprite.get(CRConfigs.client().smokeQuality.get().ordinal(), SmokeQuality.values().length - 1));
+        alpha = data.stationary ? 0.25f : 0.1f;
+        ascendScale.chase(data.stationary ? 0.3 : 0.1, data.stationary ? 0.001 : 0.03, LerpedFloat.Chaser.EXP);
+        rCol = data.red;
+        gCol = data.green;
+        bCol = data.blue;
+        stationarySource = data.stationary;
+    }
 
-	@Override
-	public @NotNull ParticleRenderType getRenderType() {
-		return TRANSPARENT_SMOKE;
-	}
+    @Override
+    public @NotNull ParticleRenderType getRenderType() {
+        return TRANSPARENT_SMOKE;
+    }
 
-	@Override
-	public void tick() {
-		this.xo = this.x;
-		this.yo = this.y;
-		this.zo = this.z;
-		if (this.age++ >= this.lifetime || this.alpha <= 0.0f) {
-			this.remove();
-			return;
-		}
-		float diffusionScale = stationarySource ? 800.0f : 500.0f;
-		if (this.age > 350) {
-			diffusionScale = 5000.0f;
-		} else if (this.age > 300) {
-			diffusionScale = Mth.lerp((age-300) / 50.0f, stationarySource ? 800.0f : 500.0f, 5000.0f);
-		}
-		this.xd += (double)(this.random.nextFloat() / diffusionScale * (float)(this.random.nextBoolean() ? 1 : -1));
-		this.zd += (double)(this.random.nextFloat() / diffusionScale * (float)(this.random.nextBoolean() ? 1 : -1));
-		//this.yd -= (double)this.gravity;
-		this.yd = this.baseYd * ascendScale.getValue();
-		ascendScale.tickChaser();
-		this.move(this.xd, this.yd, this.zd);
-		if (this.age >= this.lifetime - 100 && this.alpha > 0.01f) {
-			this.alpha -= 0.015f;
-		}
-	}
+    @Override
+    public void tick() {
+        this.xo = this.x;
+        this.yo = this.y;
+        this.zo = this.z;
+        if (this.age++ >= this.lifetime || this.alpha <= 0.0f) {
+            this.remove();
+            return;
+        }
+        float diffusionScale = stationarySource ? 800.0f : 500.0f;
+        if (this.age > 350) {
+            diffusionScale = 5000.0f;
+        } else if (this.age > 300) {
+            diffusionScale = Mth.lerp((age - 300) / 50.0f, stationarySource ? 800.0f : 500.0f, 5000.0f);
+        }
+        this.xd += (double) (this.random.nextFloat() / diffusionScale * (float) (this.random.nextBoolean() ? 1 : -1));
+        this.zd += (double) (this.random.nextFloat() / diffusionScale * (float) (this.random.nextBoolean() ? 1 : -1));
+        //this.yd -= (double)this.gravity;
+        this.yd = this.baseYd * ascendScale.getValue();
+        ascendScale.tickChaser();
+        this.move(this.xd, this.yd, this.zd);
+        if (this.age >= this.lifetime - 100 && this.alpha > 0.01f) {
+            this.alpha -= 0.015f;
+        }
+    }
 
-	@Override
-	public void render(@NotNull VertexConsumer buffer, @NotNull Camera renderInfo, float partialTicks) {
-		render(buffer, renderInfo, partialTicks, 0.0f, 1.0f, 1.0f);
-		if (CRConfigs.client().thickerSmoke.get()) {
-			render(buffer, renderInfo, partialTicks, 0.3f, 0.5f, 0.75f);
-			render(buffer, renderInfo, partialTicks, -0.3f, 0.5f, 0.75f);
-		}
-	}
+    @Override
+    public void render(@NotNull VertexConsumer buffer, @NotNull Camera renderInfo, float partialTicks) {
+        render(buffer, renderInfo, partialTicks, 0.0f, 1.0f, 1.0f);
+        if (CRConfigs.client().thickerSmoke.get()) {
+            render(buffer, renderInfo, partialTicks, 0.3f, 0.5f, 0.75f);
+            render(buffer, renderInfo, partialTicks, -0.3f, 0.5f, 0.75f);
+        }
+    }
 
-	private void render(VertexConsumer buffer, Camera renderInfo, float partialTicks, float offsetDepth, float size, float alphaFactor) {
-		Vec3 vec3 = renderInfo.getPosition();
-		float f = (float)(Mth.lerp((double)partialTicks, this.xo, this.x) - vec3.x());
-		float g = (float)(Mth.lerp((double)partialTicks, this.yo, this.y) - vec3.y());
-		float h = (float)(Mth.lerp((double)partialTicks, this.zo, this.z) - vec3.z());
-		Quaternion quaternion;
-		if (this.roll == 0.0F) {
-			quaternion = renderInfo.rotation();
-		} else {
-			quaternion = new Quaternion(renderInfo.rotation());
-			float i = Mth.lerp(partialTicks, this.oRoll, this.roll);
-			quaternion.mul(Vector3f.ZP.rotation(i));
-		}
+    private void render(VertexConsumer buffer, Camera renderInfo, float partialTicks, float offsetDepth, float size, float alphaFactor) {
+        Vec3 vec3 = renderInfo.getPosition();
+        float f = (float) (Mth.lerp((double) partialTicks, this.xo, this.x) - vec3.x());
+        float g = (float) (Mth.lerp((double) partialTicks, this.yo, this.y) - vec3.y());
+        float h = (float) (Mth.lerp((double) partialTicks, this.zo, this.z) - vec3.z());
+        Quaternion quaternion;
+        if (this.roll == 0.0F) {
+            quaternion = renderInfo.rotation();
+        } else {
+            quaternion = new Quaternion(renderInfo.rotation());
+            float i = Mth.lerp(partialTicks, this.oRoll, this.roll);
+            quaternion.mul(Vector3f.ZP.rotation(i));
+        }
 
         /*quaternion.mul(Vector3f.XP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
 		quaternion.mul(Vector3f.YP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));
 		quaternion.mul(Vector3f.ZP.rotationDegrees(((this.random.nextFloat()*2) - 1) * 3));*/
 
-		Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-size, -size, offsetDepth), new Vector3f(-size, size, offsetDepth), new Vector3f(size, size, offsetDepth), new Vector3f(size, -size, offsetDepth)};
-		float j = this.getQuadSize(partialTicks);
+        Vector3f[] vector3fs = new Vector3f[]{new Vector3f(-size, -size, offsetDepth), new Vector3f(-size, size, offsetDepth), new Vector3f(size, size, offsetDepth), new Vector3f(size, -size, offsetDepth)};
+        float j = this.getQuadSize(partialTicks);
 
-		for(int k = 0; k < 4; ++k) {
-			Vector3f vector3f2 = vector3fs[k];
-			vector3f2.transform(quaternion);
-			vector3f2.mul(j);
-			vector3f2.add(f, g, h);
-		}
+        for (int k = 0; k < 4; ++k) {
+            Vector3f vector3f2 = vector3fs[k];
+            vector3f2.transform(quaternion);
+            vector3f2.mul(j);
+            vector3f2.add(f, g, h);
+        }
 
-		float l = this.getU0();
-		float m = this.getU1();
-		float n = this.getV0();
-		float o = this.getV1();
-		int p = this.getLightColor(partialTicks);
-		buffer.vertex((double)vector3fs[0].x(), (double)vector3fs[0].y(), (double)vector3fs[0].z()).uv(m, o).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[1].x(), (double)vector3fs[1].y(), (double)vector3fs[1].z()).uv(m, n).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[2].x(), (double)vector3fs[2].y(), (double)vector3fs[2].z()).uv(l, n).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
-		buffer.vertex((double)vector3fs[3].x(), (double)vector3fs[3].y(), (double)vector3fs[3].z()).uv(l, o).color(this.rCol, this.gCol, this.bCol, this.alpha*alphaFactor).uv2(p).endVertex();
-	}
+        float l = this.getU0();
+        float m = this.getU1();
+        float n = this.getV0();
+        float o = this.getV1();
+        int p = this.getLightColor(partialTicks);
+        buffer.vertex((double) vector3fs[0].x(), (double) vector3fs[0].y(), (double) vector3fs[0].z()).uv(m, o).color(this.rCol, this.gCol, this.bCol, this.alpha * alphaFactor).uv2(p).endVertex();
+        buffer.vertex((double) vector3fs[1].x(), (double) vector3fs[1].y(), (double) vector3fs[1].z()).uv(m, n).color(this.rCol, this.gCol, this.bCol, this.alpha * alphaFactor).uv2(p).endVertex();
+        buffer.vertex((double) vector3fs[2].x(), (double) vector3fs[2].y(), (double) vector3fs[2].z()).uv(l, n).color(this.rCol, this.gCol, this.bCol, this.alpha * alphaFactor).uv2(p).endVertex();
+        buffer.vertex((double) vector3fs[3].x(), (double) vector3fs[3].y(), (double) vector3fs[3].z()).uv(l, o).color(this.rCol, this.gCol, this.bCol, this.alpha * alphaFactor).uv2(p).endVertex();
+    }
 
     /*	@Override
 	public @NotNull ParticleRenderType getRenderType() {
@@ -243,23 +244,23 @@ public class SmokeParticle extends SimpleAnimatedParticle {
 		}
 	}*/
 
-	@Override
-	public int getLightColor(float partialTick) {
-		BlockPos blockpos = new BlockPos(this.x, this.y, this.z);
-		return this.level.isLoaded(blockpos) ? LevelRenderer.getLightColor(level, blockpos) : 0;
-	}
+    @Override
+    public int getLightColor(float partialTick) {
+        BlockPos blockpos = new BlockPos(this.x, this.y, this.z);
+        return this.level.isLoaded(blockpos) ? LevelRenderer.getLightColor(level, blockpos) : 0;
+    }
 
-	public static class Factory implements ParticleProvider<SmokeParticleData> {
-		private final SpriteSet spriteSet;
+    public static class Factory implements ParticleProvider<SmokeParticleData> {
+        private final SpriteSet spriteSet;
 
-		public Factory(SpriteSet animatedSprite) {
-			this.spriteSet = animatedSprite;
-		}
+        public Factory(SpriteSet animatedSprite) {
+            this.spriteSet = animatedSprite;
+        }
 
-		public Particle createParticle(SmokeParticleData data, ClientLevel worldIn, double x, double y, double z,
-									   double xSpeed, double ySpeed, double zSpeed) {
-			return new SmokeParticle(worldIn, data, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
-		}
-	}
+        public Particle createParticle(SmokeParticleData data, ClientLevel worldIn, double x, double y, double z,
+                                       double xSpeed, double ySpeed, double zSpeed) {
+            return new SmokeParticle(worldIn, data, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
+        }
+    }
 
 }

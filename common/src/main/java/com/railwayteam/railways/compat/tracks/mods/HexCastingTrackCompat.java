@@ -28,6 +28,7 @@ public class HexCastingTrackCompat extends GenericTrackCompat {
     }
 
     private static boolean registered = false;
+
     public static void register() {
         if (registered) {
             Railways.LOGGER.error("Duplicate registration of Hex Casting track compat");
@@ -36,7 +37,7 @@ public class HexCastingTrackCompat extends GenericTrackCompat {
         registered = true;
         Railways.LOGGER.info("Registering tracks for Hex Casting");
         new HexCastingTrackCompat().register(
-            "edified"
+                "edified"
         );
     }
 }

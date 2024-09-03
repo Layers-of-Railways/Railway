@@ -25,7 +25,8 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(FlywheelBlockEntity.class)
 public class MixinFlywheelBlockEntity implements ICarriageFlywheel {
-    @Shadow(remap = false) float angle;
+    @Shadow(remap = false)
+    float angle;
 
     @Override
     public float railways$getAngle() {

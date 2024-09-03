@@ -34,45 +34,46 @@ import org.jetbrains.annotations.Contract;
 import java.util.function.Predicate;
 
 public class EntityUtils {
-	@ExpectPlatform
-	public static CompoundTag getPersistentData(Entity entity) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static CompoundTag getPersistentData(Entity entity) {
+        throw new AssertionError();
+    }
 
-	/**
-	 * Gives a player an item. Plays the pickup sound, and drops whatever can't be picked up.
-	 */
-	@ExpectPlatform
-	public static void givePlayerItem(Player player, ItemStack stack) {
-		throw new AssertionError();
-	}
+    /**
+     * Gives a player an item. Plays the pickup sound, and drops whatever can't be picked up.
+     */
+    @ExpectPlatform
+    public static void givePlayerItem(Player player, ItemStack stack) {
+        throw new AssertionError();
+    }
 
-	@ExpectPlatform
-	public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static ServerPlayer createConductorFakePlayer(ServerLevel level, ConductorEntity conductor) {
+        throw new AssertionError();
+    }
 
-	@ExpectPlatform
-	public static double getReachDistance(Player player) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static double getReachDistance(Player player) {
+        throw new AssertionError();
+    }
 
-	/**
-	 * Fire a use event.
-	 * @return true if the use is allowed, false otherwise
-	 */
-	@ExpectPlatform
-	@Contract // shut
-	public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
-		throw new AssertionError();
-	}
+    /**
+     * Fire a use event.
+     *
+     * @return true if the use is allowed, false otherwise
+     */
+    @ExpectPlatform
+    @Contract // shut
+    public static boolean handleUseEvent(Player player, InteractionHand hand, BlockHitResult hit) {
+        throw new AssertionError();
+    }
 
-	public static boolean isHolding(Player player, Predicate<ItemStack> predicate) {
-		return predicate.test(player.getItemInHand(InteractionHand.MAIN_HAND))
-				|| predicate.test(player.getItemInHand(InteractionHand.OFF_HAND));
-	}
+    public static boolean isHolding(Player player, Predicate<ItemStack> predicate) {
+        return predicate.test(player.getItemInHand(InteractionHand.MAIN_HAND))
+                || predicate.test(player.getItemInHand(InteractionHand.OFF_HAND));
+    }
 
-	public static boolean isHoldingItem(Player player, Predicate<Item> predicate) {
-		return isHolding(player, (stack) -> predicate.test(stack.getItem()));
-	}
+    public static boolean isHoldingItem(Player player, Predicate<Item> predicate) {
+        return isHolding(player, (stack) -> predicate.test(stack.getItem()));
+    }
 }

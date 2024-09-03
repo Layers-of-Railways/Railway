@@ -47,7 +47,7 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock {
     public LinkPinBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-            .setValue(STYLE, Style.LINK));
+                .setValue(STYLE, Style.LINK));
     }
 
     @Override
@@ -74,11 +74,11 @@ public class LinkPinBlock extends AbstractDyeableSingleBufferBlock {
         LINKLESS("link_and_pin_linkless", "Linkless Link 'n Pin"),
         KNUCKLE("knuckle_coupler", "Knuckle Coupler"),
         KNUCKLE_SPLIT("split_knuckle_coupler", "Split Knuckle Coupler"),
-        SCREWLINK("screwlink_coupler", "Screwlink Coupler")
-        ;
+        SCREWLINK("screwlink_coupler", "Screwlink Coupler");
 
         private final String model;
         private final String langName;
+
         Style(String model, String langName) {
             this.model = model;
             this.langName = langName;

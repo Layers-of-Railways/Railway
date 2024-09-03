@@ -25,10 +25,15 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 
 public class DismountCameraPacket implements C2SPacket {
-    public DismountCameraPacket() {}
-    public DismountCameraPacket(FriendlyByteBuf buf) {}
+    public DismountCameraPacket() {
+    }
+
+    public DismountCameraPacket(FriendlyByteBuf buf) {
+    }
+
     @Override
-    public void write(FriendlyByteBuf buffer) {}
+    public void write(FriendlyByteBuf buffer) {
+    }
 
     @Override
     public void handle(ServerPlayer sender) {

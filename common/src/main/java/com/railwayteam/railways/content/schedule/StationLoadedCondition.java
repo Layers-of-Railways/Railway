@@ -57,10 +57,12 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
     }
 
     @Override
-    protected void writeAdditional(CompoundTag tag) {}
+    protected void writeAdditional(CompoundTag tag) {
+    }
 
     @Override
-    protected void readAdditional(CompoundTag tag) {}
+    protected void readAdditional(CompoundTag tag) {
+    }
 
     @Override
     public ResourceLocation getId() {

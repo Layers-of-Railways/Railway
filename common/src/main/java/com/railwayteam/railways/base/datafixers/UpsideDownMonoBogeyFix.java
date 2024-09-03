@@ -44,7 +44,7 @@ public class UpsideDownMonoBogeyFix extends DataFix {
                 dynamic = dynamic.set("Name", dynamic.createString("railways:mono_bogey"));
 
                 Dynamic<?> properties = dynamic.get("Properties").orElseEmptyMap()
-                    .set("upside_down", dynamic.createString("true"));
+                        .set("upside_down", dynamic.createString("true"));
 
                 dynamic = dynamic.set("Properties", properties);
                 return dynamic;

@@ -65,12 +65,14 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
 
     public SemaphoreBlock(Properties pProperties) {
         super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(FLIPPED,false).setValue(FULL,false).setValue(UPSIDE_DOWN, false));
+        registerDefaultState(defaultBlockState().setValue(FLIPPED, false).setValue(FULL, false).setValue(UPSIDE_DOWN, false));
     }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder.add(FACING).add(FLIPPED).add(FULL).add(UPSIDE_DOWN));
     }
+
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand,
@@ -85,43 +87,41 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
 
         if (helper.matchesItem(itemInHand))
             return helper.getOffset(player, world, state, pos, ray)
-                            .placeInWorld(world, (BlockItem) itemInHand.getItem(), player, hand, ray);
+                    .placeInWorld(world, (BlockItem) itemInHand.getItem(), player, hand, ray);
         return InteractionResult.PASS;
     }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState state = super.getStateForPlacement(context);
-        if(state==null)
+        if (state == null)
             return null;
 
         Direction facing = context.getHorizontalDirection().getOpposite();
 
         Vec3 look = context.getPlayer().getLookAngle();
         Vec3 cross = look.cross(new Vec3(facing.step()));
-        boolean flipped = cross.y<0;
+        boolean flipped = cross.y < 0;
         boolean upside_down = context.getClickedFace() == Direction.DOWN && !CRConfigs.server().semaphores.simplifiedPlacement.get();
 
-        return state.setValue(FACING,facing).setValue(FLIPPED,flipped).setValue(UPSIDE_DOWN,upside_down);
+        return state.setValue(FACING, facing).setValue(FLIPPED, flipped).setValue(UPSIDE_DOWN, upside_down);
     }
+
     @Override
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         Level world = context.getLevel();
         BlockState rotated;
         boolean upsideDownChanged = false;
 
-        if(context.getClickedFace().getAxis() != Direction.Axis.Y)
-        {
-            if (context.getClickedFace() == state.getValue(FACING))
-            {
+        if (context.getClickedFace().getAxis() != Direction.Axis.Y) {
+            if (context.getClickedFace() == state.getValue(FACING)) {
                 rotated = state.cycle(FLIPPED);
             } else if (context.getClickedFace() == state.getValue(FACING).getOpposite() && !CRConfigs.server().semaphores.simplifiedPlacement.get()) {
                 rotated = state.cycle(UPSIDE_DOWN);
                 upsideDownChanged = true;
-            }
-            else
-                rotated = state.setValue(FACING,context.getClickedFace());
-        }else
-        {
+            } else
+                rotated = state.setValue(FACING, context.getClickedFace());
+        } else {
             rotated = getRotatedBlockState(state, context.getClickedFace());
         }
 
@@ -229,15 +229,15 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             if (newState.getMaterial().isReplaceable()) {
 
                 Direction facing = ray.getDirection();
-                if(facing.getAxis()== Direction.Axis.Y)
+                if (facing.getAxis() == Direction.Axis.Y)
                     return PlacementOffset.fail();
 
                 Vec3 look = player.getLookAngle();
                 Vec3 cross = look.cross(new Vec3(facing.step()));
-                boolean flipped = cross.y<0;
+                boolean flipped = cross.y < 0;
                 boolean upsideDown = offsetDirection == Direction.DOWN && !CRConfigs.server().semaphores.simplifiedPlacement.get();
 
-                return PlacementOffset.success(newPos, x -> x.setValue(FLIPPED,flipped).setValue(FACING,facing).setValue(UPSIDE_DOWN,upsideDown));
+                return PlacementOffset.success(newPos, x -> x.setValue(FLIPPED, flipped).setValue(FACING, facing).setValue(UPSIDE_DOWN, upsideDown));
             }
 
             return PlacementOffset.fail();
@@ -248,7 +248,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             if (!offset.hasGhostState())
                 return;
 
-            CreateClient.GHOST_BLOCKS.showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL,true)))
+            CreateClient.GHOST_BLOCKS.showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL, true)))
                     .at(offset.getBlockPos())
                     .breathingAlpha();
         }
@@ -287,7 +287,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             if (newState.getMaterial().isReplaceable()) {
 
                 Direction facing = ray.getDirection();
-                if(facing.getAxis()== Direction.Axis.Y)
+                if (facing.getAxis() == Direction.Axis.Y)
                     return PlacementOffset.fail();
 
                 return PlacementOffset.success(newPos);

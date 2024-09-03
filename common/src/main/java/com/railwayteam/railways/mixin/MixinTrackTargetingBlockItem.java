@@ -46,16 +46,17 @@ import java.util.function.BiConsumer;
 @Mixin(value = TrackTargetingBlockItem.class, remap = false)
 public class MixinTrackTargetingBlockItem {
 
-    @Shadow private EdgePointType<?> type;
+    @Shadow
+    private EdgePointType<?> type;
     private static final List<TrackShape> acceptableShapes = List.of(
-        TrackShape.XO,
-        TrackShape.ZO,
-        TrackShape.PD,
-        TrackShape.ND,
-        TrackShape.AN,
-        TrackShape.AS,
-        TrackShape.AE,
-        TrackShape.AW
+            TrackShape.XO,
+            TrackShape.ZO,
+            TrackShape.PD,
+            TrackShape.ND,
+            TrackShape.AN,
+            TrackShape.AS,
+            TrackShape.AE,
+            TrackShape.AW
     );
 
     @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true), remap = true)

@@ -34,7 +34,7 @@ import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
 public class ToggleButton extends AbstractButton {
-//    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");
+    //    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");
 //    private static final int TEXT_COLOR = 14737632;
     private boolean selected;
     private final ResourceLocation enabledTexture;

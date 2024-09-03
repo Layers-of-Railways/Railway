@@ -55,8 +55,8 @@ public enum DevCapeUtils {
         CompletableFuture.runAsync(() -> {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder(URI.create(url))
-                .GET()
-                .build();
+                    .GET()
+                    .build();
             try {
                 String body = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
                 JsonArray devArray = JsonParser.parseString(body).getAsJsonObject().getAsJsonArray("dev");

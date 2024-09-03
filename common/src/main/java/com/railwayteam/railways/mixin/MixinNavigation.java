@@ -71,19 +71,23 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     @Shadow
     public Train train;
 
-    @Shadow public int ticksWaitingForSignal;
+    @Shadow
+    public int ticksWaitingForSignal;
 
-    @Shadow public GlobalStation destination;
+    @Shadow
+    public GlobalStation destination;
 
-    @Shadow private TravellingPoint signalScout;
+    @Shadow
+    private TravellingPoint signalScout;
 
-    @Shadow public abstract TravellingPoint.ITrackSelector controlSignalScout();
+    @Shadow
+    public abstract TravellingPoint.ITrackSelector controlSignalScout();
 
     @Override
     public boolean railways$isWaypointMode() {
         try {
             return !train.manualTick && !train.runtime.paused && !train.runtime.completed && train.runtime.getSchedule() != null && train.runtime.currentEntry < train.runtime.getSchedule().entries.size() &&
-                train.runtime.getSchedule().entries.get(train.runtime.currentEntry).instruction instanceof WaypointDestinationInstruction;
+                    train.runtime.getSchedule().entries.get(train.runtime.currentEntry).instruction instanceof WaypointDestinationInstruction;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -103,10 +107,10 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     }
 
     @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
-    slice = @Slice(
-        from = @At(value = "CONSTANT", args = {"doubleValue=0.25d"}),
-        to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
-    ))
+            slice = @Slice(
+                    from = @At(value = "CONSTANT", args = {"doubleValue=0.25d"}),
+                    to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
+            ))
     private Pair<UUID, Boolean> brakeProperlyAtWaypoints(Navigation instance, Operation<Pair<UUID, Boolean>> original) {
         return railways$isWaypointMode() ? null : original.call(instance);
     }
@@ -125,7 +129,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     }
 
     @ModifyExpressionValue(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V",
-        at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
+            at = @At(value = "INVOKE", target = "Ljava/util/Set;contains(Ljava/lang/Object;)Z"))
     private boolean isNavigationIncompatible(boolean original, @Local Map.Entry<TrackNode, TrackEdge> target) {
         if (target.getValue().getTrackMaterial().trackType == CRTrackType.UNIVERSAL)
             return true;
@@ -230,7 +234,8 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         frontier.add(new FrontierEntry(distanceToNode2, 0, initialNode1, initialNode2, initialEdge));
         int signalWeight = Mth.clamp(ticksWaitingForSignal * 2, AccessorTrain.AccessorPenalties.railways$getRedSignal(), 200);
 
-        Search: while (!frontier.isEmpty()) {
+        Search:
+        while (!frontier.isEmpty()) {
             FrontierEntry entry = frontier.poll();
             if (!visited.add(entry.edge))
                 continue;
@@ -444,7 +449,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             if (train.graph == null) return;
 
             TravellingPoint leadingPoint = !currentlyBackwards ? train.carriages.get(0).getLeadingPoint()
-                : train.carriages.get(train.carriages.size() - 1).getTrailingPoint();
+                    : train.carriages.get(train.carriages.size() - 1).getTrailingPoint();
 
             signalScout.node1 = leadingPoint.node1;
             signalScout.node2 = leadingPoint.node2;
@@ -459,18 +464,19 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
             MutableDouble bufferDistance = new MutableDouble(Double.MAX_VALUE);
 
             signalScout.travel(train.graph, (scanDistance + 50) * speedMod, controlSignalScout(),
-                (distance, couple) -> {
-                    if (distance > scanDistance) return true;
+                    (distance, couple) -> {
+                        if (distance > scanDistance) return true;
 
-                    if (couple.getFirst() instanceof TrackBuffer trackBuffer) {
-                        // don't stop *right* on the buffer block, stop a little bit before
-                        double bufferedDistance = Math.max(0, distance - TrackBuffer.getBufferRoom(this.train, currentlyBackwards));
-                        bufferDistance.setValue(Math.min(bufferDistance.getValue(), bufferedDistance));
-                        return true;
-                    }
+                        if (couple.getFirst() instanceof TrackBuffer trackBuffer) {
+                            // don't stop *right* on the buffer block, stop a little bit before
+                            double bufferedDistance = Math.max(0, distance - TrackBuffer.getBufferRoom(this.train, currentlyBackwards));
+                            bufferDistance.setValue(Math.min(bufferDistance.getValue(), bufferedDistance));
+                            return true;
+                        }
 
-                    return false;
-                }, (distance, edge) -> {});
+                        return false;
+                    }, (distance, edge) -> {
+                    });
 
             if (bufferDistance.getValue() >= Double.MAX_VALUE)
                 return;

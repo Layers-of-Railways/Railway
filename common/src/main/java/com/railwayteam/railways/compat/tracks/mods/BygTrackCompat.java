@@ -28,6 +28,7 @@ public class BygTrackCompat extends GenericTrackCompat {
     }
 
     private static boolean registered = false;
+
     public static void register() {
         if (registered) {
             Railways.LOGGER.error("Duplicate registration of BYG track compat");
@@ -36,35 +37,35 @@ public class BygTrackCompat extends GenericTrackCompat {
         registered = true;
         Railways.LOGGER.info("Registering tracks for Oh The Biomes You'll Go");
         new BygTrackCompat().register(
-            "aspen",
-            "baobab",
-            "blue_enchanted",
-            "bulbis",
-            "cherry",
-            "cika",
-            "cypress",
-            "ebony",
-            "embur",
-            "ether",
-            "fir",
-            "green_enchanted",
-            "holly",
-            "imparius",
-            "jacaranda",
-            "lament",
-            "mahogany",
-            "maple",
-            "nightshade",
-            "palm",
-            "pine",
-            "rainbow_eucalyptus",
-            "redwood",
-            "skyris",
-            "sythian",
-            "white_mangrove",
-            "willow",
-            "witch_hazel",
-            "zelkova"
+                "aspen",
+                "baobab",
+                "blue_enchanted",
+                "bulbis",
+                "cherry",
+                "cika",
+                "cypress",
+                "ebony",
+                "embur",
+                "ether",
+                "fir",
+                "green_enchanted",
+                "holly",
+                "imparius",
+                "jacaranda",
+                "lament",
+                "mahogany",
+                "maple",
+                "nightshade",
+                "palm",
+                "pine",
+                "rainbow_eucalyptus",
+                "redwood",
+                "skyris",
+                "sythian",
+                "white_mangrove",
+                "willow",
+                "witch_hazel",
+                "zelkova"
         );
     }
 }

@@ -43,8 +43,10 @@ import java.util.Map;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MixinMountedStorageManager implements IFuelInventory {
-    @Unique private CombinedTankWrapper railways$fluidFuelInventory;
-    @Unique private Map<BlockPos, MountedFluidStorage> railways$fluidFuelStorage = new HashMap<>();
+    @Unique
+    private CombinedTankWrapper railways$fluidFuelInventory;
+    @Unique
+    private Map<BlockPos, MountedFluidStorage> railways$fluidFuelStorage = new HashMap<>();
 
     @Inject(method = "entityTick", at = @At("TAIL"))
     private void entityTick(AbstractContraptionEntity entity, CallbackInfo ci) {

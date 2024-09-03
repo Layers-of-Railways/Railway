@@ -76,8 +76,8 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
     private static boolean isOkShape(BlockState state) {
         TrackShape shape = state.getValue(TrackBlock.SHAPE);
         return switch (shape) {
-            case ZO, XO,
-                TE, TN, TS, TW -> true;
+            case ZO, XO, PD, ND,
+                 TE, TN, TS, TW -> true;
             default -> false;
         };
     }
@@ -99,8 +99,13 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
 
             Vec3 lookAngle = player.getLookAngle();
             Pair<Vec3, AxisDirection> nearestTrackAxis = track.getNearestTrackAxis(level, pos, state, lookAngle);
-            boolean front = nearestTrackAxis.getSecond() == AxisDirection.POSITIVE;
-            Axis axis = Direction.getNearest(nearestTrackAxis.getFirst().x, nearestTrackAxis.getFirst().y, nearestTrackAxis.getFirst().z).getAxis();
+            boolean front = nearestTrackAxis.getSecond() == AxisDirection.NEGATIVE;
+            Vec3 biasedDirection = nearestTrackAxis.getFirst().yRot(10);
+            Axis axis = Direction.getNearest(
+                    biasedDirection.x,
+                    biasedDirection.y,
+                    biasedDirection.z
+            ).getAxis();
             EdgePointType<?> type = getType(stack);
 
             MutableObject<OverlapResult> result = new MutableObject<>(null);
@@ -108,13 +113,13 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
 
             if (result.getValue().feedback != null) {
                 player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
-                    .withStyle(ChatFormatting.RED), true);
+                        .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
             if (!isOkShape(state)) {
                 player.displayClientMessage(Components.translatable("railways.buffer.invalid_shape")
-                    .withStyle(ChatFormatting.RED), true);
+                        .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
@@ -152,9 +157,13 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
             teTag.put("TargetTrack", NbtUtils.writeBlockPos(pos.subtract(placedPos)));
             stackTag.put("BlockEntityTag", teTag);
 
+            TrackShape shape = state.getValue(TrackBlock.SHAPE);
+            boolean diagonal = shape == TrackShape.PD || shape == TrackShape.ND;
+
             InteractionResult useOn = place(BufferBlockPlaceContext.at(
-                new BlockPlaceContext(context), placedPos, placeDirection,
-                Direction.fromAxisAndDirection(axis, nearestTrackAxis.getSecond()), overrideBlock
+                    new BlockPlaceContext(context), placedPos, placeDirection,
+                    Direction.fromAxisAndDirection(axis, nearestTrackAxis.getSecond()),
+                    overrideBlock, diagonal
             ));
 
             teTag.remove("TargetTrack");

@@ -56,8 +56,8 @@ public abstract class AbstractDyeableSingleBufferBlock extends HorizontalDirecti
     public AbstractDyeableSingleBufferBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-            .setValue(FACING, Direction.NORTH)
-            .setValue(WATERLOGGED, false));
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false));
     }
 
     @Override

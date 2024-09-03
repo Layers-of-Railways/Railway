@@ -31,6 +31,7 @@ import java.util.stream.Stream;
  */
 public class SoftIngredient extends Ingredient {
     public final ResourceLocation item;
+
     public SoftIngredient(ResourceLocation item) {
         super(Stream.empty());
         this.item = item;

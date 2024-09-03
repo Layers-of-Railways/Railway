@@ -89,14 +89,15 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
     public ConductorWhistleItem(Block block, Item.Properties properties) {
         super(block, properties, EdgePointType.STATION);
     }
+
     @Override
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) { //Not worth the effort
         return false;
     }
 
     private static InteractionResult fail(Player player, String message) {
-        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), true);
-        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), false);
+        player.displayClientMessage(Components.translatable("railways.whistle.failure." + message).withStyle(ChatFormatting.RED), true);
+        player.displayClientMessage(Components.translatable("railways.whistle.failure." + message).withStyle(ChatFormatting.RED), false);
         return InteractionResult.FAIL;
     }
 
@@ -156,14 +157,16 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         BlockState state = level.getBlockState(pos);
         Player player = pContext.getPlayer();
         CompoundTag stackTag = stack.getTag();
-        if(stackTag == null) return InteractionResult.FAIL;
+        if (stackTag == null) return InteractionResult.FAIL;
         UUID trainId = stackTag.getUUID("SelectedTrain");
         Train train = Create.RAILWAYS.trains.get(trainId);
 
         if (player == null || train == null)
             return InteractionResult.FAIL;
 
-        if (player instanceof DeployerFakePlayer && state.getBlock() instanceof AirBlock && train.runtime.isAutoSchedule) {train.runtime.discardSchedule();}
+        if (player instanceof DeployerFakePlayer && state.getBlock() instanceof AirBlock && train.runtime.isAutoSchedule) {
+            train.runtime.discardSchedule();
+        }
 
 
         if (player.isSteppingCarefully() && stack.hasTag()) {
@@ -271,9 +274,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 stackTag.remove("BlockEntityTag");
                 stack.setTag(stackTag);
 
-            }
-
-            else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {
+            } else if (level.getBlockEntity(pos) instanceof StationBlockEntity stationBe) {
                 stationName = Objects.requireNonNull(stationBe.getStation()).name;
             }
 
@@ -354,7 +355,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
     @Override
     public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
         if (isSelected && level instanceof ServerLevel serverLevel
-            && (serverLevel.getGameTime() + entity.hashCode() + slotId) % CRConfigs.server().conductors.whistleRebindRate.get() == 0) {
+                && (serverLevel.getGameTime() + entity.hashCode() + slotId) % CRConfigs.server().conductors.whistleRebindRate.get() == 0) {
             CompoundTag tag = stack.getTag();
             if (tag != null && tag.hasUUID("SelectedTrain") && tag.hasUUID("SelectedConductor")) {
                 UUID trainId = tag.getUUID("SelectedTrain");

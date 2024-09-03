@@ -29,10 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TrainHatOffsets.class, remap = false)
 public class MixinTrainHatOffsets {
-  @Inject(at = @At("HEAD"), method = "getOffset", cancellable = true)
-  private static void inj$getOffset(EntityModel<?> model, CallbackInfoReturnable<Vec3> cir) {
-    if (model instanceof ConductorEntityModel) {
-      cir.setReturnValue(new Vec3(0f, -1f, 0f));
+    @Inject(at = @At("HEAD"), method = "getOffset", cancellable = true)
+    private static void inj$getOffset(EntityModel<?> model, CallbackInfoReturnable<Vec3> cir) {
+        if (model instanceof ConductorEntityModel) {
+            cir.setReturnValue(new Vec3(0f, -1f, 0f));
+        }
     }
-  }
 }

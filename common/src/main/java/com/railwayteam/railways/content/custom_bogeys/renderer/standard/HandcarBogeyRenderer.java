@@ -89,7 +89,7 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
         }
 
         Vec2 upperVec2 = new Vec2(0, 39 / 16f);
-        Vec2 couplingVec2 = new Vec2((float)coupling_pos.z, (float)coupling_pos.y);
+        Vec2 couplingVec2 = new Vec2((float) coupling_pos.z, (float) coupling_pos.y);
 
         //                                                                             upper         lower
         Vec2 hingeOffset = DoubleArmIK.calculateJointOffset(upperVec2, couplingVec2, 14 / 16., 18 / 16.);
@@ -110,14 +110,14 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
         getTransform(HANDCAR_HANDLE, ms, inInstancedContraption)
                 .translateY(39 / 16.)
                 .rotateZ(180)
-                .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
+                .rotateXRadians(handleAngle - Math.toRadians(90 - 32.5))
                 .translateY(-34 / 16.)
                 .scale(firstPerson ? 0 : 1)
                 .render(ms, light, vb);
         getTransform(HANDCAR_HANDLE_FIRST_PERSON, ms, inInstancedContraption)
                 .translateY(39 / 16.)
                 .rotateZ(180)
-                .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
+                .rotateXRadians(handleAngle - Math.toRadians(90 - 32.5))
                 .translateY(-34 / 16.)
                 .scale(firstPerson ? 1 : 0)
                 .render(ms, light, vb);

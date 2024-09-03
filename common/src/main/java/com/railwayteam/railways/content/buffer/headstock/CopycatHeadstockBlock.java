@@ -74,9 +74,9 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     public CopycatHeadstockBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState()
-            .setValue(FACING, Direction.NORTH)
-            .setValue(STYLE, HeadstockStyle.BUFFER)
-            .setValue(UPSIDE_DOWN, false)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(STYLE, HeadstockStyle.BUFFER)
+                .setValue(UPSIDE_DOWN, false)
         );
     }
 
@@ -98,16 +98,16 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
 
         BlockPos diff = fromPos.subtract(toPos);
         int coord = facing.getAxis()
-            .choose(diff.getX(), diff.getY(), diff.getZ());
+                .choose(diff.getX(), diff.getY(), diff.getZ());
 
         if (!toState.is(this))
             return facing != face.getOpposite();
 //            return !(coord != 0 && coord == facing.getAxisDirection().getStep());
 
         return facing == toState.getValue(FACING)
-            .getOpposite()
-            && !(coord != 0 && coord == facing.getAxisDirection()
-            .getStep());
+                .getOpposite()
+                && !(coord != 0 && coord == facing.getAxisDirection()
+                .getStep());
     }
 
     @Override
@@ -120,11 +120,11 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
 
         BlockPos diff = fromPos.subtract(toPos);
         int coord = facing.getAxis()
-            .choose(diff.getX(), diff.getY(), diff.getZ());
+                .choose(diff.getX(), diff.getY(), diff.getZ());
 
         if (!toState.is(this))
             return coord != -facing.getAxisDirection()
-                .getStep();
+                    .getStep();
 
         if (isOccluded(state, toState, facing.getOpposite()))
             return true;
@@ -137,7 +137,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
     @Override
     public boolean canFaceBeOccluded(BlockState state, Direction face) {
         return state.getValue(FACING)
-            .getOpposite() == face;
+                .getOpposite() == face;
     }
 
     @Override
@@ -169,9 +169,9 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
 
         if (state.is(this) == neighborState.is(this)) {
             if (CopycatSpecialCases.isBarsMaterial(material)
-                && CopycatSpecialCases.isBarsMaterial(otherMaterial))
+                    && CopycatSpecialCases.isBarsMaterial(otherMaterial))
                 return state.getValue(FACING) == neighborState.getValue(FACING)
-                    && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
+                        && state.getValue(UPSIDE_DOWN) == neighborState.getValue(UPSIDE_DOWN);
             if (material.skipRendering(otherMaterial, dir.getOpposite()))
                 return isOccluded(state, neighborState, dir.getOpposite());
 
@@ -180,12 +180,12 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
             occlusionTestWorld.setBlock(pos, material);
             occlusionTestWorld.setBlock(otherPos, otherMaterial);
             if (material.isSolidRender(occlusionTestWorld, pos) && otherMaterial.isSolidRender(occlusionTestWorld, otherPos))
-                if(!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
+                if (!Block.shouldRenderFace(otherMaterial, occlusionTestWorld, pos, dir.getOpposite(), otherPos))
                     return isOccluded(state, neighborState, dir.getOpposite());
         }
 
         return state.getValue(FACING) == dir.getOpposite()
-            && material.skipRendering(neighborState, dir.getOpposite());
+                && material.skipRendering(neighborState, dir.getOpposite());
     }
 
     private static boolean isOccluded(BlockState state, BlockState other, Direction pDirection) {
@@ -229,9 +229,9 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         if (world instanceof ServerLevel) {
             if (player != null && !player.isCreative())
                 Block.getDrops(state, (ServerLevel) world, pos, world.getBlockEntity(pos), player, context.getItemInHand())
-                    .forEach(itemStack -> {
-                        player.getInventory().placeItemBackInInventory(itemStack);
-                    });
+                        .forEach(itemStack -> {
+                            player.getInventory().placeItemBackInInventory(itemStack);
+                        });
             state.spawnAfterBreak((ServerLevel) world, pos, ItemStack.EMPTY, true);
             world.destroyBlock(pos, false);
             playRemoveSound(world, pos);
@@ -258,7 +258,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock {
         KineticBlockEntity.switchToBlockState(world, context.getClickedPos(), updateAfterWrenched(rotated, context));
 
         BlockEntity be = context.getLevel()
-            .getBlockEntity(context.getClickedPos());
+                .getBlockEntity(context.getClickedPos());
         if (be instanceof GeneratingKineticBlockEntity) {
             ((GeneratingKineticBlockEntity) be).reActivateSource = true;
         }

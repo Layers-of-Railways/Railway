@@ -24,13 +24,13 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(value = ToolboxHandlerClient.class, remap = false)
 public interface AccessorToolboxHandlerClient {
-  @Accessor("COOLDOWN")
-  static int getCOOLDOWN() {
-    throw new AssertionError();
-  }
+    @Accessor("COOLDOWN")
+    static int getCOOLDOWN() {
+        throw new AssertionError();
+    }
 
-  @Accessor("COOLDOWN")
-  static void setCOOLDOWN(int i) {
-    throw new AssertionError();
-  }
+    @Accessor("COOLDOWN")
+    static void setCOOLDOWN(int i) {
+        throw new AssertionError();
+    }
 }

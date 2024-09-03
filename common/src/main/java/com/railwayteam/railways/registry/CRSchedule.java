@@ -47,5 +47,6 @@ public class CRSchedule {
         CONDITION_TYPES.add(Pair.of(Railways.asResource(name), factory));
     }
 
-    public static void register() {}
+    public static void register() {
+    }
 }

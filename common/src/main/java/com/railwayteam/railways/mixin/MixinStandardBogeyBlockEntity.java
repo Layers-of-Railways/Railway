@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(value = StandardBogeyBlockEntity.class, remap = false)
 public class MixinStandardBogeyBlockEntity implements IStandardBogeyTEVirtualCoupling {
     private double coupling = -1;
+
     @Override
     public void setCouplingDistance(double distance) {
         coupling = distance;

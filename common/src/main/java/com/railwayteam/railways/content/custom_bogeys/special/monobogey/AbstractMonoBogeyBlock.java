@@ -119,9 +119,9 @@ public abstract class AbstractMonoBogeyBlock<T extends MonoBogeyBlockEntity> ext
     }
 
     private final List<Property<?>> properties_to_copy = ImmutableList.<Property<?>>builder()
-        .addAll(super.propertiesToCopy())
-        .add(UPSIDE_DOWN)
-        .build();
+            .addAll(super.propertiesToCopy())
+            .add(UPSIDE_DOWN)
+            .build();
 
     @Override
     public List<Property<?>> propertiesToCopy() {

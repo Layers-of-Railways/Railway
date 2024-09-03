@@ -28,6 +28,6 @@ import java.util.Map;
 
 @Mixin(value = Carriage.class, remap = false)
 public interface AccessorCarriage {
-	@Accessor
-	Map<Integer, CompoundTag> getSerialisedPassengers();
+    @Accessor
+    Map<Integer, CompoundTag> getSerialisedPassengers();
 }

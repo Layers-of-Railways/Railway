@@ -70,17 +70,17 @@ public class TrainScenes {
         scene.world.toggleControls(util.grid.at(13, 3, 1));
         scene.world.toggleControls(util.grid.at(13, 3, 4));
 
-        BlockPos signal1 = new BlockPos(12,1,10);
-        BlockPos signal2 = new BlockPos(9,1,2);
-        BlockPos signal3 = new BlockPos(7,1,12);
-        BlockPos signal4 = new BlockPos(4,1,4);
+        BlockPos signal1 = new BlockPos(12, 1, 10);
+        BlockPos signal2 = new BlockPos(9, 1, 2);
+        BlockPos signal3 = new BlockPos(7, 1, 12);
+        BlockPos signal4 = new BlockPos(4, 1, 4);
 
-        BlockPos semaphore1a = new BlockPos(12,4,10);
-        BlockPos semaphore1b = new BlockPos(12,6,10);
-        BlockPos semaphore2a = new BlockPos(9,4,2);
-        BlockPos semaphore2b = new BlockPos(9,6,2);
-        BlockPos semaphore3 = new BlockPos(7,2,12);
-        BlockPos semaphore4 = new BlockPos(4,4,4);
+        BlockPos semaphore1a = new BlockPos(12, 4, 10);
+        BlockPos semaphore1b = new BlockPos(12, 6, 10);
+        BlockPos semaphore2a = new BlockPos(9, 4, 2);
+        BlockPos semaphore2b = new BlockPos(9, 6, 2);
+        BlockPos semaphore3 = new BlockPos(7, 2, 12);
+        BlockPos semaphore4 = new BlockPos(4, 4, 4);
 
         Selection train1 = util.select.fromTo(11, 2, 6, 15, 3, 8);
         Selection train2 = util.select.fromTo(15, 2, 3, 11, 3, 5);
@@ -95,9 +95,9 @@ public class TrainScenes {
         scene.idle(3);
         scene.world.showSection(util.select.position(signal4), Direction.DOWN);
 
-        scene.world.replaceBlocks(util.select.position(semaphore1a.above()), Blocks.AIR.defaultBlockState(),false);
+        scene.world.replaceBlocks(util.select.position(semaphore1a.above()), Blocks.AIR.defaultBlockState(), false);
         scene.idle(15);
-        scene.world.showSection(util.select.fromTo(signal1.offset(0,1,0),signal1.offset(0,2,0)), Direction.DOWN);
+        scene.world.showSection(util.select.fromTo(signal1.offset(0, 1, 0), signal1.offset(0, 2, 0)), Direction.DOWN);
         scene.idle(10);
         scene.world.showSection(util.select.position(semaphore1a), Direction.DOWN);
         scene.idle(10);
@@ -108,7 +108,7 @@ public class TrainScenes {
                 .text("Semaphores are placed on poles above Train Signals");
         scene.idle(65);
 
-        scene.world.showSection(util.select.fromTo(signal4.offset(0,1,0),signal4.offset(0,2,0)), Direction.DOWN);
+        scene.world.showSection(util.select.fromTo(signal4.offset(0, 1, 0), signal4.offset(0, 2, 0)), Direction.DOWN);
         scene.idle(10);
 
 
@@ -122,19 +122,19 @@ public class TrainScenes {
         scene.world.showSection(util.select.position(semaphore4), Direction.DOWN);
 
         scene.idle(10);
-        scene.world.replaceBlocks(util.select.position(semaphore2a.above()), Blocks.AIR.defaultBlockState(),false);
+        scene.world.replaceBlocks(util.select.position(semaphore2a.above()), Blocks.AIR.defaultBlockState(), false);
 
         scene.idle(5);
-        scene.world.showSection(util.select.fromTo(signal2.offset(0,1,0),signal2.offset(0,2,0)), Direction.DOWN);
+        scene.world.showSection(util.select.fromTo(signal2.offset(0, 1, 0), signal2.offset(0, 2, 0)), Direction.DOWN);
         scene.idle(5);
         scene.world.showSection(util.select.position(semaphore2a), Direction.DOWN);
         scene.idle(5);
-        scene.world.showSection(util.select.fromTo(signal3.offset(0,1,0),signal3.offset(0,1,0)), Direction.DOWN);
+        scene.world.showSection(util.select.fromTo(signal3.offset(0, 1, 0), signal3.offset(0, 1, 0)), Direction.DOWN);
         scene.idle(5);
         scene.world.showSection(util.select.position(semaphore3), Direction.DOWN);
 
         scene.idle(10);
-        scene.special.movePointOfInterest(new Vec3(0,3,8));
+        scene.special.movePointOfInterest(new Vec3(0, 3, 8));
 
         ElementLink<WorldSectionElement> trainElement = scene.world.showIndependentSection(train1, null);
         ElementLink<ParrotElement> birb1 =
@@ -170,7 +170,7 @@ public class TrainScenes {
                 .text("Semaphores show the current state of the signal below the pole");
         scene.idle(80);
 
-        scene.special.movePointOfInterest(new Vec3(-3,3,8));
+        scene.special.movePointOfInterest(new Vec3(-3, 3, 8));
         scene.idle(5);
         scene.world.moveSection(trainElement, util.vector.of(-10, 0, 0), 35);
         scene.world.animateBogey(util.grid.at(13, 2, 7), 10f, 35);
@@ -227,7 +227,7 @@ public class TrainScenes {
                 .add(0, pY, 0);
         Vec3 m4 = util.vector.topOf(5, 0, 10)
                 .add(0, pY, 0);
-        Vec3 c1 = util.vector.topOf(8, 0, 7).add(0,pY,0);
+        Vec3 c1 = util.vector.topOf(8, 0, 7).add(0, pY, 0);
 
         AABB bb = new AABB(m1, m1);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb, bb, 1);
@@ -237,7 +237,7 @@ public class TrainScenes {
         AABB bb2 = bb.move(-.45, 0, 0);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, c1, m1.add(-.45, 0, 0), 20);
         scene.idle(10);
-        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0),c1 , 10);
+        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0), c1, 10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m4.add(.45, 0, -.45), c1, 10);
 
         scene.idle(20);
@@ -249,7 +249,6 @@ public class TrainScenes {
                 .placeNearTarget()
                 .text("... a second semaphore can be placed above the first");
         scene.idle(50);
-
 
 
         scene.world.restoreBlocks(util.select.position(semaphore1a.above()));
@@ -265,7 +264,7 @@ public class TrainScenes {
                 .text("The bottom semaphore will now close if any of the available paths are blocked");
         scene.idle(70);
 
-        bb2 = new AABB(new BlockPos(semaphore1a)).inflate(-0.25,0,-0.25);
+        bb2 = new AABB(new BlockPos(semaphore1a)).inflate(-0.25, 0, -0.25);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb2, bb2, 30);
 
         bb = new AABB(m1, m1);
@@ -275,7 +274,7 @@ public class TrainScenes {
 
         scene.overlay.showBigLine(PonderPalette.OUTPUT, c1, m1.add(-.45, 0, 0), 20);
         scene.idle(10);
-        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0),c1 , 10);
+        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0), c1, 10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m4.add(.45, 0, -.45), c1, 10);
         scene.idle(10);
 
@@ -292,7 +291,7 @@ public class TrainScenes {
                 .text("The top semaphore will close if all paths are blocked");
         scene.idle(60);
 
-        bb2 = new AABB(new BlockPos(semaphore1b)).inflate(-0.25,0,-0.25);
+        bb2 = new AABB(new BlockPos(semaphore1b)).inflate(-0.25, 0, -0.25);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.OUTPUT, bb2, bb2, 30);
 
         bb = new AABB(m1, m1);
@@ -302,7 +301,7 @@ public class TrainScenes {
 
         scene.overlay.showBigLine(PonderPalette.OUTPUT, c1, m1.add(-.45, 0, 0), 20);
         scene.idle(10);
-        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0),c1 , 10);
+        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0), c1, 10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m4.add(.45, 0, -.45), c1, 10);
         scene.idle(10);
 
@@ -337,7 +336,7 @@ public class TrainScenes {
 
         scene.overlay.showBigLine(PonderPalette.OUTPUT, c1, m1.add(-.45, 0, 0), 20);
         scene.idle(10);
-        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0),c1 , 10);
+        scene.overlay.showBigLine(PonderPalette.OUTPUT, m2.add(.45, 0, 0), c1, 10);
         scene.overlay.showBigLine(PonderPalette.OUTPUT, m4.add(.45, 0, -.45), c1, 10);
         scene.idle(10);
 
@@ -702,16 +701,16 @@ public class TrainScenes {
         BlockPos locoTrailingBogeyPos = new BlockPos(5, 2, 18);
         BlockPos cargoBogeyPos = new BlockPos(17, 2, 18);
 
-        Selection coupler = util.select.position(10,1,7);
-        Selection redstoneDust = util.select.position(10,1,6);
-        Selection button = util.select.position(10,1,5);
+        Selection coupler = util.select.position(10, 1, 7);
+        Selection redstoneDust = util.select.position(10, 1, 6);
+        Selection button = util.select.position(10, 1, 5);
         Selection station = util.select.position(1, 1, 7);
 
         BlockPos couplerPad1 = new BlockPos(12, 1, 10);
         BlockPos couplerPad1Under = new BlockPos(12, 0, 10);
-        BlockPos couplerPos = new BlockPos(10,1,7);
-        BlockPos redstoneDustPos = new BlockPos(10,1,6);
-        BlockPos buttonPos = new BlockPos(10,1,5);
+        BlockPos couplerPos = new BlockPos(10, 1, 7);
+        BlockPos redstoneDustPos = new BlockPos(10, 1, 6);
+        BlockPos buttonPos = new BlockPos(10, 1, 5);
         BlockPos stationPos = new BlockPos(1, 1, 7);
 
         Selection train1 = util.select.fromTo(0, 2, 20, 8, 6, 16);
@@ -727,26 +726,26 @@ public class TrainScenes {
         AABB bb = new AABB(util.vector.topOf(couplerPad1Under), util.vector.topOf(couplerPad1Under)).move(0, 2 / 16f, 0);
 
         scene.overlay
-            .showControls(new InputWindowElement(couplerPad1TopMarker, Pointing.DOWN).rightClick()
-                .withItem(CRBlocks.TRACK_COUPLER.asStack()), 40);
+                .showControls(new InputWindowElement(couplerPad1TopMarker, Pointing.DOWN).rightClick()
+                        .withItem(CRBlocks.TRACK_COUPLER.asStack()), 40);
         scene.idle(6);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb, 1);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb.inflate(.45f, 1 / 16f, .45f), 100);
         scene.idle(10);
 
         scene.overlay.showText(70)
-            .pointAt(couplerPad1TopMarker)
-            .placeNearTarget()
-            .colored(PonderPalette.GREEN)
-            .attachKeyFrame()
-            .text("Select a Train Track then place the Coupler nearby");
+                .pointAt(couplerPad1TopMarker)
+                .placeNearTarget()
+                .colored(PonderPalette.GREEN)
+                .attachKeyFrame()
+                .text("Select a Train Track then place the Coupler nearby");
         scene.idle(60);
 
         // reveal coupler
         scene.world.showSection(coupler, Direction.DOWN);
         scene.idle(15);
         scene.overlay.chaseBoundingBoxOutline(PonderPalette.GREEN, bb,
-            new AABB(couplerPos), 20);
+                new AABB(couplerPos), 20);
         scene.idle(25);
 
         scene.overlay.showText(100)
@@ -757,8 +756,8 @@ public class TrainScenes {
         scene.idle(120);
 
         scene.overlay
-            .showControls(new InputWindowElement(couplerTop, Pointing.DOWN).scroll()
-                .withWrench(), 60);
+                .showControls(new InputWindowElement(couplerTop, Pointing.DOWN).scroll()
+                        .withWrench(), 60);
         scene.overlay.showScrollInput(couplerTop, Direction.DOWN, 60);
         scene.idle(5);
 
@@ -789,11 +788,11 @@ public class TrainScenes {
         scene.idle(5);
 
         scene.overlay.showText(70)
-            .pointAt(couplerTop)
-            .placeNearTarget()
-            .colored(PonderPalette.GREEN)
-            .attachKeyFrame()
-            .text("By using a wrench you can cycle between coupling, decoupling, and both modes");
+                .pointAt(couplerTop)
+                .placeNearTarget()
+                .colored(PonderPalette.GREEN)
+                .attachKeyFrame()
+                .text("By using a wrench you can cycle between coupling, decoupling, and both modes");
         scene.idle(80);
 
         for (int i = 0; i < 3; i++) {
@@ -806,11 +805,11 @@ public class TrainScenes {
         scene.idle(5);
 
         scene.overlay.showText(70)
-            .pointAt(stationTop)
-            .placeNearTarget()
-            .colored(PonderPalette.GREEN)
-            .attachKeyFrame()
-            .text("Stations can be used to help align trains for coupling");
+                .pointAt(stationTop)
+                .placeNearTarget()
+                .colored(PonderPalette.GREEN)
+                .attachKeyFrame()
+                .text("Stations can be used to help align trains for coupling");
         scene.idle(80);
 
         // prepare trains
@@ -848,11 +847,11 @@ public class TrainScenes {
         scene.idle(20);
 
         scene.overlay.showText(70)
-            .pointAt(buttonTop)
-            .placeNearTarget()
-            .colored(PonderPalette.RED)
-            .attachKeyFrame()
-            .text("By powering a coupler you can couple/decouple a properly aligned train");
+                .pointAt(buttonTop)
+                .placeNearTarget()
+                .colored(PonderPalette.RED)
+                .attachKeyFrame()
+                .text("By powering a coupler you can couple/decouple a properly aligned train");
         scene.idle(80);
 
         // 'press' button

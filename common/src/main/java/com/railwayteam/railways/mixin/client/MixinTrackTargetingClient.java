@@ -54,9 +54,9 @@ public abstract class MixinTrackTargetingClient {
     static BezierTrackPointLocation lastHoveredBezierSegment;
 
     @Inject(method = "render", at = @At(
-        value = "FIELD", opcode = Opcodes.GETSTATIC,
-        target = "Lcom/simibubi/create/content/trains/track/TrackTargetingClient;lastType:Lcom/simibubi/create/content/trains/graph/EdgePointType;",
-        ordinal = 0
+            value = "FIELD", opcode = Opcodes.GETSTATIC,
+            target = "Lcom/simibubi/create/content/trains/track/TrackTargetingClient;lastType:Lcom/simibubi/create/content/trains/graph/EdgePointType;",
+            ordinal = 0
     ), cancellable = true)
     private static void renderCustom(PoseStack ms, SuperRenderTypeBuffer buffer, Vec3 camera, CallbackInfo ci) {
         if (CustomTrackOverlayRendering.CUSTOM_OVERLAYS.containsKey(lastType)) {
@@ -67,10 +67,10 @@ public abstract class MixinTrackTargetingClient {
 
             ms.pushPose();
             TransformStack.cast(ms)
-                .translate(Vec3.atLowerCornerOf(pos)
-                    .subtract(camera));
+                    .translate(Vec3.atLowerCornerOf(pos)
+                            .subtract(camera));
             CustomTrackOverlayRendering.renderOverlay(mc.level, pos, direction, lastHoveredBezierSegment, ms, buffer, light,
-                OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f);
+                    OverlayTexture.NO_OVERLAY, lastType, 1 + 1 / 16f);
             ms.popPose();
             ci.cancel();
         }

@@ -27,8 +27,7 @@ public class ExceptionUtils {
         throw (T) exception;
     }
 
-    public static void throwExceptionUnchecked(Throwable exception)
-    {
+    public static void throwExceptionUnchecked(Throwable exception) {
         ExceptionUtils.throwExceptionInternal(exception);
     }
 }

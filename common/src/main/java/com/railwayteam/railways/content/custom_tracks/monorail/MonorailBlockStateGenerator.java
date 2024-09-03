@@ -33,8 +33,8 @@ public class MonorailBlockStateGenerator extends CustomTrackBlockStateGenerator 
         TrackShape value = state.getValue(TrackBlock.SHAPE);
         if (value == TrackShape.NONE)
             return prov.models()
-                .getExistingFile(prov.mcLoc("block/air"));
+                    .getExistingFile(prov.mcLoc("block/air"));
         return prov.models()
-            .getExistingFile(prov.modLoc("block/monorail/monorail/static_blocks/" + value.getModel()));
+                .getExistingFile(prov.modLoc("block/monorail/monorail/static_blocks/" + value.getModel()));
     }
 }

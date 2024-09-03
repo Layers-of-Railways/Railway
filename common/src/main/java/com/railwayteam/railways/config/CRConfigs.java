@@ -88,14 +88,14 @@ public class CRConfigs {
     public static void onLoad(ModConfig modConfig) {
         for (ConfigBase config : CONFIGS.values())
             if (config.specification == modConfig
-                .getSpec())
+                    .getSpec())
                 config.onLoad();
     }
 
     public static void onReload(ModConfig modConfig) {
         for (ConfigBase config : CONFIGS.values())
             if (config.specification == modConfig
-                .getSpec())
+                    .getSpec())
                 config.onReload();
     }
 
@@ -115,7 +115,7 @@ public class CRConfigs {
 
         Map<String, String> trueMap = new HashMap<>();
         for (Map.Entry<String, String> entry : m.entrySet()) {
-            trueMap.put("general."+entry.getKey(), "client."+entry.getValue());
+            trueMap.put("general." + entry.getKey(), "client." + entry.getValue());
         }
         return migrate(contents, trueMap);
     }
@@ -127,7 +127,7 @@ public class CRConfigs {
 
         Map<String, String> trueMap = new HashMap<>();
         for (Map.Entry<String, String> entry : m.entrySet()) {
-            trueMap.put("general."+entry.getKey(), entry.getValue());
+            trueMap.put("general." + entry.getKey(), entry.getValue());
         }
         return migrate(contents, trueMap);
     }
@@ -201,8 +201,8 @@ public class CRConfigs {
             if (commentIdx != -1)
                 line = line.substring(0, commentIdx);
             line = line
-                .trim()
-                .replaceAll(" ", "");
+                    .trim()
+                    .replaceAll(" ", "");
 
             if (line.isEmpty())
                 continue;
@@ -223,7 +223,7 @@ public class CRConfigs {
 
     private static void preloadValues() {
         Path configDir = Utils.configDir();
-        Path commonConfig = configDir.resolve(Railways.MODID+"-common.toml");
+        Path commonConfig = configDir.resolve(Railways.MODID + "-common.toml");
         try (Reader reader = new FileReader(commonConfig.toFile())) {
             CommentedConfig config = new TomlParser().parse(reader);
             cachedDisableDatafixer = config.<Boolean>getRaw("disableDatafixer");
@@ -243,6 +243,7 @@ public class CRConfigs {
 
     private static Boolean cachedDisableDatafixer;
     private static Boolean cachedRegisterMissingTracks;
+
     public static boolean getDisableDatafixer() {
         if (common != null)
             return common.disableDatafixer.get();

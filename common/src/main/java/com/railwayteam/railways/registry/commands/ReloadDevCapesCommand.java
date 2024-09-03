@@ -28,14 +28,14 @@ import static com.railwayteam.railways.multiloader.ClientCommands.literal;
 import static com.railwayteam.railways.multiloader.ClientCommands.sendSuccess;
 
 public class ReloadDevCapesCommand {
-  public static ArgumentBuilder<SharedSuggestionProvider, ?> register() {
-    return literal("reload_dev_capes")
-        .requires(cs -> cs.hasPermission(0))
-        .executes(ctx -> {
-          Env.CLIENT.runIfCurrent(() -> DevCapeUtils.INSTANCE::refresh);
+    public static ArgumentBuilder<SharedSuggestionProvider, ?> register() {
+        return literal("reload_dev_capes")
+                .requires(cs -> cs.hasPermission(0))
+                .executes(ctx -> {
+                    Env.CLIENT.runIfCurrent(() -> DevCapeUtils.INSTANCE::refresh);
 
-          sendSuccess(ctx.getSource(), Components.literal("Refreshed dev capes"));
-          return 1;
-        });
-  }
+                    sendSuccess(ctx.getSource(), Components.literal("Refreshed dev capes"));
+                    return 1;
+                });
+    }
 }

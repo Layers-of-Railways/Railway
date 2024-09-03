@@ -36,6 +36,7 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
     public static final int DOUBLE_SPEED_SENTINEL = 42;
     protected final boolean stationarySource;
     protected final RandomSource random;
+
     protected PuffSmokeParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean stationarySource, double ySpeed) {
         super(level, x, y, z, 0.0, ySpeed, 0.0);
         if (Mth.equal(DOUBLE_SPEED_SENTINEL, ySpeed)) {
@@ -65,10 +66,10 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
         if (this.age > 350) {
             diffusionScale = 5000.0f;
         } else if (this.age > 300) {
-            diffusionScale = Mth.lerp((age-300) / 50.0f, stationarySource ? 800.0f : 500.0f, 5000.0f);
+            diffusionScale = Mth.lerp((age - 300) / 50.0f, stationarySource ? 800.0f : 500.0f, 5000.0f);
         }
-        this.xd += this.random.nextFloat() / diffusionScale * (float)(this.random.nextBoolean() ? 1 : -1);
-        this.zd += this.random.nextFloat() / diffusionScale * (float)(this.random.nextBoolean() ? 1 : -1);
+        this.xd += this.random.nextFloat() / diffusionScale * (float) (this.random.nextBoolean() ? 1 : -1);
+        this.zd += this.random.nextFloat() / diffusionScale * (float) (this.random.nextBoolean() ? 1 : -1);
     }
 
     @Override
@@ -79,6 +80,7 @@ public class PuffSmokeParticle extends CustomAnimatedTextureSheetParticle {
     @Environment(EnvType.CLIENT)
     public static class Factory<T extends PuffSmokeParticleData<T>> implements ParticleProvider<T> {
         private final SpriteSet spriteSet;
+
         public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }

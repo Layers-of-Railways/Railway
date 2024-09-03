@@ -42,14 +42,14 @@ public class NarrowGaugeCompatTrackBlockStateGenerator extends CustomTrackBlockS
         //Railways.LOGGER.warn("TrackShape: "+value.name()+", material: "+material.langName);
         if (value == TrackShape.NONE) {
             return prov.models()
-                .getExistingFile(prov.mcLoc("block/air"));
+                    .getExistingFile(prov.mcLoc("block/air"));
         }
 
         String textureModId = material.id.getNamespace();
         String resName = material.resourceName().replaceFirst("_narrow", "");
 
         String texturePrefix = "block/track/" + resName + "/";
-        String outputPrefix = "block/track/compat/"+material.id.getNamespace()+"/" + material.resourceName() + "/";
+        String outputPrefix = "block/track/compat/" + material.id.getNamespace() + "/" + material.resourceName() + "/";
         Map<String, String> textureMap = new HashMap<>();//prefix + get() + material.resName()
         switch (value) {
             case TE, TN, TS, TW -> {
@@ -79,19 +79,19 @@ public class NarrowGaugeCompatTrackBlockStateGenerator extends CustomTrackBlockS
         }
 
         BlockModelBuilder builder = prov.models()
-            .withExistingParent(outputPrefix + value.getModel(),
-                Railways.asResource("block/narrow_gauge_base/" + value.getModel()))
-            .texture("particle", material.particle);
+                .withExistingParent(outputPrefix + value.getModel(),
+                        Railways.asResource("block/narrow_gauge_base/" + value.getModel()))
+                .texture("particle", material.particle);
         for (String k : textureMap.keySet()) {
             builder = builder.texture(k, new ResourceLocation(textureModId, texturePrefix + textureMap.get(k) + resName));
         }
         for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
             prov.models()
-                .withExistingParent(outputPrefix + k,
-                    Railways.asResource("block/narrow_gauge_base/" + k))
-                .texture("0", new ResourceLocation(textureModId, texturePrefix + "standard_track_" + resName))
-                .texture("1", new ResourceLocation(textureModId, texturePrefix + "standard_track_mip_" + resName))
-                .texture("particle", material.particle);
+                    .withExistingParent(outputPrefix + k,
+                            Railways.asResource("block/narrow_gauge_base/" + k))
+                    .texture("0", new ResourceLocation(textureModId, texturePrefix + "standard_track_" + resName))
+                    .texture("1", new ResourceLocation(textureModId, texturePrefix + "standard_track_mip_" + resName))
+                    .texture("particle", material.particle);
         }
         return builder;
     }

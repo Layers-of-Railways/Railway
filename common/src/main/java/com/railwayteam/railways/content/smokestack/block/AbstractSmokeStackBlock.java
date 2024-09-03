@@ -82,10 +82,10 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
 
     protected BlockState makeDefaultState() {
         return this.defaultBlockState()
-            .setValue(STYLE, SmokestackStyle.STEEL)
-            .setValue(ENABLED, true)
-            .setValue(POWERED, false)
-            .setValue(WATERLOGGED, false);
+                .setValue(STYLE, SmokestackStyle.STEEL)
+                .setValue(ENABLED, true)
+                .setValue(POWERED, false)
+                .setValue(WATERLOGGED, false);
     }
 
     @Override

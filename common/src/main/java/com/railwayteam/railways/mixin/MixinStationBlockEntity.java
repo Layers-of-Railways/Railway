@@ -63,7 +63,9 @@ import java.util.UUID;
 
 @Mixin(value = StationBlockEntity.class, remap = false)
 public abstract class MixinStationBlockEntity extends SmartBlockEntity {
-    @Shadow @Nullable public abstract GlobalStation getStation();
+    @Shadow
+    @Nullable
+    public abstract GlobalStation getStation();
 
     private MixinStationBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -85,8 +87,8 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
             locals = LocalCapture.CAPTURE_FAILSOFT, remap = true, require = 0
     )
     private void railways$setBogeyData(Player player, InteractionHand hand, ITrackBlock track, BlockState state, BlockPos pos,
-                              CallbackInfoReturnable<Boolean> cir, BoundingBox bb, BlockPos up, BlockPos down,
-                              int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
+                                       CallbackInfoReturnable<Boolean> cir, BoundingBox bb, BlockPos up, BlockPos down,
+                                       int bogeyOffset, ItemStack handItem, boolean upsideDown, BlockPos targetPos) {
         if (track.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL)
             return;
         Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(player.getUUID());
@@ -129,7 +131,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "assemble", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", ordinal = 0), require = 0)
-    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name="typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name="atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
+    private void allowAssemblingWithoutControls(UUID playerUUID, CallbackInfo ci, @Local(name = "typeOfFirstBogey") AbstractBogeyBlock<?> typeOfFirstBogey, @Local(name = "atLeastOneForwardControls") LocalBooleanRef atLeastOneForwardControls) {
         if (typeOfFirstBogey instanceof HandcarBlock) {
             atLeastOneForwardControls.set(true);
         }

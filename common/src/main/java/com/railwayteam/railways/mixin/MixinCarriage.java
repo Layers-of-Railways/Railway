@@ -52,15 +52,20 @@ import java.util.UUID;
 @Mixin(value = Carriage.class, remap = false)
 public abstract class MixinCarriage implements ICarriageConductors, ICarriageBufferDistanceTracker {
 
-    @Shadow public Train train;
+    @Shadow
+    public Train train;
 
-    @Shadow public abstract CarriageBogey leadingBogey();
+    @Shadow
+    public abstract CarriageBogey leadingBogey();
 
-    @Shadow public abstract CarriageBogey trailingBogey();
+    @Shadow
+    public abstract CarriageBogey trailingBogey();
 
-    @Shadow public abstract TravellingPoint getLeadingPoint();
+    @Shadow
+    public abstract TravellingPoint getLeadingPoint();
 
-    @Shadow public abstract TravellingPoint getTrailingPoint();
+    @Shadow
+    public abstract TravellingPoint getTrailingPoint();
 
     private final List<UUID> railways$controllingConductors = new ArrayList<>();
 

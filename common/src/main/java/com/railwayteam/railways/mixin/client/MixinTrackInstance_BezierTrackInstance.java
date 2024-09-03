@@ -107,21 +107,21 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
             BlockPos tePosition = bc.tePositions.getFirst();
             PoseStack pose = new PoseStack();
             TransformStack.cast(pose)
-                .translate(this$0.getInstancePosition())
-                .nudge((int) bc.tePositions.getFirst()
-                    .asLong());
+                    .translate(this$0.getInstancePosition())
+                    .nudge((int) bc.tePositions.getFirst()
+                            .asLong());
 
             BlockState air = Blocks.AIR.defaultBlockState();
             MonorailAngles[] monorails = ((IMonorailBezier) bc).getBakedMonorails();
             var mat = ((AccessorInstance) this$0).getMaterialManager().cutout(RenderType.cutoutMipped())
-                .material(Materials.TRANSFORMED);
+                    .material(Materials.TRANSFORMED);
 
-            right = new ModelData[monorails.length-1];
-            ties = new ModelData[monorails.length-1];
-            left = new ModelData[monorails.length-1];
-            tiesLightPos = new BlockPos[monorails.length-1];
-            leftLightPos = new BlockPos[monorails.length-1];
-            rightLightPos = new BlockPos[monorails.length-1];
+            right = new ModelData[monorails.length - 1];
+            ties = new ModelData[monorails.length - 1];
+            left = new ModelData[monorails.length - 1];
+            tiesLightPos = new BlockPos[monorails.length - 1];
+            leftLightPos = new BlockPos[monorails.length - 1];
+            rightLightPos = new BlockPos[monorails.length - 1];
 
             ModelData[] top = right;
             ModelData[] middle = ties;
@@ -141,15 +141,15 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
                 PoseStack.Pose beamTransform = segment.beam;
 
                 middle[modelIndex].setTransform(pose)
-                    .mulPose(beamTransform.pose())
-                    .mulNormal(beamTransform.normal());
+                        .mulPose(beamTransform.pose())
+                        .mulNormal(beamTransform.normal());
                 middleLight[modelIndex] = segment.lightPosition.offset(tePosition);
 
                 for (boolean isTop : Iterate.trueAndFalse) {
                     PoseStack.Pose beamCapTransform = segment.beamCaps.get(isTop);
                     (isTop ? top : bottom)[modelIndex].setTransform(pose)
-                        .mulPose(beamCapTransform.pose())
-                        .mulNormal(beamCapTransform.normal());
+                            .mulPose(beamCapTransform.pose())
+                            .mulNormal(beamCapTransform.normal());
                     (isTop ? topLight : bottomLight)[modelIndex] = segment.lightPosition.offset(tePosition);
                 }
             }

@@ -37,7 +37,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = BezierConnection.class, remap = false)
 public abstract class MixinBezierConnectionClient implements IMonorailBezier {
-    @Shadow public abstract int getSegmentCount();
+    @Shadow
+    public abstract int getSegmentCount();
 
     private MonorailAngles[] bakedMonorails;
 
@@ -61,11 +62,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
             Vec3 mainGirder = segment.position;//.add(segment.normal.scale(.965f));
 //            Vec3 rightGirder = segment.position.subtract(segment.normal.scale(.965f));
             Vec3 upNormal = segment.derivative.normalize()
-                .cross(segment.normal);
+                    .cross(segment.normal);
             Vec3 firstGirderOffset = upNormal.scale(8 / 16f);
             Vec3 secondGirderOffset = upNormal.scale(-10 / 16f);
             Vec3 mainTop = segment.position//.add(segment.normal.scale(1))
-                .add(firstGirderOffset);
+                    .add(firstGirderOffset);
 //            Vec3 rightTop = segment.position.subtract(segment.normal.scale(1))
 //                .add(firstGirderOffset);
             Vec3 mainBottom = mainTop.add(secondGirderOffset);
@@ -74,7 +75,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
             angles.lightPosition = new BlockPos(mainGirder);
 
             Couple<Vec3> offsets =
-                Couple.create(mainTop, mainBottom);
+                    Couple.create(mainTop, mainBottom);
 
             if (previousOffsets == null) {
                 previousOffsets = offsets;
@@ -87,22 +88,22 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
 
             // Middle
             Vec3 currentBeam = offsets.getFirst()
-                .add(offsets.getSecond())
-                .scale(.5);
+                    .add(offsets.getSecond())
+                    .scale(.5);
             Vec3 previousBeam = previousOffsets.getFirst()
-                .add(previousOffsets.getSecond())
-                .scale(.5);
+                    .add(previousOffsets.getSecond())
+                    .scale(.5);
             Vec3 beamDiff = currentBeam.subtract(previousBeam);
             Vec3 beamAngles = TrackRenderer.getModelAngles(segment.normal, beamDiff);
 
             PoseStack poseStack = new PoseStack();
             TransformStack.cast(poseStack)
-                .translate(previousBeam)
-                .rotateYRadians(beamAngles.y)
-                .rotateXRadians(beamAngles.x)
-                .rotateZRadians(beamAngles.z)
-                .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
-                .scale(1, 1, (float) beamDiff.length() * scale);
+                    .translate(previousBeam)
+                    .rotateYRadians(beamAngles.y)
+                    .rotateXRadians(beamAngles.x)
+                    .rotateZRadians(beamAngles.z)
+                    .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
+                    .scale(1, 1, (float) beamDiff.length() * scale);
             angles.beam = poseStack.last();
 
             // Caps
@@ -114,13 +115,13 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
 
                 poseStack = new PoseStack();
                 TransformStack.cast(poseStack)
-                    .translate(previous)
-                    .rotateYRadians(capAngles.y)
-                    .rotateXRadians(capAngles.x)
-                    .rotateZRadians(capAngles.z)
-                    .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
-                    .rotateZ(0)
-                    .scale(1, 1, (float) diff.length() * scale);
+                        .translate(previous)
+                        .rotateYRadians(capAngles.y)
+                        .rotateXRadians(capAngles.x)
+                        .rotateZRadians(capAngles.z)
+                        .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
+                        .rotateZ(0)
+                        .scale(1, 1, (float) diff.length() * scale);
                 angles.beamCaps.set(top, poseStack.last());
             }
 
@@ -131,7 +132,7 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
         return bakedMonorails;
     }
 
-    @ModifyExpressionValue(method="getBakedSegments", at = @At(value = "CONSTANT", args = "doubleValue=0.9649999737739563"))
+    @ModifyExpressionValue(method = "getBakedSegments", at = @At(value = "CONSTANT", args = "doubleValue=0.9649999737739563"))
     private double modifyRailWidth(double original) {
         BezierConnection this$ = (BezierConnection) (Object) this;
         if (this$.getMaterial().trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE) {

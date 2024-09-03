@@ -22,5 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public interface IMaterialAdaptingBuffer {
-    @NotNull BlockState getMaterial();
+    @NotNull
+    BlockState getMaterial();
 }

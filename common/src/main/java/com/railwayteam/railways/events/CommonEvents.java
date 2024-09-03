@@ -50,14 +50,14 @@ public class CommonEvents {
             long offsetTicks = ticks + train.id.hashCode();
             if (offsetTicks % CRConfigs.server().journeymap.farTrainSyncTicks.get() == 0) {
                 CRPackets.PACKETS.sendTo(PlayerSelection.allWith(p -> journeymapUsers.contains(p.getUUID())),
-                    new TrainMarkerDataUpdatePacket(train));
+                        new TrainMarkerDataUpdatePacket(train));
             }
             if (offsetTicks % CRConfigs.server().journeymap.nearTrainSyncTicks.get() == 0) { //DONE train *might* not have any carriages if it just got coupled, fix that
                 if (!train.carriages.isEmpty()) {
                     Entity trainEntity = train.carriages.get(0).anyAvailableEntity();
                     if (trainEntity != null)
                         CRPackets.PACKETS.sendTo(PlayerSelection.trackingWith(trainEntity, p -> journeymapUsers.contains(p.getUUID())),
-                            new TrainMarkerDataUpdatePacket(train));
+                                new TrainMarkerDataUpdatePacket(train));
                 }
             }
         }

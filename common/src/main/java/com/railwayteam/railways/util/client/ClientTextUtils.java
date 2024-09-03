@@ -51,7 +51,7 @@ public class ClientTextUtils {
     @Environment(EnvType.CLIENT)
     public static void renderMultilineDebugText(PoseStack poseStack, MultiBufferSource buffer, int packedLight,
                                                 double baseY, boolean transparent, String... lines) {
-        double y = baseY + (lines.length/4.0D);
+        double y = baseY + (lines.length / 4.0D);
         for (String line : lines) {
             renderDebugText(poseStack, buffer, packedLight, y, transparent, line);
             y -= 0.25D;
@@ -67,9 +67,9 @@ public class ClientTextUtils {
         poseStack.scale(-0.025F, -0.025F, 0.025F);
         Matrix4f matrix4f = poseStack.last().pose();
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-        int j = (int)(f1 * 255.0F) << 24;
+        int j = (int) (f1 * 255.0F) << 24;
         Font font = Minecraft.getInstance().font;
-        float f2 = (float)(-font.width(text) / 2);
+        float f2 = (float) (-font.width(text) / 2);
         font.drawInBatch(text, f2, 0, 553648127, false, matrix4f, pBuffer, transparent, j, pPackedLight);
 
         if (transparent) {

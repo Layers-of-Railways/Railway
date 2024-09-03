@@ -42,6 +42,7 @@ public class RailwaysSequencedAssemblyRecipeBuilder extends SequencedAssemblyRec
 
     /**
      * If the material is from another mod, add a recipe condition for the mod.
+     *
      * @param trackMaterial the material
      * @return this
      */
@@ -60,6 +61,7 @@ public class RailwaysSequencedAssemblyRecipeBuilder extends SequencedAssemblyRec
 
     public static class RailwaysDataGenResult extends DataGenResult {
         private final List<ConditionJsonProvider> recipeConditions;
+
         public RailwaysDataGenResult(SequencedAssemblyRecipe recipe, List<ConditionJsonProvider> recipeConditions) {
             super(recipe, recipeConditions);
             this.recipeConditions = recipeConditions;
@@ -80,6 +82,7 @@ public class RailwaysSequencedAssemblyRecipeBuilder extends SequencedAssemblyRec
          * Generates forge:mod_loaded conditions from the fabric:all_mods_loaded condition.
          * If there are multiple mods, these are wrapped in a forge:and condition.
          * This conversion assumes that Fabric and Forge versions share the same modid.
+         *
          * @param provider the fabric condition
          * @return the generated JSON
          */

@@ -40,7 +40,8 @@ public class LiquidFuelType {
     private int fuelTicks = 400;
     private boolean invalid = false;
 
-    public LiquidFuelType() { }
+    public LiquidFuelType() {
+    }
 
     public List<Supplier<Fluid>> getFluids() {
         return fluids;
@@ -81,7 +82,8 @@ public class LiquidFuelType {
                                         type.fluids.add(() -> fluid);
                                     }
                                 }
-                            } catch (ResourceLocationException ignored) {}
+                            } catch (ResourceLocationException ignored) {
+                            }
                         }
                     }
                 }
@@ -91,7 +93,8 @@ public class LiquidFuelType {
 
             parseJsonPrimitive(object, "fuel_ticks", JsonPrimitive::isNumber, primitive -> type.fuelTicks = primitive.getAsInt());
             parseJsonPrimitive(object, "invalid", JsonPrimitive::isBoolean, primitive -> type.invalid = primitive.getAsBoolean());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         return type;
     }

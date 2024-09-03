@@ -32,10 +32,13 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
     public static final Logger LOGGER = LoggerFactory.getLogger("Railways/MixinPlugin");
 
     @Override
-    public void onLoad(String mixinPackage) { } // NO-OP
+    public void onLoad(String mixinPackage) {
+    } // NO-OP
 
     @Override
-    public String getRefMapperConfig() { return null; } // DEFAULT
+    public String getRefMapperConfig() {
+        return null;
+    } // DEFAULT
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
@@ -43,14 +46,19 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) { } // NO-OP
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    } // NO-OP
 
     @Override
-    public List<String> getMixins() { return null; } // DEFAULT
+    public List<String> getMixins() {
+        return null;
+    } // DEFAULT
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) { } // NO-OP
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    } // NO-OP
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) { } // NO-OP
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    } // NO-OP
 }

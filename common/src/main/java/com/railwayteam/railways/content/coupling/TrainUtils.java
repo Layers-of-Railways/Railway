@@ -57,7 +57,8 @@ import java.util.UUID;
 public class TrainUtils {
     /**
      * Splits the train into two trains, with the last carriage of the original train being the first carriage of the new train.
-     * @param train The train to split.
+     *
+     * @param train        The train to split.
      * @param numberOffEnd The number of carriages to move to the new train.
      * @return The new train.
      */
@@ -70,14 +71,14 @@ public class TrainUtils {
         if (!allCarriagesLoaded(train))
             return train;
 
-        Integer frontSpacingBackup  = null;
+        Integer frontSpacingBackup = null;
         Carriage[] lastCarriages = new Carriage[numberOffEnd];
         Integer[] lastCarriageSpacings = new Integer[numberOffEnd - 1];
 
-        for (int i = numberOffEnd-1; i >= 0; i--) {
+        for (int i = numberOffEnd - 1; i >= 0; i--) {
             lastCarriages[i] = train.carriages.remove(train.carriages.size() - 1);
             if (i > 0) {
-                lastCarriageSpacings[i-1] = train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
+                lastCarriageSpacings[i - 1] = train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
             } else { //discard front spacing - there is no spacing between the front carriage and nothing (or the back carriage and nothing)
                 frontSpacingBackup = train.carriageSpacing.remove(train.carriageSpacing.size() - 1);
             }
@@ -102,11 +103,9 @@ public class TrainUtils {
             return train;
         }
         train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
-        if(!train.name.getString().contains("Split off from: ")){
-            newTrain.name = Components.literal("Split off from: "+train.name.getString());
-        }
-        else newTrain.name = Components.literal(train.name.getString());
-
+        if (!train.name.getString().contains("Split off from: ")) {
+            newTrain.name = Components.literal("Split off from: " + train.name.getString());
+        } else newTrain.name = Components.literal(train.name.getString());
 
 
 //        lastCarriage.setTrain(newTrain);
@@ -151,9 +150,9 @@ public class TrainUtils {
         // set cce.carriage.train to the correct train, we should be good (try skipping this last line to test some stuff)
         PlayerSelection allPlayers = PlayerSelection.all();
         Arrays.stream(lastCarriages).forEach(
-            c -> c.forEachPresentEntity(
-                cce -> CRPackets.PACKETS.sendTo(allPlayers, new CarriageContraptionEntityUpdatePacket(cce, newTrain))
-            )
+                c -> c.forEachPresentEntity(
+                        cce -> CRPackets.PACKETS.sendTo(allPlayers, new CarriageContraptionEntityUpdatePacket(cce, newTrain))
+                )
         );
         CRPackets.PACKETS.sendTo(allPlayers, new ChopTrainEndPacket(train, numberOffEnd, train.doubleEnded));
 
@@ -188,9 +187,9 @@ public class TrainUtils {
             leadingCarriage.travel(null, train.graph, -offsetDist, null, null, 0);
             TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
             MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
-            double distance = discoveryPoint.travel(train.graph, maxDistance+offsetDist, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
+            double distance = discoveryPoint.travel(train.graph, maxDistance + offsetDist, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
                 if (couple.getFirst() instanceof GlobalStation station && station.canApproachFrom(couple.getSecond().getSecond())
-                    && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
+                        && (station.getNearestTrain() == null || station.getNearestTrain() == train) && station.getPresentTrain() == null) {
                     targetStation.setValue(station);
                     return true;
                 }
@@ -203,7 +202,7 @@ public class TrainUtils {
                 train.navigation = new Navigation(train);
                 train.runtime = new ScheduleRuntime(train);
                 train.navigation.destination = targetStation.getValue();
-                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance)+offsetDist, discoveryPoint, null, 0);
+                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance) + offsetDist, discoveryPoint, null, 0);
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
                 train.runtime = oldRuntime;

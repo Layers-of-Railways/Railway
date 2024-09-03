@@ -36,46 +36,46 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RailwaysClient {
-  public static void init() {
-    registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
-    registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
+    public static void init() {
+        registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
+        registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
 
-    registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
-    registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
-    registerBuiltinPack("legacy_palettes", "Steam 'n' Rails Legacy Palettes Textures");
+        registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
+        registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
+        registerBuiltinPack("legacy_palettes", "Steam 'n' Rails Legacy Palettes Textures");
 
-    registerClientCommands(CRCommandsClient::register);
+        registerClientCommands(CRCommandsClient::register);
 
-    CRPackets.PACKETS.registerS2CListener();
+        CRPackets.PACKETS.registerS2CListener();
 
-    CRPonderIndex.register();
+        CRPonderIndex.register();
 
-    CRKeys.register();
-    CRBlockPartials.init();
+        CRKeys.register();
+        CRBlockPartials.init();
 
-    CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
-    CustomTrackOverlayRendering.register(CREdgePointTypes.SWITCH, CRBlockPartials.SWITCH_RIGHT_TURN);
+        CustomTrackOverlayRendering.register(CREdgePointTypes.COUPLER, CRBlockPartials.COUPLER_BOTH);
+        CustomTrackOverlayRendering.register(CREdgePointTypes.SWITCH, CRBlockPartials.SWITCH_RIGHT_TURN);
 
-    Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
+        Mods.JOURNEYMAP.executeIfInstalled(() -> RailwayMapPlugin::load);
 
-    CRDevCaps.register();
-    BufferModelUtils.register();
+        CRDevCaps.register();
+        BufferModelUtils.register();
 
-    DevCapeUtils.INSTANCE.init();
-  }
+        DevCapeUtils.INSTANCE.init();
+    }
 
-  @ExpectPlatform
-  public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
-    throw new AssertionError();
-  }
+    @ExpectPlatform
+    public static void registerClientCommands(Consumer<CommandDispatcher<SharedSuggestionProvider>> consumer) {
+        throw new AssertionError();
+    }
 
-  @ExpectPlatform
-  public static void registerModelLayer(ModelLayerLocation layer, Supplier<LayerDefinition> definition) {
-    throw new AssertionError();
-  }
+    @ExpectPlatform
+    public static void registerModelLayer(ModelLayerLocation layer, Supplier<LayerDefinition> definition) {
+        throw new AssertionError();
+    }
 
-  @ExpectPlatform
-  public static void registerBuiltinPack(String id, String name) {
-    throw new AssertionError();
-  }
+    @ExpectPlatform
+    public static void registerBuiltinPack(String id, String name) {
+        throw new AssertionError();
+    }
 }

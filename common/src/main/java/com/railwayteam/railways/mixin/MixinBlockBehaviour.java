@@ -33,16 +33,16 @@ import java.util.List;
 
 @Mixin(BlockBehaviour.class)
 public class MixinBlockBehaviour {
-  /**
-   * @author Railways
-   * @reason Can't inject in MixinTrackBlock, because TrackBlock itself doesn't include this method, only its superclass (BlockBehaviour)
-   */
-  @Inject(method = "getDrops", at = @At("RETURN"))
-  private void addTrackCasingDrops(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> cir) {
-    // superList is mutable, so we don't need to cir.setReturnValue() (it doesnt stack)
-    List<ItemStack> superList = cir.getReturnValue();
-    if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
-      superList.add(new ItemStack(casing.getTrackCasing()));
+    /**
+     * @author Railways
+     * @reason Can't inject in MixinTrackBlock, because TrackBlock itself doesn't include this method, only its superclass (BlockBehaviour)
+     */
+    @Inject(method = "getDrops", at = @At("RETURN"))
+    private void addTrackCasingDrops(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> cir) {
+        // superList is mutable, so we don't need to cir.setReturnValue() (it doesnt stack)
+        List<ItemStack> superList = cir.getReturnValue();
+        if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
+            superList.add(new ItemStack(casing.getTrackCasing()));
+        }
     }
-  }
 }

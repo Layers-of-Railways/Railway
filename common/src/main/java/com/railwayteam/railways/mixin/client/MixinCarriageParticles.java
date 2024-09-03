@@ -33,7 +33,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CarriageParticles.class)
 public class MixinCarriageParticles {
-    @Unique private boolean railways$isHandcar;
+    @Unique
+    private boolean railways$isHandcar;
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void railways$checkIfHandcar(CarriageContraptionEntity entity, CallbackInfo ci) {
@@ -45,7 +46,7 @@ public class MixinCarriageParticles {
             target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"
     ))
     private boolean railways$skipParticlesForHandcar(Level instance, ParticleOptions particleData, double x, double y, double z,
-                                                double xSpeed, double ySpeed, double zSpeed, @Local(ordinal = 1) boolean spark) {
+                                                     double xSpeed, double ySpeed, double zSpeed, @Local(ordinal = 1) boolean spark) {
         return spark || !railways$isHandcar;
     }
 }

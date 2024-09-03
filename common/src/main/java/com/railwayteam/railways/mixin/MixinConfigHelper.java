@@ -31,8 +31,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = ConfigHelper.class, remap = false)
 public class MixinConfigHelper {
     @Inject(method = {
-        "hasAnyConfig",
-        "hasAnyForgeConfig"
+            "hasAnyConfig",
+            "hasAnyForgeConfig"
     }, at = @At("HEAD"), cancellable = true)
     private static void markSNRConfig(String modID, CallbackInfoReturnable<Boolean> cir) {
         if (modID.equals(Railways.MODID))

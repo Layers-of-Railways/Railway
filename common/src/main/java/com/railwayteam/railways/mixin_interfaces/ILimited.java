@@ -23,6 +23,7 @@ import net.minecraft.core.BlockPos;
 
 public interface ILimited {
     void setLimitEnabled(boolean limitEnabled);
+
     boolean isLimitEnabled();
 
     static StationEditPacket makeLimitEnabledPacket(BlockPos pos, boolean limitEnabled) {

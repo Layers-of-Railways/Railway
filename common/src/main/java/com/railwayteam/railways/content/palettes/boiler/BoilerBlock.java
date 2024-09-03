@@ -189,7 +189,7 @@ public class BoilerBlock extends Block implements IWrenchable, IForceRenderingSo
     public void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state) {
         double offset = state.getValue(RAISED) ? 8 : 0;
 
-        for (int zeroAndOne  : Iterate.zeroAndOne) {
+        for (int zeroAndOne : Iterate.zeroAndOne) {
             int i = zeroAndOne * 16;
 
             // First line / direction on right side

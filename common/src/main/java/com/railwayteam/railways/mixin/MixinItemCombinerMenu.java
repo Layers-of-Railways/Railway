@@ -31,7 +31,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemCombinerMenu.class)
 public class MixinItemCombinerMenu {
-    @Shadow @Final protected ContainerLevelAccess access;
+    @Shadow
+    @Final
+    protected ContainerLevelAccess access;
 
     @Inject(method = "stillValid", at = @At("HEAD"), cancellable = true)
     private void railways$addGuiBlocksToStillValid(Player player, CallbackInfoReturnable<Boolean> cir) {

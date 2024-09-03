@@ -31,9 +31,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(NbtUtils.class)
 public abstract class NbtUtilsMixin {
     @Inject(
-        method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/util/datafix/DataFixTypes;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
-        at = @At("RETURN"),
-        cancellable = true
+            method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/util/datafix/DataFixTypes;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
+            at = @At("RETURN"),
+            cancellable = true
     )
     private static void updateDataWithFixers(DataFixer fixer, DataFixTypes fixTypes, CompoundTag compound,
                                              int oldVersion, int targetVersion, CallbackInfoReturnable<CompoundTag> cir) {

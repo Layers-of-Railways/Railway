@@ -115,14 +115,14 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
 
                     AllGuiTextures.TOOLBELT_SLOT.render(ms, 0, 0, this);
                     GuiGameElement.of(stack)
-                        .at(3, 3)
-                        .render(ms);
+                            .at(3, 3)
+                            .render(ms);
 
 
                     if (selected) {
                         AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(ms, -1, -1, this);
                         tip = Components.empty().append(stack.getHoverName())
-                            .withStyle(ChatFormatting.GOLD);
+                                .withStyle(ChatFormatting.GOLD);
                     }
                 }
             } else {

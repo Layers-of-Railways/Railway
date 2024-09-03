@@ -74,19 +74,19 @@ public class TrackEdgePointHighlighter {
 
                 if (state.getBlock() instanceof ITrackBlock track) {
                     loc = TrackGraphHelper.getGraphLocationAt(level, pos, track.getNearestTrackAxis(level, pos, state, lookAngle)
-                        .getSecond(), track.getTrackAxes(level, pos, state).get(0));
+                            .getSecond(), track.getTrackAxes(level, pos, state).get(0));
                 }
 
                 if (loc == null) {
                     BezierPointSelection bezier = TrackBlockOutline.result;
                     if (bezier != null) {
                         loc = TrackGraphHelper.getBezierGraphLocationAt(
-                            level,
-                            bezier.blockEntity().getBlockPos(),
-                            lookAngle.dot(bezier.direction()) < 0
-                                ? Direction.AxisDirection.POSITIVE
-                                : Direction.AxisDirection.NEGATIVE,
-                            bezier.loc()
+                                level,
+                                bezier.blockEntity().getBlockPos(),
+                                lookAngle.dot(bezier.direction()) < 0
+                                        ? Direction.AxisDirection.POSITIVE
+                                        : Direction.AxisDirection.NEGATIVE,
+                                bezier.loc()
                         );
                     }
                 }
@@ -101,25 +101,25 @@ public class TrackEdgePointHighlighter {
 
                     TrackGraphLocation finalLoc = loc;
                     edge.getEdgeData().getPoints().stream().sorted((a, b) -> {
-                            double distA = Math.abs(a.getLocationOn(edge) - finalLoc.position);
-                            double distB = Math.abs(b.getLocationOn(edge) - finalLoc.position);
-                            return Double.compare(distA, distB);
-                        }).filter(point -> Math.abs(point.getLocationOn(edge) - finalLoc.position) <= 0.5f)
-                        .limit(1).forEach(point -> {
-                            if (point instanceof SingleBlockEntityEdgePoint single && single.getBlockEntityPos() != null) {
-                                showOutlinesFrom(mc.level.getBlockEntity(single.getBlockEntityPos()), single.getBlockEntityPos(), 0);
-                            } else if (point instanceof SignalBoundary signal) {
-                                MutableInt index = new MutableInt(0);
-                                //noinspection CodeBlock2Expr
-                                signal.blockEntities.forEach(positions -> {
-                                    positions.keySet().forEach(pos2 -> {
-                                        if (pos2 != null) {
-                                            showOutlinesFrom(mc.level.getBlockEntity(pos2), pos2, index.getAndAdd(1));
-                                        }
+                                double distA = Math.abs(a.getLocationOn(edge) - finalLoc.position);
+                                double distB = Math.abs(b.getLocationOn(edge) - finalLoc.position);
+                                return Double.compare(distA, distB);
+                            }).filter(point -> Math.abs(point.getLocationOn(edge) - finalLoc.position) <= 0.5f)
+                            .limit(1).forEach(point -> {
+                                if (point instanceof SingleBlockEntityEdgePoint single && single.getBlockEntityPos() != null) {
+                                    showOutlinesFrom(mc.level.getBlockEntity(single.getBlockEntityPos()), single.getBlockEntityPos(), 0);
+                                } else if (point instanceof SignalBoundary signal) {
+                                    MutableInt index = new MutableInt(0);
+                                    //noinspection CodeBlock2Expr
+                                    signal.blockEntities.forEach(positions -> {
+                                        positions.keySet().forEach(pos2 -> {
+                                            if (pos2 != null) {
+                                                showOutlinesFrom(mc.level.getBlockEntity(pos2), pos2, index.getAndAdd(1));
+                                            }
+                                        });
                                     });
-                                });
-                            }
-                        });
+                                }
+                            });
                 }
             }
         }
@@ -139,28 +139,28 @@ public class TrackEdgePointHighlighter {
         if (trackTarget1 != null) {
             AABB aa = new AABB(pos).inflate(1 / 32f);
             CreateClient.OUTLINER.chaseAABB(holder.BLOCK_BOX, aa)
-                .colored(Color.SPRING_GREEN)
-                .lineWidth(1 / 16f);
+                    .colored(Color.SPRING_GREEN)
+                    .lineWidth(1 / 16f);
 
             AABB bb = new AABB(trackTarget1.getPositionForMapMarker()).contract(0, 10 / 16f, 0);
             CreateClient.OUTLINER.chaseAABB(holder.TRACK_BOX, bb)
-                .colored(Color.SPRING_GREEN)
-                .lineWidth(1 / 16f);
+                    .colored(Color.SPRING_GREEN)
+                    .lineWidth(1 / 16f);
 
             CreateClient.OUTLINER.showLine(holder.CONNECTOR, aa.getCenter(), bb.getCenter())
-                .colored(Color.SPRING_GREEN)
-                .lineWidth(1 / 16f);
+                    .colored(Color.SPRING_GREEN)
+                    .lineWidth(1 / 16f);
 
             SecondaryTrackTargetingBehaviour<?> trackTarget2 = SecondaryTrackTargetingBehaviour.get(be, SecondaryTrackTargetingBehaviour.TYPE);
             if (trackTarget2 != null) {
                 AABB cc = new AABB(trackTarget2.getGlobalPosition()).contract(0, 10 / 16f, 0);
                 CreateClient.OUTLINER.chaseAABB(holder.TRACK_BOX2, cc)
-                    .colored(Color.GREEN)
-                    .lineWidth(1 / 16f);
+                        .colored(Color.GREEN)
+                        .lineWidth(1 / 16f);
 
                 CreateClient.OUTLINER.showLine(holder.CONNECTOR2, bb.getCenter(), cc.getCenter())
-                    .colored(Color.GREEN)
-                    .lineWidth(1 / 16f);
+                        .colored(Color.GREEN)
+                        .lineWidth(1 / 16f);
             }
             return true;
         }

@@ -53,13 +53,13 @@ import static com.railwayteam.railways.base.data.CRTagGen.addOptionalTag;
 public abstract class TrackCompatUtils {
 
     public static final Set<String> TRACK_COMPAT_MODS = ImmutableSet.of(
-        "hexcasting",
-        "byg", // Oh The Biomes You'll Go,
-        "blue_skies",
-        "twilightforest",
-        "biomesoplenty",
-        "create_dd", // Dreams 'n' Desires
-        "quark"
+            "hexcasting",
+            "byg", // Oh The Biomes You'll Go,
+            "blue_skies",
+            "twilightforest",
+            "biomesoplenty",
+            "create_dd", // Dreams 'n' Desires
+            "quark"
     );
 
     public static boolean anyLoaded() {
@@ -91,11 +91,13 @@ public abstract class TrackCompatUtils {
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, boolean hideInCreativeTabs) {
-        return makeTrack(material, new CompatTrackBlockStateGenerator()::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
+        return makeTrack(material, new CompatTrackBlockStateGenerator()::generate, (t) -> {
+        }, (p) -> p, hideInCreativeTabs);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
-        return makeTrack(material, blockstateGen, (t) -> {});
+        return makeTrack(material, blockstateGen, (t) -> {
+        });
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister) {
@@ -103,7 +105,8 @@ public abstract class TrackCompatUtils {
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
-        return makeTrack(material, blockstateGen, (t) -> {}, collectProperties);
+        return makeTrack(material, blockstateGen, (t) -> {
+        }, collectProperties);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen, NonNullConsumer<? super TrackBlock> onRegister, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> collectProperties) {
@@ -121,37 +124,37 @@ public abstract class TrackCompatUtils {
             addOptionalTag(Railways.asResource(name), AllTags.AllBlockTags.GIRDABLE_TRACKS.tag);
 
         return REGISTRATE.block(name, material::createBlock)
-            .initialProperties(Material.STONE)
-            .properties(p -> collectProperties.apply(p)
-                .color(MaterialColor.METAL)
-                .strength(0.8F)
-                .sound(SoundType.METAL)
-                .noOcclusion())
-            .addLayer(() -> RenderType::cutoutMipped)
-            .blockstate(blockstateGen)
-            .lang(material.langName + " Train Track")
-            .onRegister(onRegister)
-            .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
-            .onRegister(CRTrackMaterials::addToBlockEntityType)
-            .item(TrackBlockItem::new)
-            .properties(p -> {
-                if (hideInCreativeTabs) //noinspection DataFlowIssue
-                    p.tab(null);
-                return p;
-            })
-            .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_"+material.resourceName())))
-            .build()
-            .register();
+                .initialProperties(Material.STONE)
+                .properties(p -> collectProperties.apply(p)
+                        .color(MaterialColor.METAL)
+                        .strength(0.8F)
+                        .sound(SoundType.METAL)
+                        .noOcclusion())
+                .addLayer(() -> RenderType::cutoutMipped)
+                .blockstate(blockstateGen)
+                .lang(material.langName + " Train Track")
+                .onRegister(onRegister)
+                .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
+                .onRegister(CRTrackMaterials::addToBlockEntityType)
+                .item(TrackBlockItem::new)
+                .properties(p -> {
+                    if (hideInCreativeTabs) //noinspection DataFlowIssue
+                        p.tab(null);
+                    return p;
+                })
+                .model((c, p) -> p.generated(c, new ResourceLocation(owningMod, "item/track/track_" + material.resourceName())))
+                .build()
+                .register();
     }
 
     public static TrackMaterial buildCompatModels(TrackMaterialFactory factory) {
-        String namespace = ((AccessorTrackMaterialFactory)factory).getId().getNamespace();
-        String path = ((AccessorTrackMaterialFactory)factory).getId().getPath();
+        String namespace = ((AccessorTrackMaterialFactory) factory).getId().getNamespace();
+        String path = ((AccessorTrackMaterialFactory) factory).getId().getPath();
         String prefix = "block/track/compat/" + namespace + "/" + path + "/";
         return factory.customModels(
-            () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
-            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
-            () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
+                () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
+                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
+                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
         ).build();
     }
 }

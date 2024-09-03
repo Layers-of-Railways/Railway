@@ -77,7 +77,7 @@ public class MonorailTrackBlock extends TrackBlock {
                 block = CRBlocks.INVISIBLE_MONO_BOGEY;
         }
         return block.getDefaultState()
-            .setValue(BlockStateProperties.HORIZONTAL_AXIS, state.getValue(SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z);
+                .setValue(BlockStateProperties.HORIZONTAL_AXIS, state.getValue(SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z);
     }
 
     @Override
@@ -166,8 +166,8 @@ public class MonorailTrackBlock extends TrackBlock {
     public PartialModel prepareAssemblyOverlay(BlockGetter world, BlockPos pos, BlockState state, Direction direction,
                                                PoseStack ms) {
         TransformStack.cast(ms)
-            .rotateCentered(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(direction)))
-            .translateY(14/16f);
+                .rotateCentered(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(direction)))
+                .translateY(14 / 16f);
         return CRBlockPartials.MONORAIL_TRACK_ASSEMBLING_OVERLAY;
     }
 
@@ -176,7 +176,7 @@ public class MonorailTrackBlock extends TrackBlock {
     public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (!state.hasProperty(SHAPE)) return;
         TrackGraphLocation location = TrackGraphHelper.getGraphLocationAt(level, pos,
-            Direction.AxisDirection.POSITIVE, state.getValue(SHAPE).getAxes().get(0));
+                Direction.AxisDirection.POSITIVE, state.getValue(SHAPE).getAxes().get(0));
         if (location == null) return;
         Couple<TrackNode> nodes = location.edge.map((e) -> location.graph.locateNode(e));
         if (nodes.either(Objects::isNull)) return;

@@ -41,65 +41,65 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class MinecartWorkbench extends MinecartBlock implements MenuProvider {
-  public static final Type TYPE = Type.valueOf("RAILWAY_WORKBENCH");
+    public static final Type TYPE = Type.valueOf("RAILWAY_WORKBENCH");
 
-  private final double VALID_RANGE = 32d;
-  private static final EntityTypeTest<Entity, MinecartWorkbench> test = EntityTypeTest.forClass(MinecartWorkbench.class);
+    private final double VALID_RANGE = 32d;
+    private static final EntityTypeTest<Entity, MinecartWorkbench> test = EntityTypeTest.forClass(MinecartWorkbench.class);
 
-  public MinecartWorkbench(EntityType<?> type, Level level) {
-    super(type, level, Blocks.CRAFTING_TABLE);
-  }
-
-  protected MinecartWorkbench(Level level, double x, double y, double z) {
-    super(CREntities.CART_BLOCK.get(), level, x, y, z, Blocks.CRAFTING_TABLE);
-  }
-
-  // need to detour through this or generics explode somehow
-  @ExpectPlatform
-  public static MinecartWorkbench create(Level level, double x, double y, double z) {
-    throw new AssertionError();
-  }
-
-  @ExpectPlatform
-  public static MinecartWorkbench create(EntityType<?> type, Level level) {
-    throw new AssertionError();
-  }
-
-  @Override
-  public Type getMinecartType() {
-    return TYPE;
-  }
-
-  @NotNull
-  @Override
-  public InteractionResult interact (@NotNull Player player, @NotNull InteractionHand hand) {
-    InteractionResult ret = super.interact(player, hand);
-    if (ret.consumesAction()) return ret;
-    player.openMenu(this);
-    if (!player.level.isClientSide) {
-      this.gameEvent(GameEvent.CONTAINER_OPEN, player);
-      PiglinAi.angerNearbyPiglins(player, true);
-      return InteractionResult.CONSUME;
-    } else {
-      return InteractionResult.SUCCESS;
+    public MinecartWorkbench(EntityType<?> type, Level level) {
+        super(type, level, Blocks.CRAFTING_TABLE);
     }
-  }
 
-  @Nullable
-  @Override
-  public AbstractContainerMenu createMenu (int p_39954_, @NotNull Inventory inv, @NotNull Player player) {
-    return new CraftingMenu(p_39954_, inv, ContainerLevelAccess.create(level, blockPosition())) {
-      @Override
-      public boolean stillValid(@NotNull Player player) {
-        return player.level.getEntities(
-        test, player.getBoundingBox().inflate(VALID_RANGE), Entity::isAlive
-        ).stream().anyMatch((e) -> player.distanceToSqr(e) < VALID_RANGE);
-      }
-    };
-  }
+    protected MinecartWorkbench(Level level, double x, double y, double z) {
+        super(CREntities.CART_BLOCK.get(), level, x, y, z, Blocks.CRAFTING_TABLE);
+    }
 
-  @Override
-  public ItemStack getPickResult() {
-    return CRItems.ITEM_BENCHCART.asStack();
-  }
+    // need to detour through this or generics explode somehow
+    @ExpectPlatform
+    public static MinecartWorkbench create(Level level, double x, double y, double z) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static MinecartWorkbench create(EntityType<?> type, Level level) {
+        throw new AssertionError();
+    }
+
+    @Override
+    public Type getMinecartType() {
+        return TYPE;
+    }
+
+    @NotNull
+    @Override
+    public InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
+        InteractionResult ret = super.interact(player, hand);
+        if (ret.consumesAction()) return ret;
+        player.openMenu(this);
+        if (!player.level.isClientSide) {
+            this.gameEvent(GameEvent.CONTAINER_OPEN, player);
+            PiglinAi.angerNearbyPiglins(player, true);
+            return InteractionResult.CONSUME;
+        } else {
+            return InteractionResult.SUCCESS;
+        }
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, @NotNull Inventory inv, @NotNull Player player) {
+        return new CraftingMenu(p_39954_, inv, ContainerLevelAccess.create(level, blockPosition())) {
+            @Override
+            public boolean stillValid(@NotNull Player player) {
+                return player.level.getEntities(
+                        test, player.getBoundingBox().inflate(VALID_RANGE), Entity::isAlive
+                ).stream().anyMatch((e) -> player.distanceToSqr(e) < VALID_RANGE);
+            }
+        };
+    }
+
+    @Override
+    public ItemStack getPickResult() {
+        return CRItems.ITEM_BENCHCART.asStack();
+    }
 }

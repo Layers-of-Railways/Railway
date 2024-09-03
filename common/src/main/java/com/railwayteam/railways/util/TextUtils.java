@@ -43,9 +43,9 @@ public class TextUtils {
         Stream.of(inputString.split(" ")).forEach(stringPart -> {
             if (stringPart.length() > 1)
                 resultPlaceHolder.append(stringPart.substring(0, 1)
-                        .toUpperCase(Locale.ROOT))
-                    .append(stringPart.substring(1)
-                        .toLowerCase(Locale.ROOT));
+                                .toUpperCase(Locale.ROOT))
+                        .append(stringPart.substring(1)
+                                .toLowerCase(Locale.ROOT));
             else
                 resultPlaceHolder.append(stringPart.toUpperCase(Locale.ROOT));
 

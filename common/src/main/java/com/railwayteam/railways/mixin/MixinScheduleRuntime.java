@@ -42,15 +42,20 @@ public abstract class MixinScheduleRuntime {
     @Shadow
     Schedule schedule;
 
-    @Shadow public int currentEntry;
+    @Shadow
+    public int currentEntry;
 
-    @Shadow public ScheduleRuntime.State state;
+    @Shadow
+    public ScheduleRuntime.State state;
 
-    @Shadow public boolean isAutoSchedule;
+    @Shadow
+    public boolean isAutoSchedule;
 
-    @Shadow public abstract void discardSchedule();
+    @Shadow
+    public abstract void discardSchedule();
 
-    @Shadow Train train;
+    @Shadow
+    Train train;
 
     @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
     private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
@@ -84,8 +89,8 @@ public abstract class MixinScheduleRuntime {
 
     // waypoint instructions have no conditions, and so are handled as 'invalid' by the vanilla code (https://github.com/Layers-of-Railways/Railway/issues/329)
     @Inject(method = "estimateStayDuration",
-        at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;get(I)Ljava/lang/Object;", shift = At.Shift.BY, by=2),
-        cancellable = true)
+            at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/List;get(I)Ljava/lang/Object;", shift = At.Shift.BY, by = 2),
+            cancellable = true)
     private void waypointsAreValid(int index, CallbackInfoReturnable<Integer> cir, @Local(name = "scheduleEntry") ScheduleEntry scheduleEntry) {
         if (scheduleEntry.instruction instanceof WaypointDestinationInstruction)
             cir.setReturnValue(0);

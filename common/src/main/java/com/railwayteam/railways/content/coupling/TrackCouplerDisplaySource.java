@@ -47,8 +47,8 @@ public class TrackCouplerDisplaySource extends DisplaySource {
         switch (info.mode()) {
             case NONE -> {
                 return ImmutableList.of(
-                    Components.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD),
-                    te.getClientInfo().error
+                        Components.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD),
+                        te.getClientInfo().error
                 );
             }
             case COUPLING -> {
@@ -75,7 +75,7 @@ public class TrackCouplerDisplaySource extends DisplaySource {
     public void loadFlapDisplayLayout(DisplayLinkContext context, FlapDisplayBlockEntity flapDisplay, FlapDisplayLayout layout) {
         if (!layout.isLayout("Default"))
             layout.configure("Default",
-                ImmutableList.of(createSectionForValue(context, flapDisplay.getMaxCharCount())));
+                    ImmutableList.of(createSectionForValue(context, flapDisplay.getMaxCharCount())));
     }
 
     protected FlapDisplaySection createSectionForValue(DisplayLinkContext context, int size) {

@@ -47,201 +47,202 @@ import java.util.function.Function;
  * </pre>
  */
 public abstract class PacketSet {
-	public final String id;
-	public final int version;
+    public final String id;
+    public final int version;
 
-	public final ResourceLocation c2sPacket;
-	public final ResourceLocation s2cPacket;
+    public final ResourceLocation c2sPacket;
+    public final ResourceLocation s2cPacket;
 
-	private final List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets;
-	private final Object2IntMap<Class<? extends S2CPacket>> s2cTypes;
-	private final List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets;
-	private final Object2IntMap<Class<? extends C2SPacket>> c2sTypes;
+    private final List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets;
+    private final Object2IntMap<Class<? extends S2CPacket>> s2cTypes;
+    private final List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets;
+    private final Object2IntMap<Class<? extends C2SPacket>> c2sTypes;
 
-	protected PacketSet(String id, int version,
-						List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets,
-						Object2IntMap<Class<? extends S2CPacket>> s2cTypes,
-						List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets,
-						Object2IntMap<Class<? extends C2SPacket>> c2sTypes) {
-		this.id = id;
-		this.version = version;
+    protected PacketSet(String id, int version,
+                        List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets,
+                        Object2IntMap<Class<? extends S2CPacket>> s2cTypes,
+                        List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets,
+                        Object2IntMap<Class<? extends C2SPacket>> c2sTypes) {
+        this.id = id;
+        this.version = version;
 
-		this.s2cPackets = s2cPackets;
-		this.s2cTypes = s2cTypes;
+        this.s2cPackets = s2cPackets;
+        this.s2cTypes = s2cTypes;
 
-		this.c2sPackets = c2sPackets;
-		this.c2sTypes = c2sTypes;
+        this.c2sPackets = c2sPackets;
+        this.c2sTypes = c2sTypes;
 
-		c2sPacket = new ResourceLocation(id, "c2s");
-		s2cPacket = new ResourceLocation(id, "s2c");
-	}
+        c2sPacket = new ResourceLocation(id, "c2s");
+        s2cPacket = new ResourceLocation(id, "s2c");
+    }
 
-	/**
-	 * Send the given C2S packet to the server.
-	 */
-	@Environment(EnvType.CLIENT)
-	public void send(C2SPacket packet) {
-		int i = idOfC2S(packet);
-		if (i != -1) {
-			FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-			buf.writeVarInt(i);
-			packet.write(buf);
-			doSendC2S(buf);
-		} else {
-			throw new IllegalArgumentException("Cannot send unregistered C2SPacket: " + packet);
-		}
-	}
+    /**
+     * Send the given C2S packet to the server.
+     */
+    @Environment(EnvType.CLIENT)
+    public void send(C2SPacket packet) {
+        int i = idOfC2S(packet);
+        if (i != -1) {
+            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+            buf.writeVarInt(i);
+            packet.write(buf);
+            doSendC2S(buf);
+        } else {
+            throw new IllegalArgumentException("Cannot send unregistered C2SPacket: " + packet);
+        }
+    }
 
-	/**
-	 * Send one of Create's packets to the server.
-	 */
-	@Environment(EnvType.CLIENT)
-	public abstract void send(SimplePacketBase packet);
+    /**
+     * Send one of Create's packets to the server.
+     */
+    @Environment(EnvType.CLIENT)
+    public abstract void send(SimplePacketBase packet);
 
-	/**
-	 * Send the given S2C packet to the given player.
-	 */
-	public void sendTo(ServerPlayer player, S2CPacket packet) {
-		sendTo(PlayerSelection.of(player), packet);
-	}
+    /**
+     * Send the given S2C packet to the given player.
+     */
+    public void sendTo(ServerPlayer player, S2CPacket packet) {
+        sendTo(PlayerSelection.of(player), packet);
+    }
 
-	/**
-	 * Send the given Create packet to the given player.
-	 */
-	public abstract void sendTo(ServerPlayer player, SimplePacketBase packet);
+    /**
+     * Send the given Create packet to the given player.
+     */
+    public abstract void sendTo(ServerPlayer player, SimplePacketBase packet);
 
-	/**
-	 * Send the given S2C packet to the given players.
-	 */
-	public void sendTo(PlayerSelection selection, S2CPacket packet) {
-		int i = idOfS2C(packet);
-		if (i != -1) {
-			FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-			buf.writeVarInt(i);
-			packet.write(buf);
-			selection.accept(s2cPacket, buf);
-		} else {
-			throw new IllegalArgumentException("Cannot send unregistered S2CPacket: " + packet);
-		}
-	}
+    /**
+     * Send the given S2C packet to the given players.
+     */
+    public void sendTo(PlayerSelection selection, S2CPacket packet) {
+        int i = idOfS2C(packet);
+        if (i != -1) {
+            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+            buf.writeVarInt(i);
+            packet.write(buf);
+            selection.accept(s2cPacket, buf);
+        } else {
+            throw new IllegalArgumentException("Cannot send unregistered S2CPacket: " + packet);
+        }
+    }
 
-	/**
-	 * Send the given Create packet to the given players.
-	 */
-	public abstract void sendTo(PlayerSelection selection, SimplePacketBase packet);
+    /**
+     * Send the given Create packet to the given players.
+     */
+    public abstract void sendTo(PlayerSelection selection, SimplePacketBase packet);
 
-	@Environment(EnvType.CLIENT)
-	public abstract void registerS2CListener();
-	public abstract void registerC2SListener();
+    @Environment(EnvType.CLIENT)
+    public abstract void registerS2CListener();
 
-	@Environment(EnvType.CLIENT)
-	protected abstract void doSendC2S(FriendlyByteBuf buf);
+    public abstract void registerC2SListener();
 
-	protected int idOfC2S(C2SPacket packet) {
-		return c2sTypes.getOrDefault(packet.getClass(), -1);
-	}
+    @Environment(EnvType.CLIENT)
+    protected abstract void doSendC2S(FriendlyByteBuf buf);
 
-	protected int idOfS2C(S2CPacket packet) {
-		return s2cTypes.getOrDefault(packet.getClass(), -1);
-	}
+    protected int idOfC2S(C2SPacket packet) {
+        return c2sTypes.getOrDefault(packet.getClass(), -1);
+    }
 
-	@Environment(EnvType.CLIENT)
-	@Internal
-	public void handleS2CPacket(Minecraft mc, FriendlyByteBuf buf) {
-		int i = buf.readVarInt();
-		if (i < 0 || i >= s2cPackets.size()) {
-			Railways.LOGGER.error("Invalid S2C Packet {}, ignoring", i);
-			return;
-		}
-		Function<FriendlyByteBuf, S2CPacket> factory = s2cPackets.get(i);
-		S2CPacket packet = factory.apply(buf);
-		mc.execute(() -> packet.handle(mc));
-	}
+    protected int idOfS2C(S2CPacket packet) {
+        return s2cTypes.getOrDefault(packet.getClass(), -1);
+    }
 
-	@Internal
-	public void handleC2SPacket(ServerPlayer sender, FriendlyByteBuf buf) {
-		int i = buf.readVarInt();
-		if (i < 0 || i >= c2sPackets.size()) {
-			Railways.LOGGER.error("Invalid C2S Packet {}, ignoring", i);
-			return;
-		}
-		Function<FriendlyByteBuf, C2SPacket> factory = c2sPackets.get(i);
-		C2SPacket packet = factory.apply(buf);
-		sender.server.execute(() -> packet.handle(sender));
-	}
+    @Environment(EnvType.CLIENT)
+    @Internal
+    public void handleS2CPacket(Minecraft mc, FriendlyByteBuf buf) {
+        int i = buf.readVarInt();
+        if (i < 0 || i >= s2cPackets.size()) {
+            Railways.LOGGER.error("Invalid S2C Packet {}, ignoring", i);
+            return;
+        }
+        Function<FriendlyByteBuf, S2CPacket> factory = s2cPackets.get(i);
+        S2CPacket packet = factory.apply(buf);
+        mc.execute(() -> packet.handle(mc));
+    }
 
-	@ExpectPlatform
-	@Internal
-	public static PacketSet create(String id, int version,
-								   List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets,
-								   Object2IntMap<Class<? extends S2CPacket>> s2cTypes,
-								   List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets,
-								   Object2IntMap<Class<? extends C2SPacket>> c2sTypes) {
-		throw new AssertionError();
-	}
+    @Internal
+    public void handleC2SPacket(ServerPlayer sender, FriendlyByteBuf buf) {
+        int i = buf.readVarInt();
+        if (i < 0 || i >= c2sPackets.size()) {
+            Railways.LOGGER.error("Invalid C2S Packet {}, ignoring", i);
+            return;
+        }
+        Function<FriendlyByteBuf, C2SPacket> factory = c2sPackets.get(i);
+        C2SPacket packet = factory.apply(buf);
+        sender.server.execute(() -> packet.handle(sender));
+    }
 
-	/**
-	 * Start building a new PacketSet. Starts with a version sync packet.
-	 */
-	public static Builder builder(String id, int version) {
-		return new Builder(id, version).s2c(CheckVersionPacket.class, CheckVersionPacket::new);
-	}
+    @ExpectPlatform
+    @Internal
+    public static PacketSet create(String id, int version,
+                                   List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets,
+                                   Object2IntMap<Class<? extends S2CPacket>> s2cTypes,
+                                   List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets,
+                                   Object2IntMap<Class<? extends C2SPacket>> c2sTypes) {
+        throw new AssertionError();
+    }
 
-	/**
-	 * Send the player a packet with the current network version. If they do not match, the player will disconnect.
-	 */
-	public void onPlayerJoin(ServerPlayer player) {
-		sendTo(player, new CheckVersionPacket(version));
-	}
+    /**
+     * Start building a new PacketSet. Starts with a version sync packet.
+     */
+    public static Builder builder(String id, int version) {
+        return new Builder(id, version).s2c(CheckVersionPacket.class, CheckVersionPacket::new);
+    }
 
-	public record CheckVersionPacket(int serverVersion) implements S2CPacket {
-		public CheckVersionPacket(FriendlyByteBuf buf) {
-			this(buf.readVarInt());
-		}
+    /**
+     * Send the player a packet with the current network version. If they do not match, the player will disconnect.
+     */
+    public void onPlayerJoin(ServerPlayer player) {
+        sendTo(player, new CheckVersionPacket(version));
+    }
 
-		@Override
-		public void write(FriendlyByteBuf buffer) {
-			buffer.writeVarInt(serverVersion);
-		}
+    public record CheckVersionPacket(int serverVersion) implements S2CPacket {
+        public CheckVersionPacket(FriendlyByteBuf buf) {
+            this(buf.readVarInt());
+        }
 
-		@Override
-		public void handle(Minecraft mc) {
-			if (CRPackets.PACKETS.version == serverVersion)
-				return;
-			Component error = Components.literal("Steam n' Rails on the client uses a different network format than the server.")
-					.append(" You should use the same version of the mod on both sides.");
-			mc.getConnection().onDisconnect(error);
-		}
-	}
+        @Override
+        public void write(FriendlyByteBuf buffer) {
+            buffer.writeVarInt(serverVersion);
+        }
 
-	public static class Builder {
-		public final String id;
-		public final int version;
+        @Override
+        public void handle(Minecraft mc) {
+            if (CRPackets.PACKETS.version == serverVersion)
+                return;
+            Component error = Components.literal("Steam n' Rails on the client uses a different network format than the server.")
+                    .append(" You should use the same version of the mod on both sides.");
+            mc.getConnection().onDisconnect(error);
+        }
+    }
 
-		private final List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets = new ArrayList<>();
-		private final Object2IntMap<Class<? extends S2CPacket>> s2cTypes = new Object2IntOpenHashMap<>();
-		private final List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets = new ArrayList<>();
-		private final Object2IntMap<Class<? extends C2SPacket>> c2sTypes = new Object2IntOpenHashMap<>();
+    public static class Builder {
+        public final String id;
+        public final int version;
 
-		protected Builder(String id, int version) {
-			this.id = id;
-			this.version = version;
-		}
+        private final List<Function<FriendlyByteBuf, S2CPacket>> s2cPackets = new ArrayList<>();
+        private final Object2IntMap<Class<? extends S2CPacket>> s2cTypes = new Object2IntOpenHashMap<>();
+        private final List<Function<FriendlyByteBuf, C2SPacket>> c2sPackets = new ArrayList<>();
+        private final Object2IntMap<Class<? extends C2SPacket>> c2sTypes = new Object2IntOpenHashMap<>();
 
-		public Builder s2c(Class<? extends S2CPacket> clazz, Function<FriendlyByteBuf, S2CPacket> factory) {
-			s2cPackets.add(factory);
-			s2cTypes.put(clazz, s2cPackets.indexOf(factory));
-			return this;
-		}
+        protected Builder(String id, int version) {
+            this.id = id;
+            this.version = version;
+        }
 
-		public Builder c2s(Class<? extends C2SPacket> clazz, Function<FriendlyByteBuf, C2SPacket> factory) {
-			c2sPackets.add(factory);
-			c2sTypes.put(clazz, c2sPackets.indexOf(factory));
-			return this;
-		}
+        public Builder s2c(Class<? extends S2CPacket> clazz, Function<FriendlyByteBuf, S2CPacket> factory) {
+            s2cPackets.add(factory);
+            s2cTypes.put(clazz, s2cPackets.indexOf(factory));
+            return this;
+        }
 
-		public PacketSet build() {
-			return create(id, version, s2cPackets, s2cTypes, c2sPackets, c2sTypes);
-		}
-	}
+        public Builder c2s(Class<? extends C2SPacket> clazz, Function<FriendlyByteBuf, C2SPacket> factory) {
+            c2sPackets.add(factory);
+            c2sTypes.put(clazz, c2sPackets.indexOf(factory));
+            return this;
+        }
+
+        public PacketSet build() {
+            return create(id, version, s2cPackets, s2cTypes, c2sPackets, c2sTypes);
+        }
+    }
 }

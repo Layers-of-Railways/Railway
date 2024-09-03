@@ -49,7 +49,8 @@ public class DyeableBlockEntity extends SmartBlockEntity implements IDyedBuffer 
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     @Override
     protected void write(CompoundTag tag, boolean clientPacket) {
@@ -76,13 +77,13 @@ public class DyeableBlockEntity extends SmartBlockEntity implements IDyedBuffer 
         if (hasLevel()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
             level.getChunkSource()
-                .getLightEngine()
-                .checkBlock(worldPosition);
+                    .getLightEngine()
+                    .checkBlock(worldPosition);
         }
     }
 
     public InteractionResult applyDyeIfValid(ItemStack stack) {
-        if (!(stack.getItem()instanceof DyeItem dyeItem))
+        if (!(stack.getItem() instanceof DyeItem dyeItem))
             return InteractionResult.PASS;
         DyeColor color = dyeItem.getDyeColor();
         if (color == this.color)

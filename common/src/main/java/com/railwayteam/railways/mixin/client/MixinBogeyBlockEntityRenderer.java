@@ -38,7 +38,7 @@ public class MixinBogeyBlockEntityRenderer {
             double couplingDistance = virtualCoupling.getCouplingDistance();
             if (couplingDistance > 0) {
                 VirtualCouplerRendering.renderCoupler(virtualCoupling.getCouplingDirection(), couplingDistance,
-                    virtualCoupling.getFront(), partialTicks, ms, buffer, light, overlay, sbte);
+                        virtualCoupling.getFront(), partialTicks, ms, buffer, light, overlay, sbte);
             }
         }
     }

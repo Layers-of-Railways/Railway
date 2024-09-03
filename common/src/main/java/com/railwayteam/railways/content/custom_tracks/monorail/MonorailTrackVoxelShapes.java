@@ -31,7 +31,7 @@ public class MonorailTrackVoxelShapes extends TrackVoxelShapes {
     }
 
     public static VoxelShape longOrthogonalX() {
-        return Block.box(-3.3, 0,0 , 19.3, 16, 16);
+        return Block.box(-3.3, 0, 0, 19.3, 16, 16);
     }
 
     public static VoxelShape longOrthogonalZ() {
@@ -45,11 +45,11 @@ public class MonorailTrackVoxelShapes extends TrackVoxelShapes {
     public static VoxelShape ascending() {
         int offset = -9;
         int verticalOffset = 1;
-        VoxelShape shape = Block.box(0, verticalOffset, offset, 16, 16+verticalOffset, 16+offset);
+        VoxelShape shape = Block.box(0, verticalOffset, offset, 16, 16 + verticalOffset, 16 + offset);
         VoxelShape[] shapes = new VoxelShape[6];
         for (int i = 0; i < 6; i++) {
             int off = (i + 1) * 2;
-            shapes[i] = Block.box(0, off + verticalOffset, off+offset, 16, 16 + off + verticalOffset, 16 + off + offset);
+            shapes[i] = Block.box(0, off + verticalOffset, off + offset, 16, 16 + off + verticalOffset, 16 + off + offset);
         }
         return Shapes.or(shape, shapes);
     }
@@ -57,7 +57,7 @@ public class MonorailTrackVoxelShapes extends TrackVoxelShapes {
     public static VoxelShape diagonal() {
         VoxelShape shape = Block.box(0, 0, 0, 16, 16, 16);
         final int half_count = 2;
-        VoxelShape[] shapes = new VoxelShape[half_count*2];
+        VoxelShape[] shapes = new VoxelShape[half_count * 2];
         int off = 0;
 
         for (int i = 0; i < half_count; i++) {

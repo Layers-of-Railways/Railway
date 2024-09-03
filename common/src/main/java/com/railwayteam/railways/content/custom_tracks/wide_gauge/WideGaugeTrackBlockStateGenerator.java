@@ -41,7 +41,7 @@ import java.util.Set;
 public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGenerator {
 
     private static final Set<String> COMPAT_MODS = ImmutableSet.of(
-        "create"
+            "create"
     );
 
     @Override
@@ -51,15 +51,15 @@ public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGene
         //Railways.LOGGER.warn("TrackShape: "+value.name()+", material: "+material.langName);
         if (value == TrackShape.NONE) {
             return prov.models()
-                .getExistingFile(prov.mcLoc("block/air"));
+                    .getExistingFile(prov.mcLoc("block/air"));
         }
 
         String textureModId = Railways.MODID;
         String resName = material.resourceName().replaceFirst("_wide", "");
         for (String modPrefix : COMPAT_MODS) {
-            if (resName.startsWith(modPrefix+"_")) {
+            if (resName.startsWith(modPrefix + "_")) {
                 textureModId = modPrefix;
-                resName = resName.replaceFirst(modPrefix+"_", "");
+                resName = resName.replaceFirst(modPrefix + "_", "");
                 break;
             }
         }
@@ -98,28 +98,28 @@ public class WideGaugeTrackBlockStateGenerator extends CustomTrackBlockStateGene
             BlockModelBuilder builder = prov.models().withExistingParent(prefix + value.getModel(), Railways.asResource("block/wide_gauge_base/" + value.getModel()));
             for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
                 prov.models()
-                    .withExistingParent(prefix + k,
-                        Railways.asResource("block/wide_gauge_base/" + k))
-                    .texture("0", Create.asResource("block/standard_track"))
-                    .texture("1", Create.asResource("block/standard_track_mip"))
-                    .texture("particle", material.particle);
+                        .withExistingParent(prefix + k,
+                                Railways.asResource("block/wide_gauge_base/" + k))
+                        .texture("0", Create.asResource("block/standard_track"))
+                        .texture("1", Create.asResource("block/standard_track_mip"))
+                        .texture("particle", material.particle);
             }
             return builder;
         }
         BlockModelBuilder builder = prov.models()
-            .withExistingParent(prefix + value.getModel(),
-                Railways.asResource("block/wide_gauge_base/" + value.getModel()))
-            .texture("particle", material.particle);
+                .withExistingParent(prefix + value.getModel(),
+                        Railways.asResource("block/wide_gauge_base/" + value.getModel()))
+                .texture("particle", material.particle);
         for (String k : textureMap.keySet()) {
             builder = builder.texture(k, new ResourceLocation(textureModId, texturePrefix + textureMap.get(k) + resName));
         }
         for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
             prov.models()
-                .withExistingParent(prefix + k,
-                    Railways.asResource("block/wide_gauge_base/" + k))
-                .texture("0", new ResourceLocation(textureModId, texturePrefix + "standard_track_" + resName))
-                .texture("1", new ResourceLocation(textureModId, texturePrefix + "standard_track_mip_" + resName))
-                .texture("particle", material.particle);
+                    .withExistingParent(prefix + k,
+                            Railways.asResource("block/wide_gauge_base/" + k))
+                    .texture("0", new ResourceLocation(textureModId, texturePrefix + "standard_track_" + resName))
+                    .texture("1", new ResourceLocation(textureModId, texturePrefix + "standard_track_mip_" + resName))
+                    .texture("particle", material.particle);
         }
         return builder;
     }

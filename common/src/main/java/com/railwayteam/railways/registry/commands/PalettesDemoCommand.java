@@ -42,44 +42,44 @@ import static net.minecraft.world.level.block.RotatedPillarBlock.AXIS;
 public class PalettesDemoCommand {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("palettes_demo")
-            .requires(cs -> cs.hasPermission(2))
-            .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                .executes(ctx -> {
-                    BlockPos origin = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
-                    PatternBuilder pattern = create();
+                .requires(cs -> cs.hasPermission(2))
+                .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                        .executes(ctx -> {
+                            BlockPos origin = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
+                            PatternBuilder pattern = create();
 
-                    pattern.place(ctx.getSource().getLevel(), origin, null);
-                    for (DyeColor dyeColor : DyeColor.values()) {
-                        origin = origin.offset(pattern.maxWidth + 2, 0, 0);
-                        pattern.place(ctx.getSource().getLevel(), origin, dyeColor);
-                    }
+                            pattern.place(ctx.getSource().getLevel(), origin, null);
+                            for (DyeColor dyeColor : DyeColor.values()) {
+                                origin = origin.offset(pattern.maxWidth + 2, 0, 0);
+                                pattern.place(ctx.getSource().getLevel(), origin, dyeColor);
+                            }
 
-                    ctx.getSource().sendSuccess(Components.literal("Placed palettes blocks"), true);
-                    return 1;
-                }));
+                            ctx.getSource().sendSuccess(Components.literal("Placed palettes blocks"), true);
+                            return 1;
+                        }));
     }
 
     private static PatternBuilder create() {
         return new PatternBuilder()
-            .next(Styles.SLASHED).next(Styles.SLASHED).next(Styles.FLAT_SLASHED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Y)
-            .nextRow()
-            .next(Styles.RIVETED).next(Styles.RIVETED).next(Styles.FLAT_RIVETED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Z)
-            .nextRow()
-            .next(Styles.PILLAR).transform(AXIS, Axis.Y).next(Styles.PILLAR).transform(AXIS, Axis.Z).next(Styles.PLATED).next(Styles.BRASS_WRAPPED_SLASHED)
-            .nextRow()
-            .next(Styles.IRON_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.BRASS_WRAPPED_SLASHED)
-            .nextRow()
-            .nextRow()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.BRASS_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.COPPER_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.IRON_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .nextRow()
-            .nextRow()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.GULLET)
-            .skip()
-            .skip()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.SMOKEBOX);
+                .next(Styles.SLASHED).next(Styles.SLASHED).next(Styles.FLAT_SLASHED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Y)
+                .nextRow()
+                .next(Styles.RIVETED).next(Styles.RIVETED).next(Styles.FLAT_RIVETED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Z)
+                .nextRow()
+                .next(Styles.PILLAR).transform(AXIS, Axis.Y).next(Styles.PILLAR).transform(AXIS, Axis.Z).next(Styles.PLATED).next(Styles.BRASS_WRAPPED_SLASHED)
+                .nextRow()
+                .next(Styles.IRON_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.BRASS_WRAPPED_SLASHED)
+                .nextRow()
+                .nextRow()
+                .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.X)
+                .next(Styles.BRASS_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
+                .next(Styles.COPPER_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
+                .next(Styles.IRON_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
+                .nextRow()
+                .nextRow()
+                .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.GULLET)
+                .skip()
+                .skip()
+                .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.SMOKEBOX);
     }
 
     private record Transform<T extends Comparable<T>>(Property<T> property, T value) {

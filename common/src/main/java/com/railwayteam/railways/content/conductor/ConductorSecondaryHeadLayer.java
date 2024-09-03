@@ -51,6 +51,7 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
     private final float scaleZ;
     private final Map<SkullBlock.Type, SkullModelBase> skullModels;
     private final ItemInHandRenderer itemInHandRenderer;
+
     public ConductorSecondaryHeadLayer(RenderLayerParent<T, M> renderer, EntityModelSet skullModels, ItemInHandRenderer itemInHandRenderer) {
         this(renderer, skullModels, 1.0f, 1.0f, 1.0f, itemInHandRenderer);
     }
@@ -80,8 +81,8 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
             matrixStack.scale(0.7f, 0.7f, 0.7f);
             matrixStack.translate(0.0, 1.0, 0.0);
         }
-        ((HeadedModel)this.getParentModel()).getHead().translateAndRotate(matrixStack);
-        if (item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AbstractSkullBlock) {
+        ((HeadedModel) this.getParentModel()).getHead().translateAndRotate(matrixStack);
+        if (item instanceof BlockItem && ((BlockItem) item).getBlock() instanceof AbstractSkullBlock) {
             CompoundTag compoundTag;
             matrixStack.scale(1.1875f, -1.1875f, -1.1875f);
             GameProfile gameProfile = null;
@@ -89,11 +90,11 @@ public class ConductorSecondaryHeadLayer<T extends ConductorEntity, M extends En
                 gameProfile = NbtUtils.readGameProfile(compoundTag.getCompound("SkullOwner"));
             }
             matrixStack.translate(-0.5, 0.0, -0.5);
-            SkullBlock.Type type = ((AbstractSkullBlock)((BlockItem)item).getBlock()).getType();
+            SkullBlock.Type type = ((AbstractSkullBlock) ((BlockItem) item).getBlock()).getType();
             SkullModelBase skullModelBase = this.skullModels.get(type);
             RenderType renderType = SkullBlockRenderer.getRenderType(type, gameProfile);
             SkullBlockRenderer.renderSkull(null, 180.0f, limbSwing, matrixStack, buffer, packedLight, skullModelBase, renderType);
-        } else if (!(item instanceof ArmorItem) || ((ArmorItem)item).getSlot() != EquipmentSlot.HEAD) {
+        } else if (!(item instanceof ArmorItem) || ((ArmorItem) item).getSlot() != EquipmentSlot.HEAD) {
             CustomHeadLayer.translateToHead(matrixStack, false);
             this.itemInHandRenderer.renderItem(conductor, itemStack, ItemTransforms.TransformType.HEAD, false, matrixStack, buffer, packedLight);
         }

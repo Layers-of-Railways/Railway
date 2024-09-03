@@ -48,8 +48,7 @@ public class DebugRendererExtensions {
         RAID(d -> d.raidDebugRenderer),
         GOAL_SELECTOR(g -> g.goalSelectorRenderer),
         GAME_TEST(g -> g.gameTestDebugRenderer),
-        GAME_EVENT(g -> g.gameEventListenerRenderer)
-        ;
+        GAME_EVENT(g -> g.gameEventListenerRenderer);
 
         private final Function<DebugRenderer, DebugRenderer.SimpleDebugRenderer> rendererSupplier;
 
@@ -70,8 +69,8 @@ public class DebugRendererExtensions {
             return EMPTY;
 
         return ImmutableSet.of(
-            //Renderers.COLLISION_BOX
-            //Renderers.SOLID_FACE
+                //Renderers.COLLISION_BOX
+                //Renderers.SOLID_FACE
         );
     }
 

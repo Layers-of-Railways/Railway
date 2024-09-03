@@ -1,4 +1,4 @@
-// 1.19.2	2024-08-05T16:20:40.1792431	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2024-09-03T08:00:19.6377806	Registrate Provider for railways [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 e64705f1b617701fb21a0c89d0cd3c94370a1a59 assets\railways\models\block\track\compat\byg\aspen_wide\diag.json
 1d2c33a53b8752f7cf43037923548863de990f6e assets\railways\models\block\track\compat\byg\maple_narrow\cross_d2_xo.json
 04f587350ff04e28457380f1e43f1826b7b08b16 assets\railways\models\block\light_blue_locometal_boiler_gullet_x.json
@@ -1225,6 +1225,7 @@ df866787063b50eed8c69b214a7c576ab9591aeb data\railways\loot_tables\blocks\orange
 474da4da71cfd9cf0198eb3254828026e377f634 data\railways\loot_tables\blocks\smokestack_caboosestyle.json
 bc33abc6f7871dbaf9957ee9964802c295ae591b assets\railways\models\block\track\compat\twilightforest\canopy_narrow\teleport.json
 3d31b4946461838d77e0ad96977c82c2a8187d3d assets\railways\models\block\track\compat\byg\palm_narrow\ascending.json
+99c7432efaea3dc5d5583659cc53d49c3f51cd1f data\create\tags\items\tracks.json
 7fcff13fe74c99354b27b106dad22d4f5379ef09 assets\railways\models\block\track\compat\byg\sythian_wide\segment_right.json
 729f1446d0a8baea6d82cbda7e4d9ced317ff7fb assets\railways\models\block\track\compat\blue_skies\dusk_narrow\cross_d2_zo.json
 0c3928092d4334035120a53b7ea5277c66493c56 assets\railways\models\block\track\compat\blue_skies\dusk_wide\diag_2.json
@@ -1673,7 +1674,7 @@ fd5b4648e3cadfddec571f92060fd192fc14fdd7 data\railways\loot_tables\blocks\track_
 4f4bb0088fca563f597556779fe0fa959cb59b4d assets\railways\models\block\cyan_iron_wrapped_locometal_boiler_gullet_x.json
 827079295f60c94b8483a6ed6a4845ef4570a404 assets\railways\blockstates\track_blue_skies_maple_wide.json
 3f857fb7fce99cba461d07e09c428d969366bd33 assets\railways\models\block\track\dark_oak\cross_diag.json
-c9fbbb98e3620734875ba93d73f9b1b1020bb1ed assets\railways\blockstates\buffer.json
+e587187de000647c82138bb71e9a7b3109c5a96e assets\railways\blockstates\buffer.json
 5efbcd41d927b4d49d4271434c1bb6208bdd83ec assets\railways\models\block\track\compat\biomesoplenty\fir_narrow\z_ortho.json
 03fbbe3ff24f8155f9295dab45513f14dd66c41a assets\railways\models\item\track_incomplete_birch_wide.json
 4c7615211bcfdbb5712194875dc35e8604933e24 assets\railways\models\block\track\compat\biomesoplenty\hellbark\segment_right.json
@@ -2120,7 +2121,7 @@ c00a017f427e714ee98cfed10e3c7d8dca79fcc4 data\railways\recipes\dying_existing_ca
 66a4a73c94a128a9f6b176d154ec05aac75c94f3 assets\railways\models\block\track\compat\byg\cika_narrow\cross_d2_xo.json
 1db975c0182f6eb2af47df134d4119e89d83ee54 assets\railways\blockstates\large_create_styled_0_6_0.json
 0f40313eb1a8873f87057e39c2638bd39b106472 assets\railways\models\block\track\compat\blue_skies\bluebright_wide\cross_d1_xo.json
-656238c2ff67f33d34bb129e20e826c407d76e1c assets\railways\blockstates\buffer_mono.json
+fa2daee13fe1f0365ef300498090168b96efbd25 assets\railways\blockstates\buffer_mono.json
 375551aa84e52978de9678bc2b50e0bb5eb8d1b8 assets\railways\models\block\purple_plated_locometal.json
 91e69fdca5281c2c1d9842d66ece77296dc01320 assets\railways\models\block\gray_locometal_boiler_gullet_z_raised.json
 76f3260f87d45c934fe87948ca0a053e5a52050d assets\railways\models\item\magenta_iron_wrapped_locometal.json
@@ -4434,7 +4435,7 @@ cf014280dd9e964ceeaa81314e1a7e030e94cad3 assets\railways\models\block\track\comp
 b0d36b75e62b3968effaefcae2f0c29c1fe2954e assets\railways\models\block\track\tieless_narrow\diag_2.json
 02d7ff5e6dfe8e46f239d26767eab281c0d21d82 assets\railways\models\block\green_iron_wrapped_locometal_boiler_gullet_x.json
 63c59d6b88a2a92faba412ba152eea9da2ecfbf9 assets\railways\models\item\track_create_andesite_narrow.json
-8ca6eaed4324808fe0a8710652277d0457169a85 assets\railways\blockstates\buffer_wide.json
+35fc53bf74a529eb74af612c250f7b5a13fb96e4 assets\railways\blockstates\buffer_wide.json
 ce2d58d4631b5784c7bc6d1d0efcba80a0829004 assets\railways\models\block\track\create_andesite_narrow\cross_d2_xo.json
 ec04aeda6b37674ace22f1db68fd615b31f23ab0 assets\railways\blockstates\track_spruce.json
 63a73515b2d20f2bf7827d7e006936b975846319 assets\railways\models\block\track\compat\byg\jacaranda_wide\x_ortho.json
@@ -5266,7 +5267,7 @@ ff51faefa59e4dd36d2fd1013fe1d25d534c829a assets\railways\models\block\track\dark
 cb6ebf70ca4439a58236742792694ee7964c270a assets\railways\models\block\track\compat\byg\pine_narrow\cross_d1_xo.json
 e5ca114771e2c94b2cbb0dad9d79f5493f8cc06c assets\railways\blockstates\blue_copper_wrapped_locometal.json
 27eb91b6318a9f51c6850891f404b75293878837 assets\railways\models\block\yellow_brass_wrapped_locometal_boiler_smokebox_z.json
-02109f44896d6bc78cf1f0e47cbbfbdcd3e76870 assets\railways\blockstates\buffer_narrow.json
+c24ed183f502c7ce7dbebb54be8f74baa39cb67c assets\railways\blockstates\buffer_narrow.json
 17843905a36743ce14c5e019cf4112033dcf5e2b assets\railways\models\block\track\compat\byg\palm_wide\cross_d2_zo.json
 8e6e859fa60693c405c215196c6108eb6708b53d assets\railways\models\block\smokestack_oilburner_brass_cap_copper.json
 e315a093cc6d1d679c7cf7bc7221a2fd53b599ba assets\railways\models\block\track\compat\byg\witch_hazel_wide\segment_right.json

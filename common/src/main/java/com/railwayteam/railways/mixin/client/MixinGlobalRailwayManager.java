@@ -38,7 +38,8 @@ import java.util.UUID;
 
 @Mixin(value = GlobalRailwayManager.class, remap = false)
 public abstract class MixinGlobalRailwayManager {
-    @Shadow public Map<UUID, Train> trains;
+    @Shadow
+    public Map<UUID, Train> trains;
 
     @Inject(method = "clientTick", at = @At("HEAD"))
     private void showTrainDebug(CallbackInfo ci) {
@@ -47,13 +48,14 @@ public abstract class MixinGlobalRailwayManager {
                 TravellingPointVisualizer.debugTrain(train);
     }
 
-    @Shadow public Map<UUID, TrackGraph> trackNetworks;
+    @Shadow
+    public Map<UUID, TrackGraph> trackNetworks;
 
     @Inject(method = "clientTick", at = @At("HEAD"))
     private void showSwitchDebug(CallbackInfo ci) {
         if (KineticDebugger.isF3DebugModeActive()) {
             for (TrackGraph graph : trackNetworks.values()) {
-                for (TrackSwitch sw: graph.getPoints(CREdgePointTypes.SWITCH)) {
+                for (TrackSwitch sw : graph.getPoints(CREdgePointTypes.SWITCH)) {
                     TrackSwitchDebugVisualizer.visualizeSwitchExits(sw);
                 }
             }

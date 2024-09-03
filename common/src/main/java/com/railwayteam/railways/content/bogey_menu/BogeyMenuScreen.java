@@ -146,7 +146,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         addRenderableWidget(closeButton);
 
 
-        String[] gaugeText = new String[] {"narrow", "standard", "wide"};
+        String[] gaugeText = new String[]{"narrow", "standard", "wide"};
         for (int i = 0; i < 3; i++) {
             addRenderableOnly(new TooltipArea(x + 163 + (i * 18), y + 135, 18, 18)
                     .withTooltip(ImmutableList.of(
@@ -304,13 +304,13 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 double y0 = y + 48;
                 double w = 140;
                 double h = 77;
-                double bottom = y0+h;
+                double bottom = y0 + h;
 
                 Window window = mc.getWindow();
                 double scale = window.getGuiScale();
 
                 RenderSystem.clearDepth(0.5); // same depth as gui
-                RenderSystem.enableScissor((int) (x0*scale), window.getHeight() - (int) (bottom*scale), (int) (w*scale), (int) (h*scale));
+                RenderSystem.enableScissor((int) (x0 * scale), window.getHeight() - (int) (bottom * scale), (int) (w * scale), (int) (h * scale));
 
                 RenderSystem.clear(GL11.GL_DEPTH_BUFFER_BIT, false);
 
@@ -337,7 +337,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         // Max of 6 slots, objects inside the slots will be mutated later
         for (int i = 0; i < 6; i++) {
             if (i < bogies.size()) {
-                bogeyList[i] = bogies.get(i+offset);
+                bogeyList[i] = bogies.get(i + offset);
                 bogeyMenuButtons[i].active = true;
             } else {
                 // I know, this is silly but its best way to know if rendering should be skipped
@@ -474,8 +474,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
     private void updateFavorites() {
         favouriteButton.setIcon(BogeyMenuHandlerClient.isFavorited(selectedBogey.bogeyStyle())
-            ? CRIcons.I_FAVORITED
-            : CRIcons.I_FAVORITE
+                ? CRIcons.I_FAVORITED
+                : CRIcons.I_FAVORITE
         );
 
         if (selectedCategory == CategoryEntry.FavoritesCategory.INSTANCE) {

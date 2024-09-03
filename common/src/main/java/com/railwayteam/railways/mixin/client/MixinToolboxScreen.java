@@ -33,15 +33,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ToolboxScreen.class, remap = false)
 public abstract class MixinToolboxScreen extends AbstractSimiContainerScreen<ToolboxMenu> {
-	public MixinToolboxScreen(ToolboxMenu container, Inventory inv, Component title) {
-		super(container, inv, title);
-	}
+    public MixinToolboxScreen(ToolboxMenu container, Inventory inv, Component title) {
+        super(container, inv, title);
+    }
 
-	@Inject(method = "lambda$init$1", at = @At("HEAD"), cancellable = true)
-	private void railways$disposeConductorToolbox(CallbackInfo ci) {
-		if (menu.contentHolder instanceof MountedToolbox mounted) {
-			CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
-			ci.cancel();
-		}
-	}
+    @Inject(method = "lambda$init$1", at = @At("HEAD"), cancellable = true)
+    private void railways$disposeConductorToolbox(CallbackInfo ci) {
+        if (menu.contentHolder instanceof MountedToolbox mounted) {
+            CRPackets.PACKETS.send(new MountedToolboxDisposeAllPacket(mounted.getParent()));
+            ci.cancel();
+        }
+    }
 }

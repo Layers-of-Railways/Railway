@@ -44,12 +44,18 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     private final C context;
-    @NotNull private final Property<T> property;
-    @NotNull private final T[] values;
-    @NotNull private final BlockEntry<?> blockEntry;
-    @NotNull private final TagKey<Item> cycleTag;
-    @Nullable private final T excluded;
-    @Nullable private final String tooltipTranslationKey;
+    @NotNull
+    private final Property<T> property;
+    @NotNull
+    private final T[] values;
+    @NotNull
+    private final BlockEntry<?> blockEntry;
+    @NotNull
+    private final TagKey<Item> cycleTag;
+    @Nullable
+    private final T excluded;
+    @Nullable
+    private final String tooltipTranslationKey;
 
     @NotNull
     private final NonNullUnaryOperator<ItemBuilder<BlockStateBlockItem<T>, CreateRegistrate>> itemTransformer;
@@ -112,13 +118,13 @@ public class BlockStateBlockItemGroup<C, T extends BlockStateBlockItemGroup.ISty
             }
 
             items.put(v, REGISTRATE.item(v.getBlockId(context), BlockStateBlockItem.create(blockEntry::get, property, v, primary))
-                .properties(p -> p.tab(CRItems.mainCreativeTab))
-                .lang(v.getLangName(context))
-                .onRegisterAfter(Registry.ITEM_REGISTRY, i -> ItemDescription.useKey(i, tooltipKey))
-                .transform(itemTransformer)
-                .tag(cycleTag)
-                .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))
-                .register());
+                    .properties(p -> p.tab(CRItems.mainCreativeTab))
+                    .lang(v.getLangName(context))
+                    .onRegisterAfter(Registry.ITEM_REGISTRY, i -> ItemDescription.useKey(i, tooltipKey))
+                    .transform(itemTransformer)
+                    .tag(cycleTag)
+                    .model((c, p) -> p.withExistingParent("item/" + c.getName(), v.getModel(context)))
+                    .register());
             primary = false;
         }
     }

@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -52,80 +53,97 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public abstract class TrackBufferBlock<BE extends TrackBufferBlockEntity> extends HorizontalDirectionalBlock implements IBE<BE>, IWrenchable, ProperWaterloggedBlock {
-	protected TrackBufferBlock(Properties pProperties) {
-		super(pProperties);
-		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
-	}
 
-	@Override
-	public abstract Class<BE> getBlockEntityClass();
+    public static final BooleanProperty DIAGONAL = BooleanProperty.create("diagonal");
 
-	@Override
-	public abstract BlockEntityType<? extends BE> getBlockEntityType();
+    protected TrackBufferBlock(Properties pProperties) {
+        super(pProperties);
+        registerDefaultState(defaultBlockState()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
+                .setValue(DIAGONAL, false));
+    }
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED));
-	}
+    @Override
+    public abstract Class<BE> getBlockEntityClass();
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public void onRemove(@NotNull BlockState state, @NotNull Level worldIn,
-						 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
-		IBE.onRemove(state, worldIn, pos, newState);
-	}
+    @Override
+    public abstract BlockEntityType<? extends BE> getBlockEntityType();
 
-	protected abstract BlockState getCycledStyle(BlockState originalState, Direction targetedFace);
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder.add(FACING, WATERLOGGED, DIAGONAL));
+    }
 
-	@Override
-	public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
-		if (targetedFace.getAxis() == originalState.getValue(FACING).getAxis()) {
-			return getCycledStyle(originalState, targetedFace);
-		} else {
-			return originalState.setValue(FACING, originalState.getValue(FACING).getOpposite());
-		}
-	}
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onRemove(@NotNull BlockState state, @NotNull Level worldIn,
+                         @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
+        IBE.onRemove(state, worldIn, pos, newState);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public FluidState getFluidState(BlockState state) {
-		return fluidState(state);
-	}
+    protected abstract BlockState getCycledStyle(BlockState originalState, Direction targetedFace);
 
-	@Nullable
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		BlockState state = super.getStateForPlacement(context);
-		if (state != null && context instanceof BufferBlockPlaceContext bufferBlockPlaceContext) {
-			state = state.setValue(FACING, bufferBlockPlaceContext.facing);
-		}
-		return withWater(state, context);
-	}
+    @Override
+    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
+        if (targetedFace.getAxis() == originalState.getValue(FACING).getAxis()) {
+            return getCycledStyle(originalState, targetedFace);
+        } else {
+            return originalState.setValue(FACING, originalState.getValue(FACING).getOpposite());
+        }
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
-		updateWater(level, state, currentPos);
-		return state;
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return fluidState(state);
+    }
 
-	@Override
-	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-		return CRBlocks.TRACK_BUFFER.asStack();
-	}
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state != null && context instanceof BufferBlockPlaceContext bufferBlockPlaceContext) {
+            state = state.setValue(FACING, bufferBlockPlaceContext.facing).setValue(DIAGONAL, bufferBlockPlaceContext.diagonal);
+        }
+        return withWater(state, context);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
-		return Shapes.empty();
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+        updateWater(level, state, currentPos);
+        return state;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
-								 BlockHitResult pHit) {
-		if (AdventureUtils.isAdventure(pPlayer))
-			return InteractionResult.PASS;
-		return onBlockEntityUse(pLevel, pPos, be -> be.applyDyeIfValid(pPlayer.getItemInHand(pHand)));
-	}
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return CRBlocks.TRACK_BUFFER.asStack();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return Shapes.empty();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+                                 BlockHitResult pHit) {
+        if (AdventureUtils.isAdventure(pPlayer))
+            return InteractionResult.PASS;
+        return onBlockEntityUse(pLevel, pPos, be -> be.applyDyeIfValid(pPlayer.getItemInHand(pHand)));
+    }
+
+    public static int getBaseModelYRotationOf(BlockState state) {
+        return getBaseModelYRotationOf(state, 0);
+    }
+
+    public static int getBaseModelYRotationOf(BlockState state, int offset) {
+        return (int) (
+                (state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) + offset
+        ) % 360;
+    }
+
 }

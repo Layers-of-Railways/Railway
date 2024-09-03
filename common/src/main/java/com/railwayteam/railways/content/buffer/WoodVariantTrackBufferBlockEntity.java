@@ -46,10 +46,10 @@ public class WoodVariantTrackBufferBlockEntity extends TrackBufferBlockEntity im
     }
 
     public InteractionResult applyMaterialIfValid(ItemStack stack) {
-        if (!(stack.getItem()instanceof BlockItem blockItem))
+        if (!(stack.getItem() instanceof BlockItem blockItem))
             return InteractionResult.PASS;
         BlockState material = blockItem.getBlock()
-            .defaultBlockState();
+                .defaultBlockState();
         if (material == this.material)
             return InteractionResult.PASS;
         if (!material.is(BlockTags.PLANKS))

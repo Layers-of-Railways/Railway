@@ -29,9 +29,9 @@ import java.util.WeakHashMap;
 
 @Mixin(value = ToolboxBlockEntity.class, remap = false)
 public interface AccessorToolboxBlockEntity {
-  @Accessor
-  ToolboxInventory getInventory();
+    @Accessor
+    ToolboxInventory getInventory();
 
-  @Accessor
-  Map<Integer, WeakHashMap<Player, Integer>> getConnectedPlayers();
+    @Accessor
+    Map<Integer, WeakHashMap<Player, Integer>> getConnectedPlayers();
 }

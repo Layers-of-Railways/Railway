@@ -53,12 +53,12 @@ import java.util.List;
 public class RedstoneLinkInstruction extends ScheduleInstruction implements ICustomExecutableInstruction {
 
     public static WorldAttached<List<CustomRedstoneActor>> customActors =
-        new WorldAttached<>($ -> new ArrayList<>());
+            new WorldAttached<>($ -> new ArrayList<>());
 
     @MultiLoaderEvent
     public static void tick(Level world) {
         List<CustomRedstoneActor> actors = customActors.get(world);
-        for (Iterator<CustomRedstoneActor> actorIterator = actors.iterator(); actorIterator.hasNext();) {
+        for (Iterator<CustomRedstoneActor> actorIterator = actors.iterator(); actorIterator.hasNext(); ) {
             CustomRedstoneActor actor = actorIterator.next();
             actor.decrement();
             if (!actor.isAlive()) {
@@ -97,7 +97,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     public List<Component> getSecondLineTooltip(int slot) {
         return ImmutableList.of(Lang.translateDirect(slot == 0 ? "logistics.firstFrequency" : "logistics.secondFrequency")
-            .withStyle(ChatFormatting.RED));
+                .withStyle(ChatFormatting.RED));
     }
 
     private ItemStack icon() {
@@ -117,19 +117,19 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     public List<Component> getTitleAs(String type) {
         return ImmutableList.of(
-            Lang.translateDirect("schedule.condition.redstone_link.frequency_powered"),
-            Components.literal(" #1 ").withStyle(ChatFormatting.GRAY)
-                .append(freq.getFirst()
-                    .getStack()
-                    .getHoverName()
-                    .copy()
-                    .withStyle(ChatFormatting.DARK_AQUA)),
-            Components.literal(" #2 ").withStyle(ChatFormatting.GRAY)
-                .append(freq.getSecond()
-                    .getStack()
-                    .getHoverName()
-                    .copy()
-                    .withStyle(ChatFormatting.DARK_AQUA)));
+                Lang.translateDirect("schedule.condition.redstone_link.frequency_powered"),
+                Components.literal(" #1 ").withStyle(ChatFormatting.GRAY)
+                        .append(freq.getFirst()
+                                .getStack()
+                                .getHoverName()
+                                .copy()
+                                .withStyle(ChatFormatting.DARK_AQUA)),
+                Components.literal(" #2 ").withStyle(ChatFormatting.GRAY)
+                        .append(freq.getSecond()
+                                .getStack()
+                                .getHoverName()
+                                .copy()
+                                .withStyle(ChatFormatting.DARK_AQUA)));
     }
 
     @Override
@@ -141,7 +141,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     @Override
     public ItemStack getItem(int slot) {
         return freq.get(slot == 0)
-            .getStack();
+                .getStack();
     }
 
     @Override
@@ -162,8 +162,8 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
     public void initConfigurationWidgets(ModularGuiLineBuilder builder) {
         builder.addScrollInput(20, 101, (si, l) -> {
             si.withRange(1, 16)
-                .withStepFunction(c -> c.shift ? 5 : 1)
-                .titled(Components.translatable("railways.schedule.instruction.redstone_link.power_edit_box"));
+                    .withStepFunction(c -> c.shift ? 5 : 1)
+                    .titled(Components.translatable("railways.schedule.instruction.redstone_link.power_edit_box"));
             //l.withSuffix("%");
         }, "Power");
     }

@@ -28,7 +28,8 @@ import net.minecraft.nbt.CompoundTag;
 
 public class InvisibleBogeyRenderer extends BogeyRenderer {
     @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) { }
+    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+    }
 
     @Override
     public BogeySizes.BogeySize getSize() {
@@ -36,5 +37,6 @@ public class InvisibleBogeyRenderer extends BogeyRenderer {
     }
 
     @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) { }
+    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+    }
 }

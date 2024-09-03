@@ -41,6 +41,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     protected final boolean leadOnly;
     protected final RandomSource random;
     protected final boolean small;
+
     protected ChimneyPushParticle(ClientLevel level, double x, double y, double z, RandomSource random, boolean leadOnly, boolean small) {
         super(level, x, y, z, 0.0, 0, 0.0);
         this.small = small;
@@ -51,11 +52,11 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         this.friction = 0.99f;
         this.random = random;
         this.leadOnly = leadOnly;
-        setLifetime((int) (random.nextIntBetweenInclusive(15, 25) * Math.min(getAnimationFactor()*3, 1.0)));
+        setLifetime((int) (random.nextIntBetweenInclusive(15, 25) * Math.min(getAnimationFactor() * 3, 1.0)));
     }
 
     protected double getAnimationFactor() {
-        return leadOnly ? (small ? 3/9. : 3/13.) : 1;
+        return leadOnly ? (small ? 3 / 9. : 3 / 13.) : 1;
     }
 
     @Override
@@ -74,9 +75,9 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     public void render(@NotNull VertexConsumer buffer, @NotNull Camera renderInfo, float partialTicks) {
         Vec3 vec3 = renderInfo.getPosition();
         float quadSize = this.getQuadSize(partialTicks);
-        float x = (float)(Mth.lerp(partialTicks, this.xo, this.x) - vec3.x());
-        float y = (float)(Mth.lerp(partialTicks, this.yo, this.y) - vec3.y()) + (quadSize/2);
-        float z = (float)(Mth.lerp(partialTicks, this.zo, this.z) - vec3.z());
+        float x = (float) (Mth.lerp(partialTicks, this.xo, this.x) - vec3.x());
+        float y = (float) (Mth.lerp(partialTicks, this.yo, this.y) - vec3.y()) + (quadSize / 2);
+        float z = (float) (Mth.lerp(partialTicks, this.zo, this.z) - vec3.z());
         Quaternion facing;
         if (this.roll == 0.0F) {
             facing = Vector3f.YP.rotationDegrees(-renderInfo.getYRot());//renderInfo.rotation();
@@ -87,10 +88,10 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         }
 
         Vector3f[] vertices = new Vector3f[]{
-            new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)
+                new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F), new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F)
         };
 
-        for(int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i) {
             Vector3f vertex = vertices[i];
             vertex.transform(facing);
             vertex.mul(quadSize);
@@ -105,25 +106,25 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         float v1 = this.getV1();
         int packedLight = this.getLightColor(partialTicks);
         buffer.vertex(vertices[0].x(), vertices[0].y(), vertices[0].z())
-            .uv(u1, v1)
-            .color(this.rCol, this.gCol, this.bCol, this.alpha)
-            .uv2(packedLight)
-            .endVertex();
+                .uv(u1, v1)
+                .color(this.rCol, this.gCol, this.bCol, this.alpha)
+                .uv2(packedLight)
+                .endVertex();
         buffer.vertex(vertices[1].x(), vertices[1].y(), vertices[1].z())
-            .uv(u1, v0)
-            .color(this.rCol, this.gCol, this.bCol, this.alpha)
-            .uv2(packedLight)
-            .endVertex();
+                .uv(u1, v0)
+                .color(this.rCol, this.gCol, this.bCol, this.alpha)
+                .uv2(packedLight)
+                .endVertex();
         buffer.vertex(vertices[2].x(), vertices[2].y(), vertices[2].z())
-            .uv(u0, v0)
-            .color(this.rCol, this.gCol, this.bCol, this.alpha)
-            .uv2(packedLight)
-            .endVertex();
+                .uv(u0, v0)
+                .color(this.rCol, this.gCol, this.bCol, this.alpha)
+                .uv2(packedLight)
+                .endVertex();
         buffer.vertex(vertices[3].x(), vertices[3].y(), vertices[3].z())
-            .uv(u0, v1)
-            .color(this.rCol, this.gCol, this.bCol, this.alpha)
-            .uv2(packedLight)
-            .endVertex();
+                .uv(u0, v1)
+                .color(this.rCol, this.gCol, this.bCol, this.alpha)
+                .uv2(packedLight)
+                .endVertex();
     }
 
     public void setOldPos() {
@@ -148,6 +149,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     @Environment(EnvType.CLIENT)
     public static class Factory<T extends ChimneyPushParticleData<T>> implements ParticleProvider<T> {
         private final SpriteSet spriteSet;
+
         public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }

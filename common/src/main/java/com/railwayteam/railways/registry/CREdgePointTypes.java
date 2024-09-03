@@ -30,5 +30,6 @@ public class CREdgePointTypes {
     public static final EdgePointType<TrackBuffer> BUFFER = EdgePointType.register(Railways.asResource("buffer"), TrackBuffer::new);
 
     @SuppressWarnings("EmptyMethod")
-    public static void register() {}
+    public static void register() {
+    }
 }

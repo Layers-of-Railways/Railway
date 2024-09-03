@@ -31,11 +31,14 @@ public interface IRailwayMarkerHandler {
 
     void reloadMarkers();
 
-    default void onJoinWorld() {}
+    default void onJoinWorld() {
+    }
 
-    default void disable() {}
+    default void disable() {
+    }
 
-    default void enable() {}
+    default void enable() {
+    }
 
     default boolean isEnabled() {
         return true;

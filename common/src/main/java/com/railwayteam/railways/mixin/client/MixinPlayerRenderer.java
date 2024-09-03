@@ -153,8 +153,8 @@ public abstract class MixinPlayerRenderer extends LivingEntityRenderer<AbstractC
     }
 
     private void railways$renderHand(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight,
-                                ConductorEntity conductor, ModelPart rendererArm, PlayerModel<?> playermodel,
-                                ConductorEntityModel<ConductorEntity> conductorModel, ConductorRenderer conductorRenderer) {
+                                     ConductorEntity conductor, ModelPart rendererArm, PlayerModel<?> playermodel,
+                                     ConductorEntityModel<ConductorEntity> conductorModel, ConductorRenderer conductorRenderer) {
         playermodel.attackTime = 0.0f;
         playermodel.crouching = false;
         playermodel.swimAmount = 0.0f;

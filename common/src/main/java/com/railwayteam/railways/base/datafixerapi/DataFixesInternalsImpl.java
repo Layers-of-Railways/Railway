@@ -66,9 +66,9 @@ public final class DataFixesInternalsImpl extends DataFixesInternals {
         if (dataFixer != null) {
             int modDataVersion = DataFixesInternals.getModDataVersion(compound);
             current = dataFixer.dataFixer()
-                .update(dataFixTypes.getType(),
-                    current,
-                    modDataVersion, dataFixer.currentVersion());
+                    .update(dataFixTypes.getType(),
+                            current,
+                            modDataVersion, dataFixer.currentVersion());
         }
 
         return (CompoundTag) current.getValue();

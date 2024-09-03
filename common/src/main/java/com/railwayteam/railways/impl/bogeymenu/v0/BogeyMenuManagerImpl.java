@@ -37,10 +37,16 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ApiStatus.Internal
 public class BogeyMenuManagerImpl implements BogeyMenuManager {
-     /** Internal use only, do NOT touch. */
-    @ApiStatus.Internal public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
-    /** Internal use only, do NOT touch. */
-    @ApiStatus.Internal public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new ConcurrentHashMap<>();
+    /**
+     * Internal use only, do NOT touch.
+     */
+    @ApiStatus.Internal
+    public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
+    /**
+     * Internal use only, do NOT touch.
+     */
+    @ApiStatus.Internal
+    public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new ConcurrentHashMap<>();
 
     static {
         CATEGORIES.add(CategoryEntry.FavoritesCategory.INSTANCE);

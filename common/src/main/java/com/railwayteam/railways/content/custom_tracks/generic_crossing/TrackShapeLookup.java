@@ -54,7 +54,6 @@ public class TrackShapeLookup {
     }
 
     /**
-     *
      * @param a supposed primary shape
      * @param b supposed secondary shape
      * @return (merged, flip) -> flip means that primary and secondary are reversed
@@ -77,6 +76,7 @@ public class TrackShapeLookup {
     }
 
 
-
-    public record GenericCrossingData(Pair<TrackShape, Boolean> merged, TrackMaterial existingMaterial, TrackMaterial overlayMaterial) {}
+    public record GenericCrossingData(Pair<TrackShape, Boolean> merged, TrackMaterial existingMaterial,
+                                      TrackMaterial overlayMaterial) {
+    }
 }

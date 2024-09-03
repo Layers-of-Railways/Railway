@@ -47,8 +47,7 @@ public class SemaphoreItem extends BlockItem {
         Level world = pContext.getLevel();
         Player player = pContext.getPlayer();
         BlockPos pos = pContext.getClickedPos();
-        if(!pContext.replacingClickedOnBlock())
-        {
+        if (!pContext.replacingClickedOnBlock()) {
             pos = pos.offset(pContext.getClickedFace().getOpposite().getNormal());
         }
         BlockState state = world.getBlockState(pos);
@@ -58,13 +57,13 @@ public class SemaphoreItem extends BlockItem {
         Vec3 endPos = eyePos.add(viewVec.x * pHitDistance, viewVec.y * pHitDistance, viewVec.z * pHitDistance);
         BlockHitResult ray = pContext.getLevel().clip(new ClipContext(eyePos, endPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
 //        BlockHitResult ray = (BlockHitResult)Minecraft.getInstance().hitResult;
-        if(!placementHelper.matchesState(state))
+        if (!placementHelper.matchesState(state))
             return super.place(pContext);
 
         InteractionResult result = placementHelper.getOffset(player, world, state, pos, ray)
                 .placeInWorld(world, this, player, pContext.getHand(), ray);
 
-        if(result.consumesAction())
+        if (result.consumesAction())
             return result;
         else
             return super.place(pContext);

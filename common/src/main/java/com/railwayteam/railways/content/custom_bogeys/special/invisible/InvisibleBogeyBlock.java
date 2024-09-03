@@ -46,75 +46,75 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Set;
 
 public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockEntity>
-	implements IBE<InvisibleBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+        implements IBE<InvisibleBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
 
-	public InvisibleBogeyBlock(Properties props) {
-		super(props, BogeySizes.SMALL);
-		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
-	}
+    public InvisibleBogeyBlock(Properties props) {
+        super(props, BogeySizes.SMALL);
+        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
+    }
 
-	@Override
-	public TrackType getTrackType(BogeyStyle style) {
-		return CRTrackType.STANDARD;
-	}
+    @Override
+    public TrackType getTrackType(BogeyStyle style) {
+        return CRTrackType.STANDARD;
+    }
 
-	@Override
-	public boolean isOnIncompatibleTrack(Carriage carriage, boolean leading) {
-		TravellingPoint point = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
-		CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
-		
-		if (point.edge == null)
-			return false;
-		
-		return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle())
-			&& point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
-			&& point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE
-			&& point.edge.getTrackMaterial().trackType != CRTrackType.MONORAIL;
-	}
+    @Override
+    public boolean isOnIncompatibleTrack(Carriage carriage, boolean leading) {
+        TravellingPoint point = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
+        CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
 
-	@Override
-	public Set<TrackType> getValidPathfindingTypes(BogeyStyle style) {
-		return ImmutableSet.of(getTrackType(style), CRTrackType.WIDE_GAUGE, CRTrackType.NARROW_GAUGE, CRTrackType.MONORAIL);
-	}
+        if (point.edge == null)
+            return false;
 
-	@Override
-	public double getWheelPointSpacing() {
-		return 2;
-	}
+        return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle())
+                && point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
+                && point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE
+                && point.edge.getTrackMaterial().trackType != CRTrackType.MONORAIL;
+    }
 
-	@Override
-	public double getWheelRadius() {
-		return 6.5 / 16d;
-	}
+    @Override
+    public Set<TrackType> getValidPathfindingTypes(BogeyStyle style) {
+        return ImmutableSet.of(getTrackType(style), CRTrackType.WIDE_GAUGE, CRTrackType.NARROW_GAUGE, CRTrackType.MONORAIL);
+    }
 
-	@Override
-	public Vec3 getConnectorAnchorOffset() {
-		return new Vec3(0, 7 / 32f, 1);
-	}
+    @Override
+    public double getWheelPointSpacing() {
+        return 2;
+    }
 
-	@Override
-	public BogeyStyle getDefaultStyle() {
-		return CRBogeyStyles.INVISIBLE;
-	}
+    @Override
+    public double getWheelRadius() {
+        return 6.5 / 16d;
+    }
 
-	@Override
-	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-		return AllBlocks.RAILWAY_CASING.asStack();
-	}
+    @Override
+    public Vec3 getConnectorAnchorOffset() {
+        return new Vec3(0, 7 / 32f, 1);
+    }
 
-	@Override
-	public Class<InvisibleBogeyBlockEntity> getBlockEntityClass() {
-		return InvisibleBogeyBlockEntity.class;
-	}
+    @Override
+    public BogeyStyle getDefaultStyle() {
+        return CRBogeyStyles.INVISIBLE;
+    }
 
-	@Override
-	public BlockEntityType<? extends InvisibleBogeyBlockEntity> getBlockEntityType() {
-		return CRBlockEntities.INVISIBLE_BOGEY.get();
-	}
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return AllBlocks.RAILWAY_CASING.asStack();
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return CRShapes.INVISIBLE_BOGEY;
-	}
+    @Override
+    public Class<InvisibleBogeyBlockEntity> getBlockEntityClass() {
+        return InvisibleBogeyBlockEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends InvisibleBogeyBlockEntity> getBlockEntityType() {
+        return CRBlockEntities.INVISIBLE_BOGEY.get();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return CRShapes.INVISIBLE_BOGEY;
+    }
 }

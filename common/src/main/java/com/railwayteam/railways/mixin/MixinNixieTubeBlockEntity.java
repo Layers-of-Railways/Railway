@@ -40,9 +40,11 @@ import java.util.Optional;
 
 @Mixin(value = NixieTubeBlockEntity.class, remap = false)
 public abstract class MixinNixieTubeBlockEntity extends SmartBlockEntity implements IOverridableSignal {
-    @Shadow private WeakReference<SignalBlockEntity> cachedSignalTE;
+    @Shadow
+    private WeakReference<SignalBlockEntity> cachedSignalTE;
 
-    @Shadow public SignalBlockEntity.SignalState signalState;
+    @Shadow
+    public SignalBlockEntity.SignalState signalState;
 
     private int overrideLastingTicks = -1;
 
@@ -78,8 +80,8 @@ public abstract class MixinNixieTubeBlockEntity extends SmartBlockEntity impleme
         overrideLastingTicks = ticks;
         if (!level.isClientSide) {
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this),
-                new OverridableSignalPacket(getBlockPos(),signalBE == null ? null : signalBE.getBlockPos(),
-                    state, ticks, distantSignal));
+                    new OverridableSignalPacket(getBlockPos(), signalBE == null ? null : signalBE.getBlockPos(),
+                            state, ticks, distantSignal));
         }
     }
 

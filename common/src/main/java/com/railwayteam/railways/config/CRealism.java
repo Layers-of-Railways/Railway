@@ -27,7 +27,7 @@ public class CRealism extends ConfigBase {
 
     @Override
     public String getName() {
-            return "realism";
+        return "realism";
     }
 
     private static class Comments {

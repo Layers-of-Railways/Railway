@@ -47,7 +47,7 @@ public class ConductorWhistleFlagRenderer extends SmartBlockEntityRenderer<Condu
         renderEdgePoint(te, ms, buffer, light, overlay);
 
         CachedBufferer.partial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(te.getColor()), Blocks.AIR.defaultBlockState())
-            .renderInto(ms, buffer.getBuffer(RenderType.cutout()));
+                .renderInto(ms, buffer.getBuffer(RenderType.cutout()));
     }
 
     private void renderEdgePoint(ConductorWhistleFlagBlockEntity te, PoseStack ms, MultiBufferSource buffer,
@@ -66,7 +66,7 @@ public class ConductorWhistleFlagRenderer extends SmartBlockEntityRenderer<Condu
         ms.pushPose();
         ms.translate(-pos.getX(), -pos.getY(), -pos.getZ());
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-            buffer, light, overlay, AllPartialModels.TRACK_STATION_OVERLAY, 1, false);
+                buffer, light, overlay, AllPartialModels.TRACK_STATION_OVERLAY, 1, false);
         ms.popPose();
     }
 }

@@ -53,273 +53,273 @@ import java.util.function.UnaryOperator;
 public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     GeneratedRecipe TRACK_COUPLER = create(CRBlocks.TRACK_COUPLER)
-        .unlockedBy(Ingredients::railwayCasing)
-        .viaShaped(b -> b.define('=', Ingredients.ironSheet())
-            .define('#', Ingredients.redstone())
-            .define('T', Ingredients.railwayCasing())
-            .pattern("=")
-            .pattern("#")
-            .pattern("T"));
+            .unlockedBy(Ingredients::railwayCasing)
+            .viaShaped(b -> b.define('=', Ingredients.ironSheet())
+                    .define('#', Ingredients.redstone())
+                    .define('T', Ingredients.railwayCasing())
+                    .pattern("=")
+                    .pattern("#")
+                    .pattern("T"));
 
     GeneratedRecipe CONDUCTOR_WHISTLE = create(CRBlocks.CONDUCTOR_WHISTLE_FLAG)
-        .unlockedByTag(() -> CRTags.AllItemTags.CONDUCTOR_CAPS.tag)
-        .viaShapeless(b -> b
-            .requires(Ingredients.copperIngot())
-            .requires(Ingredients.brassNugget()));
+            .unlockedByTag(() -> CRTags.AllItemTags.CONDUCTOR_CAPS.tag)
+            .viaShapeless(b -> b
+                    .requires(Ingredients.copperIngot())
+                    .requires(Ingredients.brassNugget()));
 
     GeneratedRecipe REMOTE_LENS = create(CRItems.REMOTE_LENS)
             .unlockedBy(Ingredients::precisionMechanism)
             .viaShapeless(b -> b
-                .requires(Ingredients.precisionMechanism())
-                .requires(Ingredients.eyeOfEnder())
-                .requires(Ingredients.brassSheet()));
+                    .requires(Ingredients.precisionMechanism())
+                    .requires(Ingredients.eyeOfEnder())
+                    .requires(Ingredients.brassSheet()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
-            .pattern("# #")
-            .pattern("# #")
-            .pattern("#+#")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('+', Ingredients.campfire())
+                    .pattern("# #")
+                    .pattern("# #")
+                    .pattern("#+#")
+            );
 
     GeneratedRecipe DIESEL_STACK = create(CRBlocks.DIESEL_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('*', Ingredients.propeller())
-            .pattern("#*#")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('*', Ingredients.propeller())
+                    .pattern("#*#")
+            );
 
     GeneratedRecipe CABOOSE_STACK = create(CRBlocks.CABOOSESTYLE_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
-            .define('.', Ingredients.ironNugget())
-            .pattern(".#.")
-            .pattern(" + ")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('+', Ingredients.campfire())
+                    .define('.', Ingredients.ironNugget())
+                    .pattern(".#.")
+                    .pattern(" + ")
+            );
 
     GeneratedRecipe OILBURNER_STACK = create(CRBlocks.OILBURNER_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
-            .pattern("# #")
-            .pattern("#+#")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('+', Ingredients.campfire())
+                    .pattern("# #")
+                    .pattern("#+#")
+            );
 
     GeneratedRecipe STREAMLINED_STACK = create(CRBlocks.STREAMLINED_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
-            .pattern("#+#")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('+', Ingredients.campfire())
+                    .pattern("#+#")
+            );
 
     GeneratedRecipe WOODBURNER_STACK = create(CRBlocks.WOODBURNER_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('#', Ingredients.ironSheet())
-            .define('+', Ingredients.campfire())
-            .define('.', Ingredients.ironNugget())
-            .pattern(".#.")
-            .pattern("#+#")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('#', Ingredients.ironSheet())
+                    .define('+', Ingredients.campfire())
+                    .define('.', Ingredients.ironNugget())
+                    .pattern(".#.")
+                    .pattern("#+#")
+            );
 
     GeneratedRecipe LONG_STACK = create(CRBlocks.LONG_STACK)
-        .unlockedBy(Ingredients::campfire)
-        .viaShaped(b -> b.define('+', Ingredients.campfire())
-            .define('.', Ingredients.ironNugget())
-            .pattern(".+.")
-        );
+            .unlockedBy(Ingredients::campfire)
+            .viaShaped(b -> b.define('+', Ingredients.campfire())
+                    .define('.', Ingredients.ironNugget())
+                    .pattern(".+.")
+            );
 
     GeneratedRecipe SEMAPHORE = create(CRBlocks.SEMAPHORE)
-        .unlockedBy(AllItems.ELECTRON_TUBE)
-        .returns(4)
-        .viaShaped(b -> b
-            .define('C', Ingredients.andesiteCasing())
-            .define('T', Ingredients.electronTube())
-            .define('F', Ingredients.fence())
-            .define('S', Ingredients.ironSheet())
-            .pattern(" S ")
-            .pattern("FCT")
-            .pattern(" S ")
-        );
+            .unlockedBy(AllItems.ELECTRON_TUBE)
+            .returns(4)
+            .viaShaped(b -> b
+                    .define('C', Ingredients.andesiteCasing())
+                    .define('T', Ingredients.electronTube())
+                    .define('F', Ingredients.fence())
+                    .define('S', Ingredients.ironSheet())
+                    .pattern(" S ")
+                    .pattern("FCT")
+                    .pattern(" S ")
+            );
 
     // FIXME: Recipe unlocking doesn't seem to work properly
     GeneratedRecipe ANDESITE_SWITCH = create(CRBlocks.ANDESITE_SWITCH)
-      .unlockedBy(Ingredients::andesiteCasing)
-      .viaShaped(b -> b
-        .define('L', Ingredients.lever())
-        .define('C', Ingredients.andesiteCasing())
-        .define('W', Ingredients.cogwheel())
-        .pattern("L")
-        .pattern("C")
-        .pattern("W")
-      );
+            .unlockedBy(Ingredients::andesiteCasing)
+            .viaShaped(b -> b
+                    .define('L', Ingredients.lever())
+                    .define('C', Ingredients.andesiteCasing())
+                    .define('W', Ingredients.cogwheel())
+                    .pattern("L")
+                    .pattern("C")
+                    .pattern("W")
+            );
 
     GeneratedRecipe BRASS_SWITCH = create(CRBlocks.BRASS_SWITCH)
-      .unlockedBy(Ingredients::precisionMechanism)
-      .viaShaped(b -> b
-        .define('L', Ingredients.lever())
-        .define('C', Ingredients.brassCasing())
-        .define('P', Ingredients.precisionMechanism())
-        .pattern("L")
-        .pattern("C")
-        .pattern("P")
-      );
+            .unlockedBy(Ingredients::precisionMechanism)
+            .viaShaped(b -> b
+                    .define('L', Ingredients.lever())
+                    .define('C', Ingredients.brassCasing())
+                    .define('P', Ingredients.precisionMechanism())
+                    .pattern("L")
+                    .pattern("C")
+                    .pattern("P")
+            );
 
     GeneratedRecipe HANDCAR = create(CRBlocks.HANDCAR)
-        .unlockedBy(Ingredients::contraptionControls)
-        .viaShaped(b -> b
-            .define('/', Ingredients.stick())
-            .define('%', Ingredients.andesiteAlloy())
-            .define('_', Ingredients.woodenSlab())
-            .define('C', Ingredients.contraptionControls())
-            .define('#', Ingredients.andesiteCasing())
-            .define('*', Ingredients.smallCog())
-            .pattern("/%/")
-            .pattern("_C_")
-            .pattern("#*#")
-        );
+            .unlockedBy(Ingredients::contraptionControls)
+            .viaShaped(b -> b
+                    .define('/', Ingredients.stick())
+                    .define('%', Ingredients.andesiteAlloy())
+                    .define('_', Ingredients.woodenSlab())
+                    .define('C', Ingredients.contraptionControls())
+                    .define('#', Ingredients.andesiteCasing())
+                    .define('*', Ingredients.smallCog())
+                    .pattern("/%/")
+                    .pattern("_C_")
+                    .pattern("#*#")
+            );
 
     GeneratedRecipe SMALL_BUFFER = create(CRBlocks.SMALL_BUFFER)
-        .unlockedBy(Ingredients::industrialIron)
-        .returns(4)
-        .viaShaped(b -> b
-            .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.ironSheet())
-            .define('I', Ingredients.shaft())
-            .pattern("#I_")
-        );
+            .unlockedBy(Ingredients::industrialIron)
+            .returns(4)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.industrialIron())
+                    .define('_', Ingredients.ironSheet())
+                    .define('I', Ingredients.shaft())
+                    .pattern("#I_")
+            );
 
     GeneratedRecipe BIG_BUFFER = create(CRBlocks.BIG_BUFFER)
-        .unlockedBy(Ingredients::smallBuffer)
-        .returns(4)
-        .viaShaped(b -> b
-            .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.ironSheet())
-            .define('I', Ingredients.smallBuffer())
-            .pattern("#I_")
-        );
+            .unlockedBy(Ingredients::smallBuffer)
+            .returns(4)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.industrialIron())
+                    .define('_', Ingredients.ironSheet())
+                    .define('I', Ingredients.smallBuffer())
+                    .pattern("#I_")
+            );
 
     GeneratedRecipe LINK_AND_PIN = create(Ingredients::linkPin)
-        .unlockedBy(Ingredients::industrialIron)
-        .returns(4)
-        .viaShaped(b -> b
-            .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.ironSheet())
-            .define('I', Ingredients.shaft())
-            .define(',', Ingredients.ironNugget())
-            .pattern("__ ")
-            .pattern("#I,")
-            .pattern("__ ")
-        );
+            .unlockedBy(Ingredients::industrialIron)
+            .returns(4)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.industrialIron())
+                    .define('_', Ingredients.ironSheet())
+                    .define('I', Ingredients.shaft())
+                    .define(',', Ingredients.ironNugget())
+                    .pattern("__ ")
+                    .pattern("#I,")
+                    .pattern("__ ")
+            );
 
     GeneratedRecipe HEADSTOCK = create(Ingredients::headstock)
-        .unlockedBy(Ingredients::linkPin)
-        .viaShaped(b -> b
-            .define('#', Ingredients.linkPinTag())
-            .define('_', Ingredients.woodenSlab())
-            .pattern(" # ")
-            .pattern("___")
-        );
+            .unlockedBy(Ingredients::linkPin)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.linkPinTag())
+                    .define('_', Ingredients.woodenSlab())
+                    .pattern(" # ")
+                    .pattern("___")
+            );
 
     GeneratedRecipe COPYCAT_HEADSTOCK = create(Ingredients::copycatHeadstock)
-        .unlockedBy(Ingredients::linkPin)
-        .viaShaped(b -> b
-            .define('#', Ingredients.linkPinTag())
-            .define('_', Ingredients.copycatPanel())
-            .pattern(" # ")
-            .pattern("___")
-        );
+            .unlockedBy(Ingredients::linkPin)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.linkPinTag())
+                    .define('_', Ingredients.copycatPanel())
+                    .pattern(" # ")
+                    .pattern("___")
+            );
 
     GeneratedRecipe BUFFER = create(CRBlocks.TRACK_BUFFER)
-        .unlockedBy(Ingredients::headstock)
-        .viaShaped(b -> b
-            .define('#', Ingredients.industrialIron())
-            .define('>', Ingredients.headstockTag())
-            .define('=', Ingredients.girder())
-            .pattern(">>>")
-            .pattern("===")
-            .pattern("# #")
-        );
+            .unlockedBy(Ingredients::headstock)
+            .viaShaped(b -> b
+                    .define('#', Ingredients.industrialIron())
+                    .define('>', Ingredients.headstockTag())
+                    .define('=', Ingredients.girder())
+                    .pattern(">>>")
+                    .pattern("===")
+                    .pattern("# #")
+            );
 
     GeneratedRecipe RIVETED_LOCOMETAL = create(Styles.RIVETED.get(null))
-        .returns(8)
-        .setEmiDefault()
-        .viaStonecutting(Ingredients::ironBlock)
-        .create();
+            .returns(8)
+            .setEmiDefault()
+            .viaStonecutting(Ingredients::ironBlock)
+            .create();
 
     // dye a style
     StyledList<DyedRecipeList> LOCOMETAL_DYEING_8x = new StyledList<>(style -> new DyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/dyeing_8x", style.get(color))
-            .unlockedByTag(() -> style.dyeGroupTag)
-            .returns(8)
-            .setEmiDefault()
-            .viaShaped(b -> b
-                .define('#', style.dyeGroupTag)
-                .define('d', Ingredients.dye(color))
-                .pattern("###")
-                .pattern("#d#")
-                .pattern("###")
-            )
+            new GeneratedRecipeBuilder("palettes/dyeing_8x", style.get(color))
+                    .unlockedByTag(() -> style.dyeGroupTag)
+                    .returns(8)
+                    .setEmiDefault()
+                    .viaShaped(b -> b
+                            .define('#', style.dyeGroupTag)
+                            .define('d', Ingredients.dye(color))
+                            .pattern("###")
+                            .pattern("#d#")
+                            .pattern("###")
+                    )
     ));
 
     StyledList<DyedRecipeList> LOCOMETAL_DYEING_1x = new StyledList<>(style -> new DyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/dyeing_1x", style.get(color))
-            .unlockedByTag(() -> style.dyeGroupTag)
-            .viaShapeless(b -> b
-                .requires(style.dyeGroupTag)
-                .requires(Ingredients.dye(color))
-            )
+            new GeneratedRecipeBuilder("palettes/dyeing_1x", style.get(color))
+                    .unlockedByTag(() -> style.dyeGroupTag)
+                    .viaShapeless(b -> b
+                            .requires(style.dyeGroupTag)
+                            .requires(Ingredients.dye(color))
+                    )
     ));
 
     DyedRecipeList LOCOMETAL_WRAPPING_BRASS = new NullableDyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/wrapping", Styles.BRASS_WRAPPED_SLASHED.get(color))
-            .unlockedBy(() -> Styles.SLASHED.get(color).get())
-            .returns(8)
-            .setEmiDefault(color == null)
-            .viaShaped(b -> b
-                .define('#', Styles.SLASHED.get(color).get())
-                .define('d', Ingredients.brassIngot())
-                .pattern("###")
-                .pattern("#d#")
-                .pattern("###")
-            )
+            new GeneratedRecipeBuilder("palettes/wrapping", Styles.BRASS_WRAPPED_SLASHED.get(color))
+                    .unlockedBy(() -> Styles.SLASHED.get(color).get())
+                    .returns(8)
+                    .setEmiDefault(color == null)
+                    .viaShaped(b -> b
+                            .define('#', Styles.SLASHED.get(color).get())
+                            .define('d', Ingredients.brassIngot())
+                            .pattern("###")
+                            .pattern("#d#")
+                            .pattern("###")
+                    )
     );
 
     DyedRecipeList LOCOMETAL_WRAPPING_COPPER = new NullableDyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
-            .unlockedBy(() -> Styles.SLASHED.get(color).get())
-            .returns(8)
-            .setEmiDefault(color == null)
-            .viaShaped(b -> b
-                .define('#', Styles.SLASHED.get(color).get())
-                .define('d', Ingredients.copperIngot())
-                .pattern("###")
-                .pattern("#d#")
-                .pattern("###")
-            )
+            new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
+                    .unlockedBy(() -> Styles.SLASHED.get(color).get())
+                    .returns(8)
+                    .setEmiDefault(color == null)
+                    .viaShaped(b -> b
+                            .define('#', Styles.SLASHED.get(color).get())
+                            .define('d', Ingredients.copperIngot())
+                            .pattern("###")
+                            .pattern("#d#")
+                            .pattern("###")
+                    )
     );
 
     DyedRecipeList LOCOMETAL_WRAPPING_IRON = new NullableDyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
-            .unlockedBy(() -> Styles.SLASHED.get(color).get())
-            .returns(8)
-            .setEmiDefault(color == null)
-            .viaShaped(b -> b
-                .define('#', Styles.SLASHED.get(color).get())
-                .define('d', Ingredients.ironIngot())
-                .pattern("###")
-                .pattern("#d#")
-                .pattern("###")
-            )
+            new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
+                    .unlockedBy(() -> Styles.SLASHED.get(color).get())
+                    .returns(8)
+                    .setEmiDefault(color == null)
+                    .viaShaped(b -> b
+                            .define('#', Styles.SLASHED.get(color).get())
+                            .define('d', Ingredients.ironIngot())
+                            .pattern("###")
+                            .pattern("#d#")
+                            .pattern("###")
+                    )
     );
 
     // cut a color to other blocks in the cycle
     CyclingStyleList<DyedRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new NullableDyedRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
-            .setEmiDefault(color == null && style != Styles.RIVETED)
-            .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
-            .create()
+            new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
+                    .setEmiDefault(color == null && style != Styles.RIVETED)
+                    .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
+                    .create()
     ));
 
     GeneratedRecipe FUEL_TANK = create(AbstractionUtils.getFluidTankBlockEntry())
@@ -399,15 +399,15 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         GeneratedRecipeBuilder unlockedBy(Supplier<? extends ItemLike> item) {
             this.unlockedBy = () -> ItemPredicate.Builder.item()
-                .of(item.get())
-                .build();
+                    .of(item.get())
+                    .build();
             return this;
         }
 
         GeneratedRecipeBuilder unlockedByTag(Supplier<TagKey<Item>> tag) {
             this.unlockedBy = () -> ItemPredicate.Builder.item()
-                .of(tag.get())
-                .build();
+                    .of(tag.get())
+                    .build();
             return this;
         }
 
@@ -468,7 +468,7 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
         private ResourceLocation getRegistryName() {
             return compatDatagenOutput == null ? RegisteredObjects.getKeyOrThrow(result.get()
-                .asItem()) : compatDatagenOutput;
+                    .asItem()) : compatDatagenOutput;
         }
 
         GeneratedRecipeBuilder.GeneratedCookingRecipeBuilder viaCooking(Supplier<? extends ItemLike> item) {
@@ -524,8 +524,8 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             private int cookingTime;
 
             private final SimpleCookingSerializer<?> FURNACE = RecipeSerializer.SMELTING_RECIPE,
-                SMOKER = RecipeSerializer.SMOKING_RECIPE, BLAST = RecipeSerializer.BLASTING_RECIPE,
-                CAMPFIRE = RecipeSerializer.CAMPFIRE_COOKING_RECIPE;
+                    SMOKER = RecipeSerializer.SMOKING_RECIPE, BLAST = RecipeSerializer.BLASTING_RECIPE,
+                    CAMPFIRE = RecipeSerializer.CAMPFIRE_COOKING_RECIPE;
 
             GeneratedCookingRecipeBuilder(Supplier<Ingredient> ingredient) {
                 this.ingredient = ingredient;
@@ -576,14 +576,14 @@ public abstract class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                     boolean isOtherMod = compatDatagenOutput != null;
 
                     SimpleCookingRecipeBuilder b = builder.apply(
-                        SimpleCookingRecipeBuilder.cooking(ingredient.get(), isOtherMod ? Items.DIRT : result.get(),
-                            exp, (int) (cookingTime * cookingTimeModifier), serializer));
+                            SimpleCookingRecipeBuilder.cooking(ingredient.get(), isOtherMod ? Items.DIRT : result.get(),
+                                    exp, (int) (cookingTime * cookingTimeModifier), serializer));
                     if (unlockedBy != null)
                         b.unlockedBy("has_item", inventoryTrigger(unlockedBy.get()));
                     b.save(result -> {
                         consumer.accept(result);
                     }, createSimpleLocation(RegisteredObjects.getKeyOrThrow(serializer)
-                        .getPath()));
+                            .getPath()));
                 });
             }
         }

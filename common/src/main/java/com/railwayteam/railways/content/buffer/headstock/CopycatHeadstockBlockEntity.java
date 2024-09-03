@@ -71,13 +71,13 @@ public class CopycatHeadstockBlockEntity extends CopycatBlockEntity implements I
         if (hasLevel()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
             level.getChunkSource()
-                .getLightEngine()
-                .checkBlock(worldPosition);
+                    .getLightEngine()
+                    .checkBlock(worldPosition);
         }
     }
 
     public InteractionResult applyDyeIfValid(ItemStack stack) {
-        if (!(stack.getItem()instanceof DyeItem dyeItem))
+        if (!(stack.getItem() instanceof DyeItem dyeItem))
             return InteractionResult.PASS;
         DyeColor color = dyeItem.getDyeColor();
         if (color == this.color)

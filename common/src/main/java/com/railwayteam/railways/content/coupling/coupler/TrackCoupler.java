@@ -73,7 +73,7 @@ public class TrackCoupler extends SingleBlockEntityEdgePoint {
 
     private void notifyTrains(Level level) {
         TrackGraph graph = Create.RAILWAYS.sided(level)
-            .getGraph(level, edgeLocation.getFirst());
+                .getGraph(level, edgeLocation.getFirst());
         if (graph == null)
             return;
         TrackEdge edge = graph.getConnection(edgeLocation.map(graph::locateNode));

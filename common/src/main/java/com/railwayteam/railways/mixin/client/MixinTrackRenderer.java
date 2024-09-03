@@ -52,7 +52,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 @Mixin(value = TrackRenderer.class, remap = false)
 public class MixinTrackRenderer {
     @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/track/TrackBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = true)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/MultiBufferSource;getBuffer(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;"), remap = true)
     private void renderCasing(TrackBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
         SlabBlock casingBlock = ((IHasTrackCasing) te).getTrackCasing();
         if (casingBlock != null) {
@@ -63,9 +63,9 @@ public class MixinTrackRenderer {
                     double angle = te.tilt.smoothingAngle.get();
                     switch (te.getBlockState().getValue(TrackBlock.SHAPE)) {
                         case ZO -> TransformStack.cast(ms)
-                            .rotateX(-angle);
+                                .rotateX(-angle);
                         case XO -> TransformStack.cast(ms)
-                            .rotateZ(angle);
+                                .rotateZ(angle);
                     }
                 }
 
@@ -83,17 +83,17 @@ public class MixinTrackRenderer {
                 PartialModel texturedPartial = reTexture(spec.model, casingBlock);
 
                 CachedBufferer.partial(reTexture(spec.model, casingBlock), casingBlock.defaultBlockState())
-                    .rotateX(transform.rx()).rotateY(transform.ry()).rotateZ(transform.rz())
-                    .translate(transform.x(), transform.y(), transform.z())
-                    .light(light)
-                    .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+                        .rotateX(transform.rx()).rotateY(transform.ry()).rotateZ(transform.rz())
+                        .translate(transform.x(), transform.y(), transform.z())
+                        .light(light)
+                        .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
 
                 for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
                     CachedBufferer.partial(texturedPartial, casingBlock.defaultBlockState())
-                        .rotateX(additionalTransform.rx()).rotateY(additionalTransform.ry()).rotateZ(additionalTransform.rz())
-                        .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z())
-                        .light(light)
-                        .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+                            .rotateX(additionalTransform.rx()).rotateY(additionalTransform.ry()).rotateZ(additionalTransform.rz())
+                            .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z())
+                            .light(light)
+                            .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
                 }
                 ms.popPose();
             } else {
@@ -111,8 +111,8 @@ public class MixinTrackRenderer {
     }
 
     @Inject(method = "renderBezierTurn",
-        at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/track/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
-        cancellable = true)
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;renderGirder(Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/trains/track/BezierConnection;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/core/BlockPos;)V", shift = At.Shift.AFTER, remap = true),
+            cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             railways$renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
@@ -123,7 +123,7 @@ public class MixinTrackRenderer {
 
     @Unique
     private static void railways$renderActualMonorail(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb,
-                                                 BlockPos tePosition) {
+                                                      BlockPos tePosition) {
 
         BlockState air = Blocks.AIR.defaultBlockState();
         MonorailAngles[] monorails = ((IMonorailBezier) bc).getBakedMonorails();
@@ -134,18 +134,18 @@ public class MixinTrackRenderer {
 
             PoseStack.Pose beamTransform = segment.beam;
             CachedBufferer.partial(MONORAIL_SEGMENT_MIDDLE, air)
-                .mulPose(beamTransform.pose())
-                .mulNormal(beamTransform.normal())
-                .light(light)
-                .renderInto(ms, vb);
+                    .mulPose(beamTransform.pose())
+                    .mulNormal(beamTransform.normal())
+                    .light(light)
+                    .renderInto(ms, vb);
 
             for (boolean top : Iterate.trueAndFalse) {
                 PoseStack.Pose beamCapTransform = segment.beamCaps.get(top);
                 CachedBufferer.partial(top ? MONORAIL_SEGMENT_TOP : MONORAIL_SEGMENT_BOTTOM, air)
-                    .mulPose(beamCapTransform.pose())
-                    .mulNormal(beamCapTransform.normal())
-                    .light(light)
-                    .renderInto(ms, vb);
+                        .mulPose(beamCapTransform.pose())
+                        .mulNormal(beamCapTransform.normal())
+                        .light(light)
+                        .renderInto(ms, vb);
             }
         }
     }

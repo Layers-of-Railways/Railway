@@ -40,9 +40,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public abstract class MixinGameRenderer {
-    @Shadow @Final private Minecraft minecraft;
+    @Shadow
+    @Final
+    private Minecraft minecraft;
 
-    @Shadow protected abstract void loadEffect(ResourceLocation resourceLocation);
+    @Shadow
+    protected abstract void loadEffect(ResourceLocation resourceLocation);
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
     private void railways$bobView(PoseStack matrixStack, float partialTicks, CallbackInfo ci) {
@@ -52,9 +55,9 @@ public abstract class MixinGameRenderer {
         float f = conductor.walkDist - conductor.walkDistO;
         float g = -(conductor.walkDist + f * partialTicks);
         float h = Mth.lerp(partialTicks, conductor.oBob, conductor.bob);
-        matrixStack.translate(Mth.sin(g * (float)Math.PI) * h * 0.5f, -Math.abs(Mth.cos(g * (float)Math.PI) * h), 0.0);
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(g * (float)Math.PI) * h * 3.0f));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(Math.abs(Mth.cos(g * (float)Math.PI - 0.2f) * h) * 5.0f));
+        matrixStack.translate(Mth.sin(g * (float) Math.PI) * h * 0.5f, -Math.abs(Mth.cos(g * (float) Math.PI) * h), 0.0);
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(g * (float) Math.PI) * h * 3.0f));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(Math.abs(Mth.cos(g * (float) Math.PI - 0.2f) * h) * 5.0f));
         ci.cancel();
     }
 

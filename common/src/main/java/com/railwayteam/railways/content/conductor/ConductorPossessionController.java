@@ -106,8 +106,7 @@ public class ConductorPossessionController {
                     dismount();
                     options.keyShift.setDown(false);
                 }
-            }
-            else {
+            } else {
                 if (wasUpPressed) {
                     //moveViewUp(cam);
                     options.keyUp.setDown(true);
@@ -231,8 +230,7 @@ public class ConductorPossessionController {
                 if (wasMousePressed[2] = options.keyPickItem.isDown())
                     options.keyPickItem.setDown(false);
 
-            }
-            else {
+            } else {
                 /*if (wasMouseClicked[0]) {
                     KeyMapping.click(((AccessorKeyMapping) options.keyAttack).getKey());
                 }

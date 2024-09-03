@@ -49,10 +49,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public abstract class CasingCollisionBlock extends Block implements EntityBlock, ProperWaterloggedBlock {
     public CasingCollisionBlock(Properties properties) {
         super(properties
-            .instabreak()
-            .noLootTable()
-            .randomTicks()
-            .noOcclusion());
+                .instabreak()
+                .noLootTable()
+                .randomTicks()
+                .noOcclusion());
         registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
 

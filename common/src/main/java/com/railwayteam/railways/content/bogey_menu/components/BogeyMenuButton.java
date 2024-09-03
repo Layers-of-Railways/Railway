@@ -29,5 +29,6 @@ public class BogeyMenuButton extends Button {
     }
 
     @Override // NO-OP, We take care of rendering ourselves as buttons for text doesn't update properly
-    public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) { }
+    public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    }
 }

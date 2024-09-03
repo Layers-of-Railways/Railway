@@ -45,8 +45,8 @@ public abstract class MixinTrackBlockOutline {
     @Redirect(method = "pickCurves",
             at = @At(
                     value = "INVOKE",
-                target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
-                remap = true
+                    target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+                    remap = true
             )
     )
     private static VoxelShape pickWithCorrectShape(VoxelShaper instance, Direction direction, @Local BezierConnection bc) {

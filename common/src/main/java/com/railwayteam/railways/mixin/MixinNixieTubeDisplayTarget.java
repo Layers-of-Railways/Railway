@@ -45,9 +45,9 @@ public class MixinNixieTubeDisplayTarget {
             Pair<SignalBlockEntity.SignalState, Optional<SignalBlockEntity>> state = getSignalState(context, text);
             if (context.getTargetBlockEntity() instanceof IOverridableSignal overridableSignal) {
                 overridableSignal.railways$refresh(
-                    state.getSecond().orElse(null),
-                    state.getFirst(),
-                    context.getSourceBlockEntity() instanceof SignalBlockEntity ? 43 : 103
+                        state.getSecond().orElse(null),
+                        state.getFirst(),
+                        context.getSourceBlockEntity() instanceof SignalBlockEntity ? 43 : 103
                 );
             }
         }

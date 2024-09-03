@@ -37,6 +37,7 @@ import java.util.List;
 public interface IGenericCrossingTrackBE {
     @Nullable
     Pair<TrackMaterial, TrackShape> railways$getFirstCrossingPiece();
+
     @Nullable
     Pair<TrackMaterial, TrackShape> railways$getSecondCrossingPiece();
 
@@ -49,9 +50,9 @@ public interface IGenericCrossingTrackBE {
     static @NotNull BakedModel getModel(@NotNull TrackMaterial material, @NotNull TrackShape shape) {
         TrackBlock track = material.getBlock();
         return Minecraft.getInstance().getModelManager().getBlockModelShaper()
-            .getBlockModel(track.defaultBlockState()
-                .setValue(TrackBlock.SHAPE, shape)
-            );
+                .getBlockModel(track.defaultBlockState()
+                        .setValue(TrackBlock.SHAPE, shape)
+                );
     }
 
     @Environment(EnvType.CLIENT)

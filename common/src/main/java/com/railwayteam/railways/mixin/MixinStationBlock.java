@@ -65,7 +65,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Mixin(value = StationBlock.class, remap = false)
 public abstract class MixinStationBlock {
     @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
-    private void autoWhistle(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir){
+    private void autoWhistle(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemInHand = pPlayer.getItemInHand(pHand);
         if (CRBlocks.CONDUCTOR_WHISTLE_FLAG.asStack().getItem().equals(itemInHand.getItem())) {
             if (!pLevel.isClientSide && pPlayer instanceof DeployerFakePlayer && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe) {
@@ -88,7 +88,7 @@ public abstract class MixinStationBlock {
 
                     boolean foundConductor = false;
                     Carriage conductorCarriage = null;
-                    if(train==null)return;
+                    if (train == null) return;
                     for (Carriage carriage : train.carriages) {
                         if (((ICarriageConductors) carriage).railways$getControllingConductors().contains(conductorId)) {
                             foundConductor = true;
@@ -167,11 +167,10 @@ public abstract class MixinStationBlock {
                     train.runtime.setSchedule(schedule, true);
                     ((AccessorScheduleRuntime) train.runtime).setCooldown(10);
                     cir.setReturnValue(InteractionResult.SUCCESS);
-                }
-                else if(station != null && station.getPresentTrain() != null) {
+                } else if (station != null && station.getPresentTrain() != null) {
                     UUID trainId = station.getPresentTrain().id;
                     Train train = Create.RAILWAYS.trains.get(trainId);
-                    if(train==null) return;
+                    if (train == null) return;
 
                     AtomicBoolean found = new AtomicBoolean(false);
                     for (Carriage carriage : train.carriages)
@@ -248,15 +247,15 @@ public abstract class MixinStationBlock {
         if (schedule.isEmpty())
             return;
         if (sender.getMainHandItem()
-            .isEmpty()) {
+                .isEmpty()) {
             sender.getInventory()
-                .placeItemBackInInventory(schedule);
+                    .placeItemBackInInventory(schedule);
             return;
         }
         Vec3 v = VecHelper.getCenterOf(te.getBlockPos());
         ItemEntity itemEntity = new ItemEntity(te.getLevel(), v.x, v.y, v.z, schedule);
         itemEntity.setDeltaMovement(Vec3.ZERO);
         te.getLevel()
-            .addFreshEntity(itemEntity);
+                .addFreshEntity(itemEntity);
     }
 }

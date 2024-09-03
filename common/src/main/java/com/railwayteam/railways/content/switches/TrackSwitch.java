@@ -244,7 +244,8 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
         }
     }
 
-    @Nullable TrackNodeLocation getSwitchPoint() {
+    @Nullable
+    TrackNodeLocation getSwitchPoint() {
         return switchPoint;
     }
 
@@ -278,6 +279,7 @@ public class TrackSwitch extends SingleBlockEntityEdgePoint {
 
     /**
      * Tries to set state, but fails if locked
+     *
      * @param state Which state to attempt to switch to
      * @return success or failure
      */

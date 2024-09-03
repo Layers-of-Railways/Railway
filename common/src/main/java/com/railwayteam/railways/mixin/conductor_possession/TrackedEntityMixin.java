@@ -37,41 +37,41 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 /**
  * Lets entities get sent to the client even though they're not in range of the player
- *
+ * <p>
  * Confirmed working with Security Craft
  */
 @Mixin(value = ChunkMap.TrackedEntity.class, priority = 1200)
 public abstract class TrackedEntityMixin {
-	@Shadow
-	@Final
-	Entity entity;
-	@Unique
-	private boolean shouldBeSent = false;
+    @Shadow
+    @Final
+    Entity entity;
+    @Unique
+    private boolean shouldBeSent = false;
 
-	/**
-	 * Checks if this entity is in range of a camera that is currently being viewed, and stores the result in the field
-	 * shouldBeSent
-	 */
-	@Inject(method = "updatePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/world/phys/Vec3;x:D", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
-	private void railways$securitycraft$onUpdatePlayer(ServerPlayer player, CallbackInfo callback, Vec3 unused, double viewDistance) {
-		if (ConductorPossessionController.isPossessingConductor(player)) {
-			Vec3 relativePosToCamera = player.getCamera().position().subtract(entity.position());
+    /**
+     * Checks if this entity is in range of a camera that is currently being viewed, and stores the result in the field
+     * shouldBeSent
+     */
+    @Inject(method = "updatePlayer", at = @At(value = "FIELD", target = "Lnet/minecraft/world/phys/Vec3;x:D", ordinal = 0), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void railways$securitycraft$onUpdatePlayer(ServerPlayer player, CallbackInfo callback, Vec3 unused, double viewDistance) {
+        if (ConductorPossessionController.isPossessingConductor(player)) {
+            Vec3 relativePosToCamera = player.getCamera().position().subtract(entity.position());
 
-			if (relativePosToCamera.x >= -viewDistance && relativePosToCamera.x <= viewDistance && relativePosToCamera.z >= -viewDistance && relativePosToCamera.z <= viewDistance)
-				shouldBeSent = true;
-		}
-	}
+            if (relativePosToCamera.x >= -viewDistance && relativePosToCamera.x <= viewDistance && relativePosToCamera.z >= -viewDistance && relativePosToCamera.z <= viewDistance)
+                shouldBeSent = true;
+        }
+    }
 
-	/**
-	 * Enables entities that should be sent as well as security camera entities to be sent to the client
-	 */
-	@SuppressWarnings("InvalidInjectorMethodSignature")
-	// variable name: flag or bl
-	@ModifyVariable(method = "updatePlayer", ordinal = 0, at = @At(value = "JUMP", opcode = Opcodes.IFEQ, shift = At.Shift.BEFORE, ordinal = 1))
-	public boolean railways$securitycraft$modifyFlag(boolean original) {
-		boolean shouldBeSent = this.shouldBeSent;
+    /**
+     * Enables entities that should be sent as well as security camera entities to be sent to the client
+     */
+    @SuppressWarnings("InvalidInjectorMethodSignature")
+    // variable name: flag or bl
+    @ModifyVariable(method = "updatePlayer", ordinal = 0, at = @At(value = "JUMP", opcode = Opcodes.IFEQ, shift = At.Shift.BEFORE, ordinal = 1))
+    public boolean railways$securitycraft$modifyFlag(boolean original) {
+        boolean shouldBeSent = this.shouldBeSent;
 
-		this.shouldBeSent = false;
-		return entity instanceof ConductorEntity || original || shouldBeSent;
-	}
+        this.shouldBeSent = false;
+        return entity instanceof ConductorEntity || original || shouldBeSent;
+    }
 }

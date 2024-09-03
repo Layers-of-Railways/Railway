@@ -64,7 +64,7 @@ public class SecondaryTrackTargetingBehaviour<T extends TrackEdgePoint> extends 
             CompoundTag bezierNbt = new CompoundTag();
             bezierNbt.putInt("Segment", accessor.getTargetBezier().segment());
             bezierNbt.put("Key", NbtUtils.writeBlockPos(accessor.getTargetBezier().curveTarget()
-                .subtract(getPos())));
+                    .subtract(getPos())));
             nbt.put("SecondaryBezier", bezierNbt);
         }
     }
@@ -88,7 +88,7 @@ public class SecondaryTrackTargetingBehaviour<T extends TrackEdgePoint> extends 
             CompoundTag bezierNbt = nbt.getCompound("SecondaryBezier");
             BlockPos key = NbtUtils.readBlockPos(bezierNbt.getCompound("Key"));
             accessor.setTargetBezier(new BezierTrackPointLocation(bezierNbt.contains("FromStack") ? key : key.offset(getPos()),
-                bezierNbt.getInt("Segment")));
+                    bezierNbt.getInt("Segment")));
         }
     }
 }

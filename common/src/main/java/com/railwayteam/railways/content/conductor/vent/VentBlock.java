@@ -52,6 +52,7 @@ import java.util.Set;
 
 public abstract class VentBlock extends CopycatBlock implements IWrenchable {
     public static final BooleanProperty CONDUCTOR_VISIBLE = BooleanProperty.create("conductor_visible");
+
     protected VentBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(CONDUCTOR_VISIBLE, false));
@@ -93,7 +94,8 @@ public abstract class VentBlock extends CopycatBlock implements IWrenchable {
         BlockPos.MutableBlockPos end = start.mutable();
 
         int panic = CRConfigs.server().conductors.maxVentLength.get();
-        Outer: while (true) {
+        Outer:
+        while (true) {
             if (panic-- < 0) {
                 return Optional.empty();
             }

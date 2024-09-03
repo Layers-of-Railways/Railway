@@ -38,12 +38,12 @@ public class MixinDoorMovingInteraction {
     prevent players from just opening special doors unless sneaking
      */
     @Inject(
-        method = "handle",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", ordinal = 1, remap = true),
-        cancellable = true
+            method = "handle",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", ordinal = 1, remap = true),
+            cancellable = true
     )
     private void railways$lockSpecial(Player player, Contraption contraption, BlockPos pos,
-                                 BlockState currentState, CallbackInfoReturnable<BlockState> cir) {
+                                      BlockState currentState, CallbackInfoReturnable<BlockState> cir) {
         if (player == null) return;
         if (!(currentState.getBlock() instanceof SlidingDoorBlock)) return;
         boolean lower = currentState.getValue(SlidingDoorBlock.HALF) == DoubleBlockHalf.LOWER;

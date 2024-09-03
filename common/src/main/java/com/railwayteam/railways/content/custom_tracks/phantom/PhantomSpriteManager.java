@@ -56,7 +56,7 @@ public abstract class PhantomSpriteManager {
     @MultiLoaderEvent
     public static void tick(Minecraft mc) {
         visible = mc.player != null
-            && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())
+                && (CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.MAINHAND).getItem())
                 || CRTags.AllItemTags.PHANTOM_TRACK_REVEALING.matches(mc.player.getItemBySlot(EquipmentSlot.OFFHAND).getItem()));
         if (visible != lastVisible || firstRun) {
             firstRun = false;

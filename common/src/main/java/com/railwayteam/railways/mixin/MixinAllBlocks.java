@@ -40,9 +40,9 @@ public class MixinAllBlocks {
     @WrapOperation(
             method = "<clinit>",
             at = @At(
-                value = "INVOKE",
-                target = "Lcom/tterrag/registrate/builders/BlockBuilder;properties(Lcom/tterrag/registrate/util/nullness/NonNullUnaryOperator;)Lcom/tterrag/registrate/builders/BlockBuilder;",
-                ordinal = 2
+                    value = "INVOKE",
+                    target = "Lcom/tterrag/registrate/builders/BlockBuilder;properties(Lcom/tterrag/registrate/util/nullness/NonNullUnaryOperator;)Lcom/tterrag/registrate/builders/BlockBuilder;",
+                    ordinal = 2
             ),
             slice = @Slice(
                     from = @At(value = "CONSTANT", args = "stringValue=sequenced_gearshift")

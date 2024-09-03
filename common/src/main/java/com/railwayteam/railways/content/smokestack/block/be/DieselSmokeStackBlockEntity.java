@@ -44,7 +44,8 @@ public class DieselSmokeStackBlockEntity extends SmartBlockEntity implements ISp
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     public double getRpm(float partialTicks) {
         boolean enabled = getBlockState().getValue(SmokeStackBlock.ENABLED);

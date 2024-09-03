@@ -35,23 +35,23 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 /**
  * When a player is viewing a camera, enables sounds near the camera to be played, while sounds near the player entity are
  * suppressed
- *
+ * <p>
  * Confirmed working with Security Craft
  */
 @Mixin(value = PlayerList.class, priority = 1200)
 public class PlayerListMixin {
-	@SuppressWarnings("InvalidInjectorMethodSignature")
-	@Inject(method = "broadcast", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/level/ServerPlayer;getZ()D"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
-	private void securitycraft$broadcastToCameras(@Nullable Player except, double x, double y, double z, double radius, ResourceKey<Level> dimension, Packet<?> packet, CallbackInfo callback, int iteration, ServerPlayer serverPlayer) {
-		if (serverPlayer.getCamera() instanceof ConductorEntity conductor) {
-			double dX = x - conductor.getX();
-			double dY = y - conductor.getY();
-			double dZ = z - conductor.getZ();
+    @SuppressWarnings("InvalidInjectorMethodSignature")
+    @Inject(method = "broadcast", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/level/ServerPlayer;getZ()D"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
+    private void securitycraft$broadcastToCameras(@Nullable Player except, double x, double y, double z, double radius, ResourceKey<Level> dimension, Packet<?> packet, CallbackInfo callback, int iteration, ServerPlayer serverPlayer) {
+        if (serverPlayer.getCamera() instanceof ConductorEntity conductor) {
+            double dX = x - conductor.getX();
+            double dY = y - conductor.getY();
+            double dZ = z - conductor.getZ();
 
-			if (dX * dX + dY * dY + dZ * dZ < radius * radius)
-				serverPlayer.connection.send(packet);
+            if (dX * dX + dY * dY + dZ * dZ < radius * radius)
+                serverPlayer.connection.send(packet);
 
-			callback.cancel();
-		}
-	}
+            callback.cancel();
+        }
+    }
 }

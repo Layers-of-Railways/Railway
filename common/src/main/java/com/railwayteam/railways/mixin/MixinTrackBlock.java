@@ -58,70 +58,70 @@ import java.util.Optional;
 
 @Mixin(value = TrackBlock.class, remap = false)
 public class MixinTrackBlock {
-  @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
-  private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
-    //noinspection ConstantValue
-    if (!(((Object) this) instanceof MonorailTrackBlock)) {
-      InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
-      if (result != null) {
-        cir.setReturnValue(result);
-      }
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
+    private void extendedUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+        //noinspection ConstantValue
+        if (!(((Object) this) instanceof MonorailTrackBlock)) {
+            InteractionResult result = CustomTrackBlock.casingUse(state, world, pos, player, hand, hit);
+            if (result != null) {
+                cir.setReturnValue(result);
+            }
+        }
     }
-  }
 
-  @Inject(method = "getBogeyAnchor", at = @At("HEAD"), cancellable = true)
-  private void placeCustomStyle(BlockGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir) {
-    if (BogeyMenuHandlerServer.getCurrentPlayer() == null)
-      return;
-    Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(BogeyMenuHandlerServer.getCurrentPlayer());
-    BogeyStyle style = styleData.getFirst();
+    @Inject(method = "getBogeyAnchor", at = @At("HEAD"), cancellable = true)
+    private void placeCustomStyle(BlockGetter world, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir) {
+        if (BogeyMenuHandlerServer.getCurrentPlayer() == null)
+            return;
+        Pair<BogeyStyle, BogeySize> styleData = BogeyMenuHandlerServer.getStyle(BogeyMenuHandlerServer.getCurrentPlayer());
+        BogeyStyle style = styleData.getFirst();
 
-    TrackType trackType = ((TrackBlock) (Object) this).getMaterial().trackType;
+        TrackType trackType = ((TrackBlock) (Object) this).getMaterial().trackType;
 
-    Optional<BogeyStyle> mappedStyleOptional = CRBogeyStyles.getMapped(style, trackType, true);
-    if (mappedStyleOptional.isPresent())
-      style = mappedStyleOptional.get();
+        Optional<BogeyStyle> mappedStyleOptional = CRBogeyStyles.getMapped(style, trackType, true);
+        if (mappedStyleOptional.isPresent())
+            style = mappedStyleOptional.get();
 
-    BogeySize selectedSize = styleData.getSecond();
-    if (style == AllBogeyStyles.STANDARD)
-      return;
+        BogeySize selectedSize = styleData.getSecond();
+        if (style == AllBogeyStyles.STANDARD)
+            return;
 
-    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.getAllSizesSmallToLarge().get(0);
-    int escape = BogeySizes.getAllSizesSmallToLarge().size();
-    while (!style.validSizes().contains(size)) {
-      if (escape < 0)
-        return;
-      size = size.increment();
-      escape--;
+        BogeySize size = selectedSize != null ? selectedSize : BogeySizes.getAllSizesSmallToLarge().get(0);
+        int escape = BogeySizes.getAllSizesSmallToLarge().size();
+        while (!style.validSizes().contains(size)) {
+            if (escape < 0)
+                return;
+            size = size.increment();
+            escape--;
+        }
+        Block block = style.getBlockOfSize(size);
+        cir.setReturnValue(
+                block.defaultBlockState()
+                        .setValue(BlockStateProperties.HORIZONTAL_AXIS,
+                                state.getValue(TrackBlock.SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z)
+        );
     }
-    Block block = style.getBlockOfSize(size);
-    cir.setReturnValue(
-            block.defaultBlockState()
-                    .setValue(BlockStateProperties.HORIZONTAL_AXIS,
-                            state.getValue(TrackBlock.SHAPE) == TrackShape.XO ? Direction.Axis.X : Direction.Axis.Z)
-    );
-  }
 
-  @Redirect(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;I)V", remap = true), remap = true)
-  private void maybeMakeTickInstant(Level instance, BlockPos blockPos, Block block, int i) {
-    if (TrackReplacePaver.tickInstantly)
-      i = 0;
-    instance.scheduleTick(blockPos, block, i);
-  }
-
-  @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true, remap = true)
-  private void casingCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext, CallbackInfoReturnable<VoxelShape> cir) {
-    if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
-      if (CasingCollisionUtils.shouldMakeCollision(tbe, pState)) {
-        cir.setReturnValue(CRShapes.BOTTOM_SLAB);
-      }
+    @Redirect(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;I)V", remap = true), remap = true)
+    private void maybeMakeTickInstant(Level instance, BlockPos blockPos, Block block, int i) {
+        if (TrackReplacePaver.tickInstantly)
+            i = 0;
+        instance.scheduleTick(blockPos, block, i);
     }
-  }
 
-  @Inject(method = "onRemove", at = @At("HEAD"), remap = true)
-  private void removeCasingCollisions(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving, CallbackInfo ci) {
-    if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
-      CasingCollisionUtils.manageTracks(tbe, true);
+    @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true, remap = true)
+    private void casingCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext, CallbackInfoReturnable<VoxelShape> cir) {
+        if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
+            if (CasingCollisionUtils.shouldMakeCollision(tbe, pState)) {
+                cir.setReturnValue(CRShapes.BOTTOM_SLAB);
+            }
+        }
     }
-  }
+
+    @Inject(method = "onRemove", at = @At("HEAD"), remap = true)
+    private void removeCasingCollisions(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving, CallbackInfo ci) {
+        if (pLevel.getBlockEntity(pPos) instanceof TrackBlockEntity tbe) {
+            CasingCollisionUtils.manageTracks(tbe, true);
+        }
+    }
 }

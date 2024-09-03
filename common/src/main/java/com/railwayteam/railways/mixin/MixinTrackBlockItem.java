@@ -43,10 +43,10 @@ public class MixinTrackBlockItem {
         Player player = pContext.getPlayer();
 
         if (state.getBlock() instanceof ITrackBlock track && track.getTrackAxes(level, pos, state)
-            .size() > 1) {
+                .size() > 1) {
             if (!level.isClientSide)
                 player.displayClientMessage(Lang.translateDirect("track.junction_start")
-                    .withStyle(ChatFormatting.RED), true);
+                        .withStyle(ChatFormatting.RED), true);
             cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }

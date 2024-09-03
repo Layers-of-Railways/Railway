@@ -120,8 +120,8 @@ public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBl
     public Vec3 getCurveStart(BlockGetter world, BlockPos pos, BlockState state, Vec3 axis) {
         boolean vertical = axis.y != 0;
         return VecHelper.getCenterOf(pos)
-            .add(0, (vertical ? 0 : -.5f), 0)
-            .add(axis.scale(.5));
+                .add(0, (vertical ? 0 : -.5f), 0)
+                .add(axis.scale(.5));
     }
 
     @Override
@@ -259,20 +259,20 @@ public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBl
                                                                          boolean linear, TrackNodeLocation connectedTo) {
         Collection<TrackNodeLocation.DiscoveredLocation> list;
         BlockGetter world = connectedTo != null && worldIn instanceof ServerLevel sl ? sl.getServer()
-            .getLevel(connectedTo.dimension) : worldIn;
+                .getLevel(connectedTo.dimension) : worldIn;
 
         if (getTrackAxes(world, pos, state).size() > 1) {
             Vec3 center = Vec3.atBottomCenterOf(pos)
-                .add(0, getElevationAtCenter(world, pos, state), 0);
+                    .add(0, getElevationAtCenter(world, pos, state), 0);
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             list = new ArrayList<>();
             for (Vec3 axis : getTrackAxes(world, pos, state))
                 for (boolean fromCenter : Iterate.trueAndFalse)
                     ITrackBlock.addToListIfConnected(connectedTo, list,
-                        (d, b) -> axis.scale(b ? 0 : fromCenter ? -d : d)
-                            .add(center),
-                        b -> shape.getNormal(), b -> world instanceof Level l ? l.dimension() : Level.OVERWORLD, v -> 0,
-                        axis, null, (b, v) -> ITrackBlock.getMaterialSimple(world, v));
+                            (d, b) -> axis.scale(b ? 0 : fromCenter ? -d : d)
+                                    .add(center),
+                            b -> shape.getNormal(), b -> world instanceof Level l ? l.dimension() : Level.OVERWORLD, v -> 0,
+                            axis, null, (b, v) -> ITrackBlock.getMaterialSimple(world, v));
         } else
             list = ITrackBlock.super.getConnected(world, pos, state, linear, connectedTo);
 

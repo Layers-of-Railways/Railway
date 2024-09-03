@@ -102,8 +102,8 @@ public class BufferModelUtils {
 
     private static TextureAtlasSprite getSpriteOnSide(BlockState state, Direction side) {
         BakedModel model = Minecraft.getInstance()
-            .getBlockRenderer()
-            .getBlockModel(state);
+                .getBlockRenderer()
+                .getBlockModel(state);
         if (model == null)
             return null;
         RandomSource random = RandomSource.create();
@@ -111,7 +111,7 @@ public class BufferModelUtils {
         List<BakedQuad> quads = model.getQuads(state, side, random);
         if (!quads.isEmpty()) {
             return quads.get(0)
-                .getSprite();
+                    .getSprite();
         }
         random.setSeed(42L);
         quads = model.getQuads(state, null, random);
@@ -126,5 +126,6 @@ public class BufferModelUtils {
     }
 
     // ensure that sprites get loaded
-    public static void register() {}
+    public static void register() {
+    }
 }

@@ -56,7 +56,7 @@ public class EmiRecipeDefaultsGen implements DataProvider {
     @Override
     public void run(@NotNull CachedOutput output) throws IOException {
         Path path = this.gen.getOutputFolder()
-            .resolve("assets/emi/recipe/defaults/railways.json");
+                .resolve("assets/emi/recipe/defaults/railways.json");
 
         ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
         HashingOutputStream hashingoutputstream = new HashingOutputStream(Hashing.sha1(), bytearrayoutputstream);

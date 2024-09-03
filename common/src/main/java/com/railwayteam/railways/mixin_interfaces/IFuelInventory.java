@@ -26,8 +26,10 @@ import java.util.Map;
 
 public interface IFuelInventory {
     void railways$setFuelFluids(CombinedTankWrapper combinedTankWrapper);
+
     CombinedTankWrapper railways$getFuelFluids();
 
     void railways$setFluidFuelStorage(Map<BlockPos, MountedFluidStorage> storageMap);
+
     Map<BlockPos, MountedFluidStorage> railways$getFluidFuelStorage();
 }

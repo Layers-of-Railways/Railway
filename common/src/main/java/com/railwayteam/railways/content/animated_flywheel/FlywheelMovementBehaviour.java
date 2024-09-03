@@ -35,7 +35,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class FlywheelMovementBehaviour implements MovementBehaviour {
-    @Override public boolean renderAsNormalBlockEntity() { return true; }
+    @Override
+    public boolean renderAsNormalBlockEntity() {
+        return true;
+    }
 
     @Override
     public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
@@ -44,7 +47,8 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
         if (!context.world.isClientSide || Minecraft.getInstance().isPaused()) return;
         if (!(context.contraption instanceof CarriageContraption carriageContraption)) return;
         if (!(carriageContraption.entity instanceof CarriageContraptionEntity carriageContraptionEntity)) return;
-        if (!(context.contraption.presentBlockEntities.get(context.localPos) instanceof FlywheelBlockEntity flywheelBlockEntity)) return;
+        if (!(context.contraption.presentBlockEntities.get(context.localPos) instanceof FlywheelBlockEntity flywheelBlockEntity))
+            return;
         if (flywheelBlockEntity.getBlockState().getValue(BlockStateProperties.AXIS).isVertical()) return;
         // It wasn't that bad was it? :^)
 
@@ -52,14 +56,18 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
         Direction.Axis flwAxis = flywheelBlockEntity.getBlockState().getValue(BlockStateProperties.AXIS);
 
         switch (dir) {
-            case NORTH, SOUTH -> { if (flwAxis == Direction.Axis.Z) return; }
-            case EAST, WEST -> { if (flwAxis == Direction.Axis.X) return; }
+            case NORTH, SOUTH -> {
+                if (flwAxis == Direction.Axis.Z) return;
+            }
+            case EAST, WEST -> {
+                if (flwAxis == Direction.Axis.X) return;
+            }
         }
 
         ICarriageFlywheel flywheel = ((ICarriageFlywheel) flywheelBlockEntity);
         double distanceTravelled = ((IDistanceTravelled) carriageContraptionEntity).railways$getDistanceTravelled();
 
-        double angleDiff = 360 * (distanceTravelled / AnimationTickHolder.getPartialTicks()) / (Math.PI *  2.8125);
+        double angleDiff = 360 * (distanceTravelled / AnimationTickHolder.getPartialTicks()) / (Math.PI * 2.8125);
 
         if (dir == Direction.SOUTH || dir == Direction.WEST)
             angleDiff = -angleDiff;

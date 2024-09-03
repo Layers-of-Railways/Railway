@@ -63,10 +63,10 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
     public HeadstockBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-            .setValue(FACING, Direction.NORTH)
-            .setValue(WATERLOGGED, false)
-            .setValue(STYLE, HeadstockStyle.BUFFER)
-            .setValue(UPSIDE_DOWN, false)
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
+                .setValue(STYLE, HeadstockStyle.BUFFER)
+                .setValue(UPSIDE_DOWN, false)
         );
     }
 
@@ -119,9 +119,9 @@ public class HeadstockBlock extends HorizontalDirectionalBlock implements IBE<He
         if (state.getValue(UPSIDE_DOWN)) {
             AABB toErase = CRShapes.HEADSTOCK_PLAIN.get(dir).toAabbs().get(0);
             return new AllShapes.Builder(shape)
-                .erase(toErase.minX*16, toErase.minY*16, toErase.minZ*16, toErase.maxX*16, toErase.maxY*16, toErase.maxZ*16)
-                .add(CRShapes.HEADSTOCK_PLAIN.get(dir).move(0, -4 / 16., 0))
-                .build();
+                    .erase(toErase.minX * 16, toErase.minY * 16, toErase.minZ * 16, toErase.maxX * 16, toErase.maxY * 16, toErase.maxZ * 16)
+                    .add(CRShapes.HEADSTOCK_PLAIN.get(dir).move(0, -4 / 16., 0))
+                    .build();
         } else {
             return shape;
         }

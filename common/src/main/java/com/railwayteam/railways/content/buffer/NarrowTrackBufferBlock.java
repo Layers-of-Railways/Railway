@@ -35,6 +35,7 @@ import java.util.Locale;
 @MethodsReturnNonnullByDefault
 public class NarrowTrackBufferBlock extends WoodVariantTrackBufferBlock {
     public static final EnumProperty<Style> STYLE = EnumProperty.create("style", Style.class);
+
     public NarrowTrackBufferBlock(Properties pProperties) {
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(STYLE, Style.STANDARD));
@@ -52,10 +53,10 @@ public class NarrowTrackBufferBlock extends WoodVariantTrackBufferBlock {
 
     public enum Style implements StringRepresentable {
         STANDARD("narrow_buffer_stop"),
-        MONO("narrow_mono_buffer_stop")
-        ;
+        MONO("narrow_mono_buffer_stop");
 
         private final String model;
+
         Style(String model) {
             this.model = model;
         }

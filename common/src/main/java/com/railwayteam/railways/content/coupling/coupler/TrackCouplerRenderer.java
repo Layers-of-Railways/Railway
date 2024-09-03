@@ -77,9 +77,9 @@ public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerB
 
         ms.pushPose();
         TransformStack.cast(ms)
-            .translate(targetPosition.subtract(pos));
+                .translate(targetPosition.subtract(pos));
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-            buffer, light, overlay, getCouplerOverlayModel(te), 1, offsetToSide);
+                buffer, light, overlay, getCouplerOverlayModel(te), 1, offsetToSide);
         ms.popPose();
     }
 }

@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class SetCameraViewPacket implements S2CPacket {
     private final int id;
+
     public SetCameraViewPacket(Entity camera) {
         id = camera.getId();
     }
@@ -35,6 +36,7 @@ public class SetCameraViewPacket implements S2CPacket {
     public SetCameraViewPacket(FriendlyByteBuf buf) {
         id = buf.readVarInt();
     }
+
     @Override
     public void write(FriendlyByteBuf buffer) {
         buffer.writeVarInt(id);

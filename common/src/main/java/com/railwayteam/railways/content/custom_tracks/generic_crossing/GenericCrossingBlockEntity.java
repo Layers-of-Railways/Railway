@@ -67,7 +67,8 @@ public class GenericCrossingBlockEntity extends SmartBlockEntity implements IMer
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
 
     @Override
     protected void read(CompoundTag tag, boolean clientPacket) {

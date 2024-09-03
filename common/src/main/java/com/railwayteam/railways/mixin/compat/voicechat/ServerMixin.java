@@ -45,9 +45,9 @@ public class ServerMixin {
     }
 
     @WrapOperation(method = "processProximityPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getUUID()Ljava/util/UUID;"),
-        slice = @Slice(
-            from = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;isCrouching()Z")
-        ))
+            slice = @Slice(
+                    from = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;isCrouching()Z")
+            ))
     private UUID useConductorSpyUUID(ServerPlayer instance, Operation<UUID> original) {
         if (ConductorPossessionController.isPossessingConductor(instance)) {
             return instance.getCamera().getUUID();

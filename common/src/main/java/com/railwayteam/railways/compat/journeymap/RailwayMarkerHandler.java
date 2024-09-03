@@ -38,9 +38,9 @@ import java.util.UUID;
 
 public class RailwayMarkerHandler implements IRailwayMarkerHandler {
     private static final MapImage TRAIN_IMAGE = new MapImage(Railways.asResource("textures/gui/journeymap_train.png"), 60, 60)
-        .setDisplayWidth(27)
-        .setDisplayHeight(27)
-        .centerAnchors();
+            .setDisplayWidth(27)
+            .setDisplayHeight(27)
+            .centerAnchors();
 
     private IClientAPI jmAPI;
     private HashMap<UUID, MarkerOverlay> markers;

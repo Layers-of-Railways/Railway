@@ -42,9 +42,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Contraption.class)
 public abstract class MixinContraption implements IContraptionFuel {
-    @Shadow(remap = false) protected MountedStorageManager storage;
+    @Shadow(remap = false)
+    protected MountedStorageManager storage;
 
-    @Shadow protected abstract BlockPos toLocalPos(BlockPos globalPos);
+    @Shadow
+    protected abstract BlockPos toLocalPos(BlockPos globalPos);
 
     @Inject(method = "getBlockEntityNBT", at = @At("RETURN"))
     private void getBlockEntityNBT(Level world, BlockPos pos, CallbackInfoReturnable<CompoundTag> cir) {
@@ -61,7 +63,7 @@ public abstract class MixinContraption implements IContraptionFuel {
     }
 
     @Inject(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
-    private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {
+    private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name = "add") BlockPos add) {
         BlockEntity be = world.getBlockEntity(add);
         if (be instanceof IPreAssembleCallback preTransformCallback)
             preTransformCallback.railways$preAssemble();

@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.Block;
 public class TrackCouplerBlockItem extends TrackTargetingBlockItem {
 
     public static <T extends Block> NonNullBiFunction<? super T, Properties, TrackTargetingBlockItem> ofType(
-        EdgePointType<?> type) {
+            EdgePointType<?> type) {
         return (b, p) -> new TrackCouplerBlockItem(b, p, type);
     }
 

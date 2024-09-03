@@ -128,10 +128,10 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
             case VANILLA -> {
                 SimpleParticleType particleType = isSignalFire ? ParticleTypes.CAMPFIRE_SIGNAL_SMOKE : ParticleTypes.CAMPFIRE_COSY_SMOKE;
                 level.addAlwaysVisibleParticle(particleType, true,
-                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double)(random.nextBoolean() ? 1 : -1),
-                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y,
-                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (double)(random.nextBoolean() ? 1 : -1),
-                    0.0D, 0.07D*speedMultiplier / (stationary ? 1. : 25.), 0.0D);
+                        pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (double) (random.nextBoolean() ? 1 : -1),
+                        pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y,
+                        pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (double) (random.nextBoolean() ? 1 : -1),
+                        0.0D, 0.07D * speedMultiplier / (stationary ? 1. : 25.), 0.0D);
             }
             case OLD -> {
                 ParticleOptions particleType;
@@ -142,10 +142,10 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
                     particleType = new SmokeParticleData(stationary);
                 }
                 level.addAlwaysVisibleParticle(particleType, true,
-                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
-                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
-                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
-                    0.0D, 0.07D * speedMultiplier * (stationary ? 25 : 1), 0.0D);
+                        pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+                        pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+                        pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+                        0.0D, 0.07D * speedMultiplier * (stationary ? 25 : 1), 0.0D);
             }
             case CARTOON -> {
                 ParticleOptions particleType;
@@ -157,18 +157,18 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
                     particleType = PuffSmokeParticleData.create(small, stationary);
                 }
                 level.addAlwaysVisibleParticle(particleType, true,
-                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
-                    pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
-                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
-                    0.0D, Mth.equal(speedMultiplier, -1) ? PuffSmokeParticle.DOUBLE_SPEED_SENTINEL : 2.1, 0.0D);
+                        pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * (random.nextDouble() * 2 - 1),
+                        pos.y() + random.nextDouble() * spawnDelta.y + spawnOffset.y + 0.5,
+                        pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * (random.nextDouble() * 2 - 1),
+                        0.0D, Mth.equal(speedMultiplier, -1) ? PuffSmokeParticle.DOUBLE_SPEED_SENTINEL : 2.1, 0.0D);
             }
         }
         if (spawnExtraSmoke && smokeType != SmokeType.CARTOON) {
             level.addParticle(ParticleTypes.SMOKE,
-                pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
-                pos.y() + spawnOffset.y - 0.1d,
-                pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * 0.75d * (double)(random.nextBoolean() ? 1 : -1),
-                0.0D, 0.005D*speedMultiplier, 0.0D);
+                    pos.x() + spawnOffset.x + random.nextDouble() * spawnDelta.x * 0.75d * (double) (random.nextBoolean() ? 1 : -1),
+                    pos.y() + spawnOffset.y - 0.1d,
+                    pos.z() + spawnOffset.z + random.nextDouble() * spawnDelta.z * 0.75d * (double) (random.nextBoolean() ? 1 : -1),
+                    0.0D, 0.005D * speedMultiplier, 0.0D);
         }
 
     }
@@ -176,7 +176,7 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
     public void blockEntityAnimateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(ENABLED)) {
             if (random.nextFloat() < type.particleSpawnChance * 1.5 && createsStationarySmoke) {
-                for(int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
+                for (int i = 0; i < random.nextInt((type.maxParticles - type.minParticles)) + type.minParticles; ++i) {
                     makeParticlesStationary(level, pos, random.nextBoolean(), true, type.getParticleSpawnOffset(), type.getParticleSpawnDelta());
                 }
             }

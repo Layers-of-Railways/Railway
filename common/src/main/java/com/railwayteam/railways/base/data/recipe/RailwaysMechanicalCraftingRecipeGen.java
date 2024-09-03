@@ -39,52 +39,52 @@ import java.util.function.UnaryOperator;
 public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipeProvider {
 
     DyedRecipeList BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.BOILER.get(color).get())
-        .returns(4)
-        .setEmiDefault(color == null)
-        .recipe(b -> b.key('#', Styles.SLASHED.get(color).get())
-            .key('u', Items.BUCKET)
-            .key('/', Items.BLAZE_ROD)
-            .patternLine("  #  ")
-            .patternLine(" #u# ")
-            .patternLine("#///#")
-            .patternLine(" #/# ")
-            .patternLine("  #  ")));
+            .returns(4)
+            .setEmiDefault(color == null)
+            .recipe(b -> b.key('#', Styles.SLASHED.get(color).get())
+                    .key('u', Items.BUCKET)
+                    .key('/', Items.BLAZE_ROD)
+                    .patternLine("  #  ")
+                    .patternLine(" #u# ")
+                    .patternLine("#///#")
+                    .patternLine(" #/# ")
+                    .patternLine("  #  ")));
 
     DyedRecipeList BRASS_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.BRASS_WRAPPED_BOILER.get(color).get())
-        .returns(4)
-        .setEmiDefault(color == null)
-        .recipe(b -> b.key('#', Styles.BRASS_WRAPPED_SLASHED.get(color).get())
-            .key('u', Items.BUCKET)
-            .key('/', Items.BLAZE_ROD)
-            .patternLine("  #  ")
-            .patternLine(" #u# ")
-            .patternLine("#///#")
-            .patternLine(" #/# ")
-            .patternLine("  #  ")));
+            .returns(4)
+            .setEmiDefault(color == null)
+            .recipe(b -> b.key('#', Styles.BRASS_WRAPPED_SLASHED.get(color).get())
+                    .key('u', Items.BUCKET)
+                    .key('/', Items.BLAZE_ROD)
+                    .patternLine("  #  ")
+                    .patternLine(" #u# ")
+                    .patternLine("#///#")
+                    .patternLine(" #/# ")
+                    .patternLine("  #  ")));
 
     DyedRecipeList COPPER_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.COPPER_WRAPPED_BOILER.get(color).get())
-        .returns(4)
-        .setEmiDefault(color == null)
-        .recipe(b -> b.key('#', Styles.COPPER_WRAPPED_SLASHED.get(color).get())
-            .key('u', Items.BUCKET)
-            .key('/', Items.BLAZE_ROD)
-            .patternLine("  #  ")
-            .patternLine(" #u# ")
-            .patternLine("#///#")
-            .patternLine(" #/# ")
-            .patternLine("  #  ")));
+            .returns(4)
+            .setEmiDefault(color == null)
+            .recipe(b -> b.key('#', Styles.COPPER_WRAPPED_SLASHED.get(color).get())
+                    .key('u', Items.BUCKET)
+                    .key('/', Items.BLAZE_ROD)
+                    .patternLine("  #  ")
+                    .patternLine(" #u# ")
+                    .patternLine("#///#")
+                    .patternLine(" #/# ")
+                    .patternLine("  #  ")));
 
     DyedRecipeList IRON_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.IRON_WRAPPED_BOILER.get(color).get())
-        .returns(4)
-        .setEmiDefault(color == null)
-        .recipe(b -> b.key('#', Styles.IRON_WRAPPED_SLASHED.get(color).get())
-            .key('u', Items.BUCKET)
-            .key('/', Items.BLAZE_ROD)
-            .patternLine("  #  ")
-            .patternLine(" #u# ")
-            .patternLine("#///#")
-            .patternLine(" #/# ")
-            .patternLine("  #  ")));
+            .returns(4)
+            .setEmiDefault(color == null)
+            .recipe(b -> b.key('#', Styles.IRON_WRAPPED_SLASHED.get(color).get())
+                    .key('u', Items.BUCKET)
+                    .key('/', Items.BLAZE_ROD)
+                    .patternLine("  #  ")
+                    .patternLine(" #u# ")
+                    .patternLine("#///#")
+                    .patternLine(" #/# ")
+                    .patternLine("  #  ")));
 
     protected RailwaysMechanicalCraftingRecipeGen(DataGenerator pGenerator) {
         super(pGenerator);
@@ -133,14 +133,13 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
         }
 
 
-
         GeneratedRecipe recipe(UnaryOperator<MechanicalCraftingRecipeBuilder> builder) {
             return register(consumer -> {
                 MechanicalCraftingRecipeBuilder b =
-                    builder.apply(MechanicalCraftingRecipeBuilder.shapedRecipe(result.get(), amount));
+                        builder.apply(MechanicalCraftingRecipeBuilder.shapedRecipe(result.get(), amount));
                 ResourceLocation location = clean(Railways.asResource("mechanical_crafting/" + RegisteredObjects.getKeyOrThrow(result.get()
-                        .asItem())
-                    .getPath() + suffix));
+                                .asItem())
+                        .getPath() + suffix));
                 if (addToEmiDefaults) {
                     EmiRecipeDefaultsGen.DEFAULT_RECIPES.add(location);
                 }

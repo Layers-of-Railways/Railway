@@ -52,9 +52,11 @@ import java.util.Map;
 
 @Mixin(value = AbstractBogeyBlock.class, remap = false)
 public abstract class MixinAbstractBogeyBlock {
-    @Shadow protected abstract BlockState copyProperties(BlockState source, BlockState target);
+    @Shadow
+    protected abstract BlockState copyProperties(BlockState source, BlockState target);
 
-    @Shadow public abstract BlockState getStateOfSize(AbstractBogeyBlockEntity sbte, BogeySizes.BogeySize size);
+    @Shadow
+    public abstract BlockState getStateOfSize(AbstractBogeyBlockEntity sbte, BogeySizes.BogeySize size);
 
     // fixme this is a Create bug, file a report (styles not placing the correct block)
     // Has been merged, awaiting release

@@ -51,13 +51,15 @@ public abstract class MixinPlayer extends LivingEntity {
     @Inject(method = "getDimensions", at = @At("RETURN"), cancellable = true)
     private void shrinkConductorPlayer(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
         if (ConductorEntity.isPlayerDisguised((Player) (Object) this)) {
-            if (pose == Pose.SLEEPING || pose == Pose.FALL_FLYING || pose == Pose.SPIN_ATTACK || pose == Pose.SWIMMING || pose == Pose.DYING) return;
+            if (pose == Pose.SLEEPING || pose == Pose.FALL_FLYING || pose == Pose.SPIN_ATTACK || pose == Pose.SWIMMING || pose == Pose.DYING)
+                return;
             EntityDimensions dimensions = cir.getReturnValue();
             cir.setReturnValue(dimensions.scale(1.0f, 1.5f / 1.8f));
         }
     }
 
     private boolean wasDisguised = false;
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void updateDimensions(CallbackInfo ci) {
         boolean isDisguised = ConductorEntity.isPlayerDisguised((Player) (Object) this);

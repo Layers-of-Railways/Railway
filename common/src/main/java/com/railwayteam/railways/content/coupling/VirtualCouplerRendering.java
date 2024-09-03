@@ -34,7 +34,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public final class VirtualCouplerRendering {
-    private VirtualCouplerRendering() {}
+    private VirtualCouplerRendering() {
+    }
 
     public static void renderCoupler(Direction direction, double couplingDistance, boolean front, float partialTicks,
                                      PoseStack ms, MultiBufferSource buffer, int light, int overlay,
@@ -57,10 +58,10 @@ public final class VirtualCouplerRendering {
             ms.pushPose();
             ms.translate(anchor.x, anchor.y, anchor.z);
             CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
-                .rotateY(-yRot)
-                .rotateX(xRot)
-                .light(light)
-                .renderInto(ms, vb);
+                    .rotateY(-yRot)
+                    .rotateX(xRot)
+                    .light(light)
+                    .renderInto(ms, vb);
 
             float margin = 3 / 16f;
             int couplingSegments = (int) Math.round(couplingDistance * 4);
@@ -68,13 +69,13 @@ public final class VirtualCouplerRendering {
 
             for (int j = 0; j < couplingSegments; j++) {
                 CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_CABLE, air)
-                    .rotateY(-yRot + 180)
-                    .rotateX(-xRot)
-                    .translate(0, 0, margin + 2 / 16f)
-                    .scale(1, 1, (float) stretch)
-                    .translate(0, 0, j / 4f)
-                    .light(light)
-                    .renderInto(ms, vb);
+                        .rotateY(-yRot + 180)
+                        .rotateX(-xRot)
+                        .translate(0, 0, margin + 2 / 16f)
+                        .scale(1, 1, (float) stretch)
+                        .translate(0, 0, j / 4f)
+                        .light(light)
+                        .renderInto(ms, vb);
             }
 
             ms.popPose();
@@ -82,10 +83,10 @@ public final class VirtualCouplerRendering {
             ms.pushPose();
             ms.translate(anchor2.x, anchor2.y, anchor2.z);
             CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
-                .rotateY(-yRot + 180)
-                .rotateX(-xRot)
-                .light(light)
-                .renderInto(ms, vb);
+                    .rotateY(-yRot + 180)
+                    .rotateX(-xRot)
+                    .light(light)
+                    .renderInto(ms, vb);
             ms.popPose();
             ms.popPose();
         }

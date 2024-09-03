@@ -64,8 +64,7 @@ public class NarrowGaugeBogeyBlock extends CRBogeyBlock {
     public enum NarrowGaugeStandardStyle {
         SMALL(() -> CRBogeyStyles.NARROW_DEFAULT, () -> BogeySizes.SMALL),
         SCOTCH_YOKE(() -> CRBogeyStyles.NARROW_DEFAULT, () -> BogeySizes.LARGE),
-        DOUBLE_SCOTCH_YOKE(() -> CRBogeyStyles.NARROW_DOUBLE_SCOTCH, () -> BogeySizes.LARGE)
-        ;
+        DOUBLE_SCOTCH_YOKE(() -> CRBogeyStyles.NARROW_DOUBLE_SCOTCH, () -> BogeySizes.LARGE);
         public final Supplier<BogeyStyle> style;
         public final Supplier<BogeySize> size;
 

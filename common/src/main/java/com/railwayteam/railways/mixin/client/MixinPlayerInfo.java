@@ -40,12 +40,19 @@ import java.util.Objects;
 
 @Mixin(PlayerInfo.class)
 public class MixinPlayerInfo {
-    @Shadow @Final private GameProfile profile;
-    @Shadow @Final private Map<MinecraftProfileTexture.Type, ResourceLocation> textureLocations;
-    @Shadow private @Nullable String skinModel;
+    @Shadow
+    @Final
+    private GameProfile profile;
+    @Shadow
+    @Final
+    private Map<MinecraftProfileTexture.Type, ResourceLocation> textureLocations;
+    @Shadow
+    private @Nullable String skinModel;
 
-    @Unique private boolean railways$texturesLoaded;
-    @Unique private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
+    @Unique
+    private boolean railways$texturesLoaded;
+    @Unique
+    private static final ResourceLocation DEV_CAPE = Railways.asResource("textures/misc/dev_cape.png");
 
     // Replaces skin inside the dev env with the conductor skin
     @DevEnvMixin
@@ -76,8 +83,8 @@ public class MixinPlayerInfo {
     @DevEnvMixin
     @Inject(method = "registerTextures",
             at = @At(
-                value = "INVOKE",
-                target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/resources/SkinManager;registerSkins(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/client/resources/SkinManager$SkinTextureCallback;Z)V"
             )
     )
     private void railways$setModelToLarge(CallbackInfo ci) {

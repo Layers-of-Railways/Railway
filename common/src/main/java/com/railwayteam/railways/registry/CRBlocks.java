@@ -149,26 +149,27 @@ public class CRBlocks {
         }
         //noinspection unchecked
         return REGISTRATE.block("track_" + material.resourceName(), material::createBlock)
-            .initialProperties(Material.STONE)
-            .properties(p -> collectProperties.apply(p)
-                .color(MaterialColor.METAL)
-                .strength(0.8F)
-                .sound(SoundType.METAL)
-                .noOcclusion())
-            .addLayer(() -> RenderType::cutoutMipped)
-            .transform(pickaxeOnly())
-            .blockstate(blockstateGen)
-            .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
-            .tag((TagKey<Block>[]) trackTags.toArray(new TagKey[0])) // keep the cast, or stuff breaks
-            .lang(material.langName + " Train Track")
-            .onRegister(onRegister)
-            .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
-            .onRegister(CRTrackMaterials::addToBlockEntityType)
-            .item(TrackBlockItem::new)
-            .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
-            .tag((TagKey<Item>[]) itemTags.toArray(new TagKey[0]))
-            .build()
-            .register();
+                .initialProperties(Material.STONE)
+                .properties(p -> collectProperties.apply(p)
+                        .color(MaterialColor.METAL)
+                        .strength(0.8F)
+                        .sound(SoundType.METAL)
+                        .noOcclusion())
+                .addLayer(() -> RenderType::cutoutMipped)
+                .transform(pickaxeOnly())
+                .blockstate(blockstateGen)
+                .tag(CommonTags.RELOCATION_NOT_SUPPORTED.forge, CommonTags.RELOCATION_NOT_SUPPORTED.fabric)
+                .tag((TagKey<Block>[]) trackTags.toArray(TagKey[]::new)) // keep the cast, or stuff breaks
+                .lang(material.langName + " Train Track")
+                .onRegister(onRegister)
+                .onRegister(CreateRegistrate.blockModel(() -> TrackModel::new))
+                .onRegister(CRTrackMaterials::addToBlockEntityType)
+                .item(TrackBlockItem::new)
+                .model((c, p) -> p.generated(c, Railways.asResource("item/track/" + c.getName())))
+                .tag((TagKey<Item>[]) itemTags.toArray(TagKey[]::new))
+                .tag(AllTags.AllItemTags.TRACKS.tag)
+                .build()
+                .register();
     }
 
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, VoxelShape shape, boolean emitStationarySmoke) {
@@ -196,19 +197,19 @@ public class CRBlocks {
         return makeSmokeStack(variant, type, description, shape, spawnExtraSmoke, emitStationarySmoke,
                 (c, p) -> p.getVariantBuilder(c.get())
                         .forAllStatesExcept(state -> ConfiguredModel.builder()
-                                .modelFile(p.models().withExistingParent(
-                                                        c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
-                                                        Railways.asResource("block/smokestack/block_" + variant)
-                                                )
-                                                .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
-                                                .texture("particle", "#0")
-                                )
-                                .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
-                                        rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
-                                .build(),
-                            AbstractSmokeStackBlock.ENABLED,
-                            AbstractSmokeStackBlock.POWERED,
-                            AbstractSmokeStackBlock.WATERLOGGED
+                                        .modelFile(p.models().withExistingParent(
+                                                                c.getName() + "_" + state.getValue(SmokeStackBlock.STYLE).getBlockId(),
+                                                                Railways.asResource("block/smokestack/block_" + variant)
+                                                        )
+                                                        .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
+                                                        .texture("particle", "#0")
+                                        )
+                                        .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
+                                                rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                                        .build(),
+                                AbstractSmokeStackBlock.ENABLED,
+                                AbstractSmokeStackBlock.POWERED,
+                                AbstractSmokeStackBlock.WATERLOGGED
                         ), blockFunction);
     }
 
@@ -217,32 +218,32 @@ public class CRBlocks {
     private static BlockEntry<SmokeStackBlock> makeSmokeStack(String variant, SmokeStackBlock.SmokeStackType type, String description, ShapeWrapper shape, boolean spawnExtraSmoke, boolean emitStationarySmoke, NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> blockStateProvider, SmokeStackFunction<SmokeStackBlock> blockFunction) {
         TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
         BlockEntry<SmokeStackBlock> BLOCK = REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, type, shape, emitStationarySmoke, variant))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(blockStateProvider)
-            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .addLayer(() -> RenderType::cutoutMipped)
-            .transform(pickaxeOnly())
-            .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
-            .lang(description)
-            .item(BlockStateBlockItem.create(SmokeStackBlock.STYLE, SmokestackStyle.STEEL, true))
+                .initialProperties(SharedProperties::softMetal)
+                .blockstate(blockStateProvider)
+                .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+                .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                .properties(BlockBehaviour.Properties::noOcclusion)
+                .addLayer(() -> RenderType::cutoutMipped)
+                .transform(pickaxeOnly())
+                .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
+                .lang(description)
+                .item(BlockStateBlockItem.create(SmokeStackBlock.STYLE, SmokestackStyle.STEEL, true))
                 .lang(description)
                 .tab(() -> CRItems.mainCreativeTab)
                 .model((c, p) -> p.withExistingParent(c.getName(), Railways.asResource("block/smokestack_" + variant + "_steel")))
                 .tag(cycleTag)
-            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> {
-                if (!variant.equals("caboosestyle"))
-                    ItemDescription.useKey(v, "block.railways.smokestack");
-            })
-            .build()
-            .register();
+                .onRegisterAfter(Registry.ITEM_REGISTRY, v -> {
+                    if (!variant.equals("caboosestyle"))
+                        ItemDescription.useKey(v, "block.railways.smokestack");
+                })
+                .build()
+                .register();
 
         if (!variant.equals("caboosestyle")) {
             BlockStateBlockItemGroup<Couple<String>, SmokestackStyle> group = new BlockStateBlockItemGroup<>(Couple.create("smokestack_" + variant + "_", description), SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
-                i -> i.tab(() -> null)
-                    .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.smokestack")),
-                cycleTag, SmokestackStyle.STEEL, null);
+                    i -> i.tab(() -> null)
+                            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.smokestack")),
+                    cycleTag, SmokestackStyle.STEEL, null);
             SMOKESTACK_GROUP.put(variant, group);
             group.registerDefaultEntry(SmokestackStyle.STEEL, ItemEntry.cast(REGISTRATE.get("smokestack_" + variant, Registry.ITEM_REGISTRY)));
         }
@@ -251,91 +252,91 @@ public class CRBlocks {
     }
 
     public static final BlockEntry<SemaphoreBlock> SEMAPHORE = REGISTRATE.block("semaphore", SemaphoreBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry())
-            .forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(prov.models().getExistingFile(prov.modLoc(
-                    "block/semaphore/block" +
-                        (state.getValue(SemaphoreBlock.FULL) ? "_full" : "") +
-                        (state.getValue(SemaphoreBlock.FLIPPED) ? "_flipped" : "") +
-                        (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ? "_down" : ""))))
-                .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                .build()
+            .initialProperties(SharedProperties::softMetal)
+            .blockstate((ctx, prov) -> prov.getVariantBuilder(ctx.getEntry())
+                    .forAllStates(state -> ConfiguredModel.builder()
+                            .modelFile(prov.models().getExistingFile(prov.modLoc(
+                                    "block/semaphore/block" +
+                                            (state.getValue(SemaphoreBlock.FULL) ? "_full" : "") +
+                                            (state.getValue(SemaphoreBlock.FLIPPED) ? "_flipped" : "") +
+                                            (state.getValue(SemaphoreBlock.UPSIDE_DOWN) ? "_down" : ""))))
+                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                            .build()
+                    )
             )
-        )
-        .properties(p -> p.color(MaterialColor.COLOR_GRAY))
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
-        .item(SemaphoreItem::new).transform(customItemModel())
-        .transform(axeOnly())
-        .addLayer(() -> RenderType::translucent)
-        .register();
+            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
+            .item(SemaphoreItem::new).transform(customItemModel())
+            .transform(axeOnly())
+            .addLayer(() -> RenderType::translucent)
+            .register();
 
     public static final BlockEntry<TrackCouplerBlock> TRACK_COUPLER =
-        REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
-            .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
+            REGISTRATE.block("track_coupler", TrackCouplerBlock::create)
+                    .initialProperties(SharedProperties::softMetal)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(BlockBehaviour.Properties::noOcclusion)
+                    .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStatesExcept(state -> ConfiguredModel.builder()
                             .modelFile(AssetLookup.partialBaseModel(c, p, state.getValue(TrackCouplerBlock.MODE).getSerializedName()))
                             .build(), TrackCouplerBlock.POWERED))
-            .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
-            .lang("Train Coupler")
-            .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
-            .transform(customItemModel("_", "block_both"))
-            .register();
+                    .transform(pickaxeOnly())
+                    .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
+                    .lang("Train Coupler")
+                    .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
+                    .transform(customItemModel("_", "block_both"))
+                    .register();
 
     public static final BlockEntry<TrackSwitchBlock> ANDESITE_SWITCH =
-        REGISTRATE.block("track_switch_andesite", TrackSwitchBlock::manual)
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                .forAllStatesExcept(
-                    state -> ConfiguredModel.builder()
-                        .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_andesite/block")))
-                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-                        .build(),
-                    TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
-                ))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
-            .onRegister(ItemUseOverrides::addBlock)
-            .lang("Andesite Track Switch")
-            .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
-            .transform(customItemModel())
-            .register();
+            REGISTRATE.block("track_switch_andesite", TrackSwitchBlock::manual)
+                    .initialProperties(SharedProperties::softMetal)
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStatesExcept(
+                                    state -> ConfiguredModel.builder()
+                                            .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_andesite/block")))
+                                            .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
+                                            .build(),
+                                    TrackSwitchBlock.LOCKED//, TrackSwitchBlock.STATE
+                            ))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .properties(BlockBehaviour.Properties::noOcclusion)
+                    .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                    .transform(pickaxeOnly())
+                    .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
+                    .lang("Andesite Track Switch")
+                    .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
+                    .transform(customItemModel())
+                    .register();
 
     public static final BlockEntry<TrackSwitchBlock> BRASS_SWITCH =
-        REGISTRATE.block("track_switch_brass", TrackSwitchBlock::automatic)
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                .forAllStatesExcept(state -> ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_brass/block")))
-                    .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
-                    .build(), TrackSwitchBlock.LOCKED))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
-            .properties(BlockBehaviour.Properties::noOcclusion)
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
-            .onRegister(ItemUseOverrides::addBlock)
-            .lang("Brass Track Switch")
-            .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
-            .transform(customItemModel())
-            .register();
+            REGISTRATE.block("track_switch_brass", TrackSwitchBlock::automatic)
+                    .initialProperties(SharedProperties::softMetal)
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStatesExcept(state -> ConfiguredModel.builder()
+                                    .modelFile(p.models().getExistingFile(Railways.asResource("block/track_switch_brass/block")))
+                                    .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 90) % 360)
+                                    .build(), TrackSwitchBlock.LOCKED))
+                    .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+                    .properties(BlockBehaviour.Properties::noOcclusion)
+                    .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                    .transform(pickaxeOnly())
+                    .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+                    .onRegister(ItemUseOverrides::addBlock)
+                    .lang("Brass Track Switch")
+                    .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
+                    .transform(customItemModel())
+                    .register();
 
     public static final BlockEntry<CasingCollisionBlock> CASING_COLLISION = REGISTRATE.block("casing_collision", CasingCollisionBlock::create)
-        .initialProperties((new Material.Builder(MaterialColor.METAL))
-            .replaceable()
-            .build())
-        .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-            .withExistingParent(c.getName(), p.mcLoc("block/air"))))
-        .lang("Track Casing Collision Block")
-        .register();
+            .initialProperties((new Material.Builder(MaterialColor.METAL))
+                    .replaceable()
+                    .build())
+            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+                    .withExistingParent(c.getName(), p.mcLoc("block/air"))))
+            .lang("Track Casing Collision Block")
+            .register();
 
     static {
         Railways.registrate().creativeModeTab(() -> CRItems.tracksCreativeTab, "Create Steam 'n' Rails: Tracks");
@@ -374,119 +375,119 @@ public class CRBlocks {
     }
 
     public static final BlockEntry<TrackBlock> MONORAIL_TRACK = makeTrack(
-        new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
+            new MonorailBlockStateGenerator()::generate, BlockBehaviour.Properties::randomTicks);
 
     static {
         Railways.registrate().creativeModeTab(() -> CRItems.mainCreativeTab);
     }
 
     public static final BlockEntry<MonoBogeyBlock> MONO_BOGEY =
-        REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.monobogey())
-            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-            .lang("Monorail Bogey")
-            .register();
+            REGISTRATE.block("mono_bogey", MonoBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.monobogey())
+                    .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+                    .lang("Monorail Bogey")
+                    .register();
 
     public static final BlockEntry<InvisibleBogeyBlock> INVISIBLE_BOGEY =
-        REGISTRATE.block("invisible_bogey", InvisibleBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.invisibleBogey())
-            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-            .lang("Invisible Bogey")
-            .register();
+            REGISTRATE.block("invisible_bogey", InvisibleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.invisibleBogey())
+                    .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+                    .lang("Invisible Bogey")
+                    .register();
 
     public static final BlockEntry<InvisibleMonoBogeyBlock> INVISIBLE_MONO_BOGEY =
-        REGISTRATE.block("invisible_mono_bogey", InvisibleMonoBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.invisibleMonoBogey())
-            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-            .lang("Invisible Mono Bogey")
-            .register();
+            REGISTRATE.block("invisible_mono_bogey", InvisibleMonoBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.invisibleMonoBogey())
+                    .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+                    .lang("Invisible Mono Bogey")
+                    .register();
 
     public static final BlockEntry<SingleAxleBogeyBlock> SINGLEAXLE_BOGEY =
-        REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.standardBogey()) // handles SAFE_NBT
-            .lang("Single Axle Bogey")
-            .register();
+            REGISTRATE.block("singleaxle_bogey", SingleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey()) // handles SAFE_NBT
+                    .lang("Single Axle Bogey")
+                    .register();
 
     public static final BlockEntry<DoubleAxleBogeyBlock> DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("doubleaxle_bogey", DoubleAxleBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.standardBogey())
-            .lang("Double Axle Bogey")
-            .register();
+            REGISTRATE.block("doubleaxle_bogey", DoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Double Axle Bogey")
+                    .register();
 
     //fixme todo Implement Datafixer for this and remove it.
     @Deprecated
     public static final BlockEntry<DoubleAxleBogeyBlock> LARGE_PLATFORM_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("large_platform_doubleaxle_bogey", DoubleAxleBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.standardBogey())
-            .lang("Large Platform Double Axle Bogey")
-            .register();
+            REGISTRATE.block("large_platform_doubleaxle_bogey", DoubleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Large Platform Double Axle Bogey")
+                    .register();
 
     public static final BlockEntry<TripleAxleBogeyBlock> TRIPLEAXLE_BOGEY =
-        REGISTRATE.block("tripleaxle_bogey", TripleAxleBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.standardBogey())
-            .lang("Triple Axle Bogey")
-            .register();
+            REGISTRATE.block("tripleaxle_bogey", TripleAxleBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.standardBogey())
+                    .lang("Triple Axle Bogey")
+                    .register();
 
     public static final BlockEntry<WideGaugeBogeyBlock> WIDE_DOUBLEAXLE_BOGEY =
-        REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeBogeyBlock.create(false))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Double Axle Bogey")
-            .register();
+            REGISTRATE.block("wide_doubleaxle_bogey", WideGaugeBogeyBlock.create(false))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.wideBogey())
+                    .lang("Wide Gauge Double Axle Bogey")
+                    .register();
 
     public static final BlockEntry<WideGaugeBogeyBlock> WIDE_SCOTCH_BOGEY =
-        REGISTRATE.block("wide_scotch_bogey", WideGaugeBogeyBlock.create(true))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Scotch Yoke Bogey")
-            .register();
+            REGISTRATE.block("wide_scotch_bogey", WideGaugeBogeyBlock.create(true))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.wideBogey())
+                    .lang("Wide Gauge Scotch Yoke Bogey")
+                    .register();
 
     public static final BlockEntry<WideGaugeComicallyLargeBogeyBlock> WIDE_COMICALLY_LARGE_BOGEY =
-        REGISTRATE.block("wide_comically_large_bogey", WideGaugeComicallyLargeBogeyBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.wideBogey())
-            .lang("Wide Gauge Comically Large Bogey")
-            .register();
+            REGISTRATE.block("wide_comically_large_bogey", WideGaugeComicallyLargeBogeyBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.wideBogey())
+                    .lang("Wide Gauge Comically Large Bogey")
+                    .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SMALL_BOGEY =
-        REGISTRATE.block("narrow_small_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SMALL))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.narrowBogey())
-            .lang("Narrow Gauge Small Bogey")
-            .register();
+            REGISTRATE.block("narrow_small_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SMALL))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.narrowBogey())
+                    .lang("Narrow Gauge Small Bogey")
+                    .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_SCOTCH_BOGEY =
-        REGISTRATE.block("narrow_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SCOTCH_YOKE))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.narrowBogey())
-            .lang("Narrow Gauge Scotch Yoke Bogey")
-            .register();
+            REGISTRATE.block("narrow_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.SCOTCH_YOKE))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.narrowBogey())
+                    .lang("Narrow Gauge Scotch Yoke Bogey")
+                    .register();
 
     public static final BlockEntry<NarrowGaugeBogeyBlock> NARROW_DOUBLE_SCOTCH_BOGEY =
-        REGISTRATE.block("narrow_double_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.DOUBLE_SCOTCH_YOKE))
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.narrowBogey())
-            .lang("Narrow Gauge Double Scotch Yoke Bogey")
-            .register();
+            REGISTRATE.block("narrow_double_scotch_bogey", NarrowGaugeBogeyBlock.create(NarrowGaugeStandardStyle.DOUBLE_SCOTCH_YOKE))
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.narrowBogey())
+                    .lang("Narrow Gauge Double Scotch Yoke Bogey")
+                    .register();
 
     public static final BlockEntry<HandcarBlock> HANDCAR =
-        REGISTRATE.block("handcar", HandcarBlock::new)
-            .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(BuilderTransformers.handcar())
-            .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
-            .item(HandcarItem::new)
-            .properties(p -> p.stacksTo(1))
-            .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
-            .build()
-            .lang("Handcar")
-            .register();
+            REGISTRATE.block("handcar", HandcarBlock::new)
+                    .properties(p -> p.color(MaterialColor.PODZOL))
+                    .transform(BuilderTransformers.handcar())
+                    .onRegister(interactionBehaviour(new HandcarControlsInteractionBehaviour()))
+                    .item(HandcarItem::new)
+                    .properties(p -> p.stacksTo(1))
+                    .model((c, p) -> p.generated(c, Railways.asResource("item/" + c.getName())))
+                    .build()
+                    .lang("Handcar")
+                    .register();
 
     public static final BlockEntry<MediumBogeyBlock> MEDIUM_BOGEY =
             REGISTRATE.block("medium_bogey", MediumBogeyBlock::new)
@@ -566,26 +567,25 @@ public class CRBlocks {
                     .register();
 
 
-
     public static final BlockEntry<ConductorWhistleFlagBlock> CONDUCTOR_WHISTLE_FLAG =
-        REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
-            .initialProperties(SharedProperties::wooden)
-            .properties(p -> p
-                    .color(MaterialColor.COLOR_BROWN)
-                    .noOcclusion()
-                    .sound(SoundType.WOOD)
-                    .instabreak()
-                    .noLootTable()
-                    .noCollission()
-            )
-            .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                .forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
-                    .build()))
-            .lang("Conductor Whistle")
-            .item(ConductorWhistleItem::new)
-            .transform(customItemModel())
-            .register();
+            REGISTRATE.block("conductor_whistle", ConductorWhistleFlagBlock::new)
+                    .initialProperties(SharedProperties::wooden)
+                    .properties(p -> p
+                            .color(MaterialColor.COLOR_BROWN)
+                            .noOcclusion()
+                            .sound(SoundType.WOOD)
+                            .instabreak()
+                            .noLootTable()
+                            .noCollission()
+                    )
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStates(state -> ConfiguredModel.builder()
+                                    .modelFile(AssetLookup.partialBaseModel(c, p, "pole"))
+                                    .build()))
+                    .lang("Conductor Whistle")
+                    .item(ConductorWhistleItem::new)
+                    .transform(customItemModel())
+                    .register();
 
 //    static {
 //        REGISTRATE.startSection(AllSections.PALETTES);
@@ -601,271 +601,271 @@ public class CRBlocks {
     woodburner
      */
     public static final BlockEntry<SmokeStackBlock>
-        CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
-        LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Double Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
-        COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
-        OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", RotationType.NONE, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
-        STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", RotationType.FACING, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false,true),
-        WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK, true);
+            CABOOSESTYLE_STACK = makeSmokeStack("caboosestyle", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Caboose Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.CABOOSE_STACK), false, true),
+            LONG_STACK = makeSmokeStack("long", new SmokeStackBlock.SmokeStackType(0.5, 10 / 16.0d, 0.5), "Double Smokestack", RotationType.AXIS, ShapeWrapper.wrapped(CRShapes.LONG_STACK), true, true),
+            COALBURNER_STACK = makeSmokeStack("coalburner", new SmokeStackBlock.SmokeStackType(0.5, 1.0, 0.5), "Coalburner Smokestack", CRShapes.COAL_STACK, true),
+            OILBURNER_STACK = makeSmokeStack("oilburner", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)), "Oilburner Smokestack", RotationType.NONE, ShapeWrapper.wrapped(CRShapes.OIL_STACK), true, true),
+            STREAMLINED_STACK = makeSmokeStack("streamlined", new SmokeStackBlock.SmokeStackType(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)), "Streamlined Smokestack", RotationType.FACING, ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK), false, true),
+            WOODBURNER_STACK = makeSmokeStack("woodburner", new SmokeStackBlock.SmokeStackType(0.5, 12 / 16.0d, 0.5), "Woodburner Smokestack", CRShapes.WOOD_STACK, true);
 
     public static final BlockEntry<DieselSmokeStackBlock> DIESEL_STACK = REGISTRATE.block("smokestack_diesel", p -> new DieselSmokeStackBlock(p, ShapeWrapper.wrapped(CRShapes.DIESEL_STACK)))
-        .initialProperties(SharedProperties::softMetal)
-        .blockstate((c, p) -> p.getVariantBuilder(c.get())
-            .forAllStatesExcept(state -> {
-                Direction dir = state.getValue(BlockStateProperties.FACING);
-                return ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
-                    .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
-                    .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
-                    .build();
-            }, DieselSmokeStackBlock.WATERLOGGED, DieselSmokeStackBlock.ENABLED, DieselSmokeStackBlock.POWERED))
-        .properties(p -> p.color(MaterialColor.COLOR_GRAY))
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .properties(BlockBehaviour.Properties::noOcclusion)
-        .addLayer(() -> RenderType::cutoutMipped)
-        .transform(pickaxeOnly())
-        .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
-        .lang("Radiator Fan")
-        .item()
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))
-        .build()
-        .register();
-
-    public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
-        REGISTRATE.block("conductor_vent", VentBlock::create)
-            .transform(copycat())
+            .initialProperties(SharedProperties::softMetal)
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
-                .forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(state.getValue(CONDUCTOR_VISIBLE) ?
-                        Railways.asResource("block/copycat_vent_visible") :
-                        new ResourceLocation("block/air")))
-                    .build()))
-            .properties(p -> p.isSuffocating((state, level, pos) -> false))
-            .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
-            .lang("Vent Block")
-            .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
-            .item()
-            .transform(customItemModel("copycat_vent"))
-            .register();
-
-    public static final BlockEntry<StandardTrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", StandardTrackBufferBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.color(MaterialColor.PODZOL))
-        .properties(BlockBehaviour.Properties::noOcclusion)
-        .properties(BlockBehaviour.Properties::noCollission)
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-                .forAllStatesExcept(state -> ConfiguredModel.builder()
-                        .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
-                        .rotationY(((int) state.getValue(StandardTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                        .build(), StandardTrackBufferBlock.WATERLOGGED
-                )
-        )
-        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Track Buffer")
-        .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
-        .transform(BuilderTransformers.variantBufferItem())
-        .transform(customItemModel())
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
-        .register();
-
-    public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.color(MaterialColor.PODZOL))
-        .properties(BlockBehaviour.Properties::noOcclusion)
-        .properties(BlockBehaviour.Properties::noCollission)
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build(), NarrowTrackBufferBlock.WATERLOGGED
-            )
-        )
-        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Narrow Track Buffer")
-        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
-        .register();
-
-    public static final BlockEntry<MonoTrackBufferBlock> TRACK_BUFFER_MONO = REGISTRATE.block("buffer_mono", MonoTrackBufferBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.color(MaterialColor.PODZOL))
-        .properties(BlockBehaviour.Properties::noOcclusion)
-        .properties(BlockBehaviour.Properties::noCollission)
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> {
-                boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
-                return ConfiguredModel.builder()
-                    .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
-                    .rotationX(hanging ? 180 : 0)
-                    .rotationY(((int) state.getValue(MonoTrackBufferBlock.FACING).toYRot() + (hanging ? 0 : 180)) % 360)
-                    .build();
-                }, MonoTrackBufferBlock.WATERLOGGED
-            )
-        )
-        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Monorail Track Buffer")
-        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
-        .register();
-
-    public static final BlockEntry<WideTrackBufferBlock> TRACK_BUFFER_WIDE = REGISTRATE.block("buffer_wide", WideTrackBufferBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.color(MaterialColor.PODZOL))
-        .properties(BlockBehaviour.Properties::noOcclusion)
-        .properties(BlockBehaviour.Properties::noCollission)
-        .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
-                .rotationY(((int) state.getValue(NarrowTrackBufferBlock.FACING).toYRot() + 180) % 360)
-                .build(), WideTrackBufferBlock.WATERLOGGED
-            )
-        )
-        .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Wide Track Buffer")
-        .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
-        .register();
-
-    public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), LinkPinBlock.WATERLOGGED
-            )
-        )
-        .transform(pickaxeOnly())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Deco Coupler")
-        /*.transform(LINK_PIN_GROUP.registerBlockItems())
-        .item()
-        .transform(BuilderTransformers.variantBufferItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/link_and_pin")))
-        .build()*/
-        .register();
-
-    public static final BlockStateBlockItemGroup<Void, LinkPinBlock.Style> LINK_AND_PIN_GROUP
-        = new BlockStateBlockItemGroup<>(null, LinkPinBlock.STYLE, LinkPinBlock.Style.values(), LINK_AND_PIN,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.headstock");
-
-    public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
-            )
-        )
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Big Buffer")
-        .item()
-        .transform(BuilderTransformers.variantBufferItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
-        .build()
-        .register();
-
-    public static final BlockEntry<GenericDyeableSingleBufferBlock> SMALL_BUFFER = REGISTRATE.block("small_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.SMALL_BUFFER))
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
-                .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
-                .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
-            )
-        )
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Small Buffer")
-        .item()
-        .transform(BuilderTransformers.variantBufferItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
-        .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
-        .build()
-        .register();
-
-    public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
-                .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
-                .build(), HeadstockBlock.WATERLOGGED
-            )
-        )
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.variantBuffer())
-        .lang("Headstock")
-        /*.item()
-        .transform(BuilderTransformers.variantBufferItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/wooden_headstock_buffer")))
-        .build()*/
-        .register();
-
-    public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
-        = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
-        BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.headstock_wood");
-
-    public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
-        .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
-        .register();
-
-    public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
-        .initialProperties(SharedProperties::softMetal)
-        .properties(p -> p.sound(SoundType.COPPER))
-        .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
-            .forAllStatesExcept(state -> ConfiguredModel.builder()
-                .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
-                .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
-                .build(), CopycatHeadstockBlock.WATERLOGGED
-            )
-        )
-        .transform(axeOrPickaxe())
-        .transform(BuilderTransformers.copycatHeadstock())
-        .lang("Copycat Headstock")
-        /*.item()
-        .transform(BuilderTransformers.copycatHeadstockItem())
-        .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/copycat_headstock_buffer")))
-        .build()*/
-        .register();
-
-    public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
-        = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
-        BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.headstock");
-
-    public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
-        REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
-            .transform(BuilderTransformers.genericCrossing())
-            .initialProperties(Material.STONE)
-            .properties(p -> p
-                .color(MaterialColor.METAL)
-                .strength(0.8F)
-                .sound(SoundType.METAL)
-                .noOcclusion().noLootTable())
-            .tag(AllTags.AllBlockTags.TRACKS.tag)
-            .tag(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag)
+                    .forAllStatesExcept(state -> {
+                        Direction dir = state.getValue(BlockStateProperties.FACING);
+                        return ConfiguredModel.builder()
+                                .modelFile(p.models().getExistingFile(Railways.asResource("block/smokestack/block_diesel_case")))
+                                .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+                                .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                                .build();
+                    }, DieselSmokeStackBlock.WATERLOGGED, DieselSmokeStackBlock.ENABLED, DieselSmokeStackBlock.POWERED))
+            .properties(p -> p.color(MaterialColor.COLOR_GRAY))
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-                .withExistingParent(c.getName(), p.modLoc("block/invisible"))))
-            .lang("Generic Crossing")
+            .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
+            .lang("Radiator Fan")
+            .item()
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))
+            .build()
             .register();
+
+    public static final BlockEntry<VentBlock> CONDUCTOR_VENT =
+            REGISTRATE.block("conductor_vent", VentBlock::create)
+                    .transform(copycat())
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .forAllStates(state -> ConfiguredModel.builder()
+                                    .modelFile(p.models().getExistingFile(state.getValue(CONDUCTOR_VISIBLE) ?
+                                            Railways.asResource("block/copycat_vent_visible") :
+                                            new ResourceLocation("block/air")))
+                                    .build()))
+                    .properties(p -> p.isSuffocating((state, level, pos) -> false))
+                    .onRegister(CreateRegistrate.blockModel(() -> CopycatVentModel::create))
+                    .lang("Vent Block")
+                    .recipe((c, p) -> p.stonecutting(DataIngredient.items(AllBlocks.INDUSTRIAL_IRON_BLOCK), c, 2))
+                    .item()
+                    .transform(customItemModel("copycat_vent"))
+                    .register();
+
+    public static final BlockEntry<StandardTrackBufferBlock> TRACK_BUFFER = REGISTRATE.block("buffer", StandardTrackBufferBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noCollission)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(state.getValue(StandardTrackBufferBlock.STYLE).getModel()))
+                            .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
+                            .build(), StandardTrackBufferBlock.WATERLOGGED
+                    )
+            )
+            .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Track Buffer")
+            .item(TrackBufferBlockItem.ofType(CREdgePointTypes.BUFFER))
+            .transform(BuilderTransformers.variantBufferItem())
+            .transform(customItemModel())
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.track_buffer"))
+            .register();
+
+    public static final BlockEntry<NarrowTrackBufferBlock> TRACK_BUFFER_NARROW = REGISTRATE.block("buffer_narrow", NarrowTrackBufferBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noCollission)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(state.getValue(NarrowTrackBufferBlock.STYLE).getModel()))
+                            .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
+                            .build(), NarrowTrackBufferBlock.WATERLOGGED
+                    )
+            )
+            .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Narrow Track Buffer")
+            .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+            .register();
+
+    public static final BlockEntry<MonoTrackBufferBlock> TRACK_BUFFER_MONO = REGISTRATE.block("buffer_mono", MonoTrackBufferBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noCollission)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> {
+                                boolean hanging = state.getValue(MonoTrackBufferBlock.UPSIDE_DOWN);
+                                return ConfiguredModel.builder()
+                                        .modelFile(p.models().getExistingFile(state.getValue(MonoTrackBufferBlock.STYLE).getModel()))
+                                        .rotationX(hanging ? 180 : 0)
+                                        .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state, hanging ? 0 : 180))
+                                        .build();
+                            }, MonoTrackBufferBlock.WATERLOGGED
+                    )
+            )
+            .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Monorail Track Buffer")
+            .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+            .register();
+
+    public static final BlockEntry<WideTrackBufferBlock> TRACK_BUFFER_WIDE = REGISTRATE.block("buffer_wide", WideTrackBufferBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(BlockBehaviour.Properties::noCollission)
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(Railways.asResource("block/buffer/wide_buffer_stop")))
+                            .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
+                            .build(), WideTrackBufferBlock.WATERLOGGED
+                    )
+            )
+            .tag(AllTags.AllBlockTags.MOVABLE_EMPTY_COLLIDER.tag)
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Wide Track Buffer")
+            .loot((p, b) -> p.dropOther(b, CRBlocks.TRACK_BUFFER.get()))
+            .register();
+
+    public static final BlockEntry<LinkPinBlock> LINK_AND_PIN = REGISTRATE.block("link_and_pin", LinkPinBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(state.getValue(LinkPinBlock.STYLE).getModel()))
+                            .rotationY(((int) state.getValue(LinkPinBlock.FACING).toYRot() + 180) % 360)
+                            .build(), LinkPinBlock.WATERLOGGED
+                    )
+            )
+            .transform(pickaxeOnly())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Deco Coupler")
+            /*.transform(LINK_PIN_GROUP.registerBlockItems())
+            .item()
+            .transform(BuilderTransformers.variantBufferItem())
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/link_and_pin")))
+            .build()*/
+            .register();
+
+    public static final BlockStateBlockItemGroup<Void, LinkPinBlock.Style> LINK_AND_PIN_GROUP
+            = new BlockStateBlockItemGroup<>(null, LinkPinBlock.STYLE, LinkPinBlock.Style.values(), LINK_AND_PIN,
+            BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.DECO_COUPLERS.tag, "block.railways.headstock");
+
+    public static final BlockEntry<GenericDyeableSingleBufferBlock> BIG_BUFFER = REGISTRATE.block("big_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.BIG_BUFFER))
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/big_buffer")))
+                            .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
+                            .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+                    )
+            )
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Big Buffer")
+            .item()
+            .transform(BuilderTransformers.variantBufferItem())
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/big_buffer")))
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
+            .build()
+            .register();
+
+    public static final BlockEntry<GenericDyeableSingleBufferBlock> SMALL_BUFFER = REGISTRATE.block("small_buffer", GenericDyeableSingleBufferBlock.createFactory(CRShapes.SMALL_BUFFER))
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/buffer/single_deco/small_buffer")))
+                            .rotationY(TrackBufferBlock.getBaseModelYRotationOf(state))
+                            .build(), GenericDyeableSingleBufferBlock.WATERLOGGED
+                    )
+            )
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Small Buffer")
+            .item()
+            .transform(BuilderTransformers.variantBufferItem())
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/single_deco/small_buffer")))
+            .onRegisterAfter(Registry.ITEM_REGISTRY, v -> ItemDescription.useKey(v, "block.railways.buffer"))
+            .build()
+            .register();
+
+    public static final BlockEntry<HeadstockBlock> HEADSTOCK = REGISTRATE.block("headstock", HeadstockBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(state.getValue(HeadstockBlock.STYLE).getModel(false, state.getValue(HeadstockBlock.UPSIDE_DOWN))))
+                            .rotationY(((int) state.getValue(HeadstockBlock.FACING).toYRot() + 180) % 360)
+                            .build(), HeadstockBlock.WATERLOGGED
+                    )
+            )
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.variantBuffer())
+            .lang("Headstock")
+            /*.item()
+            .transform(BuilderTransformers.variantBufferItem())
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/wooden_headstock_buffer")))
+            .build()*/
+            .register();
+
+    public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> HEADSTOCK_GROUP
+            = new BlockStateBlockItemGroup<>(false, HeadstockBlock.STYLE, HeadstockStyle.values(), HEADSTOCK,
+            BuilderTransformers.variantBufferItem(), CRTags.AllItemTags.WOODEN_HEADSTOCKS.tag, "block.railways.headstock_wood");
+
+    public static final BlockEntry<CopycatHeadstockBarsBlock> COPYCAT_HEADSTOCK_BARS = REGISTRATE.block("copycat_headstock_bars", CopycatHeadstockBarsBlock::new)
+            .transform(BuilderTransformers.copycatHeadstockBars()) // it's all platform-dependent :(
+            .register();
+
+    public static final BlockEntry<CopycatHeadstockBlock> COPYCAT_HEADSTOCK = REGISTRATE.block("copycat_headstock", CopycatHeadstockBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.getVariantBuilder(c.getEntry())
+                    .forAllStatesExcept(state -> ConfiguredModel.builder()
+                            .modelFile(p.models().getExistingFile(state.getValue(CopycatHeadstockBlock.STYLE).getModel(true, state.getValue(CopycatHeadstockBlock.UPSIDE_DOWN))))
+                            .rotationY(((int) state.getValue(CopycatHeadstockBlock.FACING).toYRot() + 180) % 360)
+                            .build(), CopycatHeadstockBlock.WATERLOGGED
+                    )
+            )
+            .transform(axeOrPickaxe())
+            .transform(BuilderTransformers.copycatHeadstock())
+            .lang("Copycat Headstock")
+            /*.item()
+            .transform(BuilderTransformers.copycatHeadstockItem())
+            .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/buffer/headstock/copycat_headstock_buffer")))
+            .build()*/
+            .register();
+
+    public static final BlockStateBlockItemGroup<Boolean, HeadstockStyle> COPYCAT_HEADSTOCK_GROUP
+            = new BlockStateBlockItemGroup<>(true, CopycatHeadstockBlock.STYLE, HeadstockStyle.values(), COPYCAT_HEADSTOCK,
+            BuilderTransformers.copycatHeadstockItem(), CRTags.AllItemTags.COPYCAT_HEADSTOCKS.tag, "block.railways.headstock");
+
+    public static final BlockEntry<GenericCrossingBlock> GENERIC_CROSSING =
+            REGISTRATE.block("generic_crossing", GenericCrossingBlock::new)
+                    .transform(BuilderTransformers.genericCrossing())
+                    .initialProperties(Material.STONE)
+                    .properties(p -> p
+                            .color(MaterialColor.METAL)
+                            .strength(0.8F)
+                            .sound(SoundType.METAL)
+                            .noOcclusion().noLootTable())
+                    .tag(AllTags.AllBlockTags.TRACKS.tag)
+                    .tag(AllTags.AllBlockTags.GIRDABLE_TRACKS.tag)
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .transform(pickaxeOnly())
+                    .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+                            .withExistingParent(c.getName(), p.modLoc("block/invisible"))))
+                    .lang("Generic Crossing")
+                    .register();
 
     @ExpectPlatform
     public static void platformBasedRegistration() {

@@ -98,34 +98,34 @@ public class DoorScenes {
 
         // explain that doors have multiple modes
         scene.overlay.showText(80)
-            .colored(PonderPalette.GREEN)
-            .text("Doors have multiple modes of operation: Normal, Manual, and Special")
-            .pointAt(util.vector.topOf(doorBottomPos))
-            .attachKeyFrame()
-            .placeNearTarget();
+                .colored(PonderPalette.GREEN)
+                .text("Doors have multiple modes of operation: Normal, Manual, and Special")
+                .pointAt(util.vector.topOf(doorBottomPos))
+                .attachKeyFrame()
+                .placeNearTarget();
 
         scene.idle(80);
 
         Vec3 blockSurface = util.vector.blockSurface(doorBottomPos, Direction.NORTH)
-            .add(0, 1 / 16f, 0);
+                .add(0, 1 / 16f, 0);
         scene.overlay.showFilterSlotInput(blockSurface, Direction.NORTH, 60);
         scene.overlay.showControls(new InputWindowElement(blockSurface, Pointing.DOWN).scroll()
-            .withWrench(), 60);
+                .withWrench(), 60);
         scene.idle(10);
         scene.overlay.showText(60)
-            .pointAt(blockSurface)
-            .placeNearTarget()
-            .attachKeyFrame()
-            .sharedText(Create.asResource("behaviour_modify_value_panel"));
+                .pointAt(blockSurface)
+                .placeNearTarget()
+                .attachKeyFrame()
+                .sharedText(Create.asResource("behaviour_modify_value_panel"));
         scene.idle(70);
 
         Vec3 upperDoorSurface = util.vector.blockSurface(doorTopPos, Direction.NORTH);
 
         scene.overlay.showText(60)
-            .text("In normal mode (the default) and manual mode, manual operation of the door is possible")
-            .pointAt(upperDoorSurface.add(-8 / 16f, 0, 0))
-            .placeNearTarget()
-            .attachKeyFrame();
+                .text("In normal mode (the default) and manual mode, manual operation of the door is possible")
+                .pointAt(upperDoorSurface.add(-8 / 16f, 0, 0))
+                .placeNearTarget()
+                .attachKeyFrame();
         scene.idle(30);
         scene.overlay.showControls(new InputWindowElement(upperDoorSurface, Pointing.DOWN).rightClick(), 20);
         scene.idle(10);
@@ -135,10 +135,10 @@ public class DoorScenes {
         scene.idle(10);
 
         scene.overlay.showText(60)
-            .text("and redstone operation works in normal mode and special mode")
-            .pointAt(util.vector.blockSurface(leverPos, Direction.UP).subtract(0, 4 / 16f, 0))
-            .placeNearTarget()
-            .attachKeyFrame();
+                .text("and redstone operation works in normal mode and special mode")
+                .pointAt(util.vector.blockSurface(leverPos, Direction.UP).subtract(0, 4 / 16f, 0))
+                .placeNearTarget()
+                .attachKeyFrame();
         scene.idle(20);
         scene.world.toggleRedstonePower(leverAndRedstone);
         openDoor(scene, doorBottomPos);
@@ -245,10 +245,10 @@ public class DoorScenes {
         scene.idle(10);
 
         scene.overlay.showText(80)
-            .colored(PonderPalette.BLUE)
-            .text("Doors in normal and special modes open and close when a contraption moves or stops")
-            .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
-            .placeNearTarget();
+                .colored(PonderPalette.BLUE)
+                .text("Doors in normal and special modes open and close when a contraption moves or stops")
+                .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
+                .placeNearTarget();
         scene.idle(50);
         openDoor(scene, elevatorDoorBottomPos);
         scene.world.cycleBlockProperty(outerContactLowerPos, ElevatorContactBlock.POWERING);
@@ -268,11 +268,11 @@ public class DoorScenes {
         scene.idle(10);
 
         scene.overlay.showText(80)
-            .colored(PonderPalette.BLUE)
-            .text("Doors in manual mode only change when a player interacts with them")
-            .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
-            .placeNearTarget()
-            .attachKeyFrame();
+                .colored(PonderPalette.BLUE)
+                .text("Doors in manual mode only change when a player interacts with them")
+                .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
+                .placeNearTarget()
+                .attachKeyFrame();
         scene.idle(50);
 
         // disable calling state of upper contact, enable powering state of upper contact
@@ -295,13 +295,13 @@ public class DoorScenes {
         scene.idle(30);
 
         scene.overlay.showControls(new InputWindowElement(util.vector.topOf(elevatorDoorBottomPos.below(6))
-            .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick(), 60);
+                .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick(), 60);
         scene.overlay.showText(70)
-            .colored(PonderPalette.RED)
-            .text("Doors in special mode cannot be toggled simply by using them")
-            .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
-            .placeNearTarget()
-            .attachKeyFrame();
+                .colored(PonderPalette.RED)
+                .text("Doors in special mode cannot be toggled simply by using them")
+                .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
+                .placeNearTarget()
+                .attachKeyFrame();
         scene.idle(5);
         scene.effects.indicateRedstone(elevatorDoorBottomPos.below(5).north());
 
@@ -326,13 +326,13 @@ public class DoorScenes {
         scene.idle(15);
 
         scene.overlay.showControls(new InputWindowElement(util.vector.topOf(elevatorDoorBottomPos.below(6))
-            .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick().whileSneaking(), 50);
+                .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick().whileSneaking(), 50);
         scene.overlay.showText(60)
-            .colored(PonderPalette.GREEN)
-            .text("Sneaking, however, allows the player to toggle the door anyway")
-            .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
-            .placeNearTarget()
-            .attachKeyFrame();
+                .colored(PonderPalette.GREEN)
+                .text("Sneaking, however, allows the player to toggle the door anyway")
+                .pointAt(util.vector.blockSurface(elevatorDoorTopPos.below(6), Direction.NORTH))
+                .placeNearTarget()
+                .attachKeyFrame();
 
         openDoor(scene, elevatorDoorBottomPos);
         scene.effects.indicateSuccess(elevatorDoorBottomPos.below(5).north());

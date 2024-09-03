@@ -24,13 +24,13 @@ import net.minecraft.resources.ResourceLocation;
 
 public class WaypointDestinationInstruction extends DestinationInstruction {
 
-	@Override
-	public boolean supportsConditions() {
-		return false;
-	}
+    @Override
+    public boolean supportsConditions() {
+        return false;
+    }
 
-	@Override
-	public ResourceLocation getId() {
-		return Railways.asResource("waypoint_destination");
-	}
+    @Override
+    public ResourceLocation getId() {
+        return Railways.asResource("waypoint_destination");
+    }
 }

@@ -37,91 +37,91 @@ import net.minecraft.world.level.Level;
 
 public class MountedToolboxEquipPacket implements C2SPacket {
 
-	private Integer toolboxCarrierId = null;
-	private final int slot;
-	private final int hotbarSlot;
+    private Integer toolboxCarrierId = null;
+    private final int slot;
+    private final int hotbarSlot;
 
-	public MountedToolboxEquipPacket(ConductorEntity toolboxCarrier, int slot, int hotbarSlot) {
-		this.toolboxCarrierId = toolboxCarrier.getId();
-		this.slot = slot;
-		this.hotbarSlot = hotbarSlot;
-	}
+    public MountedToolboxEquipPacket(ConductorEntity toolboxCarrier, int slot, int hotbarSlot) {
+        this.toolboxCarrierId = toolboxCarrier.getId();
+        this.slot = slot;
+        this.hotbarSlot = hotbarSlot;
+    }
 
-	public MountedToolboxEquipPacket(FriendlyByteBuf buffer) {
-		if (buffer.readBoolean())
-			toolboxCarrierId = buffer.readInt();
-		slot = buffer.readVarInt();
-		hotbarSlot = buffer.readVarInt();
-	}
+    public MountedToolboxEquipPacket(FriendlyByteBuf buffer) {
+        if (buffer.readBoolean())
+            toolboxCarrierId = buffer.readInt();
+        slot = buffer.readVarInt();
+        hotbarSlot = buffer.readVarInt();
+    }
 
-	@Override
-	public void write(FriendlyByteBuf buffer) {
-		buffer.writeBoolean(toolboxCarrierId != null);
-		if (toolboxCarrierId != null)
-			buffer.writeInt(toolboxCarrierId);
-		buffer.writeVarInt(slot);
-		buffer.writeVarInt(hotbarSlot);
-	}
+    @Override
+    public void write(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(toolboxCarrierId != null);
+        if (toolboxCarrierId != null)
+            buffer.writeInt(toolboxCarrierId);
+        buffer.writeVarInt(slot);
+        buffer.writeVarInt(hotbarSlot);
+    }
 
-	@Override
-	public void handle(ServerPlayer player) {
-		Level world = player.level;
+    @Override
+    public void handle(ServerPlayer player) {
+        Level world = player.level;
 
-		if (toolboxCarrierId == null) {
-			ToolboxHandler.unequip(player, hotbarSlot, false);
-			ToolboxHandler.syncData(player);
-			return;
-		}
+        if (toolboxCarrierId == null) {
+            ToolboxHandler.unequip(player, hotbarSlot, false);
+            ToolboxHandler.syncData(player);
+            return;
+        }
 
-		Entity entity = world.getEntity(toolboxCarrierId);
+        Entity entity = world.getEntity(toolboxCarrierId);
 
-		double maxRange = ToolboxHandler.getMaxRange(player);
-		if (player.distanceToSqr(entity) > maxRange
-				* maxRange)
-			return;
-		if (!(entity instanceof ConductorEntity conductorEntity))
-			return;
+        double maxRange = ToolboxHandler.getMaxRange(player);
+        if (player.distanceToSqr(entity) > maxRange
+                * maxRange)
+            return;
+        if (!(entity instanceof ConductorEntity conductorEntity))
+            return;
 
-		ToolboxHandler.unequip(player, hotbarSlot, false);
+        ToolboxHandler.unequip(player, hotbarSlot, false);
 
-		if (slot < 0 || slot >= 8) {
-			ToolboxHandler.syncData(player);
-			return;
-		}
+        if (slot < 0 || slot >= 8) {
+            ToolboxHandler.syncData(player);
+            return;
+        }
 
-		MountedToolbox toolbox = conductorEntity.getToolbox();
-		if (toolbox == null)
-			return;
+        MountedToolbox toolbox = conductorEntity.getToolbox();
+        if (toolbox == null)
+            return;
 
-		ItemStack held = player.getInventory().getItem(hotbarSlot);
-		if (!held.isEmpty()) {
-			ToolboxInventory inv = ((AccessorToolboxBlockEntity) toolbox).getInventory();
-			AccessorToolboxInventory invAccess = (AccessorToolboxInventory) inv;
+        ItemStack held = player.getInventory().getItem(hotbarSlot);
+        if (!held.isEmpty()) {
+            ToolboxInventory inv = ((AccessorToolboxBlockEntity) toolbox).getInventory();
+            AccessorToolboxInventory invAccess = (AccessorToolboxInventory) inv;
 
-			ItemStack filterStack = invAccess.getFilters().get(slot);
-			if (!ToolboxInventory.canItemsShareCompartment(held, filterStack)) {
-				inv.inLimitedMode($ -> doEquip(player, hotbarSlot, held, inv));
-			}
-		}
+            ItemStack filterStack = invAccess.getFilters().get(slot);
+            if (!ToolboxInventory.canItemsShareCompartment(held, filterStack)) {
+                inv.inLimitedMode($ -> doEquip(player, hotbarSlot, held, inv));
+            }
+        }
 
-		CompoundTag playerData = EntityUtils.getPersistentData(player);
-		CompoundTag compound = playerData.getCompound("CreateToolboxData");
-		String key = String.valueOf(hotbarSlot);
+        CompoundTag playerData = EntityUtils.getPersistentData(player);
+        CompoundTag compound = playerData.getCompound("CreateToolboxData");
+        String key = String.valueOf(hotbarSlot);
 
-		CompoundTag data = new CompoundTag();
-		data.putInt("Slot", slot);
-		data.putUUID("EntityUUID", conductorEntity.getUUID());
-		data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
-		compound.put(key, data);
+        CompoundTag data = new CompoundTag();
+        data.putInt("Slot", slot);
+        data.putUUID("EntityUUID", conductorEntity.getUUID());
+        data.put("Pos", NbtUtils.writeBlockPos(new BlockPos(0, 1000, 0)));
+        compound.put(key, data);
 
-		playerData.put("CreateToolboxData", compound);
+        playerData.put("CreateToolboxData", compound);
 
-		toolbox.connectPlayer(slot, player, hotbarSlot);
-		ToolboxHandler.syncData(player);
-	}
+        toolbox.connectPlayer(slot, player, hotbarSlot);
+        ToolboxHandler.syncData(player);
+    }
 
-	@ExpectPlatform
-	public static void doEquip(ServerPlayer player, int hotbarSlot, ItemStack held, ToolboxInventory inv) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static void doEquip(ServerPlayer player, int hotbarSlot, ItemStack held, ToolboxInventory inv) {
+        throw new AssertionError();
+    }
 }

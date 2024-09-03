@@ -40,7 +40,8 @@ public class OcclusionTestWorld implements BlockGetter {
 
     private final Map<BlockPos, BlockState> blocks = new HashMap<>();
 
-    public OcclusionTestWorld() {}
+    public OcclusionTestWorld() {
+    }
 
     public void setBlock(BlockPos pos, BlockState state) {
         blocks.put(pos.immutable(), state);

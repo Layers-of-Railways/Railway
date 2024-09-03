@@ -72,6 +72,7 @@ public class MonoTrackBufferBlock extends WoodVariantTrackBufferBlock {
         ;
 
         private final String model;
+
         Style(String model) {
             this.model = model;
         }

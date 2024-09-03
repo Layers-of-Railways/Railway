@@ -43,69 +43,70 @@ import java.util.Map;
  * Based on {@link TagGen}
  */
 public class CRTagGen {
-	private static final Map<TagKey<Block>, List<ResourceLocation>> OPTIONAL_TAGS = new HashMap<>();
+    private static final Map<TagKey<Block>, List<ResourceLocation>> OPTIONAL_TAGS = new HashMap<>();
 
-	@SafeVarargs
-	public static void addOptionalTag(ResourceLocation id, TagKey<Block>... tags) {
-		for (TagKey<Block> tag : tags) {
-			OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<>()).add(id);
-		}
-	}
-	public static void generateBlockTags(RegistrateTagsProvider<Block> prov) {
-		prov.tag(CRTags.AllBlockTags.SEMAPHORE_POLES.tag)
-				.add(AllBlocks.METAL_GIRDER.get(), AllBlocks.METAL_GIRDER_ENCASED_SHAFT.get())
-				.forceAddTag(BlockTags.FENCES);
+    @SafeVarargs
+    public static void addOptionalTag(ResourceLocation id, TagKey<Block>... tags) {
+        for (TagKey<Block> tag : tags) {
+            OPTIONAL_TAGS.computeIfAbsent(tag, (e) -> new ArrayList<>()).add(id);
+        }
+    }
 
-		prov.tag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
+    public static void generateBlockTags(RegistrateTagsProvider<Block> prov) {
+        prov.tag(CRTags.AllBlockTags.SEMAPHORE_POLES.tag)
+                .add(AllBlocks.METAL_GIRDER.get(), AllBlocks.METAL_GIRDER_ENCASED_SHAFT.get())
+                .forceAddTag(BlockTags.FENCES);
 
-		// VALIDATE
+        prov.tag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
 
-		for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
-			if (tag.alwaysDatagen) {
-				tagAppender(prov, tag);
-			}
-		}
+        // VALIDATE
 
-		for (TagKey<Block> tag : OPTIONAL_TAGS.keySet()) {
-			var appender = tagAppender(prov, tag);
-			for (ResourceLocation loc : OPTIONAL_TAGS.get(tag))
-				appender.addOptional(loc);
-		}
-	}
+        for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
+            if (tag.alwaysDatagen) {
+                tagAppender(prov, tag);
+            }
+        }
 
-	public static void generateItemTags(RegistrateTagsProvider<Item> prov) {
-		CommonTags.DYES.values().forEach(tag -> tag.generateCommon(prov));
-		CommonTags.IRON_NUGGETS.generateCommon(prov);
-		CommonTags.ZINC_NUGGETS.generateCommon(prov);
-		CommonTags.BRASS_NUGGETS.generateCommon(prov);
-		CommonTags.COPPER_INGOTS.generateCommon(prov);
-		CommonTags.BRASS_INGOTS.generateCommon(prov);
-		CommonTags.IRON_INGOTS.generateCommon(prov);
-		CommonTags.STRING.generateCommon(prov)
-			.generateBoth(prov, tag -> tag.add(Items.STRING));
-		CommonTags.IRON_PLATES.generateCommon(prov);
-		CommonTags.BRASS_PLATES.generateCommon(prov);
-		CommonTags.WORKBENCH.generateCommon(prov)
-				.generateBoth(prov, tag -> tag.add(Items.CRAFTING_TABLE));
+        for (TagKey<Block> tag : OPTIONAL_TAGS.keySet()) {
+            var appender = tagAppender(prov, tag);
+            for (ResourceLocation loc : OPTIONAL_TAGS.get(tag))
+                appender.addOptional(loc);
+        }
+    }
 
-		prov.tag(AllItemTags.NOT_TRAIN_FUEL.tag);
+    public static void generateItemTags(RegistrateTagsProvider<Item> prov) {
+        CommonTags.DYES.values().forEach(tag -> tag.generateCommon(prov));
+        CommonTags.IRON_NUGGETS.generateCommon(prov);
+        CommonTags.ZINC_NUGGETS.generateCommon(prov);
+        CommonTags.BRASS_NUGGETS.generateCommon(prov);
+        CommonTags.COPPER_INGOTS.generateCommon(prov);
+        CommonTags.BRASS_INGOTS.generateCommon(prov);
+        CommonTags.IRON_INGOTS.generateCommon(prov);
+        CommonTags.STRING.generateCommon(prov)
+                .generateBoth(prov, tag -> tag.add(Items.STRING));
+        CommonTags.IRON_PLATES.generateCommon(prov);
+        CommonTags.BRASS_PLATES.generateCommon(prov);
+        CommonTags.WORKBENCH.generateCommon(prov)
+                .generateBoth(prov, tag -> tag.add(Items.CRAFTING_TABLE));
 
-		for (AllItemTags tag : AllItemTags.values()) {
-			if (tag.alwaysDatagen)
-				tagAppender(prov, tag);
-		}
-	}
+        prov.tag(AllItemTags.NOT_TRAIN_FUEL.tag);
 
-	public static TagAppender<Item> tagAppender(RegistrateTagsProvider<Item> prov, AllItemTags tag) {
-		return tagAppender(prov, tag.tag);
-	}
+        for (AllItemTags tag : AllItemTags.values()) {
+            if (tag.alwaysDatagen)
+                tagAppender(prov, tag);
+        }
+    }
 
-	public static TagAppender<Block> tagAppender(RegistrateTagsProvider<Block> prov, AllBlockTags tag) {
-		return tagAppender(prov, tag.tag);
-	}
+    public static TagAppender<Item> tagAppender(RegistrateTagsProvider<Item> prov, AllItemTags tag) {
+        return tagAppender(prov, tag.tag);
+    }
 
-	@ExpectPlatform
-	public static <T> TagAppender<T> tagAppender(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
-		throw new AssertionError();
-	}
+    public static TagAppender<Block> tagAppender(RegistrateTagsProvider<Block> prov, AllBlockTags tag) {
+        return tagAppender(prov, tag.tag);
+    }
+
+    @ExpectPlatform
+    public static <T> TagAppender<T> tagAppender(RegistrateTagsProvider<T> prov, TagKey<T> tag) {
+        throw new AssertionError();
+    }
 }

@@ -28,6 +28,7 @@ public class BlueSkiesTrackCompat extends GenericTrackCompat {
     }
 
     private static boolean registered = false;
+
     public static void register() {
         if (registered) {
             Railways.LOGGER.error("Duplicate registration of Blue Skies track compat");
@@ -36,13 +37,13 @@ public class BlueSkiesTrackCompat extends GenericTrackCompat {
         registered = true;
         Railways.LOGGER.info("Registering tracks for Blue Skies");
         new BlueSkiesTrackCompat().register(
-            "bluebright",
-            "cherry",
-            "dusk",
-            "frostbright",
-            "lunar",
-            "maple",
-            "starlit"
+                "bluebright",
+                "cherry",
+                "dusk",
+                "frostbright",
+                "lunar",
+                "maple",
+                "starlit"
         );
     }
 }

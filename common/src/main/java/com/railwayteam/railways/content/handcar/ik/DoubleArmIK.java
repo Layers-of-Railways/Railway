@@ -24,10 +24,11 @@ import net.minecraft.world.phys.Vec2;
 public class DoubleArmIK {
     /**
      * Calculates coordinates of a double-armed joint
-     * @param topPoint coordinates of the top fixed point
+     *
+     * @param topPoint    coordinates of the top fixed point
      * @param bottomPoint coordinates of the bottom fixed point
-     * @param k radius of 'upper' circle
-     * @param g radius of 'lower' circle
+     * @param k           radius of 'upper' circle
+     * @param g           radius of 'lower' circle
      * @return coordinates of the moving hinge
      */
     public static Vec2 calculateJointOffset(final Vec2 topPoint, final Vec2 bottomPoint, final double k, final double g) {
@@ -79,18 +80,19 @@ public class DoubleArmIK {
 
     /**
      * Calculates intersection point of two circles
+     *
      * @param d distance between centers of both circles
      * @param k radius of 'upper' circle
      * @param g radius of 'lower' circle
      * @return (x, y) intersection point between two circles
      */
     private static Vec2 getIntersection(final double d, final double k, final double g) {
-        final double g2 = g*g;
-        final double d2 = d*d;
-        final double k2 = k*k;
+        final double g2 = g * g;
+        final double d2 = d * d;
+        final double k2 = k * k;
 
-        final double y = (g2 + d2 - k2) / (2*d);
-        final double y2 = y*y;
+        final double y = (g2 + d2 - k2) / (2 * d);
+        final double y2 = y * y;
         final double x = Math.sqrt(g2 - y2);
 
         return new Vec2((float) x, (float) y);

@@ -39,105 +39,105 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class SlabUseOnCurvePacket implements C2SPacket {
 
-  private BlockPos pos;
-  private BlockPos targetPos;
-  private BlockPos soundSource;
+    private BlockPos pos;
+    private BlockPos targetPos;
+    private BlockPos soundSource;
 
-  public SlabUseOnCurvePacket(BlockPos pos, BlockPos targetPos, BlockPos soundSource) {
-    this.pos = pos;
-    this.targetPos = targetPos;
-    this.soundSource = soundSource;
-  }
-
-  public SlabUseOnCurvePacket(FriendlyByteBuf buffer) {
-    pos = buffer.readBlockPos();
-    targetPos = buffer.readBlockPos();
-    soundSource = buffer.readBlockPos();
-  }
-
-  @Override
-  public void write(FriendlyByteBuf buffer) {
-    buffer.writeBlockPos(pos);
-    buffer.writeBlockPos(targetPos);
-    buffer.writeBlockPos(soundSource);
-  }
-
-  @Override
-  public void handle(ServerPlayer player) {
-    Level world = player.level;
-    if (AdventureUtils.isAdventure(player))
-      return;
-    if (!world.isLoaded(pos))
-      return;
-    if (!pos.closerThan(player.blockPosition(), 64))
-      return;
-    BlockEntity BlockEntity = world.getBlockEntity(pos);
-    if (BlockEntity instanceof TrackBlockEntity track) {
-      applySettings(player, track);
-      track.notifyUpdate();
+    public SlabUseOnCurvePacket(BlockPos pos, BlockPos targetPos, BlockPos soundSource) {
+        this.pos = pos;
+        this.targetPos = targetPos;
+        this.soundSource = soundSource;
     }
-  }
 
-  private InteractionResult useOn(ServerPlayer player, InteractionHand hand, Level world, IHasTrackCasing casingAble) {
-    if (world.isClientSide) return InteractionResult.FAIL;
-    ItemStack handStack = player.getItemInHand(hand);
-    if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock) {
-      SlabBlock currentCasing = casingAble.getTrackCasing();
-      if (currentCasing == slabBlock) {
-        casingAble.setAlternate(!casingAble.isAlternate());
-        return InteractionResult.SUCCESS;
-      } else {
-        if (!player.isCreative()) {
-          handStack.shrink(1);
-          if (currentCasing != null) {
-            ItemStack casingStack = new ItemStack(currentCasing);
-            EntityUtils.givePlayerItem(player, casingStack);
-          }
-          player.setItemInHand(hand, handStack);
+    public SlabUseOnCurvePacket(FriendlyByteBuf buffer) {
+        pos = buffer.readBlockPos();
+        targetPos = buffer.readBlockPos();
+        soundSource = buffer.readBlockPos();
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buffer) {
+        buffer.writeBlockPos(pos);
+        buffer.writeBlockPos(targetPos);
+        buffer.writeBlockPos(soundSource);
+    }
+
+    @Override
+    public void handle(ServerPlayer player) {
+        Level world = player.level;
+        if (AdventureUtils.isAdventure(player))
+            return;
+        if (!world.isLoaded(pos))
+            return;
+        if (!pos.closerThan(player.blockPosition(), 64))
+            return;
+        BlockEntity BlockEntity = world.getBlockEntity(pos);
+        if (BlockEntity instanceof TrackBlockEntity track) {
+            applySettings(player, track);
+            track.notifyUpdate();
         }
-        casingAble.setTrackCasing(slabBlock);
-      }
-      return InteractionResult.SUCCESS;
-    } else if (handStack.isEmpty()) {
-      SlabBlock currentCasing = casingAble.getTrackCasing();
-      if (currentCasing != null) {
-        handStack = new ItemStack(currentCasing);
-        casingAble.setTrackCasing(null);
-        if (!player.isCreative())
-          EntityUtils.givePlayerItem(player, handStack);
-        return InteractionResult.SUCCESS;
-      }
-    }
-    return InteractionResult.PASS;
-  }
-
-  protected void applySettings(ServerPlayer player, TrackBlockEntity te) {
-    if (!te.getBlockPos()
-        .closerThan(player.blockPosition(), 128)) {
-      Railways.LOGGER.warn(player.getScoreboardName() + " too far away from slabbed Curve track");
-      return;
     }
 
-    Level level = te.getLevel();
-    BezierConnection bezierConnection = te.getConnections()
-        .get(targetPos);
-
-    if (bezierConnection.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-      Railways.LOGGER.warn(player.getScoreboardName() + "tried to slab a monorail track");
-      return;
+    private InteractionResult useOn(ServerPlayer player, InteractionHand hand, Level world, IHasTrackCasing casingAble) {
+        if (world.isClientSide) return InteractionResult.FAIL;
+        ItemStack handStack = player.getItemInHand(hand);
+        if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock) {
+            SlabBlock currentCasing = casingAble.getTrackCasing();
+            if (currentCasing == slabBlock) {
+                casingAble.setAlternate(!casingAble.isAlternate());
+                return InteractionResult.SUCCESS;
+            } else {
+                if (!player.isCreative()) {
+                    handStack.shrink(1);
+                    if (currentCasing != null) {
+                        ItemStack casingStack = new ItemStack(currentCasing);
+                        EntityUtils.givePlayerItem(player, casingStack);
+                    }
+                    player.setItemInHand(hand, handStack);
+                }
+                casingAble.setTrackCasing(slabBlock);
+            }
+            return InteractionResult.SUCCESS;
+        } else if (handStack.isEmpty()) {
+            SlabBlock currentCasing = casingAble.getTrackCasing();
+            if (currentCasing != null) {
+                handStack = new ItemStack(currentCasing);
+                casingAble.setTrackCasing(null);
+                if (!player.isCreative())
+                    EntityUtils.givePlayerItem(player, handStack);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
     }
 
-    if (level != null) {
-      InteractionHand hand = InteractionHand.MAIN_HAND;
-      InteractionResult result = useOn(player, hand, level, (IHasTrackCasing) bezierConnection);
-      if (!result.consumesAction()) {
-        hand = InteractionHand.OFF_HAND;
-        result = useOn(player, hand, level, (IHasTrackCasing) bezierConnection);
-      }
-      if (result.shouldSwing())
-        player.swing(hand, true);
+    protected void applySettings(ServerPlayer player, TrackBlockEntity te) {
+        if (!te.getBlockPos()
+                .closerThan(player.blockPosition(), 128)) {
+            Railways.LOGGER.warn(player.getScoreboardName() + " too far away from slabbed Curve track");
+            return;
+        }
 
-      te.notifyUpdate();
+        Level level = te.getLevel();
+        BezierConnection bezierConnection = te.getConnections()
+                .get(targetPos);
+
+        if (bezierConnection.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
+            Railways.LOGGER.warn(player.getScoreboardName() + "tried to slab a monorail track");
+            return;
+        }
+
+        if (level != null) {
+            InteractionHand hand = InteractionHand.MAIN_HAND;
+            InteractionResult result = useOn(player, hand, level, (IHasTrackCasing) bezierConnection);
+            if (!result.consumesAction()) {
+                hand = InteractionHand.OFF_HAND;
+                result = useOn(player, hand, level, (IHasTrackCasing) bezierConnection);
+            }
+            if (result.shouldSwing())
+                player.swing(hand, true);
+
+            te.notifyUpdate();
+        }
     }
-  }
 }

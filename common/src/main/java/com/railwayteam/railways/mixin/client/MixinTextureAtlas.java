@@ -32,7 +32,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TextureAtlas.class)
 public abstract class MixinTextureAtlas {
-    @Shadow @Final private ResourceLocation location;
+    @Shadow
+    @Final
+    private ResourceLocation location;
 
     @Inject(method = "cycleAnimationFrames", at = @At("RETURN"))
     private void railways$cycleAnimationFrames(CallbackInfo ci) {

@@ -77,8 +77,8 @@ public class CustomTrackOverlayRendering {
     //Copied from TrackTargetingBehaviour
     @Environment(EnvType.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
-                              BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-                              PartialModel model, float scale, boolean offsetToSide) {
+                                     BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
+                                     PartialModel model, float scale, boolean offsetToSide) {
         if (level instanceof SchematicWorld && !(level instanceof PonderWorld))
             return;
 
@@ -92,11 +92,11 @@ public class CustomTrackOverlayRendering {
         PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model);
         if (partial != null)
             CachedBufferer.partial(partial, trackState)
-                .translate(.5, 0, .5)
-                .scale(scale)
-                .translate(offsetToSide ? .5 : -.5, 0, -.5)
-                .light(LevelRenderer.getLightColor(level, pos))
-                .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
+                    .translate(.5, 0, .5)
+                    .scale(scale)
+                    .translate(offsetToSide ? .5 : -.5, 0, -.5)
+                    .light(LevelRenderer.getLightColor(level, pos))
+                    .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
 
         ms.popPose();
     }
@@ -128,15 +128,15 @@ public class CustomTrackOverlayRendering {
                 offset = bc.getPosition(t);
                 normal = bc.getNormal(t);
                 diff = bc.getPosition(tpost)
-                    .subtract(bc.getPosition(tpre))
-                    .normalize();
+                        .subtract(bc.getPosition(tpre))
+                        .normalize();
 
                 msr.translate(offset.subtract(Vec3.atBottomCenterOf(pos)));
                 msr.translate(0, -4 / 16f, 0);
                 // Translate more for slabs or monorails
                 IHasTrackCasing casingBc = (IHasTrackCasing) bc;
                 if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-                    msr.translate(0, 14/16f, 0);
+                    msr.translate(0, 14 / 16f, 0);
                 } else if (casingBc.getTrackCasing() != null) {
                     // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
                     if (bc.tePositions.getFirst().getY() == bc.tePositions.getSecond().getY()) {
@@ -151,10 +151,10 @@ public class CustomTrackOverlayRendering {
 
         if (normal == null) {
             axis = state.getValue(TrackBlock.SHAPE)
-                .getAxes()
-                .get(0);
+                    .getAxes()
+                    .get(0);
             diff = axis.scale(direction.getStep())
-                .normalize();
+                    .normalize();
             normal = ((ITrackBlock) state.getBlock()).getUpNormal(world, pos, state);
         }
 
@@ -163,7 +163,7 @@ public class CustomTrackOverlayRendering {
 
         //Shift for casings and monorails
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            msr.translate(0, 14/16f, 0);
+            msr.translate(0, 14 / 16f, 0);
         } else if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
@@ -172,9 +172,9 @@ public class CustomTrackOverlayRendering {
                 TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
                     msr.translate(
-                        spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2) / 16f,
-                        spec.getZShift(trackType)
+                            spec.getXShift(trackType),
+                            (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2) / 16f,
+                            spec.getZShift(trackType)
                     );
             }
         }
@@ -182,9 +182,9 @@ public class CustomTrackOverlayRendering {
         Vec3 angles = TrackRenderer.getModelAngles(normal, diff);
 
         msr.centre()
-            .rotateYRadians(angles.y)
-            .rotateXRadians(angles.x)
-            .unCentre();
+                .rotateYRadians(angles.y)
+                .rotateXRadians(angles.x)
+                .unCentre();
 
         if (axis != null)
             msr.translate(0, axis.y != 0 ? 7 / 16f : 0, axis.y != 0 ? direction.getStep() * 2.5f / 16f : 0);
@@ -195,14 +195,14 @@ public class CustomTrackOverlayRendering {
         }
 
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE
-            && trackTE.isTilted()) {
+                && trackTE.isTilted()) {
             double yOffset = 0;
             for (BezierConnection bc : trackTE.getConnections().values())
                 yOffset += bc.starts.getFirst().y - pos.getY();
             msr.centre()
-                .rotateX(-direction.getStep() * trackTE.tilt.smoothingAngle.get())
-                .unCentre()
-                .translate(0, yOffset / 2, 0);
+                    .rotateX(-direction.getStep() * trackTE.tilt.smoothingAngle.get())
+                    .unCentre()
+                    .translate(0, yOffset / 2, 0);
         }
 
         return model;
@@ -217,9 +217,11 @@ public class CustomTrackOverlayRendering {
                     if (Math.abs(edgePoint.getLocationOn(edge) - (target.getEdgePoint() != null ? target.getEdgePoint().getLocationOn(edge) : graphLocation.position)) < .75 && edgePoint != target.getEdgePoint() && !edgePoint.getId().equals(target.getEdgePoint().getId())) {
                         return true;
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         return false;
     }

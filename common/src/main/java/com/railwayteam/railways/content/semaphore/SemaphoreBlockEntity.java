@@ -53,7 +53,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
     public SignalBlockEntity.SignalState signalState;
     public final LerpedFloat armPosition;
     public boolean isValid = false;
-    public boolean isDistantSignal=false;
+    public boolean isDistantSignal = false;
     protected boolean cachedWasUpsideDown = false;
     private int overrideLastingTicks = -1;
 
@@ -85,6 +85,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 
     }
+
     @Override
     public void tick() {
 
@@ -120,20 +121,17 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         }
 
 
-
         SignalBlockEntity signalBlockEntity = cachedSignalTE.get();
 
 
-
-
         // whether the arm is up (i.e. signalling that a train can pass)
-        boolean isActive=false;
+        boolean isActive = false;
 
         if (signalBlockEntity != null && !signalBlockEntity.isRemoved() && isValid) {
             signalState = signalBlockEntity.getState();
 
-            if(signalState == SignalBlockEntity.SignalState.INVALID)
-                isValid=false;
+            if (signalState == SignalBlockEntity.SignalState.INVALID)
+                isValid = false;
             else
                 isActive = (signalState == SignalBlockEntity.SignalState.YELLOW && !isDistantSignal) || signalState == SignalBlockEntity.SignalState.GREEN;
         }
@@ -146,8 +144,6 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         }
 
         armPosition.tickChaser();
-
-
 
 
     }
@@ -171,11 +167,10 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         return false;
     }
 
-    boolean updateSignalConnection(boolean upsideDown)
-    {
-        isValid=false;
-        isDistantSignal=false;
-        BlockPos currentPos = upsideDown?worldPosition.above():worldPosition.below();
+    boolean updateSignalConnection(boolean upsideDown) {
+        isValid = false;
+        isDistantSignal = false;
+        BlockPos currentPos = upsideDown ? worldPosition.above() : worldPosition.below();
         int semaphoresBelow = 0;
         boolean constantOrder = !(getBlockState().getValue(SemaphoreBlock.UPSIDE_DOWN) && CRConfigs.server().semaphores.flipYellowOrder.get());
         //count downwards from the semaphore along the pole blocks, until a signal is reached
@@ -190,7 +185,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
 
 
                 if (semaphoresBelow == 0 != (upsideDown && constantOrder)) {
-                    currentPos = upsideDown?(constantOrder?currentPos:worldPosition).below():worldPosition.above();
+                    currentPos = upsideDown ? (constantOrder ? currentPos : worldPosition).below() : worldPosition.above();
                     //if the signal is a cross-signal, and this semaphore is at the bottom of the stack,
                     //count upwards to find other semaphores. if one is found this semaphore becomes caution-type
                     for (int j = i + 1; j < 16; j++) {
@@ -203,7 +198,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
                         if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                             break;
                         }
-                        currentPos = upsideDown?currentPos.below():currentPos.above();
+                        currentPos = upsideDown ? currentPos.below() : currentPos.above();
                     }
                 }
                 //the semaphore is valid as a danger-type semaphore
@@ -212,16 +207,14 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
                 break;
 
             }
-            if(blockEntity instanceof SemaphoreBlockEntity)
-            {
+            if (blockEntity instanceof SemaphoreBlockEntity) {
                 semaphoresBelow++;
-                if(semaphoresBelow>1)
+                if (semaphoresBelow > 1)
                     break;
-            }else if(!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState))
-            {
+            } else if (!CRTags.AllBlockTags.SEMAPHORE_POLES.matches(blockState)) {
                 break;
             }
-            currentPos = upsideDown?currentPos.above():currentPos.below();
+            currentPos = upsideDown ? currentPos.above() : currentPos.below();
         }
         return isValid;
     }
@@ -235,7 +228,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         isDistantSignal = distantSignal;
         if (!level.isClientSide) {
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this),
-                new OverridableSignalPacket(getBlockPos(),signalBE == null ? null : signalBE.getBlockPos(), state, ticks, distantSignal));
+                    new OverridableSignalPacket(getBlockPos(), signalBE == null ? null : signalBE.getBlockPos(), state, ticks, distantSignal));
         }
     }
 
@@ -251,7 +244,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
         public SemaphoreValueBoxTransform() {
             super((state, d) -> {
                 if (d.getAxis()
-                    .isVertical())
+                        .isVertical())
                     return false;
                 boolean flipped = state.getValue(SemaphoreBlock.FLIPPED);
                 Direction facing = state.getValue(SemaphoreBlock.FACING);
@@ -268,9 +261,7 @@ public class SemaphoreBlockEntity extends SmartBlockEntity implements IOverridab
 
     public enum SearchMode implements INamedIconOptions {
         SEARCH_DOWN(CRIcons.I_SEARCH_DOWN),
-        SEARCH_UP(CRIcons.I_SEARCH_UP)
-
-        ;
+        SEARCH_UP(CRIcons.I_SEARCH_UP);
 
         private final String translationKey;
         private final AllIcons icon;

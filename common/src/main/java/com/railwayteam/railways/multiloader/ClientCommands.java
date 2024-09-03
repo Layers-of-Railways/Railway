@@ -26,21 +26,21 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 
 public class ClientCommands {
-	public static LiteralArgumentBuilder<SharedSuggestionProvider> literal(String name) {
-		return LiteralArgumentBuilder.literal(name);
-	}
+    public static LiteralArgumentBuilder<SharedSuggestionProvider> literal(String name) {
+        return LiteralArgumentBuilder.literal(name);
+    }
 
-	public static <T> RequiredArgumentBuilder<SharedSuggestionProvider, T> argument(String name, ArgumentType<T> type) {
-		return RequiredArgumentBuilder.argument(name, type);
-	}
+    public static <T> RequiredArgumentBuilder<SharedSuggestionProvider, T> argument(String name, ArgumentType<T> type) {
+        return RequiredArgumentBuilder.argument(name, type);
+    }
 
-	@ExpectPlatform
-	public static void sendSuccess(SharedSuggestionProvider provider, Component text) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static void sendSuccess(SharedSuggestionProvider provider, Component text) {
+        throw new AssertionError();
+    }
 
-	@ExpectPlatform
-	public static void sendFailure(SharedSuggestionProvider provider, Component text) {
-		throw new AssertionError();
-	}
+    @ExpectPlatform
+    public static void sendFailure(SharedSuggestionProvider provider, Component text) {
+        throw new AssertionError();
+    }
 }

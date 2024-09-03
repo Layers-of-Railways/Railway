@@ -29,11 +29,11 @@ import java.util.Set;
 
 @Mixin(BlockEntityType.class)
 public interface AccessorBlockEntityType {
-	@Accessor
-	Set<Block> getValidBlocks();
+    @Accessor
+    Set<Block> getValidBlocks();
 
-	@Accessor
-	@Final
-	@Mutable
-	void setValidBlocks(Set<Block> validBlocks);
+    @Accessor
+    @Final
+    @Mutable
+    void setValidBlocks(Set<Block> validBlocks);
 }

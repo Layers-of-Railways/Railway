@@ -29,7 +29,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 import java.util.UUID;
 
-public record TrainMarkerData(String name, int carriageCount, UUID owner, String destination, ResourceKey<Level> dimension, BlockPos pos, boolean incomplete) {
+public record TrainMarkerData(String name, int carriageCount, UUID owner, String destination,
+                              ResourceKey<Level> dimension, BlockPos pos, boolean incomplete) {
 
     public static final BlockPos ABSENT_POS = new BlockPos(1331, 0, 1331);
 

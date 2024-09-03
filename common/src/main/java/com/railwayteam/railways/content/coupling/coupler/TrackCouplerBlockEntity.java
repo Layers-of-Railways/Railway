@@ -411,11 +411,11 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                         secondaryTrain.carriages.indexOf(secondaryCarriage) == secondaryTrain.carriages.size() - 1) {
                     // ensure correct order when only one bogey (if 'outer' points are closer together than 'inner' points, then something is off
                     double outerLength = secondaryCarriage.getLeadingPoint().getPosition(secondaryTrain.graph)
-                        .subtract(primaryCarriage.getTrailingPoint().getPosition(primaryTrain.graph))
-                        .lengthSqr();
+                            .subtract(primaryCarriage.getTrailingPoint().getPosition(primaryTrain.graph))
+                            .lengthSqr();
                     double innerLength = secondaryCarriage.getTrailingPoint().getPosition(secondaryTrain.graph)
-                        .subtract(primaryCarriage.getLeadingPoint().getPosition(primaryTrain.graph))
-                        .lengthSqr();
+                            .subtract(primaryCarriage.getLeadingPoint().getPosition(primaryTrain.graph))
+                            .lengthSqr();
                     if (outerLength < innerLength) {
                         return OperationInfo.NONE;
                     } else {

@@ -40,22 +40,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinStationRenderer {
     @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/station/StationBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/render/CachedBufferer;partial(Lcom/jozufozu/flywheel/core/PartialModel;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/simibubi/create/foundation/render/SuperByteBuffer;"))
     private void shiftAssemblyOverlayOnEncasedTracks(
-        StationBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
-        CallbackInfo ci, @Local(name = "currentPos") MutableBlockPos currentPos, @Local(name = "trackState") BlockState trackState) {
+            StationBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
+            CallbackInfo ci, @Local(name = "currentPos") MutableBlockPos currentPos, @Local(name = "trackState") BlockState trackState) {
         ms.pushPose();
 
         if (trackState.getBlock() instanceof TrackBlock trackBlock
-            && be.getLevel().getBlockEntity(currentPos) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
+                && be.getLevel().getBlockEntity(currentPos) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
             TrackShape shape = trackState.getValue(TrackBlock.SHAPE);
             CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
             TrackMaterial.TrackType trackType = trackBlock.getMaterial().trackType;
             if (spec != null)
                 TransformStack.cast(ms)
-                    .translate(
-                        spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casing.isAlternate()) - 2) / 16f,
-                        spec.getZShift(trackType)
-                    );
+                        .translate(
+                                spec.getXShift(trackType),
+                                (spec.getTopSurfacePixelHeight(trackType, casing.isAlternate()) - 2) / 16f,
+                                spec.getZShift(trackType)
+                        );
         }
 
     }

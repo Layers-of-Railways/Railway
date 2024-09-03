@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 /**
  * This mixin fixes camera chunks disappearing when the player entity moves while viewing a camera (e.g. while being in a
  * minecart or falling) - modified by Slimeist to instead change the position to use the conductor position if the player is mounted on a conductor
- *
+ * <p>
  * Confirmed to be SC compatible
  */
 @Mixin(value = LevelRenderer.class, priority = 1200)
@@ -43,21 +43,23 @@ public class LevelRendererMixin {
 			viewArea.repositionCamera(x, z);
 	}*/
 
-	@Shadow @Final private Minecraft minecraft;
+    @Shadow
+    @Final
+    private Minecraft minecraft;
 
-	// optional redirects (Rubidium/Sodium replaces this pipeline)
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getX()D"), require = 0)
-	private double railways$getX(LocalPlayer instance) {
-		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getX() : instance.getX();
-	}
+    // optional redirects (Rubidium/Sodium replaces this pipeline)
+    @Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getX()D"), require = 0)
+    private double railways$getX(LocalPlayer instance) {
+        return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getX() : instance.getX();
+    }
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getY()D"), require = 0)
-	private double railways$getY(LocalPlayer instance) {
-		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getY() : instance.getY();
-	}
+    @Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getY()D"), require = 0)
+    private double railways$getY(LocalPlayer instance) {
+        return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getY() : instance.getY();
+    }
 
-	@Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getZ()D"), require = 0)
-	private double railways$getZ(LocalPlayer instance) {
-		return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getZ() : instance.getZ();
-	}
+    @Redirect(method = "setupRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getZ()D"), require = 0)
+    private double railways$getZ(LocalPlayer instance) {
+        return minecraft.getCameraEntity() instanceof ConductorEntity conductor ? conductor.getZ() : instance.getZ();
+    }
 }

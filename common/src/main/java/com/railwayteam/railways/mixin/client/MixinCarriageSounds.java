@@ -65,8 +65,8 @@ public class MixinCarriageSounds {
     }
 
     @WrapOperation(method = {
-        "tick",
-        "submitSharedSoundVolume"
+            "tick",
+            "submitSharedSoundVolume"
     }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;getMainEvent()Lnet/minecraft/sounds/SoundEvent;"))
     private SoundEvent useCogRumble(AllSoundEvents.SoundEntry instance, Operation<SoundEvent> original) {
         if (railways$isHandcar && instance == AllSoundEvents.TRAIN)
@@ -75,22 +75,22 @@ public class MixinCarriageSounds {
     }
 
     @WrapWithCondition(method = "tick", at = {
-        @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 0),
-        @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 1)
+            @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 0),
+            @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 1)
     }, remap = true)
     private boolean shouldPlaySteamSound(AllSoundEvents.SoundEntry instance, Level world, Vec3 pos, float volume, float pitch, boolean fade) {
         return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
     @WrapWithCondition(method = "tick", at = {
-        @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 2)
+            @At(value = "INVOKE", target = "Lcom/simibubi/create/AllSoundEvents$SoundEntry;playAt(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;FFZ)V", ordinal = 2)
     }, remap = true)
     private boolean shouldPlaySteamReleaseSound(AllSoundEvents.SoundEntry instance, Level world, Vec3 pos, float volume, float pitch, boolean fade) {
         return instance != AllSoundEvents.STEAM || !railways$isHandcar;
     }
 
     @WrapWithCondition(method = "tick", at = {
-        @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V")
+            @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V")
     }, remap = true)
     private boolean shouldPlaySteamReleaseSound3(Level instance, double x, double y, double z, SoundEvent sound, SoundSource category, float volume, float pitch, boolean distanceDelay) {
         return !railways$isHandcar;

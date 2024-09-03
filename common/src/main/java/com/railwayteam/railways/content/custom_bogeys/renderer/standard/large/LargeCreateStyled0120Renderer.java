@@ -37,7 +37,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.*;
 public class LargeCreateStyled0120Renderer extends BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_12_0_FRAME, LARGE_CREATE_STYLED_0_12_0_PISTON);
+        createModelInstance(materialManager, LARGE_CREATE_STYLED_0_12_0_FRAME, LARGE_CREATE_STYLED_0_12_0_PISTON);
         createModelInstance(materialManager, LC_STYLE_FULL_BLIND_WHEELS, 2);
         createModelInstance(materialManager, LC_STYLE_SEMI_BLIND_WHEELS, 2);
         createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);

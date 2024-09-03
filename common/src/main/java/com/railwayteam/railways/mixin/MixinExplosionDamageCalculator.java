@@ -34,8 +34,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = {
-    ExplosionDamageCalculator.class,
-    EntityBasedExplosionDamageCalculator.class
+        ExplosionDamageCalculator.class,
+        EntityBasedExplosionDamageCalculator.class
 })
 public class MixinExplosionDamageCalculator {
     @Inject(method = "shouldBlockExplode", at = @At("HEAD"), cancellable = true)

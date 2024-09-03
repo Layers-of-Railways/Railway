@@ -50,14 +50,14 @@ import static com.simibubi.create.content.trains.track.TrackBlock.SHAPE;
 public class MixinTrackPlacement {
     // minimum curve length for gauges
     @ModifyExpressionValue(method = "tryConnect", at = {
-        @At(value = "CONSTANT", args = "doubleValue=7"),
-        @At(value = "CONSTANT", args = "doubleValue=3.25")
+            @At(value = "CONSTANT", args = "doubleValue=7"),
+            @At(value = "CONSTANT", args = "doubleValue=3.25")
     })
     private static double modifiedCurvesForGauges(double value, Level level, Player player, BlockPos pos2, BlockState state2, ItemStack stack) {
         // Wide Gauge
         if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.WIDE_GAUGE)
             return value * 2;
-        // Narrow Gauge and Phantom Tracks
+            // Narrow Gauge and Phantom Tracks
         else if (TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.NARROW_GAUGE ||
                 TrackMaterial.fromItem(stack.getItem()).trackType == CRTrackMaterials.CRTrackType.UNIVERSAL)
             return value * 0.5;
@@ -67,9 +67,9 @@ public class MixinTrackPlacement {
 
     @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/ITrackBlock;overlay(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;"))
     private static void placeGenericCrossing0(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
-                                             BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
-                                             CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(name="toPlace") BlockState toPlace) {
+                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
+                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
+                                              @Share("oldToPlace") LocalRef<BlockState> oldToPlace, @Local(name = "toPlace") BlockState toPlace) {
         oldToPlace.set(toPlace);
     }
 
@@ -77,16 +77,16 @@ public class MixinTrackPlacement {
     private static void placeGenericCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                              BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                              CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                             @Local(name="stateAtPos") BlockState stateAtPos,
-                                             @Local(name="toPlace") LocalRef<BlockState> toPlace,
+                                             @Local(name = "stateAtPos") BlockState stateAtPos,
+                                             @Local(name = "toPlace") LocalRef<BlockState> toPlace,
                                              @Share("oldToPlace") LocalRef<BlockState> oldToPlace,
                                              @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingData) {
         crossingData.set(null);
         BlockState place = oldToPlace.get();
         if (stateAtPos == toPlace.get()) {
             if (stateAtPos.hasProperty(SHAPE) && place.hasProperty(SHAPE)
-                && stateAtPos.getBlock() instanceof ITrackBlock exisingTrack
-                && place.getBlock() instanceof ITrackBlock overlayTrack) {
+                    && stateAtPos.getBlock() instanceof ITrackBlock exisingTrack
+                    && place.getBlock() instanceof ITrackBlock overlayTrack) {
                 TrackShape existingShape = stateAtPos.getValue(SHAPE);
                 TrackShape overlayShape = place.getValue(SHAPE);
 
@@ -103,7 +103,7 @@ public class MixinTrackPlacement {
     private static void maybePlaceCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                            BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
                                            CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir,
-                                           @Local(name="offsetPos") BlockPos offsetPos,
+                                           @Local(name = "offsetPos") BlockPos offsetPos,
                                            @Share("crossingData") LocalRef<@Nullable GenericCrossingData> crossingDataRef) {
         @Nullable GenericCrossingData crossingData = crossingDataRef.get();
         if (crossingData != null && level.getBlockEntity(offsetPos) instanceof GenericCrossingBlockEntity genericCrossingBE) {

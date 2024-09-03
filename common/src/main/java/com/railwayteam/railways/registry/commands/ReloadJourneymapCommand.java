@@ -30,18 +30,18 @@ import static com.railwayteam.railways.multiloader.ClientCommands.*;
 public class ReloadJourneymapCommand {
     public static ArgumentBuilder<SharedSuggestionProvider, ?> register() {
         return literal("reload_jmap")
-            .requires(cs -> cs.hasPermission(0))
-            .executes(ctx -> {
-                SharedSuggestionProvider source = ctx.getSource();
-                if (Mods.JOURNEYMAP.isLoaded) {
-                    Env.CLIENT.runIfCurrent(() -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
+                .requires(cs -> cs.hasPermission(0))
+                .executes(ctx -> {
+                    SharedSuggestionProvider source = ctx.getSource();
+                    if (Mods.JOURNEYMAP.isLoaded) {
+                        Env.CLIENT.runIfCurrent(() -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
 
-                    sendSuccess(source, Components.literal("Reloaded journeymap"));
-                    return 1;
-                } else {
-                    sendFailure(source, Components.literal("Journeymap not loaded"));
-                    return 0;
-                }
-            });
+                        sendSuccess(source, Components.literal("Reloaded journeymap"));
+                        return 1;
+                    } else {
+                        sendFailure(source, Components.literal("Journeymap not loaded"));
+                        return 0;
+                    }
+                });
     }
 }

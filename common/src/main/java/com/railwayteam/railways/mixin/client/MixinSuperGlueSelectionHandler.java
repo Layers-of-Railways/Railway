@@ -35,9 +35,12 @@ import java.util.Set;
 @Mixin(value = SuperGlueSelectionHandler.class, remap = false)
 public class MixinSuperGlueSelectionHandler {
 
-    @Shadow private BlockPos hoveredPos;
-    @Shadow private Object clusterOutlineSlot;
-    @Shadow private int clusterCooldown;
+    @Shadow
+    private BlockPos hoveredPos;
+    @Shadow
+    private Object clusterOutlineSlot;
+    @Shadow
+    private int clusterCooldown;
     private static final int CONTROL_HIGHLIGHT = 0x41bdc6;
 
     @Inject(method = "tick", at = @At(value = "RETURN", ordinal = 4))
@@ -56,10 +59,10 @@ public class MixinSuperGlueSelectionHandler {
             Set<BlockPos> cluster = SuperGlueSelectionHelper.searchGlueGroup(mc.level, hoveredPos, hoveredPos, true);
             if (cluster != null) {
                 CreateClient.OUTLINER.showCluster(clusterOutlineSlot, cluster)
-                    .colored(CONTROL_HIGHLIGHT)
-                    .withFaceTextures(AllSpecialTextures.GLUE, AllSpecialTextures.HIGHLIGHT_CHECKERED)
-                    .disableLineNormals()
-                    .lineWidth(1 / 24f);
+                        .colored(CONTROL_HIGHLIGHT)
+                        .withFaceTextures(AllSpecialTextures.GLUE, AllSpecialTextures.HIGHLIGHT_CHECKERED)
+                        .disableLineNormals()
+                        .lineWidth(1 / 24f);
 
                 clusterCooldown = 10;
             }

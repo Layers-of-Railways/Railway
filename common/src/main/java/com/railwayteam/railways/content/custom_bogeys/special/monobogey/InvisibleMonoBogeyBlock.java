@@ -64,9 +64,9 @@ public class InvisibleMonoBogeyBlock extends AbstractMonoBogeyBlock<InvisibleMon
         TravellingPoint point = leading ? carriage.getLeadingPoint() : carriage.getTrailingPoint();
         CarriageBogey bogey = leading ? carriage.leadingBogey() : carriage.trailingBogey();
         return point.edge.getTrackMaterial().trackType != getTrackType(bogey.getStyle())
-            && point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
-            && point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE
-            && point.edge.getTrackMaterial().trackType != CRTrackType.STANDARD;
+                && point.edge.getTrackMaterial().trackType != CRTrackType.WIDE_GAUGE
+                && point.edge.getTrackMaterial().trackType != CRTrackType.NARROW_GAUGE
+                && point.edge.getTrackMaterial().trackType != CRTrackType.STANDARD;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class InvisibleMonoBogeyBlock extends AbstractMonoBogeyBlock<InvisibleMon
     @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (state.hasProperty(UPSIDE_DOWN) && state.getValue(UPSIDE_DOWN)) {
-            return shape(0, 0, 0, 16, 16-7, 16).build();
+            return shape(0, 0, 0, 16, 16 - 7, 16).build();
         } else {
             return shape(0, 7, 0, 16, 16, 16).build();
         }

@@ -38,12 +38,16 @@ import javax.annotation.Nullable;
 
 @Mixin(value = RollerMovementBehaviour.class, remap = false)
 public abstract class MixinRollerMovementBehaviour {
-    @Shadow protected abstract BlockState getStateToPaveWithAsSlab(MovementContext context);
+    @Shadow
+    protected abstract BlockState getStateToPaveWithAsSlab(MovementContext context);
 
-    @Shadow protected abstract BlockState getStateToPaveWith(MovementContext context);
+    @Shadow
+    protected abstract BlockState getStateToPaveWith(MovementContext context);
 
 
-    @Shadow @Nullable protected abstract PaveTask createHeightProfileForTracks(MovementContext context);
+    @Shadow
+    @Nullable
+    protected abstract PaveTask createHeightProfileForTracks(MovementContext context);
 
     // fixme this is a Create bug
     // https://github.com/Creators-of-Create/Create/pull/6272 Remove this mixin whenever this is merged

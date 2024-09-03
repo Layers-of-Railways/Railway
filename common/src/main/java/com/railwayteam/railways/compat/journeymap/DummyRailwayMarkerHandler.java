@@ -28,17 +28,22 @@ public class DummyRailwayMarkerHandler implements IRailwayMarkerHandler {
     }
 
     @Override
-    public void removeTrain(UUID uuid) {}
+    public void removeTrain(UUID uuid) {
+    }
 
     @Override
-    public void removeObsolete() {}
+    public void removeObsolete() {
+    }
 
     @Override
-    public void runUpdates() {}
+    public void runUpdates() {
+    }
 
     @Override
-    public void registerData(UUID uuid, TrainMarkerData data) {}
+    public void registerData(UUID uuid, TrainMarkerData data) {
+    }
 
     @Override
-    public void reloadMarkers() {}
+    public void reloadMarkers() {
+    }
 }

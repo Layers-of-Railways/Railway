@@ -33,7 +33,8 @@ public class NoOpDataFixesInternals extends DataFixesInternals {
     }
 
     @Override
-    public void registerFixer(@Range(from = 0, to = Integer.MAX_VALUE) int currentVersion, @NotNull DataFixer dataFixer) {}
+    public void registerFixer(@Range(from = 0, to = Integer.MAX_VALUE) int currentVersion, @NotNull DataFixer dataFixer) {
+    }
 
     @Override
     public @Nullable DataFixerEntry getFixerEntry() {

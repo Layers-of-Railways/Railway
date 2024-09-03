@@ -34,9 +34,13 @@ import javax.annotation.Nullable;
 
 @Mixin(value = GlobalStation.class, remap = false)
 public abstract class MixinGlobalStation implements ILimitedGlobalStation {
-    @Shadow @Nullable public abstract Train getNearestTrain();
+    @Shadow
+    @Nullable
+    public abstract Train getNearestTrain();
 
-    @Shadow @Nullable public abstract Train getImminentTrain();
+    @Shadow
+    @Nullable
+    public abstract Train getImminentTrain();
 
     private boolean limitEnabled;
 

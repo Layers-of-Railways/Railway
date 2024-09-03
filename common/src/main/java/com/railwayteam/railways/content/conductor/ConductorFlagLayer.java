@@ -34,26 +34,26 @@ import org.jetbrains.annotations.NotNull;
 @Environment(EnvType.CLIENT)
 public class ConductorFlagLayer<T extends ConductorEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-	public ConductorFlagLayer(RenderLayerParent<T, M> pRenderer) {
-		super(pRenderer);
-	}
+    public ConductorFlagLayer(RenderLayerParent<T, M> pRenderer) {
+        super(pRenderer);
+    }
 
-	@Override
-	public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull T conductorEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (conductorEntity.isHoldingSchedulesClient()) {
+    @Override
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull T conductorEntity, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (conductorEntity.isHoldingSchedulesClient()) {
 
-			poseStack.pushPose();
+            poseStack.pushPose();
 
-			//poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
-			//poseStack.translate(-0.5d, -1.2d, -0.94d);
+            //poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0f));
+            //poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferer.partial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(conductorEntity.getColor()), Blocks.AIR.defaultBlockState())
-					.translate(-0.78125, 0.15, -0.688)
-					.light(packedLight)
-					.renderInto(poseStack, buffer.getBuffer(RenderType.cutoutMipped()));
+            CachedBufferer.partial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(conductorEntity.getColor()), Blocks.AIR.defaultBlockState())
+                    .translate(-0.78125, 0.15, -0.688)
+                    .light(packedLight)
+                    .renderInto(poseStack, buffer.getBuffer(RenderType.cutoutMipped()));
 
-			poseStack.popPose();
-		}
-	}
+            poseStack.popPose();
+        }
+    }
 }

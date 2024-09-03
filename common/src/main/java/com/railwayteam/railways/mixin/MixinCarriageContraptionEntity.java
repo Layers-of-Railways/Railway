@@ -66,15 +66,18 @@ import static com.railwayteam.railways.util.BlockPosUtils.normalize;
 
 @Mixin(value = CarriageContraptionEntity.class, remap = false)
 public abstract class MixinCarriageContraptionEntity extends OrientedContraptionEntity implements IDistanceTravelled {
-    @Shadow private Carriage carriage;
+    @Shadow
+    private Carriage carriage;
 
     private MixinCarriageContraptionEntity(EntityType<?> type, Level world) {
         super(type, world);
     }
 
-    @Unique private boolean railways$fakePlayer = false;
+    @Unique
+    private boolean railways$fakePlayer = false;
 
-    @Unique private double railways$distanceTravelled;
+    @Unique
+    private double railways$distanceTravelled;
 
     @Inject(method = "control", at = @At("HEAD"))
     private void recordFakePlayer(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
@@ -191,7 +194,8 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         ICarriageBufferDistanceTracker distanceTracker = (ICarriageBufferDistanceTracker) carriage;
         if (level.isClientSide) return;
 
-        if (distanceTracker.railways$getLeadingDistance() != null && distanceTracker.railways$getTrailingDistance() != null) return;
+        if (distanceTracker.railways$getLeadingDistance() != null && distanceTracker.railways$getTrailingDistance() != null)
+            return;
 
         BlockPos leadingBogeyPos = null;
         BlockPos trailingBogeyPos = null;
@@ -234,7 +238,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
 
     @Inject(method = "control", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;getCurrentStation()Lcom/simibubi/create/content/trains/station/GlobalStation;"))
     private void noBufferOverrun(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player,
-                                 CallbackInfoReturnable<Boolean> cir, @Local(name="targetSpeed") LocalIntRef targetSpeedRef) {
+                                 CallbackInfoReturnable<Boolean> cir, @Local(name = "targetSpeed") LocalIntRef targetSpeedRef) {
         double targetSpeed = targetSpeedRef.get();
         if (targetSpeed == 0) return;
 

@@ -59,7 +59,7 @@ public class NarrowDoubleScotchYokeBogeyRenderer extends BogeyRenderer {
                 .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
 
         for (int i : Iterate.zeroAndOne) {
-            primaryShafts[i].translate(-.5, 1 / 16., (7/16.) + i * -(30 / 16.))
+            primaryShafts[i].translate(-.5, 1 / 16., (7 / 16.) + i * -(30 / 16.))
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()

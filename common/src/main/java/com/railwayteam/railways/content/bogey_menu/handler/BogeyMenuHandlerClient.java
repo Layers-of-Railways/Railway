@@ -83,6 +83,7 @@ public class BogeyMenuHandlerClient {
 
     /**
      * Prefer using {@link #addFavorite} and {@link #removeFavorite} for those operations
+     *
      * @return a list of favorited bogey styles
      */
     @NotNull
@@ -157,7 +158,7 @@ public class BogeyMenuHandlerClient {
     }
 
     public static List<Pair<BogeyStyle, BogeySize>> getRenderCycle(BogeyStyle style) {
-         return CACHED_RENDER_CYCLES.computeIfAbsent(style, (s) -> {
+        return CACHED_RENDER_CYCLES.computeIfAbsent(style, (s) -> {
             List<Pair<BogeyStyle, BogeySize>> cycle = new ArrayList<>();
             for (BogeySize size : style.validSizes()) {
                 cycle.add(Pair.of(style, size));
@@ -174,7 +175,7 @@ public class BogeyMenuHandlerClient {
     }
 
     public static Indicator.State[] getTrackCompat(BogeyEntry bogeyEntry) {
-        return CACHED_COMPATS.computeIfAbsent(bogeyEntry, (k) -> new Indicator.State[] {
+        return CACHED_COMPATS.computeIfAbsent(bogeyEntry, (k) -> new Indicator.State[]{
                 styleFits(bogeyEntry, CRTrackMaterials.CRTrackType.NARROW_GAUGE),
                 styleFits(bogeyEntry, TrackMaterial.TrackType.STANDARD),
                 styleFits(bogeyEntry, CRTrackMaterials.CRTrackType.WIDE_GAUGE)

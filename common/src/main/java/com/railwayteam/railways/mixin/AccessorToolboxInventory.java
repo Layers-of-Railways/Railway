@@ -27,6 +27,6 @@ import java.util.List;
 
 @Mixin(value = ToolboxInventory.class, remap = false)
 public interface AccessorToolboxInventory {
-  @Accessor("filters")
-  List<ItemStack> getFilters();
+    @Accessor("filters")
+    List<ItemStack> getFilters();
 }

@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomTrackBlock  { //done using a brass hand on a track should call TrackPropagator.onRailAdded to update materials
+public class CustomTrackBlock { //done using a brass hand on a track should call TrackPropagator.onRailAdded to update materials
     @Nullable
     public static InteractionResult casingUse(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (AdventureUtils.isAdventure(player))
@@ -47,12 +47,12 @@ public class CustomTrackBlock  { //done using a brass hand on a track should cal
             return InteractionResult.SUCCESS;
         }
         if (handStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof SlabBlock slabBlock &&
-            !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
+                !CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(slabBlock)) {
             if (world.isClientSide) return InteractionResult.SUCCESS;
             SlabBlock currentCasing = IHasTrackCasing.getTrackCasing(world, pos);
             if (currentCasing == slabBlock) {
                 return (IHasTrackCasing.setAlternateModel(world, pos, !IHasTrackCasing.isAlternate(world, pos))) ?
-                    InteractionResult.SUCCESS : InteractionResult.FAIL;
+                        InteractionResult.SUCCESS : InteractionResult.FAIL;
             } else {
                 if (!player.isCreative()) {
                     handStack.shrink(1);
