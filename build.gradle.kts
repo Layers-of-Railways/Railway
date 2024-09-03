@@ -202,8 +202,7 @@ subprojects {
 
         // Trim -build.X+mcX.XX.X from version string
         //val createFabricVersion: String = Regex("(\\d+\\.\\d+\\.\\d+-\\w)").find("create_fabric_version"())?.value.toString()
-        val createForgeVersion = if (isRelease || buildNumber != null) "create_forge_version"().split("-")[0] else "create_forge_version"()
-        
+
         // set up properties for filling into metadata
         val properties = mapOf(
                 "version" to version,
@@ -212,7 +211,7 @@ subprojects {
                 "fabric_loader_version" to "fabric_loader_version"(),
                 "voicechat_api_version" to "voicechat_api_version"(),
                 "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
-                "create_forge_version" to createForgeVersion,
+                "create_forge_version" to "create_forge_version"().split("-")[0],
                 "create_fabric_version" to "create_fabric_version"()
         )
 

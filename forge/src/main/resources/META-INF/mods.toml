@@ -32,7 +32,7 @@ side = "BOTH"
 [[dependencies.railways]]
 modId="create"
 mandatory=true
-versionRange="[${create_forge_version}]"
+versionRange="[${create_forge_version},)"
 ordering="NONE"
 side="BOTH"
 
