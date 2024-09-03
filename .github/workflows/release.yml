@@ -40,6 +40,7 @@ jobs:
       - name: Build & Publish
         env:
           RELEASE_BUILD: true
+          PLATFORM: ${{ inputs.platform }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
