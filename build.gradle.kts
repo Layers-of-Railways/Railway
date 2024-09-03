@@ -201,7 +201,7 @@ subprojects {
 
         // Trim -build.X+mcX.XX.X from version string
         //val createFabricVersion: String = Regex("(\\d+\\.\\d+\\.\\d+-\\w)").find("create_fabric_version"())?.value.toString()
-        val createForgeVersion = if (isRelease) "create_forge_version"().split("-")[0] else "create_forge_version"()
+        val createForgeVersion = if (isRelease || buildNumber != null) "create_forge_version"().split("-")[0] else "create_forge_version"()
         
         // set up properties for filling into metadata
         val properties = mapOf(
