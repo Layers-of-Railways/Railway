@@ -51,7 +51,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 import static com.railwayteam.railways.content.buffer.BufferModelUtils.combineSwappers;
@@ -119,9 +118,11 @@ public class BufferModel implements BakedModel {
 
     private List<BakedQuad> transformQuads(List<BakedQuad> quads, @Nullable BlockState state) {
         if (state == null) return quads;
-        boolean diagonal = state.getValue(TrackBufferBlock.DIAGONAL);
-        if (!diagonal) return quads;
+        boolean isDiagonal = false;
 
+        if (state.getBlock() instanceof TrackBufferBlock)
+            isDiagonal = state.getValue(TrackBufferBlock.DIAGONAL);
+        if (!isDiagonal) return quads;
         ArrayList<BakedQuad> transformedQuads = new ArrayList<>();
         for (BakedQuad quad : quads) {
             transformedQuads.add(applyDiagonalTransform(quad));
@@ -129,7 +130,7 @@ public class BufferModel implements BakedModel {
         return transformedQuads;
     }
 
-    @SuppressWarnings("deprecation")
+    
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, @NotNull RandomSource random) {
         return Collections.emptyList();

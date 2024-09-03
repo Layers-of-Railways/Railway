@@ -20,6 +20,7 @@ package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
+import com.railwayteam.railways.base.data.RailwaysHatOffsetGenerator;
 import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.lang.CRLangGen;
@@ -119,6 +120,7 @@ public class Railways {
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);
+    gen.addProvider(RailwaysHatOffsetGenerator::new);
   }
 
   public static CreateRegistrate registrate() {

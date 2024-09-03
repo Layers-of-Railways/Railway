@@ -17,6 +17,7 @@ Fixes
 Changes
 - Lower particle count for boiler blocks being broken
 - Gauge based track item sprites (Thanks Taeco!!)
+- Update to Create 0.5.1-g
 ------------------------------------------------------
 Steam 'n' Rails 1.6.4
 ------------------------------------------------------

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2024 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,19 +16,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin.client;
+package com.railwayteam.railways.base.data;
 
-import com.railwayteam.railways.content.palettes.boiler.BoilerBigOutlines;
-import net.minecraft.client.renderer.GameRenderer;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.railwayteam.railways.registry.CREntities;
+import com.simibubi.create.api.data.TrainHatInfoProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.world.phys.Vec3;
 
-@Mixin(GameRenderer.class)
-public class MixinGameRenderer {
-    @Inject(method = "pick(F)V", at = @At("TAIL"))
-    private void railways$bigShapePickModifiedFromCreate(CallbackInfo ci) {
-        BoilerBigOutlines.pick();
+public class RailwaysHatOffsetGenerator extends TrainHatInfoProvider {
+    public RailwaysHatOffsetGenerator(PackOutput output) {
+        super(output);
+    }
+    
+    @Override
+    protected void createOffsets() {
+        makeInfoFor(CREntities.CONDUCTOR.get(), new Vec3(0f, -1f, 0f));
+    }
+
+    @Override
+    public String getName() {
+        return "Steam 'n' Rails Train Hat Information";
     }
 }
