@@ -394,7 +394,7 @@ fun hasUnstaged(): Boolean {
         commandLine("git", "status", "--porcelain")
         standardOutput = stdout
     }
-    val result = stdout.toString().replace("M gradlew", "").trimEnd()
+    val result = stdout.toString().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
     if (result.isNotEmpty())
         println("Found stageable results:\n${result}\n")
     return result.isNotEmpty()
