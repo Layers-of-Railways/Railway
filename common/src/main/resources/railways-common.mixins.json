@@ -13,7 +13,7 @@
     "AccessorCarriageContraption",
     "AccessorCarriageContraptionEntity",
     "AccessorCreativeModeTabs",
-    "AccessorIngredient_TagValue",
+    "AccessorIngredient$TagValue",
     "AccessorMountedFluidStorage",
     "AccessorNavigation",
     "AccessorOrientedContraptionEntity",

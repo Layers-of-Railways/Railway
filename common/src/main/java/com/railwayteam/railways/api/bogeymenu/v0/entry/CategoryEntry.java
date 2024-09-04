@@ -60,7 +60,6 @@ public class CategoryEntry {
     }
 
     public static class FavoritesCategory extends CategoryEntry {
-
         public static final CategoryEntry INSTANCE = new FavoritesCategory();
 
         @Nullable

@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(Ingredient.TagValue.class)
-public interface AccessorIngredient_TagValue {
+public interface AccessorIngredient$TagValue {
     @Invoker("<init>")
     static Ingredient.TagValue railways$create(TagKey<Item> tag) {
         throw new AssertionError();

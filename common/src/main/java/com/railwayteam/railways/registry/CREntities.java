@@ -46,42 +46,44 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.function.Consumer;
 
 public class CREntities {
-  private static final CreateRegistrate REGISTRATE = Railways.registrate();
+    private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-  public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.<MinecartWorkbench>entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
-      .renderer(() -> CREntities::cartRenderer)
-      .properties(configure(c -> c.size(0.98F, 0.7F)))
-      .lang("Minecart with Workbench")
-      .register();
-  public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.<MinecartJukebox>entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
-      .renderer(() -> CREntities::cartRenderer)
-      .properties(configure(c -> c.size(0.98F, 0.7F)))
-      .lang("Minecart with Jukebox")
-      .register();
+    public static final EntityEntry<MinecartWorkbench> CART_BLOCK = REGISTRATE.<MinecartWorkbench>entity("benchcart", MinecartWorkbench::new, MobCategory.MISC)
+            .renderer(() -> CREntities::cartRenderer)
+            .properties(configure(c -> c.size(0.98F, 0.7F)))
+            .lang("Minecart with Workbench")
+            .register();
 
-  public static final EntityEntry<ConductorEntity> CONDUCTOR = REGISTRATE.entity("conductor", ConductorEntity::new, MobCategory.CREATURE)
-      .renderer(()-> ConductorRenderer::new)
-      .lang("Conductor")
-      .properties(configure(c -> c.size(0.6f, 1.5f).fireImmune()))
-      .loot((table, type)-> table.add(type, new LootTable.Builder().withPool(
-          LootPool.lootPool()
-              .setRolls(ConstantValue.exactly(1.0f))
-              .add(LootItem.lootTableItem(AllItems.ANDESITE_ALLOY.get())
-                  .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 1.0f)))
-              )
-      )))
-      .attributes(ConductorEntity::createAttributes)
-      .register();
+    public static final EntityEntry<MinecartJukebox> CART_JUKEBOX = REGISTRATE.<MinecartJukebox>entity("jukeboxcart", MinecartJukebox::new, MobCategory.MISC)
+            .renderer(() -> CREntities::cartRenderer)
+            .properties(configure(c -> c.size(0.98F, 0.7F)))
+            .lang("Minecart with Jukebox")
+            .register();
 
-  private static <T> NonNullConsumer<T> configure(Consumer<EntityTypeConfigurator> consumer) {
-      return builder -> consumer.accept(EntityTypeConfigurator.of(builder));
-  }
+    public static final EntityEntry<ConductorEntity> CONDUCTOR = REGISTRATE.entity("conductor", ConductorEntity::new, MobCategory.CREATURE)
+            .renderer(() -> ConductorRenderer::new)
+            .lang("Conductor")
+            .properties(configure(c -> c.size(0.6f, 1.5f).fireImmune()))
+            .loot((table, type) -> table.add(type, new LootTable.Builder().withPool(
+                    LootPool.lootPool()
+                            .setRolls(ConstantValue.exactly(1.0f))
+                            .add(LootItem.lootTableItem(AllItems.ANDESITE_ALLOY.get())
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 1.0f)))
+                            )
+            )))
+            .attributes(ConductorEntity::createAttributes)
+            .register();
 
-  @Environment(EnvType.CLIENT)
-  private static EntityRenderer<AbstractMinecart> cartRenderer(Context ctx) {
-      return new MinecartRenderer<>(ctx, ModelLayers.MINECART);
-  }
+    private static <T> NonNullConsumer<T> configure(Consumer<EntityTypeConfigurator> consumer) {
+        return builder -> consumer.accept(EntityTypeConfigurator.of(builder));
+    }
 
-  @SuppressWarnings("EmptyMethod")
-  public static void register() {}
+    @Environment(EnvType.CLIENT)
+    private static EntityRenderer<AbstractMinecart> cartRenderer(Context ctx) {
+        return new MinecartRenderer<>(ctx, ModelLayers.MINECART);
+    }
+
+    @SuppressWarnings("EmptyMethod")
+    public static void register() {
+    }
 }

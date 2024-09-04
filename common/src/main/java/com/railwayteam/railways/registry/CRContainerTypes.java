@@ -30,21 +30,22 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class CRContainerTypes {
-  private static final CreateRegistrate REGISTRATE = Railways.registrate();
+    private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
-  public static final MenuEntry<MountedToolboxContainer> MOUNTED_TOOLBOX = register(
-          "mounted_toolbox",
-          MountedToolboxContainer::new,
-          () -> MountedToolboxScreen::create
-  );
+    public static final MenuEntry<MountedToolboxContainer> MOUNTED_TOOLBOX = register(
+            "mounted_toolbox",
+            MountedToolboxContainer::new,
+            () -> MountedToolboxScreen::create
+    );
 
-  private static <C extends AbstractContainerMenu, S extends Screen & MenuAccess<C>> MenuEntry<C> register(
-      String name, MenuBuilder.ForgeMenuFactory<C> factory, NonNullSupplier<MenuBuilder.ScreenFactory<C, S>> screenFactory) {
-    return REGISTRATE
-        .menu(name, factory, screenFactory)
-        .register();
-  }
+    private static <C extends AbstractContainerMenu, S extends Screen & MenuAccess<C>> MenuEntry<C> register(
+            String name, MenuBuilder.ForgeMenuFactory<C> factory, NonNullSupplier<MenuBuilder.ScreenFactory<C, S>> screenFactory) {
+        return REGISTRATE
+                .menu(name, factory, screenFactory)
+                .register();
+    }
 
-  @SuppressWarnings("EmptyMethod")
-  public static void register() {}
+    @SuppressWarnings("EmptyMethod")
+    public static void register() {
+    }
 }

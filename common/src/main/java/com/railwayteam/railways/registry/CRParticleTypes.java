@@ -34,7 +34,6 @@ import net.minecraft.core.particles.ParticleType;
 import java.util.function.Supplier;
 
 public enum CRParticleTypes {
-
 	SMOKE(SmokeParticleData::new),
 	SMOKE_PUFF_SMALL(PuffSmokeParticleData.Small::new),
 	SMOKE_PUFF_MEDIUM(PuffSmokeParticleData.Medium::new),
@@ -96,5 +95,4 @@ public enum CRParticleTypes {
 			throw new AssertionError();
 		}
 	}
-
 }

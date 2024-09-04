@@ -35,7 +35,6 @@ import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NAR
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
 
 public class CRBlockPartials {
-
     public static final Map<DyeColor, PartialModel> TOOLBOX_BODIES = new EnumMap<>(DyeColor.class);
     public static final Map<DyeColor, PartialModel> CONDUCTOR_WHISTLE_FLAGS = new EnumMap<>(DyeColor.class);
     public static final Map<String, PartialModel> CUSTOM_CONDUCTOR_CAPS = new HashMap<>();
@@ -538,6 +537,5 @@ public class CRBlockPartials {
     }
 
     @SuppressWarnings("EmptyMethod")
-    public static void init() {
-    }
+    public static void init() {}
 }

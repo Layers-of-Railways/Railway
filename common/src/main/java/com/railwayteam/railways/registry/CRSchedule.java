@@ -32,7 +32,6 @@ import static com.simibubi.create.content.trains.schedule.Schedule.CONDITION_TYP
 import static com.simibubi.create.content.trains.schedule.Schedule.INSTRUCTION_TYPES;
 
 public class CRSchedule {
-
     static {
         registerInstruction("redstone_link", RedstoneLinkInstruction::new);
         registerInstruction("waypoint_destination", WaypointDestinationInstruction::new);

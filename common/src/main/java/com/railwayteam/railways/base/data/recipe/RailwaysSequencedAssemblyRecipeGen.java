@@ -19,8 +19,7 @@
 package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
-import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.mixin.AccessorIngredient$TagValue;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.TextUtils;
@@ -117,14 +116,14 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                     Ingredient railsIngredient = baseMaterial.railsIngredient;
                     if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
                         return value instanceof Ingredient.TagValue tagValue
-                            && (((AccessorIngredient_TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
-                            || ((AccessorIngredient_TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
-                            || ((AccessorIngredient_TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
-                            || ((AccessorIngredient_TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+                            && (((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
+                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
+                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
+                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
                     })) {
                         railsIngredient = Ingredient.fromValues(Stream.of(
-                            AccessorIngredient_TagValue.railways$create(Ingredients.ironNugget()),
-                            AccessorIngredient_TagValue.railways$create(Ingredients.zincNugget())));
+                            AccessorIngredient$TagValue.railways$create(Ingredients.ironNugget()),
+                            AccessorIngredient$TagValue.railways$create(Ingredients.zincNugget())));
                     }
 
                     Ingredient finalRailsIngredient = railsIngredient;
@@ -146,14 +145,14 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
             Ingredient railsIngredient = material.railsIngredient;
             if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
                 return value instanceof Ingredient.TagValue tagValue
-                    && (((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
-                    || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
-                    || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
-                    || ((AccessorIngredient_TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+                    && (((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
+                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
+                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
+                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
             })) {
                 railsIngredient = Ingredient.fromValues(Stream.of(
-                    AccessorIngredient_TagValue.railways$create(Ingredients.ironNugget()),
-                    AccessorIngredient_TagValue.railways$create(Ingredients.zincNugget())));
+                    AccessorIngredient$TagValue.railways$create(Ingredients.ironNugget()),
+                    AccessorIngredient$TagValue.railways$create(Ingredients.zincNugget())));
             }
 
             Ingredient finalRailsIngredient = railsIngredient;

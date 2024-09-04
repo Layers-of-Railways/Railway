@@ -22,7 +22,7 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
-import com.railwayteam.railways.mixin.AccessorIngredient_TagValue;
+import com.railwayteam.railways.mixin.AccessorIngredient$TagValue;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
@@ -159,8 +159,8 @@ public class GenericTrackCompat {
 
     protected Ingredient getIngredientForRail() {
         return Ingredient.fromValues(Stream.of(
-                AccessorIngredient_TagValue.railways$create(CommonTags.IRON_NUGGETS.tag),
-                AccessorIngredient_TagValue.railways$create(CommonTags.ZINC_NUGGETS.tag)
+                AccessorIngredient$TagValue.railways$create(CommonTags.IRON_NUGGETS.tag),
+                AccessorIngredient$TagValue.railways$create(CommonTags.ZINC_NUGGETS.tag)
         ));
     }
 

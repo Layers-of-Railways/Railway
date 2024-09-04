@@ -27,7 +27,8 @@ import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 
 
 public class CRPonderIndex {
-    static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MODID);
+    private static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MODID);
+
     public static void register() {
         HELPER.forComponents(CRBlocks.SEMAPHORE)
             .addStoryBoard("semaphore", TrainScenes::signaling);

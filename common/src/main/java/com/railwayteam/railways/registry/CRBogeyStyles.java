@@ -22,16 +22,32 @@ import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.*;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.*;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.*;
-import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowDoubleScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowSmallBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ArchbarBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.BlombergBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.FreightBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ModernBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.PassengerBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.Y25BogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0100Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0120Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled040Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled060Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled080Renderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium10010TenderRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium202TrailingRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium404TrailingRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TenderRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TrailingRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium808TenderRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuadrupleWheelRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuintupleWheelRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumSingleWheelRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumStandardRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumTripleWheelRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.CoilspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.LeafspringBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.SingleaxleBogeyRenderer;
@@ -40,6 +56,9 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_a
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideComicallyLargeScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideDefaultBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideScotchYokeBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyRenderer;
 import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.railwayteam.railways.util.Utils;
@@ -53,11 +72,16 @@ import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Pair;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.simibubi.create.AllBogeyStyles.STANDARD;
 import static com.simibubi.create.AllBogeyStyles.STANDARD_CYCLE_GROUP;
@@ -418,12 +442,5 @@ public class CRBogeyStyles {
                 addToCategory(ALL_TEST_CATEGORY, style);
             }
         }
-
-        fireReadyForRegistrationEvent();
-    }
-
-    @ExpectPlatform
-    public static void fireReadyForRegistrationEvent() {
-        throw new AssertionError();
     }
 }
