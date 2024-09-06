@@ -29,6 +29,7 @@ import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipe
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
@@ -59,7 +60,7 @@ public class Railways {
   public static final String ID_NAME = "Railways";
   public static final String NAME = "Steam 'n' Rails";
   public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
-  public static final String VERSION = findVersion();
+  public static final String VERSION = BuildParameters.VERSION;
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
 
@@ -89,13 +90,15 @@ public class Railways {
   }
 
   public static void init() {
+    LOGGER.info("Steam 'n' Rails {} v{} built from commit hash: {}, is initializing", Loader.getFormatted(), VERSION, BuildParameters.GIT_COMMIT);
+    
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MODID + "-client.toml");
     migrateConfig(clientConfigDir, CRConfigs::migrateClient);
 
     Path commonConfigDir = configDir.resolve(MODID + "-common.toml");
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
-
+    
     ModSetup.register();
     finalizeRegistrate();
 
@@ -125,11 +128,6 @@ public class Railways {
 
   public static CreateRegistrate registrate() {
     return REGISTRATE;
-  }
-
-  @ExpectPlatform
-  public static String findVersion() {
-    throw new AssertionError();
   }
 
   @ExpectPlatform

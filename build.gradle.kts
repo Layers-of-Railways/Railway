@@ -25,7 +25,6 @@ import net.fabricmc.loom.task.RemapJarTask
 import org.gradle.configurationcache.extensions.capitalized
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.Type
 import org.objectweb.asm.tree.AnnotationNode
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -44,6 +43,8 @@ plugins {
     id("me.modmuss50.mod-publish-plugin") version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
+    id("net.kyori.blossom") version "2.1.0" apply false // https://github.com/KyoriPowered/blossom
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8"
 }
 
 println("Steam 'n' Rails v${"mod_version"()}")
@@ -57,6 +58,8 @@ val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
 val removeDevMixinAnyway = System.getenv("REMOVE_DEV_MIXIN_ANYWAY")?.toBoolean() ?: false
 val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
+
+extra["gitHash"] = gitHash
 
 tasks.jar {
     enabled = false
@@ -87,6 +90,7 @@ allprojects {
 
 subprojects {
     apply(plugin = "dev.architectury.loom")
+    apply(plugin = "net.kyori.blossom")
 
     setupRepositories()
 
@@ -339,11 +343,6 @@ tasks.create("railwaysPublish") {
     }
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
-}
-
 fun Project.setupRepositories() {
     repositories {
         mavenCentral()
@@ -380,24 +379,32 @@ fun Project.setupRepositories() {
 }
 
 fun calculateGitHash(): String {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "rev-parse", "HEAD")
-        standardOutput = stdout
+    try {
+        val stdout = ByteArrayOutputStream()
+        exec {
+            commandLine("git", "rev-parse", "HEAD")
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch(ignored: Throwable) {
+        return "unknown"
     }
-    return stdout.toString().trim()
 }
 
 fun hasUnstaged(): Boolean {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "status", "--porcelain")
-        standardOutput = stdout
+    try {
+        val stdout = ByteArrayOutputStream()
+        exec {
+            commandLine("git", "status", "--porcelain")
+            standardOutput = stdout
+        }
+        val result = stdout.toString().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
+        if (result.isNotEmpty())
+            println("Found stageable results:\n${result}\n")
+        return result.isNotEmpty()
+    }  catch(ignored: Throwable) {
+        return false
     }
-    val result = stdout.toString().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
-    if (result.isNotEmpty())
-        println("Found stageable results:\n${result}\n")
-    return result.isNotEmpty()
 }
 
 fun Project.architectury(action: Action<ArchitectPluginExtension>) {
@@ -414,3 +421,9 @@ fun RepositoryHandler.exclusiveMaven(url: String, vararg groups: String) {
         }
     }
 }
+
+operator fun String.invoke(): String {
+    return rootProject.ext[this] as? String
+        ?: throw IllegalStateException("Property $this is not defined")
+}
+

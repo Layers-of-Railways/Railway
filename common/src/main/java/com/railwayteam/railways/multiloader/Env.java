@@ -19,7 +19,6 @@
 package com.railwayteam.railways.multiloader;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import java.util.function.Supplier;
@@ -47,7 +46,7 @@ public enum Env {
 
 	@Internal
 	@ExpectPlatform
-	public static Env getCurrent() {
+	private static Env getCurrent() {
 		throw new AssertionError();
 	}
 }

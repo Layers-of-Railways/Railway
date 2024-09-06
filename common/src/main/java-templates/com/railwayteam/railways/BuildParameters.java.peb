@@ -1,0 +1,6 @@
+package com.railwayteam.railways;
+
+public class BuildParameters {
+  public static final String VERSION = "{{ version }}";
+  public static final String GIT_COMMIT = {{ gitCommit | default("unknown") }};
+}

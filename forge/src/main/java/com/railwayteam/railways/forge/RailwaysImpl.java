@@ -56,22 +56,6 @@ public class RailwaysImpl {
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
 	}
 
-	public static String findVersion() {
-		String versionString = "UNKNOWN";
-
-		List<IModInfo> infoList = ModList.get().getModFileById(Railways.MODID).getMods();
-		if (infoList.size() > 1) {
-			Railways.LOGGER.error("Multiple mods for MOD_ID: " + Railways.MODID);
-		}
-		for (IModInfo info : infoList) {
-			if (info.getModId().equals(Railways.MODID)) {
-				versionString = MavenVersionStringHelper.artifactVersionToString(info.getVersion());
-				break;
-			}
-		}
-		return versionString;
-	}
-
 	public static void finalizeRegistrate() {
 		Railways.registrate().registerEventListeners(bus);
 	}

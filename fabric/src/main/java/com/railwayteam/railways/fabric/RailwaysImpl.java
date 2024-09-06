@@ -39,15 +39,6 @@ public class RailwaysImpl implements ModInitializer {
 		CommonEventsFabric.init();
 	}
 
-	public static String findVersion() {
-		return FabricLoader.getInstance()
-				.getModContainer(Railways.MODID)
-				.orElseThrow()
-				.getMetadata()
-				.getVersion()
-				.getFriendlyString();
-	}
-
 	public static void finalizeRegistrate() {
 		Railways.registrate().register();
 	}
