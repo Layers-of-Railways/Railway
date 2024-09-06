@@ -44,7 +44,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
     id("net.kyori.blossom") version "2.1.0" apply false // https://github.com/KyoriPowered/blossom
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8"
+    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8" // https://github.com/JetBrains/gradle-idea-ext-plugin
 }
 
 println("Steam 'n' Rails v${"mod_version"()}")
