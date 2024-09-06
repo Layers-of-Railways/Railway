@@ -38,7 +38,7 @@ import java.util.zip.Deflater
 plugins {
     java
     `maven-publish`
-    id("architectury-plugin") version "3.4-SNAPSHOT" apply false
+    id("architectury-plugin") version "3.4-SNAPSHOT"
     id("dev.architectury.loom") version "1.6.+" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
@@ -48,11 +48,6 @@ plugins {
 }
 
 println("Steam 'n' Rails v${"mod_version"()}")
-apply(plugin = "architectury-plugin")
-
-architectury {
-    minecraft = "minecraft_version"()
-}
 
 val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
@@ -60,6 +55,10 @@ val removeDevMixinAnyway = System.getenv("REMOVE_DEV_MIXIN_ANYWAY")?.toBoolean()
 val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
 
 extra["gitHash"] = gitHash
+
+architectury {
+    minecraft = "minecraft_version"()
+}
 
 allprojects {
     apply(plugin = "java")
