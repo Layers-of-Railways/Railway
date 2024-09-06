@@ -61,10 +61,6 @@ val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")
 
 extra["gitHash"] = gitHash
 
-tasks.jar {
-    enabled = false
-}
-
 allprojects {
     apply(plugin = "java")
     apply(plugin = "architectury-plugin")
