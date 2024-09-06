@@ -33,6 +33,7 @@ import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
@@ -90,7 +91,7 @@ public class Railways {
   }
 
   public static void init() {
-    LOGGER.info("Steam 'n' Rails {} v{} built from commit hash: {}, is initializing", Loader.getFormatted(), VERSION, BuildParameters.GIT_COMMIT);
+    LOGGER.info("{} v{} initializing! Commit hash: {} Create version: {} on platform: {}", NAME, VERSION, BuildParameters.GIT_COMMIT, Create.VERSION, Loader.getFormatted());
     
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MODID + "-client.toml");
