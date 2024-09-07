@@ -61,7 +61,6 @@ public class Railways {
   public static final String ID_NAME = "Railways";
   public static final String NAME = "Steam 'n' Rails";
   public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
-  public static final String VERSION = BuildParameters.VERSION;
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
 
@@ -91,7 +90,7 @@ public class Railways {
   }
 
   public static void init() {
-    LOGGER.info("{} v{} initializing! Commit hash: {} Create version: {} on platform: {}", NAME, VERSION, BuildParameters.GIT_COMMIT, Create.VERSION, Loader.getFormatted());
+    LOGGER.info("{} v{} initializing! Commit hash: {} Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, Create.VERSION, Loader.getFormatted());
     
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MODID + "-client.toml");

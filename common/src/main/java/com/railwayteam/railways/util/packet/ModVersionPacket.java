@@ -19,6 +19,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.RailwaysBuildInfo;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.events.ClientEvents;
@@ -46,8 +47,8 @@ public record ModVersionPacket(String version) implements S2CPacket {
   @Environment(EnvType.CLIENT)
   public void handle(Minecraft mc) {
     LocalPlayer player = mc.player;
-    if (!Railways.VERSION.equals(version) && player != null) {
-      String msg = "Steam 'n' Rails version mismatch: Server is using version " + version + ", you are using version " + Railways.VERSION + ". This may cause problems.";
+    if (!RailwaysBuildInfo.VERSION.equals(version) && player != null) {
+      String msg = "Steam 'n' Rails version mismatch: Server is using version " + version + ", you are using version " + RailwaysBuildInfo.VERSION + ". This may cause problems.";
       Railways.LOGGER.warn(msg);
       player.displayClientMessage(
               Components.literal(msg).withStyle(ChatFormatting.DARK_RED),

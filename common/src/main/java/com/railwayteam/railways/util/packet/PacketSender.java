@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.util.packet;
 
-import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.RailwaysBuildInfo;
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.multiloader.PlayerSelection;
@@ -40,6 +40,6 @@ public class PacketSender {
   @MultiLoaderEvent
   public static void notifyServerVersion(ServerPlayer player) {
     CRPackets.PACKETS.onPlayerJoin(player);
-    CRPackets.PACKETS.sendTo(player, new ModVersionPacket(Railways.VERSION));
+    CRPackets.PACKETS.sendTo(player, new ModVersionPacket(RailwaysBuildInfo.VERSION));
   }
 }
