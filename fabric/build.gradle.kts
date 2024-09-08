@@ -16,8 +16,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import dev.ithundxr.silk.ChangelogText
-
 architectury.fabric()
 
 loom {
@@ -106,36 +104,19 @@ dependencies {
 }
 
 publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = STABLE
-    displayName = "Steam 'n' Rails ${"mod_version"()} Fabric ${"minecraft_version"()}"
-    modLoaders.add("fabric")
-    modLoaders.add("quilt")
+    modLoaders.addAll("fabric", "quilt")
 
     curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
         requires {
             slug = "create-fabric"
         }
     }
 
     modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
         requires {
             slug = "create-fabric"
         }
     }
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
-}
+operator fun String.invoke(): String = rootProject.ext[this] as? String ?: error("Property $this is not defined")

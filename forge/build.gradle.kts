@@ -16,8 +16,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import dev.ithundxr.silk.ChangelogText
-
 architectury.forge()
 
 loom {
@@ -103,36 +101,19 @@ dependencies {
 }
 
 publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = STABLE
-    displayName = "Steam 'n' Rails ${"mod_version"()} Forge ${"minecraft_version"()}"
-    modLoaders.add("forge")
-    modLoaders.add("neoforge")
+    modLoaders.addAll("forge", "neoforge")
 
     curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
         requires {
             slug = "create"
         }
     }
 
     modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
         requires {
             slug = "create"
         }
     }
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
-}
+operator fun String.invoke(): String = rootProject.ext[this] as? String ?: error("Property $this is not defined")
