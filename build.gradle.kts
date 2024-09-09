@@ -178,14 +178,12 @@ subprojects {
         }
     }
 
-    val common: Configuration by configurations.creating
-    val shadowCommon: Configuration by configurations.creating
     val development = configurations.maybeCreate("development${capitalizedName}")
-
-    configurations {
-        compileOnly.get().extendsFrom(common)
-        runtimeOnly.get().extendsFrom(common)
-        development.extendsFrom(common)
+    val shadowCommon: Configuration by configurations.creating
+    val common: Configuration by configurations.creating {
+        configurations["compileOnly"].extendsFrom(this)
+        configurations["runtimeOnly"].extendsFrom(this)
+        development.extendsFrom(this)
     }
 
     dependencies {
@@ -331,27 +329,6 @@ fun removeIfDevMixin(nodeName: String, visibleAnnotations: List<AnnotationNode>?
     }
 
     return false
-}
-
-fun <T> getValueFromAnnotation(annotation: AnnotationNode?, key: String): T? {
-    var getNextValue = false
-
-    if (annotation?.values == null) {
-        return null
-    }
-
-    // Keys and value are stored in successive pairs, search for the key and if found return the following entry
-    for (value in annotation.values) {
-        if (getNextValue) {
-            @Suppress("UNCHECKED_CAST")
-            return value as T
-        }
-        if (value == key) {
-            getNextValue = true
-        }
-    }
-
-    return null
 }
 
 tasks.create("railwaysPublish") {
