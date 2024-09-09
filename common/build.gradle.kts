@@ -21,13 +21,7 @@ loom {
 }
 
 architectury {
-    common {
-        for(p in rootProject.subprojects) {
-            if(p != project) {
-                this@common.add(p.name)
-            }
-        }
-    }
+    common(rootProject.subprojects.map { it.name }.filter { it != "common" })
 }
 
 dependencies {
@@ -67,13 +61,11 @@ sourceSets.main {
         exclude(".cache/**")
         exclude("assets/create/**")
     }
+
     blossom.javaSources {
         property("version", "mod_version"())
         property("gitCommit", rootProject.extra["gitHash"].toString())
     }
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
-}
+operator fun String.invoke(): String = rootProject.ext[this] as? String ?: error("Property $this is not defined")

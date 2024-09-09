@@ -17,12 +17,12 @@
  */
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import dev.architectury.plugin.ArchitectPluginExtension
+import dev.ithundxr.silk.ChangelogText
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import me.modmuss50.mpp.ModPublishExtension
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
-import org.gradle.configurationcache.extensions.capitalized
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.tree.AnnotationNode
@@ -36,18 +36,17 @@ import java.util.jar.JarOutputStream
 import java.util.zip.Deflater
 
 plugins {
-    java
-    `maven-publish`
-    id("architectury-plugin") version "3.4-SNAPSHOT"
-    id("dev.architectury.loom") version "1.6.+" apply false
-    id("me.modmuss50.mod-publish-plugin") version "0.3.4" apply false // https://github.com/modmuss50/mod-publish-plugin
-    id("com.github.johnrengelman.shadow") version "8.1.1" apply false
-    id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
-    id("net.kyori.blossom") version "2.1.0" apply false // https://github.com/KyoriPowered/blossom
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8" // https://github.com/JetBrains/gradle-idea-ext-plugin
-}
+    id("java")
+    id("maven-publish")
+    id("dev.ithundxr.silk")
+    id("architectury-plugin")
+    id("org.jetbrains.gradle.plugin.idea-ext")
 
-println("Steam 'n' Rails v${"mod_version"()}")
+    id("net.kyori.blossom") apply false
+    id("com.gradleup.shadow") apply false
+    id("dev.architectury.loom") apply false
+    id("me.modmuss50.mod-publish-plugin") apply false
+}
 
 val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
@@ -55,6 +54,12 @@ val removeDevMixinAnyway = System.getenv("REMOVE_DEV_MIXIN_ANYWAY")?.toBoolean()
 val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
 
 extra["gitHash"] = gitHash
+
+idea {
+    module {
+        isDownloadSources = true
+    }
+}
 
 architectury {
     minecraft = "minecraft_version"()
@@ -80,6 +85,10 @@ allprojects {
 
     java {
         withSourcesJar()
+
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
     }
 }
 
@@ -89,10 +98,9 @@ subprojects {
 
     setupRepositories()
 
-    val capitalizedName = project.name.capitalized()
+    val capitalizedName = project.name.replaceFirstChar { it.uppercase() }
 
-    val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
-    loom.apply {
+    loom {
         silentMojangMappingsLicense()
         runs.configureEach {
             vmArg("-XX:+AllowEnhancedClassRedefinition")
@@ -136,8 +144,7 @@ subprojects {
             val mavenToken = System.getenv("MAVEN_TOKEN")
             val maven = if (isRelease) "releases" else "snapshots"
             if (mavenToken != null && mavenToken.isNotEmpty()) {
-                maven {
-                    url = uri("https://maven.ithundxr.dev/${maven}")
+                maven("https://maven.ithundxr.dev/${maven}") {
                     credentials {
                         username = "railways-github"
                         password = mavenToken
@@ -152,7 +159,7 @@ subprojects {
         return@subprojects
     }
 
-    apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "com.gradleup.shadow")
     apply(plugin = "me.modmuss50.mod-publish-plugin")
 
     architectury {
@@ -161,7 +168,7 @@ subprojects {
 
     tasks.named<RemapJarTask>("remapJar") {
         from("${rootProject.projectDir}/LICENSE")
-        val shadowJar = project.tasks.named<ShadowJar>("shadowJar").get()
+        val shadowJar = project.tasks.getByName<ShadowJar>("shadowJar")
         inputFile.set(shadowJar.archiveFile)
         injectAccessWidener = true
         dependsOn(shadowJar)
@@ -171,14 +178,12 @@ subprojects {
         }
     }
 
-    val common: Configuration by configurations.creating
-    val shadowCommon: Configuration by configurations.creating
     val development = configurations.maybeCreate("development${capitalizedName}")
-
-    configurations {
-        compileOnly.get().extendsFrom(common)
-        runtimeOnly.get().extendsFrom(common)
-        development.extendsFrom(common)
+    val shadowCommon: Configuration by configurations.creating
+    val common: Configuration by configurations.creating {
+        configurations["compileOnly"].extendsFrom(this)
+        configurations["runtimeOnly"].extendsFrom(this)
+        development.extendsFrom(this)
     }
 
     dependencies {
@@ -244,6 +249,26 @@ subprojects {
             skip()
         }
     }
+
+    publishMods {
+        file = tasks.getByName<RemapJarTask>("remapJar").archiveFile
+        version.set(project.version.toString())
+        changelog = ChangelogText.getChangelogText(rootProject).toString()
+        type = STABLE
+        displayName = "Steam 'n' Rails ${"mod_version"()} ${capitalizedName} ${"minecraft_version"()}"
+
+        curseforge {
+            projectId = "curseforge_id"()
+            accessToken = System.getenv("CURSEFORGE_TOKEN")
+            minecraftVersions.add("minecraft_version"())
+        }
+
+        modrinth {
+            projectId = "modrinth_id"()
+            accessToken = System.getenv("MODRINTH_TOKEN")
+            minecraftVersions.add("minecraft_version"())
+        }
+    }
 }
 
 fun transformJar(jar: File) {
@@ -304,27 +329,6 @@ fun removeIfDevMixin(nodeName: String, visibleAnnotations: List<AnnotationNode>?
     }
 
     return false
-}
-
-fun <T> getValueFromAnnotation(annotation: AnnotationNode?, key: String): T? {
-    var getNextValue = false
-
-    if (annotation?.values == null) {
-        return null
-    }
-
-    // Keys and value are stored in successive pairs, search for the key and if found return the following entry
-    for (value in annotation.values) {
-        if (getNextValue) {
-            @Suppress("UNCHECKED_CAST")
-            return value as T
-        }
-        if (value == key) {
-            getNextValue = true
-        }
-    }
-
-    return null
 }
 
 tasks.create("railwaysPublish") {
@@ -393,17 +397,17 @@ fun hasUnstaged(): Boolean {
             commandLine("git", "status", "--porcelain")
             standardOutput = stdout
         }
-        val result = stdout.toString().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
+        val result = stdout.toString()
+            .replace(Regex("M gradlew(\\.bat)?"), "")
+            .lineSequence()
+            .filter { it.isNotBlank() }
+            .joinToString("\n")
         if (result.isNotEmpty())
             println("Found stageable results:\n${result}\n")
         return result.isNotEmpty()
     }  catch(ignored: Throwable) {
         return false
     }
-}
-
-fun Project.architectury(action: Action<ArchitectPluginExtension>) {
-    action.execute(this.extensions.getByType<ArchitectPluginExtension>())
 }
 
 fun RepositoryHandler.exclusiveMaven(url: String, vararg groups: String) {
@@ -417,8 +421,10 @@ fun RepositoryHandler.exclusiveMaven(url: String, vararg groups: String) {
     }
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
-}
+val Project.loom: LoomGradleExtensionAPI
+    get() = the()
+fun Project.loom(block: Action<in LoomGradleExtensionAPI>) = block.execute(the())
+fun Project.publishMods(block: Action<in ModPublishExtension>) = block.execute(the())
+
+operator fun String.invoke(): String = rootProject.ext[this] as? String ?: error("Property $this is not defined")
 
