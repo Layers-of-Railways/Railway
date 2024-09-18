@@ -19,6 +19,8 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.CarriageBogeyUtils;
 import com.railwayteam.railways.mixin_interfaces.ICarriageBufferDistanceTracker;
@@ -46,7 +48,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -99,8 +100,8 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
         railways$trailingBufferDistance = distance;
     }
 
-    @Redirect(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
-    private Couple<Boolean> addControllingConductors(CarriageContraptionEntity instance) {
+    @WrapOperation(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
+    private Couple<Boolean> addControllingConductors(CarriageContraptionEntity instance, Operation<Couple<Boolean>> original) {
         railways$controllingConductors.clear();
         if (instance.getContraption() instanceof CarriageContraption cc) {
             for (Entity passenger : instance.getPassengers()) {
@@ -116,7 +117,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
                     railways$controllingConductors.add(passenger.getUUID());
             }
         }
-        return instance.checkConductors();
+        return original.call(instance);
     }
 
     @Inject(method = "write", at = @At("RETURN"))
