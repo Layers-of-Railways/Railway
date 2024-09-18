@@ -112,7 +112,7 @@ subprojects {
     @Suppress("UnstableApiUsage")
     dependencies {
         "minecraft"("com.mojang:minecraft:${"minecraft_version"()}")
-        // layered mappings - Mojmap names, parchment and QM docs and parameters
+        // layered mappings - Mojmap names, parchment docs and parameters
         "mappings"(loom.layered {
             officialMojangMappings { nameSyntheticMembers = false }
             parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
