@@ -27,7 +27,6 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +35,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
@@ -58,12 +57,12 @@ public class MixinTrackTargetingBlockItem {
         TrackShape.AW
     );
 
-    @Redirect(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z", remap = true), remap = true)
-    private boolean changeCloserThan(BlockPos instance, Vec3i vec3i, double v) {
+    @ModifyArg(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;closerThan(Lnet/minecraft/core/Vec3i;D)Z"), index = 1, remap = true)
+    private double changeCloserThan(double original) {
         if (type == CREdgePointTypes.SWITCH) {
-            return instance.closerThan(vec3i, CRConfigs.server().switchPlacementRange.get());
+            return CRConfigs.server().switchPlacementRange.get();
         }
-        return instance.closerThan(vec3i, v);
+        return original;
     }
 
     @Inject(method = "withGraphLocation", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/ITrackBlock;getTrackAxes(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;", remap = true), cancellable = true)
