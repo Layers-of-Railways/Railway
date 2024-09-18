@@ -65,6 +65,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     protected BlockPos controller;
     protected BlockPos lastKnownPos;
     protected boolean updateConnectivity;
+    protected boolean updateCapability;
     protected boolean window;
     protected int luminosity;
     protected int width;
@@ -82,6 +83,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         tankInventory = createInventory();
         forceFluidLevelUpdate = true;
         updateConnectivity = false;
+        updateCapability = false;
         window = true;
         height = 1;
         width = 1;
@@ -117,6 +119,10 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             return;
         }
 
+        if (updateCapability) {
+            updateCapability = false;
+            refreshCapability();
+        }
         if (updateConnectivity)
             updateConnectivity();
         if (fluidLevel != null)
@@ -401,11 +407,12 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             fluidLevel = LerpedFloat.linear()
                     .startWithValue(getFillState());
 
+        updateCapability = true;
+        
         if (!clientPacket)
             return;
 
-        boolean changeOfController =
-                !Objects.equals(controllerBefore, controller);
+        boolean changeOfController = !Objects.equals(controllerBefore, controller);
         if (changeOfController || prevSize != width || prevHeight != height) {
             if (level != null && hasLevel())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);

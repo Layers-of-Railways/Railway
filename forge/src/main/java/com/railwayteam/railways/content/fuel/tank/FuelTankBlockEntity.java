@@ -49,6 +49,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static java.lang.Math.abs;
@@ -63,6 +64,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
     protected BlockPos controller;
     protected BlockPos lastKnownPos;
     protected boolean updateConnectivity;
+    protected boolean updateCapability;
     protected boolean window;
     protected int luminosity;
     protected int width;
@@ -81,6 +83,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         fluidCapability = LazyOptional.of(() -> tankInventory);
         forceFluidLevelUpdate = true;
         updateConnectivity = false;
+        updateCapability = false;
         window = true;
         height = 1;
         width = 1;
@@ -116,6 +119,10 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             return;
         }
 
+        if (updateCapability) {
+            updateCapability = false;
+            refreshCapability();
+        }
         if (updateConnectivity)
             updateConnectivity();
         if (fluidLevel != null)
@@ -312,7 +319,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
 
     private void refreshCapability() {
         LazyOptional<IFluidHandler> oldCap = fluidCapability;
-        fluidCapability = LazyOptional.of(() -> handlerForCapability());
+        fluidCapability = LazyOptional.of(this::handlerForCapability);
         oldCap.invalidate();
     }
 
@@ -376,11 +383,12 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
             fluidLevel = LerpedFloat.linear()
                     .startWithValue(getFillState());
 
+        updateCapability = true;
+
         if (!clientPacket)
             return;
 
-        boolean changeOfController =
-                controllerBefore == null ? controller != null : !controllerBefore.equals(controller);
+        boolean changeOfController = !Objects.equals(controllerBefore, controller);
         if (changeOfController || prevSize != width || prevHeight != height) {
             if (hasLevel())
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
