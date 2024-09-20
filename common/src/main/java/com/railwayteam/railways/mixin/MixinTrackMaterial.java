@@ -25,25 +25,25 @@ import com.simibubi.create.content.trains.track.TrackMaterial;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = TrackMaterial.class, remap = false)
 public class MixinTrackMaterial {
     /**
      * DataFixer for Modded Compat Cherry Tracks.
-     * If it finds a modded cherry track material it'll replace it {@link CRTrackMaterials#CHERRY }
+     * If it finds a modded cherry track material it'll replace it {@link CRTrackMaterials#CHERRY}
      * Which is from 1.20 Vanilla.
      */
-    @Inject(method = "deserialize", at = @At("HEAD"), cancellable = true)
-    private static void railways$updateCherryCompatTracks(String serializedName, CallbackInfoReturnable<TrackMaterial> cir) {
-        switch (serializedName) {
+    @ModifyExpressionValue(method = "deserialize", at = @At(value = "INVOKE", target = "Lnet/minecraft/resources/ResourceLocation;tryParse(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;"))
+    private static ResourceLocation railways$updateCherryCompatTracks(ResourceLocation original) {
+        return switch (original.toString()) {
             case "biomesoplenty:cherry", "byg:cherry", "blue_skies:cherry"
-                    -> cir.setReturnValue(CRTrackMaterials.CHERRY);
+                    -> CRTrackMaterials.CHERRY.id;
             case "biomesoplenty:cherry_wide", "byg:cherry_wide", "blue_skies:cherry_wide"
-                    -> cir.setReturnValue(CRTrackMaterials.getWide(CRTrackMaterials.CHERRY));
+                    -> CRTrackMaterials.getWide(CRTrackMaterials.CHERRY).id;
             case "biomesoplenty:cherry_narrow", "byg:cherry_narrow", "blue_skies:cherry_narrow"
-                    -> cir.setReturnValue(CRTrackMaterials.getNarrow(CRTrackMaterials.CHERRY));
-        }
+                    -> CRTrackMaterials.getNarrow(CRTrackMaterials.CHERRY).id;
+            default -> original;
+        };
     }
     
     // Properly deserialize pre-resourcelocation tracks
