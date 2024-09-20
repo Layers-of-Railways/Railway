@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.Railways;
@@ -52,7 +53,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -119,11 +119,9 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
         dropScheduleTrain = null;
     }
 
-    @Redirect(method = "dropSchedule", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"), require = 0)
-    private Train returnOverridenTrain(GlobalStation instance) {
-        Train train = instance.getPresentTrain();
-        if (train == null)
-            train = dropScheduleTrain;
+    @ModifyExpressionValue(method = "dropSchedule", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"), require = 0)
+    private Train returnOverridenTrain(Train original) {
+        Train train = original != null ? original : dropScheduleTrain;
         dropScheduleTrain = null;
         return train;
     }

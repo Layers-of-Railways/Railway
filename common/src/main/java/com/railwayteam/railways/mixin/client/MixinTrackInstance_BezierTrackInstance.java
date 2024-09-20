@@ -22,6 +22,8 @@ package com.railwayteam.railways.mixin.client;
 import com.jozufozu.flywheel.core.Materials;
 import com.jozufozu.flywheel.core.materials.model.ModelData;
 import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
@@ -41,10 +43,11 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_BOTTOM;
+import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_MIDDLE;
+import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_TOP;
 
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.trains.track.TrackInstance$BezierTrackInstance", remap = false)
@@ -88,14 +91,14 @@ public abstract class MixinTrackInstance_BezierTrackInstance {
     abstract void updateLight();
 
 
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getSegmentCount()I"))
-    private int messWithCtor(BezierConnection instance) {
-        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? 0 : instance.getSegmentCount();
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getSegmentCount()I"))
+    private int railways$messWithCtor(BezierConnection instance, Operation<Integer> original) {
+        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? 0 : original.call(instance);
     }
 
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getBakedSegments()[Lcom/simibubi/create/content/trains/track/BezierConnection$SegmentAngles;"))
-    private BezierConnection.SegmentAngles[] messWithCtor2(BezierConnection instance) {
-        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? new BezierConnection.SegmentAngles[0] : instance.getBakedSegments();
+    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getBakedSegments()[Lcom/simibubi/create/content/trains/track/BezierConnection$SegmentAngles;"))
+    private BezierConnection.SegmentAngles[] railways$messWithCtor2(BezierConnection instance, Operation<BezierConnection.SegmentAngles[]> original) {
+        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? new BezierConnection.SegmentAngles[0] : original.call(instance);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))

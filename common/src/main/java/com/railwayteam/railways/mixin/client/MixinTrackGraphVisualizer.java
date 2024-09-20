@@ -38,7 +38,8 @@ import net.minecraft.world.phys.Vec3;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = TrackGraphVisualizer.class, remap = false)
@@ -49,27 +50,24 @@ public class MixinTrackGraphVisualizer {
     // the signal line is visible to the player
     @ModifyExpressionValue(method = "visualiseSignalEdgeGroups", at = @At(value = "CONSTANT", args = "floatValue=64f"))
     private static float fixYOffsetForMonorailTracks(float original, @Local TrackEdge edge) {
-        return edge.getTrackMaterial() == CRTrackMaterials.MONORAIL ? 5.1f : original;
+        return edge.getTrackMaterial() == CRTrackMaterials.MONORAIL ? 4.7f : original;
     }
 
     @Inject(method = "debugViewGraph",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;<init>(DDD)V", ordinal = 1, remap = true))
     private static void saveEdge(TrackGraph graph, boolean extended, CallbackInfo ci, @Local TrackEdge edge) {
-        MixinTrackGraphVisualizer.railways$isEnabled = ((ISwitchDisabledEdge) edge.getEdgeData()).isEnabled();
+        railways$isEnabled = ((ISwitchDisabledEdge) edge.getEdgeData()).isEnabled();
     }
 
-    @Redirect(method = "debugViewGraph", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;color:Lcom/simibubi/create/foundation/utility/Color;"))
-    private static Color railways$replaceColor(TrackGraph instance) {
-        if (!MixinTrackGraphVisualizer.railways$isEnabled) {
-            return Color.RED;
-        }
-        return instance.color;
+    @ModifyExpressionValue(method = "debugViewGraph", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;color:Lcom/simibubi/create/foundation/utility/Color;"))
+    private static Color railways$replaceColor(Color original) {
+        return railways$isEnabled ? original : Color.RED;
     }
 
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showLine(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showLine(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetLineVisualization(Outliner instance, Object slot, Vec3 start, Vec3 end, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, start.add(0, offset, 0), end.add(0, offset, 0));
@@ -78,7 +76,7 @@ public class MixinTrackGraphVisualizer {
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showAABB(Ljava/lang/Object;Lnet/minecraft/world/phys/AABB;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showAABB(Ljava/lang/Object;Lnet/minecraft/world/phys/AABB;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetAABBVisualization(Outliner instance, Object slot, AABB aabb, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, aabb.move(0, offset, 0));
@@ -87,7 +85,7 @@ public class MixinTrackGraphVisualizer {
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showItem(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;", remap = true), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showItem(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetAABBVisualization(Outliner instance, Object slot, Vec3 pos, ItemStack itemStack, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, pos.add(0, offset, 0), itemStack);

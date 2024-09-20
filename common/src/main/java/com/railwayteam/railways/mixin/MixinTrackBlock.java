@@ -50,7 +50,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -102,11 +102,9 @@ public class MixinTrackBlock {
     );
   }
 
-  @Redirect(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;I)V", remap = true), remap = true)
-  private void maybeMakeTickInstant(Level instance, BlockPos blockPos, Block block, int i) {
-    if (TrackReplacePaver.tickInstantly)
-      i = 0;
-    instance.scheduleTick(blockPos, block, i);
+  @ModifyArg(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;scheduleTick(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;I)V"), index = 2, remap = true)
+  private int maybeMakeTickInstant(int original) {
+    return TrackReplacePaver.tickInstantly ? 0 : original;
   }
 
   @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true, remap = true)
