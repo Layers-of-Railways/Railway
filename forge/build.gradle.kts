@@ -114,9 +114,7 @@ publishMods {
         accessToken = System.getenv("CURSEFORGE_TOKEN")
         minecraftVersions.add("minecraft_version"())
 
-        requires {
-            slug = "create"
-        }
+        requires("create")
     }
 
     modrinth {
@@ -124,9 +122,7 @@ publishMods {
         accessToken = System.getenv("MODRINTH_TOKEN")
         minecraftVersions.add("minecraft_version"())
 
-        requires {
-            slug = "create"
-        }
+        requires("create")
     }
 }
 

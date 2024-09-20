@@ -115,9 +115,8 @@ publishMods {
         accessToken = System.getenv("CURSEFORGE_TOKEN")
         minecraftVersions.add("minecraft_version"())
 
-        requires {
-            slug = "create-fabric"
-        }
+        requires("fabric-api")
+        requires("create-fabric")
     }
 
     modrinth {
@@ -125,9 +124,8 @@ publishMods {
         accessToken = System.getenv("MODRINTH_TOKEN")
         minecraftVersions.add("minecraft_version"())
 
-        requires {
-            slug = "create-fabric"
-        }
+        requires("fabric-api")
+        requires("create-fabric")
     }
 }
 
