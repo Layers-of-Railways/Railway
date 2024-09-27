@@ -25,6 +25,8 @@ public class CRealism extends ConfigBase {
     public final ConfigBool realisticTrains = b(false, "realisticTrains", Comments.realisticTrains);
     public final ConfigBool realisticFuelTanks = b(true, "realisticFuelTanks", Comments.realisticFuelTanks);
 
+    public final ConfigInt netherExtraFuelUsage = i(0, 0, Integer.MAX_VALUE, Comments.netherExtraFuelUsage);
+    
     @Override
     public String getName() {
             return "realism";
@@ -33,5 +35,7 @@ public class CRealism extends ConfigBase {
     private static class Comments {
         static String realisticTrains = "Make trains require fuel to run (either from fuel tanks or solid fuels in chests/barrels)";
         static String realisticFuelTanks = "Make fuel tanks only accept proper liquid fuels (so water etc can't go into them)";
+        
+        static String netherExtraFuelUsage = "The number of extra fuel ticks trains in the nether will use, 0 means they will not use extra fuel, 8 means they'll use roughly the same amount as if they were travelling to the same place via the Overworld";
     }
 }

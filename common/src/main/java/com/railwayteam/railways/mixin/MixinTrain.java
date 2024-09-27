@@ -18,7 +18,11 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
@@ -53,6 +57,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -75,12 +80,12 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Shadow public int fuelTicks;
     @Shadow public Player backwardsDriver;
 
-    @Unique public Set<UUID> railways$occupiedCouplers;
-    @Unique protected int railways$index = 0;
-    @Unique protected boolean railways$isHandcar = false;
-    @Unique protected boolean railways$isStrictSignalTrain = false;
-    @Unique protected int railways$controlBlockedTicks = -1;
-    @Unique protected int railways$controlBlockedSign = 0;
+    @Unique private Set<UUID> railways$occupiedCouplers;
+    @Unique private int railways$index = 0;
+    @Unique private boolean railways$isHandcar = false;
+    @Unique private boolean railways$isStrictSignalTrain = false;
+    @Unique private int railways$controlBlockedTicks = -1;
+    @Unique private int railways$controlBlockedSign = 0;
 
     @Override
     public boolean railways$isControlBlocked() {
@@ -278,6 +283,21 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
             ci.cancel();
         }
+    }
+    
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void railways$shareLevel(Level level, CallbackInfo ci, @Share("sharedLevel") LocalRef<Level> sharedLevel) {
+        sharedLevel.set(level);
+    }
+    
+    @WrapOperation(method = "burnFuel", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;fuelTicks:I", opcode = Opcodes.PUTFIELD))
+    private void railways$modifyFuelUsage(Train instance, int value, Operation<Void> original, @Share("sharedLevel") LocalRef<Level> sharedLevel) {
+        Level level = sharedLevel.get();
+        
+        int config = CRConfigs.server().realism.netherExtraFuelUsage.get();
+        if (config != 0 && level != null && level.dimension() == Level.NETHER)
+            value -= config;
+        original.call(instance, value);
     }
 
     @Inject(method = "burnFuel", at = @At(value = "INVOKE", target = "Ljava/util/List;size()I", shift = At.Shift.AFTER))
