@@ -98,6 +98,10 @@ public enum Mods {
 		assert (!requiredForDataGen || isLoaded);
 	}
 
+	public static boolean isModLoaded(String id) {
+		return isModLoaded(id, null);
+	}
+	
 	@ExpectPlatform
 	public static boolean isModLoaded(String id, @Nullable String fabricId) {
 		throw new AssertionError();
