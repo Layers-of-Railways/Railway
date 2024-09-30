@@ -20,7 +20,6 @@ package com.railwayteam.railways.registry;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.AllKeys;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
