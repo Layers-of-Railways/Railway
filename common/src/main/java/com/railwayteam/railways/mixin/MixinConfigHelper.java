@@ -35,13 +35,13 @@ public class MixinConfigHelper {
         "hasAnyForgeConfig"
     }, at = @At("HEAD"), cancellable = true)
     private static void markSNRConfig(String modID, CallbackInfoReturnable<Boolean> cir) {
-        if (modID.equals(Railways.MODID))
+        if (modID.equals(Railways.MOD_ID))
             cir.setReturnValue(true);
     }
 
     @Inject(method = "findConfigSpecFor", at = @At("HEAD"), cancellable = true)
     private static void returnSNRConfig(ModConfig.Type type, String modID, CallbackInfoReturnable<IConfigSpec<?>> cir) {
-        if (modID.equals(Railways.MODID)) {
+        if (modID.equals(Railways.MOD_ID)) {
             cir.setReturnValue(CRConfigs.byType(type).specification);
         }
     }

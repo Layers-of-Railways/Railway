@@ -594,7 +594,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
     }
 
     private static LangBuilder b() {
-        return Lang.builder(Railways.MODID);
+        return Lang.builder(Railways.MOD_ID);
     }
 
     /**

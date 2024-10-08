@@ -120,7 +120,7 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
             marker.setDimension(dimension);
             marker.setPoint(blockPos);
         } else {
-            marker = new MarkerOverlay(Railways.MODID, "train_marker_" + uuid.toString(), blockPos, TRAIN_IMAGE);
+            marker = new MarkerOverlay(Railways.MOD_ID, "train_marker_" + uuid.toString(), blockPos, TRAIN_IMAGE);
             marker.setDimension(dimension);
             markers.put(uuid, marker);
             try {

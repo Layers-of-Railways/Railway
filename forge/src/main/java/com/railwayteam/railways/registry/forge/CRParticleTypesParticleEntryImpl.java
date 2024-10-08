@@ -34,7 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Supplier;
 
 public class CRParticleTypesParticleEntryImpl {
-    private static final DeferredRegister<ParticleType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Railways.MODID);
+    private static final DeferredRegister<ParticleType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Railways.MOD_ID);
     public static void register(String id, Supplier<ParticleType<?>> supplier) {
         REGISTER.register(id, supplier);
     }

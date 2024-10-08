@@ -97,12 +97,12 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (color != null)
-            Lang.builder(Railways.MODID)
+            Lang.builder(Railways.MOD_ID)
                     .translate("smokestack.goggle.tooltip.color", ColorUtils.coloredName(color.getName()))
                     .forGoggles(tooltip);
 
         if (isSoul || color == null) {
-            Lang.builder(Railways.MODID)
+            Lang.builder(Railways.MOD_ID)
                     .translate("smokestack.goggle.tooltip",
                             isSoul ? "Soul" : ColorUtils.coloredName(DyeColor.BLACK.toString())
                     )

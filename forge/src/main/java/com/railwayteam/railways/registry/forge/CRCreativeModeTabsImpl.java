@@ -41,7 +41,7 @@ import static com.railwayteam.railways.registry.CRItems.ITEM_CONDUCTOR_CAP;
 public class CRCreativeModeTabsImpl {
 
     private static final DeferredRegister<CreativeModeTab> TAB_REGISTER =
-        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Railways.MODID);
+        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Railways.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
         () -> CreativeModeTab.builder()

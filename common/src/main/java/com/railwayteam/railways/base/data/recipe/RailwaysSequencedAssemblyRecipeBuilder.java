@@ -47,7 +47,7 @@ public class RailwaysSequencedAssemblyRecipeBuilder extends SequencedAssemblyRec
      */
     public RailwaysSequencedAssemblyRecipeBuilder conditionalMaterial(TrackMaterial trackMaterial) {
         String namespace = trackMaterial.id.getNamespace();
-        if (!Railways.MODID.equals(namespace)) {
+        if (!Railways.MOD_ID.equals(namespace)) {
             recipeConditions.add(DefaultResourceConditions.allModsLoaded(namespace));
         }
         return this;

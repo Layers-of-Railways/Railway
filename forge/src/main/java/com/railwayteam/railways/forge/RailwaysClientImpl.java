@@ -109,7 +109,7 @@ public class RailwaysClientImpl {
 	public static void onBuiltinPackRegistration(AddPackFindersEvent event) {
 		if (event.getPackType() != PackType.CLIENT_RESOURCES)
 			return;
-		IModFile modFile = ModList.get().getModFileById(Railways.MODID).getFile();
+		IModFile modFile = ModList.get().getModFileById(Railways.MOD_ID).getFile();
 
 		packs.forEach(pack -> event.addRepositorySource((consumer) -> consumer.accept(
 			Pack.create(Railways.asResource(pack.id).toString(),

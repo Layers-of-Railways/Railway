@@ -58,14 +58,14 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class Railways {
-  public static final String MODID = "railways";
+  public static final String MOD_ID = "railways";
   public static final String ID_NAME = "Railways";
   public static final String NAME = "Steam 'n' Rails";
   public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
 
-  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
+  private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
   static {
     REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
@@ -95,10 +95,10 @@ public class Railways {
     RailwaysUpdateCheck.execute();
     
     Path configDir = Utils.configDir();
-    Path clientConfigDir = configDir.resolve(MODID + "-client.toml");
+    Path clientConfigDir = configDir.resolve(MOD_ID + "-client.toml");
     migrateConfig(clientConfigDir, CRConfigs::migrateClient);
 
-    Path commonConfigDir = configDir.resolve(MODID + "-common.toml");
+    Path commonConfigDir = configDir.resolve(MOD_ID + "-common.toml");
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
     
     ModSetup.register();
@@ -112,7 +112,7 @@ public class Railways {
   }
 
   public static ResourceLocation asResource(String name) {
-    return new ResourceLocation(MODID, name);
+    return new ResourceLocation(MOD_ID, name);
   }
 
   public static void gatherData(DataGenerator.PackGenerator gen) {

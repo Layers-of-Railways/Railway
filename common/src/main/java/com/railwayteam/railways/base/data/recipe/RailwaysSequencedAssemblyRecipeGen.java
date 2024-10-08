@@ -70,7 +70,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
             ));
         }
 
-        List<TrackMaterial> trackMaterials = new ArrayList<>(TrackMaterial.allFromMod(Railways.MODID));
+        List<TrackMaterial> trackMaterials = new ArrayList<>(TrackMaterial.allFromMod(Railways.MOD_ID));
 
         // Add all mod compat tracks
         for (String mod : TRACK_COMPAT_MODS)
@@ -90,7 +90,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                     }
                     if (sleeperIngredient.isEmpty()) continue;
                     TRACKS.put(material, create(
-                        "track_" + (material.id.getNamespace().equals(Railways.MODID)
+                        "track_" + (material.id.getNamespace().equals(Railways.MOD_ID)
                             ? "" : material.id.getNamespace()+"_") + material.resourceName(),
                         b -> b.conditionalMaterial(material).require(baseMaterial.getBlock())
                             .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
@@ -128,7 +128,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
 
                     Ingredient finalRailsIngredient = railsIngredient;
                     TRACKS.put(material, create(
-                        "track_" + (material.id.getNamespace().equals(Railways.MODID)
+                        "track_" + (material.id.getNamespace().equals(Railways.MOD_ID)
                             ? "" : material.id.getNamespace()+"_") + material.resourceName(),
                         b -> b.conditionalMaterial(material).require(sleeperIngredient)
                             .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())
@@ -158,7 +158,7 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
             Ingredient finalRailsIngredient = railsIngredient;
 
             TRACKS.put(material, create(
-                "track_" + (material.id.getNamespace().equals(Railways.MODID)
+                "track_" + (material.id.getNamespace().equals(Railways.MOD_ID)
                     ? "" : material.id.getNamespace()+"_") + material.resourceName(),
                 b -> b.conditionalMaterial(material).require(material.sleeperIngredient)
                     .transitionTo(CRItems.ITEM_INCOMPLETE_TRACK.get(material).get())

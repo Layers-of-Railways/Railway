@@ -188,7 +188,7 @@ public class CRTrackMaterials {
     static {
         WIDE_GAUGE.put(TrackMaterial.ANDESITE, WIDE_GAUGE_ANDESITE);
         WIDE_GAUGE_REVERSE.put(WIDE_GAUGE_ANDESITE, TrackMaterial.ANDESITE);
-        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MODID)) {
+        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MOD_ID)) {
             if (baseMaterial.trackType != TrackType.STANDARD)
                 continue;
 
@@ -199,7 +199,7 @@ public class CRTrackMaterials {
 
         NARROW_GAUGE.put(TrackMaterial.ANDESITE, NARROW_GAUGE_ANDESITE);
         NARROW_GAUGE_REVERSE.put(NARROW_GAUGE_ANDESITE, TrackMaterial.ANDESITE);
-        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MODID)) {
+        for (TrackMaterial baseMaterial : TrackMaterial.allFromMod(Railways.MOD_ID)) {
             if (baseMaterial.trackType != TrackType.STANDARD)
                 continue;
 
@@ -222,7 +222,7 @@ public class CRTrackMaterials {
 
     private static TrackMaterial wideVariant(TrackMaterial material) {
         String path = "";
-        if (!material.id.getNamespace().equals(Railways.MODID))
+        if (!material.id.getNamespace().equals(Railways.MOD_ID))
             path = material.id.getNamespace() + "_";
         path += material.id.getPath() + "_wide";
         return make(Railways.asResource(path))
@@ -248,7 +248,7 @@ public class CRTrackMaterials {
 
     private static TrackMaterial narrowVariant(TrackMaterial material) {
         String path = "";
-        if (!material.id.getNamespace().equals(Railways.MODID))
+        if (!material.id.getNamespace().equals(Railways.MOD_ID))
             path = material.id.getNamespace() + "_";
         path += material.id.getPath() + "_narrow";
         return make(Railways.asResource(path))

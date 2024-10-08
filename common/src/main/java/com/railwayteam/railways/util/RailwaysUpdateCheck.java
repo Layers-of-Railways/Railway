@@ -38,7 +38,7 @@ public class RailwaysUpdateCheck {
         Util.ioPool().submit(() -> {
             String uri = String.format(
                     "https://update.api.ithundxr.dev/update-check?mod_id=%s&mod_version=%s&mc_version=%s&loader=%s&dev=%s",
-                    Railways.MODID,
+                    Railways.MOD_ID,
                     RailwaysBuildInfo.VERSION,
                     SharedConstants.getCurrentVersion().getName(),
                     Loader.getActual(),

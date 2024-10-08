@@ -77,7 +77,7 @@ public abstract class TrackCompatUtils {
 
     @ApiStatus.Internal
     public static boolean mixinSkipLootLoading(ResourceLocation resourceLocation) {
-        if (resourceLocation.getNamespace().equals(Railways.MODID)) {
+        if (resourceLocation.getNamespace().equals(Railways.MOD_ID)) {
             for (String compatMod : TRACK_COMPAT_MODS) {
                 if (resourceLocation.getPath().startsWith("blocks/track_"+compatMod)) {
                     return !GenericTrackCompat.get(compatMod).shouldRegisterMissing();

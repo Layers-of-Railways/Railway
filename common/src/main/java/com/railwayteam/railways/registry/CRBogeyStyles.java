@@ -351,7 +351,7 @@ public class CRBogeyStyles {
     }
 
     public static CategoryEntry registerCategory(String name) {
-        return registerCategory(Railways.MODID, name);
+        return registerCategory(Railways.MOD_ID, name);
     }
 
     public static CategoryEntry registerCategory(String modid, String name) {
@@ -378,7 +378,7 @@ public class CRBogeyStyles {
     }
 
     public static void register() {
-        Railways.LOGGER.info("Registered bogey styles from " + Railways.MODID);
+        Railways.LOGGER.info("Registered bogey styles from " + Railways.MOD_ID);
 
         map(AllBogeyStyles.STANDARD, CRTrackType.WIDE_GAUGE, WIDE_DEFAULT);
         map(AllBogeyStyles.STANDARD, CRTrackType.NARROW_GAUGE, NARROW_DEFAULT);
@@ -436,7 +436,7 @@ public class CRBogeyStyles {
         addToCategory(SEXTUPLEAXLE_CATEGORY, LARGE_CREATE_STYLED_0_12_0, 13);
 
         if (Utils.isDevEnv()) {
-            CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MODID, "all_test");
+            CategoryEntry ALL_TEST_CATEGORY = registerCategory(Railways.MOD_ID, "all_test");
             for (BogeyStyle style : AllBogeyStyles.BOGEY_STYLES.values()) {
                 if (hideInSelectionMenu(style)) continue;
                 addToCategory(ALL_TEST_CATEGORY, style);

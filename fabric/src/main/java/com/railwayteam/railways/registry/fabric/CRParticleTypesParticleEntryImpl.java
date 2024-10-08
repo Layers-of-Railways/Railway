@@ -32,7 +32,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import java.util.function.Supplier;
 
 public class CRParticleTypesParticleEntryImpl {
-    private static final LazyRegistrar<ParticleType<?>> REGISTER = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, Railways.MODID);
+    private static final LazyRegistrar<ParticleType<?>> REGISTER = LazyRegistrar.create(BuiltInRegistries.PARTICLE_TYPE, Railways.MOD_ID);
 
     public static void register(String id, Supplier<ParticleType<?>> supplier) {
         REGISTER.register(id, supplier);

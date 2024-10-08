@@ -27,7 +27,7 @@ import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
 
 
 public class CRPonderIndex {
-    private static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MODID);
+    private static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MOD_ID);
 
     public static void register() {
         HELPER.forComponents(CRBlocks.SEMAPHORE)

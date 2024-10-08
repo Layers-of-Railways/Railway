@@ -21,6 +21,7 @@ package com.railwayteam.railways.registry;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
 import com.railwayteam.railways.registry.commands.PalettesDemoCommand;
 import com.railwayteam.railways.registry.commands.ReloadCasingCollisionCommand;
@@ -39,7 +40,7 @@ import static net.minecraft.commands.Commands.literal;
 public class CRCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
 
-        var railwaysCommand = literal("railways")
+        var railwaysCommand = literal(Railways.MOD_ID)
                 .requires(cs -> cs.hasPermission(0))
                 //.then(ClearCasingCacheCommand.register())
                 .then(SplitTrainCommand.register())

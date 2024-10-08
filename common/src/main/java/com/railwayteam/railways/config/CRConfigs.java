@@ -223,7 +223,7 @@ public class CRConfigs {
 
     private static void preloadValues() {
         Path configDir = Utils.configDir();
-        Path commonConfig = configDir.resolve(Railways.MODID+"-common.toml");
+        Path commonConfig = configDir.resolve(Railways.MOD_ID +"-common.toml");
         try (Reader reader = new FileReader(commonConfig.toFile())) {
             CommentedConfig config = new TomlParser().parse(reader);
             cachedDisableDatafixer = config.<Boolean>getRaw("disableDatafixer");

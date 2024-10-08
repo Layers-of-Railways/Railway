@@ -64,7 +64,7 @@ public class ConductorFakePlayerForge extends FakePlayer implements IConductorHo
 	@Override
 	@NotNull
 	public Component getDisplayName() {
-		return Components.translatable(Railways.MODID + "." + "conductor_name");
+		return Components.translatable(Railways.MOD_ID + "." + "conductor_name");
 	}
 
 	@Override

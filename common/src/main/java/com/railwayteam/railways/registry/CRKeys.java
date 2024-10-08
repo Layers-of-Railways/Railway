@@ -42,7 +42,7 @@ public enum CRKeys {
     public static final Set<KeyMapping> NON_CONFLICTING_KEYMAPPINGS = new HashSet<>();
 
     CRKeys(String description, int defaultKey) {
-        this.description = Railways.MODID + ".keyinfo." + description;
+        this.description = Railways.MOD_ID + ".keyinfo." + description;
         this.key = defaultKey;
         this.modifiable = !description.isEmpty();
     }

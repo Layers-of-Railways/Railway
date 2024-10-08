@@ -123,11 +123,11 @@ public class CRItems {
             .requires(CONDUCTOR_CAPS)
             .requires(Ingredients.dye(color))
             .unlockedBy("hasitem", RegistrateRecipeProvider.has(CONDUCTOR_CAPS))
-            .save(prov, new ResourceLocation(Railways.MODID, "dying_existing_cap_" + colorReg)))
+            .save(prov, Railways.asResource("dying_existing_cap_" + colorReg)))
         .register());
     }
 
-    for (TrackMaterial material : TrackMaterial.allFromMod(Railways.MODID)) {
+    for (TrackMaterial material : TrackMaterial.allFromMod(Railways.MOD_ID)) {
       ITEM_INCOMPLETE_TRACK.put(material, REGISTRATE.item("track_incomplete_" + material.resourceName(), SequencedAssemblyItem::new)
           .model((c, p) -> p.generated(c, Railways.asResource("item/track_incomplete/" + c.getName())))
           .lang("Incomplete " + material.langName + " Track")

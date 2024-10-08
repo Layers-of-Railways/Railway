@@ -32,9 +32,9 @@ public class CRConfigsImpl {
         CRConfigs.registerCommon();
 
         for (Map.Entry<ModConfig.Type, ConfigBase> pair : CRConfigs.CONFIGS.entrySet())
-            ForgeConfigRegistry.INSTANCE.register(Railways.MODID, pair.getKey(), pair.getValue().specification);
+            ForgeConfigRegistry.INSTANCE.register(Railways.MOD_ID, pair.getKey(), pair.getValue().specification);
 
-        ModConfigEvents.loading(Railways.MODID).register(CRConfigs::onLoad);
-        ModConfigEvents.reloading(Railways.MODID).register(CRConfigs::onReload);
+        ModConfigEvents.loading(Railways.MOD_ID).register(CRConfigs::onLoad);
+        ModConfigEvents.reloading(Railways.MOD_ID).register(CRConfigs::onReload);
     }
 }

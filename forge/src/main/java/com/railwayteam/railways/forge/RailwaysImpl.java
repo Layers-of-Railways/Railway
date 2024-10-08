@@ -37,7 +37,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-@Mod(Railways.MODID)
+@Mod(Railways.MOD_ID)
 @Mod.EventBusSubscriber
 public class RailwaysImpl {
 	static IEventBus bus;

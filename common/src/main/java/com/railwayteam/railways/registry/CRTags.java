@@ -38,7 +38,7 @@ import static com.railwayteam.railways.registry.CRTags.NameSpace.MOD;
 
 public class CRTags {
   public enum NameSpace {
-    MOD(Railways.MODID, false, true);
+    MOD(Railways.MOD_ID, false, true);
 
     public final String id;
     public final boolean optionalDefault;

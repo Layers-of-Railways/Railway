@@ -53,7 +53,7 @@ public class WideGaugeTrackBlockStateGeneratorImpl extends WideGaugeTrackBlockSt
                 .getExistingFile(prov.mcLoc("block/air"));
         }
 
-        String textureModId = Railways.MODID;
+        String textureModId = Railways.MOD_ID;
         String resName = material.resourceName().replaceFirst("_wide", "");
         for (String modPrefix : COMPAT_MODS) {
             if (resName.startsWith(modPrefix+"_")) {

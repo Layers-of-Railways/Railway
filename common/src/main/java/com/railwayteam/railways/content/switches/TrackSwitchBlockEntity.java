@@ -290,7 +290,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
     }
 
     private static LangBuilder b() {
-        return Lang.builder(Railways.MODID);
+        return Lang.builder(Railways.MOD_ID);
     }
 
     @Override

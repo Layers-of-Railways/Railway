@@ -61,7 +61,7 @@ public class RailwaysClientImpl implements ClientModInitializer {
 	}
 
 	public static void registerBuiltinPack(String id, String name) {
-		ModContainer mod = FabricLoader.getInstance().getModContainer(Railways.MODID).orElseThrow();
+		ModContainer mod = FabricLoader.getInstance().getModContainer(Railways.MOD_ID).orElseThrow();
 		ResourceManagerHelper.registerBuiltinResourcePack(Railways.asResource(id), mod, Components.literal(name), ResourcePackActivationType.NORMAL);
 	}
 }

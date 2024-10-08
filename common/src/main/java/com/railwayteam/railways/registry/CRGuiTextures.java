@@ -63,7 +63,7 @@ public enum CRGuiTextures implements ScreenElement {
     }
 
     CRGuiTextures(String location, int startX, int startY, int width, int height) {
-        this(Railways.MODID, location, startX, startY, width, height);
+        this(Railways.MOD_ID, location, startX, startY, width, height);
     }
 
     private CRGuiTextures(String namespace, String location, int startX, int startY, int width, int height) {

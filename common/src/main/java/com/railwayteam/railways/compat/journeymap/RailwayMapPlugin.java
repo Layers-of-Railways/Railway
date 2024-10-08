@@ -42,7 +42,7 @@ public class RailwayMapPlugin implements IClientPlugin {
 
     @Override
     public String getModId() {
-        return Railways.MODID;
+        return Railways.MOD_ID;
     }
 
     @Override
