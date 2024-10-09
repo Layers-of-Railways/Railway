@@ -1,6 +1,11 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.5
 ------------------------------------------------------
+Changes
+- Update to Create 0.5.1-i
+------------------------------------------------------
+Steam 'n' Rails 1.6.5
+------------------------------------------------------
 Additions
 - Escape and Enter buttons can be used to select bogies in the bogey menu
 
