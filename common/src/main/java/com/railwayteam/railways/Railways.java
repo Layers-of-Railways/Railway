@@ -32,6 +32,7 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.MethodVarHandleUtils;
 import com.railwayteam.railways.util.RailwaysUpdateCheck;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.Create;
@@ -91,7 +92,8 @@ public class Railways {
   }
 
   public static void init() {
-    LOGGER.info("{} v{} initializing! Commit hash: {} Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, Create.VERSION, Loader.getFormatted());
+    String createVersion = MethodVarHandleUtils.getStaticField(Create.class, "VERSION", String.class, "UNKNOWN");
+    LOGGER.info("{} v{} initializing! Commit hash: {} on Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, createVersion, Loader.getFormatted());
     RailwaysUpdateCheck.execute();
     
     Path configDir = Utils.configDir();
