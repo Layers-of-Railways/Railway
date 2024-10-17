@@ -196,6 +196,6 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
                 return info.getProfile().getName();
             }
         }
-        return "Unknown Player";
+        return UsernameUtils.INSTANCE.getName(uuid);
     }
 }
