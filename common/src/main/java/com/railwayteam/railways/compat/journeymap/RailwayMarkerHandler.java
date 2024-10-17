@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.compat.journeymap;
 
-import com.mojang.authlib.GameProfile;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import journeymap.client.api.IClientAPI;
@@ -190,14 +189,13 @@ public class RailwayMarkerHandler implements IRailwayMarkerHandler {
     }
 
     public static String getNameFromUUID(UUID uuid) {
-        Minecraft mc = Minecraft.getInstance();
-        ClientPacketListener connection = mc.getConnection();
+        ClientPacketListener connection = Minecraft.getInstance().getConnection();
         if (connection != null) {
             PlayerInfo info = connection.getPlayerInfo(uuid);
             if (info != null) {
                 return info.getProfile().getName();
             }
         }
-        return mc.getMinecraftSessionService().fillProfileProperties(new GameProfile(uuid, null), true).getName();
+        return "Unknown Player";
     }
 }
