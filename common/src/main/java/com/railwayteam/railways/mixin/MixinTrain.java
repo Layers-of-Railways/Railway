@@ -21,8 +21,6 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
