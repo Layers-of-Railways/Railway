@@ -86,6 +86,8 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Unique private boolean railways$isStrictSignalTrain = false;
     @Unique private int railways$controlBlockedTicks = -1;
     @Unique private int railways$controlBlockedSign = 0;
+    
+    @Unique private ThreadLocal<Level> railways$level;
 
     @Override
     public boolean railways$isControlBlocked() {
@@ -286,17 +288,15 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     }
     
     @Inject(method = "tick", at = @At("HEAD"))
-    private void railways$shareLevel(Level level, CallbackInfo ci, @Share("sharedLevel") LocalRef<Level> sharedLevel) {
-        sharedLevel.set(level);
+    private void railways$shareLevel(Level level, CallbackInfo ci) {
+        railways$level.set(level);
     }
     
     @WrapOperation(method = "burnFuel", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;fuelTicks:I", opcode = Opcodes.PUTFIELD))
-    private void railways$modifyFuelUsage(Train instance, int value, Operation<Void> original, @Share("sharedLevel") LocalRef<Level> sharedLevel) {
-        Level level = sharedLevel.get();
-        
+    private void railways$modifyFuelUsage(Train instance, int value, Operation<Void> original) {
         int config = CRConfigs.server().realism.netherExtraFuelUsage.get();
-        if (config != 0 && level != null && level.dimension() == Level.NETHER)
-            value -= config;
+        if (railways$level.get().dimension() == Level.NETHER)
+            value -= (config - 1);
         original.call(instance, value);
     }
 
