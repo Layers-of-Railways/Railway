@@ -294,8 +294,10 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     
     @WrapOperation(method = "burnFuel", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;fuelTicks:I", opcode = Opcodes.PUTFIELD))
     private void railways$modifyFuelUsage(Train instance, int value, Operation<Void> original) {
+        Level level = railways$level.get();
+        
         int config = CRConfigs.server().realism.netherExtraFuelUsage.get();
-        if (railways$level.get().dimension() == Level.NETHER)
+        if (level != null && level.dimension() == Level.NETHER)
             value -= (config - 1);
         original.call(instance, value);
     }
