@@ -25,7 +25,10 @@
                 "sv_SE": "sv_se",
                 "ru_RU": "ru_ru",
                 "uk_UA": "uk_ua",
-                "en_GB": "en_gb"
+                "en_GB": "en_gb",
+                "tr_TR": "tr_tr",
+                "ro_RO": "ro_ro",
+                "th_TH": "th_th"
             }
         }
     }
