@@ -21,6 +21,9 @@ package com.railwayteam.railways.forge.mixin;
 import com.railwayteam.railways.forge.asm.ContainerLevelAccessASM;
 import com.railwayteam.railways.forge.asm.RollingModeEnumAdder;
 import com.railwayteam.railways.util.ConditionalMixinManager;
+import com.railwayteam.railways.util.MethodVarHandleUtils;
+import net.minecraftforge.fml.ModLoader;
+import net.minecraftforge.fml.ModLoadingException;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -37,6 +40,16 @@ public class CRMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+        //noinspection unchecked
+        Class<List<ModLoadingException>> modLoadingExceptionListClass = (Class<List<ModLoadingException>>)(Class<?>) List.class;
+        
+        List<ModLoadingException> modLoadingExceptionList = MethodVarHandleUtils.getPrivateField(
+                ModLoader.get(), ModLoader.class, "loadingExceptions", modLoadingExceptionListClass, null);
+        
+        if (!modLoadingExceptionList.isEmpty()) {
+            return false;
+        }
+        
         return ConditionalMixinManager.shouldApply(mixinClassName);
     }
 
