@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "create:industrial_iron_block"
+              "create:zinc_block"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "railways:crafting/link_and_pin"
+        "recipe": "railways:stonecutting/copycat_headstock"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "railways:crafting/link_and_pin"
+      "railways:stonecutting/copycat_headstock"
     ]
   },
   "sends_telemetry_event": false

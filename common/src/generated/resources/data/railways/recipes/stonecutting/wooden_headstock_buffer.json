@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 4,
+  "ingredient": {
+    "item": "create:andesite_casing"
+  },
+  "result": "railways:wooden_headstock_buffer"
+}

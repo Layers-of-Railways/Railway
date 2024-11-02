@@ -199,37 +199,6 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#I_")
         );
 
-    GeneratedRecipe LINK_AND_PIN = create(Ingredients::linkPin)
-        .unlockedBy(Ingredients::industrialIron)
-        .returns(4)
-        .viaShaped(b -> b
-            .define('#', Ingredients.industrialIron())
-            .define('_', Ingredients.ironSheet())
-            .define('I', Ingredients.shaft())
-            .define(',', Ingredients.ironNugget())
-            .pattern("__ ")
-            .pattern("#I,")
-            .pattern("__ ")
-        );
-
-    GeneratedRecipe HEADSTOCK = create(Ingredients::headstock)
-        .unlockedBy(Ingredients::linkPin)
-        .viaShaped(b -> b
-            .define('#', Ingredients.linkPinTag())
-            .define('_', Ingredients.woodenSlab())
-            .pattern(" # ")
-            .pattern("___")
-        );
-
-    GeneratedRecipe COPYCAT_HEADSTOCK = create(Ingredients::copycatHeadstock)
-        .unlockedBy(Ingredients::linkPin)
-        .viaShaped(b -> b
-            .define('#', Ingredients.linkPinTag())
-            .define('_', Ingredients.copycatPanel())
-            .pattern(" # ")
-            .pattern("___")
-        );
-
     GeneratedRecipe BUFFER = create(CRBlocks.TRACK_BUFFER)
         .unlockedBy(Ingredients::headstock)
         .viaShaped(b -> b
@@ -246,6 +215,31 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .setEmiDefault()
         .viaStonecutting(Ingredients::ironBlock)
         .create();
+
+    BlockStateBlockItemGroupRecipeList DECO_HEADSTOCK = new BlockStateBlockItemGroupRecipeList(CRBlocks.LINK_AND_PIN_GROUP, entry ->
+            create(entry)
+                    .unlockedBy(Ingredients::industrialIron)
+                    .returns(4)
+                    .viaStonecutting(Ingredients::industrialIron)
+                    .create()
+    );
+
+    BlockStateBlockItemGroupRecipeList WOODEN_HEADSTOCK = new BlockStateBlockItemGroupRecipeList(CRBlocks.HEADSTOCK_GROUP, entry -> 
+        create(entry)
+            .unlockedBy(Ingredients::andesiteCasing)
+            .returns(4)
+            .viaStonecutting(Ingredients::andesiteCasing)
+            .create()
+    );
+
+    BlockStateBlockItemGroupRecipeList COPYCAT_HEADSTOCK = new BlockStateBlockItemGroupRecipeList(CRBlocks.COPYCAT_HEADSTOCK_GROUP, entry ->
+            create(entry)
+                // FIXME use tags
+                .unlockedBy(AllBlocks.ZINC_BLOCK)
+                .returns(2)
+                .viaStonecutting(AllBlocks.ZINC_BLOCK)
+                .create()
+    );
 
     // dye a style
     StyledList<DyedRecipeList> LOCOMETAL_DYEING_8x = new StyledList<>(style -> new DyedRecipeList(color ->

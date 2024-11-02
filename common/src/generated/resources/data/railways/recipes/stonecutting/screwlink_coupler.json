@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 4,
+  "ingredient": {
+    "item": "create:industrial_iron_block"
+  },
+  "result": "railways:screwlink_coupler"
+}
