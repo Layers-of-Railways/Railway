@@ -18,27 +18,25 @@
 
 package com.railwayteam.railways.base.data.recipe;
 
+import com.google.common.collect.Streams;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItem;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 public class BlockStateBlockItemGroupRecipeList implements Iterable<RailwaysRecipeProvider.GeneratedRecipe> {
-    protected final RailwaysRecipeProvider.GeneratedRecipe[] values;
+    private final List<RailwaysRecipeProvider.GeneratedRecipe> values;
 
     public BlockStateBlockItemGroupRecipeList(BlockStateBlockItemGroup<?, ?> group, Function<@NotNull ItemEntry<? extends BlockStateBlockItem<?>>, RailwaysRecipeProvider.GeneratedRecipe> filler) {
-        values = new RailwaysRecipeProvider.GeneratedRecipe[Lists.newArrayList(group.getItems().iterator()).size()];
-        
-        int i = 0;
-        
-        for (ItemEntry<? extends BlockStateBlockItem<?>> entry : group.getItems()) {
-            values[i++] = filler.apply(entry);
-        }
+        this.values = Streams
+                .stream(group.getItems())
+                .map(filler)
+                .toList();
     }
     
     @Override
@@ -48,14 +46,14 @@ public class BlockStateBlockItemGroupRecipeList implements Iterable<RailwaysReci
 
             @Override
             public boolean hasNext() {
-                return index < values.length;
+                return index < values.size();
             }
 
             @Override
             public RailwaysRecipeProvider.GeneratedRecipe next() {
                 if (!hasNext())
                     throw new NoSuchElementException();
-                return values[index++];
+                return values.get(index++);
             }
         };
     }
