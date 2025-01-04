@@ -40,7 +40,7 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
 
     PalettesRecipeList BOILERS = new PalettesRecipeList(color -> create(() -> Styles.BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color.isBase())
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -52,7 +52,7 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
 
     PalettesRecipeList BRASS_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.BRASS_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color.isBase())
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.BRASS_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -64,7 +64,7 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
 
     PalettesRecipeList COPPER_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.COPPER_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color.isBase())
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.COPPER_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -76,7 +76,7 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
 
     PalettesRecipeList IRON_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.IRON_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color.isBase())
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.IRON_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)

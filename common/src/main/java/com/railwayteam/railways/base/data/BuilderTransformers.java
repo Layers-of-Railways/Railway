@@ -201,7 +201,7 @@ public class BuilderTransformers {
     }
 
     public static String colorNameUnderscore(@NotNull PalettesColor color) {
-        return color.getSerializedName() + "_";
+        return color.isNetherite() ? "" : color.getSerializedName() + "_";
     }
 
     public static String colorNameUnderscore(@Nullable DyeColor color) {

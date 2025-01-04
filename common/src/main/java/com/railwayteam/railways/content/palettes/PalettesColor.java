@@ -83,7 +83,7 @@ public enum PalettesColor implements StringRepresentable {
         return id < 16;
     }
 
-    public boolean isBase() {
+    public boolean isNetherite() {
         return this == NETHERITE;
     }
 

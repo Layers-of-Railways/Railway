@@ -107,7 +107,7 @@ public class EnumRecipeList<E extends Enum<E>> implements Iterable<GeneratedReci
 
         @Override
         protected boolean filter(PalettesColor value) {
-            return !value.isBase();
+            return !value.isNetherite();
         }
     }
 }

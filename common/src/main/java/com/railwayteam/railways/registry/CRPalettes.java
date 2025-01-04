@@ -136,8 +136,8 @@ public class CRPalettes {
                 blocks.put(palettesColor, registrar.register(palettesColor, dyeGroupTag));
             }
 
-            if (palettesColor == null) {
-                EmiRecipeDefaultsGen.TAG_DEFAULTS.put(dyeGroupTag, blocks.get(null).getId());
+            if (palettesColor.isNetherite()) {
+                EmiRecipeDefaultsGen.TAG_DEFAULTS.put(dyeGroupTag, blocks.get(PalettesColor.NETHERITE).getId());
             }
         }
 
@@ -155,8 +155,8 @@ public class CRPalettes {
         @SuppressWarnings("unchecked")
         @ApiStatus.NonExtendable
         default BlockEntry<?> register(PalettesColor color, TagKey<Item>... tags) {
-            String colorString = color == null ? "" : color.getSerializedName();
-            return register(color, colorString, color == null ? "" : snakeCaseToTitleCase(colorString), tags);
+            String colorString = color.isNetherite() ? "" : color.getSerializedName();
+            return register(color, colorString, color.isNetherite() ? "" : snakeCaseToTitleCase(colorString), tags);
         }
 
         @SuppressWarnings("unchecked")

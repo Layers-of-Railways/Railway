@@ -278,7 +278,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.BRASS_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color.isBase())
+            .setEmiDefault(color.isNetherite())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.brassIngot())
@@ -292,7 +292,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color.isBase())
+            .setEmiDefault(color.isNetherite())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.copperIngot())
@@ -306,7 +306,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color.isBase())
+            .setEmiDefault(color.isNetherite())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.ironIngot())
@@ -319,7 +319,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     // cut a color to other blocks in the cycle
     CyclingStyleList<PalettesRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
-            .setEmiDefault(color.isBase() && style != Styles.RIVETED)
+            .setEmiDefault(color.isNetherite() && style != Styles.RIVETED)
             .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
             .create()
     ));
