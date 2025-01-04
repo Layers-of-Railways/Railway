@@ -22,6 +22,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.recipe.EnumRecipeList.PalettesRecipeList;
 import com.railwayteam.railways.base.data.recipe.EnumRecipeList.DyedOnlyPalettesRecipeList;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPalettes;
@@ -243,7 +244,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("# #")
         );
 
-    GeneratedRecipe RIVETED_LOCOMETAL = create(Styles.RIVETED.get(null))
+    GeneratedRecipe RIVETED_LOCOMETAL = create(Styles.RIVETED.get(PalettesColor.NETHERITE))
         .returns(8)
         .setEmiDefault()
         .viaStonecutting(Ingredients::ironBlock)

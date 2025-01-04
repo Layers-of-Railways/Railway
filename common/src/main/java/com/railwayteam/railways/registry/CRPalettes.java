@@ -64,7 +64,6 @@ public class CRPalettes {
     public static final EnumMap<PalettesColor, TagKey<Item>> CYCLE_GROUPS = new EnumMap<>(PalettesColor.class);
 
     static {
-        CYCLE_GROUPS.put(null, CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/base")));
         for (PalettesColor palettesColor : PalettesColor.values()) {
             CYCLE_GROUPS.put(palettesColor, CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/" + palettesColor.getSerializedName())));
         }
