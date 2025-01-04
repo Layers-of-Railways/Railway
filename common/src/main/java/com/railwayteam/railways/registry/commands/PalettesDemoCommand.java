@@ -31,6 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +55,21 @@ public class PalettesDemoCommand {
                     try {
                         for (PalettesColor palettesColor : PalettesColor.values()) {
                             origin = origin.offset(pattern.maxWidth + 2, 0, 0);
-                            pattern.place(ctx.getSource().getLevel(), origin, palettesColor);
+                            pattern.place(ctx.getSource().getLevel(), origin.above(), palettesColor);
+                            Block associatedBlock = palettesColor.getAssociatedBlock();
+                            if (associatedBlock != null) {
+                                BlockState state = associatedBlock.defaultBlockState();
+                                if (state.hasProperty(HORIZONTAL_AXIS)) {
+                                    state = state.setValue(HORIZONTAL_AXIS, Axis.Z);
+                                } else if (state.hasProperty(AXIS)) {
+                                    state = state.setValue(AXIS, Axis.Z);
+                                } else if (state.hasProperty(FACING)) {
+                                    state = state.setValue(FACING, Direction.SOUTH);
+                                }
+                                for (int i = 0; i <= 3; i++) {
+                                    ctx.getSource().getLevel().setBlockAndUpdate(origin.offset(i, 0, 0), state);
+                                }
+                            }
                         }
                     } catch (Exception e) {
                         Railways.LOGGER.error("Failed to place palettes blocks", e);

@@ -19,46 +19,50 @@
 package com.railwayteam.railways.content.palettes;
 
 import com.railwayteam.railways.util.Utils;
+import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.IntFunction;
+import java.util.function.Supplier;
 
 public enum PalettesColor implements StringRepresentable {
-    NETHERITE(28, "netherite", MapColor.COLOR_BLACK),
-    BROWN(12, "brown", MapColor.COLOR_BROWN),
-    MAROON(16, "maroon", MapColor.COLOR_RED),
-    RED(14, "red", MapColor.COLOR_RED),
-    ORANGE(1, "orange", MapColor.COLOR_ORANGE),
-    GRANITE(17, "granite", MapColor.COLOR_ORANGE),
-    DRIPSTONE(18, "dripstone", MapColor.COLOR_YELLOW),
-    OCHRUM(19, "ochrum", MapColor.COLOR_YELLOW),
-    YELLOW(4, "yellow", MapColor.COLOR_YELLOW),
-    CHARTREUSE(20, "chartreuse", MapColor.COLOR_LIGHT_GREEN),
-    LIME(5, "lime", MapColor.COLOR_LIGHT_GREEN),
-    GREEN(13, "green", MapColor.COLOR_GREEN),
-    PINE_GREEN(21, "pine_green", MapColor.COLOR_GREEN),
-    CYAN(9, "cyan", MapColor.COLOR_CYAN),
-    TURQUOISE(22, "turquoise", MapColor.COLOR_CYAN),
-    LIGHT_BLUE(3, "light_blue", MapColor.COLOR_LIGHT_BLUE),
-    BLUE(11, "blue", MapColor.COLOR_BLUE),
-    ROYAL_BLUE(23, "royal_blue", MapColor.COLOR_BLUE),
-    PURPLE(10, "purple", MapColor.COLOR_PURPLE),
-    MAGENTA(2, "magenta", MapColor.COLOR_MAGENTA),
-    PINK(6, "pink", MapColor.COLOR_PINK),
-    WHITE(0, "white", MapColor.SNOW),
-    DIORITE(24, "diorite", MapColor.SNOW),
-    LIMESTONE(25, "limestone", MapColor.COLOR_LIGHT_GRAY),
-    LIGHT_GRAY(8, "light_gray", MapColor.COLOR_LIGHT_GRAY),
-    TUFF(26, "tuff", MapColor.COLOR_LIGHT_GRAY),
-    GRAY(7, "gray", MapColor.COLOR_GRAY),
-    SCORCHIA(27, "scorchia", MapColor.COLOR_GRAY),
-    BLACK(15, "black", MapColor.COLOR_BLACK),
+    NETHERITE(  28, "netherite",    MapColor.COLOR_BLACK,       () -> () -> Blocks.NETHERITE_BLOCK),
+    BROWN(      12, "brown",        MapColor.COLOR_BROWN,       AllPaletteStoneTypes.SCORIA),
+    MAROON(     16, "maroon",       MapColor.COLOR_RED),
+    RED(        14, "red",          MapColor.COLOR_RED,         AllPaletteStoneTypes.CRIMSITE),
+    ORANGE(      1, "orange",       MapColor.COLOR_ORANGE),
+    GRANITE(    17, "granite",      MapColor.COLOR_ORANGE,      AllPaletteStoneTypes.GRANITE),
+    DRIPSTONE(  18, "dripstone",    MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.DRIPSTONE),
+    OCHRUM(     19, "ochrum",       MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.OCHRUM),
+    YELLOW(      4, "yellow",       MapColor.COLOR_YELLOW),
+    CHARTREUSE( 20, "chartreuse",   MapColor.COLOR_LIGHT_GREEN),
+    LIME(        5, "lime",         MapColor.COLOR_LIGHT_GREEN),
+    GREEN(      13, "green",        MapColor.COLOR_GREEN),
+    PINE_GREEN( 21, "pine_green",   MapColor.COLOR_GREEN),
+    CYAN(        9, "cyan",         MapColor.COLOR_CYAN,        AllPaletteStoneTypes.VERIDIUM),
+    TURQUOISE(  22, "turquoise",    MapColor.COLOR_CYAN),
+    LIGHT_BLUE(  3, "light_blue",   MapColor.COLOR_LIGHT_BLUE,  AllPaletteStoneTypes.ASURINE),
+    BLUE(       11, "blue",         MapColor.COLOR_BLUE),
+    ROYAL_BLUE( 23, "royal_blue",   MapColor.COLOR_BLUE),
+    PURPLE(     10, "purple",       MapColor.COLOR_PURPLE),
+    MAGENTA(     2, "magenta",      MapColor.COLOR_MAGENTA),
+    PINK(        6, "pink",         MapColor.COLOR_PINK),
+    WHITE(       0, "white",        MapColor.SNOW,              AllPaletteStoneTypes.CALCITE),
+    DIORITE(    24, "diorite",      MapColor.SNOW,              AllPaletteStoneTypes.DIORITE),
+    LIMESTONE(  25, "limestone",    MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.LIMESTONE),
+    LIGHT_GRAY(  8, "light_gray",   MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.ANDESITE),
+    TUFF(       26, "tuff",         MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.TUFF),
+    GRAY(        7, "gray",         MapColor.COLOR_GRAY,        AllPaletteStoneTypes.DEEPSLATE),
+    SCORCHIA(   27, "scorchia",     MapColor.COLOR_GRAY,        AllPaletteStoneTypes.SCORCHIA),
+    BLACK(      15, "black",        MapColor.COLOR_BLACK),
     ;
     private static final IntFunction<PalettesColor> BY_ID = ByIdMap.continuous(PalettesColor::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     @SuppressWarnings("deprecation")
@@ -67,13 +71,23 @@ public enum PalettesColor implements StringRepresentable {
     /** guaranteed to match the appropriate {@link DyeColor}, if such exists */
     private final int id;
     /** guaranteed to match the appropriate {@link DyeColor}, if such exists */
-    private final String name;
+    private final @NotNull String name;
     private final @NotNull MapColor mapColor;
+    private final @Nullable Supplier<Supplier<Block>> associatedBlock;
 
-    PalettesColor(int id, String name, @NotNull MapColor mapColor) {
+    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor) {
+        this(id, name, mapColor, (Supplier<Supplier<Block>>) null);
+    }
+
+    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor, @NotNull AllPaletteStoneTypes stoneType) {
+        this(id, name, mapColor, () -> () -> stoneType.getVariants().registeredBlocks.get(5).get()); // pillar
+    }
+
+    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor, @Nullable Supplier<Supplier<Block>> associatedBlock) {
         this.id = id;
         this.name = name;
         this.mapColor = mapColor;
+        this.associatedBlock = associatedBlock;
     }
 
     /**
@@ -105,6 +119,11 @@ public enum PalettesColor implements StringRepresentable {
 
     public @NotNull MapColor getMapColor() {
         return mapColor;
+    }
+
+    public @Nullable Block getAssociatedBlock() {
+        if (associatedBlock == null) return null;
+        return associatedBlock.get().get();
     }
 
     @Override
