@@ -19,6 +19,7 @@
 package com.railwayteam.railways.base.data.fabric;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.fabric.BufferModel;
@@ -85,6 +86,7 @@ import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
+@ImplClass
 public class BuilderTransformersImpl {
     /*
     these blockstate transformers should be IDENTICAL on forge and fabric, just with a different import for ConfiguredModel

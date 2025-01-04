@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.events;
 
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;

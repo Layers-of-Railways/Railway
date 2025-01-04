@@ -117,6 +117,7 @@ public enum PalettesColor implements StringRepresentable {
         return name;
     }
 
+    @SuppressWarnings("unused")
     public static PalettesColor fromDyeColor(DyeColor dyeColor) {
         return byId(dyeColor.getId());
     }
@@ -125,6 +126,7 @@ public enum PalettesColor implements StringRepresentable {
         return BY_ID.apply(colorId);
     }
 
+    @SuppressWarnings("unused")
     @Nullable
     @Contract("_,!null->!null;_,null->_")
     public static PalettesColor byName(String translationKey, @Nullable PalettesColor fallback) {

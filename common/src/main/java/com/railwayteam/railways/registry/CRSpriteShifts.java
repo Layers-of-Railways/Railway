@@ -80,6 +80,7 @@ public class CRSpriteShifts {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
     }
 
+    @SuppressWarnings("unused")
     private static CTSpriteShiftEntry horizontal(String name) {
         return getCT(AllCTTypes.HORIZONTAL, name);
     }
@@ -88,12 +89,14 @@ public class CRSpriteShifts {
         return getCT(AllCTTypes.HORIZONTAL_KRYPPERS, name);
     }
 
+    @SuppressWarnings("unused")
     private static CTSpriteShiftEntry vertical(String name) {
         return getCT(AllCTTypes.VERTICAL, name);
     }
 
     //
 
+    @SuppressWarnings("unused")
     private static SpriteShiftEntry get(String originalLocation, String targetLocation) {
         return SpriteShifter.get(Railways.asResource(originalLocation), Railways.asResource(targetLocation));
     }

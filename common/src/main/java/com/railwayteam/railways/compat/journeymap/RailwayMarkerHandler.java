@@ -19,7 +19,7 @@
 package com.railwayteam.railways.compat.journeymap;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import journeymap.client.api.IClientAPI;
 import journeymap.client.api.display.MarkerOverlay;
 import journeymap.client.api.model.MapImage;

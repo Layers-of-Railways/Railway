@@ -1,5 +1,6 @@
 package com.railwayteam.railways.content.palettes.boiler.forge;
 
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
@@ -14,8 +15,7 @@ import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
-
+@ImplClass
 public class BoilerGeneratorImpl extends BoilerGenerator {
 
     protected BoilerGeneratorImpl(@NotNull PalettesColor color, CRPalettes.@Nullable Wrapping wrapping) {

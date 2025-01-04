@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.annotation.event;
+package com.railwayteam.railways.annotation.multiloader;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -24,10 +24,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used to mark methods that are called via abstracted loader-specific events.
+ * Used to mark classes that are used via abstracted loader-specific methods.
  * <p>
  * Meant purely for documentation and does not exist at compile-time or runtime.
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface MultiLoaderEvent { }
+public @interface ImplClass { }

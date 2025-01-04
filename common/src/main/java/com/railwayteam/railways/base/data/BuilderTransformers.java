@@ -70,7 +70,6 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
 import java.util.function.Function;
 
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;

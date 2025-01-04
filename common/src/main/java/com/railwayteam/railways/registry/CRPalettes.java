@@ -349,21 +349,23 @@ public class CRPalettes {
         @NotNull
         @Override
         public Iterator<T> iterator() {
-            return new Iterator<T>() {
-                private int index = 0;
+            return new StyledListIterator();
+        }
 
-                @Override
-                public boolean hasNext() {
-                    return index < Styles.values().length;
-                }
+        private class StyledListIterator implements Iterator<T> {
+            private int index = 0;
 
-                @Override
-                public T next() {
-                    if (!hasNext())
-                        throw new NoSuchElementException();
-                    return values.get(Styles.values()[index++]);
-                }
-            };
+            @Override
+            public boolean hasNext() {
+                return index < Styles.values().length;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+                return values.get(Styles.values()[index++]);
+            }
         }
     }
 

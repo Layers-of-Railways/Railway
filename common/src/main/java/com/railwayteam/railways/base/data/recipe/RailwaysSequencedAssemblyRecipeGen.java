@@ -22,7 +22,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin.AccessorIngredient$TagValue;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
@@ -58,7 +57,6 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
     final Map<TrackMaterial, GeneratedRecipe> TRACKS = new HashMap<>();
     {
         for (DyeColor color : DyeColor.values()) {
-            String colorName = TextUtils.titleCaseConversion(color.getName().replace("_", " "));
             String colorReg  = color.getName().toLowerCase(Locale.ROOT);
             CONDUCTOR_CAPS.put(color, create(colorReg + "_conductor_cap", b -> b.require(CRItems.woolByColor(color))
                 .transitionTo(CRItems.ITEM_INCOMPLETE_CONDUCTOR_CAP.get(color).get())
