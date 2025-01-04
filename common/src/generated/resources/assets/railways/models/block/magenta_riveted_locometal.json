@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "railways:block/palettes/magenta_/riveted"
+    "all": "railways:block/palettes/magenta/riveted"
   }
 }

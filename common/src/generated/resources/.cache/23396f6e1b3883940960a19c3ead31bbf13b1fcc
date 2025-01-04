@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-03T16:31:12.022039809	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
+// 1.20.1	2025-01-03T18:08:02.869651809	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
 6dc7b942e0df6738cd41c61667f4b36cb8aa86ad data/railways/recipes/sequenced_assembly/track_quark_ancient_narrow.json
 871ce86011b2893c9e7fe9a6d0fb7298e55d744b data/railways/recipes/sequenced_assembly/track_tfc_hickory_wide.json
 86548489d829e409459e9d514807cc1767a1a5ac data/railways/recipes/sequenced_assembly/track_quark_azalea_narrow.json
@@ -203,8 +203,8 @@ c343eb9acd24226afa179284ebedd27f68a6cd29 data/railways/recipes/sequenced_assembl
 41d3d35741b3d8558c6dfdc6bea245188316cded data/railways/recipes/sequenced_assembly/track_byg_holly_wide.json
 aefd27f59e6f60680689553767de79fb708416c8 data/railways/recipes/sequenced_assembly/track_byg_baobab_wide.json
 ffc9a0be23fa5a5932b7a3f5d71681a9fbac27ad data/railways/recipes/sequenced_assembly/track_biomesoplenty_magic.json
-94c78beef2473ee2350c6708816006264a99f4b2 data/railways/recipes/sequenced_assembly/track_byg_ebony_narrow.json
 d2dde6ed50fd742b848975ef87edced687fe7a64 data/railways/recipes/sequenced_assembly/track_stripped_bamboo.json
+94c78beef2473ee2350c6708816006264a99f4b2 data/railways/recipes/sequenced_assembly/track_byg_ebony_narrow.json
 11f2e055ae639b4ddad728948d55cf4404457c20 data/railways/recipes/sequenced_assembly/track_warped_narrow.json
 589eb17f23fe5ec0e38ba7b4be5dcbb55c315aaa data/railways/recipes/sequenced_assembly/track_twilightforest_transwood.json
 b8ae00c32f65b0cd098025df113a1aa9de385675 data/railways/recipes/sequenced_assembly/track_natures_spirit_wisteria_narrow.json

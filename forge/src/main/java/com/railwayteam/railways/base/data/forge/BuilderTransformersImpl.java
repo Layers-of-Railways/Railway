@@ -271,7 +271,7 @@ public class BuilderTransformersImpl {
                 .tag(CRTags.AllBlockTags.LOCOMETAL.tag);
             if (type != null)
                 out = out.blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
-                    c.getName(), p.modLoc("block/palettes/" + colorNameUnderscore(color) + "/" + type)
+                    c.getName(), p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type)
                 )));
             return out;
         };
@@ -280,8 +280,8 @@ public class BuilderTransformersImpl {
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(PalettesColor color) {
         return b -> b.transform(locoMetalBase(color, null))
             .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + colorNameUnderscore(color) + "/riveted_pillar_side"),
-                p.modLoc("block/palettes/" + colorNameUnderscore(color) + "/riveted_pillar_top")
+                p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_side"),
+                p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_top")
             ));
     }
 
@@ -294,8 +294,8 @@ public class BuilderTransformersImpl {
                 return ConfiguredModel.builder()
                     .modelFile(
                         p.models().withExistingParent(colorNameUnderscore(color) + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
-                            .texture("side", p.modLoc("block/palettes/" + colorNameUnderscore(color) + "/tank_side"))
-                            .texture("top", p.modLoc("block/palettes/" + colorNameUnderscore(color) + "/smokebox_tank_top"))
+                            .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/tank_side"))
+                            .texture("top", p.modLoc("block/palettes/" + color.getSerializedName() + "/smokebox_tank_top"))
                     )
                     .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)

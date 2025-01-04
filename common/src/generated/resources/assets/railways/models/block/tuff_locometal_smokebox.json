@@ -1,7 +1,7 @@
 {
   "parent": "railways:block/palettes/smokebox/smokebox",
   "textures": {
-    "side": "railways:block/palettes/tuff_/tank_side",
-    "top": "railways:block/palettes/tuff_/smokebox_tank_top"
+    "side": "railways:block/palettes/tuff/tank_side",
+    "top": "railways:block/palettes/tuff/smokebox_tank_top"
   }
 }

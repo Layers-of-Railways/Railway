@@ -19,6 +19,7 @@
 package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
@@ -27,6 +28,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.railwayteam.railways.content.palettes.boiler.BoilerBlock.HORIZONTAL_AXIS;
+import static com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock.FACING;
 import static net.minecraft.world.level.block.RotatedPillarBlock.AXIS;
 
 public class PalettesDemoCommand {
@@ -48,10 +51,14 @@ public class PalettesDemoCommand {
                     BlockPos origin = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
                     PatternBuilder pattern = create();
 
-                    pattern.place(ctx.getSource().getLevel(), origin, null);
-                    for (PalettesColor palettesColor : PalettesColor.values()) {
-                        origin = origin.offset(pattern.maxWidth + 2, 0, 0);
-                        pattern.place(ctx.getSource().getLevel(), origin, palettesColor);
+                    try {
+                        for (PalettesColor palettesColor : PalettesColor.values()) {
+                            origin = origin.offset(pattern.maxWidth + 2, 0, 0);
+                            pattern.place(ctx.getSource().getLevel(), origin, palettesColor);
+                        }
+                    } catch (Exception e) {
+                        Railways.LOGGER.error("Failed to place palettes blocks", e);
+                        throw e;
                     }
 
                     ctx.getSource().sendSuccess(() -> Components.literal("Placed palettes blocks"), true);
@@ -61,9 +68,9 @@ public class PalettesDemoCommand {
 
     private static PatternBuilder create() {
         return new PatternBuilder()
-            .next(Styles.SLASHED).next(Styles.SLASHED).next(Styles.FLAT_SLASHED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Y)
+            .next(Styles.SLASHED).next(Styles.SLASHED).next(Styles.FLAT_SLASHED).next(Styles.SMOKEBOX).transform(FACING, Direction.UP)
             .nextRow()
-            .next(Styles.RIVETED).next(Styles.RIVETED).next(Styles.FLAT_RIVETED).next(Styles.SMOKEBOX).transform(AXIS, Axis.Z)
+            .next(Styles.RIVETED).next(Styles.RIVETED).next(Styles.FLAT_RIVETED).next(Styles.SMOKEBOX).transform(FACING, Direction.SOUTH)
             .nextRow()
             .next(Styles.PILLAR).transform(AXIS, Axis.Y).next(Styles.PILLAR).transform(AXIS, Axis.Z).next(Styles.PLATED).next(Styles.BRASS_WRAPPED_SLASHED)
             .nextRow()

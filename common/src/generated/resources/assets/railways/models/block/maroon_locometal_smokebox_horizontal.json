@@ -1,7 +1,7 @@
 {
   "parent": "railways:block/palettes/smokebox/smokebox_horizontal",
   "textures": {
-    "side": "railways:block/palettes/maroon_/tank_side",
-    "top": "railways:block/palettes/maroon_/smokebox_tank_top"
+    "side": "railways:block/palettes/maroon/tank_side",
+    "top": "railways:block/palettes/maroon/smokebox_tank_top"
   }
 }
