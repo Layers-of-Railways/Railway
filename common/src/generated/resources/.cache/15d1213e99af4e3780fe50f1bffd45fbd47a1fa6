@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-03T23:39:50.565887979	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2025-01-04T01:20:59.613054374	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 67bd4313447341a1a83ffdff537e036d6875c23c data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/dripstone_slashed_locometal.json
 34e3f3dd2f247fd038266ee84ce423adb4ecb57a data/railways/recipes/crafting/palettes/dyeing_8x/tuff_locometal_pillar.json
 3e2f877e9baf1538f5a89e3fc5971c15be2a10d8 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/limestone_slashed_locometal.json
@@ -1197,8 +1197,8 @@ f938c99b038b2bed6ed584785814a6eb5d06f42a data/railways/advancements/recipes/misc
 aa7309af7fb6fab8bece56571d39e0eb1b3280be data/railways/advancements/recipes/misc/crafting/palettes/dyeing_8x/ochrum_locometal_boiler.json
 42a77bb7999cc58a8700d9db08297f7151ab565e data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/white_iron_wrapped_locometal_boiler.json
 e1849e5209cf168bedfb537c6ed052763a809e66 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/light_blue_flat_riveted_locometal.json
-991c58e35112596001d61116f3998e5726b0706b data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/granite_copper_wrapped_locometal.json
 560eb639e6281d72145163f7d71403eff00fbc95 data/railways/recipes/stonecutting/palettes/cycling/brown_wrapped_locometal_smokebox.json
+991c58e35112596001d61116f3998e5726b0706b data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/granite_copper_wrapped_locometal.json
 4e8676b4bf45e3535f44846ee07053f03e87d3be data/railways/advancements/recipes/misc/crafting/palettes/wrapping/granite_iron_wrapped_locometal.json
 38698bdee7708471efec537ca4f922c27cbbd71a data/railways/recipes/stonecutting/palettes/cycling/turquoise_iron_wrapped_locometal_smokebox.json
 2d58e88be757fe0fafd55dd25d0266ded22ee407 data/railways/recipes/crafting/palettes/dyeing_8x/green_locometal_pillar.json
@@ -1638,8 +1638,8 @@ b41c9b13bd3683f5d314332ec09ceff0749fd54c data/railways/recipes/crafting/palettes
 87ffd45214dfaf6d36be73fab4823c544ffc8e5b data/railways/recipes/stonecutting/palettes/cycling/light_gray_locometal_pillar.json
 4a907054aee36cc857b5d442e93889845cd69944 data/railways/recipes/crafting/palettes/dyeing_8x/granite_locometal_pillar.json
 c08d0260727663bdbfcb2ac80cc801e5e49f2f12 data/railways/recipes/crafting/palettes/dyeing_1x/black_plated_locometal.json
-8b337bae03627df0a6495d5e93c83c2f71ca0571 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/gray_riveted_locometal.json
 6afec7ffcb77b331f5227ea09eaa128a5d256ffa data/railways/recipes/crafting/palettes/wrapping/blue_brass_wrapped_locometal.json
+8b337bae03627df0a6495d5e93c83c2f71ca0571 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/gray_riveted_locometal.json
 aa934644ef4cc6ca03b2207f6234a16d92cf7b8e data/railways/recipes/crafting/palettes/dyeing_8x/blue_brass_wrapped_locometal_boiler.json
 4665359fc7f88e8282c37aa6f725678f68e9e4d4 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/ochrum_copper_wrapped_locometal_smokebox.json
 ac1428e8561ba208be3d6901c5137bbb44207560 data/railways/recipes/crafting/palettes/dyeing_8x/chartreuse_copper_wrapped_locometal_boiler.json
