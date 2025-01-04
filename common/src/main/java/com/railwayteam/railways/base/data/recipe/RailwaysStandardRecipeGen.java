@@ -20,7 +20,8 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
-import com.railwayteam.railways.base.data.recipe.DyedRecipeList.NullableDyedRecipeList;
+import com.railwayteam.railways.base.data.recipe.EnumRecipeList.PalettesRecipeList;
+import com.railwayteam.railways.base.data.recipe.EnumRecipeList.DyedOnlyPalettesRecipeList;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPalettes;
@@ -44,6 +45,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -67,11 +69,11 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .requires(Ingredients.brassNugget()));
 
     GeneratedRecipe REMOTE_LENS = create(CRItems.REMOTE_LENS)
-            .unlockedBy(Ingredients::precisionMechanism)
-            .viaShapeless(b -> b
-                .requires(Ingredients.precisionMechanism())
-                .requires(Ingredients.eyeOfEnder())
-                .requires(Ingredients.brassSheet()));
+        .unlockedBy(Ingredients::precisionMechanism)
+        .viaShapeless(b -> b
+            .requires(Ingredients.precisionMechanism())
+            .requires(Ingredients.eyeOfEnder())
+            .requires(Ingredients.brassSheet()));
 
     GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
         .unlockedBy(Ingredients::campfire)
@@ -144,26 +146,26 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
 
     // FIXME: Recipe unlocking doesn't seem to work properly
     GeneratedRecipe ANDESITE_SWITCH = create(CRBlocks.ANDESITE_SWITCH)
-      .unlockedBy(Ingredients::andesiteCasing)
-      .viaShaped(b -> b
-        .define('L', Ingredients.lever())
-        .define('C', Ingredients.andesiteCasing())
-        .define('W', Ingredients.cogwheel())
-        .pattern("L")
-        .pattern("C")
-        .pattern("W")
-      );
+        .unlockedBy(Ingredients::andesiteCasing)
+        .viaShaped(b -> b
+            .define('L', Ingredients.lever())
+            .define('C', Ingredients.andesiteCasing())
+            .define('W', Ingredients.cogwheel())
+            .pattern("L")
+            .pattern("C")
+            .pattern("W")
+        );
 
     GeneratedRecipe BRASS_SWITCH = create(CRBlocks.BRASS_SWITCH)
-      .unlockedBy(Ingredients::precisionMechanism)
-      .viaShaped(b -> b
-        .define('L', Ingredients.lever())
-        .define('C', Ingredients.brassCasing())
-        .define('P', Ingredients.precisionMechanism())
-        .pattern("L")
-        .pattern("C")
-        .pattern("P")
-      );
+        .unlockedBy(Ingredients::precisionMechanism)
+        .viaShaped(b -> b
+            .define('L', Ingredients.lever())
+            .define('C', Ingredients.brassCasing())
+            .define('P', Ingredients.precisionMechanism())
+            .pattern("L")
+            .pattern("C")
+            .pattern("P")
+        );
 
     GeneratedRecipe HANDCAR = create(CRBlocks.HANDCAR)
         .unlockedBy(Ingredients::contraptionControls)
@@ -248,34 +250,34 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
         .create();
 
     // dye a style
-    StyledList<DyedRecipeList> LOCOMETAL_DYEING_8x = new StyledList<>(style -> new DyedRecipeList(color ->
+    StyledList<DyedOnlyPalettesRecipeList> LOCOMETAL_DYEING_8x = new StyledList<>(style -> new DyedOnlyPalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/dyeing_8x", style.get(color))
             .unlockedByTag(() -> style.dyeGroupTag)
             .returns(8)
             .setEmiDefault()
             .viaShaped(b -> b
                 .define('#', style.dyeGroupTag)
-                .define('d', Ingredients.dye(color))
+                .define('d', Ingredients.palettesDye(color))
                 .pattern("###")
                 .pattern("#d#")
                 .pattern("###")
             )
     ));
 
-    StyledList<DyedRecipeList> LOCOMETAL_DYEING_1x = new StyledList<>(style -> new DyedRecipeList(color ->
+    StyledList<DyedOnlyPalettesRecipeList> LOCOMETAL_DYEING_1x = new StyledList<>(style -> new DyedOnlyPalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/dyeing_1x", style.get(color))
             .unlockedByTag(() -> style.dyeGroupTag)
             .viaShapeless(b -> b
                 .requires(style.dyeGroupTag)
-                .requires(Ingredients.dye(color))
+                .requires(Ingredients.palettesDye(color))
             )
     ));
 
-    DyedRecipeList LOCOMETAL_WRAPPING_BRASS = new NullableDyedRecipeList(color ->
+    PalettesRecipeList LOCOMETAL_WRAPPING_BRASS = new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.BRASS_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color == null)
+            .setEmiDefault(color.isBase())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.brassIngot())
@@ -285,11 +287,11 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             )
     );
 
-    DyedRecipeList LOCOMETAL_WRAPPING_COPPER = new NullableDyedRecipeList(color ->
+    PalettesRecipeList LOCOMETAL_WRAPPING_COPPER = new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.COPPER_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color == null)
+            .setEmiDefault(color.isBase())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.copperIngot())
@@ -299,11 +301,11 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             )
     );
 
-    DyedRecipeList LOCOMETAL_WRAPPING_IRON = new NullableDyedRecipeList(color ->
+    PalettesRecipeList LOCOMETAL_WRAPPING_IRON = new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/wrapping", Styles.IRON_WRAPPED_SLASHED.get(color))
             .unlockedBy(() -> Styles.SLASHED.get(color).get())
             .returns(8)
-            .setEmiDefault(color == null)
+            .setEmiDefault(color.isBase())
             .viaShaped(b -> b
                 .define('#', Styles.SLASHED.get(color).get())
                 .define('d', Ingredients.ironIngot())
@@ -314,29 +316,29 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     );
 
     // cut a color to other blocks in the cycle
-    CyclingStyleList<DyedRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new NullableDyedRecipeList(color ->
+    CyclingStyleList<PalettesRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
-            .setEmiDefault(color == null && style != Styles.RIVETED)
+            .setEmiDefault(color.isBase() && style != Styles.RIVETED)
             .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
             .create()
     ));
 
     GeneratedRecipe FUEL_TANK = create(AbstractionUtils.getFluidTankBlockEntry())
-            .unlockedBy(AllBlocks.FLUID_TANK)
-            .viaShaped(b -> b
-                    .define('S', Ingredients.sturdySheet())
-                    .define('F', AllBlocks.FLUID_TANK.get())
-                    .pattern("S")
-                    .pattern("F")
-                    .pattern("S")
-            );
+        .unlockedBy(AllBlocks.FLUID_TANK)
+        .viaShaped(b -> b
+            .define('S', Ingredients.sturdySheet())
+            .define('F', AllBlocks.FLUID_TANK.get())
+            .pattern("S")
+            .pattern("F")
+            .pattern("S")
+        );
 
     GeneratedRecipe PORTABLE_FUEL_INTERFACE = create(AbstractionUtils.getPortableFuelInterfaceBlockEntry())
-            .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
-            .viaShapeless(b -> b
-                    .requires(Ingredients.railwayCasing())
-                    .requires(Ingredients.chute())
-            );
+        .unlockedBy(AllBlocks.PORTABLE_FLUID_INTERFACE)
+        .viaShapeless(b -> b
+            .requires(Ingredients.railwayCasing())
+            .requires(Ingredients.chute())
+        );
 
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);
@@ -355,7 +357,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return "Steam 'n' Rails Standard Recipes";
     }
 

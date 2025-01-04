@@ -1,6 +1,7 @@
 package com.railwayteam.railways.registry.fabric;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.TabInfo;
@@ -40,7 +41,7 @@ public class CRCreativeModeTabsImpl {
     private static final TabInfo PALETTES_TAB = register("palettes",
             () -> FabricItemGroup.builder()
                     .title(Component.translatable("itemGroup.railways_palettes"))
-                    .icon(() -> CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack())
+                    .icon(() -> CRPalettes.Styles.BOILER.get(PalettesColor.RED).asStack())
                     .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
                     .build());
 

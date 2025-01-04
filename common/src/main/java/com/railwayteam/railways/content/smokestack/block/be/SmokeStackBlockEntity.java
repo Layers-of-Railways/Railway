@@ -21,6 +21,7 @@ package com.railwayteam.railways.content.smokestack.block.be;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -98,13 +99,13 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (color != null)
             Lang.builder(Railways.MOD_ID)
-                    .translate("smokestack.goggle.tooltip.color", ColorUtils.coloredName(color.getName()))
+                    .translate("smokestack.goggle.tooltip.color", TextUtils.snakeCaseToTitleCase(color.getName()))
                     .forGoggles(tooltip);
 
         if (isSoul || color == null) {
             Lang.builder(Railways.MOD_ID)
                     .translate("smokestack.goggle.tooltip",
-                            isSoul ? "Soul" : ColorUtils.coloredName(DyeColor.BLACK.toString())
+                            isSoul ? "Soul" : TextUtils.snakeCaseToTitleCase(DyeColor.BLACK.toString())
                     )
                     .forGoggles(tooltip);
         }

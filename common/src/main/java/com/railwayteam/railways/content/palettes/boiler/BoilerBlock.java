@@ -76,7 +76,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     public BoilerBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-                .setValue(STYLE, Style.GULLET)
+                .setValue(STYLE, Style.SMOKEBOX)
                 .setValue(HORIZONTAL_AXIS, Axis.X)
                 .setValue(RAISED, false)
         );
@@ -226,7 +226,8 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
 
     public enum Style implements StringRepresentable {
         GULLET("boiler_gullet"),
-        SMOKEBOX("smokebox_door");
+        SMOKEBOX("smokebox_door"),
+        FLAT("boiler_slashed");
 
         private final String texture;
 

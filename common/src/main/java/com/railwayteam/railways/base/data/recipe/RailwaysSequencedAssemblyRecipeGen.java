@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 import static com.railwayteam.railways.compat.tracks.TrackCompatUtils.TRACK_COMPAT_MODS;
 
 public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
-  public RailwaysSequencedAssemblyRecipeGen(PackOutput output) {
+    public RailwaysSequencedAssemblyRecipeGen(PackOutput output) {
         super(output);
     }
 

@@ -19,37 +19,34 @@
 package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
 import com.simibubi.create.foundation.block.connected.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
-import net.minecraft.world.item.DyeColor;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.EnumMap;
 
 public class CRSpriteShifts {
     public static final CTSpriteShiftEntry FUEL_TANK = getCT(AllCTTypes.RECTANGLE, "fuel_tank"),
         FUEL_TANK_TOP = getCT(AllCTTypes.RECTANGLE, "fuel_tank_top"),
         FUEL_TANK_INNER = getCT(AllCTTypes.RECTANGLE, "fuel_tank_inner");
 
-    public static final Map<@Nullable DyeColor, CTSpriteShiftEntry>
-        SLASHED_LOCOMETAL = new HashMap<>(17, 2),
-        RIVETED_LOCOMETAL = new HashMap<>(17, 2),
-        BRASS_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        COPPER_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        IRON_WRAPPED_LOCOMETAL = new HashMap<>(17, 2),
-        BOILER_SIDE = new HashMap<>(17, 2),
-        BRASS_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
-        COPPER_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2),
-        IRON_WRAPPED_BOILER_SIDE = new HashMap<>(17, 2);
+    public static final EnumMap<PalettesColor, CTSpriteShiftEntry>
+        SLASHED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        RIVETED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        IRON_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        BOILER_SIDE = new EnumMap<>(PalettesColor.class),
+        BRASS_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class),
+        COPPER_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class),
+        IRON_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class);
 
-    private static void initLocometal(@Nullable DyeColor color) {
+    private static void initLocometal(@NotNull PalettesColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
         BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
@@ -62,21 +59,20 @@ public class CRSpriteShifts {
     }
 
     static {
-        initLocometal(null);
-        for (DyeColor color : ColorUtils.ORDERED_DYE_COLORS) {
+        for (PalettesColor color : PalettesColor.values()) {
             initLocometal(color);
         }
     }
 
 
     //
-    private static CTSpriteShiftEntry locometal(@Nullable DyeColor color, String name) {
-        String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    private static CTSpriteShiftEntry locometal(@NotNull PalettesColor color, String name) {
+        String colorName = color.getSerializedName();
         return omni("palettes/" + colorName + "/" + name);
     }
 
-    private static CTSpriteShiftEntry locometalBoiler(@Nullable DyeColor color, String name) {
-        String colorName = color == null ? "netherite" : color.name().toLowerCase(Locale.ROOT);
+    private static CTSpriteShiftEntry locometalBoiler(@NotNull PalettesColor color, String name) {
+        String colorName = color.getSerializedName();
         return horizontalKryppers("palettes/" + colorName + "/" + name);
     }
 

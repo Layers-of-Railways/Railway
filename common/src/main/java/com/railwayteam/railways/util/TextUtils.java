@@ -18,19 +18,21 @@
 
 package com.railwayteam.railways.util;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import org.apache.commons.lang3.StringUtils;
-import org.joml.Matrix4f;
 
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TextUtils {
+    public static String snakeCaseToTitleCase(String inputString) {
+        return titleCaseConversion(inputString.replace("_", " "));
+    }
+
     public static String titleCaseConversion(String inputString) {
         if (StringUtils.isBlank(inputString)) {
             return "";

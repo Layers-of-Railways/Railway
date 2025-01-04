@@ -19,6 +19,7 @@
 package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.simibubi.create.foundation.utility.Components;
@@ -27,7 +28,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -49,9 +49,9 @@ public class PalettesDemoCommand {
                     PatternBuilder pattern = create();
 
                     pattern.place(ctx.getSource().getLevel(), origin, null);
-                    for (DyeColor dyeColor : DyeColor.values()) {
+                    for (PalettesColor palettesColor : PalettesColor.values()) {
                         origin = origin.offset(pattern.maxWidth + 2, 0, 0);
-                        pattern.place(ctx.getSource().getLevel(), origin, dyeColor);
+                        pattern.place(ctx.getSource().getLevel(), origin, palettesColor);
                     }
 
                     ctx.getSource().sendSuccess(() -> Components.literal("Placed palettes blocks"), true);
@@ -127,7 +127,7 @@ public class PalettesDemoCommand {
             return this;
         }
 
-        void place(Level level, BlockPos pos, DyeColor color) {
+        void place(Level level, BlockPos pos, PalettesColor color) {
             for (Entry entry : entries) {
                 BlockState state = entry.style.get(color).getDefaultState();
                 for (Transform<?> transform : entry.transforms) {
