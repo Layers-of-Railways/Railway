@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/granite_flat_riveted_locometal"
+      "model": "railways:block/palettes/granite/flat_riveted_locometal"
     }
   }
 }

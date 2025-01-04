@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/diorite_slashed_locometal"
+      "model": "railways:block/palettes/diorite/slashed_locometal"
     }
   }
 }

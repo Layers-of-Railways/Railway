@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "railways:palettes/cycle_groups/netherite"
+            "tag": "railways:palettes/cycle_groups/netherite/plain"
           }
         ]
       },

@@ -48,9 +48,12 @@ import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
@@ -80,7 +83,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
-import static com.railwayteam.railways.base.data.BuilderTransformers.colorNameUnderscore;
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
@@ -202,7 +204,7 @@ public class BuilderTransformersImpl {
             .loot((p, l) -> p.dropOther(l, AllBlocks.RAILWAY_CASING.get()));
     }
 
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, SmokeStackBlock.RotationType rotType) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, RotationType rotType) {
         return (c, p) -> p.getVariantBuilder(c.get())
             .forAllStatesExcept(state -> ConfiguredModel.builder()
                     .modelFile(p.models().withExistingParent(
@@ -212,8 +214,8 @@ public class BuilderTransformersImpl {
                             .texture("0", state.getValue(SmokeStackBlock.STYLE).getTexture(variant))
                             .texture("particle", "#0")
                     )
-                    .rotationY(rotType == SmokeStackBlock.RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
-                        rotType == SmokeStackBlock.RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
+                    .rotationY(rotType == RotationType.FACING ? (((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360) :
+                        rotType == RotationType.AXIS ? (state.getValue(BlockStateProperties.HORIZONTAL_AXIS) == Direction.Axis.X ? 90 : 0) : 0)
                     .build(),
                 AbstractSmokeStackBlock.ENABLED,
                 AbstractSmokeStackBlock.POWERED,
@@ -271,7 +273,7 @@ public class BuilderTransformersImpl {
                 .tag(CRTags.AllBlockTags.LOCOMETAL.tag);
             if (type != null)
                 out = out.blockstate((c, p) -> p.simpleBlock(c.get(), p.models().cubeAll(
-                    c.getName(), p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type)
+                    "block/palettes/"+TextUtils.prefixToFolder(c.getName(), color.getSerializedName()), p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type)
                 )));
             return out;
         };
@@ -279,28 +281,41 @@ public class BuilderTransformersImpl {
 
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(PalettesColor color) {
         return b -> b.transform(locoMetalBase(color, null))
-            .blockstate((c, p) -> p.axisBlock(c.get(),
-                p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_side"),
-                p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_top")
-            ));
+            .blockstate((c, p) -> {
+                String modelName = "block/palettes/"+TextUtils.prefixToFolder(c.getName(), color.getSerializedName());
+                ResourceLocation side = p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_side");
+                ResourceLocation end = p.modLoc("block/palettes/" + color.getSerializedName() + "/riveted_pillar_top");
+                p.axisBlock(c.get(),
+                    p.models().cubeColumn(modelName, side, end),
+                    p.models().cubeColumnHorizontal(modelName + "_horizontal", side, end)
+                );
+            });
     }
 
-    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(PalettesColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(PalettesColor color, @Nullable Wrapping wrapping) {
         return b -> b.transform(locoMetalBase(color, null))
             .blockstate((c, p) -> p.getVariantBuilder(c.get()).forAllStates(state -> {
                 Direction dir = state.getValue(BlockStateProperties.FACING);
                 String name = dir.getAxis().isVertical() ? "smokebox" : "smokebox_horizontal";
+                String wrappingName = wrapping == null ? "" : wrapping.prefix("wrapped_");
 
                 return ConfiguredModel.builder()
                     .modelFile(
-                        p.models().withExistingParent(colorNameUnderscore(color) + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
-                            .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/tank_side"))
+                        p.models().withExistingParent("block/palettes/" + color.getSerializedName() + "/" + wrappingName + "locometal_" + name, p.modLoc("block/palettes/smokebox/" + name))
+                            .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + wrappingName + "tank_side"))
                             .texture("top", p.modLoc("block/palettes/" + color.getSerializedName() + "/smokebox_tank_top"))
                     )
                     .rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
             }));
+    }
+
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> locoMetalItem(PalettesColor color) {
+        return i -> i.model((c, p) -> p.withExistingParent(
+            c.getName(),
+            p.modLoc("block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()))
+        ));
     }
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {

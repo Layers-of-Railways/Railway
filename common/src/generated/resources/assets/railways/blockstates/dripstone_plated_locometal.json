@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/dripstone_plated_locometal"
+      "model": "railways:block/palettes/dripstone/plated_locometal"
     }
   }
 }

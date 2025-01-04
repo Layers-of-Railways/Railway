@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/diorite_flat_riveted_locometal"
+      "model": "railways:block/palettes/diorite/flat_riveted_locometal"
     }
   }
 }

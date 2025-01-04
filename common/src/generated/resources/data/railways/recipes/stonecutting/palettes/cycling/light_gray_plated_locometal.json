@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/light_gray"
+    "tag": "railways:palettes/cycle_groups/light_gray/plain"
   },
   "result": "railways:light_gray_plated_locometal"
 }

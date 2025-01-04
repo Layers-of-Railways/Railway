@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/light_blue"
+    "tag": "railways:palettes/cycle_groups/light_blue/plain"
   },
   "result": "railways:light_blue_locometal_smokebox"
 }

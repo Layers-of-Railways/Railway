@@ -62,7 +62,11 @@ public class TagCycleTracker {
 
     public @Nullable TagKey<Item> getCycleTag(Item item) {
         if (!cyclesComputed) computeCycles();
-        return REVERSE_LOOKUP.get(item);
+        TagKey<Item> tag = REVERSE_LOOKUP.get(item);
+        if (tag != null && CYCLES.get(tag).size() == 1) { // no point showing a menu for a single item
+            return null;
+        }
+        return tag;
     }
 
     public List<Item> getCycle(TagKey<Item> tag) {

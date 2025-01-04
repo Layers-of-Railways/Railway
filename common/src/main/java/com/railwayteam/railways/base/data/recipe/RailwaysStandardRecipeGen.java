@@ -20,8 +20,8 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
-import com.railwayteam.railways.base.data.recipe.EnumRecipeList.PalettesRecipeList;
 import com.railwayteam.railways.base.data.recipe.EnumRecipeList.DyedOnlyPalettesRecipeList;
+import com.railwayteam.railways.base.data.recipe.EnumRecipeList.PalettesRecipeList;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
@@ -33,6 +33,7 @@ import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.AbstractionUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.foundation.utility.Pair;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -320,7 +321,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     CyclingStyleList<PalettesRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new PalettesRecipeList(color ->
         new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
             .setEmiDefault(color.isNetherite() && style != Styles.RIVETED)
-            .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(color))
+            .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(Pair.of(color, style.wrapping)))
             .create()
     ));
 

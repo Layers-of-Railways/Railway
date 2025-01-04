@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/maroon"
+    "tag": "railways:palettes/cycle_groups/maroon/plain"
   },
   "result": "railways:maroon_flat_riveted_locometal"
 }

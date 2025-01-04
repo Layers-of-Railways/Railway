@@ -21,53 +21,78 @@ package com.railwayteam.railways.registry.commands;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.PalettesColor;
-import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
+import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.world.level.Level;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.StructureBlockInfo;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.railwayteam.railways.content.palettes.boiler.BoilerBlock.HORIZONTAL_AXIS;
 import static com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock.FACING;
 import static net.minecraft.world.level.block.RotatedPillarBlock.AXIS;
 
 public class PalettesDemoCommand {
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
         return Commands.literal("palettes_demo")
             .requires(cs -> cs.hasPermission(2))
             .then(Commands.argument("pos", BlockPosArgument.blockPos())
                 .executes(ctx -> {
-                    BlockPos origin = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
-                    PatternBuilder pattern = create();
+                    final BlockPos origin0 = BlockPosArgument.getLoadedBlockPos(ctx, "pos");
+                    BlockPos origin = origin0;
+                    ServerLevel level = ctx.getSource().getLevel();
+                    StructureTemplate template = level.getStructureManager().get(Railways.asResource("palettes_showcase")).get();
+                    final BoundingBox bounds = template.getBoundingBox(BlockPos.ZERO, Rotation.NONE, BlockPos.ZERO, Mirror.NONE);
 
                     try {
                         for (PalettesColor palettesColor : PalettesColor.values()) {
-                            origin = origin.offset(pattern.maxWidth + 2, 0, 0);
-                            pattern.place(ctx.getSource().getLevel(), origin.above(), palettesColor);
+                            if (palettesColor.ordinal() > 0)
+                                origin = origin.offset(bounds.getXSpan() + 2, 0, 0);
+                            template.placeInWorld(
+                                level,
+                                origin,
+                                origin,
+                                new StructurePlaceSettings().addProcessor(new LocometalSubstituteProcessor(palettesColor)),
+                                level.random,
+                                Block.UPDATE_CLIENTS
+                            );
+
                             Block associatedBlock = palettesColor.getAssociatedBlock();
                             if (associatedBlock != null) {
                                 BlockState state = associatedBlock.defaultBlockState();
                                 if (state.hasProperty(HORIZONTAL_AXIS)) {
                                     state = state.setValue(HORIZONTAL_AXIS, Axis.Z);
                                 } else if (state.hasProperty(AXIS)) {
-                                    state = state.setValue(AXIS, Axis.Z);
+                                    state = state.setValue(AXIS, Axis.Y);
                                 } else if (state.hasProperty(FACING)) {
-                                    state = state.setValue(FACING, Direction.SOUTH);
+                                    state = state.setValue(FACING, Direction.UP);
                                 }
                                 for (int i = 0; i <= 3; i++) {
-                                    ctx.getSource().getLevel().setBlockAndUpdate(origin.offset(i, 0, 0), state);
+                                    for (int j = 0; j <= 4; j++) {
+                                        level.setBlockAndUpdate(origin.offset(i, 0, j), state);
+                                    }
                                 }
                             }
                         }
@@ -76,100 +101,65 @@ public class PalettesDemoCommand {
                         throw e;
                     }
 
-                    ctx.getSource().sendSuccess(() -> Components.literal("Placed palettes blocks"), true);
+                    final BlockPos finalCorner = origin.offset(bounds.getXSpan() - 1, bounds.getYSpan() - 1, bounds.getZSpan() - 1);
+
+                    ctx.getSource().sendSuccess(() -> Components.literal("Placed palettes blocks. Click ")
+                        .append(Components.literal("[here]").withStyle(Style.EMPTY
+                            .withClickEvent(new ClickEvent(
+                                ClickEvent.Action.SUGGEST_COMMAND,
+                                "/fill " +
+                                    origin0.getX() + " " + origin0.getY() + " " + origin0.getZ() + " " +
+                                    finalCorner.getX() + " " + finalCorner.getY() + " " + finalCorner.getZ() + " air")
+                            )
+                            .withBold(true)
+                        ))
+                        .append(Components.literal(" to clear.")), true);
                     return 1;
                 }));
     }
 
-    private static PatternBuilder create() {
-        return new PatternBuilder()
-            .next(Styles.SLASHED).next(Styles.SLASHED).next(Styles.FLAT_SLASHED).next(Styles.SMOKEBOX).transform(FACING, Direction.UP)
-            .nextRow()
-            .next(Styles.RIVETED).next(Styles.RIVETED).next(Styles.FLAT_RIVETED).next(Styles.SMOKEBOX).transform(FACING, Direction.SOUTH)
-            .nextRow()
-            .next(Styles.PILLAR).transform(AXIS, Axis.Y).next(Styles.PILLAR).transform(AXIS, Axis.Z).next(Styles.PLATED).next(Styles.BRASS_WRAPPED_SLASHED)
-            .nextRow()
-            .next(Styles.IRON_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.COPPER_WRAPPED_SLASHED).next(Styles.BRASS_WRAPPED_SLASHED)
-            .nextRow()
-            .nextRow()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.BRASS_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.COPPER_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .next(Styles.IRON_WRAPPED_BOILER).transform(HORIZONTAL_AXIS, Axis.X)
-            .nextRow()
-            .nextRow()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.GULLET)
-            .skip()
-            .skip()
-            .next(Styles.BOILER).transform(HORIZONTAL_AXIS, Axis.Z).transform(BoilerBlock.STYLE, BoilerBlock.Style.SMOKEBOX);
-    }
+    private static class LocometalSubstituteProcessor extends StructureProcessor {
+        private final PalettesColor color;
 
-    private record Transform<T extends Comparable<T>>(Property<T> property, T value) {
-        public static <T extends Comparable<T>> Transform<T> of(Property<T> property, T value) {
-            return new Transform<>(property, value);
+        public LocometalSubstituteProcessor(PalettesColor color) {
+            this.color = color;
         }
 
-        public BlockState apply(BlockState state) {
-            return state.setValue(property, value);
-        }
-    }
-
-    private static class PatternBuilder {
-        private @Nullable Entry latest = null;
-
-        final List<Entry> entries = new ArrayList<>();
-        int xOffset = 0;
-        int yOffset = 0;
-        int maxWidth = 0;
-
-        PatternBuilder next(Styles style) {
-            latest = new Entry(style, xOffset, yOffset);
-            xOffset += 1;
-            maxWidth = Math.max(maxWidth, xOffset);
-            entries.add(latest);
-            return this;
-        }
-
-        PatternBuilder skip() {
-            xOffset += 1;
-            maxWidth = Math.max(maxWidth, xOffset);
-            return this;
-        }
-
-        PatternBuilder nextRow() {
-            xOffset = 0;
-            yOffset += 1;
-            return this;
-        }
-
-        <T extends Comparable<T>> PatternBuilder transform(Property<T> property, T value) {
-            if (latest != null) {
-                latest.transforms.add(Transform.of(property, value));
+        @Override
+        public @Nullable StructureBlockInfo processBlock(
+            @NotNull LevelReader level,
+            @NotNull BlockPos blockPos,
+            @NotNull BlockPos pos,
+            @NotNull StructureBlockInfo blockInfo,
+            @NotNull StructureBlockInfo relativeBlockInfo,
+            @NotNull StructurePlaceSettings settings
+        ) {
+            StructureBlockInfo superInfo = super.processBlock(level, blockPos, pos, blockInfo, relativeBlockInfo, settings);
+            Pair<Styles, PalettesColor> styleInfo = CRPalettes.getStyleForBlock(superInfo.state.getBlock());
+            if (styleInfo != null) {
+                return new StructureBlockInfo(
+                    superInfo.pos(),
+                    blockWithProperties(styleInfo.getFirst().get(color).get(), superInfo.state),
+                    superInfo.nbt()
+                );
             }
-            return this;
+            return superInfo;
         }
 
-        void place(Level level, BlockPos pos, PalettesColor color) {
-            for (Entry entry : entries) {
-                BlockState state = entry.style.get(color).getDefaultState();
-                for (Transform<?> transform : entry.transforms) {
-                    state = transform.apply(state);
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        private static BlockState blockWithProperties(Block block, BlockState propertySource) {
+            BlockState state = block.defaultBlockState();
+            for (Property property : propertySource.getProperties()) {
+                if (state.hasProperty(property)) {
+                    state = state.setValue(property, propertySource.getValue(property));
                 }
-                level.setBlockAndUpdate(pos.offset(entry.xOffset, entry.yOffset, 0), state);
             }
+            return state;
         }
-    }
 
-    private static class Entry {
-        final Styles style;
-        final int xOffset;
-        final int yOffset;
-        final List<Transform<?>> transforms = new ArrayList<>();
-
-        private Entry(Styles style, int xOffset, int yOffset) {
-            this.style = style;
-            this.xOffset = xOffset;
-            this.yOffset = yOffset;
+        @Override
+        protected @NotNull StructureProcessorType<?> getType() {
+            return StructureProcessorType.NOP; // not actually a NOP, but this won't ever be serialized
         }
     }
 }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/ochrum_flat_riveted_locometal"
+      "model": "railways:block/palettes/ochrum/flat_riveted_locometal"
     }
   }
 }

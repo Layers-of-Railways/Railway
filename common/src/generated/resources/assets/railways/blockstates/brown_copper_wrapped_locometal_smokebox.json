@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox_horizontal",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox_horizontal",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox"
+    },
+    "facing=west": {
+      "model": "railways:block/palettes/brown/copper_wrapped_locometal_smokebox_horizontal",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -1,15 +1,15 @@
 {
   "variants": {
     "axis=x": {
-      "model": "railways:block/royal_blue_locometal_pillar_horizontal",
+      "model": "railways:block/palettes/royal_blue/locometal_pillar_horizontal",
       "x": 90,
       "y": 90
     },
     "axis=y": {
-      "model": "railways:block/royal_blue_locometal_pillar"
+      "model": "railways:block/palettes/royal_blue/locometal_pillar"
     },
     "axis=z": {
-      "model": "railways:block/royal_blue_locometal_pillar_horizontal",
+      "model": "railways:block/palettes/royal_blue/locometal_pillar_horizontal",
       "x": 90
     }
   }

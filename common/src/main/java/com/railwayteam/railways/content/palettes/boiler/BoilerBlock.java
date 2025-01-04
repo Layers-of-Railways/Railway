@@ -76,7 +76,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     public BoilerBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
-                .setValue(STYLE, Style.SMOKEBOX)
+                .setValue(STYLE, Style.FLAT)
                 .setValue(HORIZONTAL_AXIS, Axis.X)
                 .setValue(RAISED, false)
         );

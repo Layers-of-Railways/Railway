@@ -1,28 +1,28 @@
 {
   "variants": {
     "facing=down": {
-      "model": "railways:block/ochrum_locometal_smokebox",
+      "model": "railways:block/palettes/ochrum/locometal_smokebox",
       "x": 180
     },
     "facing=east": {
-      "model": "railways:block/ochrum_locometal_smokebox_horizontal",
+      "model": "railways:block/palettes/ochrum/locometal_smokebox_horizontal",
       "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "railways:block/ochrum_locometal_smokebox_horizontal",
+      "model": "railways:block/palettes/ochrum/locometal_smokebox_horizontal",
       "x": 90
     },
     "facing=south": {
-      "model": "railways:block/ochrum_locometal_smokebox_horizontal",
+      "model": "railways:block/palettes/ochrum/locometal_smokebox_horizontal",
       "x": 90,
       "y": 180
     },
     "facing=up": {
-      "model": "railways:block/ochrum_locometal_smokebox"
+      "model": "railways:block/palettes/ochrum/locometal_smokebox"
     },
     "facing=west": {
-      "model": "railways:block/ochrum_locometal_smokebox_horizontal",
+      "model": "railways:block/palettes/ochrum/locometal_smokebox_horizontal",
       "x": 90,
       "y": 270
     }

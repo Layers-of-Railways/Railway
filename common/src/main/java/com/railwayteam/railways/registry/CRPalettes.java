@@ -26,10 +26,14 @@ import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.util.IterableUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.Pair;
+import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -38,6 +42,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -49,6 +54,7 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
 public class CRPalettes {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
+    private static final Map<Block, Pair<Styles, PalettesColor>> REVERSE_LOOKUP = new HashMap<>(Styles.values().length * PalettesColor.values().length, 2);
 
     public static void register() { // registration order is important for a clean inventory layout
         ModSetup.usePalettesTab();
@@ -61,40 +67,55 @@ public class CRPalettes {
         ModSetup.useBaseTab();
     }
 
-    public static final EnumMap<PalettesColor, TagKey<Item>> CYCLE_GROUPS = new EnumMap<>(PalettesColor.class);
+    public static final Map<Pair<PalettesColor, @Nullable Wrapping>, TagKey<Item>> CYCLE_GROUPS =
+        new HashMap<>(PalettesColor.values().length * (Wrapping.values().length + 1), 2);
 
     static {
         for (PalettesColor palettesColor : PalettesColor.values()) {
-            CYCLE_GROUPS.put(palettesColor, CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/" + palettesColor.getSerializedName())));
+            for (Wrapping wrapping : IterableUtils.nullAnd(Wrapping.values())) {
+                String wrappingName = wrapping == null ? "plain" : wrapping.name().toLowerCase(Locale.ROOT);
+                CYCLE_GROUPS.put(Pair.of(palettesColor, wrapping), CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/" + palettesColor.getSerializedName()+"/"+wrappingName)));
+            }
         }
     }
 
     public static void provideLangEntries(BiConsumer<String, String> consumer) {
         for (PalettesColor color : PalettesColor.values()) {
-            consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName(), joinSpace(snakeCaseToTitleCase(color.getName()), "Locometal"));
+            String colorLangName = color.isNetherite() ? null : snakeCaseToTitleCase(color.getName());
+            consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName()+".plain", joinSpace(colorLangName, "Locometal"));
+            for (Wrapping wrapping : Wrapping.values()) {
+                consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName()+"."+wrapping.name().toLowerCase(Locale.ROOT),
+                    joinSpace(colorLangName, snakeCaseToTitleCase(wrapping.name()), "Wrapped Locometal"));
+            }
         }
-        consumer.accept("tag.item.railways.palettes.cycle_groups.base", "Locometal");
 
         for (Styles style : Styles.values()) {
             consumer.accept("tag.item.railways.palettes.dye_groups."+style.name().toLowerCase(Locale.ROOT), style.dyeGroupLang);
         }
     }
 
+    public static @Nullable Pair<Styles, PalettesColor> getStyleForBlock(Block block) {
+        return REVERSE_LOOKUP.get(block);
+    }
+
     public enum Styles {
         SLASHED(CRPalettes::slashedLocometal, true, "Slashed Locometal"),
         RIVETED(CRPalettes::rivetedLocometal, true, "Riveted Locometal"),
         PILLAR(CRPalettes::locometalPillar, true, "Locometal Pillars"),
-        SMOKEBOX(CRPalettes::locometalSmokebox, true, "Locometal Smokeboxes"),
+        SMOKEBOX(CRPalettes.locometalSmokebox(null), true, "Locometal Smokeboxes"),
+        BRASS_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.BRASS), true, "Brass Wrapped Locometal Smokeboxes", Wrapping.BRASS),
+        COPPER_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.COPPER), true, "Copper Wrapped Locometal Smokeboxes", Wrapping.COPPER),
+        IRON_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.IRON), true, "Iron Wrapped Locometal Smokeboxes", Wrapping.IRON),
         PLATED(CRPalettes::platedLocometal, true, "Plated Locometal"),
         FLAT_SLASHED(CRPalettes::flatSlashedLocometal, true, "Flat Slashed Locometal"),
         FLAT_RIVETED(CRPalettes::flatRivetedLocometal, true, "Flat Riveted Locometal"),
-        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, false, "Brass Wrapped Locometal"),
-        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, false, "Copper Wrapped Locometal"),
-        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, false, "Iron Wrapped Locometal"),
+        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, true, "Brass Wrapped Locometal", Wrapping.BRASS),
+        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, true, "Copper Wrapped Locometal", Wrapping.COPPER),
+        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, true, "Iron Wrapped Locometal", Wrapping.IRON),
         BOILER(CRPalettes::locometalBoiler, false, "Locometal Boilers"),
-        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, false, "Brass Wrapped Locometal Boilers"),
-        COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, false, "Copper Wrapped Locometal Boilers"),
-        IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, false, "Iron Wrapped Locometal Boilers")
+        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, false, "Brass Wrapped Locometal Boilers", Wrapping.BRASS),
+        COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, false, "Copper Wrapped Locometal Boilers", Wrapping.COPPER),
+        IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, false, "Iron Wrapped Locometal Boilers", Wrapping.IRON)
         ;
 
         private static Styles[] CYCLING = null;
@@ -119,22 +140,32 @@ public class CRPalettes {
         private final PaletteBlockRegistrar registrar;
         public final TagKey<Item> dyeGroupTag;
         public final boolean includeInCycleGroup;
+        public final @Nullable Wrapping wrapping;
         public final String dyeGroupLang;
 
         Styles(PaletteBlockRegistrar registrar, boolean includeInCycleGroup, String dyeGroupLang) {
+            this(registrar, includeInCycleGroup, dyeGroupLang, null);
+        }
+
+        Styles(PaletteBlockRegistrar registrar, boolean includeInCycleGroup, String dyeGroupLang, @Nullable Wrapping wrapping) {
             this.registrar = registrar;
             this.dyeGroupLang = dyeGroupLang;
             this.dyeGroupTag = CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/dye_groups/" + name().toLowerCase(Locale.ROOT)));
             this.includeInCycleGroup = includeInCycleGroup;
+            this.wrapping = wrapping;
         }
 
         @SuppressWarnings("unchecked")
         private void register(PalettesColor palettesColor) {
-            if (includeInCycleGroup) {
-                blocks.put(palettesColor, registrar.register(palettesColor, dyeGroupTag, CYCLE_GROUPS.get(palettesColor)));
-            } else {
-                blocks.put(palettesColor, registrar.register(palettesColor, dyeGroupTag));
-            }
+            // we inject this transformer so that every registered block can be reverse-looked up
+            // in the future we can of course extend this to apply any other transformations to all palettes blocks
+            TransformerProvider transformer = new ChildTransformer(palettesColor);
+
+            BlockEntry<?> registered = includeInCycleGroup
+                ? registrar.register(transformer, palettesColor, dyeGroupTag, CYCLE_GROUPS.get(Pair.of(palettesColor, wrapping)))
+                : registrar.register(transformer, palettesColor, dyeGroupTag);
+
+            blocks.put(palettesColor, registered);
 
             if (palettesColor.isNetherite()) {
                 EmiRecipeDefaultsGen.TAG_DEFAULTS.put(dyeGroupTag, blocks.get(PalettesColor.NETHERITE).getId());
@@ -148,29 +179,53 @@ public class CRPalettes {
         public boolean contains(Block block) {
             return blocks.values().stream().anyMatch(e -> e.get() == block);
         }
+
+        private class ChildTransformer implements TransformerProvider {
+            private final PalettesColor color;
+
+            private ChildTransformer(PalettesColor color) {
+                this.color = color;
+            }
+
+            @Override
+            public <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> get() {
+                return b -> b.onRegister(this::onRegister);
+            }
+
+            private void onRegister(Block block) {
+                REVERSE_LOOKUP.put(block, Pair.of(Styles.this, color));
+            }
+        }
     }
 
     @FunctionalInterface
     private interface PaletteBlockRegistrar {
         @SuppressWarnings("unchecked")
         @ApiStatus.NonExtendable
-        default BlockEntry<?> register(PalettesColor color, TagKey<Item>... tags) {
+        default BlockEntry<?> register(TransformerProvider transformer, PalettesColor color, TagKey<Item>... tags) {
             String colorString = color.isNetherite() ? "" : color.getSerializedName();
-            return register(color, colorString, color.isNetherite() ? "" : snakeCaseToTitleCase(colorString), tags);
+            return register(transformer, color, colorString, color.isNetherite() ? "" : snakeCaseToTitleCase(colorString), tags);
         }
 
         @SuppressWarnings("unchecked")
         @ApiStatus.OverrideOnly
-        BlockEntry<?> register(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags);
+        BlockEntry<?> register(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags);
+    }
+
+    @FunctionalInterface
+    private interface TransformerProvider {
+        <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> get();
     }
 
     @SafeVarargs
-    private static BlockEntry<?> slashedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> slashedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "slashed_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "slashed"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.SLASHED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Slashed Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -178,12 +233,14 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    private static BlockEntry<?> rivetedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> rivetedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "riveted_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Riveted Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -191,23 +248,36 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    private static BlockEntry<?> locometalPillar(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> locometalPillar(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_pillar"), RotatedPillarBlock::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalPillar(color))
             .lang(joinSpace(colorName, "Locometal Pillar"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
             .register();
     }
 
+    private static PaletteBlockRegistrar locometalSmokebox(@Nullable Wrapping wrapping) {
+        return (transformer, color, colorString, colorName, tags) ->
+            locometalSmokebox(transformer, color, colorString, colorName, wrapping, tags);
+    }
+
     @SafeVarargs
-    public static BlockEntry<?> locometalSmokebox(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
-        return REGISTRATE.block(joinUnderscore(colorString, "locometal_smokebox"), PalettesSmokeboxBlock::new)
-            .transform(BuilderTransformers.locoMetalSmokeBox(color))
-            .lang(joinSpace(colorName, "Locometal Smokebox"))
+    private static BlockEntry<?> locometalSmokebox(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, @Nullable Wrapping wrapping, TagKey<Item>... tags) {
+        String wrappingName = wrapping == null ? null : wrapping.prefix("wrapped");
+        String wrappingLangName = wrapping == null
+            ? null
+            : snakeCaseToTitleCase(wrapping.name()) + " Wrapped";
+        return REGISTRATE.block(joinUnderscore(colorString, wrappingName, "locometal_smokebox"), PalettesSmokeboxBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locoMetalSmokeBox(color, wrapping))
+            .lang(joinSpace(colorName, wrappingLangName, "Locometal Smokebox"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -215,11 +285,13 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    public static BlockEntry<?> platedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> platedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "plated_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "sheeting"))
             .lang(joinSpace("Plated", colorName, "Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -227,11 +299,13 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    public static BlockEntry<?> flatSlashedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> flatSlashedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "flat_slashed_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "annexed_slashed"))
             .lang(joinSpace("Flat", colorName, "Slashed Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -239,11 +313,13 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    public static BlockEntry<?> flatRivetedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> flatRivetedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "flat_riveted_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "annexed_riveted"))
             .lang(joinSpace("Flat", colorName, "Riveted Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
             .build()
@@ -251,88 +327,96 @@ public class CRPalettes {
     }
 
     @SafeVarargs
-    public static BlockEntry<?> brassWrappedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> brassWrappedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "brass_wrapped_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "wrapped_slashed"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Brass Wrapped Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .build()
             .register();
     }
 
     @SafeVarargs
-    public static BlockEntry<?> copperWrappedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> copperWrappedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "copper_wrapped_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "copper_wrapped_slashed"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.COPPER_WRAPPED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Copper Wrapped Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .build()
             .register();
     }
 
-
-
     @SafeVarargs
-    public static BlockEntry<?> ironWrappedLocometal(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> ironWrappedLocometal(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "iron_wrapped_locometal"), Block::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBase(color, "iron_wrapped_slashed"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.IRON_WRAPPED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Iron Wrapped Locometal"))
             .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)
             .build()
             .register();
     }
 
     @SafeVarargs
-    public static BlockEntry<?> locometalBoiler(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> locometalBoiler(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_boiler"), BoilerBlock::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBoiler(color, null))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Locometal Boiler"))
             .item()
             .tag(tags)
-            .transform(customItemModel(joinUnderscore(colorString, "locometal_boiler_gullet_x")))
+            .transform(customItemModel(join("/", "palettes", color.getSerializedName(), "locometal_boiler_flat_x")))
             .register();
     }
 
     @SafeVarargs
-    public static BlockEntry<?> brassWrappedLocometalBoiler(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> brassWrappedLocometalBoiler(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "brass_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.BRASS))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.BRASS_WRAPPED_BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Brass Wrapped Locometal Boiler"))
             .item()
             .tag(tags)
-            .transform(customItemModel(joinUnderscore(colorString, "brass_wrapped_locometal_boiler_gullet_x")))
+            .transform(customItemModel(join("/", "palettes", color.getSerializedName(), "brass_wrapped_locometal_boiler_flat_x")))
             .register();
     }
 
     @SafeVarargs
-    public static BlockEntry<?> copperWrappedLocometalBoiler(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> copperWrappedLocometalBoiler(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "copper_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.COPPER))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.COPPER_WRAPPED_BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Copper Wrapped Locometal Boiler"))
             .item()
             .tag(tags)
-            .transform(customItemModel(joinUnderscore(colorString, "copper_wrapped_locometal_boiler_gullet_x")))
+            .transform(customItemModel(join("/", "palettes", color.getSerializedName(), "copper_wrapped_locometal_boiler_flat_x")))
             .register();
     }
 
     @SafeVarargs
-    public static BlockEntry<?> ironWrappedLocometalBoiler(PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+    private static BlockEntry<?> ironWrappedLocometalBoiler(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "iron_wrapped_locometal_boiler"), BoilerBlock::new)
+            .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalBoiler(color, Wrapping.IRON))
             .onRegister(connectedTextures(() -> new BoilerCTBehaviour(CRSpriteShifts.IRON_WRAPPED_BOILER_SIDE.get(color))))
             .lang(joinSpace(colorName, "Iron Wrapped Locometal Boiler"))
             .item()
             .tag(tags)
-            .transform(customItemModel(joinUnderscore(colorString, "iron_wrapped_locometal_boiler_gullet_x")))
+            .transform(customItemModel(join("/", "palettes", color.getSerializedName(), "iron_wrapped_locometal_boiler_flat_x")))
             .register();
     }
 
@@ -399,15 +483,13 @@ public class CRPalettes {
     }
 
     public enum Wrapping {
-        BRASS(false, Styles.BRASS_WRAPPED_BOILER),
-        COPPER(true, Styles.COPPER_WRAPPED_BOILER),
-        IRON(true, Styles.IRON_WRAPPED_BOILER);
+        BRASS(false),
+        COPPER(true),
+        IRON(true);
         private final boolean doPrefix;
-        public final Styles boilerStyle;
 
-        Wrapping(boolean doPrefix, Styles boilerStyle) {
+        Wrapping(boolean doPrefix) {
             this.doPrefix = doPrefix;
-            this.boilerStyle = boilerStyle;
         }
 
         public String prefix(String base) {

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/plated_locometal"
+      "model": "railways:block/palettes/netherite/plated_locometal"
     }
   }
 }

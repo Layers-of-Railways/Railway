@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/tuff"
+    "tag": "railways:palettes/cycle_groups/tuff/plain"
   },
   "result": "railways:tuff_locometal_pillar"
 }

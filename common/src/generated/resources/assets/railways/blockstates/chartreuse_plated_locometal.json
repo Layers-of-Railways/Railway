@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/chartreuse_plated_locometal"
+      "model": "railways:block/palettes/chartreuse/plated_locometal"
     }
   }
 }

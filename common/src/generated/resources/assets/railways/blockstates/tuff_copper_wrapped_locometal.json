@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/tuff_copper_wrapped_locometal"
+      "model": "railways:block/palettes/tuff/copper_wrapped_locometal"
     }
   }
 }

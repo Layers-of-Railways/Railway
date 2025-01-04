@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/diorite_copper_wrapped_locometal"
+      "model": "railways:block/palettes/diorite/copper_wrapped_locometal"
     }
   }
 }

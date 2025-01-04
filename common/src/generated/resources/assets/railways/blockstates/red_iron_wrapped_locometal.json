@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/red_iron_wrapped_locometal"
+      "model": "railways:block/palettes/red/iron_wrapped_locometal"
     }
   }
 }

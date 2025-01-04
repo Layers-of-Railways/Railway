@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/scorchia_flat_riveted_locometal"
+      "model": "railways:block/palettes/scorchia/flat_riveted_locometal"
     }
   }
 }

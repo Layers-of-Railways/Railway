@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/chartreuse_copper_wrapped_locometal"
+      "model": "railways:block/palettes/chartreuse/copper_wrapped_locometal"
     }
   }
 }

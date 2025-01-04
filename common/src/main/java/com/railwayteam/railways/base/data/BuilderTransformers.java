@@ -181,7 +181,7 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(PalettesColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(PalettesColor color, @Nullable Wrapping wrapping) {
         throw new AssertionError();
     }
 
@@ -198,6 +198,11 @@ public class BuilderTransformers {
             .transform(pickaxeOnly())
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.boiler"))
             .blockstate(BoilerGenerator.create(color, wrapping)::generate);
+    }
+
+    @ExpectPlatform
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> locoMetalItem(PalettesColor color) {
+        throw new AssertionError();
     }
 
     public static String colorNameUnderscore(@NotNull PalettesColor color) {

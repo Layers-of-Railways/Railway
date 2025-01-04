@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/scorchia_iron_wrapped_locometal"
+      "model": "railways:block/palettes/scorchia/iron_wrapped_locometal"
     }
   }
 }
