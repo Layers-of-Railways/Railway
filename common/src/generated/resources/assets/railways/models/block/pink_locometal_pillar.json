@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "railways:block/palettes/pink/riveted_pillar_top",
-    "side": "railways:block/palettes/pink/riveted_pillar_side"
+    "end": "railways:block/palettes/pink_/riveted_pillar_top",
+    "side": "railways:block/palettes/pink_/riveted_pillar_side"
   }
 }

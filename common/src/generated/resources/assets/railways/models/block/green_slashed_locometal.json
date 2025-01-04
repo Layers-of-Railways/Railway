@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "railways:block/palettes/green/slashed"
+    "all": "railways:block/palettes/green_/slashed"
   }
 }
