@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "railways:end_ladder",
+    "railways:rung_ladder"
+  ]
+}

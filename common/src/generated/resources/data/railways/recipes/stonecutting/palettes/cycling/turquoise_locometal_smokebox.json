@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/turquoise/plain"
+    "tag": "railways:palettes/cycle_groups/turquoise/base"
   },
   "result": "railways:turquoise_locometal_smokebox"
 }

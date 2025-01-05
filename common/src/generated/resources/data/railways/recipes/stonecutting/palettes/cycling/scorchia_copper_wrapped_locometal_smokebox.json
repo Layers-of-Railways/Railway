@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/scorchia/copper"
+    "tag": "railways:palettes/cycle_groups/scorchia/wrapped_copper"
   },
   "result": "railways:scorchia_copper_wrapped_locometal_smokebox"
 }

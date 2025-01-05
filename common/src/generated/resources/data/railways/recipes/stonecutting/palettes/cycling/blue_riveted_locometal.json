@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/blue/plain"
+    "tag": "railways:palettes/cycle_groups/blue/base"
   },
   "result": "railways:blue_riveted_locometal"
 }
