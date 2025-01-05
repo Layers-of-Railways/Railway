@@ -20,6 +20,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
@@ -27,6 +28,7 @@ import com.simibubi.create.foundation.block.connected.CTType;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.block.render.SpriteShifter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 
@@ -38,6 +40,10 @@ public class CRSpriteShifts {
     public static final EnumMap<PalettesColor, CTSpriteShiftEntry>
         SLASHED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
         RIVETED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        SMOKEBOX = new EnumMap<>(PalettesColor.class),
+        BRASS_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
+        COPPER_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
+        IRON_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
         BRASS_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
         COPPER_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
         IRON_WRAPPED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
@@ -46,9 +52,22 @@ public class CRSpriteShifts {
         COPPER_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class),
         IRON_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class);
 
+    public static EnumMap<PalettesColor, CTSpriteShiftEntry> getSmokebox(@Nullable Wrapping wrapping) {
+        if (wrapping == null) return SMOKEBOX;
+        return switch (wrapping) {
+            case BRASS -> BRASS_WRAPPED_SMOKEBOX;
+            case COPPER -> COPPER_WRAPPED_SMOKEBOX;
+            case IRON -> IRON_WRAPPED_SMOKEBOX;
+        };
+    }
+
     private static void initLocometal(@NotNull PalettesColor color) {
         SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
+        SMOKEBOX.put(color, locometalSmokebox(color, "tank_side"));
+        BRASS_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "wrapped_tank_side"));
+        COPPER_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "copper_wrapped_tank_side"));
+        IRON_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "iron_wrapped_tank_side"));
         BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
         COPPER_WRAPPED_LOCOMETAL.put(color, locometal(color, "copper_wrapped_slashed"));
         IRON_WRAPPED_LOCOMETAL.put(color, locometal(color, "iron_wrapped_slashed"));
@@ -76,6 +95,11 @@ public class CRSpriteShifts {
         return horizontalKryppers("palettes/" + colorName + "/" + name);
     }
 
+    private static CTSpriteShiftEntry locometalSmokebox(@NotNull PalettesColor color, String name) {
+        String colorName = color.getSerializedName();
+        return verticalPinkmachine("palettes/" + colorName + "/" + name);
+    }
+
     private static CTSpriteShiftEntry omni(String name) {
         return getCT(AllCTTypes.OMNIDIRECTIONAL, name);
     }
@@ -92,6 +116,10 @@ public class CRSpriteShifts {
     @SuppressWarnings("unused")
     private static CTSpriteShiftEntry vertical(String name) {
         return getCT(AllCTTypes.VERTICAL, name);
+    }
+
+    private static CTSpriteShiftEntry verticalPinkmachine(String name) {
+        return getCT(CRCTTypes.VERTICAL_PINKMACHINE, name);
     }
 
     //

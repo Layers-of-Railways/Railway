@@ -26,6 +26,7 @@ import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.content.palettes.smokebox.SmokeboxCTBehaviour;
 import com.railwayteam.railways.util.IterableUtils;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -275,6 +276,7 @@ public class CRPalettes {
         return REGISTRATE.block(joinUnderscore(colorString, wrappingName, "locometal_smokebox"), PalettesSmokeboxBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalSmokeBox(color, wrapping))
+            .onRegister(connectedTextures(() -> new SmokeboxCTBehaviour(CRSpriteShifts.getSmokebox(wrapping).get(color))))
             .lang(joinSpace(colorName, wrappingLangName, "Locometal Smokebox"))
             .item()
             .transform(BuilderTransformers.locoMetalItem(color))
