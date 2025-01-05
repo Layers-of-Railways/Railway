@@ -115,8 +115,8 @@ public class CRPalettes {
         BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, "Brass Wrapped Locometal Boilers", null),
         COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, "Copper Wrapped Locometal Boilers", null),
         IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, "Iron Wrapped Locometal Boilers", null),
-        END_LADDER(CRPalettes::endLadder, "End Ladders", CycleGroupCategory.LADDERS),
-        RUNG_LADDER(CRPalettes::rungLadder, "Rung Ladders", CycleGroupCategory.LADDERS),
+        END_LADDER(CRPalettes::endLadder, "Locometal End Ladders", CycleGroupCategory.LADDERS),
+        RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -424,19 +424,19 @@ public class CRPalettes {
 
     @SafeVarargs
     private static BlockEntry<?> endLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
-        return REGISTRATE.block(joinUnderscore(colorString, "end_ladder"), FloatingMetalLadderBlock::new)
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_end_ladder"), FloatingMetalLadderBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalLadder(color, tags))
-            .lang(joinSpace(colorName, "End Ladder"))
+            .lang(joinSpace(colorName, "Locometal End Ladder"))
             .register();
     }
 
     @SafeVarargs
     private static BlockEntry<?> rungLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
-        return REGISTRATE.block(joinUnderscore(colorString, "rung_ladder"), MetalLadderBlock::new)
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_rung_ladder"), MetalLadderBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalLadder(color, tags))
-            .lang(joinSpace(colorName, "Rung Ladder"))
+            .lang(joinSpace(colorName, "Locometal Rung Ladder"))
             .register();
     }
 

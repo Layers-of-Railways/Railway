@@ -76,6 +76,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -318,6 +319,7 @@ public class BuilderTransformersImpl {
     @SafeVarargs
     public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, TagKey<Item>... tags) {
         return b -> b.transform(locoMetalBase(color, null))
+            .initialProperties(() -> Blocks.LADDER)
             .addLayer(() -> RenderType::cutout)
             .properties(p -> p.sound(SoundType.COPPER))
             .blockstate((c, p) -> {
