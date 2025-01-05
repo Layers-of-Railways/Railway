@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:turquoise_end_ladder",
-    "railways:turquoise_rung_ladder"
+    "railways:turquoise_locometal_end_ladder",
+    "railways:turquoise_locometal_rung_ladder"
   ]
 }

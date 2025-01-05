@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:end_ladder",
-    "railways:rung_ladder"
+    "railways:locometal_end_ladder",
+    "railways:locometal_rung_ladder"
   ]
 }

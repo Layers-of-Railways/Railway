@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "tag": "railways:palettes/cycle_groups/dripstone/ladders"
-  },
-  "result": "railways:dripstone_end_ladder"
-}
