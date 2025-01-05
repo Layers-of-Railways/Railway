@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "railways:block/palettes/dripstone/locometal_rung_ladder"
+    "layer0": "railways:block/palettes/dripstone/rung_ladder"
   }
 }

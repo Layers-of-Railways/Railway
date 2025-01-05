@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/ladder",
-  "textures": {
-    "0": "railways:block/palettes/brown/locometal_end_ladder_hoop",
-    "1": "railways:block/palettes/brown/locometal_end_ladder",
-    "particle": "railways:block/palettes/brown/locometal_end_ladder"
-  }
-}

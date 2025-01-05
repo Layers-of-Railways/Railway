@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "railways:block/palettes/pink/locometal_end_ladder"
+    "layer0": "railways:block/palettes/pink/end_ladder"
   }
 }
