@@ -47,6 +47,7 @@ import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -59,6 +60,7 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -177,6 +179,12 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(PalettesColor color) {
+        throw new AssertionError();
+    }
+
+    @SafeVarargs
+    @ExpectPlatform
+    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, TagKey<Item>... tags) {
         throw new AssertionError();
     }
 

@@ -56,6 +56,8 @@ import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -70,6 +72,8 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -309,6 +313,31 @@ public class BuilderTransformersImpl {
                     .rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
                     .build();
             }));
+    }
+
+    @SafeVarargs
+    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, TagKey<Item>... tags) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .addLayer(() -> RenderType::cutout)
+            .properties(p -> p.sound(SoundType.COPPER))
+            .blockstate((c, p) -> {
+                String main = "block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName());
+                String hoop = main + "_hoop";
+                p.horizontalBlock(c.get(), p.models()
+                    .withExistingParent(main, Create.asResource("block/ladder"))
+                    .texture("0", hoop)
+                    .texture("1", main)
+                    .texture("particle", main)
+                );
+            })
+            .tag(BlockTags.CLIMBABLE)
+            .item()
+            .model((c, p) -> p.blockSprite(
+                c::get,
+                p.modLoc("block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()))
+            ))
+            .tag(tags)
+            .build();
     }
 
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> locoMetalItem(PalettesColor color) {

@@ -26,6 +26,7 @@ import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRPalettes;
+import com.railwayteam.railways.registry.CRPalettes.CycleCategoryList;
 import com.railwayteam.railways.registry.CRPalettes.CyclingStyleList;
 import com.railwayteam.railways.registry.CRPalettes.StyledList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
@@ -318,12 +319,16 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     );
 
     // cut a color to other blocks in the cycle
-    CyclingStyleList<PalettesRecipeList> LOCOMETAL_CYCLING = new CyclingStyleList<>(style -> new PalettesRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
-            .setEmiDefault(color.isNetherite() && style != Styles.RIVETED)
-            .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(Pair.of(color, style.wrapping)))
-            .create()
-    ));
+    CycleCategoryList<CyclingStyleList<PalettesRecipeList>> LOCOMETAL_CYCLING = new CycleCategoryList<>(category ->
+        new CyclingStyleList<>(category, style ->
+            new PalettesRecipeList(color ->
+                new GeneratedRecipeBuilder("palettes/cycling", style.get(color))
+                    .setEmiDefault(color.isNetherite() && style != Styles.RIVETED)
+                    .viaStonecuttingTag(() -> CRPalettes.CYCLE_GROUPS.get(Pair.of(color, style.cycleGroupCategory)))
+                    .create()
+            )
+        )
+    );
 
     GeneratedRecipe FUEL_TANK = create(AbstractionUtils.getFluidTankBlockEntry())
         .unlockedBy(AllBlocks.FLUID_TANK)

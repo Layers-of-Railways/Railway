@@ -22,12 +22,13 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
+import com.railwayteam.railways.content.palettes.FloatingMetalLadderBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.smokebox.SmokeboxCTBehaviour;
-import com.railwayteam.railways.util.IterableUtils;
+import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -68,14 +69,13 @@ public class CRPalettes {
         ModSetup.useBaseTab();
     }
 
-    public static final Map<Pair<PalettesColor, @Nullable Wrapping>, TagKey<Item>> CYCLE_GROUPS =
-        new HashMap<>(PalettesColor.values().length * (Wrapping.values().length + 1), 2);
+    public static final Map<Pair<PalettesColor, CycleGroupCategory>, TagKey<Item>> CYCLE_GROUPS =
+        new HashMap<>(PalettesColor.values().length * CycleGroupCategory.values().length, 2);
 
     static {
         for (PalettesColor palettesColor : PalettesColor.values()) {
-            for (Wrapping wrapping : IterableUtils.nullAnd(Wrapping.values())) {
-                String wrappingName = wrapping == null ? "plain" : wrapping.name().toLowerCase(Locale.ROOT);
-                CYCLE_GROUPS.put(Pair.of(palettesColor, wrapping), CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/" + palettesColor.getSerializedName()+"/"+wrappingName)));
+            for (CycleGroupCategory category : CycleGroupCategory.values()) {
+                CYCLE_GROUPS.put(Pair.of(palettesColor, category), CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/cycle_groups/" + palettesColor.getSerializedName()+"/"+category.getSerializedName())));
             }
         }
     }
@@ -83,10 +83,8 @@ public class CRPalettes {
     public static void provideLangEntries(BiConsumer<String, String> consumer) {
         for (PalettesColor color : PalettesColor.values()) {
             String colorLangName = color.isNetherite() ? null : snakeCaseToTitleCase(color.getName());
-            consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName()+".plain", joinSpace(colorLangName, "Locometal"));
-            for (Wrapping wrapping : Wrapping.values()) {
-                consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName()+"."+wrapping.name().toLowerCase(Locale.ROOT),
-                    joinSpace(colorLangName, snakeCaseToTitleCase(wrapping.name()), "Wrapped Locometal"));
+            for (CycleGroupCategory category : CycleGroupCategory.values()) {
+                consumer.accept("tag.item.railways.palettes.cycle_groups."+color.getName()+"."+category.getSerializedName(), joinSpace(colorLangName, category.langName));
             }
         }
 
@@ -100,60 +98,62 @@ public class CRPalettes {
     }
 
     public enum Styles {
-        SLASHED(CRPalettes::slashedLocometal, true, "Slashed Locometal"),
-        RIVETED(CRPalettes::rivetedLocometal, true, "Riveted Locometal"),
-        PILLAR(CRPalettes::locometalPillar, true, "Locometal Pillars"),
-        SMOKEBOX(CRPalettes.locometalSmokebox(null), true, "Locometal Smokeboxes"),
-        BRASS_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.BRASS), true, "Brass Wrapped Locometal Smokeboxes", Wrapping.BRASS),
-        COPPER_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.COPPER), true, "Copper Wrapped Locometal Smokeboxes", Wrapping.COPPER),
-        IRON_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.IRON), true, "Iron Wrapped Locometal Smokeboxes", Wrapping.IRON),
-        PLATED(CRPalettes::platedLocometal, true, "Plated Locometal"),
-        FLAT_SLASHED(CRPalettes::flatSlashedLocometal, true, "Flat Slashed Locometal"),
-        FLAT_RIVETED(CRPalettes::flatRivetedLocometal, true, "Flat Riveted Locometal"),
-        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, true, "Brass Wrapped Locometal", Wrapping.BRASS),
-        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, true, "Copper Wrapped Locometal", Wrapping.COPPER),
-        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, true, "Iron Wrapped Locometal", Wrapping.IRON),
-        BOILER(CRPalettes::locometalBoiler, false, "Locometal Boilers"),
-        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, false, "Brass Wrapped Locometal Boilers", Wrapping.BRASS),
-        COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, false, "Copper Wrapped Locometal Boilers", Wrapping.COPPER),
-        IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, false, "Iron Wrapped Locometal Boilers", Wrapping.IRON)
+        SLASHED(CRPalettes::slashedLocometal, "Slashed Locometal"),
+        RIVETED(CRPalettes::rivetedLocometal, "Riveted Locometal"),
+        PILLAR(CRPalettes::locometalPillar, "Locometal Pillars"),
+        SMOKEBOX(CRPalettes.locometalSmokebox(null),"Locometal Smokeboxes"),
+        BRASS_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.BRASS), "Brass Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_BRASS),
+        COPPER_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.COPPER), "Copper Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_COPPER),
+        IRON_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.IRON), "Iron Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_IRON),
+        PLATED(CRPalettes::platedLocometal, "Plated Locometal"),
+        FLAT_SLASHED(CRPalettes::flatSlashedLocometal, "Flat Slashed Locometal"),
+        FLAT_RIVETED(CRPalettes::flatRivetedLocometal, "Flat Riveted Locometal"),
+        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, "Brass Wrapped Locometal", CycleGroupCategory.WRAPPED_BRASS),
+        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, "Copper Wrapped Locometal", CycleGroupCategory.WRAPPED_COPPER),
+        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, "Iron Wrapped Locometal", CycleGroupCategory.WRAPPED_IRON),
+        BOILER(CRPalettes::locometalBoiler, "Locometal Boilers", null),
+        BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, "Brass Wrapped Locometal Boilers", null),
+        COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, "Copper Wrapped Locometal Boilers", null),
+        IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, "Iron Wrapped Locometal Boilers", null),
+        END_LADDER(CRPalettes::endLadder, "End Ladders", CycleGroupCategory.LADDERS),
+        RUNG_LADDER(CRPalettes::rungLadder, "Rung Ladders", CycleGroupCategory.LADDERS),
         ;
 
-        private static Styles[] CYCLING = null;
+        private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
 
-        public static Styles[] getCyclingValues() {
-            if (CYCLING == null) {
+        /** It is illegal to modify the return value */
+        private static Styles[] getCyclingValues(CycleGroupCategory category) {
+            if (!CYCLING.containsKey(category)) {
                 int cyclingCount = 0;
                 for (Styles style : Styles.values()) {
-                    if (style.includeInCycleGroup) cyclingCount++;
+                    if (style.cycleGroupCategory == category) cyclingCount++;
                 }
-                CYCLING = new Styles[cyclingCount];
+                Styles[] cycle = new Styles[cyclingCount];
                 int index = 0;
                 for (Styles style : Styles.values()) {
-                    if (style.includeInCycleGroup)
-                        CYCLING[index++] = style;
+                    if (style.cycleGroupCategory == category)
+                        cycle[index++] = style;
                 }
+                CYCLING.put(category, cycle);
             }
-            return Arrays.copyOf(CYCLING, CYCLING.length);
+            return CYCLING.get(category);
         }
 
         private final Map<PalettesColor, BlockEntry<?>> blocks = new HashMap<>(17, 2);
         private final PaletteBlockRegistrar registrar;
         public final TagKey<Item> dyeGroupTag;
-        public final boolean includeInCycleGroup;
-        public final @Nullable Wrapping wrapping;
+        public final @Nullable CycleGroupCategory cycleGroupCategory;
         public final String dyeGroupLang;
 
-        Styles(PaletteBlockRegistrar registrar, boolean includeInCycleGroup, String dyeGroupLang) {
-            this(registrar, includeInCycleGroup, dyeGroupLang, null);
+        Styles(PaletteBlockRegistrar registrar, String dyeGroupLang) {
+            this(registrar, dyeGroupLang, CycleGroupCategory.BASE);
         }
 
-        Styles(PaletteBlockRegistrar registrar, boolean includeInCycleGroup, String dyeGroupLang, @Nullable Wrapping wrapping) {
+        Styles(PaletteBlockRegistrar registrar, String dyeGroupLang, @Nullable CycleGroupCategory cycleGroupCategory) {
             this.registrar = registrar;
             this.dyeGroupLang = dyeGroupLang;
             this.dyeGroupTag = CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/dye_groups/" + name().toLowerCase(Locale.ROOT)));
-            this.includeInCycleGroup = includeInCycleGroup;
-            this.wrapping = wrapping;
+            this.cycleGroupCategory = cycleGroupCategory;
         }
 
         @SuppressWarnings("unchecked")
@@ -162,8 +162,8 @@ public class CRPalettes {
             // in the future we can of course extend this to apply any other transformations to all palettes blocks
             TransformerProvider transformer = new ChildTransformer(palettesColor);
 
-            BlockEntry<?> registered = includeInCycleGroup
-                ? registrar.register(transformer, palettesColor, dyeGroupTag, CYCLE_GROUPS.get(Pair.of(palettesColor, wrapping)))
+            BlockEntry<?> registered = cycleGroupCategory != null
+                ? registrar.register(transformer, palettesColor, dyeGroupTag, CYCLE_GROUPS.get(Pair.of(palettesColor, cycleGroupCategory)))
                 : registrar.register(transformer, palettesColor, dyeGroupTag);
 
             blocks.put(palettesColor, registered);
@@ -422,6 +422,24 @@ public class CRPalettes {
             .register();
     }
 
+    @SafeVarargs
+    private static BlockEntry<?> endLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "end_ladder"), FloatingMetalLadderBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locoMetalLadder(color, tags))
+            .lang(joinSpace(colorName, "End Ladder"))
+            .register();
+    }
+
+    @SafeVarargs
+    private static BlockEntry<?> rungLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "rung_ladder"), MetalLadderBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locoMetalLadder(color, tags))
+            .lang(joinSpace(colorName, "Rung Ladder"))
+            .register();
+    }
+
     public static class StyledList<T> implements Iterable<T> {
         private final Map<Styles, T> values = new EnumMap<>(Styles.class);
 
@@ -455,10 +473,12 @@ public class CRPalettes {
     }
 
     public static class CyclingStyleList<T> implements Iterable<T> {
+        private final CycleGroupCategory category;
         private final Map<Styles, T> values = new EnumMap<>(Styles.class);
 
-        public CyclingStyleList(Function<Styles, T> filler) {
-            for (Styles style : Styles.getCyclingValues()) {
+        public CyclingStyleList(CycleGroupCategory category, Function<Styles, T> filler) {
+            this.category = category;
+            for (Styles style : Styles.getCyclingValues(category)) {
                 values.put(style, filler.apply(style));
             }
         }
@@ -471,14 +491,44 @@ public class CRPalettes {
 
                 @Override
                 public boolean hasNext() {
-                    return index < Styles.getCyclingValues().length;
+                    return index < Styles.getCyclingValues(category).length;
                 }
 
                 @Override
                 public T next() {
                     if (!hasNext())
                         throw new NoSuchElementException();
-                    return values.get(Styles.getCyclingValues()[index++]);
+                    return values.get(Styles.getCyclingValues(category)[index++]);
+                }
+            };
+        }
+    }
+
+    public static class CycleCategoryList<T> implements Iterable<T> {
+        private final Map<CycleGroupCategory, T> values = new EnumMap<>(CycleGroupCategory.class);
+
+        public CycleCategoryList(Function<CycleGroupCategory, T> filler) {
+            for (CycleGroupCategory category : CycleGroupCategory.values()) {
+                values.put(category, filler.apply(category));
+            }
+        }
+
+        @NotNull
+        @Override
+        public Iterator<T> iterator() {
+            return new Iterator<T>() {
+                private int index = 0;
+
+                @Override
+                public boolean hasNext() {
+                    return index < CycleGroupCategory.values().length;
+                }
+
+                @Override
+                public T next() {
+                    if (!hasNext())
+                        throw new NoSuchElementException();
+                    return values.get(CycleGroupCategory.values()[index++]);
                 }
             };
         }
@@ -496,6 +546,24 @@ public class CRPalettes {
 
         public String prefix(String base) {
             return doPrefix ? name().toLowerCase(Locale.ROOT) + "_" + base : base;
+        }
+    }
+
+    public enum CycleGroupCategory {
+        BASE("Locometal"),
+        WRAPPED_BRASS("Brass Wrapped Locometal"),
+        WRAPPED_COPPER("Copper Wrapped Locometal"),
+        WRAPPED_IRON("Iron Wrapped Locometal"),
+        LADDERS("Locometal Ladders"),
+        ;
+        public final String langName;
+
+        CycleGroupCategory(String langName) {
+            this.langName = langName;
+        }
+
+        public String getSerializedName() {
+            return name().toLowerCase(Locale.ROOT);
         }
     }
 }
