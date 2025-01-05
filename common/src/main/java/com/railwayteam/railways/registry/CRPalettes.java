@@ -426,7 +426,7 @@ public class CRPalettes {
     private static BlockEntry<?> endLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_end_ladder"), FloatingMetalLadderBlock::new)
             .transform(transformer.get())
-            .transform(BuilderTransformers.locoMetalLadder(color, tags))
+            .transform(BuilderTransformers.locoMetalLadder(color, "end", tags))
             .lang(joinSpace(colorName, "Locometal End Ladder"))
             .register();
     }
@@ -435,7 +435,7 @@ public class CRPalettes {
     private static BlockEntry<?> rungLadder(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_rung_ladder"), MetalLadderBlock::new)
             .transform(transformer.get())
-            .transform(BuilderTransformers.locoMetalLadder(color, tags))
+            .transform(BuilderTransformers.locoMetalLadder(color, "rung", tags))
             .lang(joinSpace(colorName, "Locometal Rung Ladder"))
             .register();
     }

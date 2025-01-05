@@ -90,6 +90,7 @@ import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
+import static com.railwayteam.railways.util.TextUtils.join;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 @ImplClass
@@ -317,26 +318,26 @@ public class BuilderTransformersImpl {
     }
 
     @SafeVarargs
-    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, TagKey<Item>... tags) {
+    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, String ladderType, TagKey<Item>... tags) {
         return b -> b.transform(locoMetalBase(color, null))
             .initialProperties(() -> Blocks.LADDER)
             .addLayer(() -> RenderType::cutout)
             .properties(p -> p.sound(SoundType.COPPER))
             .blockstate((c, p) -> {
-                String main = "block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName());
+                String main = join("/", "block", "palettes", color.getSerializedName(), ladderType+"_ladder");
                 String hoop = main + "_hoop";
                 p.horizontalBlock(c.get(), p.models()
                     .withExistingParent(main, Create.asResource("block/ladder"))
-                    .texture("0", hoop)
-                    .texture("1", main)
-                    .texture("particle", main)
+                    .texture("0", p.modLoc(hoop))
+                    .texture("1", p.modLoc(main))
+                    .texture("particle", p.modLoc(main))
                 );
             })
             .tag(BlockTags.CLIMBABLE)
             .item()
             .model((c, p) -> p.blockSprite(
                 c::get,
-                p.modLoc("block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()))
+                p.modLoc(join("/", "block", "palettes", color.getSerializedName(), ladderType+"_ladder"))
             ))
             .tag(tags)
             .build();

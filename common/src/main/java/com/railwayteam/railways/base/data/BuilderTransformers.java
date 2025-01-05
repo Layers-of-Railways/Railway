@@ -184,7 +184,7 @@ public class BuilderTransformers {
 
     @SafeVarargs
     @ExpectPlatform
-    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, TagKey<Item>... tags) {
+    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, String ladderType, TagKey<Item>... tags) {
         throw new AssertionError();
     }
 
