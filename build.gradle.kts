@@ -51,10 +51,22 @@ println("Steam 'n' Rails v${"mod_version"()}")
 
 val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
+// whether dev mixins should be stripped, even if it's not a release build
 val removeDevMixinAnyway = System.getenv("REMOVE_DEV_MIXIN_ANYWAY")?.toBoolean() ?: false
+// whether the build should include dev commands, even in a non-dev environment
+val includeDevCommands = !isRelease && System.getenv("INCLUDE_DEV_COMMANDS")?.toBoolean() ?: false
 val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
 
+if (!isRelease && removeDevMixinAnyway) {
+    println("Removing dev mixins, even though it's not a release build")
+}
+
+if (includeDevCommands) {
+    println("Including dev commands in build")
+}
+
 extra["gitHash"] = gitHash
+extra["includeDevCommands"] = includeDevCommands
 
 architectury {
     minecraft = "minecraft_version"()
