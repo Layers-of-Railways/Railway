@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/flywheel/block",
+  "textures": {
+    "0": "railways:block/palettes/netherite/flywheel",
+    "particle": "railways:block/palettes/netherite/flywheel"
+  }
+}

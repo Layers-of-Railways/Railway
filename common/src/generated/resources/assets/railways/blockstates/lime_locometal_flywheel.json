@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "railways:block/palettes/flywheel/lime/block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "railways:block/palettes/flywheel/lime/block"
+    },
+    "axis=z": {
+      "model": "railways:block/palettes/flywheel/lime/block",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/flywheel/item",
+  "textures": {
+    "0": "railways:block/palettes/lime/flywheel",
+    "particle": "railways:block/palettes/lime/flywheel"
+  }
+}
