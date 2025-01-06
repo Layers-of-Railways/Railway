@@ -40,6 +40,7 @@ public class CRSpriteShifts {
     public static final EnumMap<PalettesColor, CTSpriteShiftEntry>
         SLASHED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
         RIVETED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        RIVETED_LOCOMETAL_PILLAR = new EnumMap<>(PalettesColor.class),
         SMOKEBOX = new EnumMap<>(PalettesColor.class),
         BRASS_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
         COPPER_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
@@ -62,19 +63,20 @@ public class CRSpriteShifts {
     }
 
     private static void initLocometal(@NotNull PalettesColor color) {
-        SLASHED_LOCOMETAL.put(color, locometal(color, "slashed"));
-        RIVETED_LOCOMETAL.put(color, locometal(color, "riveted"));
-        SMOKEBOX.put(color, locometalSmokebox(color, "tank_side"));
-        BRASS_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "wrapped_tank_side"));
-        COPPER_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "copper_wrapped_tank_side"));
-        IRON_WRAPPED_SMOKEBOX.put(color, locometalSmokebox(color, "iron_wrapped_tank_side"));
-        BRASS_WRAPPED_LOCOMETAL.put(color, locometal(color, "wrapped_slashed"));
-        COPPER_WRAPPED_LOCOMETAL.put(color, locometal(color, "copper_wrapped_slashed"));
-        IRON_WRAPPED_LOCOMETAL.put(color, locometal(color, "iron_wrapped_slashed"));
-        BOILER_SIDE.put(color, locometalBoiler(color, "boiler_side"));
-        BRASS_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "wrapped_boiler_side"));
-        COPPER_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "copper_wrapped_boiler_side"));
-        IRON_WRAPPED_BOILER_SIDE.put(color, locometalBoiler(color, "iron_wrapped_boiler_side"));
+        SLASHED_LOCOMETAL.put(color, locometalOmni(color, "slashed"));
+        RIVETED_LOCOMETAL.put(color, locometalOmni(color, "riveted"));
+        RIVETED_LOCOMETAL_PILLAR.put(color, locometalVerticalPinkmachine(color, "riveted_pillar_side"));
+        SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "tank_side"));
+        BRASS_WRAPPED_SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "wrapped_tank_side"));
+        COPPER_WRAPPED_SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "copper_wrapped_tank_side"));
+        IRON_WRAPPED_SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "iron_wrapped_tank_side"));
+        BRASS_WRAPPED_LOCOMETAL.put(color, locometalOmni(color, "wrapped_slashed"));
+        COPPER_WRAPPED_LOCOMETAL.put(color, locometalOmni(color, "copper_wrapped_slashed"));
+        IRON_WRAPPED_LOCOMETAL.put(color, locometalOmni(color, "iron_wrapped_slashed"));
+        BOILER_SIDE.put(color, locometalHorizontalKryppers(color, "boiler_side"));
+        BRASS_WRAPPED_BOILER_SIDE.put(color, locometalHorizontalKryppers(color, "wrapped_boiler_side"));
+        COPPER_WRAPPED_BOILER_SIDE.put(color, locometalHorizontalKryppers(color, "copper_wrapped_boiler_side"));
+        IRON_WRAPPED_BOILER_SIDE.put(color, locometalHorizontalKryppers(color, "iron_wrapped_boiler_side"));
     }
 
     static {
@@ -85,17 +87,17 @@ public class CRSpriteShifts {
 
 
     //
-    private static CTSpriteShiftEntry locometal(@NotNull PalettesColor color, String name) {
+    private static CTSpriteShiftEntry locometalOmni(@NotNull PalettesColor color, String name) {
         String colorName = color.getSerializedName();
         return omni("palettes/" + colorName + "/" + name);
     }
 
-    private static CTSpriteShiftEntry locometalBoiler(@NotNull PalettesColor color, String name) {
+    private static CTSpriteShiftEntry locometalHorizontalKryppers(@NotNull PalettesColor color, String name) {
         String colorName = color.getSerializedName();
         return horizontalKryppers("palettes/" + colorName + "/" + name);
     }
 
-    private static CTSpriteShiftEntry locometalSmokebox(@NotNull PalettesColor color, String name) {
+    private static CTSpriteShiftEntry locometalVerticalPinkmachine(@NotNull PalettesColor color, String name) {
         String colorName = color.getSerializedName();
         return verticalPinkmachine("palettes/" + colorName + "/" + name);
     }

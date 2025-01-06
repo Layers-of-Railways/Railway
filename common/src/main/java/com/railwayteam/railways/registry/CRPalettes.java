@@ -25,9 +25,9 @@ import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.content.palettes.FloatingMetalLadderBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
-import com.railwayteam.railways.content.palettes.boiler.BoilerCTBehaviour;
+import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
-import com.railwayteam.railways.content.palettes.smokebox.SmokeboxCTBehaviour;
+import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -253,6 +253,7 @@ public class CRPalettes {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_pillar"), RotatedPillarBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalPillar(color))
+            .onRegister(connectedTextures(() -> new PalettesPillarCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL_PILLAR.get(color))))
             .lang(joinSpace(colorName, "Locometal Pillar"))
             .item()
             .transform(BuilderTransformers.locoMetalItem(color))
@@ -276,7 +277,7 @@ public class CRPalettes {
         return REGISTRATE.block(joinUnderscore(colorString, wrappingName, "locometal_smokebox"), PalettesSmokeboxBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalSmokeBox(color, wrapping))
-            .onRegister(connectedTextures(() -> new SmokeboxCTBehaviour(CRSpriteShifts.getSmokebox(wrapping).get(color))))
+            .onRegister(connectedTextures(() -> new PalettesPillarCTBehaviour(CRSpriteShifts.getSmokebox(wrapping).get(color))))
             .lang(joinSpace(colorName, wrappingLangName, "Locometal Smokebox"))
             .item()
             .transform(BuilderTransformers.locoMetalItem(color))
