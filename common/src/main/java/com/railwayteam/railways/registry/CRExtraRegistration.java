@@ -46,6 +46,7 @@ public class CRExtraRegistration {
         addSignalSource();
     }
 
+    // fixme redo the way both of these work to be independent of load order. Actually, just create a proper API
     public static void addVentAsCopycat(BlockEntityType<?> object) {
         if (registeredVentAsCopycat) return;
         Block ventBlock;
