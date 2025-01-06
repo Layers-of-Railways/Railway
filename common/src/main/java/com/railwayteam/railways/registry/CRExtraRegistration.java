@@ -19,21 +19,26 @@
 package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableSet;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
-import com.simibubi.create.AllBlockEntityTypes;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
 import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.EnumMap;
 import java.util.Set;
 
 public class CRExtraRegistration {
-    public static boolean registeredSignalSource = false;
-    public static boolean registeredVentAsCopycat = false;
+    private static boolean registeredSignalSource = false;
+    private static boolean registeredVentAsCopycat = false;
+    private static boolean registeredPalettesFlywheels = false;
 
     // register the source, working independently of mod loading order
     public static void register() {
@@ -51,17 +56,45 @@ public class CRExtraRegistration {
         }
         Set<Block> validBlocks = ((AccessorBlockEntityType) object).getValidBlocks();
         validBlocks = new ImmutableSet.Builder<Block>()
-                .add(validBlocks.toArray(Block[]::new))
-                .add(ventBlock)
-                .build();
+            .add(validBlocks.toArray(Block[]::new))
+            .add(ventBlock)
+            .build();
         ((AccessorBlockEntityType) object).setValidBlocks(validBlocks);
+        if (Utils.isDevEnv()) {
+            Railways.LOGGER.info("Registered vent as copycat");
+        }
         registeredVentAsCopycat = true;
+    }
+
+    public static void addPalettesFlywheels(BlockEntityType<?> object) {
+        if (registeredPalettesFlywheels) return;
+        EnumMap<PalettesColor, FlywheelBlock> flywheels = new EnumMap<>(PalettesColor.class);
+        try {
+            for (PalettesColor color : PalettesColor.values()) {
+                flywheels.put(color, (FlywheelBlock) CRPalettes.Styles.FLYWHEEL.get(color).get());
+            }
+        } catch (NullPointerException ignored) {
+            return;
+        }
+        Set<Block> validBlocks = ((AccessorBlockEntityType) object).getValidBlocks();
+        validBlocks = new ImmutableSet.Builder<Block>()
+            .add(validBlocks.toArray(Block[]::new))
+            .addAll(flywheels.values())
+            .build();
+        ((AccessorBlockEntityType) object).setValidBlocks(validBlocks);
+        if (Utils.isDevEnv()) {
+            Railways.LOGGER.info("Added palettes flywheels to BlockEntityType");
+        }
+        registeredPalettesFlywheels = true;
     }
 
     public static void addSignalSource() {
         if (registeredSignalSource) return;
         DisplayBehaviour signalDisplaySource = AllDisplayBehaviours.register(Create.asResource("track_signal_source"), new SignalDisplaySource());
         AllDisplayBehaviours.assignBlock(signalDisplaySource, Create.asResource("track_signal"));
+        if (Utils.isDevEnv()) {
+            Railways.LOGGER.info("Registered signal source");
+        }
         registeredSignalSource = true;
     }
 

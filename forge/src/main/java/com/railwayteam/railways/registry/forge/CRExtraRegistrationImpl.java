@@ -18,12 +18,15 @@
 
 package com.railwayteam.railways.registry.forge;
 
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.simibubi.create.Create;
 import net.minecraft.core.registries.Registries;
 
+@ImplClass
 public class CRExtraRegistrationImpl {
     public static void platformSpecificRegistration() {
         Create.REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
+        Create.REGISTRATE.addRegisterCallback("flywheel", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addPalettesFlywheels);
     }
 }

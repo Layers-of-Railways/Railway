@@ -18,19 +18,24 @@
 
 package com.railwayteam.railways.registry.fabric;
 
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.simibubi.create.Create;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
+@ImplClass
 public class CRExtraRegistrationImpl {
     private static final ResourceLocation COPYCAT_ID = Create.asResource("copycat");
+    private static final ResourceLocation FLYWHEEL_ID = Create.asResource("flywheel");
 
     public static void platformSpecificRegistration() {
         RegistryEntryAddedCallback.event(BuiltInRegistries.BLOCK_ENTITY_TYPE).register((rawId, id, blockEntityType) ->  {
-            if (id == COPYCAT_ID)
+            if (id.equals(COPYCAT_ID))
                 CRExtraRegistration.addVentAsCopycat(blockEntityType);
+            else if (id.equals(FLYWHEEL_ID))
+                CRExtraRegistration.addPalettesFlywheels(blockEntityType);
         });
     }
 }

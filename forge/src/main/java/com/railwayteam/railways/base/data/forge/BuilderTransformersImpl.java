@@ -59,6 +59,8 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -91,6 +93,7 @@ import java.util.function.Function;
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
 import static com.railwayteam.railways.content.conductor.vent.VentBlock.CONDUCTOR_VISIBLE;
 import static com.railwayteam.railways.util.TextUtils.join;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 @ImplClass
@@ -340,6 +343,33 @@ public class BuilderTransformersImpl {
                 p.modLoc(join("/", "block", "palettes", color.getSerializedName(), ladderType+"_ladder"))
             ))
             .tag(tags)
+            .build();
+    }
+
+    @SafeVarargs
+    public static <B extends FlywheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalFlywheel(PalettesColor color, TagKey<Item>... tags) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .properties(p -> p.noOcclusion())
+            .transform(axeOrPickaxe())
+            .transform(BlockStressDefaults.setNoImpact())
+            .blockstate((c, p) -> {
+                String modelName = join("/", "block", "palettes", "flywheel", color.getSerializedName(), "block");
+                ResourceLocation flywheelTex = p.modLoc(join("/", "block", "palettes", color.getSerializedName(), "flywheel"));
+                BlockStateGen.axisBlock(
+                    c, p,
+                    $ -> p.models().withExistingParent(modelName, Create.asResource("block/flywheel/block"))
+                        .texture("0", flywheelTex)
+                        .texture("particle", flywheelTex)
+                );
+            })
+            .item()
+            .tag(tags)
+            .model((c, p) -> {
+                ResourceLocation flywheelTex = p.modLoc(join("/", "block", "palettes", color.getSerializedName(), "flywheel"));
+                p.withExistingParent(c.getName(), Create.asResource("block/flywheel/item"))
+                    .texture("0", flywheelTex)
+                    .texture("particle", flywheelTex);
+            })
             .build();
     }
 

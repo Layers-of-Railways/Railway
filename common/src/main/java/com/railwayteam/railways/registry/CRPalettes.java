@@ -22,13 +22,16 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
+import com.railwayteam.railways.content.animated_flywheel.FlywheelMovementBehaviour;
 import com.railwayteam.railways.content.palettes.FloatingMetalLadderBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
+import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
+import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -118,6 +121,7 @@ public class CRPalettes {
         IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, "Iron Wrapped Locometal Boilers", null),
         END_LADDER(CRPalettes::endLadder, "Locometal End Ladders", CycleGroupCategory.LADDERS),
         RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
+        FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null)
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -454,6 +458,16 @@ public class CRPalettes {
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalLadder(color, "rung", tags))
             .lang(joinSpace(colorName, "Locometal Rung Ladder"))
+            .register();
+    }
+
+    @SafeVarargs
+    private static BlockEntry<?> flywheel(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_flywheel"), FlywheelBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locoMetalFlywheel(color, tags))
+            .onRegister(AllMovementBehaviours.movementBehaviour(new FlywheelMovementBehaviour()))
+            .lang(joinSpace(colorName, "Locometal Flywheel"))
             .register();
     }
 

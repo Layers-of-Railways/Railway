@@ -48,6 +48,7 @@ import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
+import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -185,6 +186,12 @@ public class BuilderTransformers {
     @SafeVarargs
     @ExpectPlatform
     public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, String ladderType, TagKey<Item>... tags) {
+        throw new AssertionError();
+    }
+
+    @SafeVarargs
+    @ExpectPlatform
+    public static <B extends FlywheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalFlywheel(PalettesColor color, TagKey<Item>... tags) {
         throw new AssertionError();
     }
 
