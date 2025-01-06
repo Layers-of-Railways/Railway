@@ -59,7 +59,7 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
         ICarriageFlywheel flywheel = ((ICarriageFlywheel) flywheelBlockEntity);
         double distanceTravelled = ((IDistanceTravelled) carriageContraptionEntity).railways$getDistanceTravelled();
 
-        double angleDiff = 360 * (distanceTravelled / AnimationTickHolder.getPartialTicks()) / (Math.PI *  2.8125);
+        double angleDiff = AnimationTickHolder.getPartialTicks() * (distanceTravelled / 2.8125) * (180 / Math.PI);
 
         if (dir == Direction.SOUTH || dir == Direction.WEST)
             angleDiff = -angleDiff;
