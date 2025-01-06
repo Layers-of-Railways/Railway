@@ -27,6 +27,7 @@ import com.railwayteam.railways.base.data.lang.CRLangGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
+import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
@@ -93,19 +94,22 @@ public class Railways {
   public static void init() {
     String createVersion = MethodVarHandleUtils.getStaticField(Create.class, "VERSION", String.class, "UNKNOWN");
     LOGGER.info("{} v{} initializing! Commit hash: {} on Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, createVersion, Loader.getFormatted());
-    
+
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MOD_ID + "-client.toml");
     migrateConfig(clientConfigDir, CRConfigs::migrateClient);
 
     Path commonConfigDir = configDir.resolve(MOD_ID + "-common.toml");
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
-    
+
     ModSetup.register();
     finalizeRegistrate();
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
+
+    // everything should be registered (or at least loaded) by now.
+    MultiRegistryCallback.enableFinalizers();
 
     if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();

@@ -20,73 +20,33 @@ package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
 import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
-import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class CRExtraRegistration {
     private static boolean registeredSignalSource = false;
-    private static boolean registeredVentAsCopycat = false;
-    private static boolean registeredPalettesFlywheels = false;
+    private static Set<BlockEntityType<?>> modifiedTypes = new HashSet<>();
 
     // register the source, working independently of mod loading order
     public static void register() {
-        platformSpecificRegistration();
         addSignalSource();
-    }
-
-    // fixme redo the way both of these work to be independent of load order. Actually, just create a proper API
-    public static void addVentAsCopycat(BlockEntityType<?> object) {
-        if (registeredVentAsCopycat) return;
-        Block ventBlock;
-        try {
-            ventBlock = CRBlocks.CONDUCTOR_VENT.get();
-        } catch (NullPointerException ignored) {
-            return;
-        }
-        Set<Block> validBlocks = ((AccessorBlockEntityType) object).getValidBlocks();
-        validBlocks = new ImmutableSet.Builder<Block>()
-            .add(validBlocks.toArray(Block[]::new))
-            .add(ventBlock)
-            .build();
-        ((AccessorBlockEntityType) object).setValidBlocks(validBlocks);
-        if (Utils.isDevEnv()) {
-            Railways.LOGGER.info("Registered vent as copycat");
-        }
-        registeredVentAsCopycat = true;
-    }
-
-    public static void addPalettesFlywheels(BlockEntityType<?> object) {
-        if (registeredPalettesFlywheels) return;
-        EnumMap<PalettesColor, FlywheelBlock> flywheels = new EnumMap<>(PalettesColor.class);
-        try {
-            for (PalettesColor color : PalettesColor.values()) {
-                flywheels.put(color, (FlywheelBlock) CRPalettes.Styles.FLYWHEEL.get(color).get());
-            }
-        } catch (NullPointerException ignored) {
-            return;
-        }
-        Set<Block> validBlocks = ((AccessorBlockEntityType) object).getValidBlocks();
-        validBlocks = new ImmutableSet.Builder<Block>()
-            .add(validBlocks.toArray(Block[]::new))
-            .addAll(flywheels.values())
-            .build();
-        ((AccessorBlockEntityType) object).setValidBlocks(validBlocks);
-        if (Utils.isDevEnv()) {
-            Railways.LOGGER.info("Added palettes flywheels to BlockEntityType");
-        }
-        registeredPalettesFlywheels = true;
+        addVentAsCopycat();
+        addPalettesFlywheels();
+        MultiRegistryCallback.addFinalizer(CRExtraRegistration::finalizeBlockEntityTypes);
     }
 
     public static void addSignalSource() {
@@ -99,8 +59,45 @@ public class CRExtraRegistration {
         registeredSignalSource = true;
     }
 
-    @ExpectPlatform
-    public static void platformSpecificRegistration() {
-        throw new AssertionError();
+    private static void addVentAsCopycat() {
+        addRailwaysBlockToCreateBlockEntity(CRBlocks.CONDUCTOR_VENT, Create.asResource("copycat"));
+    }
+
+    private static void addPalettesFlywheels() {
+        for (PalettesColor color : PalettesColor.values()) {
+            addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.FLYWHEEL.get(color), Create.asResource("flywheel"));
+        }
+    }
+
+    private static void addRailwaysBlockToCreateBlockEntity(BlockEntry<?> railwaysBlock, ResourceLocation createBE) {
+        MultiRegistryCallback.create(
+            Create.REGISTRATE, Registries.BLOCK_ENTITY_TYPE, createBE,
+            Railways.registrate(), Registries.BLOCK, railwaysBlock.getId(),
+            CRExtraRegistration::addBlockToBE
+        );
+    }
+
+    private static void addBlockToBE(BlockEntityType<?> be, Block block) {
+        Set<Block> validBlocks = ((AccessorBlockEntityType) be).getValidBlocks();
+        try {
+            validBlocks.add(block);
+        } catch (UnsupportedOperationException e) {
+            validBlocks = new HashSet<>(validBlocks);
+            validBlocks.add(block);
+            ((AccessorBlockEntityType) be).setValidBlocks(validBlocks);
+        }
+        modifiedTypes.add(be);
+    }
+
+    // it is likely that an ImmutableSet will be more efficient in terms of memory and query time than a HashSet, so we
+    // refreeze the set after all modifications are done
+    private static void finalizeBlockEntityTypes() {
+        for (BlockEntityType<?> type : modifiedTypes) {
+            Set<Block> validBlocks = ((AccessorBlockEntityType) type).getValidBlocks();
+            if (!(validBlocks instanceof HashSet)) continue;
+            ((AccessorBlockEntityType) type).setValidBlocks(ImmutableSet.copyOf(validBlocks));
+        }
+        modifiedTypes.clear();
+        modifiedTypes = null;
     }
 }
