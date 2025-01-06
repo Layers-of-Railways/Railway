@@ -3,6 +3,7 @@
   "values": [
     "railways:slashed_locometal",
     "railways:riveted_locometal",
+    "railways:locometal_vent",
     "railways:locometal_pillar",
     "railways:locometal_smokebox",
     "railways:plated_locometal",
