@@ -100,6 +100,7 @@ public class CRPalettes {
     public enum Styles {
         SLASHED(CRPalettes::slashedLocometal, "Slashed Locometal"),
         RIVETED(CRPalettes::rivetedLocometal, "Riveted Locometal"),
+        VENT(CRPalettes::locometalVent, "Locometal Vents"),
         PILLAR(CRPalettes::locometalPillar, "Locometal Pillars"),
         SMOKEBOX(CRPalettes.locometalSmokebox(null),"Locometal Smokeboxes"),
         BRASS_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.BRASS), "Brass Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_BRASS),
@@ -240,6 +241,21 @@ public class CRPalettes {
             .transform(BuilderTransformers.locoMetalBase(color, "riveted"))
             .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.RIVETED_LOCOMETAL.get(color))))
             .lang(joinSpace(colorName, "Riveted Locometal"))
+            .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
+            .tag(tags)
+            .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
+            .build()
+            .register();
+    }
+
+    @SafeVarargs
+    private static BlockEntry<?> locometalVent(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_vent"), Block::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locoMetalBase(color, "vent"))
+            .onRegister(connectedTextures(() -> new SimpleCTBehaviour(CRSpriteShifts.LOCOMETAL_VENT.get(color))))
+            .lang(joinSpace(colorName, "Locometal Vent"))
             .item()
             .transform(BuilderTransformers.locoMetalItem(color))
             .tag(tags)

@@ -40,6 +40,7 @@ public class CRSpriteShifts {
     public static final EnumMap<PalettesColor, CTSpriteShiftEntry>
         SLASHED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
         RIVETED_LOCOMETAL = new EnumMap<>(PalettesColor.class),
+        LOCOMETAL_VENT = new EnumMap<>(PalettesColor.class),
         RIVETED_LOCOMETAL_PILLAR = new EnumMap<>(PalettesColor.class),
         SMOKEBOX = new EnumMap<>(PalettesColor.class),
         BRASS_WRAPPED_SMOKEBOX = new EnumMap<>(PalettesColor.class),
@@ -65,6 +66,7 @@ public class CRSpriteShifts {
     private static void initLocometal(@NotNull PalettesColor color) {
         SLASHED_LOCOMETAL.put(color, locometalOmni(color, "slashed"));
         RIVETED_LOCOMETAL.put(color, locometalOmni(color, "riveted"));
+        LOCOMETAL_VENT.put(color, locometalOmni(color, "vent"));
         RIVETED_LOCOMETAL_PILLAR.put(color, locometalVerticalPinkmachine(color, "riveted_pillar_side"));
         SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "tank_side"));
         BRASS_WRAPPED_SMOKEBOX.put(color, locometalVerticalPinkmachine(color, "wrapped_tank_side"));
