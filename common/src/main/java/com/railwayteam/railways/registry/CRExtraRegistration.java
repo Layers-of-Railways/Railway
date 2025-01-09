@@ -45,7 +45,7 @@ public class CRExtraRegistration {
     public static void register() {
         addSignalSource();
         addVentAsCopycat();
-        addPalettesFlywheels();
+        addPalettesBlocks();
         MultiRegistryCallback.addFinalizer(CRExtraRegistration::finalizeBlockEntityTypes);
     }
 
@@ -63,9 +63,10 @@ public class CRExtraRegistration {
         addRailwaysBlockToCreateBlockEntity(CRBlocks.CONDUCTOR_VENT, Create.asResource("copycat"));
     }
 
-    private static void addPalettesFlywheels() {
+    private static void addPalettesBlocks() {
         for (PalettesColor color : PalettesColor.values()) {
             addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.FLYWHEEL.get(color), Create.asResource("flywheel"));
+            addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.SLIDING_DOOR.get(color), Create.asResource("sliding_door"));
         }
     }
 

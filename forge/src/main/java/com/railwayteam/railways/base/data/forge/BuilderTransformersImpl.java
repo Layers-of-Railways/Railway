@@ -419,6 +419,47 @@ public class BuilderTransformersImpl {
         });
     }
 
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalSlidingDoorBlockState(PalettesColor color, String type) {
+        return b -> b.blockstate((c, p) -> {
+            Couple<Couple<BlockModelBuilder>> pieces = Couple.createWithContext((bottom) -> {
+                String texName = bottom ? "bottom" : "top";
+                String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/block_" + texName;
+                return Couple.createWithContext((windowed) -> {
+                    String windowedName = windowed ? "_windowed" : "";
+                    return p.models().withExistingParent(
+                            modelName + windowedName,
+                            p.modLoc("block/palettes/doors/block_" + texName + "_right")
+                        )
+                        .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_side"))
+                        .texture(texName, p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_" + texName))
+                        .texture("block_particle", p.modLoc("block/palettes/" + color.getSerializedName() + "/annexed_slashed"));
+                });
+            });
+            p.getVariantBuilder(c.get()).forAllStatesExcept((state) -> {
+                int yRot = (int) state.getValue(DoorBlock.FACING).toYRot() + 90;
+                boolean right = state.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT;
+                boolean open = state.getValue(DoorBlock.OPEN);
+                boolean lower = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+                boolean windowed = state.getValue(HingedDoorBlock.WINDOWED);
+
+                if (open) {
+                    yRot += 90;
+                }
+                if (right && open) {
+                    yRot += 180;
+                }
+                yRot %= 360;
+
+                ModelFile model = pieces.get(lower).get(windowed);
+
+                return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(yRot)
+                    .build();
+            }, DoorBlock.POWERED);
+        });
+    }
+
     public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
         return i -> i.model((c, p) -> p.blockSprite(c, p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_door")));
     }

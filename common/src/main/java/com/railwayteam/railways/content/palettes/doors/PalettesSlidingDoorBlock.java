@@ -21,7 +21,9 @@ package com.railwayteam.railways.content.palettes.doors;
 import com.railwayteam.railways.registry.CRBlockSetTypes;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +35,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -44,11 +45,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class HingedDoorBlock extends DoorBlock implements IWrenchable {
+public class PalettesSlidingDoorBlock extends SlidingDoorBlock implements IWrenchable {
     public static final BooleanProperty WINDOWED = BooleanProperty.create("windowed");
 
-    public HingedDoorBlock(Properties properties) {
-        super(properties, CRBlockSetTypes.LOCOMETAL);
+    public static NonNullFunction<Properties, PalettesSlidingDoorBlock> create(boolean folds) {
+        return p -> new PalettesSlidingDoorBlock(p, folds);
+    }
+
+    public PalettesSlidingDoorBlock(Properties properties, boolean folds) {
+        super(properties, CRBlockSetTypes.LOCOMETAL, folds);
         registerDefaultState(defaultBlockState()
             .setValue(WINDOWED, false));
     }
@@ -88,7 +93,7 @@ public class HingedDoorBlock extends DoorBlock implements IWrenchable {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             Level level = context.getLevel();
             BlockPos posBelow = context.getClickedPos().below();
-            return IWrenchable.super.onSneakWrenched(level.getBlockState(posBelow), new UseOnContext(
+            return super.onSneakWrenched(level.getBlockState(posBelow), new UseOnContext(
                 level,
                 context.getPlayer(),
                 context.getHand(),
@@ -101,7 +106,7 @@ public class HingedDoorBlock extends DoorBlock implements IWrenchable {
                 )
             ));
         }
-        return IWrenchable.super.onSneakWrenched(state, context);
+        return super.onSneakWrenched(state, context);
     }
 
     @Override

@@ -247,6 +247,11 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalSlidingDoorBlockState(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
         throw new AssertionError();
     }

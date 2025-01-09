@@ -29,9 +29,11 @@ import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
+import com.railwayteam.railways.content.palettes.doors.PalettesSlidingDoorBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
-import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorMovementBehaviour;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -55,6 +57,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.util.TextUtils.*;
+import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 
@@ -123,7 +126,8 @@ public class CRPalettes {
         END_LADDER(CRPalettes::endLadder, "Locometal End Ladders", CycleGroupCategory.LADDERS),
         RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
         FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
-        HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS)
+        HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS),
+        SLIDING_DOOR(CRPalettes::slidingLocometalDoor, "Sliding Locometal Doors", CycleGroupCategory.DOORS)
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -468,7 +472,7 @@ public class CRPalettes {
         return REGISTRATE.block(joinUnderscore(colorString, "locometal_flywheel"), FlywheelBlock::new)
             .transform(transformer.get())
             .transform(BuilderTransformers.locoMetalFlywheel(color, tags))
-            .onRegister(AllMovementBehaviours.movementBehaviour(new FlywheelMovementBehaviour()))
+            .onRegister(movementBehaviour(new FlywheelMovementBehaviour()))
             .lang(joinSpace(colorName, "Locometal Flywheel"))
             .register();
     }
@@ -476,6 +480,8 @@ public class CRPalettes {
     // is this overcomplicated and silly? yes. does `hingedLocometalDoor` explode if you simply try to pass in an empty array? also yes.
     @SuppressWarnings("unchecked")
     private static final TagKey<Block>[] NO_TAGS = (TagKey<Block>[]) new TagKey[0];
+    @SuppressWarnings("unchecked")
+    private static final TagKey<Block>[] NO_DOUBLE_DOOR_TAGS = (TagKey<Block>[]) new TagKey[]{AllTags.AllBlockTags.NON_DOUBLE_DOOR.tag};
 
     @SafeVarargs
     private static BlockEntry<?> hingedLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
@@ -484,6 +490,17 @@ public class CRPalettes {
             .transform(BuilderTransformers.locometalDoor(color, "hinged", tags, NO_TAGS))
             .transform(BuilderTransformers.locometalHingedDoorBlockState(color, "hinged"))
             .lang(joinSpace(colorName, "Hinged Locometal Door"))
+            .register();
+    }
+
+    @SafeVarargs
+    private static BlockEntry<?> slidingLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        TagKey<Item>[] slidingTags = Arrays.copyOf(tags, tags.length + 1);
+        slidingTags[tags.length] = AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag;
+        return REGISTRATE.block(joinUnderscore(colorString, "sliding_locometal_door"), PalettesSlidingDoorBlock.create(false))
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locometalDoor(color, "sliding", slidingTags, NO_DOUBLE_DOOR_TAGS))
+            .onRegister(movementBehaviour(new SlidingDoorMovementBehaviour()))
             .register();
     }
 
