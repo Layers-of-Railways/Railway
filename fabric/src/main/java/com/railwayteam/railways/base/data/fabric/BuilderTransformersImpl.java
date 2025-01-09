@@ -43,6 +43,7 @@ import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCr
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.fabric.GenericCrossingModel;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
@@ -65,29 +66,34 @@ import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.fabric.TriFunction;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel;
+import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
+import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockModelBuilder;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
@@ -371,6 +377,83 @@ public class BuilderTransformersImpl {
                     .texture("particle", flywheelTex);
             })
             .build();
+    }
+
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalHingedDoorBlockState(PalettesColor color, String type) {
+        return b -> b.blockstate((c, p) -> {
+            BiFunction<TriFunction<String, ResourceLocation, ResourceLocation, BlockModelBuilder>, String, Couple<BlockModelBuilder>> piece = (modelGen, pieceName) -> {
+                String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/" + pieceName;
+                return Couple.create(
+                    modelGen.apply(
+                        modelName + "_windowed",
+                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_windowed_door_bottom"),
+                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_windowed_door_top")
+                    ),
+                    modelGen.apply(
+                        modelName,
+                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_door_bottom"),
+                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_door_top")
+                    )
+                );
+            };
+            var bottomLeft = piece.apply(p.models()::doorBottomLeft, "bottom_left");
+            var bottomLeftOpen = piece.apply(p.models()::doorBottomLeftOpen, "bottom_left_open");
+            var bottomRight = piece.apply(p.models()::doorBottomRight, "bottom_right");
+            var bottomRightOpen = piece.apply(p.models()::doorBottomRightOpen, "bottom_right_open");
+            var topLeft = piece.apply(p.models()::doorTopLeft, "top_left");
+            var topLeftOpen = piece.apply(p.models()::doorTopLeftOpen, "top_left_open");
+            var topRight = piece.apply(p.models()::doorTopRight, "top_right");
+            var topRightOpen = piece.apply(p.models()::doorTopRightOpen, "top_right_open");
+            p.getVariantBuilder(c.get()).forAllStatesExcept((state) -> {
+                int yRot = (int) state.getValue(DoorBlock.FACING).toYRot() + 90;
+                boolean right = state.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT;
+                boolean open = state.getValue(DoorBlock.OPEN);
+                boolean lower = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
+                boolean windowed = state.getValue(HingedDoorBlock.WINDOWED);
+
+                if (open) {
+                    yRot += 90;
+                }
+                if (right && open) {
+                    yRot += 180;
+                }
+                yRot %= 360;
+
+                ModelFile model = null;
+                if (lower && right && open) {
+                    model = bottomRightOpen.get(windowed);
+                } else if (lower && !right && open) {
+                    model = bottomLeftOpen.get(windowed);
+                }
+
+                if (lower && right && !open) {
+                    model = bottomRight.get(windowed);
+                } else if (lower && !right && !open) {
+                    model = bottomLeft.get(windowed);
+                }
+
+                if (!lower && right && open) {
+                    model = topRightOpen.get(windowed);
+                } else if (!lower && !right && open) {
+                    model = topLeftOpen.get(windowed);
+                }
+
+                if (!lower && right && !open) {
+                    model = topRight.get(windowed);
+                } else if (!lower && !right && !open) {
+                    model = topLeft.get(windowed);
+                }
+
+                return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(yRot)
+                    .build();
+            }, DoorBlock.POWERED);
+        });
+    }
+
+    public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
+        return i -> i.model((c, p) -> p.blockSprite(c, p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_door")));
     }
 
     public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> locoMetalItem(PalettesColor color) {

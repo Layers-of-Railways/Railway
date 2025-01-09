@@ -42,6 +42,7 @@ public class ModSetup {
 
   public static void register() {
     useBaseTab();
+    CRBlockSetTypes.register();
     CRTrackMaterials.register();
     CRBogeyStyles.register();
     CRCreativeModeTabs.register();

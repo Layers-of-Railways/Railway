@@ -47,6 +47,7 @@ import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.contraptions.behaviour.DoorMovingInteraction;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -58,23 +59,30 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
+import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class BuilderTransformers {
@@ -213,6 +221,34 @@ public class BuilderTransformers {
             .transform(pickaxeOnly())
             .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.boiler"))
             .blockstate(BoilerGenerator.create(color, wrapping)::generate);
+    }
+
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalDoor(PalettesColor color, String type, TagKey<Item>[] itemTags, TagKey<Block>[] blockTags) {
+        return b -> b
+            .transform(BuilderTransformers.locoMetalBase(color, null))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(p -> p.pushReaction(PushReaction.DESTROY))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .onRegister(interactionBehaviour(new DoorMovingInteraction()))
+            .tag(BlockTags.DOORS)
+            .tag(BlockTags.WOODEN_DOORS) // for villager AI
+            .tag(blockTags)
+            .loot((lr, block) -> lr.add(block, lr.createDoorTable(block)))
+            .item()
+            .tag(ItemTags.DOORS)
+            .tag(itemTags)
+            .transform(locometalDoorItemModel(color, type))
+            .build();
+    }
+
+    @ExpectPlatform
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalHingedDoorBlockState(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
+        throw new AssertionError();
     }
 
     @ExpectPlatform

@@ -86,7 +86,12 @@ public class CRExtraRegistration {
             validBlocks.add(block);
             ((AccessorBlockEntityType) be).setValidBlocks(validBlocks);
         }
-        modifiedTypes.add(be);
+
+        if (modifiedTypes != null) {
+            modifiedTypes.add(be);
+        } else {
+            Railways.LOGGER.warn("Added valid block ({}) to block entity type ({}) after finalization. Refreezing will be skipped. This may incur a performance penalty.", block, be);
+        }
     }
 
     // it is likely that an ImmutableSet will be more efficient in terms of memory and query time than a HashSet, so we

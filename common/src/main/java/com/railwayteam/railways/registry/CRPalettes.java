@@ -27,8 +27,9 @@ import com.railwayteam.railways.content.palettes.FloatingMetalLadderBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
-import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
+import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
+import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
@@ -121,7 +122,8 @@ public class CRPalettes {
         IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, "Iron Wrapped Locometal Boilers", null),
         END_LADDER(CRPalettes::endLadder, "Locometal End Ladders", CycleGroupCategory.LADDERS),
         RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
-        FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null)
+        FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
+        HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS)
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -471,6 +473,20 @@ public class CRPalettes {
             .register();
     }
 
+    // is this overcomplicated and silly? yes. does `hingedLocometalDoor` explode if you simply try to pass in an empty array? also yes.
+    @SuppressWarnings("unchecked")
+    private static final TagKey<Block>[] NO_TAGS = (TagKey<Block>[]) new TagKey[0];
+
+    @SafeVarargs
+    private static BlockEntry<?> hingedLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        return REGISTRATE.block(joinUnderscore(colorString, "hinged_locometal_door"), HingedDoorBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locometalDoor(color, "hinged", tags, NO_TAGS))
+            .transform(BuilderTransformers.locometalHingedDoorBlockState(color, "hinged"))
+            .lang(joinSpace(colorName, "Hinged Locometal Door"))
+            .register();
+    }
+
     public static class StyledList<T> implements Iterable<T> {
         private final Map<Styles, T> values = new EnumMap<>(Styles.class);
 
@@ -586,6 +602,7 @@ public class CRPalettes {
         WRAPPED_COPPER("Copper Wrapped Locometal"),
         WRAPPED_IRON("Iron Wrapped Locometal"),
         LADDERS("Locometal Ladders"),
+        DOORS("Locometal Doors")
         ;
         public final String langName;
 

@@ -122,14 +122,24 @@ public final class MultiRegistryCallback<A, B> {
             valueB = null;
         } else if (valueA != null && valueB != null) {
             LOGGER.info("Running callback for {} and {}", idA, idB);
+
+            Throwable thrown = null;
+            try {
+                callback.accept(valueA, valueB);
+            } catch (Exception e) {
+                thrown = e.fillInStackTrace();
+            }
+            valueA = null;
+            valueB = null;
+            callback = null;
+
             if (--TODO_COUNT == 0) {
                 runFinalizers();
             }
 
-            callback.accept(valueA, valueB);
-            valueA = null;
-            valueB = null;
-            callback = null;
+            if (thrown != null) {
+                throw new RuntimeException("Error running MultiRegistryCallback", thrown);
+            }
         }
     }
 

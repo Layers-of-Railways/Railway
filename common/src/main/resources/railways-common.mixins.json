@@ -8,6 +8,7 @@
     "AccessorAbstractContraptionEntity",
     "AccessorBlockEntity",
     "AccessorBlockEntityType",
+    "AccessorBlockSetType",
     "AccessorCarriage",
     "AccessorCarriageBogey",
     "AccessorCarriageContraption",
