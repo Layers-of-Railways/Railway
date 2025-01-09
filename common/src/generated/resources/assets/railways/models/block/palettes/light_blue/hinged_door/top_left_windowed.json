@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_left",
-  "textures": {
-    "bottom": "railways:block/palettes/light_blue/hinged_windowed_door_bottom",
-    "top": "railways:block/palettes/light_blue/hinged_windowed_door_top"
-  }
-}

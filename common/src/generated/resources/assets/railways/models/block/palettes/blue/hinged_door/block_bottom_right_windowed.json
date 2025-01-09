@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/palettes/doors/block_bottom_right",
+  "textures": {
+    "block_particle": "railways:block/palettes/blue/annexed_slashed",
+    "bottom": "railways:block/palettes/blue/hinged_windowed_door_bottom",
+    "side": "railways:block/palettes/blue/hinged_windowed_door_side"
+  }
+}
