@@ -20,6 +20,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.EnumFilledList;
 import com.railwayteam.railways.base.data.BuilderTransformers;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.content.animated_flywheel.FlywheelMovementBehaviour;
@@ -127,7 +128,8 @@ public class CRPalettes {
         RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
         FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
         HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS),
-        SLIDING_DOOR(CRPalettes::slidingLocometalDoor, "Sliding Locometal Doors", CycleGroupCategory.DOORS)
+        SLIDING_DOOR(CRPalettes::slidingLocometalDoor, "Sliding Locometal Doors", CycleGroupCategory.DOORS),
+        FOLDING_DOOR(CRPalettes::foldingLocometalDoor, "Folding Locometal Doors", CycleGroupCategory.DOORS)
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -500,39 +502,28 @@ public class CRPalettes {
         return REGISTRATE.block(joinUnderscore(colorString, "sliding_locometal_door"), PalettesSlidingDoorBlock.create(false))
             .transform(transformer.get())
             .transform(BuilderTransformers.locometalDoor(color, "sliding", slidingTags, NO_DOUBLE_DOOR_TAGS))
+            .transform(BuilderTransformers.locometalSlidingDoorBlockState(color, "sliding"))
             .onRegister(movementBehaviour(new SlidingDoorMovementBehaviour()))
+            .lang(joinSpace(colorName, "Sliding Locometal Door"))
             .register();
     }
 
-    public static class StyledList<T> implements Iterable<T> {
-        private final Map<Styles, T> values = new EnumMap<>(Styles.class);
+    @SafeVarargs
+    private static BlockEntry<?> foldingLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        TagKey<Item>[] foldingTags = Arrays.copyOf(tags, tags.length + 1);
+        foldingTags[tags.length] = AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag;
+        return REGISTRATE.block(joinUnderscore(colorString, "folding_locometal_door"), PalettesSlidingDoorBlock.create(true))
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locometalDoor(color, "folding", foldingTags, NO_DOUBLE_DOOR_TAGS))
+            .transform(BuilderTransformers.locometalFoldingDoorBlockState(color, "folding"))
+            .onRegister(movementBehaviour(new SlidingDoorMovementBehaviour()))
+            .lang(joinSpace(colorName, "Folding Locometal Door"))
+            .register();
+    }
 
+    public static class StyledList<T> extends EnumFilledList<Styles, T> {
         public StyledList(Function<Styles, T> filler) {
-            for (Styles style : Styles.values()) {
-                values.put(style, filler.apply(style));
-            }
-        }
-
-        @NotNull
-        @Override
-        public Iterator<T> iterator() {
-            return new StyledListIterator();
-        }
-
-        private class StyledListIterator implements Iterator<T> {
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < Styles.values().length;
-            }
-
-            @Override
-            public T next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return values.get(Styles.values()[index++]);
-            }
+            super(Styles.class, filler);
         }
     }
 
@@ -550,7 +541,7 @@ public class CRPalettes {
         @NotNull
         @Override
         public Iterator<T> iterator() {
-            return new Iterator<T>() {
+            return new Iterator<>() {
                 private int index = 0;
 
                 @Override
@@ -568,33 +559,15 @@ public class CRPalettes {
         }
     }
 
-    public static class CycleCategoryList<T> implements Iterable<T> {
-        private final Map<CycleGroupCategory, T> values = new EnumMap<>(CycleGroupCategory.class);
-
+    public static class CycleCategoryList<T> extends EnumFilledList<CycleGroupCategory, T> {
         public CycleCategoryList(Function<CycleGroupCategory, T> filler) {
-            for (CycleGroupCategory category : CycleGroupCategory.values()) {
-                values.put(category, filler.apply(category));
-            }
+            super(CycleGroupCategory.class, filler);
         }
+    }
 
-        @NotNull
-        @Override
-        public Iterator<T> iterator() {
-            return new Iterator<T>() {
-                private int index = 0;
-
-                @Override
-                public boolean hasNext() {
-                    return index < CycleGroupCategory.values().length;
-                }
-
-                @Override
-                public T next() {
-                    if (!hasNext())
-                        throw new NoSuchElementException();
-                    return values.get(CycleGroupCategory.values()[index++]);
-                }
-            };
+    public static class PalettesColorList<T> extends EnumFilledList<PalettesColor, T> {
+        public PalettesColorList(Function<PalettesColor, T> filler) {
+            super(PalettesColor.class, filler);
         }
     }
 

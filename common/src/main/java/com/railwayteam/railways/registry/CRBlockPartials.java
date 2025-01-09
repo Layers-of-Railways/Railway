@@ -20,9 +20,11 @@ package com.railwayteam.railways.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.registry.CRPalettes.PalettesColorList;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -520,6 +522,14 @@ public class CRBlockPartials {
 
     public static final PartialModel DIESEL_STACK_FAN = block("smokestack/block_diesel_fan");
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
+
+    public static final PalettesColorList<Couple<Couple<PartialModel>>> FOLDING_DOORS = new PalettesColorList<>(
+        color -> Couple.createWithContext(windowed -> Couple.createWithContext(left -> {
+            String side = left ? "left" : "right";
+            String windowStr = windowed ? "windowed" : "plain";
+            return block("palettes/"+color.getSerializedName()+"/folding_door/fold_"+side+"_"+windowStr);
+        }))
+    );
 
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));

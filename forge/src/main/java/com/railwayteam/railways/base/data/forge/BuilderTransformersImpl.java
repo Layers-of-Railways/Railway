@@ -67,6 +67,7 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -92,6 +93,7 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
@@ -420,7 +422,12 @@ public class BuilderTransformersImpl {
     }
 
     public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalSlidingDoorBlockState(PalettesColor color, String type) {
+        return locometalSlidingDoorBlockState(color, type, (c, p) -> {});
+    }
+
+    private static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalSlidingDoorBlockState(PalettesColor color, String type, BiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> extraRegistration) {
         return b -> b.blockstate((c, p) -> {
+            extraRegistration.accept(c, p);
             Couple<Couple<BlockModelBuilder>> pieces = Couple.createWithContext((bottom) -> {
                 String texName = bottom ? "bottom" : "top";
                 String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/block_" + texName;
@@ -458,6 +465,27 @@ public class BuilderTransformersImpl {
                     .build();
             }, DoorBlock.POWERED);
         });
+    }
+
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalFoldingDoorBlockState(PalettesColor color, String type) {
+        return b -> b.transform(locometalSlidingDoorBlockState(color, type, (c, p) -> {
+            // just generate the needed fold models. Amazingly, this still generates even though it isn't used in any blockstate
+            for (boolean right : Iterate.trueAndFalse) {
+                for (boolean windowed : Iterate.trueAndFalse) {
+                    String name = right ? "right" : "left";
+                    String windowStr = windowed ? "_windowed" : "";
+                    String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/fold_" + name + windowStr;
+                    p.models().withExistingParent(
+                            modelName,
+                            p.modLoc("block/palettes/doors/fold_" + name)
+                        )
+                        .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowStr + "_door_side"))
+                        .texture("bottom", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowStr + "_door_bottom"))
+                        .texture("top", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowStr + "_door_top"))
+                        .texture("block_particle", p.modLoc("block/palettes/" + color.getSerializedName() + "/annexed_slashed"));
+                }
+            }
+        }));
     }
 
     public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
