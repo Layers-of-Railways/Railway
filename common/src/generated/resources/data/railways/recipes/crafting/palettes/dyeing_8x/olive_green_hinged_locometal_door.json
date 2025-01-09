@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/hinged_door"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:olive_green_hinged_locometal_door"
+  },
+  "show_notification": true
+}

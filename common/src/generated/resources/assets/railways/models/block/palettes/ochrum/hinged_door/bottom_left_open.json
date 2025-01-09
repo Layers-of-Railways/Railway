@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "railways:block/palettes/ochrum/hinged_door_bottom",
+    "top": "railways:block/palettes/ochrum/hinged_door_top"
+  }
+}
