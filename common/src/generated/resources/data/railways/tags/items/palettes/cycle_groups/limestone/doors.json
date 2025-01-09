@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:limestone_hinged_locometal_door"
+    "railways:limestone_hinged_locometal_door",
+    "railways:limestone_sliding_locometal_door"
   ]
 }

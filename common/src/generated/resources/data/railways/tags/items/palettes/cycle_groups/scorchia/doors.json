@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:scorchia_hinged_locometal_door"
+    "railways:scorchia_hinged_locometal_door",
+    "railways:scorchia_sliding_locometal_door"
   ]
 }

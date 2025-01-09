@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:diorite_hinged_locometal_door"
+    "railways:diorite_hinged_locometal_door",
+    "railways:diorite_sliding_locometal_door"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "railways:purple_hinged_locometal_door"
+    "railways:purple_hinged_locometal_door",
+    "railways:purple_sliding_locometal_door"
   ]
 }
