@@ -19,11 +19,15 @@
 package com.railwayteam.railways.content.palettes.doors;
 
 import com.railwayteam.railways.registry.CRBlockSetTypes;
+import com.railwayteam.railways.util.EntityUtils;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -34,6 +38,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -68,6 +73,35 @@ public class HingedDoorBlock extends DoorBlock implements IWrenchable {
         BlockState newState = state.cycle(WINDOWED);
         world.setBlock(pos, newState, UPDATE_ALL);
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (EntityUtils.isHolding(player, AllItems.WRENCH::isIn)) {
+            return InteractionResult.PASS;
+        }
+        return super.use(state, level, pos, player, hand, hit);
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            Level level = context.getLevel();
+            BlockPos posBelow = context.getClickedPos().below();
+            return IWrenchable.super.onSneakWrenched(level.getBlockState(posBelow), new UseOnContext(
+                level,
+                context.getPlayer(),
+                context.getHand(),
+                context.getItemInHand(),
+                new BlockHitResult(
+                    context.getClickLocation().add(0, -1, 0),
+                    context.getClickedFace(),
+                    posBelow,
+                    context.isInside()
+                )
+            ));
+        }
+        return IWrenchable.super.onSneakWrenched(state, context);
     }
 
     @Override
