@@ -75,7 +75,6 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
-import net.minecraft.data.models.blockstates.PropertyDispatch.TriFunction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -93,7 +92,6 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.base.data.BuilderTransformers.sharedBogey;
@@ -381,31 +379,23 @@ public class BuilderTransformersImpl {
 
     public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalHingedDoorBlockState(PalettesColor color, String type) {
         return b -> b.blockstate((c, p) -> {
-            BiFunction<TriFunction<String, ResourceLocation, ResourceLocation, BlockModelBuilder>, String, Couple<BlockModelBuilder>> piece = (modelGen, pieceName) -> {
-                String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/" + pieceName;
-                return Couple.create(
-                    modelGen.apply(
-                        modelName + "_windowed",
-                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_windowed_bottom"),
-                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_windowed_top")
-                    ),
-                    modelGen.apply(
-                        modelName,
-                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_bottom"),
-                        p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + "_top")
-                    )
-                );
-            };
-            var bottomLeft = piece.apply(p.models()::doorBottomLeft, "bottom_left");
-            var bottomLeftOpen = piece.apply(p.models()::doorBottomLeftOpen, "bottom_left_open");
-            var bottomRight = piece.apply(p.models()::doorBottomRight, "bottom_right");
-            var bottomRightOpen = piece.apply(p.models()::doorBottomRightOpen, "bottom_right_open");
-            var topLeft = piece.apply(p.models()::doorTopLeft, "top_left");
-            var topLeftOpen = piece.apply(p.models()::doorTopLeftOpen, "top_left_open");
-            var topRight = piece.apply(p.models()::doorTopRight, "top_right");
-            var topRightOpen = piece.apply(p.models()::doorTopRightOpen, "top_right_open");
+            Couple<Couple<Couple<BlockModelBuilder>>> pieces = Couple.createWithContext((right) -> Couple.createWithContext((bottom) -> {
+                String texName = bottom ? "bottom" : "top";
+                String modelSuffix = texName + "_" + (right ? "right" : "left");
+                String modelName = "block/palettes/" + color.getSerializedName() + "/" + type + "_door/block_" + modelSuffix;
+                return Couple.createWithContext((windowed) -> {
+                    String windowedName = windowed ? "_windowed" : "";
+                    return p.models().withExistingParent(
+                            modelName + windowedName,
+                            p.modLoc("block/palettes/doors/block_" + modelSuffix)
+                        )
+                        .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_side"))
+                        .texture(texName, p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_" + texName))
+                        .texture("block_particle", p.modLoc("block/palettes/" + color.getSerializedName() + "/annexed_slashed"));
+                });
+            }));
             p.getVariantBuilder(c.get()).forAllStatesExcept((state) -> {
-                int yRot = (int) ((Direction) state.getValue(DoorBlock.FACING)).toYRot() + 90;
+                int yRot = (int) state.getValue(DoorBlock.FACING).toYRot() + 90;
                 boolean right = state.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT;
                 boolean open = state.getValue(DoorBlock.OPEN);
                 boolean lower = state.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
@@ -419,30 +409,7 @@ public class BuilderTransformersImpl {
                 }
                 yRot %= 360;
 
-                ModelFile model = null;
-                if (lower && right && open) {
-                    model = bottomRightOpen.get(windowed);
-                } else if (lower && !right && open) {
-                    model = bottomLeftOpen.get(windowed);
-                }
-
-                if (lower && right && !open) {
-                    model = bottomRight.get(windowed);
-                } else if (lower && !right && !open) {
-                    model = bottomLeft.get(windowed);
-                }
-
-                if (!lower && right && open) {
-                    model = topRightOpen.get(windowed);
-                } else if (!lower && !right && open) {
-                    model = topLeftOpen.get(windowed);
-                }
-
-                if (!lower && right && !open) {
-                    model = topRight.get(windowed);
-                } else if (!lower && !right && !open) {
-                    model = topLeft.get(windowed);
-                }
+                ModelFile model = pieces.get(right ^ open).get(lower).get(windowed);
 
                 return ConfiguredModel.builder()
                     .modelFile(model)
