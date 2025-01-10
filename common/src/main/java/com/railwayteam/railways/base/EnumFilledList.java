@@ -37,6 +37,10 @@ public class EnumFilledList<E extends Enum<E>, T> implements Iterable<T> {
         }
     }
 
+    public T get(E e) {
+        return values[e.ordinal()];
+    }
+
     @Override
     public @NotNull Iterator<T> iterator() {
         return new EnumFilledListIterator();

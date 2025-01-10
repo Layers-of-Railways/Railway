@@ -499,7 +499,7 @@ public class CRPalettes {
     private static BlockEntry<?> slidingLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         TagKey<Item>[] slidingTags = Arrays.copyOf(tags, tags.length + 1);
         slidingTags[tags.length] = AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag;
-        return REGISTRATE.block(joinUnderscore(colorString, "sliding_locometal_door"), PalettesSlidingDoorBlock.create(false))
+        return REGISTRATE.block(joinUnderscore(colorString, "sliding_locometal_door"), PalettesSlidingDoorBlock.create(false, color))
             .transform(transformer.get())
             .transform(BuilderTransformers.locometalDoor(color, "sliding", slidingTags, NO_DOUBLE_DOOR_TAGS))
             .transform(BuilderTransformers.locometalSlidingDoorBlockState(color, "sliding"))
@@ -512,7 +512,7 @@ public class CRPalettes {
     private static BlockEntry<?> foldingLocometalDoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
         TagKey<Item>[] foldingTags = Arrays.copyOf(tags, tags.length + 1);
         foldingTags[tags.length] = AllTags.AllItemTags.CONTRAPTION_CONTROLLED.tag;
-        return REGISTRATE.block(joinUnderscore(colorString, "folding_locometal_door"), PalettesSlidingDoorBlock.create(true))
+        return REGISTRATE.block(joinUnderscore(colorString, "folding_locometal_door"), PalettesSlidingDoorBlock.create(true, color))
             .transform(transformer.get())
             .transform(BuilderTransformers.locometalDoor(color, "folding", foldingTags, NO_DOUBLE_DOOR_TAGS))
             .transform(BuilderTransformers.locometalFoldingDoorBlockState(color, "folding"))

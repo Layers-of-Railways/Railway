@@ -133,6 +133,7 @@
     "client.MixinPlayerRenderer",
     "client.MixinPortableStorageInterfaceRenderer",
     "client.MixinRadialToolboxMenu",
+    "client.MixinSlidingDoorRenderer",
     "client.MixinSpriteContents",
     "client.MixinSpriteContents$MixinAnimatedTexture",
     "client.MixinStationRenderer",

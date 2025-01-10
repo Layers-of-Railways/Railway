@@ -67,7 +67,7 @@ public class CRExtraRegistration {
         for (PalettesColor color : PalettesColor.values()) {
             addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.FLYWHEEL.get(color), Create.asResource("flywheel"));
             addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.SLIDING_DOOR.get(color), Create.asResource("sliding_door"));
-            addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.FOLDING_DOOR.get(color), Create.asResource("folding_door"));
+            addRailwaysBlockToCreateBlockEntity(CRPalettes.Styles.FOLDING_DOOR.get(color), Create.asResource("sliding_door"));
         }
     }
 

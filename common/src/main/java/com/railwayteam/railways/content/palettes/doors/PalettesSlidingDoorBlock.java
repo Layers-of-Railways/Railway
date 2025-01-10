@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.content.palettes.doors;
 
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlockSetTypes;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.AllItems;
@@ -47,13 +48,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class PalettesSlidingDoorBlock extends SlidingDoorBlock implements IWrenchable {
     public static final BooleanProperty WINDOWED = BooleanProperty.create("windowed");
+    public final PalettesColor color;
 
-    public static NonNullFunction<Properties, PalettesSlidingDoorBlock> create(boolean folds) {
-        return p -> new PalettesSlidingDoorBlock(p, folds);
+    public static NonNullFunction<Properties, PalettesSlidingDoorBlock> create(boolean folds, PalettesColor color) {
+        return p -> new PalettesSlidingDoorBlock(p, folds, color);
     }
 
-    public PalettesSlidingDoorBlock(Properties properties, boolean folds) {
+    public PalettesSlidingDoorBlock(Properties properties, boolean folds, PalettesColor color) {
         super(properties, CRBlockSetTypes.LOCOMETAL, folds);
+        this.color = color;
         registerDefaultState(defaultBlockState()
             .setValue(WINDOWED, false));
     }

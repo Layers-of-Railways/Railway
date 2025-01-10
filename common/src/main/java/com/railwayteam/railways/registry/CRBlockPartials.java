@@ -526,8 +526,8 @@ public class CRBlockPartials {
     public static final PalettesColorList<Couple<Couple<PartialModel>>> FOLDING_DOORS = new PalettesColorList<>(
         color -> Couple.createWithContext(windowed -> Couple.createWithContext(left -> {
             String side = left ? "left" : "right";
-            String windowStr = windowed ? "windowed" : "plain";
-            return block("palettes/"+color.getSerializedName()+"/folding_door/fold_"+side+"_"+windowStr);
+            String windowStr = windowed ? "_windowed" : "";
+            return block("palettes/" + color.getSerializedName() + "/folding_door/fold_" + side + windowStr);
         }))
     );
 
