@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/single_pane_window"
+    },
+    {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:chartreuse_single_pane_locometal_window"
+  }
+}

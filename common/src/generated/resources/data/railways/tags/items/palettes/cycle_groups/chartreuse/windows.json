@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "railways:chartreuse_round_pane_locometal_window",
+    "railways:chartreuse_single_pane_locometal_window",
+    "railways:chartreuse_two_pane_locometal_window",
+    "railways:chartreuse_four_pane_locometal_window"
+  ]
+}

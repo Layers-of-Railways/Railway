@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/single_pane_window"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/gray_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:gray_single_pane_locometal_window"
+  },
+  "show_notification": true
+}
