@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/palettes/doors/block_bottom_right",
+  "parent": "railways:block/palettes/doors/block_bottom_left",
   "textures": {
     "block_particle": "railways:block/palettes/vermilion/annexed_slashed",
     "bottom": "railways:block/palettes/vermilion/sliding_door_bottom",

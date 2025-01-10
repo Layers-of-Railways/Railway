@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/palettes/doors/block_bottom_right",
+  "parent": "railways:block/palettes/doors/block_bottom_left",
   "textures": {
     "block_particle": "railways:block/palettes/royal_blue/annexed_slashed",
     "bottom": "railways:block/palettes/royal_blue/folding_door_bottom",

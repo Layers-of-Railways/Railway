@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/palettes/doors/block_top_right",
+  "parent": "railways:block/palettes/doors/block_top_left",
   "textures": {
     "block_particle": "railways:block/palettes/ochrum/annexed_slashed",
     "side": "railways:block/palettes/ochrum/sliding_door_side",

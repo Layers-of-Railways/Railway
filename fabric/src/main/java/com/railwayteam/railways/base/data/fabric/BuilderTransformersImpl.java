@@ -437,7 +437,7 @@ public class BuilderTransformersImpl {
                     String windowedName = windowed ? "_windowed" : "";
                     return p.models().withExistingParent(
                             modelName + windowedName,
-                            p.modLoc("block/palettes/doors/block_" + texName + "_right")
+                            p.modLoc("block/palettes/doors/block_" + texName + "_left")
                         )
                         .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_side"))
                         .texture(texName, p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type + windowedName + "_door_" + texName))

@@ -1,5 +1,5 @@
 {
-  "parent": "railways:block/palettes/doors/block_bottom_right",
+  "parent": "railways:block/palettes/doors/block_bottom_left",
   "textures": {
     "block_particle": "railways:block/palettes/pine_green/annexed_slashed",
     "bottom": "railways:block/palettes/pine_green/sliding_windowed_door_bottom",
