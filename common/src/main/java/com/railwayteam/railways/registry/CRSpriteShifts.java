@@ -20,6 +20,8 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.registry.CRPalettes.PalettesColorList;
+import com.railwayteam.railways.registry.CRPalettes.WindowTypeList;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.block.connected.AllCTTypes;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
@@ -53,6 +55,12 @@ public class CRSpriteShifts {
         BRASS_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class),
         COPPER_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class),
         IRON_WRAPPED_BOILER_SIDE = new EnumMap<>(PalettesColor.class);
+
+    public static WindowTypeList<PalettesColorList<CTSpriteShiftEntry>> WINDOWS = new WindowTypeList<>(
+        windowType -> new PalettesColorList<>(
+            color -> locometalVertical(color, windowType.getSerializedName())
+        )
+    );
 
     public static EnumMap<PalettesColor, CTSpriteShiftEntry> getSmokebox(@Nullable Wrapping wrapping) {
         if (wrapping == null) return SMOKEBOX;
@@ -99,6 +107,11 @@ public class CRSpriteShifts {
         return horizontalKryppers("palettes/" + colorName + "/" + name);
     }
 
+    private static CTSpriteShiftEntry locometalVertical(@NotNull PalettesColor color, String name) {
+        String colorName = color.getSerializedName();
+        return vertical("palettes/" + colorName + "/" + name);
+    }
+
     private static CTSpriteShiftEntry locometalVerticalPinkmachine(@NotNull PalettesColor color, String name) {
         String colorName = color.getSerializedName();
         return verticalPinkmachine("palettes/" + colorName + "/" + name);
@@ -117,7 +130,6 @@ public class CRSpriteShifts {
         return getCT(AllCTTypes.HORIZONTAL_KRYPPERS, name);
     }
 
-    @SuppressWarnings("unused")
     private static CTSpriteShiftEntry vertical(String name) {
         return getCT(AllCTTypes.VERTICAL, name);
     }

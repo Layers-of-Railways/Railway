@@ -52,6 +52,7 @@ import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
@@ -486,6 +487,19 @@ public class BuilderTransformersImpl {
                 }
             }
         }));
+    }
+
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalWindow(PalettesColor color, CRPalettes.WindowType type) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .blockstate((c, p) -> {
+                String modelName = "block/palettes/"+TextUtils.prefixToFolder(c.getName(), color.getSerializedName());
+                ResourceLocation side = p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type.getTextureName());
+                ResourceLocation end = p.modLoc("block/palettes/" + color.getSerializedName() + "/" + type.getTextureName());
+                p.axisBlock(c.get(),
+                    p.models().cubeColumn(modelName, side, end),
+                    p.models().cubeColumnHorizontal(modelName + "_horizontal", side, end)
+                );
+            });
     }
 
     public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {

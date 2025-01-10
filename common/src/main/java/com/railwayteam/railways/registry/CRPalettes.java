@@ -32,6 +32,7 @@ import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.doors.PalettesSlidingDoorBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorMovementBehaviour;
@@ -129,7 +130,11 @@ public class CRPalettes {
         FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
         HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS),
         SLIDING_DOOR(CRPalettes::slidingLocometalDoor, "Sliding Locometal Doors", CycleGroupCategory.DOORS),
-        FOLDING_DOOR(CRPalettes::foldingLocometalDoor, "Folding Locometal Doors", CycleGroupCategory.DOORS)
+        FOLDING_DOOR(CRPalettes::foldingLocometalDoor, "Folding Locometal Doors", CycleGroupCategory.DOORS),
+        ROUND_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.ROUND_PANE), "Round Pane Windows", CycleGroupCategory.WINDOWS),
+        SINGLE_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.SINGLE_PANE), "Single Pane Windows", CycleGroupCategory.WINDOWS),
+        TWO_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.TWO_PANE), "Two Pane Windows", CycleGroupCategory.WINDOWS),
+        FOUR_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.FOUR_PANE), "Four Pane Windows", CycleGroupCategory.WINDOWS),
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -521,6 +526,21 @@ public class CRPalettes {
             .register();
     }
 
+    private static PaletteBlockRegistrar locometalWindow(WindowType type) {
+        return (TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) ->
+            REGISTRATE.block(joinUnderscore(colorString, type.getSerializedName() + "_locometal_window"), RotatedPillarBlock::new)
+                .transform(transformer.get())
+                .transform(BuilderTransformers.locometalWindow(color, type))
+                .onRegister(connectedTextures(() -> new PalettesPillarCTBehaviour(CRSpriteShifts.WINDOWS.get(type).get(color))))
+                .lang(joinSpace(colorName, type.getLangName(), "Locometal Window"))
+                .item()
+                .transform(BuilderTransformers.locoMetalItem(color))
+                .tag(tags)
+                .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
+                .build()
+                .register();
+    }
+
     public static class StyledList<T> extends EnumFilledList<Styles, T> {
         public StyledList(Function<Styles, T> filler) {
             super(Styles.class, filler);
@@ -571,6 +591,12 @@ public class CRPalettes {
         }
     }
 
+    public static class WindowTypeList<T> extends EnumFilledList<WindowType, T> {
+        public WindowTypeList(Function<WindowType, T> filler) {
+            super(WindowType.class, filler);
+        }
+    }
+
     public enum Wrapping {
         BRASS(false),
         COPPER(true),
@@ -592,7 +618,8 @@ public class CRPalettes {
         WRAPPED_COPPER("Copper Wrapped Locometal"),
         WRAPPED_IRON("Iron Wrapped Locometal"),
         LADDERS("Locometal Ladders"),
-        DOORS("Locometal Doors")
+        DOORS("Locometal Doors"),
+        WINDOWS("Locometal Windows")
         ;
         public final String langName;
 
@@ -602,6 +629,26 @@ public class CRPalettes {
 
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
+        }
+    }
+
+    public enum WindowType {
+        ROUND_PANE,
+        SINGLE_PANE,
+        TWO_PANE,
+        FOUR_PANE
+        ;
+
+        public String getSerializedName() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        public String getLangName() {
+            return TextUtils.snakeCaseToTitleCase(getSerializedName());
+        }
+
+        public String getTextureName() {
+            return getSerializedName() + "_window";
         }
     }
 }
