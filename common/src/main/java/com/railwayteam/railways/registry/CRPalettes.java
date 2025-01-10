@@ -26,6 +26,7 @@ import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.content.animated_flywheel.FlywheelMovementBehaviour;
 import com.railwayteam.railways.content.palettes.FloatingMetalLadderBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.content.palettes.RotatedPillarWindowBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
@@ -42,14 +43,21 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -526,13 +534,37 @@ public class CRPalettes {
             .register();
     }
 
+    private static BlockBehaviour.Properties glassProperties(BlockBehaviour.Properties p) {
+        return p.isValidSpawn(CRPalettes::never)
+            .isRedstoneConductor(CRPalettes::never)
+            .isSuffocating(CRPalettes::never)
+            .isViewBlocking(CRPalettes::never)
+            .instrument(NoteBlockInstrument.HAT)
+            .strength(0.3F)
+            .sound(SoundType.GLASS)
+            .noOcclusion();
+    }
+
+    private static <A, B, C> boolean never(A $, B $$, C $$$) {
+        return false;
+    }
+
+    private static <A, B, C, D> boolean never(A $, B $$, C $$$, D $$$$) {
+        return false;
+    }
+
     private static PaletteBlockRegistrar locometalWindow(WindowType type) {
         return (TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) ->
-            REGISTRATE.block(joinUnderscore(colorString, type.getSerializedName() + "_locometal_window"), RotatedPillarBlock::new)
+            REGISTRATE.block(joinUnderscore(colorString, type.getSerializedName() + "_locometal_window"), RotatedPillarWindowBlock::transparent)
                 .transform(transformer.get())
                 .transform(BuilderTransformers.locometalWindow(color, type))
-                .onRegister(connectedTextures(() -> new PalettesPillarCTBehaviour(CRSpriteShifts.WINDOWS.get(type).get(color))))
+                .properties(CRPalettes::glassProperties)
                 .lang(joinSpace(colorName, type.getLangName(), "Locometal Window"))
+                .addLayer(() -> RenderType::cutoutMipped)
+                .tag(BlockTags.IMPERMEABLE)
+                .removeTag(ProviderType.BLOCK_TAGS, AllTags.AllBlockTags.WRENCH_PICKUP.tag)
+                .loot(RegistrateBlockLootTables::dropWhenSilkTouch)
+                .onRegister(connectedTextures(() -> new PalettesPillarCTBehaviour(CRSpriteShifts.WINDOWS.get(type).get(color))))
                 .item()
                 .transform(BuilderTransformers.locoMetalItem(color))
                 .tag(tags)

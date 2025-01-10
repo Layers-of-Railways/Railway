@@ -58,7 +58,7 @@ public class CRSpriteShifts {
 
     public static WindowTypeList<PalettesColorList<CTSpriteShiftEntry>> WINDOWS = new WindowTypeList<>(
         windowType -> new PalettesColorList<>(
-            color -> locometalVertical(color, windowType.getSerializedName())
+            color -> locometalVertical(color, windowType.getTextureName())
         )
     );
 
