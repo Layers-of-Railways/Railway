@@ -46,6 +46,7 @@ import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.RotatedPillarWindowBlock;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
@@ -89,6 +90,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -510,6 +512,57 @@ public class BuilderTransformersImpl {
                     p.models().cubeColumn(modelName, side, end),
                     p.models().cubeColumnHorizontal(modelName + "_horizontal", side, end)
                 );
+            });
+    }
+
+    public static <B extends PalettesTrapDoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalTrapdoor(PalettesColor color) {
+        return b -> b.transform(locoMetalBase(color, null))
+            .blockstate((c, p) -> {
+                String[] qualifiers = {"bottom", "top", "open"};
+                Couple<ModelFile[]> models = Couple.createWithContext((windowed) -> {
+                    String windowStr = windowed ? "windowed_" : "";
+                    ModelFile[] out = new ModelFile[3];
+                    for (int i = 0; i < 3; i++) {
+                        String modelName = "block/palettes/" + color.getSerializedName() + "/trapdoors/" + windowStr + "trapdoor_" + qualifiers[i];
+                        out[i] = p.models().withExistingParent(
+                                modelName,
+                                p.modLoc("block/palettes/trapdoors/template_orientable_trapdoor_" + qualifiers[i])
+                            )
+                            .texture("texture", p.modLoc("block/palettes/" + color.getSerializedName() + "/" + windowStr + "trapdoor"))
+                            .texture("side", p.modLoc("block/palettes/" + color.getSerializedName() + "/hinged_door_side"));
+                    }
+                    return out;
+                });
+
+                Couple<ModelFile> bottom = Couple.createWithContext((windowed) -> models.get(windowed)[0]);
+                Couple<ModelFile> top = Couple.createWithContext((windowed) -> models.get(windowed)[1]);
+                Couple<ModelFile> open = Couple.createWithContext((windowed) -> models.get(windowed)[2]);
+
+                // create block model alias
+                p.models().withExistingParent(
+                    "block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()),
+                    bottom.get(false).getLocation()
+                );
+
+                p.getVariantBuilder(c.get()).forAllStatesExcept(state -> {
+                    Direction facing = state.getValue(PalettesTrapDoorBlock.FACING);
+                    boolean isOpen = state.getValue(PalettesTrapDoorBlock.OPEN);
+                    Half half = state.getValue(PalettesTrapDoorBlock.HALF);
+                    boolean windowed = state.getValue(PalettesTrapDoorBlock.WINDOWED);
+
+                    int xRot = 0;
+                    int yRot = ((int) facing.toYRot()) + 180;
+                    if (isOpen && half == Half.TOP) {
+                        xRot += 180;
+                        yRot += 180;
+                    }
+                    yRot %= 360;
+                    return ConfiguredModel.builder()
+                        .modelFile((isOpen ? open : half == Half.TOP ? top : bottom).get(windowed))
+                        .rotationX(xRot)
+                        .rotationY(yRot)
+                        .build();
+                }, PalettesTrapDoorBlock.POWERED, PalettesTrapDoorBlock.WATERLOGGED);
             });
     }
 

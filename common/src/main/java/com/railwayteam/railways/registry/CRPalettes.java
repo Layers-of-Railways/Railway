@@ -33,8 +33,10 @@ import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.doors.PalettesSlidingDoorBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.contraptions.behaviour.TrapdoorMovingInteraction;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorMovementBehaviour;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
@@ -51,6 +53,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -67,6 +70,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import static com.railwayteam.railways.util.TextUtils.*;
+import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
 import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -143,6 +147,7 @@ public class CRPalettes {
         SINGLE_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.SINGLE_PANE), "Single Pane Windows", CycleGroupCategory.WINDOWS),
         TWO_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.TWO_PANE), "Two Pane Windows", CycleGroupCategory.WINDOWS),
         FOUR_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.FOUR_PANE), "Four Pane Windows", CycleGroupCategory.WINDOWS),
+        TRAPDOOR(CRPalettes::locometalTrapdoor, "Locometal Trapdoors", null)
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -571,6 +576,25 @@ public class CRPalettes {
                 .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.generic_radial"))
                 .build()
                 .register();
+    }
+
+    @SafeVarargs
+    private static BlockEntry<?> locometalTrapdoor(TransformerProvider transformer, PalettesColor color, String colorString, String colorName, TagKey<Item>... tags) {
+        TagKey<Item>[] trapdoorTags = Arrays.copyOf(tags, tags.length + 1);
+        trapdoorTags[trapdoorTags.length - 1] = ItemTags.TRAPDOORS;
+        return REGISTRATE.block(joinUnderscore(colorString, "locometal_trapdoor"), PalettesTrapDoorBlock::new)
+            .transform(transformer.get())
+            .transform(BuilderTransformers.locometalTrapdoor(color))
+            .lang(joinSpace(colorName, "Locometal Trapdoor"))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .tag(BlockTags.TRAPDOORS)
+            .onRegister(interactionBehaviour(new TrapdoorMovingInteraction()))
+            .item()
+            .transform(BuilderTransformers.locoMetalItem(color))
+            .tag(trapdoorTags)
+            .build()
+            .register();
     }
 
     public static class StyledList<T> extends EnumFilledList<Styles, T> {
