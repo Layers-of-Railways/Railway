@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "railways:block/palettes/maroon/hazard_stripes_diagonal_on_white",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "railways:block/palettes/maroon/hazard_stripes_diagonal_on_white"
+    }
+  }
+}

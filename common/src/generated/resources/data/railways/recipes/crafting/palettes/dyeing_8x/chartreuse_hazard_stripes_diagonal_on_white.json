@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "railways:palettes/dye_groups/hazard_stripes_diagonal_white"
+    },
+    "d": {
+      "tag": "railways:internal/dyes/black_dyes"
+    }
+  },
+  "pattern": [
+    "###",
+    "#d#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "item": "railways:chartreuse_hazard_stripes_diagonal_on_white"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/hazard_stripes_diagonal_white"
+    },
+    {
+      "tag": "railways:internal/dyes/light_gray_dyes"
+    }
+  ],
+  "result": {
+    "item": "railways:light_gray_hazard_stripes_diagonal_on_white"
+  }
+}

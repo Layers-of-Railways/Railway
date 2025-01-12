@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "railways:block/palettes/turquoise/hazard_stripes_diagonal_on_black",
+      "y": 90
+    },
+    "axis=z": {
+      "model": "railways:block/palettes/turquoise/hazard_stripes_diagonal_on_black"
+    }
+  }
+}
