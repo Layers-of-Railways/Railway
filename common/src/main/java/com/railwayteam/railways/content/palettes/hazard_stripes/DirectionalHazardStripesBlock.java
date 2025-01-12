@@ -70,6 +70,6 @@ public class DirectionalHazardStripesBlock extends HazardStripesBlock {
 
     @Override
     public int getYRot(BlockState state) {
-        return ((int) (state.getValue(FACING).toYRot()) + 180) % 360;
+        return (int) (state.getValue(FACING).toYRot());
     }
 }

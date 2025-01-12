@@ -581,7 +581,7 @@ public class BuilderTransformersImpl {
                 "/hazard_stripes_" + shape + "_a_on_" + baseColor.getSerializedName()));
 
             p.getVariantBuilder(c.get()).forAllStates(state -> {
-                int yRot = c.get().getYRot(state);
+                int yRot = c.get().getYRot(state) % 360;
                 return ConfiguredModel.builder()
                     .modelFile(model)
                     .rotationY(yRot)
