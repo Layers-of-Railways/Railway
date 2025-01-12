@@ -39,6 +39,7 @@ import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.RotatedPillarWindowBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.palettes.hazard_stripes.HazardStripesBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -266,6 +267,11 @@ public class BuilderTransformers {
 
     @ExpectPlatform
     public static <B extends PalettesTrapDoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalTrapdoor(PalettesColor color) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends HazardStripesBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> hazardStripes(boolean chevron) {
         throw new AssertionError();
     }
 

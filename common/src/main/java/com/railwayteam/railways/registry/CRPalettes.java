@@ -32,6 +32,7 @@ import com.railwayteam.railways.content.palettes.ct.BoilerCTBehaviour;
 import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.doors.PalettesSlidingDoorBlock;
+import com.railwayteam.railways.content.palettes.hazard_stripes.HazardStripesBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.util.TextUtils;
@@ -147,7 +148,11 @@ public class CRPalettes {
         SINGLE_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.SINGLE_PANE), "Single Pane Windows", CycleGroupCategory.WINDOWS),
         TWO_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.TWO_PANE), "Two Pane Windows", CycleGroupCategory.WINDOWS),
         FOUR_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.FOUR_PANE), "Four Pane Windows", CycleGroupCategory.WINDOWS),
-        TRAPDOOR(CRPalettes::locometalTrapdoor, "Locometal Trapdoors", null)
+        TRAPDOOR(CRPalettes::locometalTrapdoor, "Locometal Trapdoors", null),
+        HAZARD_STRIPES_DIAGONAL_BLACK(CRPalettes.hazardStripes(false, PalettesColor.BLACK), "Diagonal Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
+        HAZARD_STRIPES_DIAGONAL_WHITE(CRPalettes.hazardStripes(false, PalettesColor.WHITE), "Diagonal White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
+        HAZARD_STRIPES_CHEVRON_BLACK(CRPalettes.hazardStripes(true, PalettesColor.BLACK), "Chevron Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
+        HAZARD_STRIPES_CHEVRON_WHITE(CRPalettes.hazardStripes(true, PalettesColor.WHITE), "Chevron White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES);
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -597,6 +602,24 @@ public class CRPalettes {
             .register();
     }
 
+    private static PaletteBlockRegistrar hazardStripes(boolean chevron, PalettesColor base) {
+        return (transformer, color, colorString, colorName, tags) -> {
+            colorName = colorName.isEmpty() ? "Locometal" : colorName;
+            return REGISTRATE.block(
+                    joinUnderscore(colorString, "hazard_stripes", chevron ? "chevron" : "diagonal", "on", base.getSerializedName()),
+                    HazardStripesBlock.create(!chevron, color, base)
+                )
+                .transform(transformer.get())
+                .transform(BuilderTransformers.hazardStripes(chevron))
+                .lang(joinSpace(colorName, "on", snakeCaseToTitleCase(base.getName()), chevron ? "Chevron" : "Hazard Stripes"))
+                .item()
+                .transform(BuilderTransformers.locoMetalItem(color))
+                .tag(tags)
+                .build()
+                .register();
+        };
+    }
+
     public static class StyledList<T> extends EnumFilledList<Styles, T> {
         public StyledList(Function<Styles, T> filler) {
             super(Styles.class, filler);
@@ -675,7 +698,8 @@ public class CRPalettes {
         WRAPPED_IRON("Iron Wrapped Locometal"),
         LADDERS("Locometal Ladders"),
         DOORS("Locometal Doors"),
-        WINDOWS("Locometal Windows")
+        WINDOWS("Locometal Windows"),
+        HAZARD_STRIPES("Hazard Stripes")
         ;
         public final String langName;
 

@@ -45,6 +45,7 @@ import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.RotatedPillarWindowBlock;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
+import com.railwayteam.railways.content.palettes.hazard_stripes.HazardStripesBlock;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
@@ -564,6 +565,29 @@ public class BuilderTransformersImpl {
                         .build();
                 }, PalettesTrapDoorBlock.POWERED, PalettesTrapDoorBlock.WATERLOGGED);
             });
+    }
+
+    public static <B extends HazardStripesBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> hazardStripes(boolean chevron) {
+        return b -> b.blockstate((c, p) -> {
+            PalettesColor color = c.get().getMainColor();
+            PalettesColor baseColor = c.get().getBaseColor();
+
+            String shape = chevron ? "chevron" : "diagonal";
+            String baseModel = "block/palettes/hazard_stripes/" + shape;
+            var model = p.models().withExistingParent(
+                "block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()),
+                p.modLoc(baseModel)
+            ).texture("texture", p.modLoc("block/palettes/" + color.getSerializedName() +
+                "/hazard_stripes_" + shape + "_a_on_" + baseColor.getSerializedName()));
+
+            p.getVariantBuilder(c.get()).forAllStates(state -> {
+                int yRot = c.get().getYRot(state);
+                return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(yRot)
+                    .build();
+            });
+        });
     }
 
     public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
