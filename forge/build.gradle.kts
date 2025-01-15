@@ -41,6 +41,9 @@ dependencies {
     modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
 
+    modImplementation("net.createmod.catnip:Catnip-Forge-${"minecraft_version"()}:${"catnip_version"()}")
+    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}")
+
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
 
