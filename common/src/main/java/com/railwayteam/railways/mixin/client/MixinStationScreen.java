@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +24,17 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainIconType;
-import com.simibubi.create.content.trains.station.*;
+import com.simibubi.create.content.trains.station.AbstractStationScreen;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.StationScreen;
+import com.simibubi.create.content.trains.station.TrainEditPacket;
 import com.simibubi.create.foundation.gui.widget.ScrollInput;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -56,7 +60,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
     private void initCheckbox(CallbackInfo ci) {
         int x = guiLeft;
         int y = guiTop;
-        limitEnableCheckbox = new Checkbox(x + background.width - 98, y + background.height - 26, 50, 20, Components.translatable("railways.station.train_limit"), station != null && ((ILimited) station).isLimitEnabled(), true) {
+        limitEnableCheckbox = new Checkbox(x + background.getWidth() - 98, y + background.getHeight() - 26, 50, 20, Component.translatable("railways.station.train_limit"), station != null && ((ILimited) station).isLimitEnabled(), true) {
             @Override
             public void onPress() {
                 super.onPress();
@@ -67,7 +71,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
                 super.renderWidget(guiGraphics, mouseX, mouseY, partialTick);
                 if (this.isHoveredOrFocused()) {
-                    guiGraphics.renderComponentTooltip(font, ImmutableList.of(Components.translatable("railways.station.train_limit.tooltip.1"), Components.translatable("railways.station.train_limit.tooltip.2")), mouseX, mouseY);
+                    guiGraphics.renderComponentTooltip(font, ImmutableList.of(Component.translatable("railways.station.train_limit.tooltip.1"), Component.translatable("railways.station.train_limit.tooltip.2")), mouseX, mouseY);
                 }
             }
         };
@@ -76,7 +80,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
         iconTypes = TrainIconType.REGISTRY.keySet()
                 .stream()
                 .toList();
-        iconTypeScroll = new ScrollInput(x + 4, y + 17, 184, 14).titled(Lang.translateDirect("station.icon_type"));
+        iconTypeScroll = new ScrollInput(x + 4, y + 17, 184, 14).titled(CreateLang.translateDirect("station.icon_type"));
         iconTypeScroll.withRange(0, iconTypes.size());
         iconTypeScroll.withStepFunction(ctx -> -iconTypeScroll.standardStep()
                 .apply(ctx));
@@ -85,7 +89,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             if (train != null) {
                 train.icon = TrainIconType.byId(iconTypes.get(s));
                 Utils.sendCreatePacketToServer(
-                        new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId()));
+                        new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId(), train.mapColorIndex));
             }
         });
         iconTypeScroll.active = false;

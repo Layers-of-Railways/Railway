@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,8 @@ import com.railwayteam.railways.content.extended_sliding_doors.SlidingDoorMode;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -40,7 +40,7 @@ public class MixinSlidingDoorBlockEntity implements SlidingDoorMode.IHasDoorMode
     @Inject(method = "addBehaviours", at = @At("RETURN"))
     private void addScrollBehaviour(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         SlidingDoorBlockEntity this_ = (SlidingDoorBlockEntity) (Object) this;
-        railways$doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Components.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
+        railways$doorModeScroll = new ScrollOptionBehaviour<>(SlidingDoorMode.class, Component.translatable("create.sliding_door.mode"), this_, new SlidingDoorMode.SlidingDoorValueBoxTransform()) {
             @Override
             public void read(CompoundTag nbt, boolean clientPacket) {
                 super.read(nbt, clientPacket);

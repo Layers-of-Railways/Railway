@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
@@ -67,7 +66,7 @@ public class CategoryEntry {
         private int cachedVersion = -1;
 
         private FavoritesCategory() {
-            super(Components.translatable("railways.gui.bogey_menu.category.favorites"), Railways.asResource("favorites"));
+            super(Component.translatable("railways.gui.bogey_menu.category.favorites"), Railways.asResource("favorites"));
         }
 
         @Override

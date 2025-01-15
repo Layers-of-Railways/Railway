@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,14 +18,14 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.switches.TrackSwitchDebugVisualizer;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.trains.track.TrackTargetingClient;
-import com.simibubi.create.foundation.render.SuperRenderTypeBuffer;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.render.SuperRenderTypeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -66,7 +66,7 @@ public abstract class MixinTrackTargetingClient {
             Direction.AxisDirection direction = lastDirection ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE;
 
             ms.pushPose();
-            TransformStack.cast(ms)
+            TransformStack.of(ms)
                 .translate(Vec3.atLowerCornerOf(pos)
                     .subtract(camera));
             CustomTrackOverlayRendering.renderOverlay(mc.level, pos, direction, lastHoveredBezierSegment, ms, buffer, light,

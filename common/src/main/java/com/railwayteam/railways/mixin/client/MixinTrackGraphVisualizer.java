@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -29,9 +29,9 @@ import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackGraphVisualizer;
-import com.simibubi.create.foundation.outliner.Outline;
-import com.simibubi.create.foundation.outliner.Outliner;
-import com.simibubi.create.foundation.utility.Color;
+import net.createmod.catnip.outliner.Outline;
+import net.createmod.catnip.outliner.Outliner;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -59,7 +59,7 @@ public class MixinTrackGraphVisualizer {
         railways$isEnabled = ((ISwitchDisabledEdge) edge.getEdgeData()).isEnabled();
     }
 
-    @ModifyExpressionValue(method = "debugViewGraph", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;color:Lcom/simibubi/create/foundation/utility/Color;"))
+    @ModifyExpressionValue(method = "debugViewGraph", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/graph/TrackGraph;color:Lnet/createmod/catnip/theme/Color;"))
     private static Color railways$replaceColor(Color original) {
         return railways$isEnabled ? original : Color.RED;
     }
@@ -67,7 +67,7 @@ public class MixinTrackGraphVisualizer {
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showLine(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/outliner/Outliner;showLine(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/createmod/catnip/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetLineVisualization(Outliner instance, Object slot, Vec3 start, Vec3 end, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, start.add(0, offset, 0), end.add(0, offset, 0));
@@ -76,7 +76,7 @@ public class MixinTrackGraphVisualizer {
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showAABB(Ljava/lang/Object;Lnet/minecraft/world/phys/AABB;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/outliner/Outliner;showAABB(Ljava/lang/Object;Lnet/minecraft/world/phys/AABB;)Lnet/createmod/catnip/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetAABBVisualization(Outliner instance, Object slot, AABB aabb, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, aabb.move(0, offset, 0));
@@ -85,7 +85,7 @@ public class MixinTrackGraphVisualizer {
     @WrapOperation(method = {
         "visualiseSignalEdgeGroups",
         "debugViewGraph"
-    }, at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/outliner/Outliner;showItem(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/foundation/outliner/Outline$OutlineParams;"), require = 0, remap = true)
+    }, at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/outliner/Outliner;showItem(Ljava/lang/Object;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/item/ItemStack;)Lnet/createmod/catnip/outliner/Outline$OutlineParams;"), require = 0, remap = true)
     private static Outline.OutlineParams railways$offsetAABBVisualization(Outliner instance, Object slot, Vec3 pos, ItemStack itemStack, Operation<Outline.OutlineParams> original) {
         double offset = CRConfigs.client().trackOverlayOffset.get();
         return original.call(instance, slot, pos.add(0, offset, 0), itemStack);

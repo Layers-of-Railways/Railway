@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,13 +22,11 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
-import org.gradle.configurationcache.extensions.capitalized
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.tree.AnnotationNode
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import java.io.ByteArrayOutputStream
 import java.util.*
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -39,7 +37,7 @@ plugins {
     java
     `maven-publish`
     id("architectury-plugin") version "3.4-SNAPSHOT"
-    id("dev.architectury.loom") version "1.7.+" apply false
+    id("dev.architectury.loom") version "1.9.+" apply false
     id("me.modmuss50.mod-publish-plugin") version "0.7.4" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
@@ -89,7 +87,8 @@ subprojects {
 
     setupRepositories()
 
-    val capitalizedName = project.name.capitalized()
+    val capitalizedName =
+        project.name.replaceFirstChar { it.uppercase() }
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
     loom.apply {
@@ -326,7 +325,7 @@ fun <T> getValueFromAnnotation(annotation: AnnotationNode?, key: String): T? {
     return null
 }
 
-tasks.create("railwaysPublish") {
+tasks.register("railwaysPublish") {
     when (val platform = System.getenv("PLATFORM")) {
         "both" -> {
             dependsOn(tasks.build, ":fabric:publish", ":forge:publish", ":common:publish", ":fabric:publishMods", ":forge:publishMods")
@@ -340,6 +339,7 @@ tasks.create("railwaysPublish") {
 fun Project.setupRepositories() {
     repositories {
         mavenCentral()
+        maven("https://maven.createmod.net") // Catnip, Ponder
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
@@ -352,7 +352,7 @@ fun Project.setupRepositories() {
             content {
                 includeGroup("com.simibubi.create")
                 includeGroup("com.tterrag.registrate")
-                includeGroup("com.jozufozu.flywheel")
+                includeGroup("dev.engine-room.flywheel")
             }
         }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat
@@ -369,17 +369,20 @@ fun Project.setupRepositories() {
                 includeGroupByRegex("com.github.*")
             }
         }
+        
+        // temp
+        flatDir {
+            dirs = setOf(rootProject.file("libs"))
+        }
     }
 }
 
 fun calculateGitHash(): String {
     try {
-        val stdout = ByteArrayOutputStream()
-        exec {
+        val output = providers.exec {
             commandLine("git", "rev-parse", "HEAD")
-            standardOutput = stdout
         }
-        return stdout.toString().trim()
+        return output.standardOutput.asText.get().trim()
     } catch(ignored: Throwable) {
         return "unknown"
     }
@@ -387,12 +390,10 @@ fun calculateGitHash(): String {
 
 fun hasUnstaged(): Boolean {
     try {
-        val stdout = ByteArrayOutputStream()
-        exec {
+        val output = providers.exec {
             commandLine("git", "status", "--porcelain")
-            standardOutput = stdout
         }
-        val result = stdout.toString().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
+        val result = output.standardOutput.asText.get().replace(Regex("M gradlew(\\.bat)?"), "").trimEnd()
         if (result.isNotEmpty())
             println("Found stageable results:\n${result}\n")
         return result.isNotEmpty()

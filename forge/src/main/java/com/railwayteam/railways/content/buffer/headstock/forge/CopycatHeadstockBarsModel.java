@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,8 +19,8 @@
 package com.railwayteam.railways.content.buffer.headstock.forge;
 
 import com.simibubi.create.content.decoration.copycat.CopycatModel;
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.model.BakedQuadHelper;
+import net.createmod.catnip.render.SpriteShiftEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -52,8 +52,7 @@ public class CopycatHeadstockBarsModel extends CopycatModel {
 
         if (side != null && side.getAxis() == Direction.Axis.Y) {
             List<BakedQuad> templateQuads = model.getQuads(material, null, rand, wrappedData, renderType);
-            for (int i = 0; i < templateQuads.size(); i++) {
-                BakedQuad quad = templateQuads.get(i);
+            for (BakedQuad quad : templateQuads) {
                 if (quad.getDirection() != Direction.UP)
                     continue;
                 targetSprite = quad.getSprite();
@@ -66,16 +65,15 @@ public class CopycatHeadstockBarsModel extends CopycatModel {
 
         List<BakedQuad> quads = new ArrayList<>();
 
-        for (int i = 0; i < superQuads.size(); i++) {
-            BakedQuad quad = superQuads.get(i);
+        for (BakedQuad quad : superQuads) {
             TextureAtlasSprite original = quad.getSprite();
             BakedQuad newQuad = BakedQuadHelper.clone(quad);
             int[] vertexData = newQuad.getVertices();
             for (int vertex = 0; vertex < 4; vertex++) {
                 BakedQuadHelper.setU(vertexData, vertex, targetSprite
-                    .getU(SpriteShiftEntry.getUnInterpolatedU(original, BakedQuadHelper.getU(vertexData, vertex))));
+                        .getU(SpriteShiftEntry.getUnInterpolatedU(original, BakedQuadHelper.getU(vertexData, vertex))));
                 BakedQuadHelper.setV(vertexData, vertex, targetSprite
-                    .getV(SpriteShiftEntry.getUnInterpolatedV(original, BakedQuadHelper.getV(vertexData, vertex))));
+                        .getV(SpriteShiftEntry.getUnInterpolatedV(original, BakedQuadHelper.getV(vertexData, vertex))));
             }
             quads.add(newQuad);
         }

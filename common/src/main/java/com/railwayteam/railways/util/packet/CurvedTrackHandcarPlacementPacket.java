@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,8 +23,12 @@ import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
-import com.simibubi.create.content.trains.track.*;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
+import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -88,7 +92,7 @@ public class CurvedTrackHandcarPlacementPacket implements C2SPacket {
             return;
 
         if (result.getValue().feedback != null) {
-            player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
+            player.displayClientMessage(CreateLang.translateDirect(result.getValue().feedback)
                 .withStyle(ChatFormatting.RED), true);
             AllSoundEvents.DENY.play(player.level, null, pos, .5f, 1);
             return;

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,8 +21,8 @@ package com.railwayteam.railways.registry.commands;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.multiloader.Env;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import static com.railwayteam.railways.multiloader.ClientCommands.literal;
 import static com.railwayteam.railways.multiloader.ClientCommands.sendSuccess;
@@ -34,7 +34,7 @@ public class ClearCapCacheCommand {
         .executes(ctx -> {
           Env.CLIENT.runIfCurrent(() -> ConductorCapModel::clearModelCache);
 
-          sendSuccess(ctx.getSource(), Components.literal("cleared cap cache"));
+          sendSuccess(ctx.getSource(), Component.literal("cleared cap cache"));
           return 1;
         });
   }

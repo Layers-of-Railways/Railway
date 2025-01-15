@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,16 +21,20 @@ package com.railwayteam.railways.content.qol;
 import com.railwayteam.railways.content.buffer.TrackBufferBlockEntity;
 import com.railwayteam.railways.content.coupling.coupler.SecondaryTrackTargetingBehaviour;
 import com.railwayteam.railways.util.EntityUtils;
-import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.equipment.wrench.WrenchItem;
-import com.simibubi.create.content.trains.graph.*;
+import com.simibubi.create.content.trains.graph.TrackEdge;
+import com.simibubi.create.content.trains.graph.TrackGraph;
+import com.simibubi.create.content.trains.graph.TrackGraphHelper;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackBlockOutline.BezierPointSelection;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
-import com.simibubi.create.foundation.utility.Color;
+import net.createmod.catnip.outliner.Outliner;
+import net.createmod.catnip.theme.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -138,27 +142,27 @@ public class TrackEdgePointHighlighter {
         TrackTargetingBehaviour<?> trackTarget1 = TrackTargetingBehaviour.get(be, TrackTargetingBehaviour.TYPE);
         if (trackTarget1 != null) {
             AABB aa = new AABB(pos).inflate(1 / 32f);
-            CreateClient.OUTLINER.chaseAABB(holder.BLOCK_BOX, aa)
+            Outliner.getInstance().chaseAABB(holder.BLOCK_BOX, aa)
                 .colored(Color.SPRING_GREEN)
                 .lineWidth(1 / 16f);
 
             AABB bb = new AABB(trackTarget1.getPositionForMapMarker()).contract(0, 10 / 16f, 0);
-            CreateClient.OUTLINER.chaseAABB(holder.TRACK_BOX, bb)
+            Outliner.getInstance().chaseAABB(holder.TRACK_BOX, bb)
                 .colored(Color.SPRING_GREEN)
                 .lineWidth(1 / 16f);
 
-            CreateClient.OUTLINER.showLine(holder.CONNECTOR, aa.getCenter(), bb.getCenter())
+            Outliner.getInstance().showLine(holder.CONNECTOR, aa.getCenter(), bb.getCenter())
                 .colored(Color.SPRING_GREEN)
                 .lineWidth(1 / 16f);
 
             SecondaryTrackTargetingBehaviour<?> trackTarget2 = SecondaryTrackTargetingBehaviour.get(be, SecondaryTrackTargetingBehaviour.TYPE);
             if (trackTarget2 != null) {
                 AABB cc = new AABB(trackTarget2.getGlobalPosition()).contract(0, 10 / 16f, 0);
-                CreateClient.OUTLINER.chaseAABB(holder.TRACK_BOX2, cc)
+                Outliner.getInstance().chaseAABB(holder.TRACK_BOX2, cc)
                     .colored(Color.GREEN)
                     .lineWidth(1 / 16f);
 
-                CreateClient.OUTLINER.showLine(holder.CONNECTOR2, bb.getCenter(), cc.getCenter())
+                Outliner.getInstance().showLine(holder.CONNECTOR2, bb.getCenter(), cc.getCenter())
                     .colored(Color.GREEN)
                     .lineWidth(1 / 16f);
             }

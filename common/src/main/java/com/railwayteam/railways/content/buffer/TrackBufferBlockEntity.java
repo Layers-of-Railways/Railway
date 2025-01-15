@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,18 +19,19 @@
 package com.railwayteam.railways.content.buffer;
 
 import com.railwayteam.railways.registry.CREdgePointTypes;
-import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
+import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
 import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class TrackBufferBlockEntity extends DyeableBlockEntity implements ITransformableBlockEntity {
+public class TrackBufferBlockEntity extends DyeableBlockEntity implements TransformableBlockEntity {
 
     public TrackTargetingBehaviour<TrackBuffer> edgePoint;
 
@@ -49,7 +50,7 @@ public class TrackBufferBlockEntity extends DyeableBlockEntity implements ITrans
     }
 
     @Override
-    public void transform(StructureTransform transform) {
-        edgePoint.transform(transform);
+    public void transform(BlockEntity blockEntity, StructureTransform transform) {
+        edgePoint.transform(blockEntity, transform);
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,8 +18,8 @@
 
 package com.railwayteam.railways.config;
 
-import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
+import net.createmod.catnip.config.ConfigBase;
+import net.createmod.catnip.config.ui.ConfigAnnotations;
 
 @SuppressWarnings("unused")
 public class CCommon extends ConfigBase {

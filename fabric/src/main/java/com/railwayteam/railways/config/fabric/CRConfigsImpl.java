@@ -20,9 +20,9 @@ package com.railwayteam.railways.config.fabric;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
-import com.simibubi.create.foundation.config.ConfigBase;
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
+import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.Map;

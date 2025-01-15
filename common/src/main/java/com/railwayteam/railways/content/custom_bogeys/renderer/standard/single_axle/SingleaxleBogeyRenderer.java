@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle;
 
-import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;

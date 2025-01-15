@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,8 @@ import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.graph.TrackNodeLocation;
-import com.simibubi.create.foundation.utility.Color;
+import net.createmod.catnip.outliner.Outliner;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -54,7 +55,7 @@ public class TrackSwitchDebugVisualizer {
     TrackNodeLocation activeExit = sw.getSwitchTarget();
     for (TrackNodeLocation to : sw.getExits()) {
       boolean active = to == activeExit;
-      CreateClient.OUTLINER.showLine(to,
+      Outliner.getInstance().showLine(to,
           from.getLocation().add(offset),
           to.getLocation().add(offset))
         .colored(active ? new Color(0, 203, 150) : new Color(255, 50, 150))
@@ -132,7 +133,7 @@ public class TrackSwitchDebugVisualizer {
           }
 
           Direction offsetDirection = Direction.getNearest(farthestOffset.x, farthestOffset.y, farthestOffset.z);
-          CreateClient.OUTLINER.showAABB(node, AABB.ofSize(tnl.getLocation()
+          Outliner.getInstance().showAABB(node, AABB.ofSize(tnl.getLocation()
                           .add(farthestOffset.x/2., farthestOffset.y/2., farthestOffset.z/2.)
                           .add(0, 8 / 16f, 0),
                           1, 1, 1))

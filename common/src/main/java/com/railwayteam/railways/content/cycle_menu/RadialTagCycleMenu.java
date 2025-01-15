@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.content.cycle_menu;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -27,12 +26,12 @@ import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandle
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRKeys;
 import com.railwayteam.railways.util.client.ClientUtils;
-import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.element.GuiGameElement;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Components;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.element.GuiGameElement;
+import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,7 +42,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -89,7 +87,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         ms.translate(width / 2, height / 2, 0);
         Component tip = null;
         ResourceLocation tagLoc = tag.location();
-        Component title = Components.translatable("tag.item." + tagLoc.getNamespace() + "." + tagLoc.getPath().replace('/', '.'));
+        Component title = Component.translatable("tag.item." + tagLoc.getNamespace() + "." + tagLoc.getPath().replace('/', '.'));
 
         /*
         core rendering
@@ -100,10 +98,10 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
             ms.pushPose();
             double radius = -40 + (10 * (1 - fade) * (1 - fade));
             double angle = slot * 45 - 45;
-            TransformStack.cast(ms)
-                    .rotateZ(angle)
+            TransformStack.of(ms)
+                    .rotateZDegrees((float) angle)
                     .translate(0, radius, 0)
-                    .rotateZ(-angle);
+                    .rotateZDegrees((float) -angle);
             ms.translate(-12, -12, 0);
 
             boolean selected = (slot == (scrollMode ? scrollSlot : hoveredSlot));
@@ -124,7 +122,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
 
                     if (selected) {
                         AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -1, -1);
-                        tip = Components.empty().append(stack.getHoverName())
+                        tip = Component.empty().append(stack.getHoverName())
                             .withStyle(ChatFormatting.GOLD);
                     }
                 }

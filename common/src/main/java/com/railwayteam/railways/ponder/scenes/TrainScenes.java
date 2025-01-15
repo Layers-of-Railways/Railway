@@ -1,3 +1,21 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2025 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.ponder.scenes;
 
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
@@ -7,20 +25,25 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity.PonderData;
 import com.railwayteam.railways.mixin_interfaces.IStandardBogeyTEVirtualCoupling;
-import com.railwayteam.railways.ponder.scenes.temp.CreateSceneBuilder;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlockEntity;
 import com.simibubi.create.content.trains.signal.SignalBlock;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
-import net.createmod.catnip.utility.Pointing;
+import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
+import net.createmod.catnip.math.Pointing;
+import net.createmod.ponder.api.PonderPalette;
+import net.createmod.ponder.api.element.ElementLink;
+import net.createmod.ponder.api.element.ParrotElement;
+import net.createmod.ponder.api.element.ParrotPose;
+import net.createmod.ponder.api.element.WorldSectionElement;
+import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.createmod.ponder.foundation.*;
+import net.createmod.ponder.api.scene.Selection;
+import net.createmod.ponder.foundation.PonderScene;
 import net.createmod.ponder.foundation.element.InputWindowElement;
-import net.createmod.ponder.foundation.element.ParrotElement;
-import net.createmod.ponder.foundation.element.WorldSectionElement;
 import net.createmod.ponder.foundation.instruction.PonderInstruction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -124,7 +147,7 @@ public class TrainScenes {
 
         ElementLink<WorldSectionElement> trainElement = scene.world().showIndependentSection(train1, null);
         ElementLink<ParrotElement> birb1 =
-                scene.special().createBirb(util.vector().centerOf(18, 3, 7), ParrotElement.FacePointOfInterestPose::new);
+                scene.special().createBirb(util.vector().centerOf(18, 3, 7), ParrotPose.FacePointOfInterestPose::new);
         scene.world().moveSection(trainElement, util.vector().of(4, 0, 0), 0);
         scene.world().moveSection(trainElement, util.vector().of(-9, 0, 0), 30);
         scene.world().animateBogey(util.grid().at(13, 2, 7), 9f, 30);
@@ -140,7 +163,7 @@ public class TrainScenes {
 
         ElementLink<WorldSectionElement> trainElement2 = scene.world().showIndependentSection(train3, null);
         ElementLink<ParrotElement> birb2 =
-                scene.special().createBirb(util.vector().centerOf(18, 3, 7), ParrotElement.FacePointOfInterestPose::new);
+                scene.special().createBirb(util.vector().centerOf(18, 3, 7), ParrotPose.FacePointOfInterestPose::new);
         scene.world().moveSection(trainElement2, util.vector().of(4, 0, 6), 0);
         scene.world().moveSection(trainElement2, util.vector().of(-3.5, 0, 0), 25);
         scene.world().animateBogey(util.grid().at(13, 2, 1), 3.5f, 25);
@@ -304,7 +327,7 @@ public class TrainScenes {
         scene.world().moveSection(trainElement3, util.vector().of(-14, 0, 14), 40);
         scene.world().animateBogey(util.grid().at(13, 2, 4), -14f, 40);
         ElementLink<ParrotElement> birb3 =
-                scene.special().createBirb(util.vector().of(18, 3.5, -2), ParrotElement.FacePointOfInterestPose::new);
+                scene.special().createBirb(util.vector().of(18, 3.5, -2), ParrotPose.FacePointOfInterestPose::new);
         scene.special().moveParrot(birb3, util.vector().of(-14, 0, 14), 40);
         scene.idle(12);
         scene.world().changeSignalState(signal2, SignalBlockEntity.SignalState.RED);
@@ -353,7 +376,7 @@ public class TrainScenes {
         scene.world().moveSection(trainElement, util.vector().of(4, 0, -9), 0);
         scene.world().moveSection(trainElement, util.vector().of(-9, 0, 9), 40);
         scene.world().animateBogey(util.grid().at(13, 2, 7), -9f, 40);
-        birb1 = scene.special().createBirb(util.vector().of(18, 3.5, -2), ParrotElement.FacePointOfInterestPose::new);
+        birb1 = scene.special().createBirb(util.vector().of(18, 3.5, -2), ParrotPose.FacePointOfInterestPose::new);
         scene.special().moveParrot(birb1, util.vector().of(-9, 0, 9), 40);
 
         scene.idle(15);
@@ -417,8 +440,8 @@ public class TrainScenes {
         Vec3 target = util.vector().topOf(switchTargetPos.below());
         AABB bb = new AABB(target, target).move(0, 2 / 16f, 0);
 
-        scene.overlay().showControls(new InputWindowElement(target, Pointing.DOWN).rightClick()
-                .withItem(CRBlocks.ANDESITE_SWITCH.asStack()), 40);
+        scene.overlay().showControls(target, Pointing.DOWN, 40).rightClick()
+                .withItem(CRBlocks.ANDESITE_SWITCH.asStack());
         scene.idle(6);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb, 1);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb.inflate(.45f, 1 / 16f, .45f), 60);

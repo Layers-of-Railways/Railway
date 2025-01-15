@@ -23,7 +23,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.railwayteam.railways.registry.CRParticleTypes;
-import com.simibubi.create.foundation.ModFilePackResources;
+import com.simibubi.create.foundation.pack.ModFilePackResources;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.CommandSourceStack;
@@ -44,7 +44,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.forgespi.locating.IModFile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 

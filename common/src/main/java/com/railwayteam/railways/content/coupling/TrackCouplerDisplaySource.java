@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,14 +20,14 @@ package com.railwayteam.railways.content.coupling;
 
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockEntity;
+import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
-import com.simibubi.create.content.redstone.displayLink.source.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import com.simibubi.create.content.trains.display.FlapDisplayBlockEntity;
 import com.simibubi.create.content.trains.display.FlapDisplayLayout;
 import com.simibubi.create.content.trains.display.FlapDisplaySection;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 import java.util.List;
@@ -47,19 +47,19 @@ public class TrackCouplerDisplaySource extends DisplaySource {
         switch (info.mode()) {
             case NONE -> {
                 return ImmutableList.of(
-                    Components.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD),
+                    Component.translatable("railways.display_source.coupler.no_action").withStyle(ChatFormatting.BOLD),
                     te.getClientInfo().error
                 );
             }
             case COUPLING -> {
                 return ImmutableList.of(
-                        Components.translatable("railways.display_source.coupler.coupling").append(info.frontCarriage().train.name),
-                        Components.translatable("railways.display_source.coupler.coupling.to").append(info.backCarriage().train.name)
+                        Component.translatable("railways.display_source.coupler.coupling").append(info.frontCarriage().train.name),
+                        Component.translatable("railways.display_source.coupler.coupling.to").append(info.backCarriage().train.name)
                 );
             }
             case DECOUPLING -> {
                 return ImmutableList.of(
-                        Components.translatable("railways.display_source.coupler.decoupling").append(info.frontCarriage().train.name)
+                        Component.translatable("railways.display_source.coupler.decoupling").append(info.frontCarriage().train.name)
                 );
             }
         }

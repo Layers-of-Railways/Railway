@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,15 +18,15 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackRenderer;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Iterate;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -96,11 +96,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
             Vec3 beamAngles = TrackRenderer.getModelAngles(segment.normal, beamDiff);
 
             PoseStack poseStack = new PoseStack();
-            TransformStack.cast(poseStack)
+            TransformStack.of(poseStack)
                 .translate(previousBeam)
-                .rotateYRadians(beamAngles.y)
-                .rotateXRadians(beamAngles.x)
-                .rotateZRadians(beamAngles.z)
+                .rotateY((float) beamAngles.y)
+                .rotateX((float) beamAngles.x)
+                .rotateZ((float) beamAngles.z)
                 .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
                 .scale(1, 1, (float) beamDiff.length() * scale);
             angles.beam = poseStack.last();
@@ -113,11 +113,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
                 Vec3 capAngles = TrackRenderer.getModelAngles(segment.normal, diff);
 
                 poseStack = new PoseStack();
-                TransformStack.cast(poseStack)
+                TransformStack.of(poseStack)
                     .translate(previous)
-                    .rotateYRadians(capAngles.y)
-                    .rotateXRadians(capAngles.x)
-                    .rotateZRadians(capAngles.z)
+                    .rotateY((float) capAngles.y)
+                    .rotateX((float) capAngles.x)
+                    .rotateZ((float) capAngles.z)
                     .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
                     .rotateZ(0)
                     .scale(1, 1, (float) diff.length() * scale);

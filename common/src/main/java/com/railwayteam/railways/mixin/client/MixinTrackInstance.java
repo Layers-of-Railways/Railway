@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,15 +18,10 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.api.Material;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
-import com.jozufozu.flywheel.core.Materials;
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.core.materials.model.ModelData;
-import com.jozufozu.flywheel.light.LightUpdater;
-import com.jozufozu.flywheel.util.box.GridAlignedBB;
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
 import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
@@ -34,8 +29,9 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.Pair;
+import dev.engine_room.flywheel.lib.visual.AbstractBlockEntityVisual;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -61,10 +57,10 @@ import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NAR
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
 import static com.railwayteam.railways.util.MathUtils.copy;
 
-@Mixin(value = TrackInstance.class, remap = false)
-public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockEntity> implements IGetBezierConnection {
-    private MixinTrackInstance(MaterialManager materialManager, TrackBlockEntity blockEntity) {
-        super(materialManager, blockEntity);
+@Mixin(value = TrackVisual.class, remap = false)
+public abstract class MixinTrackInstance extends AbstractBlockEntityVisual<TrackBlockEntity> implements IGetBezierConnection {
+    public MixinTrackInstance(VisualizationContext ctx, TrackBlockEntity blockEntity, float partialTick) {
+        super(ctx, blockEntity, partialTick);
     }
 
     @Shadow
@@ -73,7 +69,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
     @Nullable
     private BezierConnection bezierConnection = null;
 
-    private final List<Pair<ModelData, BlockPos>> casingData = new ArrayList<>();
+    private final List<Pair<TransformedInstance, BlockPos>> casingData = new ArrayList<>();
 
     @Override
     public @Nullable BezierConnection getBezierConnection() {
@@ -119,7 +115,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
         Material<ModelData> mat = this.materialManager.cutout(RenderType.cutoutMipped()).material(Materials.TRANSFORMED);
 
         PoseStack ms = new PoseStack();
-        TransformStack.cast(ms)
+        TransformStack.of(ms)
             .translate(getInstancePosition())
             .nudge((int) this.pos.asLong());
 
@@ -131,9 +127,9 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                 if (this.blockEntity.isTilted()) {
                     double angle = this.blockEntity.tilt.smoothingAngle.get();
                     switch (this.blockEntity.getBlockState().getValue(TrackBlock.SHAPE)) {
-                        case ZO -> TransformStack.cast(ms)
+                        case ZO -> TransformStack.of(ms)
                             .rotateX(-angle);
-                        case XO -> TransformStack.cast(ms)
+                        case XO -> TransformStack.of(ms)
                             .rotateZ(angle);
                     }
                 }

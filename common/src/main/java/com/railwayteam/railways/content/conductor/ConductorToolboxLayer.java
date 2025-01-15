@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,9 +25,9 @@ import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.EntityModel;
@@ -54,10 +54,10 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
       MountedToolbox holder = conductorEntity.getToolbox();
       BlockState blockState = ((BlockItem) itemstack.getItem()).getBlock().defaultBlockState();
       SuperByteBuffer body =
-          CachedBufferer.partial(CRBlockPartials.TOOLBOX_BODIES.get(holder.getColor()), blockState);
+          CachedBuffers.partial(CRBlockPartials.TOOLBOX_BODIES.get(holder.getColor()), blockState);
       SuperByteBuffer lid =
-          CachedBufferer.partial(AllPartialModels.TOOLBOX_LIDS.get(holder.getColor()), blockState);
-      SuperByteBuffer drawer = CachedBufferer.partial(AllPartialModels.TOOLBOX_DRAWER, blockState);
+              CachedBuffers.partial(AllPartialModels.TOOLBOX_LIDS.get(holder.getColor()), blockState);
+      SuperByteBuffer drawer = CachedBuffers.partial(AllPartialModels.TOOLBOX_DRAWER, blockState);
 
       float lidAngle = holder.lid.getValue(partialTick);
       float drawerOffset = holder.drawers.getValue(partialTick);
@@ -70,17 +70,17 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
       double rotate = 0;
 
       VertexConsumer builder = buffer.getBuffer(RenderType.cutoutMipped());
-      body.centre()
-          .rotateY(rotate)
-          .unCentre()
+      body.center()
+          .rotateY((float) rotate)
+          .uncenter()
           .translate(0, 6 / 16f, 12 / 16f)
           .translate(0, -6 / 16f, -12 / 16f)
           .light(packedLight)
           .renderInto(poseStack, builder);
 
-      lid.centre()
-          .rotateY(rotate)
-          .unCentre()
+      lid.center()
+          .rotateY((float) rotate)
+          .uncenter()
           .translate(0, 6 / 16f, 12 / 16f)
           .rotateX(60 * lidAngle)
           .translate(0, -6 / 16f, -12 / 16f)
@@ -88,9 +88,9 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
           .renderInto(poseStack, builder);
 
       for (int offset : Iterate.zeroAndOne) {
-        drawer.centre()
-            .rotateY(rotate)
-            .unCentre()
+        drawer.center()
+            .rotateY((float) rotate)
+            .uncenter()
             .translate(0, offset / 8f, -drawerOffset * .175f * (2 - offset))
             .light(packedLight)
             .renderInto(poseStack, builder);

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,17 +18,17 @@
 
 package com.railwayteam.railways.content.semaphore;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlock;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.RenderTypes;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -44,7 +44,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
         float yRot = AngleHelper.horizontalAngle(blockState.getValue(NixieTubeBlock.FACING))+180;
 
-        TransformStack msr = TransformStack.cast(ms);
+        TransformStack msr = TransformStack.of(ms);
         msr.centre()
                 .rotateY(yRot)
                 .unCentre();
@@ -92,7 +92,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_FLIPPED:CRBlockPartials.SEMAPHORE_ARM_RED_FLIPPED:
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW:CRBlockPartials.SEMAPHORE_ARM_RED;
         }
-        CachedBufferer.partial(arm, blockState)
+        CachedBuffers.partial(arm, blockState)
                 .light(light)
                 .rotateCentered(Direction.EAST,angle * (upside_down?-1:1))
                 .renderInto(ms, buffer.getBuffer(RenderType.solid()));
@@ -119,7 +119,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
 
 
-            CachedBufferer.partial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
+            CachedBuffers.partial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1, 1, 1)
@@ -127,7 +127,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
 
 
-            CachedBufferer
+            CachedBuffers
                     .partial(
                             bottom ? AllPartialModels.SIGNAL_WHITE_GLOW:yellow?AllPartialModels.SIGNAL_YELLOW_GLOW:AllPartialModels.SIGNAL_RED_GLOW,
                             blockState)
@@ -136,7 +136,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
                     .scale(1.5f,2, 2)
                     .renderInto(ms, buffer.getBuffer(RenderTypes.getAdditive()));
 
-            CachedBufferer
+            CachedBuffers
                     .partial(bottom?CRBlockPartials.SEMAPHORE_LAMP_WHITE:yellow?CRBlockPartials.SEMAPHORE_LAMP_YELLOW:CRBlockPartials.SEMAPHORE_LAMP_RED
                             , blockState)
                     .light(0xF000F0)

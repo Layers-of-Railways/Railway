@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
@@ -38,7 +38,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(StationRenderer.class)
 public class MixinStationRenderer {
-    @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/station/StationBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/render/CachedBufferer;partial(Lcom/jozufozu/flywheel/core/PartialModel;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/simibubi/create/foundation/render/SuperByteBuffer;"))
+    @Inject(method = "renderSafe(Lcom/simibubi/create/content/trains/station/StationBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/render/CachedBuffers;partial(Lcom/jozufozu/flywheel/core/PartialModel;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/simibubi/create/foundation/render/SuperByteBuffer;"))
     private void shiftAssemblyOverlayOnEncasedTracks(
         StationBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
         CallbackInfo ci, @Local(name = "currentPos") MutableBlockPos currentPos, @Local(name = "trackState") BlockState trackState) {
@@ -50,7 +50,7 @@ public class MixinStationRenderer {
             CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
             TrackMaterial.TrackType trackType = trackBlock.getMaterial().trackType;
             if (spec != null)
-                TransformStack.cast(ms)
+                TransformStack.of(ms)
                     .translate(
                         spec.getXShift(trackType),
                         (spec.getTopSurfacePixelHeight(trackType, casing.isAlternate()) - 2) / 16f,

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,12 +22,12 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRItems;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -54,7 +54,7 @@ public class ConductorDemoCommand {
                     int i = 0;
                     for (String name : customCapNames) {
                         ItemStack capStack = CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.values()[i++ % DyeColor.values().length]).asStack();
-                        capStack.setHoverName(Components.literal(name));
+                        capStack.setHoverName(Component.literal(name));
 
                         spawnConductor(ctx.getSource().getLevel(), pos, capStack, null);
                         pos.move(Direction.NORTH);
@@ -67,7 +67,7 @@ public class ConductorDemoCommand {
                         pos.move(Direction.NORTH);
                     }
 
-                    ctx.getSource().sendSuccess(() -> Components.literal("Spawned custom conductors"), true);
+                    ctx.getSource().sendSuccess(() -> Component.literal("Spawned custom conductors"), true);
                     return 1;
                 }));
     }
@@ -75,7 +75,7 @@ public class ConductorDemoCommand {
     private static void spawnConductor(Level level, BlockPos pos, ItemStack headStack, @Nullable String name) {
         ConductorEntity conductor = ConductorEntity.spawn(level, pos, headStack);
         if (conductor != null && name != null) {
-            conductor.setCustomName(Components.literal(name));
+            conductor.setCustomName(Component.literal(name));
             conductor.setCustomNameVisible(true);
         }
     }

@@ -23,7 +23,7 @@ import com.railwayteam.railways.annotation.mixin.ConditionalMixin;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.content.animated_flywheel.FlywheelMovementBehaviour;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllMovementBehaviours;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.tterrag.registrate.builders.BlockBuilder;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
@@ -47,6 +47,6 @@ public class MixinAllBlocks {
             remap = false
     )
     private static <T extends Block, P> BlockBuilder<T, P> railways$addFlywheelMovementBehaviour(BlockBuilder<T, P> original) {
-        return original.onRegister(AllMovementBehaviours.movementBehaviour(new FlywheelMovementBehaviour()));
+        return original.onRegister(MovementBehaviour.movementBehaviour(new FlywheelMovementBehaviour()));
     }
 }

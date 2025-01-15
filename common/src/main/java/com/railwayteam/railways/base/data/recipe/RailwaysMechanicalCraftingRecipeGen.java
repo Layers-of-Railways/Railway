@@ -23,8 +23,8 @@ import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.recipe.DyedRecipeList.NullableDyedRecipeList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeBuilder;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -138,7 +138,7 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
             return register(consumer -> {
                 MechanicalCraftingRecipeBuilder b =
                     builder.apply(MechanicalCraftingRecipeBuilder.shapedRecipe(result.get(), amount));
-                ResourceLocation location = clean(Railways.asResource("mechanical_crafting/" + RegisteredObjects.getKeyOrThrow(result.get()
+                ResourceLocation location = clean(Railways.asResource("mechanical_crafting/" + CatnipServices.REGISTRIES.getKeyOrThrow(result.get()
                         .asItem())
                     .getPath() + suffix));
                 if (addToEmiDefaults) {

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,7 +20,6 @@ package com.railwayteam.railways.fabric.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
-import com.simibubi.create.content.contraptions.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;

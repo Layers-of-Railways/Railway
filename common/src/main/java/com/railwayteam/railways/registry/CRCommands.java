@@ -30,7 +30,7 @@ import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrackDemoCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
 import com.railwayteam.railways.util.Utils;
-import com.simibubi.create.infrastructure.command.AllCommands;
+import net.createmod.catnip.command.CatnipCommands;
 import net.minecraft.commands.CommandSourceStack;
 
 import java.util.Collections;
@@ -61,7 +61,6 @@ public class CRCommands {
         if (snr != null)
             return;
 
-        dispatcher.getRoot()
-                .addChild(AllCommands.buildRedirect("snr", railwaysRoot));
+        CatnipCommands.createOrAddToShortcut(dispatcher, "snr", railwaysRoot);
     }
 }

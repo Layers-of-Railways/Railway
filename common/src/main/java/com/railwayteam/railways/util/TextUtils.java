@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,6 @@
 package com.railwayteam.railways.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -57,13 +56,13 @@ public class TextUtils {
     }
 
     public static Component translateWithFormatting(String key, Object... args) {
-        MutableComponent base = Components.translatable(key, args);
+        MutableComponent base = Component.translatable(key, args);
         StringBuilder partsStringBuilder = new StringBuilder();
         base.visit((style, part) -> {
             partsStringBuilder.append(part);
             return Optional.empty();
         }, Style.EMPTY);
-        return Components.literal(partsStringBuilder.toString());
+        return Component.literal(partsStringBuilder.toString());
     }
 
     public static String joinSpace(String... strings) {

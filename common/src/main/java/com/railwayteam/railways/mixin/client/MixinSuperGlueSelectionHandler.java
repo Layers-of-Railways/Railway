@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,9 +19,9 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.simibubi.create.AllSpecialTextures;
-import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHandler;
 import com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHelper;
+import net.createmod.catnip.outliner.Outliner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,7 +55,7 @@ public class MixinSuperGlueSelectionHandler {
         if (mc.options.keySprint.isDown()) {
             Set<BlockPos> cluster = SuperGlueSelectionHelper.searchGlueGroup(mc.level, hoveredPos, hoveredPos, true);
             if (cluster != null) {
-                CreateClient.OUTLINER.showCluster(clusterOutlineSlot, cluster)
+                Outliner.getInstance().showCluster(clusterOutlineSlot, cluster)
                     .colored(CONTROL_HIGHLIGHT)
                     .withFaceTextures(AllSpecialTextures.GLUE, AllSpecialTextures.HIGHLIGHT_CHECKERED)
                     .disableLineNormals()

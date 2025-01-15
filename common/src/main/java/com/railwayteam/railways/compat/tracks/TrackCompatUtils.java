@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,7 @@
 package com.railwayteam.railways.compat.tracks;
 
 import com.google.common.collect.ImmutableSet;
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
@@ -149,9 +149,9 @@ public abstract class TrackCompatUtils {
         String prefix = "block/track/compat/" + namespace + "/" + path + "/";
 
         TrackMaterialFactory materialFactory = factory.customModels(
-                () -> () -> new PartialModel(Railways.asResource(prefix + "tie")),
-                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_left")),
-                () -> () -> new PartialModel(Railways.asResource(prefix + "segment_right"))
+                () -> () -> PartialModel.of(Railways.asResource(prefix + "tie")),
+                () -> () -> PartialModel.of(Railways.asResource(prefix + "segment_left")),
+                () -> () -> PartialModel.of(Railways.asResource(prefix + "segment_right"))
         );
 
         String customLang = trackCompat.getLang(path);

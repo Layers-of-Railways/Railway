@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,10 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
     }
+
+    runs.configureEach {
+        programArg("-mixin.config=create.mixins.json")
+    }
 }
 
 dependencies {
@@ -38,11 +42,10 @@ dependencies {
 
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
-    modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
-
-    modImplementation("net.createmod.catnip:Catnip-Forge-${"minecraft_version"()}:${"catnip_version"()}")
     modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}")
+    modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
+    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${"minecraft_version"()}:${"flywheel_version"()}")
+    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_version"()}")
 
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")

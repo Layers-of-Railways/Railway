@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu;
 import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu.State;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
-import com.simibubi.create.foundation.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.AbstractSimiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

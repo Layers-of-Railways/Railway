@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.content.switches;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity.PonderData;
@@ -27,11 +26,12 @@ import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
-import com.simibubi.create.foundation.ponder.PonderWorld;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Color;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.catnip.theme.Color;
+import net.createmod.ponder.api.level.PonderLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -55,12 +55,12 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
     renderFlagState(te, partialTicks, ms, buffer, light);
     renderTrackOverlay(te, ms, buffer, light, overlay, te.edgePoint);
 
-    if (te.ponderData != null && te.getLevel() instanceof PonderWorld ponderWorld) {
+    if (te.ponderData != null && te.getLevel() instanceof PonderLevel ponderWorld) {
       renderPonderData(ponderWorld, te.getState(), te.ponderData, partialTicks, ms, buffer, light, overlay);
     }
   }
 
-  private void renderPonderData(PonderWorld ponderWorld, SwitchState state, PonderData ponderData, float partialTicks, PoseStack ms,
+  private void renderPonderData(PonderLevel ponderWorld, SwitchState state, PonderData ponderData, float partialTicks, PoseStack ms,
                                 MultiBufferSource buffer, int light, int overlay) {
     ms.pushPose();
     Vec3 offset = new Vec3(0, 0.4, 0);
@@ -84,20 +84,20 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
     ms.pushPose();
 
     float yRot = AngleHelper.horizontalAngle(state.getValue(TrackSwitchBlock.FACING));
-
-    TransformStack msr = TransformStack.cast(ms);
-    msr.centre()
-      .rotateY(yRot)
-      .unCentre();
+    
+    TransformStack.of(ms)
+      .center()
+      .rotateYDegrees(yRot)
+      .uncenter();
 
     SuperByteBuffer buf;
     if (te.isAutomatic()) {
       ms.pushPose();
       ms.translate(0, -2.0 / 16, 0);
 
-      buf = CachedBufferer.partial(CRBlockPartials.BRASS_SWITCH_FLAG, state)
+      buf = CachedBuffers.partial(CRBlockPartials.BRASS_SWITCH_FLAG, state)
         .light(light)
-        .rotateCentered(Direction.UP, 1.5708f)
+        .rotateCentered(1.5708f, Direction.UP)
         .translate(0.5, 8.5 / 16, 0.5);
 
       // Rotate just enough to touch the front or back edge
@@ -108,7 +108,7 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
       } else {
         te.lerpedAngle.updateChaseTarget(0.0f);
       }
-      buf = buf.rotate(Direction.NORTH, te.lerpedAngle.getValue(partialTicks));
+      buf = buf.rotate(te.lerpedAngle.getValue(partialTicks), Direction.NORTH);
 
       buf
         .translate(-0.5, -7.5 / 16, -0.5)
@@ -116,7 +116,7 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
 
       ms.popPose();
     } else {
-      buf = CachedBufferer.partial(CRBlockPartials.ANDESITE_SWITCH_FLAG, state)
+      buf = CachedBuffers.partial(CRBlockPartials.ANDESITE_SWITCH_FLAG, state)
         .light(light);
 
       if (te.isReverseLeft()) {
@@ -128,12 +128,12 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
       } else {
         te.lerpedAngle.updateChaseTarget(0.0f);
       }
-      buf = buf.rotateCentered(Direction.UP, te.lerpedAngle.getValue(partialTicks));
+      buf = buf.rotateCentered(te.lerpedAngle.getValue(partialTicks), Direction.UP);
       buf.renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
-      CachedBufferer.partial(CRBlockPartials.ANDESITE_SWITCH_HANDLE, state)
+      CachedBuffers.partial(CRBlockPartials.ANDESITE_SWITCH_HANDLE, state)
         .light(light)
-        .rotateCentered(Direction.UP, -1.5708f)  // 90°
+        .rotateCentered(-1.5708f, Direction.UP)  // 90°
         .renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }
 
@@ -154,7 +154,7 @@ public class TrackSwitchRenderer extends SmartBlockEntityRenderer<TrackSwitchBlo
       return;
 
     ms.pushPose();
-    TransformStack.cast(ms)
+    TransformStack.of(ms)
             .translate(targetPosition.subtract(pos));
     CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
             buffer, light, overlay, te.getOverlayModel(), 1, offsetToSide);

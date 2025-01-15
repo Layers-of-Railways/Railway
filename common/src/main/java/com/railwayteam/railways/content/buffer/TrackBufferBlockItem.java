@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,11 +23,14 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.graph.EdgePointType;
-import com.simibubi.create.content.trains.track.*;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
+import net.createmod.catnip.data.Pair;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -40,6 +43,7 @@ import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -112,13 +116,13 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
             withGraphLocation(level, pos, front, null, type, (overlap, location) -> result.setValue(overlap));
             
             if (result.getValue().feedback != null) {
-                player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
+                player.displayClientMessage(CreateLang.translateDirect(result.getValue().feedback)
                         .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
             }
             if (!isOkShape(state)) {
-                player.displayClientMessage(Components.translatable("railways.buffer.invalid_shape")
+                player.displayClientMessage(Component.translatable("railways.buffer.invalid_shape")
                         .withStyle(ChatFormatting.RED), true);
                 AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                 return InteractionResult.FAIL;
@@ -184,7 +188,7 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
         
         if (player != null) {
             
-            player.displayClientMessage(Lang.translateDirect("track_target.invalid")
+            player.displayClientMessage(CreateLang.translateDirect("track_target.invalid")
                     .withStyle(ChatFormatting.RED), true);
             AllSoundEvents.DENY.play(level, player, player.position(), .5f, 1);
             return false;

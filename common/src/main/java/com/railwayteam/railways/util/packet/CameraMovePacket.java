@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,9 +24,9 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.multiloader.C2SPacket;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -123,7 +123,7 @@ public class CameraMovePacket implements C2SPacket, S2CPacket {
     public void handle(ServerPlayer sender1) {
         if (sender1.level.getEntity(id) instanceof ConductorEntity conductor && sender1.getCamera() == conductor) {
             if (containsInvalidValues(packet.getX(0.0), packet.getY(0.0), packet.getZ(0.0), packet.getYRot(0.0f), packet.getXRot(0.0f))) {
-                sender1.connection.disconnect(Components.translatable("multiplayer.disconnect.invalid_player_movement"));
+                sender1.connection.disconnect(Component.translatable("multiplayer.disconnect.invalid_player_movement"));
                 return;
             }
             if (!(conductor.level instanceof ServerLevel serverLevel))

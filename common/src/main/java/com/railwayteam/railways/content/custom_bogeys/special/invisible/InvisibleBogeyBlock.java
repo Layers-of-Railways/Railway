@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -46,7 +46,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Set;
 
 public class InvisibleBogeyBlock extends AbstractBogeyBlock<InvisibleBogeyBlockEntity>
-	implements IBE<InvisibleBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+	implements IBE<InvisibleBogeyBlockEntity>, ProperWaterloggedBlock, SpecialBlockItemRequirement {
 
 	public InvisibleBogeyBlock(Properties props) {
 		super(props, BogeySizes.SMALL);

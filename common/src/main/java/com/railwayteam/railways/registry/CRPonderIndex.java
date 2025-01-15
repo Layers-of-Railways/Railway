@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,18 +18,19 @@
 
 package com.railwayteam.railways.registry;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.ponder.ConductorScenes;
-import com.railwayteam.railways.ponder.DoorScenes;
-import com.railwayteam.railways.ponder.TrainScenes;
+import com.railwayteam.railways.ponder.scenes.ConductorScenes;
+import com.railwayteam.railways.ponder.scenes.DoorScenes;
+import com.railwayteam.railways.ponder.scenes.TrainScenes;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
-
+import com.tterrag.registrate.util.entry.ItemProviderEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
+import net.minecraft.resources.ResourceLocation;
 
 public class CRPonderIndex {
-    private static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MOD_ID);
-
-    public static void register() {
+    public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
+        PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+        
         HELPER.forComponents(CRBlocks.SEMAPHORE)
             .addStoryBoard("semaphore", TrainScenes::signaling);
         HELPER.forComponents(CRBlocks.TRACK_COUPLER)

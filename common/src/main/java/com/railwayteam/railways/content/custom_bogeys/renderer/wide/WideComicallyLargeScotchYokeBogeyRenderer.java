@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.wide;
 
-import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
@@ -26,13 +25,15 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_FRAME;
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_PINS;
+import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_PISTONS;
+import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_WHEELS;
 
 public class WideComicallyLargeScotchYokeBogeyRenderer extends BogeyRenderer {
     @Override

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,22 +18,28 @@
 
 package com.railwayteam.railways.content.custom_tracks.generic_crossing;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.content.trains.graph.TrackNodeLocation;
-import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.content.trains.track.TrackPropagator;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.VecHelper;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -71,11 +77,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.simibubi.create.AllShapes.*;
+import static com.simibubi.create.AllShapes.TRACK_ASC;
+import static com.simibubi.create.AllShapes.TRACK_CROSS;
+import static com.simibubi.create.AllShapes.TRACK_CROSS_DIAG;
+import static com.simibubi.create.AllShapes.TRACK_CROSS_DIAG_ORTHO;
+import static com.simibubi.create.AllShapes.TRACK_CROSS_ORTHO_DIAG;
+import static com.simibubi.create.AllShapes.TRACK_DIAG;
+import static com.simibubi.create.AllShapes.TRACK_ORTHO;
+import static com.simibubi.create.AllShapes.TRACK_ORTHO_LONG;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBlockEntity>, ITrackBlock, IWrenchable, ISpecialBlockItemRequirement, ProperWaterloggedBlock {
+public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBlockEntity>, ITrackBlock, IWrenchable, SpecialBlockItemRequirement, ProperWaterloggedBlock {
 
     public static final EnumProperty<TrackShape> SHAPE = TrackBlock.SHAPE;
 

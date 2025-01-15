@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,12 +18,11 @@
 
 package com.railwayteam.railways.content.distant_signals;
 
+import com.simibubi.create.api.behaviour.display.DisplayTarget;
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
-import com.simibubi.create.content.redstone.displayLink.target.DisplayTarget;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -53,6 +52,6 @@ public class SemaphoreDisplayTarget extends DisplayTarget {
 
     @Override
     public Component getLineOptionText(int line) {
-        return Components.translatable("railways.display_target.semaphore."+(line != 0 ? "distant" : "normal"));
+        return Component.translatable("railways.display_target.semaphore."+(line != 0 ? "distant" : "normal"));
     }
 }

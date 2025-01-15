@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,10 +19,9 @@
 package com.railwayteam.railways.content.conductor;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import net.createmod.catnip.render.CachedBuffers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -53,13 +52,13 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferer.partial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 
-					.rotateX(180)
+					.rotateXDegrees(180)
 					.translate(3 / 16.0, 3.5 / 16.0, 0 / 16.0)
-					.rotateZ(-30)
+					.rotateZDegrees(-30)
 					.light(packedLight)
 					.renderInto(poseStack, buffer.getBuffer(RenderType.cutoutMipped()));
 
@@ -74,11 +73,11 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferer.partial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 
-					.rotateZ(180)
+					.rotateZDegrees(180)
 					.translate(-8 / 16.0, 2 / 16.0, -8 / 16.0)
 					.light(packedLight)
 					.renderInto(poseStack, buffer.getBuffer(RenderType.cutoutMipped()));

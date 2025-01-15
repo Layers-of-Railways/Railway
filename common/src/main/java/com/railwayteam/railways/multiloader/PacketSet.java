@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,6 @@ package com.railwayteam.railways.multiloader;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import com.simibubi.create.foundation.utility.Components;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -208,7 +207,7 @@ public abstract class PacketSet {
 		public void handle(Minecraft mc) {
 			if (CRPackets.PACKETS.version == serverVersion)
 				return;
-			Component error = Components.literal("Steam n' Rails on the client uses a different network format than the server.")
+			Component error = Component.literal("Steam n' Rails on the client uses a different network format than the server.")
 					.append(" You should use the same version of the mod on both sides.");
 			mc.getConnection().onDisconnect(error);
 		}

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,8 +18,6 @@
 
 package com.railwayteam.railways.content.switches;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
@@ -27,9 +25,9 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRIcons;
-import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
+import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
@@ -41,8 +39,13 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.utility.*;
-import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -50,6 +53,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -58,14 +63,18 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import static com.railwayteam.railways.content.switches.TrackSwitchBlock.LOCKED;
 import static java.util.stream.Collectors.toSet;
 import static net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING;
 
 
-public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
+public class TrackSwitchBlockEntity extends SmartBlockEntity implements TransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
     private SwitchState state;
     private int lastAnalogOutput = 0;
@@ -137,25 +146,25 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
         if (isAutomatic()) {
-            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
+            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Component.translatable("railways.switch.auto_mode"),
                     this, new ValueBoxTransform() {
                 @Override
-                public Vec3 getLocalOffset(BlockState state) {
+                public Vec3 getLocalOffset(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState) {
                     Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
-                    base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
+                    base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(blockState.getValue(FACING)), Direction.Axis.Y);
                     return base;
                 }
 
                 @Override
-                public void rotate(BlockState state, PoseStack ms) {
-                    TransformStack.cast(ms)
-                            .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
+                public void rotate(LevelAccessor levelAccessor, BlockPos blockPos, BlockState blockState, PoseStack ms) {
+                    TransformStack.of(ms)
+                            .rotateY(AngleHelper.horizontalAngle(blockState.getValue(FACING)) - 90)
                             .rotateX(90);
                 }
 
                 @Override
-                public boolean testHit(BlockState state, Vec3 localHit) {
-                    Vec3 offset = getLocalOffset(state);
+                public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+                    Vec3 offset = getLocalOffset(level, pos, state);
                     if (offset == null)
                         return false;
                     return localHit.distanceTo(offset) < scale / 3;
@@ -173,8 +182,8 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
     }
 
     @Override
-    public void transform(StructureTransform transform) {
-        edgePoint.transform(transform);
+    public void transform(BlockEntity blockEntity, StructureTransform structureTransform) {
+        edgePoint.transform(blockEntity, structureTransform);
     }
 
     public boolean isAutomatic() {

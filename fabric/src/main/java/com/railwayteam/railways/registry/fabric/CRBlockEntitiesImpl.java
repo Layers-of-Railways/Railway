@@ -22,7 +22,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.fuel.psi.PortableFuelInterfaceBlockEntity;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.content.fuel.tank.FuelTankRenderer;
-import com.simibubi.create.content.contraptions.actors.psi.PSIInstance;
+import com.simibubi.create.content.contraptions.actors.psi.PSIVisual;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -38,7 +38,7 @@ public class CRBlockEntitiesImpl {
 
     public static final BlockEntityEntry<PortableFuelInterfaceBlockEntity> PORTABLE_FUEL_INTERFACE = REGISTRATE
             .blockEntity("portable_fuel_interface", PortableFuelInterfaceBlockEntity::new)
-            .instance(() -> PSIInstance::new)
+            .visual(() -> PSIVisual::new)
             .validBlocks(CRBlocksImpl.PORTABLE_FUEL_INTERFACE)
             .renderer(() -> PortableStorageInterfaceRenderer::new)
             .register();

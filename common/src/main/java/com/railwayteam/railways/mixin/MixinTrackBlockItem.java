@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,7 +20,7 @@ package com.railwayteam.railways.mixin;
 
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -45,7 +45,7 @@ public class MixinTrackBlockItem {
         if (state.getBlock() instanceof ITrackBlock track && track.getTrackAxes(level, pos, state)
             .size() > 1) {
             if (!level.isClientSide)
-                player.displayClientMessage(Lang.translateDirect("track.junction_start")
+                player.displayClientMessage(CreateLang.translateDirect("track.junction_start")
                     .withStyle(ChatFormatting.RED), true);
             cir.setReturnValue(InteractionResult.SUCCESS);
         }

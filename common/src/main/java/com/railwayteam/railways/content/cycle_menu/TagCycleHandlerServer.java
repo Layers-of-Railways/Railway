@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,7 @@ package com.railwayteam.railways.content.cycle_menu;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.registry.CRPalettes;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -52,7 +52,7 @@ public class TagCycleHandlerServer {
     public static void select(ServerPlayer player, Item target) {
         if (!select(player, target, InteractionHand.MAIN_HAND) && !select(player, target, InteractionHand.OFF_HAND)) {
             Railways.LOGGER.warn("Player {} tried to select {} through tag cycling but failed", player.getName().getString(), target.getDescription().getString());
-            player.connection.disconnect(Components.literal("Invalid tag selection"));
+            player.connection.disconnect(Component.literal("Invalid tag selection"));
         }
     }
 

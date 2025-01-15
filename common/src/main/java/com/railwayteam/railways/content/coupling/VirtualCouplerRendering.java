@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,8 +23,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.StandardBogeyBlockEntity;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.utility.AngleHelper;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -56,7 +56,7 @@ public final class VirtualCouplerRendering {
             ms.pushPose();
             ms.pushPose();
             ms.translate(anchor.x, anchor.y, anchor.z);
-            CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
+            CachedBuffers.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
                 .rotateY(-yRot)
                 .rotateX(xRot)
                 .light(light)
@@ -67,7 +67,7 @@ public final class VirtualCouplerRendering {
             double stretch = 1.0;
 
             for (int j = 0; j < couplingSegments; j++) {
-                CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_CABLE, air)
+                CachedBuffers.partial(AllPartialModels.TRAIN_COUPLING_CABLE, air)
                     .rotateY(-yRot + 180)
                     .rotateX(-xRot)
                     .translate(0, 0, margin + 2 / 16f)
@@ -81,7 +81,7 @@ public final class VirtualCouplerRendering {
 
             ms.pushPose();
             ms.translate(anchor2.x, anchor2.y, anchor2.z);
-            CachedBufferer.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
+            CachedBuffers.partial(AllPartialModels.TRAIN_COUPLING_HEAD, air)
                 .rotateY(-yRot + 180)
                 .rotateX(-xRot)
                 .light(light)

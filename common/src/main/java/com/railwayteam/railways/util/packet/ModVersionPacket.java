@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,13 +25,13 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.foundation.utility.Components;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 
 public record ModVersionPacket(String version) implements S2CPacket {
   public ModVersionPacket(FriendlyByteBuf buf) {
@@ -51,7 +51,7 @@ public record ModVersionPacket(String version) implements S2CPacket {
       String msg = "Steam 'n' Rails version mismatch: Server is using version " + version + ", you are using version " + RailwaysBuildInfo.VERSION + ". This may cause problems.";
       Railways.LOGGER.warn(msg);
       player.displayClientMessage(
-              Components.literal(msg).withStyle(ChatFormatting.DARK_RED),
+              Component.literal(msg).withStyle(ChatFormatting.DARK_RED),
               false
       );
     }

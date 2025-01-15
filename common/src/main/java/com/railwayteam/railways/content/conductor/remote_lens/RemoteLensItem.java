@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,6 @@ package com.railwayteam.railways.content.conductor.remote_lens;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -56,11 +55,11 @@ public class RemoteLensItem extends Item {
         if (tag != null && tag.hasUUID("SelectedConductor")) {
             UUID conductorId = tag.getUUID("SelectedConductor");
 
-            tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
+            tooltip.add(Component.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
             tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.conductor_id", conductorId.toString().substring(0, 5)));
-            tooltip.add(Components.translatable("railways.remote_lens.tool.bound_usage"));
+            tooltip.add(Component.translatable("railways.remote_lens.tool.bound_usage"));
         } else {
-            tooltip.add(Components.translatable("railways.remote_lens.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
+            tooltip.add(Component.translatable("railways.remote_lens.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
         }
     }
 
@@ -72,7 +71,7 @@ public class RemoteLensItem extends Item {
         if (pInteractionTarget instanceof ConductorEntity conductor && conductor.getJob() == ConductorEntity.Job.SPY) {
             CompoundTag stackTag = pStack.getOrCreateTag();
             stackTag.putUUID("SelectedConductor", conductor.getUUID());
-            pPlayer.displayClientMessage(Components.translatable("railways.remote_lens.set"), true);
+            pPlayer.displayClientMessage(Component.translatable("railways.remote_lens.set"), true);
             pStack.setTag(stackTag);
             pPlayer.setItemInHand(pUsedHand, pStack);
             AllSoundEvents.PECULIAR_BELL_USE.play(pPlayer.level, null, conductor.getX(), conductor.getY(), conductor.getZ(), .5f, 1.1f);
@@ -99,7 +98,7 @@ public class RemoteLensItem extends Item {
             if (player.isShiftKeyDown()) {
                 stack.removeTagKey("SelectedConductor");
                 AllSoundEvents.CONTROLLER_CLICK.play(level, null, player.blockPosition(), .5f, 1.1f);
-                player.displayClientMessage(Components.translatable("railways.remote_lens.clear"), true);
+                player.displayClientMessage(Component.translatable("railways.remote_lens.clear"), true);
                 return InteractionResultHolder.success(stack);
             }
             Entity entity = serverLevel.getEntity(conductorId);

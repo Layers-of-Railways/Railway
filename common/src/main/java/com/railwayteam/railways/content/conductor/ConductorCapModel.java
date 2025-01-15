@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,14 +18,14 @@
 
 package com.railwayteam.railways.content.conductor;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -129,7 +129,7 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 //			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
 			override.get().getTransforms().head.apply(false, poseStack);
 			poseStack.translate(-0.5, -0.5, -0.5);
-			CachedBufferer.partial(override, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(override, Blocks.AIR.defaultBlockState())
 				.light(packedLight)
 				.overlay(packedOverlay)
 				.renderInto(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.translucent()));

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -44,8 +44,7 @@ import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -95,8 +94,8 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
     }
 
     private static InteractionResult fail(Player player, String message) {
-        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), true);
-        player.displayClientMessage(Components.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), false);
+        player.displayClientMessage(Component.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), true);
+        player.displayClientMessage(Component.translatable("railways.whistle.failure."+message).withStyle(ChatFormatting.RED), false);
         return InteractionResult.FAIL;
     }
 
@@ -112,14 +111,14 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             if (railways != null && railways.trains.containsKey(trainId))
                 trainName = railways.trains.get(trainId).name.getString();
 
-            tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
+            tooltip.add(Component.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
             tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.conductor_id", conductorId.toString().substring(0, 5)));
             tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.train_id", trainName, trainId.toString().substring(0, 5)));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_usage"));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_usage"));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_clear"));
+            tooltip.add(Component.translatable("railways.whistle.tool.bound_usage"));
+            tooltip.add(Component.translatable("railways.whistle.tool.bound_auto_usage"));
+            tooltip.add(Component.translatable("railways.whistle.tool.bound_auto_clear"));
         } else {
-            tooltip.add(Components.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
+            tooltip.add(Component.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
         }
     }
 
@@ -135,13 +134,13 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 stackTag.putUUID("SelectedTrain", train.id);
                 stackTag.putUUID("SelectedConductor", conductor.getUUID());
                 stackTag.putByte("SelectedColor", conductor.getEntityData().get(ConductorEntity.COLOR));
-                pPlayer.displayClientMessage(Components.translatable("railways.whistle.set"), true);
+                pPlayer.displayClientMessage(Component.translatable("railways.whistle.set"), true);
                 pStack.setTag(stackTag);
                 pPlayer.setItemInHand(pUsedHand, pStack);
                 AllSoundEvents.PECULIAR_BELL_USE.play(pPlayer.level, null, conductor.getX(), conductor.getY(), conductor.getZ(), .5f, 1.1f);
                 return InteractionResult.SUCCESS;
             } else {
-                pPlayer.displayClientMessage(Components.translatable("railways.whistle.not_owner").withStyle(ChatFormatting.RED), true);
+                pPlayer.displayClientMessage(Component.translatable("railways.whistle.not_owner").withStyle(ChatFormatting.RED), true);
                 return InteractionResult.FAIL;
             }
         }
@@ -169,7 +168,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
         if (player.isSteppingCarefully() && stack.hasTag()) {
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
-            player.displayClientMessage(Components.translatable("railways.whistle.clear"), true);
+            player.displayClientMessage(Component.translatable("railways.whistle.clear"), true);
             stack.setTag(null);
             AllSoundEvents.CONTROLLER_CLICK.play(level, null, pos, 1, .5f);
             return InteractionResult.SUCCESS;
@@ -222,7 +221,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
                 withGraphLocation(level, pos, front, null, type, (overlap, location) -> result.setValue(overlap));
 
                 if (result.getValue().feedback != null) {
-                    player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
+                    player.displayClientMessage(CreateLang.translateDirect(result.getValue().feedback)
                             .withStyle(ChatFormatting.RED), true);
                     AllSoundEvents.DENY.play(level, null, pos, .5f, 1);
                     return InteractionResult.FAIL;
@@ -328,7 +327,7 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             }
 
 
-            player.displayClientMessage(Components.translatable("railways.whistle.success"), true);
+            player.displayClientMessage(Component.translatable("railways.whistle.success"), true);
             AllSoundEvents.CONTROLLER_CLICK.play(level, null, pos, 1, 1);
 
             Schedule schedule = new Schedule();

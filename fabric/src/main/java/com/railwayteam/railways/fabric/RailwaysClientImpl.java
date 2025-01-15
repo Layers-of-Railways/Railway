@@ -24,7 +24,6 @@ import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.content.conductor.fabric.ConductorCapItemRenderer;
 import com.railwayteam.railways.fabric.events.ClientEventsFabric;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
-import com.simibubi.create.foundation.utility.Components;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -62,6 +61,6 @@ public class RailwaysClientImpl implements ClientModInitializer {
 
 	public static void registerBuiltinPack(String id, String name) {
 		ModContainer mod = FabricLoader.getInstance().getModContainer(Railways.MOD_ID).orElseThrow();
-		ResourceManagerHelper.registerBuiltinResourcePack(Railways.asResource(id), mod, Components.literal(name), ResourcePackActivationType.NORMAL);
+		ResourceManagerHelper.registerBuiltinResourcePack(Railways.asResource(id), mod, Component.literal(name), ResourcePackActivationType.NORMAL);
 	}
 }

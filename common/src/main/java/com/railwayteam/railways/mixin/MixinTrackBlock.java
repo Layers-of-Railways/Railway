@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -33,7 +33,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -86,15 +86,15 @@ public class MixinTrackBlock {
     if (style == AllBogeyStyles.STANDARD)
       return;
 
-    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.getAllSizesSmallToLarge().get(0);
-    int escape = BogeySizes.getAllSizesSmallToLarge().size();
+    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.allSortedIncreasing().getFirst();
+    int escape = BogeySizes.allSortedIncreasing().size();
     while (!style.validSizes().contains(size)) {
       if (escape < 0)
         return;
-      size = size.increment();
+      size = size.nextBySize();
       escape--;
     }
-    Block block = style.getBlockOfSize(size);
+    Block block = style.getBlockForSize(size);
     cir.setReturnValue(
             block.defaultBlockState()
                     .setValue(BlockStateProperties.HORIZONTAL_AXIS,

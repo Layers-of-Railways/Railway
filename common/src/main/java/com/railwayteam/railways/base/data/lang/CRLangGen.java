@@ -20,10 +20,12 @@ package com.railwayteam.railways.base.data.lang;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.foundation.utility.FilesHelper;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import net.createmod.ponder.foundation.PonderIndex;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -36,6 +38,7 @@ public class CRLangGen {
         provideDefaultLang("tooltips", langConsumer);
         CRTags.provideLangEntries(langConsumer);
         CRPalettes.provideLangEntries(langConsumer);
+        PonderIndex.getLangAccess().provideLang(Railways.MOD_ID, langConsumer);
     }
 
     private static void provideDefaultLang(String fileName, BiConsumer<String, String> consumer) {

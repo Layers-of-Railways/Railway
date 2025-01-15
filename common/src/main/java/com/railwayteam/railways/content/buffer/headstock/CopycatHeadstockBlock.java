@@ -28,6 +28,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
 import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
 import com.simibubi.create.content.decoration.copycat.WaterloggedCopycatBlock;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.fabricmc.api.EnvType;
@@ -238,7 +239,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
                     });
             state.spawnAfterBreak((ServerLevel) world, pos, ItemStack.EMPTY, true);
             world.destroyBlock(pos, false);
-            playRemoveSound(world, pos);
+            IWrenchable.playRemoveSound(world, pos);
         }
         return InteractionResult.SUCCESS;
     }
@@ -268,7 +269,7 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
         }
 
         if (world.getBlockState(context.getClickedPos()) != state)
-            playRotateSound(world, context.getClickedPos());
+            IWrenchable.playRotateSound(world, context.getClickedPos());
 
         return InteractionResult.SUCCESS;
     }

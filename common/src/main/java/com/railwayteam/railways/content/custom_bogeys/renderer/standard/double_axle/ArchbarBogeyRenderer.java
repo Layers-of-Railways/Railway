@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,64 +18,54 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle;
 
-import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.ARCHBAR_FRAME;
 
-public class ArchbarBogeyRenderer extends BogeyRenderer {
+public class ArchbarBogeyRenderer implements BogeyRenderer {
     @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 2);
-        createModelInstance(materialManager, ARCHBAR_FRAME);
-        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
-    }
-
-    @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
-
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-
-        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+        
+        SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
 
         for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i]
+            secondaryShaft
                     .translate(-.5f, .25f, i * -1)
-                    .centre()
+                    .center()
                     .rotateZ(wheelAngle)
-                    .unCentre()
-                    .render(ms, light, vb);
+                    .uncenter()
+                    .light(light)
+                    .overlay(overlay)
+                    .renderInto(poseStack, buffer);
         }
 
-        getTransform(ARCHBAR_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+        CachedBuffers.partial(ARCHBAR_FRAME, Blocks.AIR.defaultBlockState())
+                .light(light)
+                .overlay(overlay)
+                .renderInto(poseStack, buffer);
 
-        BogeyModelData[] wheels = getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
         for (int side : Iterate.positiveAndNegative) {
-            if (!inInstancedContraption)
-                ms.pushPose();
-            BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 11.975 / 16f, side * 0.998)
-                    .rotateX(wheelAngle)
-                    .render(ms, light, vb);
-            if (!inInstancedContraption)
-                ms.popPose();
+            wheels.translate(0, 11.975 / 16f, side * 0.998)
+                    .rotateXDegrees(wheelAngle)
+                    .light(light)
+                    .overlay(overlay)
+                    .renderInto(poseStack, buffer);
         }
     }
 }

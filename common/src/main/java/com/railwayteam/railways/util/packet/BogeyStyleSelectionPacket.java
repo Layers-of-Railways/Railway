@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@ import com.simibubi.create.AllBogeyStyles;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,8 +50,8 @@ public class BogeyStyleSelectionPacket implements C2SPacket {
         style = AllBogeyStyles.BOGEY_STYLES.getOrDefault(loc, AllBogeyStyles.STANDARD);
         if (buf.readBoolean()) {
             ResourceLocation sizeLoc = buf.readResourceLocation();
-            size = BogeySizes.getAllSizesSmallToLarge().stream()
-                    .filter((s) -> s.location().equals(sizeLoc))
+            size = BogeySizes.allSortedIncreasing().stream()
+                    .filter((s) -> s.id().equals(sizeLoc))
                     .findFirst().orElse(null);
         } else {
             size = null;
@@ -60,10 +60,10 @@ public class BogeyStyleSelectionPacket implements C2SPacket {
 
     @Override
     public void write(FriendlyByteBuf buffer) {
-        buffer.writeResourceLocation(style.name);
+        buffer.writeResourceLocation(style.id);
         buffer.writeBoolean(size != null);
         if (size != null)
-            buffer.writeResourceLocation(size.location());
+            buffer.writeResourceLocation(size.id());
     }
 
     @Override

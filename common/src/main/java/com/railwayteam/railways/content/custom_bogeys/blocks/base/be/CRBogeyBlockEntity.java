@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,13 +18,13 @@
 
 package com.railwayteam.railways.content.custom_bogeys.blocks.base.be;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
 import com.railwayteam.railways.registry.CRBogeyStyles;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -47,8 +47,8 @@ public class CRBogeyBlockEntity extends AbstractBogeyBlockEntity implements IHav
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.builder()
-                .add(Components.empty().append(getStyle().displayName).withStyle(ChatFormatting.GOLD))
+        Lang.builder(Railways.MOD_ID)
+                .add(Component.empty().append(getStyle().displayName).withStyle(ChatFormatting.GOLD))
                 .forGoggles(tooltip);
         return true;
     }

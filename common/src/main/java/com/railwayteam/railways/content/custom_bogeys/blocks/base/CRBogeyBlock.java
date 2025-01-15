@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,7 @@ package com.railwayteam.railways.content.custom_bogeys.blocks.base;
 import com.railwayteam.railways.content.custom_bogeys.blocks.base.be.CRBogeyBlockEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -31,13 +31,15 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CRBogeyBlock extends AbstractBogeyBlock<CRBogeyBlockEntity>
-	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, SpecialBlockItemRequirement {
 
 	private final BogeyStyle defaultStyle;
 
@@ -86,5 +88,4 @@ public class CRBogeyBlock extends AbstractBogeyBlock<CRBogeyBlockEntity>
 	public BlockEntityType<? extends CRBogeyBlockEntity> getBlockEntityType() {
 		return CRBlockEntities.BOGEY.get();
 	}
-
 }

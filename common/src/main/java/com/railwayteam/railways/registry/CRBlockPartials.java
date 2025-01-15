@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,18 +18,24 @@
 
 package com.railwayteam.railways.registry;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.foundation.utility.Lang;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NARROW_GAUGE;
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
@@ -44,21 +50,21 @@ public class CRBlockPartials {
     public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS_FOR_NAME = new HashMap<>(); // for if a conductor is renamed, rather than the cap
 
     public static void registerCustomCap(String itemName, String modelLoc) {
-        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
     public static void registerCustomCap(String itemName, String modelLoc, boolean preventTilting) {
-        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
         if (preventTilting)
             NO_TILT_CAPS.add(itemName);
     }
 
     public static void registerCustomConductorOnlyCap(String itemName, String modelLoc) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
     public static void registerCustomConductorOnlyCap(String itemName, String modelLoc, boolean preventTilting) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
         if (preventTilting)
             NO_TILT_CAPS.add(itemName);
     }
@@ -522,17 +528,17 @@ public class CRBlockPartials {
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 
     private static PartialModel createBlock(String path) {
-        return new PartialModel(Create.asResource("block/" + path));
+        return PartialModel.of(Create.asResource("block/" + path));
     }
 
     private static PartialModel block(String path) {
-        return new PartialModel(Railways.asResource("block/" + path));
+        return PartialModel.of(Railways.asResource("block/" + path));
     }
 
     static {
         for (DyeColor color : DyeColor.values()) {
             TOOLBOX_BODIES.put(color, createBlock(Lang.asId(color.name()) + "_toolbox"));
-            CONDUCTOR_WHISTLE_FLAGS.put(color, block("conductor_whistle/flag_"+Lang.asId(color.name())));
+            CONDUCTOR_WHISTLE_FLAGS.put(color, block("conductor_whistle/flag_"+ Lang.asId(color.name())));
         }
     }
 

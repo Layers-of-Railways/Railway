@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,6 @@
 package com.railwayteam.railways.content.bogey_menu;
 
 import com.google.common.collect.ImmutableList;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -40,14 +39,19 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.AllIcons;
-import com.simibubi.create.foundation.gui.element.GuiGameElement;
-import com.simibubi.create.foundation.gui.widget.*;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.foundation.gui.widget.IconButton;
+import com.simibubi.create.foundation.gui.widget.Indicator;
+import com.simibubi.create.foundation.gui.widget.Label;
+import com.simibubi.create.foundation.gui.widget.ScrollInput;
+import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
+import com.simibubi.create.foundation.gui.widget.TooltipArea;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.element.GuiGameElement;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -57,11 +61,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Quaternionf;
 import org.lwjgl.glfw.GLFW;
@@ -116,7 +120,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         scrollTo(0);
 
         // Category selector START
-        Label categoryLabel = new Label(x + 14, y + 25, Components.immutableEmpty()).withShadow();
+        Label categoryLabel = new Label(x + 14, y + 25, CommonComponents.EMPTY).withShadow();
         ScrollInput categoryScrollInput = new SelectionScrollInput(x + 9, y + 20, 77, 18)
                 .forOptions(categoryComponentList)
                 .writingTo(categoryLabel)
@@ -181,9 +185,9 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
         // Train casing on right side of screen where arrow is pointing START
         ms.pushPose();
-
-        TransformStack msr = TransformStack.cast(ms);
-        msr.pushPose()
+        
+        TransformStack.of(ms)
+                .pushPose()
                 .translate(x + background.width + 4, y + background.height + 4, 100)
                 .scale(40)
                 .rotateX(-22)
@@ -257,9 +261,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 bogeyScale = BogeyMenuManagerImpl.SIZES_TO_SCALE.get(renderPair);
             }
 
-            Block renderBlock = style.getBlockOfSize(renderSize);
-            BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
-            if (minecraft == null || !(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock)) return;
+            AbstractBogeyBlock<?> bogeyBlock = style.getBlockForSize(renderSize);
+            BlockState bogeyState = bogeyBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
 
             float defaultScale = BogeyMenuManagerImpl.defaultScale;
             float scalePercentage = bogeyScale / defaultScale;
@@ -289,7 +292,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
             MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
             int light = 0xF000F0;
             int overlay = OverlayTexture.NO_OVERLAY;
-            float wheelAngle = -3 * AnimationTickHolder.getRenderTime(minecraft.level);
+            float wheelAngle = -3 * AnimationTickHolder.getRenderTime();
 
             // Render Bogey Block & Bogey
             minecraft.getBlockRenderer().renderSingleBlock(bogeyState, ms, bufferSource, light, overlay);

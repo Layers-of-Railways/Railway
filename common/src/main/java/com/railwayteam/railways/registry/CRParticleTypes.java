@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,8 @@ import com.railwayteam.railways.content.smokestack.particles.chimneypush.Chimney
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
 import com.simibubi.create.foundation.particle.ICustomParticleData;
-import com.simibubi.create.foundation.utility.Lang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.createmod.catnip.lang.Lang;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,9 @@ import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.BogeyEntry;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
@@ -40,7 +41,7 @@ public class BogeyMenuManagerImpl implements BogeyMenuManager {
      /** Internal use only, do NOT touch. */
     @ApiStatus.Internal public static final List<CategoryEntry> CATEGORIES = new ArrayList<>();
     /** Internal use only, do NOT touch. */
-    @ApiStatus.Internal public static final Map<Pair<BogeyStyle, BogeySizes.BogeySize>, Float> SIZES_TO_SCALE = new ConcurrentHashMap<>();
+    @ApiStatus.Internal public static final Map<Pair<BogeyStyle, BogeySize>, Float> SIZES_TO_SCALE = new ConcurrentHashMap<>();
 
     static {
         CATEGORIES.add(CategoryEntry.FavoritesCategory.INSTANCE);

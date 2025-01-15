@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,11 +18,11 @@
 
 package com.railwayteam.railways.content.train_debug;
 
-import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.utility.Color;
+import net.createmod.catnip.outliner.Outliner;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.world.entity.Entity;
@@ -47,26 +47,26 @@ public class TravellingPointVisualizer {
                     /*for (TravellingPoint travellingPoint : new TravellingPoint[]{bogey.leading(), bogey.trailing()}) {
                         if (travellingPoint.node1.getLocation().getDimension() == cameraEntity.level.dimension() &&
                             travellingPoint.node2.getLocation().getDimension() == cameraEntity.level.dimension()) {
-                            CreateClient.OUTLINER.showLine()
+                            Outliner.getInstance().showLine()
                         }
                     }*/
                         Vec3 leadPos = bogey.leading().getPosition(train.graph);
                         Vec3 trailPos = bogey.trailing().getPosition(train.graph);
                         mc.level.addParticle(new DustParticleOptions(new Vector3f(0, 1, 0), 2.0f), leadPos.x, leadPos.y+2, leadPos.z, 0, 0, 0);
                         mc.level.addParticle(new DustParticleOptions(new Vector3f(1, 0, 0), 2.0f), trailPos.x, trailPos.y+2, trailPos.z, 0, 0, 0);
-                        CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 2 + (bogey == carriage.leadingBogey() ? 0 : 1)), bogey.leading().getPosition(train.graph), bogey.trailing().getPosition(train.graph))
+                        Outliner.getInstance().showLine(Integer.valueOf(carriage.id * 2 + (bogey == carriage.leadingBogey() ? 0 : 1)), bogey.leading().getPosition(train.graph), bogey.trailing().getPosition(train.graph))
                             .colored(color)
                             .lineWidth(2/16f);
                         /*int extent = 2;
-                        CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 0),
+                        Outliner.getInstance().showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 0),
                                 bogey.getAnchorPosition().add(0, extent, 0), bogey.getAnchorPosition().add(0, -extent, 0))
                             .colored(color)
                             .lineWidth(4/16f);
-                        CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 1),
+                        Outliner.getInstance().showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 1),
                                 bogey.getAnchorPosition().add(extent, 0, 0), bogey.getAnchorPosition().add(-extent, 0, 0))
                             .colored(color)
                             .lineWidth(4/16f);
-                        CreateClient.OUTLINER.showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 2),
+                        Outliner.getInstance().showLine(Integer.valueOf(carriage.id * 8 + (bogey == carriage.leadingBogey() ? 0 : 1) * 4 + 2),
                                 bogey.getAnchorPosition().add(0, 0, extent), bogey.getAnchorPosition().add(0, 0, -extent))
                             .colored(color)
                             .lineWidth(4/16f);*/

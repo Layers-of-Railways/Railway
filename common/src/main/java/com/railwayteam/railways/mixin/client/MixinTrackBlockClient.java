@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,8 +18,10 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
@@ -30,6 +32,7 @@ import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -47,17 +50,17 @@ public class MixinTrackBlockClient {
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/jozufozu/flywheel/util/transform/TransformStack;translate(DDD)Ljava/lang/Object;", ordinal = 0),
         locals = LocalCapture.CAPTURE_FAILSOFT, remap = false) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
     private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint,
-                                         Direction.AxisDirection direction,PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type,
+                                         AxisDirection direction,PoseStack ms, RenderedTrackOverlayType type,
                                          CallbackInfoReturnable<PartialModel> cir, TransformStack msr, Vec3 axis, Vec3 diff, Vec3 normal,
                                          Vec3 offset,TrackBlockEntity trackTE, BezierConnection bc) {
         IHasTrackCasing casingBc = (IHasTrackCasing) bc;
-        if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
+        if (bc.getMaterial().trackType == CRTrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
             return;
         }
         // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
         if (casingBc.getTrackCasing() != null) {
-            if (bc.tePositions.getFirst().getY() == bc.tePositions.getSecond().getY()) {
+            if (bc.bePositions.getFirst().getY() == bc.bePositions.getSecond().getY()) {
                 msr.translate(0, 1 / 16f, 0);
             } else if (!casingBc.isAlternate()) {
                 msr.translate(0, 4 / 16f, 0);

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,8 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.multiloader.Env;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import static com.railwayteam.railways.multiloader.ClientCommands.*;
 
@@ -36,10 +36,10 @@ public class ReloadJourneymapCommand {
                 if (Mods.JOURNEYMAP.isLoaded) {
                     Env.CLIENT.runIfCurrent(() -> () -> DummyRailwayMarkerHandler.getInstance().reloadMarkers());
 
-                    sendSuccess(source, Components.literal("Reloaded journeymap"));
+                    sendSuccess(source, Component.literal("Reloaded journeymap"));
                     return 1;
                 } else {
-                    sendFailure(source, Components.literal("Journeymap not loaded"));
+                    sendFailure(source, Component.literal("Journeymap not loaded"));
                     return 0;
                 }
             });

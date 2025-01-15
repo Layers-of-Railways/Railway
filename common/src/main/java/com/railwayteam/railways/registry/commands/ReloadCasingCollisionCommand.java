@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,9 +20,9 @@ package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 
 public class ReloadCasingCollisionCommand {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
@@ -30,7 +30,7 @@ public class ReloadCasingCollisionCommand {
             .requires(cs -> cs.hasPermission(2))
             .executes(ctx -> {
                 CasingCollisionUtils.register();
-                ctx.getSource().sendSuccess(() -> Components.literal("Reloaded Casing Collisions"), true);
+                ctx.getSource().sendSuccess(() -> Component.literal("Reloaded Casing Collisions"), true);
                 return 1;
             });
     }
