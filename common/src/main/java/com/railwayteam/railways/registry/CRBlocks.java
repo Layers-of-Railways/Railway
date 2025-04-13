@@ -107,6 +107,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.*;
 import java.util.function.Function;
 
+import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -575,7 +576,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .addLayer(() -> RenderType::cutoutMipped)
         .transform(pickaxeOnly())
-        .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
+        .onRegister(movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
         .lang("Radiator Fan")
         .item()
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))

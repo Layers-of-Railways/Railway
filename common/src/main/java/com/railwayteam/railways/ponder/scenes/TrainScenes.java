@@ -43,7 +43,6 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import net.createmod.ponder.foundation.PonderScene;
-import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.createmod.ponder.foundation.instruction.PonderInstruction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -211,10 +210,9 @@ public class TrainScenes {
         scene.idle(20);
         scene.special().movePointOfInterest(signal1);
 
-        scene.overlay().showControls(
-                new InputWindowElement(util.vector().blockSurface(signal1, Direction.EAST), Pointing.RIGHT).rightClick()
-                        .withItem(AllItems.WRENCH.asStack()),
-                40);
+        scene.overlay().showControls(util.vector().blockSurface(signal1, Direction.EAST), Pointing.RIGHT, 40)
+                .rightClick()
+                .withItem(AllItems.WRENCH.asStack());
         scene.idle(6);
         scene.world().cycleBlockProperty(signal1, SignalBlock.TYPE);
         scene.idle(15);
@@ -471,8 +469,8 @@ public class TrainScenes {
 
         scene.idle(70);
 
-        scene.overlay().showControls(new InputWindowElement(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT)
-                .rightClick(), 60);
+        scene.overlay().showControls(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT, 60)
+                .rightClick();
         scene.idle(10);
         scene.overlay().showText(70)
                 .pointAt(util.vector().blockSurface(switchPos, Direction.WEST))
@@ -483,8 +481,9 @@ public class TrainScenes {
         setSwitchState(scene, switchPos, SwitchState.REVERSE_RIGHT);
         scene.idle(70);
 
-        scene.overlay().showControls(new InputWindowElement(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT)
-                .rightClick().whileSneaking(), 20);
+        scene.overlay().showControls(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT, 20)
+                .rightClick()
+                .whileSneaking();
         scene.idle(10);
         scene.overlay().showText(70)
                 .pointAt(util.vector().blockSurface(switchPos, Direction.WEST))
@@ -494,8 +493,9 @@ public class TrainScenes {
 
         setSwitchState(scene, switchPos, SwitchState.NORMAL);
         scene.idle(25);
-        scene.overlay().showControls(new InputWindowElement(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT)
-                .rightClick().whileSneaking(), 40);
+        scene.overlay().showControls(util.vector().blockSurface(switchPos, Direction.EAST), Pointing.RIGHT, 40)
+                .rightClick()
+                .whileSneaking();
         setSwitchState(scene, switchPos, SwitchState.REVERSE_LEFT);
         scene.idle(45);
 
@@ -737,9 +737,9 @@ public class TrainScenes {
         // coupler placement
         AABB bb = new AABB(util.vector().topOf(couplerPad1Under), util.vector().topOf(couplerPad1Under)).move(0, 2 / 16f, 0);
 
-        scene.overlay()
-            .showControls(new InputWindowElement(couplerPad1TopMarker, Pointing.DOWN).rightClick()
-                .withItem(CRBlocks.TRACK_COUPLER.asStack()), 40);
+        scene.overlay().showControls(couplerPad1TopMarker, Pointing.DOWN, 40)
+                .rightClick()
+                .withItem(CRBlocks.TRACK_COUPLER.asStack());
         scene.idle(6);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb, 1);
         scene.overlay().chaseBoundingBoxOutline(PonderPalette.GREEN, bb, bb.inflate(.45f, 1 / 16f, .45f), 100);
@@ -767,9 +767,9 @@ public class TrainScenes {
                 .text("The Train Coupler lets you couple and decouple trains without disassembling them");
         scene.idle(120);
 
-        scene.overlay()
-            .showControls(new InputWindowElement(couplerTop, Pointing.DOWN).scroll()
-                .withItem(AllItems.WRENCH.asStack()), 60);
+        scene.overlay().showControls(couplerTop, Pointing.DOWN, 60)
+                .scroll()
+                .withItem(AllItems.WRENCH.asStack());
         scene.overlay().showScrollInput(couplerTop, Direction.DOWN, 60);
         scene.idle(5);
 
@@ -795,8 +795,9 @@ public class TrainScenes {
 
         // show mode cycling with a wrench
 
-        scene.overlay().showControls(new InputWindowElement(couplerTop, Pointing.DOWN).rightClick()
-                .withItem(AllItems.WRENCH.asStack()), 60);
+        scene.overlay().showControls(couplerTop, Pointing.DOWN, 60)
+                .rightClick()
+                .withItem(AllItems.WRENCH.asStack());
         scene.idle(5);
 
         scene.overlay().showText(70)

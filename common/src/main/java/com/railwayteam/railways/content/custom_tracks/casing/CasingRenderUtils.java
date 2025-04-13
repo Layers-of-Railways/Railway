@@ -58,7 +58,7 @@ public abstract class CasingRenderUtils {
     public static void clearModelCache() {
         reTexturedModels.clear();
         CRBlockPartials.registerCasingSpecs();
-        Backend.reloadWorldRenderers();
+        Minecraft.getInstance().levelRenderer.allChanged();
     }
 
     public static PartialModel reTexture(PartialModel model, SlabBlock block) {

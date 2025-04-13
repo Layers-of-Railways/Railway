@@ -296,8 +296,8 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
             // Render Bogey Block & Bogey
             minecraft.getBlockRenderer().renderSingleBlock(bogeyState, ms, bufferSource, light, overlay);
-            bogeyBlock.render(bogeyState, wheelAngle, ms, partialTicks, bufferSource, light, overlay, renderStyle, new CompoundTag());
-
+            renderStyle.render(renderSize, partialTicks, ms, bufferSource, light, overlay, wheelAngle, new CompoundTag(), false);
+            
             // End batch, pop modelViewStack & apply and pop the pose
             bufferSource.endBatch();
             modelViewStack.popPose();
