@@ -18,12 +18,15 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREntities;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -35,6 +38,8 @@ import com.simibubi.create.content.trains.schedule.destination.DestinationInstru
 import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlock;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.TrainEditPacket;
+import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -259,5 +264,58 @@ public abstract class MixinStationBlock {
         itemEntity.setDeltaMovement(Vec3.ZERO);
         te.getLevel()
             .addFreshEntity(itemEntity);
+    }
+
+//    @Inject(method = "use"
+//          , at = @At(value = "INVOKE"
+//                   , target = "Lcom/simibubi/create/content/trains/station/StationBlock;onBlockEntityUse(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Ljava/util/function/Function;)Lnet/minecraft/world/InteractionResult;"
+//                   , ordinal = 1)
+//          , cancellable = true
+//          , remap = false)
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
+    private void deployersNameTag(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
+        ItemStack itemInHand = pPlayer.getItemInHand(pHand);
+        if (!pLevel.isClientSide
+         && pPlayer instanceof DeployerFakePlayer deployerFakePlayer
+         && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe
+         && itemInHand.getItem() instanceof net.minecraft.world.item.NameTagItem)
+        {
+            cir.setReturnValue(InteractionResult.CONSUME);
+            GlobalStation station = stationBe.getStation();
+            if (station != null && station.getPresentTrain() != null) {
+                Train train = station.getPresentTrain();
+                if (itemInHand.hasTag() && itemInHand.getTag().contains("display")) {
+                    CompoundTag displayTag = itemInHand.getTag().getCompound("display");
+                    if (displayTag.contains("Name")) {
+                        // Set the train name
+                        JsonObject json = JsonParser.parseString(displayTag.getString("Name")).getAsJsonObject();
+                        String newName = json.get("text").getAsString();
+                        if (pLevel.getServer().isDedicatedServer()) {
+                            train.name = Components.literal(newName);
+                            AllPackets.getChannel()
+                                      .sendToClientsInServer(new TrainEditPacket
+                                                                .TrainEditReturnPacket(train.id, newName, train.icon.getId())
+                                                           , pLevel.getServer());
+                        }
+                        else
+                            AllPackets.getChannel()
+                                      .sendToServer(new TrainEditPacket(train.id, newName, train.icon.getId()));
+                    }
+                }
+                else {
+                    // Get the trains name and put it on the nametag
+                    JsonObject displayNameJson = new JsonObject();
+                    displayNameJson.addProperty("text", train.name.getString());
+
+                    CompoundTag tag = itemInHand.getOrCreateTag();
+                    CompoundTag displayTag = tag.contains("display", 10)
+                                           ? tag.getCompound("display")
+                                           : new CompoundTag();
+                    displayTag.putString("Name", displayNameJson.toString());
+                    tag.put("display", displayTag);
+                    itemInHand.setTag(tag);
+                }
+            }
+        }
     }
 }
