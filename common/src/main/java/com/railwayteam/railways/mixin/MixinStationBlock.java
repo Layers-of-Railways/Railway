@@ -290,6 +290,9 @@ public abstract class MixinStationBlock {
                         // Set the train name
                         JsonObject json = JsonParser.parseString(displayTag.getString("Name")).getAsJsonObject();
                         String newName = json.get("text").getAsString();
+
+                        if (train.name.getString().equals(newName)) return;
+
                         if (pLevel.getServer().isDedicatedServer()) {
                             train.name = Components.literal(newName);
                             AllPackets.getChannel()
