@@ -22,15 +22,14 @@ import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
-import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.graph.DiscoveredPath;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.gui.ModularGuiLineBuilder;
@@ -49,12 +48,13 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class RedstoneLinkInstruction extends ScheduleInstruction implements ICustomExecutableInstruction {
+public class RedstoneLinkInstruction extends ScheduleInstruction {
 
     public static WorldAttached<List<CustomRedstoneActor>> customActors =
         new WorldAttached<>($ -> new ArrayList<>());
@@ -171,21 +171,19 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
             //l.withSuffix("%");
         }, "Power");
     }
-
+    
     @Override
-    public void execute(ScheduleRuntime runtime) {
+    public @Nullable DiscoveredPath start(ScheduleRuntime runtime, Level level) {
         Train train = ((AccessorScheduleRuntime) runtime).getTrain();
-        Carriage carriage = train.carriages.get(0);
-        CarriageContraptionEntity cce = carriage.anyAvailableEntity();
-        if (cce != null) {
-            Level level = cce.level;
-            CustomRedstoneActor actor = new CustomRedstoneActor(carriage);
-            Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(level, actor);
-            customActors.get(level).add(actor);
-            //Create.REDSTONE_LINK_NETWORK_HANDLER.removeFromNetwork(level, actor);
-        }
+        Carriage carriage = train.carriages.getFirst();
+        CustomRedstoneActor actor = new CustomRedstoneActor(carriage);
+        Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(level, actor);
+        customActors.get(level).add(actor);
+        //Create.REDSTONE_LINK_NETWORK_HANDLER.removeFromNetwork(level, actor);
+
         runtime.state = ScheduleRuntime.State.PRE_TRANSIT;
         runtime.currentEntry++;
+        return null;
     }
 
     private final class CustomRedstoneActor implements IRedstoneLinkable {

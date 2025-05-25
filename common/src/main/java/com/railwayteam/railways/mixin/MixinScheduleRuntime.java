@@ -21,13 +21,10 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.schedule.WaypointDestinationInstruction;
-import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.Schedule;
 import com.simibubi.create.content.trains.schedule.ScheduleEntry;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
-import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
-import com.simibubi.create.content.trains.station.GlobalStation;
 import net.minecraft.world.level.Level;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,19 +48,6 @@ public abstract class MixinScheduleRuntime {
     @Shadow public abstract void discardSchedule();
 
     @Shadow Train train;
-
-    @Inject(method = "startCurrentInstruction", at = @At("HEAD"), cancellable = true)
-    private void startCustomInstruction(CallbackInfoReturnable<GlobalStation> cir) {
-        // https://github.com/Creators-of-Create/Create/issues/5818
-        if (schedule.entries.size() < currentEntry) return;
-
-        ScheduleEntry entry = schedule.entries.get(currentEntry);
-        ScheduleInstruction instruction = entry.instruction;
-
-        if (instruction instanceof ICustomExecutableInstruction customExecutableInstruction) {
-            cir.setReturnValue(customExecutableInstruction.executeWithStation((ScheduleRuntime) (Object) this));
-        }
-    }
 
     @Inject(method = "tickConditions", at = @At("HEAD"), cancellable = true)
     private void tickWhenNoConditions(Level level, CallbackInfo ci) {

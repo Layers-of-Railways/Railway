@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,17 +16,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin_interfaces;
+package com.railwayteam.railways.mixin.client;
 
+import dev.engine_room.flywheel.api.instance.InstancerProvider;
+import dev.engine_room.flywheel.lib.visual.AbstractVisual;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
-import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
-import com.simibubi.create.content.trains.station.GlobalStation;
-
-public interface ICustomExecutableInstruction {
-    void execute(ScheduleRuntime runtime);
-
-    default GlobalStation executeWithStation(ScheduleRuntime runtime) {
-        execute(runtime);
-        return null;
-    }
+@Mixin(AbstractVisual.class)
+public interface AccessorAbstractVisual {
+	@Invoker(value = "instancerProvider", remap = false)
+	InstancerProvider railways$getInstancerProvider();
 }

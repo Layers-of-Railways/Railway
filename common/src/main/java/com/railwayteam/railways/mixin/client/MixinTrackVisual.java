@@ -37,7 +37,6 @@ import dev.engine_room.flywheel.lib.transform.TransformStack;
 import dev.engine_room.flywheel.lib.visual.AbstractBlockEntityVisual;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
@@ -149,7 +148,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                     .rotateY(transform.ry())
                     .rotateZ(transform.rz())
                     .translate(transform.x(), transform.y(), transform.z());
-                FlatLit.relight(LevelRenderer.getLightColor(this.level, this.pos), casingInstance);
+                updateLight(casingInstance, this.level, this.pos);
                 casingData.add(Pair.of(casingInstance, this.pos));
 
                 for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
@@ -159,7 +158,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                         .rotateY(additionalTransform.ry())
                         .rotateZ(additionalTransform.rz())
                         .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z());
-                    FlatLit.relight(LevelRenderer.getLightColor(this.level, this.pos), additionalInstance);
+                    updateLight(additionalInstance, this.level, this.pos);
                     casingData.add(Pair.of(additionalInstance, this.pos.offset(Mth.floor(additionalTransform.x()), Mth.floor(additionalTransform.y()), Mth.floor(additionalTransform.z()))));
                 }
                 ms.popPose();
@@ -182,7 +181,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                                 .translate(pos.x, pos.y, pos.z)
                                 .scale(1.001f);
                             BlockPos relativePos = BlockPos.containing(this.pos.getX() + pos.x, this.pos.getY() + pos.y, this.pos.getZ() + pos.z);
-                            FlatLit.relight(LevelRenderer.getLightColor(this.level, relativePos), casingInstance);
+                            updateLight(casingInstance, this.level, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
                         }
                     } else {
@@ -200,7 +199,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                                 .translate(0, shiftDown, 0)
                                 .scale(1.001f);
                             BlockPos relativePos = segment.lightPosition.offset(this.pos);
-                            FlatLit.relight(LevelRenderer.getLightColor(this.level, relativePos), casingInstance);
+                            updateLight(casingInstance, this.level, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
 
                             TrackType trackType = bc.getMaterial().trackType;
@@ -216,7 +215,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                                             .translate(0, (i % 4) * 0.001f, 0)
                                             .translate((first ? -(61 / 64.) : -(1 / 32.)) + (inner ? 0 : (first ? 1 : -1)), shiftDown, 0);
                                         BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
-                                        FlatLit.relight(LevelRenderer.getLightColor(this.level, relativePos2), casingInstance2);
+                                        updateLight(casingInstance2, this.level, relativePos2);
                                         casingData.add(Pair.of(casingInstance2, relativePos2));
                                     }
                                 }
@@ -231,7 +230,7 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
                                         .translate(0, (i % 4) * 0.001f, 0)
                                         .translate(-0.5 + (trackType == NARROW_GAUGE ? (first ? 0.5 : -0.5) : 0), shiftDown, 0);
                                     BlockPos relativePos2 = segment.lightPosition.offset(this.pos);
-                                    FlatLit.relight(LevelRenderer.getLightColor(this.level, relativePos2), casingInstance2);
+                                    updateLight(casingInstance2, this.level, relativePos2);
                                     casingData.add(Pair.of(casingInstance2, relativePos2));
                                 }
                             }

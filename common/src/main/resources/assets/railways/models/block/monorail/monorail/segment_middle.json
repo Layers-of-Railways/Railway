@@ -1,6 +1,7 @@
 {
 	"credit": "By ToOpa",
 	"parent": "block/block",
+	"render_type": "minecraft:cutout",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "railways:block/monorail/monorail",

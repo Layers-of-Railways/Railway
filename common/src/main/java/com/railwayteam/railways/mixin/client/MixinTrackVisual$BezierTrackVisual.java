@@ -19,9 +19,6 @@
 package com.railwayteam.railways.mixin.client;
 
 
-import com.simibubi.create.content.trains.track.TrackVisual;
-import dev.engine_room.flywheel.lib.instance.TransformedInstance;
-import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,13 +26,16 @@ import com.railwayteam.railways.mixin_interfaces.IMonorailBezier;
 import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackVisual;
+import dev.engine_room.flywheel.api.instance.InstancerProvider;
+import dev.engine_room.flywheel.lib.instance.InstanceTypes;
+import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -50,12 +50,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT
 
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.trains.track.TrackVisual$BezierTrackVisual", remap = false)
-public abstract class MixinTrackVisual_BezierTrackVisual {
-
-    @Final
-    @Shadow(remap = false)
-    TrackVisual this$0;
-
+public abstract class MixinTrackVisual$BezierTrackVisual {
     @Mutable
     @Shadow(remap = false)
     @Final
@@ -72,23 +67,7 @@ public abstract class MixinTrackVisual_BezierTrackVisual {
     private TransformedInstance[] left;
 
     @Shadow(remap = false)
-    @Final
-    @Mutable
-    private BlockPos[] tiesLightPos;
-
-    @Shadow(remap = false)
-    @Final
-    @Mutable
-    private BlockPos[] leftLightPos;
-
-    @Shadow(remap = false)
-    @Final
-    @Mutable
-    private BlockPos[] rightLightPos;
-
-    @Shadow(remap = false)
     abstract void updateLight();
-
 
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getSegmentCount()I"))
     private int railways$messWithCtor(BezierConnection instance, Operation<Integer> original) {
@@ -109,32 +88,25 @@ public abstract class MixinTrackVisual_BezierTrackVisual {
             BlockPos tePosition = bc.bePositions.getFirst();
             PoseStack pose = new PoseStack();
             TransformStack.of(pose)
-                .translate(this$0.getVisualPosition())
+                .translate(trackInstance.getVisualPosition())
                 .nudge((int) bc.bePositions.getFirst()
                     .asLong());
 
-            BlockState air = Blocks.AIR.defaultBlockState();
             MonorailAngles[] monorails = ((IMonorailBezier) bc).getBakedMonorails();
-            var mat = ((AccessorInstance) this$0).getMaterialManager().cutout(RenderType.cutoutMipped())
-                .material(Materials.TRANSFORMED);
 
-            right = new ModelData[monorails.length-1];
-            ties = new ModelData[monorails.length-1];
-            left = new ModelData[monorails.length-1];
-            tiesLightPos = new BlockPos[monorails.length-1];
-            leftLightPos = new BlockPos[monorails.length-1];
-            rightLightPos = new BlockPos[monorails.length-1];
+            right = new TransformedInstance[monorails.length - 1];
+            ties = new TransformedInstance[monorails.length - 1];
+            left = new TransformedInstance[monorails.length - 1];
 
-            ModelData[] top = right;
-            ModelData[] middle = ties;
-            ModelData[] bottom = left;
-            BlockPos[] topLight = rightLightPos;
-            BlockPos[] middleLight = tiesLightPos;
-            BlockPos[] bottomLight = leftLightPos;
+            TransformedInstance[] top = right;
+            TransformedInstance[] middle = ties;
+            TransformedInstance[] bottom = left;
 
-            mat.getModel(MONORAIL_SEGMENT_TOP).createInstances(top);
-            mat.getModel(MONORAIL_SEGMENT_MIDDLE).createInstances(middle);
-            mat.getModel(MONORAIL_SEGMENT_BOTTOM).createInstances(bottom);
+            InstancerProvider provider = ((AccessorAbstractVisual) trackInstance).railways$getInstancerProvider();
+
+            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_TOP)).createInstances(top);
+            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_MIDDLE)).createInstances(middle);
+            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_BOTTOM)).createInstances(bottom);
 
             for (int i = 1; i < monorails.length; i++) {
                 MonorailAngles segment = monorails[i];
@@ -143,16 +115,14 @@ public abstract class MixinTrackVisual_BezierTrackVisual {
                 PoseStack.Pose beamTransform = segment.beam;
 
                 middle[modelIndex].setTransform(pose)
-                    .mulPose(beamTransform.pose())
-                    .mulNormal(beamTransform.normal());
-                middleLight[modelIndex] = segment.lightPosition.offset(tePosition);
+                    .mul(beamTransform)
+                    .setChanged();
 
                 for (boolean isTop : Iterate.trueAndFalse) {
                     PoseStack.Pose beamCapTransform = segment.beamCaps.get(isTop);
                     (isTop ? top : bottom)[modelIndex].setTransform(pose)
-                        .mulPose(beamCapTransform.pose())
-                        .mulNormal(beamCapTransform.normal());
-                    (isTop ? topLight : bottomLight)[modelIndex] = segment.lightPosition.offset(tePosition);
+                        .mul(beamCapTransform)
+                        .setChanged();
                 }
             }
 
