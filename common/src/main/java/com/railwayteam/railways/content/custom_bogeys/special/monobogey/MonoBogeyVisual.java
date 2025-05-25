@@ -50,15 +50,12 @@ public class MonoBogeyVisual implements BogeyVisual {
                 .instancer(InstanceTypes.TRANSFORMED, Models.partial(MONOBOGEY_FRAME))
                 .createInstance();
 
-        var wheelInstancer = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(MONOBOGEY_WHEEL));
-        var shaftInstancer = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT));
-
-        for (int i = 0; i <= 3; i++) {
-            wheels[i] = wheelInstancer.createInstance();
-            shafts[i] = shaftInstancer.createInstance();
-        }
+        ctx.instancerProvider()
+                .instancer(InstanceTypes.TRANSFORMED, Models.partial(MONOBOGEY_WHEEL))
+                .createInstances(wheels);
+        ctx.instancerProvider()
+                .instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT))
+                .createInstances(shafts);
     }
 
     @Override
