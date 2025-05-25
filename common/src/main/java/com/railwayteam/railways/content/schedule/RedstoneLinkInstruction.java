@@ -27,13 +27,17 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler;
+import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.content.trains.schedule.destination.ScheduleInstruction;
 import com.simibubi.create.foundation.gui.ModularGuiLineBuilder;
-import com.simibubi.create.foundation.utility.*;
+import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.data.WorldAttached;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -68,7 +72,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction implements ICus
         }
     }
 
-    public Couple<RedstoneLinkNetworkHandler.Frequency> freq;
+    public Couple<Frequency> freq;
 
     public RedstoneLinkInstruction() {
         freq = Couple.create(() -> RedstoneLinkNetworkHandler.Frequency.EMPTY);

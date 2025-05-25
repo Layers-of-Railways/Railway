@@ -25,25 +25,21 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.time.Clock;
 
-public class RuntimeFakePartialModel extends PartialModel {
-
-  public RuntimeFakePartialModel(ResourceLocation modelLocation) {
-    super(modelLocation);
-  }
-
+public class RuntimeFakePartialModel {
   private static ResourceLocation runtime_ify(ResourceLocation loc, BakedModel model) {
     return new ResourceLocation(loc.getNamespace(), "runtime/" + Clock.systemUTC().millis() + "/" + model.hashCode() + "/" + loc.getPath());
   }
 
-  public static RuntimeFakePartialModel make(ResourceLocation loc, BakedModel bakedModel) {
-    boolean tooLate = AccessorPartialModel.getTooLate();
-    AccessorPartialModel.setTooLate(false);
+  public static PartialModel make(ResourceLocation loc, BakedModel bakedModel) {
+    boolean tooLate = AccessorPartialModel.railways$getPopulateOnInit();
+    AccessorPartialModel.railways$setPopulateOnInit(false);
 
-    RuntimeFakePartialModel partialModel = new RuntimeFakePartialModel(runtime_ify(loc, bakedModel));
-    partialModel.bakedModel = bakedModel;
+    ResourceLocation id = runtime_ify(loc, bakedModel);
+    PartialModel partialModel = PartialModel.of(id);
+    ((AccessorPartialModel) (Object) partialModel).railways$setBakedModel(bakedModel);
 
-    AccessorPartialModel.getALL().remove(partialModel);
-    AccessorPartialModel.setTooLate(tooLate);
+    AccessorPartialModel.railways$getALL().remove(id);
+    AccessorPartialModel.railways$setPopulateOnInit(tooLate);
 
     return partialModel;
   }

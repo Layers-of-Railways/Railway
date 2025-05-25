@@ -35,7 +35,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_L
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_PISTONS;
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_COMICALLY_LARGE_WHEELS;
 
-public class WideComicallyLargeScotchYokeBogeyRenderer extends BogeyRenderer {
+public class WideComicallyLargeScotchYokeBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, WIDE_COMICALLY_LARGE_FRAME, WIDE_COMICALLY_LARGE_WHEELS,

@@ -30,7 +30,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_FRAME;
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_WHEELS;
 
-public class NarrowSmallBogeyRenderer extends BogeyRenderer {
+public class NarrowSmallBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, NARROW_FRAME);

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,11 +19,29 @@
 package com.railwayteam.railways.content.custom_bogeys.special.invisible;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import com.simibubi.create.content.trains.bogey.BogeyVisual;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.Nullable;
 
-public class InvisibleBogeyRenderer implements BogeyRenderer {
+import java.util.function.Consumer;
+
+public class InvisibleBogeyVisual implements BogeyVisual {
+    public InvisibleBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {}
+
     @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {}
+    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {}
+
+    @Override
+    public void hide() {}
+
+    @Override
+    public void updateLight(int packedLight) {}
+
+    @Override
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {}
+
+    @Override
+    public void delete() {}
 }

@@ -27,6 +27,12 @@ import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.BezierConnection.SegmentAngles;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
+import dev.engine_room.flywheel.api.instance.InstancerProvider;
+import dev.engine_room.flywheel.lib.instance.InstanceTypes;
+import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.model.ModelUtil;
+import dev.engine_room.flywheel.lib.model.SimpleModel;
+import dev.engine_room.flywheel.lib.model.baked.BakedModelBuilder;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.data.Iterate;
@@ -34,6 +40,7 @@ import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -176,8 +183,12 @@ public abstract class CasingRenderUtils {
         return positions.stream().toList();
     }
 
-    public static ModelData makeCasingInstance(PartialModel baseModel, SlabBlock slabBlock, Material<ModelData> mat) {
+    public static TransformedInstance makeCasingInstance(PartialModel baseModel, SlabBlock slabBlock, InstancerProvider instancerProvider) {
         PartialModel texturedPartial = reTexture(baseModel, slabBlock);
-        return mat.getModel(texturedPartial, slabBlock.defaultBlockState()).createInstance();
+        SimpleModel model = BakedModelBuilder.create(texturedPartial.get())
+                .materialFunc((renderType, aBoolean) -> ModelUtil.getMaterial(RenderType.cutoutMipped(), aBoolean))
+                .build();
+        return instancerProvider.instancer(InstanceTypes.TRANSFORMED, model)
+                .createInstance();
     }
 }

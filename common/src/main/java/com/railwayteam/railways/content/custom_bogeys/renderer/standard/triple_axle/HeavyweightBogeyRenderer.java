@@ -32,7 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.HEAVYWEIGHT_FRAME;
 import static com.railwayteam.railways.registry.CRBlockPartials.LONG_SHAFTED_WHEELS;
 
-public class HeavyweightBogeyRenderer extends BogeyRenderer {
+public class HeavyweightBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, LONG_SHAFTED_WHEELS, 3);

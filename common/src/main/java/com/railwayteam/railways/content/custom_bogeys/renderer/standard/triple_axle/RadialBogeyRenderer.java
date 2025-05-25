@@ -28,7 +28,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.CR_BOGEY_WHEELS;
 import static com.railwayteam.railways.registry.CRBlockPartials.RADIAL_FRAME;
 
-public class RadialBogeyRenderer extends BogeyRenderer {
+public class RadialBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, CR_BOGEY_WHEELS, 3);

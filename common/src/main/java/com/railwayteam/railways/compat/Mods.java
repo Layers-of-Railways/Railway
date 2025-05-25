@@ -19,7 +19,7 @@
 package com.railwayteam.railways.compat;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.createmod.catnip.utility.lang.Lang;
+import net.createmod.catnip.lang.Lang;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

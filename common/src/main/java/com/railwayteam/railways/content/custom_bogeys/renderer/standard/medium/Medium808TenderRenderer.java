@@ -30,7 +30,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class Medium808TenderRenderer extends BogeyRenderer {
+public class Medium808TenderRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 4);

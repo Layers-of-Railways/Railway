@@ -32,7 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.CR_WIDE_BOGEY_WHEELS;
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_DEFAULT_FRAME;
 
-public class WideDefaultBogeyRenderer extends BogeyRenderer {
+public class WideDefaultBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, CR_WIDE_BOGEY_WHEELS, 2);

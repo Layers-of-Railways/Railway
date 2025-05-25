@@ -31,7 +31,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_QUADRUPLE_WHEEL_FRAME;
 import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_SHARED_WHEELS;
 
-public class MediumQuadrupleWheelRenderer extends BogeyRenderer {
+public class MediumQuadrupleWheelRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 4);

@@ -32,7 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.BLOMBERG_FRAME;
 
-public class BlombergBogeyRenderer extends BogeyRenderer {
+public class BlombergBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 2);

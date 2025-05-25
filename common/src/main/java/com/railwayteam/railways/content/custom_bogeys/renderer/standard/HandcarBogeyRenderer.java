@@ -35,7 +35,7 @@ import net.minecraft.world.phys.Vec3;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class HandcarBogeyRenderer extends BogeyRenderer {
+public class HandcarBogeyRenderer implements BogeyRenderer {
     private CarriageBogey carriageBogey;
 
     @Override

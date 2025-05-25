@@ -28,7 +28,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class CoilspringBogeyRenderer extends BogeyRenderer {
+public class CoilspringBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS);

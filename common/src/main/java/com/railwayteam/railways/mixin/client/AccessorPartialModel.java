@@ -19,25 +19,30 @@
 package com.railwayteam.railways.mixin.client;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 @Mixin(PartialModel.class)
 public interface AccessorPartialModel {
-	@Accessor(remap = false)
-	static List<PartialModel> getALL() {
+	@Accessor(value = "ALL", remap = false)
+	static ConcurrentMap<ResourceLocation, PartialModel> railways$getALL() {
 		throw new AssertionError();
 	}
 
-	@Accessor(remap = false)
-	static void setTooLate(boolean tooLate) {
+	@Accessor(value = "populateOnInit", remap = false)
+	static void railways$setPopulateOnInit(boolean tooLate) {
 		throw new AssertionError();
 	}
 
-	@Accessor(remap = false)
-	static boolean getTooLate() {
+	@Accessor(value = "populateOnInit", remap = false)
+	static boolean railways$getPopulateOnInit() {
 		throw new AssertionError();
 	}
+
+	@Accessor(value = "bakedModel", remap = false)
+	void railways$setBakedModel(BakedModel bakedModel);
 }

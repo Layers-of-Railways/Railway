@@ -32,7 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class LargeCreateStyled080Renderer extends BogeyRenderer {
+public class LargeCreateStyled080Renderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager,  LARGE_CREATE_STYLED_0_8_0_FRAME, LARGE_CREATE_STYLED_0_8_0_PISTON);

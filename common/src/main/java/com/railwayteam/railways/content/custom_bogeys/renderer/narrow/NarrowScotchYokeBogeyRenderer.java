@@ -32,7 +32,7 @@ import net.minecraft.nbt.CompoundTag;
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_SCOTCH_WHEEL_PINS;
 
-public class NarrowScotchYokeBogeyRenderer extends BogeyRenderer {
+public class NarrowScotchYokeBogeyRenderer implements BogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, NARROW_SCOTCH_FRAME, NARROW_SCOTCH_WHEELS,
