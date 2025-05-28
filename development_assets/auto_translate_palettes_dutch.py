@@ -71,7 +71,7 @@ def join_with_title_case(*parts: str | tuple[str, bool]) -> str:
 
 def mk_boiler(wrapping: str | None) -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], wrapping_names.get(wrapping, ""), ("bekleden", wrapping is not None), "lokometaalen stoommachine")
+        return join_with_title_case(colors[color], wrapping_names.get(wrapping, ""), ("bekleden", wrapping is not None), "lokometaalen stoomketel")
     return f
 
 
