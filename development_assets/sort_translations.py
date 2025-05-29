@@ -28,7 +28,7 @@ def sort_file(lang: str):
 
 if __name__ == "__main__":
     languages = ["de_at", "de_de", "es_es", "fr_fr", "ja_jp", "ko_kr", "nl_nl", "pl_pl", "zh_cn", "da_dk", "is_is",
-                 "no_no", "sv_se", "ru_ru", "uk_ua", "en_gb", "tr_tr", "ro_ro", "th_th"]
+                 "no_no", "sv_se", "ru_ru", "uk_ua", "en_gb", "tr_tr", "ro_ro", "th_th", "es_mx"]
 
     for language in languages:
         if os.path.exists(f"../common/src/main/resources/assets/railways/lang/{language}.json"):
