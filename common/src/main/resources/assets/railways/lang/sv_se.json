@@ -1,6 +1,6 @@
 {
   "block.create.railway_casing.tooltip": "TÅGHÖLJE",
-  "block.create.railway_casing.tooltip.summary": "Tryck på knappen för att _Öppna bogeymeny_ (standard _ALT_) för att välja vilken _bogeystil_ att placera.",
+  "block.create.railway_casing.tooltip.summary": "Tryck på knappen för att _Öppna bogeymeny_ (standard _ALT_) för att välja _bogeystil_.",
   "block.create.track_station.tooltip": "TÅGSTATION",
   "block.create.track_station.tooltip.summary": "En _utrullare_ som håller i en _skiftnyckel_ kan automatiskt montera och demontera ett tåg genom att slå en station. _Tips_: trattar kan användas för att ge en skiftnyckel till en utrullare.",
   "block.railways.conductor_vent": "Ventilationsblock",
