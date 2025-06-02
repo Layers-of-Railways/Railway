@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,6 +20,7 @@ package com.railwayteam.railways.base.data.lang;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.foundation.utility.FilesHelper;
@@ -34,6 +35,7 @@ public class CRLangGen {
 
         provideDefaultLang("interface", langConsumer);
         provideDefaultLang("tooltips", langConsumer);
+        CRAdvancements.provideLang(langConsumer);
         CRTags.provideLangEntries(langConsumer);
         CRPalettes.provideLangEntries(langConsumer);
     }

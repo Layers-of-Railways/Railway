@@ -18,8 +18,11 @@
 
 package com.railwayteam.railways.content.palettes;
 
+import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
+import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.DyeColor;
@@ -34,38 +37,38 @@ import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
 public enum PalettesColor implements StringRepresentable {
-    NETHERITE(  28, "netherite",    MapColor.COLOR_BLACK,       () -> () -> Blocks.NETHERITE_BLOCK),
-    BROWN(      12, "brown",        MapColor.COLOR_BROWN,       AllPaletteStoneTypes.SCORIA),
-    MAROON(     16, "maroon",       MapColor.COLOR_RED),
-    RED(        14, "red",          MapColor.COLOR_RED,         AllPaletteStoneTypes.CRIMSITE),
-    VERMILION(  29, "vermilion",    MapColor.COLOR_RED),
-    ORANGE(      1, "orange",       MapColor.COLOR_ORANGE),
-    GRANITE(    17, "granite",      MapColor.COLOR_ORANGE,      AllPaletteStoneTypes.GRANITE),
-    DRIPSTONE(  18, "dripstone",    MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.DRIPSTONE),
-    OCHRUM(     19, "ochrum",       MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.OCHRUM),
-    YELLOW(      4, "yellow",       MapColor.COLOR_YELLOW),
-    CHARTREUSE( 20, "chartreuse",   MapColor.COLOR_LIGHT_GREEN),
-    OLIVE_GREEN(30, "olive_green",  MapColor.COLOR_LIGHT_GREEN),
-    LIME(        5, "lime",         MapColor.COLOR_LIGHT_GREEN),
-    GREEN(      13, "green",        MapColor.COLOR_GREEN),
-    PINE_GREEN( 21, "pine_green",   MapColor.COLOR_GREEN),
-    CYAN(        9, "cyan",         MapColor.COLOR_CYAN,        AllPaletteStoneTypes.VERIDIUM),
-    SEA_GREEN(  31, "sea_green",    MapColor.COLOR_CYAN),
-    TURQUOISE(  22, "turquoise",    MapColor.COLOR_CYAN),
-    LIGHT_BLUE(  3, "light_blue",   MapColor.COLOR_LIGHT_BLUE),
-    BLUE(       11, "blue",         MapColor.COLOR_BLUE,        AllPaletteStoneTypes.ASURINE),
-    ROYAL_BLUE( 23, "royal_blue",   MapColor.COLOR_BLUE),
-    PURPLE(     10, "purple",       MapColor.COLOR_PURPLE),
-    MAGENTA(     2, "magenta",      MapColor.COLOR_MAGENTA),
-    PINK(        6, "pink",         MapColor.COLOR_PINK),
-    WHITE(       0, "white",        MapColor.SNOW,              AllPaletteStoneTypes.CALCITE),
-    DIORITE(    24, "diorite",      MapColor.SNOW,              AllPaletteStoneTypes.DIORITE),
-    LIMESTONE(  25, "limestone",    MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.LIMESTONE),
-    LIGHT_GRAY(  8, "light_gray",   MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.ANDESITE),
-    TUFF(       26, "tuff",         MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.TUFF),
-    GRAY(        7, "gray",         MapColor.COLOR_GRAY,        AllPaletteStoneTypes.DEEPSLATE),
-    SCORCHIA(   27, "scorchia",     MapColor.COLOR_GRAY,        AllPaletteStoneTypes.SCORCHIA),
-    BLACK(      15, "black",        MapColor.COLOR_BLACK),
+    NETHERITE(  28, "netherite",    0x4e4449, MapColor.COLOR_BLACK,       () -> () -> Blocks.NETHERITE_BLOCK),
+    BROWN(      12, "brown",        0x564239, MapColor.COLOR_BROWN,       AllPaletteStoneTypes.SCORIA),
+    MAROON(     16, "maroon",       0x732232, MapColor.COLOR_RED),
+    RED(        14, "red",          0x953340, MapColor.COLOR_RED,         AllPaletteStoneTypes.CRIMSITE),
+    VERMILION(  29, "vermilion",    0xad4847, MapColor.COLOR_RED),
+    ORANGE(      1, "orange",       0xc75e4e, MapColor.COLOR_ORANGE),
+    GRANITE(    17, "granite",      0xa56d54, MapColor.COLOR_ORANGE,      AllPaletteStoneTypes.GRANITE),
+    DRIPSTONE(  18, "dripstone",    0x95735c, MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.DRIPSTONE),
+    OCHRUM(     19, "ochrum",       0xaf8c54, MapColor.COLOR_YELLOW,      AllPaletteStoneTypes.OCHRUM),
+    YELLOW(      4, "yellow",       0xd39a4a, MapColor.COLOR_YELLOW),
+    CHARTREUSE( 20, "chartreuse",   0x7faf4a, MapColor.COLOR_LIGHT_GREEN),
+    OLIVE_GREEN(30, "olive_green",  0x49733a, MapColor.COLOR_LIGHT_GREEN),
+    LIME(        5, "lime",         0x3e882a, MapColor.COLOR_LIGHT_GREEN),
+    GREEN(      13, "green",        0x1a7537, MapColor.COLOR_GREEN),
+    PINE_GREEN( 21, "pine_green",   0x0e5331, MapColor.COLOR_GREEN),
+    CYAN(        9, "cyan",         0x1b6557, MapColor.COLOR_CYAN,        AllPaletteStoneTypes.VERIDIUM),
+    SEA_GREEN(  31, "sea_green",    0x2b5e65, MapColor.COLOR_CYAN),
+    TURQUOISE(  22, "turquoise",    0x19827f, MapColor.COLOR_CYAN),
+    LIGHT_BLUE(  3, "light_blue",   0x50a5c0, MapColor.COLOR_LIGHT_BLUE),
+    BLUE(       11, "blue",         0x43607e, MapColor.COLOR_BLUE,        AllPaletteStoneTypes.ASURINE),
+    ROYAL_BLUE( 23, "royal_blue",   0x373c69, MapColor.COLOR_BLUE),
+    PURPLE(     10, "purple",       0x673f95, MapColor.COLOR_PURPLE),
+    MAGENTA(     2, "magenta",      0xac3673, MapColor.COLOR_MAGENTA),
+    PINK(        6, "pink",         0xdd6995, MapColor.COLOR_PINK),
+    WHITE(       0, "white",        0xe6e6ee, MapColor.SNOW,              AllPaletteStoneTypes.CALCITE),
+    DIORITE(    24, "diorite",      0xbfc0c4, MapColor.SNOW,              AllPaletteStoneTypes.DIORITE),
+    LIMESTONE(  25, "limestone",    0xd1ccbe, MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.LIMESTONE),
+    LIGHT_GRAY(  8, "light_gray",   0x979796, MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.ANDESITE),
+    TUFF(       26, "tuff",         0x767670, MapColor.COLOR_LIGHT_GRAY,  AllPaletteStoneTypes.TUFF),
+    GRAY(        7, "gray",         0x545455, MapColor.COLOR_GRAY,        AllPaletteStoneTypes.DEEPSLATE),
+    SCORCHIA(   27, "scorchia",     0x28302f, MapColor.COLOR_GRAY,        AllPaletteStoneTypes.SCORCHIA),
+    BLACK(      15, "black",        0x282930, MapColor.COLOR_BLACK),
     ;
     private static final IntFunction<PalettesColor> BY_ID = ByIdMap.continuous(PalettesColor::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     @SuppressWarnings("deprecation")
@@ -75,20 +78,22 @@ public enum PalettesColor implements StringRepresentable {
     private final int id;
     /** guaranteed to match the appropriate {@link DyeColor}, if such exists */
     private final @NotNull String name;
+    private final int diffuseColor;
     private final @NotNull MapColor mapColor;
     private final @Nullable Supplier<Supplier<Block>> associatedBlock;
 
-    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor) {
-        this(id, name, mapColor, (Supplier<Supplier<Block>>) null);
+    PalettesColor(int id, @NotNull String name, int diffuseColor, @NotNull MapColor mapColor) {
+        this(id, name, diffuseColor, mapColor, (Supplier<Supplier<Block>>) null);
     }
 
-    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor, @NotNull AllPaletteStoneTypes stoneType) {
-        this(id, name, mapColor, () -> () -> stoneType.getVariants().registeredBlocks.get(5).get()); // pillar
+    PalettesColor(int id, @NotNull String name, int diffuseColor, @NotNull MapColor mapColor, @NotNull AllPaletteStoneTypes stoneType) {
+        this(id, name, diffuseColor, mapColor, () -> () -> stoneType.getVariants().registeredBlocks.get(5).get()); // pillar
     }
 
-    PalettesColor(int id, @NotNull String name, @NotNull MapColor mapColor, @Nullable Supplier<Supplier<Block>> associatedBlock) {
+    PalettesColor(int id, @NotNull String name, int diffuseColor, @NotNull MapColor mapColor, @Nullable Supplier<Supplier<Block>> associatedBlock) {
         this.id = id;
         this.name = name;
+        this.diffuseColor = diffuseColor;
         this.mapColor = mapColor;
         this.associatedBlock = associatedBlock;
     }
@@ -120,6 +125,10 @@ public enum PalettesColor implements StringRepresentable {
         return name;
     }
 
+    public int getDiffuseColor() {
+        return diffuseColor;
+    }
+
     public @NotNull MapColor getMapColor() {
         return mapColor;
     }
@@ -137,6 +146,14 @@ public enum PalettesColor implements StringRepresentable {
     @Override
     public @NotNull String getSerializedName() {
         return name;
+    }
+
+    public @NotNull String getPaintNameId() {
+        return PaintFluid.LANG_PREFIX + getSerializedName();
+    }
+
+    public @NotNull MutableComponent getPaintName() {
+        return Components.translatable(getPaintNameId());
     }
 
     @SuppressWarnings("unused")

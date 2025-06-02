@@ -20,25 +20,59 @@ package com.railwayteam.railways.base;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Iterator;
+import java.util.*;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 
 public class EnumFilledList<E extends Enum<E>, T> implements Iterable<T> {
-    private final Class<E> clazz;
-    private final T[] values;
+    protected final Class<E> clazz;
+    protected final T[] values;
+    protected final int[] ordinal_to_idx;
 
     @SuppressWarnings("unchecked")
-    public EnumFilledList(Class<E> clazz, Function<E, T> filler) {
+    public EnumFilledList(Class<E> clazz, Function<@NotNull E, T> filler) {
         this.clazz = clazz;
-        E[] enumConstants = clazz.getEnumConstants();
-        values = (T[]) new Object[enumConstants.length];
-        for (int i = 0; i < enumConstants.length; i++) {
-            values[i] = filler.apply(enumConstants[i]);
+        E[] enumVals = clazz.getEnumConstants();
+
+        ordinal_to_idx = new int[enumVals.length];
+        int idx = 0;
+        for (E value : enumVals) {
+            if (filter(value)) {
+                ordinal_to_idx[value.ordinal()] = idx++;
+            } else {
+                ordinal_to_idx[value.ordinal()] = -1;
+            }
+        }
+        values = (T[]) new Object[idx];
+
+        for (E value : enumVals) {
+            int i = ordinal_to_idx[value.ordinal()];
+            if (i != -1) {
+                values[i] = filler.apply(value);
+            }
         }
     }
 
+    protected boolean filter(E value) {
+        return true;
+    }
+
     public T get(E e) {
-        return values[e.ordinal()];
+        int idx = ordinal_to_idx[e.ordinal()];
+        if (idx == -1) {
+            throw new NoSuchElementException();
+        }
+        return values[idx];
+    }
+
+    public T[] toArray() {
+        return Arrays.copyOf(values, values.length);
+    }
+
+    public T[] toArray(IntFunction<T[]> newType) {
+        var array = newType.apply(values.length);
+        System.arraycopy(values, 0, array, 0, values.length);
+        return array;
     }
 
     @Override
@@ -51,7 +85,7 @@ public class EnumFilledList<E extends Enum<E>, T> implements Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return index < clazz.getEnumConstants().length;
+            return index + 1 < clazz.getEnumConstants().length;
         }
 
         @Override

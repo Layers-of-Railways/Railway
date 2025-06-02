@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2024 The Railways Team
+ * Copyright (c) 2024-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,7 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.conductor.ConductorCapItem;
+import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.multiloader.Env;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -173,6 +174,10 @@ public class CRCreativeModeTabs {
                 if (item.color != DyeColor.RED) {
                     visibilities.put(item, TabVisibility.SEARCH_TAB_ONLY);
                 }
+            }
+
+            for (ItemEntry<? extends PaintPitcherItem> entry : CRItems.PAINT_PITCHERS) {
+                visibilities.put(entry.get(), TabVisibility.SEARCH_TAB_ONLY);
             }
 
             return item -> {

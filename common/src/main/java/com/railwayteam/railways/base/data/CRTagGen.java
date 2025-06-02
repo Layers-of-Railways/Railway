@@ -59,7 +59,7 @@ public class CRTagGen {
 
 		prov.addTag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
 
-		// VALIDATE
+		CommonTags.COLORLESS_GLASS_B.generateCommon(prov);
 
 		for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
 			if (tag.alwaysDatagen) {
@@ -81,6 +81,7 @@ public class CRTagGen {
 		CommonTags.COPPER_INGOTS.generateCommon(prov);
 		CommonTags.BRASS_INGOTS.generateCommon(prov);
 		CommonTags.IRON_INGOTS.generateCommon(prov);
+		CommonTags.COLORLESS_GLASS_I.generateCommon(prov);
 		CommonTags.STRING.generateCommon(prov)
 			.generateBoth(prov, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
 		CommonTags.IRON_PLATES.generateCommon(prov);

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,6 @@ import com.railwayteam.railways.fabric.events.CommonEventsFabric;
 import com.railwayteam.railways.registry.fabric.CRParticleTypesParticleEntryImpl;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.CommandSourceStack;
 
 import java.util.function.BiConsumer;
@@ -41,6 +40,7 @@ public class RailwaysImpl implements ModInitializer {
 
 	public static void finalizeRegistrate() {
 		Railways.registrate().register();
+		Railways.postRegistrationInit();
 	}
 
 	public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {

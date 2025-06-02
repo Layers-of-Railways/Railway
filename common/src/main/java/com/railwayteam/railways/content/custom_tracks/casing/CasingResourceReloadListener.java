@@ -23,7 +23,7 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import org.jetbrains.annotations.NotNull;
 
 public class CasingResourceReloadListener implements ResourceManagerReloadListener {
-    public static CasingResourceReloadListener INSTANCE = new CasingResourceReloadListener();
+    public static final CasingResourceReloadListener INSTANCE = new CasingResourceReloadListener();
     
     @Override
     public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {

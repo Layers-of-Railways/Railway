@@ -18,13 +18,7 @@
 
 package com.railwayteam.railways.base.data.compat.emi;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
-import com.railwayteam.railways.content.palettes.PalettesColor;
-import com.railwayteam.railways.registry.CRPalettes;
-import com.railwayteam.railways.registry.CRPalettes.CycleGroupCategory;
-import com.railwayteam.railways.registry.CRPalettes.Styles;
-import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -44,7 +38,6 @@ public class EmiRecipeDefaultsGen implements DataProvider {
     public static final List<ResourceLocation> DEFAULT_RECIPES = new ArrayList<>();
     public static final Map<TagKey<Item>, ResourceLocation> TAG_DEFAULTS = new LinkedHashMap<>(); // preserve insertion order
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final PackOutput packOutput;
 
     public EmiRecipeDefaultsGen(PackOutput packOutput) {
@@ -67,17 +60,7 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         JsonObject tags = new JsonObject();
 
         DEFAULT_RECIPES.forEach(loc -> added.add(loc.toString()));
-        Map<CycleGroupCategory, Styles> DEFAULTS = ImmutableMap.of(
-            CycleGroupCategory.BASE, Styles.RIVETED,
-            CycleGroupCategory.WRAPPED_BRASS, Styles.BRASS_WRAPPED_SLASHED,
-            CycleGroupCategory.WRAPPED_COPPER, Styles.COPPER_WRAPPED_SLASHED,
-            CycleGroupCategory.WRAPPED_IRON, Styles.IRON_WRAPPED_SLASHED
-        );
-        for (PalettesColor color : PalettesColor.values()) {
-            for (Map.Entry<CycleGroupCategory, Styles> entry : DEFAULTS.entrySet()) {
-                TAG_DEFAULTS.put(CRPalettes.CYCLE_GROUPS.get(Pair.of(color, entry.getKey())), entry.getValue().get(color).getId());
-            }
-        }
+
         TAG_DEFAULTS.forEach((tag, itemLoc) -> {
             String tagString = "#item:" + tag.location();
             String itemString = "item:" + itemLoc;

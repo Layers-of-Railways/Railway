@@ -22,15 +22,20 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockStyle;
 import com.railwayteam.railways.content.buffer.single_deco.LinkPinBlock;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.multiloader.fluid.MultiloaderFluidStack;
 import com.railwayteam.railways.registry.CRBlocks;
+import com.railwayteam.railways.registry.CRFluids;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.foundation.fluid.FluidIngredient;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -194,9 +199,12 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
             return CommonTags.DYES.get(color).tag;
         }
 
-        // fixme actual tags
-        public static TagKey<Item> palettesDye(@NotNull PalettesColor color) {
-            return CommonTags.DYES.get(color.toDyeColor(DyeColor.BLACK)).tag;
+        public static FluidIngredient palettesPaint(@NotNull PalettesColor color, long amount) {
+            return MultiloaderFluidStack.create(
+                CRFluids.PAINT.get(),
+                amount,
+                PaintFluid.setColor(new CompoundTag(), color)
+            ).asFluidIngredient();
         }
 
         public static TagKey<Item> brassIngot() {
@@ -241,6 +249,22 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
         public static ItemLike chute() {
             return AllBlocks.CHUTE.get();
+        }
+
+        public static ItemLike flywheel() {
+            return AllBlocks.FLYWHEEL.get();
+        }
+
+        public static TagKey<Item> woodenDoors() {
+            return ItemTags.WOODEN_DOORS;
+        }
+
+        public static TagKey<Item> woodenTrapdoors() {
+            return ItemTags.WOODEN_TRAPDOORS;
+        }
+
+        public static TagKey<Item> colorlessGlass() {
+            return CommonTags.COLORLESS_GLASS_I.tag;
         }
     }
 }

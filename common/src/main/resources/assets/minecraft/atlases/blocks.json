@@ -12,6 +12,14 @@
     {
       "type": "single",
       "resource": "railways:entity/conductor"
+    },
+    {
+      "type": "single",
+      "resource": "railways:fluid/paint_flow"
+    },
+    {
+      "type": "single",
+      "resource": "railways:fluid/paint_still"
     }
   ]
 }

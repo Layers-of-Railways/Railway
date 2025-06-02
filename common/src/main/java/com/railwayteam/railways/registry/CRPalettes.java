@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -33,8 +33,10 @@ import com.railwayteam.railways.content.palettes.ct.PalettesPillarCTBehaviour;
 import com.railwayteam.railways.content.palettes.doors.HingedDoorBlock;
 import com.railwayteam.railways.content.palettes.doors.PalettesSlidingDoorBlock;
 import com.railwayteam.railways.content.palettes.hazard_stripes.HazardStripesBlock;
+import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
+import com.railwayteam.railways.util.BlockStateUtils;
 import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.behaviour.TrapdoorMovingInteraction;
@@ -61,6 +63,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -69,6 +72,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static com.railwayteam.railways.util.TextUtils.*;
 import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
@@ -113,34 +117,49 @@ public class CRPalettes {
         for (Styles style : Styles.values()) {
             consumer.accept("tag.item.railways.palettes.dye_groups."+style.name().toLowerCase(Locale.ROOT), style.dyeGroupLang);
         }
+
+        for (PalettesColor color : PalettesColor.values()) {
+            if (color.isNetherite()) continue;
+            consumer.accept(
+                PaintFluid.LANG_PREFIX + color.getSerializedName(),
+                snakeCaseToTitleCase(color.getName()) + " Paint"
+            );
+        }
     }
 
     public static @Nullable Pair<Styles, PalettesColor> getStyleForBlock(Block block) {
         return REVERSE_LOOKUP.get(block);
     }
 
+    public static @Nullable BlockState getPaintedState(BlockState state, PalettesColor color) {
+        Pair<Styles, PalettesColor> info = getStyleForBlock(state.getBlock());
+        if (info == null || info.getSecond() == color) return null;
+        return BlockStateUtils.blockWithProperties(info.getFirst().get(color).get(), state);
+    }
+
     public enum Styles {
-        SLASHED(CRPalettes::slashedLocometal, "Slashed Locometal"),
         RIVETED(CRPalettes::rivetedLocometal, "Riveted Locometal"),
+        SLASHED(CRPalettes::slashedLocometal, "Slashed Locometal"),
+        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, "Brass Wrapped Locometal", CycleGroupCategory.WRAPPED_BRASS),
+        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, "Copper Wrapped Locometal", CycleGroupCategory.WRAPPED_COPPER),
+        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, "Iron Wrapped Locometal", CycleGroupCategory.WRAPPED_IRON),
         VENT(CRPalettes::locometalVent, "Locometal Vents"),
+        FLAT_RIVETED(CRPalettes::flatRivetedLocometal, "Flat Riveted Locometal"),
+        FLAT_SLASHED(CRPalettes::flatSlashedLocometal, "Flat Slashed Locometal"),
+        PLATED(CRPalettes::platedLocometal, "Plated Locometal"),
         PILLAR(CRPalettes::locometalPillar, "Locometal Pillars"),
         SMOKEBOX(CRPalettes.locometalSmokebox(null),"Locometal Smokeboxes"),
         BRASS_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.BRASS), "Brass Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_BRASS),
         COPPER_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.COPPER), "Copper Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_COPPER),
         IRON_WRAPPED_SMOKEBOX(CRPalettes.locometalSmokebox(Wrapping.IRON), "Iron Wrapped Locometal Smokeboxes", CycleGroupCategory.WRAPPED_IRON),
-        PLATED(CRPalettes::platedLocometal, "Plated Locometal"),
-        FLAT_SLASHED(CRPalettes::flatSlashedLocometal, "Flat Slashed Locometal"),
-        FLAT_RIVETED(CRPalettes::flatRivetedLocometal, "Flat Riveted Locometal"),
-        BRASS_WRAPPED_SLASHED(CRPalettes::brassWrappedLocometal, "Brass Wrapped Locometal", CycleGroupCategory.WRAPPED_BRASS),
-        COPPER_WRAPPED_SLASHED(CRPalettes::copperWrappedLocometal, "Copper Wrapped Locometal", CycleGroupCategory.WRAPPED_COPPER),
-        IRON_WRAPPED_SLASHED(CRPalettes::ironWrappedLocometal, "Iron Wrapped Locometal", CycleGroupCategory.WRAPPED_IRON),
         BOILER(CRPalettes::locometalBoiler, "Locometal Boilers", null),
         BRASS_WRAPPED_BOILER(CRPalettes::brassWrappedLocometalBoiler, "Brass Wrapped Locometal Boilers", null),
         COPPER_WRAPPED_BOILER(CRPalettes::copperWrappedLocometalBoiler, "Copper Wrapped Locometal Boilers", null),
         IRON_WRAPPED_BOILER(CRPalettes::ironWrappedLocometalBoiler, "Iron Wrapped Locometal Boilers", null),
+        FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
         END_LADDER(CRPalettes::endLadder, "Locometal End Ladders", CycleGroupCategory.LADDERS),
         RUNG_LADDER(CRPalettes::rungLadder, "Locometal Rung Ladders", CycleGroupCategory.LADDERS),
-        FLYWHEEL(CRPalettes::flywheel, "Locometal Flywheels", null),
+        TRAPDOOR(CRPalettes::locometalTrapdoor, "Locometal Trapdoors", null),
         HINGED_DOOR(CRPalettes::hingedLocometalDoor, "Hinged Locometal Doors", CycleGroupCategory.DOORS),
         SLIDING_DOOR(CRPalettes::slidingLocometalDoor, "Sliding Locometal Doors", CycleGroupCategory.DOORS),
         FOLDING_DOOR(CRPalettes::foldingLocometalDoor, "Folding Locometal Doors", CycleGroupCategory.DOORS),
@@ -148,11 +167,10 @@ public class CRPalettes {
         SINGLE_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.SINGLE_PANE), "Single Pane Windows", CycleGroupCategory.WINDOWS),
         TWO_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.TWO_PANE), "Two Pane Windows", CycleGroupCategory.WINDOWS),
         FOUR_PANE_WINDOW(CRPalettes.locometalWindow(WindowType.FOUR_PANE), "Four Pane Windows", CycleGroupCategory.WINDOWS),
-        TRAPDOOR(CRPalettes::locometalTrapdoor, "Locometal Trapdoors", null),
-        HAZARD_STRIPES_DIAGONAL_BLACK(CRPalettes.hazardStripes(false, PalettesColor.BLACK), "Diagonal Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
-        HAZARD_STRIPES_DIAGONAL_WHITE(CRPalettes.hazardStripes(false, PalettesColor.WHITE), "Diagonal White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
-        HAZARD_STRIPES_CHEVRON_BLACK(CRPalettes.hazardStripes(true, PalettesColor.BLACK), "Chevron Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES),
-        HAZARD_STRIPES_CHEVRON_WHITE(CRPalettes.hazardStripes(true, PalettesColor.WHITE), "Chevron White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES);
+        HAZARD_STRIPES_DIAGONAL_BLACK(CRPalettes.hazardStripes(false, PalettesColor.BLACK), "Diagonal Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES_BLACK),
+        HAZARD_STRIPES_CHEVRON_BLACK(CRPalettes.hazardStripes(true, PalettesColor.BLACK), "Chevron Black Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES_BLACK),
+        HAZARD_STRIPES_DIAGONAL_WHITE(CRPalettes.hazardStripes(false, PalettesColor.WHITE), "Diagonal White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES_WHITE),
+        HAZARD_STRIPES_CHEVRON_WHITE(CRPalettes.hazardStripes(true, PalettesColor.WHITE), "Chevron White Hazard Stripes", CycleGroupCategory.HAZARD_STRIPES_WHITE),
         ;
 
         private static final Map<CycleGroupCategory, Styles[]> CYCLING = new HashMap<>(CycleGroupCategory.values().length, 2);
@@ -206,6 +224,10 @@ public class CRPalettes {
 
             if (palettesColor.isNetherite()) {
                 EmiRecipeDefaultsGen.TAG_DEFAULTS.put(dyeGroupTag, blocks.get(PalettesColor.NETHERITE).getId());
+            }
+
+            if (cycleGroupCategory != null && cycleGroupCategory.baseStyle.get() == this) {
+                EmiRecipeDefaultsGen.TAG_DEFAULTS.put(CYCLE_GROUPS.get(Pair.of(palettesColor, cycleGroupCategory)), registered.getId());
             }
         }
 
@@ -610,6 +632,7 @@ public class CRPalettes {
                     HazardStripesBlock.create(!chevron, color, base)
                 )
                 .transform(transformer.get())
+                .transform(BuilderTransformers.locoMetalBase(color, null))
                 .transform(BuilderTransformers.hazardStripes(chevron))
                 .lang(joinSpace(colorName, "on", snakeCaseToTitleCase(base.getName()), chevron ? "Chevron" : "Hazard Stripes"))
                 .item()
@@ -670,6 +693,17 @@ public class CRPalettes {
         }
     }
 
+    public static class DyedOnlyPalettesColorList<T> extends PalettesColorList<T> {
+        public DyedOnlyPalettesColorList(Function<PalettesColor, T> filler) {
+            super(filler);
+        }
+
+        @Override
+        protected boolean filter(PalettesColor value) {
+            return !value.isNetherite();
+        }
+    }
+
     public static class WindowTypeList<T> extends EnumFilledList<WindowType, T> {
         public WindowTypeList(Function<WindowType, T> filler) {
             super(WindowType.class, filler);
@@ -692,23 +726,30 @@ public class CRPalettes {
     }
 
     public enum CycleGroupCategory {
-        BASE("Locometal"),
-        WRAPPED_BRASS("Brass Wrapped Locometal"),
-        WRAPPED_COPPER("Copper Wrapped Locometal"),
-        WRAPPED_IRON("Iron Wrapped Locometal"),
-        LADDERS("Locometal Ladders"),
-        DOORS("Locometal Doors"),
-        WINDOWS("Locometal Windows"),
-        HAZARD_STRIPES("Hazard Stripes")
+        BASE("Locometal", () -> Styles.RIVETED),
+        WRAPPED_BRASS("Brass Wrapped Locometal", () -> Styles.BRASS_WRAPPED_SLASHED),
+        WRAPPED_COPPER("Copper Wrapped Locometal", () -> Styles.COPPER_WRAPPED_SLASHED),
+        WRAPPED_IRON("Iron Wrapped Locometal", () -> Styles.IRON_WRAPPED_SLASHED),
+        LADDERS("Locometal Ladders", () -> Styles.END_LADDER),
+        DOORS("Locometal Doors", () -> Styles.HINGED_DOOR),
+        WINDOWS("Locometal Windows", () -> Styles.ROUND_PANE_WINDOW),
+        HAZARD_STRIPES_BLACK("Hazard Stripes (Black Base)", () -> Styles.HAZARD_STRIPES_DIAGONAL_BLACK),
+        HAZARD_STRIPES_WHITE("Hazard Stripes (White Base)", () -> Styles.HAZARD_STRIPES_DIAGONAL_WHITE),
         ;
         public final String langName;
+        public final Supplier<Styles> baseStyle;
 
-        CycleGroupCategory(String langName) {
+        CycleGroupCategory(String langName, Supplier<Styles> baseStyle) {
             this.langName = langName;
+            this.baseStyle = baseStyle;
         }
 
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
+        }
+
+        public TagKey<Item> getTag(@NotNull PalettesColor color) {
+            return CYCLE_GROUPS.get(Pair.of(color, this));
         }
     }
 

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,10 +27,12 @@ import com.railwayteam.railways.base.data.lang.CRLangGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
+import com.railwayteam.railways.base.data.recipe.processing.RailwaysProcessingRecipeGen;
 import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
+import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.MethodVarHandleUtils;
@@ -115,6 +117,10 @@ public class Railways {
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 
+  public static void postRegistrationInit() {
+    ModSetupLate.registerPostRegistration();
+  }
+
   public static ResourceLocation asResource(String name) {
     return new ResourceLocation(MOD_ID, name);
   }
@@ -127,6 +133,9 @@ public class Railways {
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
+    gen.addProvider(RailwaysProcessingRecipeGen::registerAll);
+
+    gen.addProvider(CRAdvancements::new);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);
     gen.addProvider(RailwaysHatOffsetGenerator::new);

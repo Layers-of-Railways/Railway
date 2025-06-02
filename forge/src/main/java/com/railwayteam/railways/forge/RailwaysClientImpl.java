@@ -24,6 +24,7 @@ import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.railwayteam.railways.registry.CRParticleTypes;
 import com.simibubi.create.foundation.ModFilePackResources;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.CommandSourceStack;
@@ -116,7 +117,7 @@ public class RailwaysClientImpl {
 				Component.literal(pack.name),
 				false,
 				(a) -> new ModFilePackResources(pack.name, modFile, "resourcepacks/" + pack.id),
-				new Pack.Info(Component.empty(), 10, FeatureFlagSet.of()),
+				new Pack.Info(Component.empty(), SharedConstants.getCurrentVersion().getPackVersion(PackType.CLIENT_RESOURCES), FeatureFlagSet.of()),
 				PackType.CLIENT_RESOURCES,
 				Pack.Position.TOP,
 				false,

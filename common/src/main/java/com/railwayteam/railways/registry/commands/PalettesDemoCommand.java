@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -39,7 +39,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
@@ -51,6 +50,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.railwayteam.railways.content.palettes.boiler.BoilerBlock.HORIZONTAL_AXIS;
 import static com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock.FACING;
+import static com.railwayteam.railways.util.BlockStateUtils.blockWithProperties;
 import static net.minecraft.world.level.block.RotatedPillarBlock.AXIS;
 
 public class PalettesDemoCommand {
@@ -135,6 +135,8 @@ public class PalettesDemoCommand {
             @NotNull StructurePlaceSettings settings
         ) {
             StructureBlockInfo superInfo = super.processBlock(level, blockPos, pos, blockInfo, relativeBlockInfo, settings);
+            if (superInfo == null) return null;
+
             Pair<Styles, PalettesColor> styleInfo = CRPalettes.getStyleForBlock(superInfo.state.getBlock());
             if (styleInfo != null) {
                 return new StructureBlockInfo(
@@ -144,17 +146,6 @@ public class PalettesDemoCommand {
                 );
             }
             return superInfo;
-        }
-
-        @SuppressWarnings({"unchecked", "rawtypes"})
-        private static BlockState blockWithProperties(Block block, BlockState propertySource) {
-            BlockState state = block.defaultBlockState();
-            for (Property property : propertySource.getProperties()) {
-                if (state.hasProperty(property)) {
-                    state = state.setValue(property, propertySource.getValue(property));
-                }
-            }
-            return state;
         }
 
         @Override

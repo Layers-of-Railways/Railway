@@ -35,7 +35,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class AxialHazardStripesBlock extends HazardStripesBlock {
-    public static EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
+    public static final EnumProperty<Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
     public AxialHazardStripesBlock(Properties properties, PalettesColor highlightColor, PalettesColor baseColor) {
         super(properties, highlightColor, baseColor);
