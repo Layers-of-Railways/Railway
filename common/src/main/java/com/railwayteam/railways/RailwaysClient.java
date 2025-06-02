@@ -43,6 +43,7 @@ public class RailwaysClient {
     registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
     registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
     registerBuiltinPack("legacy_palettes", "Steam 'n' Rails Legacy Palettes Textures");
+    registerBuiltinPack("paint_pitchers", "Steam 'n' Rails Paint Cans -> Pitchers");
 
     registerClientCommands(CRCommandsClient::register);
 
