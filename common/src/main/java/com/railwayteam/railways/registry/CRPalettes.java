@@ -629,7 +629,7 @@ public class CRPalettes {
             colorName = colorName.isEmpty() ? "Locometal" : colorName;
             return REGISTRATE.block(
                     joinUnderscore(colorString, "hazard_stripes", chevron ? "chevron" : "diagonal", "on", base.getSerializedName()),
-                    HazardStripesBlock.create(!chevron, color, base)
+                    HazardStripesBlock.directional(color, base)
                 )
                 .transform(transformer.get())
                 .transform(BuilderTransformers.locoMetalBase(color, null))
