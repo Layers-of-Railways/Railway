@@ -19,7 +19,6 @@
 package com.railwayteam.railways.content.palettes.painting;
 
 import com.railwayteam.railways.content.palettes.PalettesColor;
-import com.railwayteam.railways.mixin.AccessorBlockGetter;
 import com.railwayteam.railways.multiloader.fluid.FluidUnits;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRItems;
@@ -44,6 +43,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -284,7 +284,7 @@ public abstract class PaintPitcherItem extends Item {
                     float dy = rActual * y0 / dist;
                     float dz = rActual * z0 / dist;
 
-                    BlockPos paintTarget = AccessorBlockGetter.callTraverseBlocks(
+                    BlockPos paintTarget = BlockGetter.traverseBlocks(
                         splashSourceVec,
                         splashSourceVec.add(dx, dy, dz),
                         level,

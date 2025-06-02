@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -26,31 +26,30 @@ import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.util.BlockStateUtils;
 import com.simibubi.create.content.equipment.sandPaper.SandPaperItem;
 import com.simibubi.create.foundation.utility.Pair;
-import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.AxeItemAccessor;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ToolAction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.Optional;
-
 @Mixin(SandPaperItem.class)
-public class MixinSandPaperItem {
+public class SandPaperItemMixin {
     @WrapOperation(
         method = "useOn",
         at = @At(
             value = "INVOKE",
-            target = "Lio/github/fabricators_of_create/porting_lib/mixin/accessors/common/accessor/AxeItemAccessor;porting_lib$getStripped(Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/Optional;"
+            target = "Lnet/minecraft/world/level/block/state/BlockState;getToolModifiedState(Lnet/minecraft/world/item/context/UseOnContext;Lnet/minecraftforge/common/ToolAction;Z)Lnet/minecraft/world/level/block/state/BlockState;"
         )
     )
-    private Optional<BlockState> stripLocometal(AxeItemAccessor instance, BlockState blockState, Operation<Optional<BlockState>> original) {
-        Pair<Styles, PalettesColor> style = CRPalettes.getStyleForBlock(blockState.getBlock());
+    private BlockState stripLocometal(BlockState instance, UseOnContext context, ToolAction toolAction, boolean simulate, Operation<BlockState> original) {
+        Pair<Styles, PalettesColor> style = CRPalettes.getStyleForBlock(instance.getBlock());
         if (style != null && !style.getSecond().isNetherite()) {
-            return Optional.of(BlockStateUtils.blockWithProperties(
+            return BlockStateUtils.blockWithProperties(
                 style.getFirst().get(PalettesColor.NETHERITE).getDefaultState(),
-                blockState
-            ));
+                instance
+            );
         } else {
-            return original.call(instance, blockState);
+            return original.call(instance, context, toolAction, simulate);
         }
     }
 }
