@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-02T22:16:08.482790484	Create: Steam 'n' Rails/Railways' Processing Recipes
+// 1.20.1	2025-06-02T23:35:10.214133494	Create: Steam 'n' Rails/Railways' Processing Recipes
 41fff0cf240c1985755dbfa41c287b49d7a57bc8 data/railways/recipes/mixing/palettes/dyeing/green_round_pane_locometal_window.json
 8a5dcdb4dc477f6d087fedc33b383fce2a036c81 data/railways/recipes/mixing/palettes/dyeing/sea_green_slashed_locometal.json
 cd7b4d41aec1b49185c903bac0328b9f9f2cb689 data/railways/recipes/mixing/palettes/dyeing/pine_green_brass_wrapped_locometal_boiler.json
@@ -217,8 +217,8 @@ d56a2a9af35e3b16bfc54dacf79b0c39d4b7587d data/railways/recipes/mixing/palettes/d
 4c6ff0f9c40ced8f4f2fd349266c946030dcb770 data/railways/recipes/mixing/palettes/dyeing/maroon_two_pane_locometal_window.json
 e5a8692d61a50055e3440a524bd16144f70b91b0 data/railways/recipes/mixing/palettes/dyeing/sea_green_locometal_flywheel.json
 34171f9152cba573133bde3e9677876c3e509e00 data/railways/recipes/mixing/palettes/dyeing/tuff_locometal_flywheel.json
-f62358371d251b3fcbec07c8de5cb991dc06a3f8 data/railways/recipes/mixing/palettes/dyeing/lime_hinged_locometal_door.json
 bbdb2a39624dbd5576e0ca5f20109c261aa2b8fc data/railways/recipes/mixing/palettes/dyeing/purple_sliding_locometal_door.json
+f62358371d251b3fcbec07c8de5cb991dc06a3f8 data/railways/recipes/mixing/palettes/dyeing/lime_hinged_locometal_door.json
 32e562f3c413fc8d9acc394144ff251f9debe0f7 data/railways/recipes/mixing/palettes/dyeing/sea_green_iron_wrapped_locometal_smokebox.json
 a3e37a6a2dd7c82be24a5f9dffb4a9c3665689fe data/railways/recipes/mixing/palettes/dyeing/orange_two_pane_locometal_window.json
 7df7912ccff2daea6643eaba7285cf4b8ad65f35 data/railways/recipes/mixing/palettes/dyeing/light_gray_two_pane_locometal_window.json

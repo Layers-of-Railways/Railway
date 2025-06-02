@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-02T22:16:08.480725339	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
+// 1.20.1	2025-06-02T23:35:10.212644154	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
 6dc7b942e0df6738cd41c61667f4b36cb8aa86ad data/railways/recipes/sequenced_assembly/track_quark_ancient_narrow.json
 871ce86011b2893c9e7fe9a6d0fb7298e55d744b data/railways/recipes/sequenced_assembly/track_tfc_hickory_wide.json
 86548489d829e409459e9d514807cc1767a1a5ac data/railways/recipes/sequenced_assembly/track_quark_azalea_narrow.json
@@ -92,8 +92,8 @@ c50678b6786bb5057074fd732a6cf09eb5fd5686 data/railways/recipes/sequenced_assembl
 c99f4ce3060d06247581d0217e6899909abae3a1 data/railways/recipes/sequenced_assembly/track_acacia.json
 e9536a7b48f1070e2856363dd1ff54da10102225 data/railways/recipes/sequenced_assembly/track_twilightforest_timewood_narrow.json
 9651f9dff2ec17fc9e9ce2277d03e4bb128cbf74 data/railways/recipes/sequenced_assembly/track_natures_spirit_cypress_narrow.json
-2ccb852c2cb56459c2ae8d9e4a4f0c0dbe4ae325 data/railways/recipes/sequenced_assembly/white_conductor_cap.json
 9caca91203127330dec0e1b14a7291db556e0c85 data/railways/recipes/sequenced_assembly/track_warped.json
+2ccb852c2cb56459c2ae8d9e4a4f0c0dbe4ae325 data/railways/recipes/sequenced_assembly/white_conductor_cap.json
 ba6dc0c553ee2771c2989abfa58a75df799dedf3 data/railways/recipes/sequenced_assembly/track_byg_cika_wide.json
 e8aea13f488fd30b8fe772106122a6ef46c47096 data/railways/recipes/sequenced_assembly/track_tfc_white_cedar_narrow.json
 315ea694c58ec8acd8c6725a34da67198fc1e8fa data/railways/recipes/sequenced_assembly/track_byg_lament.json

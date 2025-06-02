@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-02T22:16:08.455348215	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2025-06-02T23:35:10.200433617	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 bb1be39b19559d8478399d8010fa8a4a348f79c1 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/dripstone_slashed_locometal.json
 a391c15af79e48e1a65ae3d1e3f6bcfb3b8d9338 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/limestone_slashed_locometal.json
 db9eb13f615ff9ae04f8ee4d4dca3a31632a7c24 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/pine_green_copper_wrapped_locometal.json
@@ -91,8 +91,8 @@ a126bc530c2d4ad0059cdc5b1c6278c45acd5593 data/railways/advancements/recipes/misc
 30af723314a1663b06737d592b758b58112d0afc data/railways/recipes/stonecutting/palettes/ladders/orange_locometal_rung_ladder.json
 8e9b2a3c461e82d73f8bd950c6c70508fddaf7a8 data/railways/recipes/stonecutting/palettes/cycling/pine_green_iron_wrapped_locometal.json
 08fc95fed0bb20dc01dcbdf1d0a8dc8def3db057 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/maroon_two_pane_locometal_window.json
-35fa0d709880270d3af2250f8801f29e93fda121 data/railways/recipes/crafting/palettes/hazard_stripes_b/limestone_hazard_stripes_diagonal_on_white.json
 6ca2f1ec38bff028b4d70c1c165ef571b32e0c3f data/railways/advancements/recipes/misc/crafting/palettes/hazard_stripes_b/limestone_hazard_stripes_diagonal_on_white.json
+35fa0d709880270d3af2250f8801f29e93fda121 data/railways/recipes/crafting/palettes/hazard_stripes_b/limestone_hazard_stripes_diagonal_on_white.json
 6a022f064fc2a5d0c79914a39aa96fb62a4bbfbb data/railways/recipes/crafting/palettes/hazard_stripes_b/hazard_stripes_diagonal_on_white.json
 4084e8dc07394649ac0003e7669edbb2a247a322 data/railways/advancements/recipes/misc/crafting/palettes/hazard_stripes_b/blue_hazard_stripes_diagonal_on_white.json
 56ba5ecf1dc4b553edf93530a601f69418967407 data/railways/recipes/stonecutting/palettes/cycling/olive_green_hazard_stripes_chevron_on_white.json
