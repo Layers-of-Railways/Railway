@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/black/base"
+  },
+  "result": "railways:black_locometal_end_ladder"
+}

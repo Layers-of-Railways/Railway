@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:flywheel"
+    },
+    {
+      "item": "railways:granite_riveted_locometal"
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:granite_locometal_flywheel"
+    }
+  ]
+}

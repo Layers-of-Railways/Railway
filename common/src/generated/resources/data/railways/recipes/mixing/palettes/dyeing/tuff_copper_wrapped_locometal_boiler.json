@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:brown_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:maroon_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:red_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:vermilion_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:orange_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:granite_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:dripstone_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:ochrum_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:yellow_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:chartreuse_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:olive_green_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:lime_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:green_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:pine_green_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:cyan_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:sea_green_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:turquoise_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:light_blue_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:blue_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:royal_blue_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:purple_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:magenta_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:pink_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:white_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:diorite_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:limestone_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:light_gray_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:gray_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:scorchia_copper_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:black_copper_wrapped_locometal_boiler"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "tuff"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:tuff_copper_wrapped_locometal_boiler"
+    }
+  ]
+}

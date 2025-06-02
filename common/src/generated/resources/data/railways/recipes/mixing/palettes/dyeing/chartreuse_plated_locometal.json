@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:plated_locometal"
+      },
+      {
+        "item": "railways:brown_plated_locometal"
+      },
+      {
+        "item": "railways:maroon_plated_locometal"
+      },
+      {
+        "item": "railways:red_plated_locometal"
+      },
+      {
+        "item": "railways:vermilion_plated_locometal"
+      },
+      {
+        "item": "railways:orange_plated_locometal"
+      },
+      {
+        "item": "railways:granite_plated_locometal"
+      },
+      {
+        "item": "railways:dripstone_plated_locometal"
+      },
+      {
+        "item": "railways:ochrum_plated_locometal"
+      },
+      {
+        "item": "railways:yellow_plated_locometal"
+      },
+      {
+        "item": "railways:olive_green_plated_locometal"
+      },
+      {
+        "item": "railways:lime_plated_locometal"
+      },
+      {
+        "item": "railways:green_plated_locometal"
+      },
+      {
+        "item": "railways:pine_green_plated_locometal"
+      },
+      {
+        "item": "railways:cyan_plated_locometal"
+      },
+      {
+        "item": "railways:sea_green_plated_locometal"
+      },
+      {
+        "item": "railways:turquoise_plated_locometal"
+      },
+      {
+        "item": "railways:light_blue_plated_locometal"
+      },
+      {
+        "item": "railways:blue_plated_locometal"
+      },
+      {
+        "item": "railways:royal_blue_plated_locometal"
+      },
+      {
+        "item": "railways:purple_plated_locometal"
+      },
+      {
+        "item": "railways:magenta_plated_locometal"
+      },
+      {
+        "item": "railways:pink_plated_locometal"
+      },
+      {
+        "item": "railways:white_plated_locometal"
+      },
+      {
+        "item": "railways:diorite_plated_locometal"
+      },
+      {
+        "item": "railways:limestone_plated_locometal"
+      },
+      {
+        "item": "railways:light_gray_plated_locometal"
+      },
+      {
+        "item": "railways:tuff_plated_locometal"
+      },
+      {
+        "item": "railways:gray_plated_locometal"
+      },
+      {
+        "item": "railways:scorchia_plated_locometal"
+      },
+      {
+        "item": "railways:black_plated_locometal"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "chartreuse"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:chartreuse_plated_locometal"
+    }
+  ]
+}

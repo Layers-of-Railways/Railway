@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:locometal_flywheel"
+      },
+      {
+        "item": "railways:brown_locometal_flywheel"
+      },
+      {
+        "item": "railways:maroon_locometal_flywheel"
+      },
+      {
+        "item": "railways:red_locometal_flywheel"
+      },
+      {
+        "item": "railways:vermilion_locometal_flywheel"
+      },
+      {
+        "item": "railways:orange_locometal_flywheel"
+      },
+      {
+        "item": "railways:granite_locometal_flywheel"
+      },
+      {
+        "item": "railways:dripstone_locometal_flywheel"
+      },
+      {
+        "item": "railways:ochrum_locometal_flywheel"
+      },
+      {
+        "item": "railways:yellow_locometal_flywheel"
+      },
+      {
+        "item": "railways:chartreuse_locometal_flywheel"
+      },
+      {
+        "item": "railways:olive_green_locometal_flywheel"
+      },
+      {
+        "item": "railways:lime_locometal_flywheel"
+      },
+      {
+        "item": "railways:green_locometal_flywheel"
+      },
+      {
+        "item": "railways:pine_green_locometal_flywheel"
+      },
+      {
+        "item": "railways:cyan_locometal_flywheel"
+      },
+      {
+        "item": "railways:sea_green_locometal_flywheel"
+      },
+      {
+        "item": "railways:turquoise_locometal_flywheel"
+      },
+      {
+        "item": "railways:light_blue_locometal_flywheel"
+      },
+      {
+        "item": "railways:blue_locometal_flywheel"
+      },
+      {
+        "item": "railways:royal_blue_locometal_flywheel"
+      },
+      {
+        "item": "railways:purple_locometal_flywheel"
+      },
+      {
+        "item": "railways:magenta_locometal_flywheel"
+      },
+      {
+        "item": "railways:pink_locometal_flywheel"
+      },
+      {
+        "item": "railways:white_locometal_flywheel"
+      },
+      {
+        "item": "railways:diorite_locometal_flywheel"
+      },
+      {
+        "item": "railways:limestone_locometal_flywheel"
+      },
+      {
+        "item": "railways:tuff_locometal_flywheel"
+      },
+      {
+        "item": "railways:gray_locometal_flywheel"
+      },
+      {
+        "item": "railways:scorchia_locometal_flywheel"
+      },
+      {
+        "item": "railways:black_locometal_flywheel"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "light_gray"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:light_gray_locometal_flywheel"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:brown_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:red_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:vermilion_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:orange_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:granite_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:dripstone_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:ochrum_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:yellow_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:chartreuse_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:olive_green_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:lime_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:green_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:pine_green_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:cyan_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:sea_green_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:turquoise_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:light_blue_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:blue_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:royal_blue_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:purple_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:magenta_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:pink_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:white_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:diorite_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:limestone_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:light_gray_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:tuff_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:gray_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:scorchia_iron_wrapped_locometal_boiler"
+      },
+      {
+        "item": "railways:black_iron_wrapped_locometal_boiler"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "maroon"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:maroon_iron_wrapped_locometal_boiler"
+    }
+  ]
+}

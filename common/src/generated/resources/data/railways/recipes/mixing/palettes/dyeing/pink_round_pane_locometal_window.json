@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:round_pane_locometal_window"
+      },
+      {
+        "item": "railways:brown_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:maroon_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:red_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:vermilion_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:orange_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:granite_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:dripstone_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:ochrum_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:yellow_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:chartreuse_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:olive_green_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:lime_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:green_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:pine_green_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:cyan_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:sea_green_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:turquoise_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:light_blue_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:blue_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:royal_blue_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:purple_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:magenta_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:white_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:diorite_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:limestone_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:light_gray_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:tuff_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:gray_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:scorchia_round_pane_locometal_window"
+      },
+      {
+        "item": "railways:black_round_pane_locometal_window"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "pink"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:pink_round_pane_locometal_window"
+    }
+  ]
+}

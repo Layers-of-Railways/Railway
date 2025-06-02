@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:folding_locometal_door"
+      },
+      {
+        "item": "railways:brown_folding_locometal_door"
+      },
+      {
+        "item": "railways:maroon_folding_locometal_door"
+      },
+      {
+        "item": "railways:red_folding_locometal_door"
+      },
+      {
+        "item": "railways:vermilion_folding_locometal_door"
+      },
+      {
+        "item": "railways:orange_folding_locometal_door"
+      },
+      {
+        "item": "railways:granite_folding_locometal_door"
+      },
+      {
+        "item": "railways:ochrum_folding_locometal_door"
+      },
+      {
+        "item": "railways:yellow_folding_locometal_door"
+      },
+      {
+        "item": "railways:chartreuse_folding_locometal_door"
+      },
+      {
+        "item": "railways:olive_green_folding_locometal_door"
+      },
+      {
+        "item": "railways:lime_folding_locometal_door"
+      },
+      {
+        "item": "railways:green_folding_locometal_door"
+      },
+      {
+        "item": "railways:pine_green_folding_locometal_door"
+      },
+      {
+        "item": "railways:cyan_folding_locometal_door"
+      },
+      {
+        "item": "railways:sea_green_folding_locometal_door"
+      },
+      {
+        "item": "railways:turquoise_folding_locometal_door"
+      },
+      {
+        "item": "railways:light_blue_folding_locometal_door"
+      },
+      {
+        "item": "railways:blue_folding_locometal_door"
+      },
+      {
+        "item": "railways:royal_blue_folding_locometal_door"
+      },
+      {
+        "item": "railways:purple_folding_locometal_door"
+      },
+      {
+        "item": "railways:magenta_folding_locometal_door"
+      },
+      {
+        "item": "railways:pink_folding_locometal_door"
+      },
+      {
+        "item": "railways:white_folding_locometal_door"
+      },
+      {
+        "item": "railways:diorite_folding_locometal_door"
+      },
+      {
+        "item": "railways:limestone_folding_locometal_door"
+      },
+      {
+        "item": "railways:light_gray_folding_locometal_door"
+      },
+      {
+        "item": "railways:tuff_folding_locometal_door"
+      },
+      {
+        "item": "railways:gray_folding_locometal_door"
+      },
+      {
+        "item": "railways:scorchia_folding_locometal_door"
+      },
+      {
+        "item": "railways:black_folding_locometal_door"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "dripstone"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:dripstone_folding_locometal_door"
+    }
+  ]
+}

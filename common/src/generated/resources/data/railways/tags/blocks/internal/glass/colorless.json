@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:colorless_glass",
+      "required": false
+    },
+    {
+      "id": "#forge:glass/colorless",
+      "required": false
+    }
+  ]
+}

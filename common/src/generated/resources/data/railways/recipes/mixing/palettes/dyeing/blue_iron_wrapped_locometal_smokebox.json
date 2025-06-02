@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:brown_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:maroon_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:red_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:vermilion_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:orange_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:granite_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:dripstone_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:ochrum_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:yellow_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:chartreuse_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:olive_green_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:lime_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:green_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:pine_green_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:cyan_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:sea_green_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:turquoise_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:light_blue_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:royal_blue_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:purple_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:magenta_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:pink_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:white_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:diorite_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:limestone_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:light_gray_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:tuff_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:gray_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:scorchia_iron_wrapped_locometal_smokebox"
+      },
+      {
+        "item": "railways:black_iron_wrapped_locometal_smokebox"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "blue"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:blue_iron_wrapped_locometal_smokebox"
+    }
+  ]
+}

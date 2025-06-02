@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "railways:white_slashed_locometal"
+    },
+    ".": {
+      "item": "railways:ochrum_slashed_locometal"
+    }
+  },
+  "pattern": [
+    ".#",
+    "#."
+  ],
+  "result": {
+    "count": 4,
+    "item": "railways:ochrum_hazard_stripes_diagonal_on_white"
+  },
+  "show_notification": true
+}

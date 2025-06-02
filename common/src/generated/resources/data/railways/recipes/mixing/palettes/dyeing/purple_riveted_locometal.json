@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:riveted_locometal"
+      },
+      {
+        "item": "railways:brown_riveted_locometal"
+      },
+      {
+        "item": "railways:maroon_riveted_locometal"
+      },
+      {
+        "item": "railways:red_riveted_locometal"
+      },
+      {
+        "item": "railways:vermilion_riveted_locometal"
+      },
+      {
+        "item": "railways:orange_riveted_locometal"
+      },
+      {
+        "item": "railways:granite_riveted_locometal"
+      },
+      {
+        "item": "railways:dripstone_riveted_locometal"
+      },
+      {
+        "item": "railways:ochrum_riveted_locometal"
+      },
+      {
+        "item": "railways:yellow_riveted_locometal"
+      },
+      {
+        "item": "railways:chartreuse_riveted_locometal"
+      },
+      {
+        "item": "railways:olive_green_riveted_locometal"
+      },
+      {
+        "item": "railways:lime_riveted_locometal"
+      },
+      {
+        "item": "railways:green_riveted_locometal"
+      },
+      {
+        "item": "railways:pine_green_riveted_locometal"
+      },
+      {
+        "item": "railways:cyan_riveted_locometal"
+      },
+      {
+        "item": "railways:sea_green_riveted_locometal"
+      },
+      {
+        "item": "railways:turquoise_riveted_locometal"
+      },
+      {
+        "item": "railways:light_blue_riveted_locometal"
+      },
+      {
+        "item": "railways:blue_riveted_locometal"
+      },
+      {
+        "item": "railways:royal_blue_riveted_locometal"
+      },
+      {
+        "item": "railways:magenta_riveted_locometal"
+      },
+      {
+        "item": "railways:pink_riveted_locometal"
+      },
+      {
+        "item": "railways:white_riveted_locometal"
+      },
+      {
+        "item": "railways:diorite_riveted_locometal"
+      },
+      {
+        "item": "railways:limestone_riveted_locometal"
+      },
+      {
+        "item": "railways:light_gray_riveted_locometal"
+      },
+      {
+        "item": "railways:tuff_riveted_locometal"
+      },
+      {
+        "item": "railways:gray_riveted_locometal"
+      },
+      {
+        "item": "railways:scorchia_riveted_locometal"
+      },
+      {
+        "item": "railways:black_riveted_locometal"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "purple"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:purple_riveted_locometal"
+    }
+  ]
+}

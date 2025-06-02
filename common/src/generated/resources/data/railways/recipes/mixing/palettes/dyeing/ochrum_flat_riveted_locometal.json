@@ -1,0 +1,113 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    [
+      {
+        "item": "railways:flat_riveted_locometal"
+      },
+      {
+        "item": "railways:brown_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:maroon_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:red_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:vermilion_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:orange_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:granite_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:dripstone_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:yellow_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:chartreuse_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:olive_green_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:lime_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:green_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:pine_green_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:cyan_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:sea_green_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:turquoise_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:light_blue_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:blue_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:royal_blue_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:purple_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:magenta_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:pink_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:white_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:diorite_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:limestone_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:light_gray_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:tuff_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:gray_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:scorchia_flat_riveted_locometal"
+      },
+      {
+        "item": "railways:black_flat_riveted_locometal"
+      }
+    ],
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "ochrum"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:ochrum_flat_riveted_locometal"
+    }
+  ]
+}

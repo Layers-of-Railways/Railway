@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "minecraft:wooden_doors"
+    },
+    {
+      "item": "railways:blue_riveted_locometal"
+    }
+  ],
+  "result": {
+    "item": "railways:blue_hinged_locometal_door"
+  }
+}

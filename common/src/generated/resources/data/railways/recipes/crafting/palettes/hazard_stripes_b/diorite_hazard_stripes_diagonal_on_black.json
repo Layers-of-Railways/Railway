@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "railways:black_slashed_locometal"
+    },
+    ".": {
+      "item": "railways:diorite_slashed_locometal"
+    }
+  },
+  "pattern": [
+    ".#",
+    "#."
+  ],
+  "result": {
+    "count": 4,
+    "item": "railways:diorite_hazard_stripes_diagonal_on_black"
+  },
+  "show_notification": true
+}
