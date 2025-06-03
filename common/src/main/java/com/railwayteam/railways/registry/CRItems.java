@@ -165,6 +165,7 @@ public class CRItems {
             .transform(BuilderTransformers.paintPitcher())
             .properties(p -> p.stacksTo(1))
             .tag(AllTags.AllItemTags.UPRIGHT_ON_BELT.tag)
+            .tag(CRTags.AllItemTags.FILLED_PAINT_PITCHERS.tag)
             .lang(colorName + " Paint Pitcher")
             .register();
     });
