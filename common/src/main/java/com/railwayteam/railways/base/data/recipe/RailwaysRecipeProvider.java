@@ -27,6 +27,7 @@ import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.multiloader.fluid.MultiloaderFluidStack;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRFluids;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -269,6 +270,18 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
         public static TagKey<Item> colorlessGlass() {
             return CommonTags.COLORLESS_GLASS_I.tag;
+        }
+
+        public static ItemLike emptyPaintPitcher() {
+            return CRItems.EMPTY_PAINT_PITCHER.get();
+        }
+
+        public static ItemLike paintBrush() {
+            return CRItems.PAINT_BRUSH.get();
+        }
+
+        public static ItemLike feather() {
+            return Items.FEATHER;
         }
     }
 }

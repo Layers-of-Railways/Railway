@@ -387,6 +387,27 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .requires(Ingredients.chute())
         );
 
+    GeneratedRecipe EMPTY_PAINT_PITCHER = create(Ingredients::emptyPaintPitcher)
+        .unlockedByTag(Ingredients::colorlessGlass)
+        .returns(5)
+        .viaShaped(b -> b
+            .define('G', Ingredients.colorlessGlass())
+            .pattern("G G")
+            .pattern("G G")
+            .pattern(" G ")
+        );
+
+    GeneratedRecipe PAINT_BRUSH = create(Ingredients::paintBrush)
+        .unlockedBy(Ingredients::feather)
+        .viaShaped(b -> b
+            .define('F', Ingredients.feather())
+            .define('_', Ingredients.ironIngot())
+            .define('|', Ingredients.stick())
+            .pattern("F")
+            .pattern("_")
+            .pattern("|")
+        );
+
     GeneratedRecipeBuilder create(Supplier<ItemLike> result) {
         return new GeneratedRecipeBuilder("/", result);
     }
