@@ -24,7 +24,6 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-// fixme probably the whole fluids system will have to be rewritten to be forge-compatible
 public class CRFluids {
     public static final FluidEntry<VirtualFluid> PAINT = registerPaint();
 
