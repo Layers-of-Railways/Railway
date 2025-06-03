@@ -21,7 +21,7 @@ package com.railwayteam.railways.mixin;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.multiloader.fluid.FluidUnits;
+import com.railwayteam.railways.util.FluidUtils;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
@@ -41,12 +41,15 @@ public class MixinProcessingRecipeSerializer<T extends ProcessingRecipe<?>> {
         for (JsonElement ingredient : json.getAsJsonArray("ingredients")) {
             if (FluidIngredient.isFluidIngredient(ingredient)) {
                 JsonObject ingredientObject = ingredient.getAsJsonObject();
-                if (!ingredientObject.has("amount")) continue;
-
-                long amount = ingredientObject.remove("amount").getAsLong();
-                ingredientObject.addProperty("railways:amount", amount);
-                ingredientObject.addProperty("railways:amount:unit", FluidUnits.bucket());
+                FluidUtils.mangleFluidAmount(ingredientObject);
             }
+        }
+
+        for (JsonElement result : json.getAsJsonArray("results")) {
+            if (!result.isJsonObject()) continue;
+            JsonObject resultObject = result.getAsJsonObject();
+            if (!resultObject.has("fluid")) continue;
+            FluidUtils.mangleFluidAmount(resultObject);
         }
     }
 
@@ -58,18 +61,15 @@ public class MixinProcessingRecipeSerializer<T extends ProcessingRecipe<?>> {
         for (JsonElement ingredient : json.getAsJsonArray("ingredients")) {
             if (FluidIngredient.isFluidIngredient(ingredient)) {
                 JsonObject ingredientObject = ingredient.getAsJsonObject();
-                if (!ingredientObject.has("railways:amount")) continue;
-                if (!ingredientObject.has("railways:amount:unit")) continue;
-
-                long amount = ingredientObject.remove("railways:amount").getAsLong();
-                long unit = ingredientObject.remove("railways:amount:unit").getAsLong();
-
-                if (unit != FluidUnits.bucket()) {
-                    amount = (long) Math.floor(amount * (double) FluidUnits.bucket() / unit);
-                }
-
-                ingredientObject.addProperty("amount", amount);
+                FluidUtils.demangleFluidAmount(ingredientObject);
             }
+        }
+
+        for (JsonElement result : json.getAsJsonArray("results")) {
+            if (!result.isJsonObject()) continue;
+            JsonObject resultObject = result.getAsJsonObject();
+            if (!resultObject.has("fluid")) continue;
+            FluidUtils.demangleFluidAmount(resultObject);
         }
     }
 }

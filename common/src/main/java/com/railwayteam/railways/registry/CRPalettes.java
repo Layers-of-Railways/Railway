@@ -58,6 +58,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -71,6 +72,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -701,6 +703,17 @@ public class CRPalettes {
         @Override
         protected boolean filter(PalettesColor value) {
             return !value.isNetherite();
+        }
+    }
+
+    public static class VanillaDyedOnlyPalettesColorList<T> extends PalettesColorList<T> {
+        public VanillaDyedOnlyPalettesColorList(BiFunction<PalettesColor, DyeColor, T> filler) {
+            super(c -> filler.apply(c, c.toDyeColor()));
+        }
+
+        @Override
+        protected boolean filter(PalettesColor value) {
+            return value.isMainSeries();
         }
     }
 

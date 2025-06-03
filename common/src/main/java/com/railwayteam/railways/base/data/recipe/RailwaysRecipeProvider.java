@@ -199,6 +199,10 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
             return CommonTags.DYES.get(color).tag;
         }
 
+        public static ItemLike egg() {
+            return Items.EGG;
+        }
+
         public static FluidIngredient palettesPaint(@NotNull PalettesColor color, long amount) {
             return MultiloaderFluidStack.create(
                 CRFluids.PAINT.get(),

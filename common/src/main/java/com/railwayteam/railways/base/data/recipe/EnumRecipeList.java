@@ -21,8 +21,10 @@ package com.railwayteam.railways.base.data.recipe;
 import com.railwayteam.railways.base.EnumFilledList;
 import com.railwayteam.railways.base.data.recipe.RailwaysRecipeProvider.GeneratedRecipe;
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class EnumRecipeList<E extends Enum<E>> extends EnumFilledList<E, GeneratedRecipe> {
@@ -49,6 +51,17 @@ public class EnumRecipeList<E extends Enum<E>> extends EnumFilledList<E, Generat
         @Override
         protected boolean filter(PalettesColor value) {
             return !value.isNetherite();
+        }
+    }
+
+    public static class VanillaDyedOnlyPalettesRecipeList extends PalettesRecipeList {
+        public VanillaDyedOnlyPalettesRecipeList(BiFunction<PalettesColor, DyeColor, GeneratedRecipe> filler) {
+            super(c -> filler.apply(c, c.toDyeColor()));
+        }
+
+        @Override
+        protected boolean filter(PalettesColor value) {
+            return value.isMainSeries();
         }
     }
 }
