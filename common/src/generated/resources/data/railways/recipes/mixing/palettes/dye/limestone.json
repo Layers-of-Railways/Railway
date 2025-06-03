@@ -6,7 +6,7 @@
       "item": "create:limestone"
     },
     {
-      "item": "minecraft:egg"
+      "tag": "railways:binding_agents"
     },
     {
       "fluidTag": "minecraft:water",

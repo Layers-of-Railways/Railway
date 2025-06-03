@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-03T17:20:31.13917804	Create: Steam 'n' Rails/Registrate Provider for railways [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2025-06-03T18:20:14.171251115	Create: Steam 'n' Rails/Registrate Provider for railways [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 acf1a339d7577511be825c8411e4308fbc271922 assets/railways/models/block/track/compat/blue_skies/starlit_wide/z_ortho.json
 f4fe54596ff38ae6bb2cd1f43675c13695acd14f assets/railways/models/block/palettes/vermilion/brass_wrapped_locometal_boiler_smokebox_z_raised.json
 1c872697782c9a6e0ad5f6dd0e6ab5c3b18064e3 assets/railways/models/block/palettes/brown/brass_wrapped_locometal_boiler_smokebox_x_raised.json
@@ -636,8 +636,8 @@ bc1aff202a8f2c4d8fad8c6430aa7310bf48b882 assets/railways/models/block/palettes/c
 47d3c2dae8eaa19f4da1c1a9ad04a22217eaf0d7 assets/railways/blockstates/orange_riveted_locometal.json
 e22ae0b5acdcf21562cdcef4f209bb89f91d109f assets/railways/models/item/copycat_headstock_screwlink_coupler.json
 a6fc722b61457e2dd1520220da665eb8bc7a1bfd assets/railways/models/block/track/cherry/cross_d1_zo.json
-0ffd20a3ff8706c1a30cbc7c164175713a03807a assets/railways/models/block/palettes/vermilion/copper_wrapped_locometal_boiler_gullet_z_raised.json
 0bb3c4159241321df4d2935824156c4a867cc0e3 assets/railways/models/block/palettes/gray/iron_wrapped_locometal.json
+0ffd20a3ff8706c1a30cbc7c164175713a03807a assets/railways/models/block/palettes/vermilion/copper_wrapped_locometal_boiler_gullet_z_raised.json
 9448524637e26551c0b1fd1cb53bcbdad6de0556 assets/railways/models/item/sea_green_locometal_trapdoor.json
 ea9a42649ef9b8a8889f389f78a3026d8f82d81c assets/railways/models/block/palettes/light_gray/iron_wrapped_locometal_smokebox.json
 37d4b729a57fd634bcfcf620443f28f53340be92 assets/railways/models/block/palettes/lime/locometal_pillar_horizontal.json
@@ -1411,8 +1411,8 @@ c2a0d4650374314e8495c0832cc32abec0f82295 data/railways/loot_tables/blocks/ochrum
 494f66855ed0602f63cc644f9e657ea3b1acf0ac assets/railways/blockstates/lime_wrapped_locometal_smokebox.json
 b4af63c03a4e41cea4728e4b7294971a67075698 data/railways/loot_tables/blocks/brown_copper_wrapped_locometal.json
 d38ec293c9fbb14f73fbb270bcc29b84d1dc1f17 assets/railways/models/block/palettes/olive_green/iron_wrapped_locometal_boiler_gullet_z_raised.json
-1de9822a75725a19a4f2b68284d108253e69ffb2 data/railways/loot_tables/blocks/light_gray_brass_wrapped_locometal.json
 243723a2dd6db08d3f675c370a2b94fb044c7471 assets/railways/models/block/track/compat/twilightforest/minewood/cross_d2_xo.json
+1de9822a75725a19a4f2b68284d108253e69ffb2 data/railways/loot_tables/blocks/light_gray_brass_wrapped_locometal.json
 83fdf8981efdf0299b16d152adfa46e2f7eee420 assets/railways/models/block/track/compat/tfc/aspen_wide/diag.json
 2f963fad7e1c7af61876feebc8fa20c9581eca16 assets/railways/models/item/cyan_flat_slashed_locometal.json
 53a79f2c25d5c118dc60e69c088c62298a07b36f assets/railways/models/block/palettes/purple/folding_door/fold_right_windowed.json
@@ -3724,8 +3724,8 @@ ff51faefa59e4dd36d2fd1013fe1d25d534c829a assets/railways/models/block/track/dark
 6be1c23ca53634d7cf3ae47d7495166152f18ee0 assets/railways/models/block/track/compat/blue_skies/frostbright_narrow/cross_d1_xo.json
 94ef60050fba981fece0a4458fdccd9f326368ea assets/railways/blockstates/magenta_wrapped_locometal_smokebox.json
 db267f08f105be2602f22ffc3f5d4269eb226177 assets/railways/models/block/palettes/light_blue/flat_slashed_locometal.json
-8a3ad30c9b8b8b00f97a2c410452f300d23dfb6c assets/railways/models/block/palettes/purple/trapdoors/trapdoor_open.json
 16510613b77f5b4780acef0c8d9256ae78d4a907 assets/railways/models/block/track/compat/tfc/maple_wide/segment_right.json
+8a3ad30c9b8b8b00f97a2c410452f300d23dfb6c assets/railways/models/block/palettes/purple/trapdoors/trapdoor_open.json
 082c2e7c338ef796cd12652b99d6199499938dcb assets/railways/models/item/limestone_iron_wrapped_locometal_smokebox.json
 f52262ba58e1169246c02bf471e6266bdcabd7ad data/railways/loot_tables/blocks/maroon_copper_wrapped_locometal_boiler.json
 a647e10ba13fb44d968290f7d3fdf3608da7bf4c assets/railways/models/block/track/compat/twilightforest/timewood/segment_right.json
@@ -3934,6 +3934,7 @@ d7d580edd028f65b1b4faddfcd88a65c85620702 assets/railways/blockstates/turquoise_b
 db7f12bfa0f71ad98e9bb716ca18e351b87f4bed assets/railways/blockstates/sea_green_two_pane_locometal_window.json
 2e6c87218b4d1282ca01a545b5247a9051766c9f assets/railways/models/block/palettes/granite/trapdoors/windowed_trapdoor_open.json
 c0b2dbff14ac2be671d6cea988769e10ab4b37b0 data/railways/tags/items/palettes/cycle_groups/diorite/hazard_stripes_black.json
+1c071e5b6725351d88b04f357b38a2d5c512ce78 data/railways/tags/items/binding_agents.json
 3248bcbe8e99268076ac90ae722eca57a7609a1f assets/railways/models/block/palettes/white/iron_wrapped_locometal_boiler_gullet_x_raised.json
 d3c53e51d6a2552135afa320e4d1c1238f1b14a0 assets/railways/models/block/palettes/blue/iron_wrapped_locometal_boiler_smokebox_z_raised.json
 88c8e759800ccb1f86167669965da0008f519b3f assets/railways/blockstates/track_create_dd_rubber_narrow.json
@@ -8347,7 +8348,7 @@ c46b79f32fca962144d1ca7423db2c6e70e346df assets/railways/models/block/palettes/r
 a462441244f30a04799667b8573d49314196ebc6 assets/railways/models/block/track/compat/byg/embur_narrow/cross_d1_xo.json
 3a8e508a7b0b170b4e7dc851c4b17aceb1d23aec assets/railways/models/block/palettes/maroon/locometal_boiler_flat_z_raised.json
 33f7f4de206f4805a7dcb1f53104a4139d208c1a assets/railways/blockstates/brown_slashed_locometal.json
-40c61b5914e1e37a8ccd6c472eb688957903f439 assets/railways/lang/en_us.json
+c4f403dcdc7f1683c2bdfda14a40f527672be018 assets/railways/lang/en_us.json
 74d1e7bb56d5aeff1a3427aee7e0313ef1c59f74 assets/railways/models/block/palettes/yellow/folding_door/fold_right_windowed.json
 b7bf5ba60abedef310fe62c6acc19ef0299cbe05 assets/railways/models/block/track/oak_wide/diag_2.json
 777051da9e667adfea2abc684ce1652cdc7f690b assets/railways/models/item/track_tfc_aspen_wide.json
@@ -12289,8 +12290,8 @@ ca2eb70a354f8222e59f5a5dea8b5a92021d7753 data/railways/loot_tables/blocks/white_
 da5d9a75fe9759f85552943b2d6c03ae6bacf527 data/railways/tags/items/palettes/dye_groups/iron_wrapped_slashed.json
 f62decae8e038883c815b18f6c682e4abd4492ef assets/railways/models/block/palettes/ochrum/locometal_smokebox.json
 afc4bf4e647bcd30c442f8b07880c590cffe3704 assets/railways/models/item/orange_four_pane_locometal_window.json
-ddf564d69da2e3755606ca914518630554052cd0 assets/railways/models/block/palettes/blue/iron_wrapped_locometal_boiler_gullet_z.json
 992f6eb208ba218bcbfd22c934bfd9f424e2b4fb assets/railways/models/block/track/compat/byg/sythian/cross_ortho.json
+ddf564d69da2e3755606ca914518630554052cd0 assets/railways/models/block/palettes/blue/iron_wrapped_locometal_boiler_gullet_z.json
 6b0aba1747a4b3b2bd3158e804f3d2b6ab62361f assets/railways/models/block/palettes/red/iron_wrapped_locometal_boiler_flat_z_raised.json
 16fe5933385fc9239ec1d4b1a9b3ade443ed1936 assets/railways/models/block/palettes/light_gray/wrapped_locometal_smokebox.json
 16f5e2e20d2c8ee8630ea8e5a2bfb24ce9821107 data/railways/loot_tables/blocks/track_natures_spirit_wisteria.json
@@ -12818,7 +12819,7 @@ c24ed183f502c7ce7dbebb54be8f74baa39cb67c assets/railways/blockstates/buffer_narr
 57e7c94f7d1ddab4eb64ae5f71a54dd0274ad139 assets/railways/models/item/track_incomplete_create_dd_smoked.json
 8e9499e234a98acbd98eafe0f09ce96366b8e9bf assets/railways/models/block/track/crimson_wide/cross_d2_xo.json
 7c570cbf9eb32f7a5c92e99eb97b9bbd9851d2f9 assets/railways/models/block/track/compat/create_dd/smoked_narrow/cross_diag.json
-50a4110cbf0ed378a3db0d887d28d687bfc664ce assets/railways/lang/en_ud.json
+a4fa0a9f51fbbb970bc9867a355ae7b17fb2409a assets/railways/lang/en_ud.json
 3c3968162dda38c502159a7e1f64aa7ab06942f0 assets/railways/models/block/palettes/limestone/copper_wrapped_locometal.json
 ca0dd9cc0d197308cf4aacad3ae4faba6106f3af assets/railways/models/block/track/compat/natures_spirit/joshua/diag_2.json
 2ab39c6a750f9f7e8d1b24495aa5aa28306d40c8 assets/railways/models/item/gray_locometal_vent.json

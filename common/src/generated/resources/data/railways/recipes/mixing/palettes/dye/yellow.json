@@ -5,7 +5,7 @@
       "tag": "railways:internal/dyes/yellow_dyes"
     },
     {
-      "item": "minecraft:egg"
+      "tag": "railways:binding_agents"
     },
     {
       "fluidTag": "minecraft:water",

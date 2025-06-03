@@ -6,7 +6,7 @@
       "item": "create:ochrum"
     },
     {
-      "item": "minecraft:egg"
+      "tag": "railways:binding_agents"
     },
     {
       "fluidTag": "minecraft:water",

@@ -6,7 +6,7 @@
       "item": "minecraft:tuff"
     },
     {
-      "item": "minecraft:egg"
+      "tag": "railways:binding_agents"
     },
     {
       "fluidTag": "minecraft:water",
