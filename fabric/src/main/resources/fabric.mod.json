@@ -26,6 +26,9 @@
     "journeymap": [
       "com.railwayteam.railways.compat.journeymap.RailwayMapPlugin"
     ],
+    "emi": [
+      "com.railwayteam.railways.compat.emi.fabric.RailwaysEmiPlugin"
+    ],
     "mm:early_risers": [
       "com.railwayteam.railways.fabric.EarlyRiser"
     ]

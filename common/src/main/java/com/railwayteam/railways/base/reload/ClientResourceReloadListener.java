@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2024 The Railways Team
+ * Copyright (c) 2024-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,23 +16,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.fabric.mixin.self;
+package com.railwayteam.railways.base.reload;
 
-import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.casing.CasingResourceReloadListener;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.resources.ResourceLocation;
+import com.railwayteam.railways.RailwaysClient;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.jetbrains.annotations.NotNull;
 
-@Mixin(CasingResourceReloadListener.class)
-public abstract class CasingResourceReloadListenerMixin implements ResourceManagerReloadListener, IdentifiableResourceReloadListener {
-    @Unique
-    private static final ResourceLocation ID = Railways.asResource("casing_reload_listener");
-    
+public class ClientResourceReloadListener implements ResourceManagerReloadListener {
+    public static final ClientResourceReloadListener INSTANCE = new ClientResourceReloadListener();
+
     @Override
-    public ResourceLocation getFabricId() {
-        return ID;
+    public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
+        RailwaysClient.invalidateRenderers();
     }
 }

@@ -14,12 +14,14 @@
       "resource": "railways:entity/conductor"
     },
     {
-      "type": "single",
-      "resource": "railways:fluid/paint_flow"
+      "type": "directory",
+      "source": "fluid/paint_still",
+      "prefix": "fluid/paint_still/"
     },
     {
-      "type": "single",
-      "resource": "railways:fluid/paint_still"
+      "type": "directory",
+      "source": "fluid/paint_flow",
+      "prefix": "fluid/paint_flow/"
     }
   ]
 }

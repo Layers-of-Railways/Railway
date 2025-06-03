@@ -22,17 +22,18 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintFluid;
-import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.FluidEntry;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 @ImplClass
 public class CRFluidsImpl {
@@ -47,21 +48,49 @@ public class CRFluidsImpl {
     @OnlyIn(Dist.CLIENT)
     public static void initRendering() {}
 
-    private static class PaintFluidType extends AllFluids.TintedFluidType {
+    private static class PaintFluidType extends FluidType {
+        private final ResourceLocation stillTexture;
+        private final ResourceLocation flowingTexture;
+
         public PaintFluidType(Properties properties, ResourceLocation stillTexture, ResourceLocation flowingTexture) {
-            super(properties, stillTexture, flowingTexture);
+            super(properties);
+            this.stillTexture = stillTexture;
+            this.flowingTexture = flowingTexture;
         }
 
         @Override
-        protected int getTintColor(FluidStack stack) {
-            return PaintFluid.getColor(stack.getTag())
-                .map(PalettesColor::getDiffuseColor)
-                .orElse(0) | 0xff000000;
-        }
+        public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            consumer.accept(new IClientFluidTypeExtensions() {
+                private ResourceLocation $getStillTexture(@Nullable PalettesColor color) {
+                    if (color == null) color = PalettesColor.NETHERITE;
+                    return stillTexture.withSuffix("/" + color.getSerializedName());
+                }
 
-        @Override
-        protected int getTintColor(FluidState state, BlockAndTintGetter getter, BlockPos pos) {
-            return NO_TINT;
+                private ResourceLocation $getFlowingTexture(@Nullable PalettesColor color) {
+                    if (color == null) color = PalettesColor.NETHERITE;
+                    return flowingTexture.withSuffix("/" + color.getSerializedName());
+                }
+
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return $getStillTexture(null);
+                }
+
+                @Override
+                public ResourceLocation getStillTexture(FluidStack stack) {
+                    return $getStillTexture(PaintFluid.getColor(stack.getTag()).orElse(null));
+                }
+
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return $getFlowingTexture(null);
+                }
+
+                @Override
+                public ResourceLocation getFlowingTexture(FluidStack stack) {
+                    return $getFlowingTexture(PaintFluid.getColor(stack.getTag()).orElse(null));
+                }
+            });
         }
 
         @Override

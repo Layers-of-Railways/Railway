@@ -21,7 +21,6 @@ package com.railwayteam.railways.base.data.recipe.processing;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.recipe.EnumRecipeList.DyedOnlyPalettesRecipeList;
-import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRPalettes.StyledList;
@@ -29,9 +28,6 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Ingredient;
-
-import java.util.Arrays;
 
 public class RailwaysMixingRecipeGen extends RailwaysProcessingRecipeGen {
 	@SuppressWarnings("unused")
@@ -45,11 +41,7 @@ public class RailwaysMixingRecipeGen extends RailwaysProcessingRecipeGen {
 				return loc;
             },
 			b -> b
-				.require(Ingredient.of(
-					Arrays.stream(PalettesColor.values())
-						.filter(c -> c != color)
-						.map(c -> style.get(c).asStack())
-				))
+				.require(style.dyeGroupTag)
 				.require(Ingredients.palettesPaint(color, PaintPitcherItem.FLUID_PER_LEVEL))
 				.output(style.get(color))
 		)

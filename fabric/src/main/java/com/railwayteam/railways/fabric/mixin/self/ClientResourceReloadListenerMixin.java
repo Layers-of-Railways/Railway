@@ -16,17 +16,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.content.custom_tracks.casing;
+package com.railwayteam.railways.fabric.mixin.self;
 
-import net.minecraft.server.packs.resources.ResourceManager;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.reload.ClientResourceReloadListener;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
-public class CasingResourceReloadListener implements ResourceManagerReloadListener {
-    public static final CasingResourceReloadListener INSTANCE = new CasingResourceReloadListener();
-    
+@Mixin(ClientResourceReloadListener.class)
+public abstract class ClientResourceReloadListenerMixin implements ResourceManagerReloadListener, IdentifiableResourceReloadListener {
+    @Unique
+    private static final ResourceLocation ID = Railways.asResource("client_reload_listener");
+
     @Override
-    public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-        CasingRenderUtils.clearModelCache();
+    public ResourceLocation getFabricId() {
+        return ID;
     }
 }
