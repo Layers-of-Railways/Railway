@@ -65,7 +65,7 @@ public class RailwaysMixingRecipeGen extends RailwaysProcessingRecipeGen {
         paintLoc(color),
         b -> {
             b.require(Ingredients.dye(dyeColor));
-            b.require(Ingredients.egg());
+            b.require(Ingredients.bindingAgent());
             b.require(FluidIngredient.fromTag(FluidTags.WATER, FluidUnits.bucket()));
             FluidUtils.addFluidOutput(b, CRFluids.PAINT.get(), FluidUnits.bucket(), PaintFluid.setColor(new CompoundTag(), color));
             return b;
@@ -129,7 +129,7 @@ public class RailwaysMixingRecipeGen extends RailwaysProcessingRecipeGen {
             paintLoc(color),
             b -> {
                 b.require(stoneType.getBaseBlock().get());
-                b.require(Ingredients.egg());
+                b.require(Ingredients.bindingAgent());
                 b.require(FluidIngredient.fromTag(FluidTags.WATER, FluidUnits.bucket()));
                 b.requiresHeat(HeatCondition.HEATED);
                 FluidUtils.addFluidOutput(b, CRFluids.PAINT.get(), FluidUnits.bucket(), PaintFluid.setColor(new CompoundTag(), color));

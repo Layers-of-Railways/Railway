@@ -91,6 +91,9 @@ public class CRTagGen {
 
 		prov.addTag(AllItemTags.NOT_TRAIN_FUEL.tag);
 
+		prov.addTag(AllItemTags.BINDING_AGENTS.tag)
+			.add(Items.EGG);
+
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)
 				tagAppender(prov, tag);
