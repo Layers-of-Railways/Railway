@@ -19,7 +19,7 @@
 package com.railwayteam.railways.compat.emi.fabric;
 
 import com.railwayteam.railways.content.palettes.PalettesColor;
-import com.railwayteam.railways.multiloader.fluid.FluidUnits;
+import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.registry.CRFluids;
 import com.railwayteam.railways.registry.CRItems;
 import com.simibubi.create.compat.emi.recipes.SpoutEmiRecipe;
@@ -45,7 +45,7 @@ public class RailwaysEmiPlugin implements EmiPlugin {
             registry.addRecipe(new SpoutEmiRecipe(
                 new ProcessingRecipeBuilder<>(FillingRecipe::new, new ResourceLocation("emi", path))
                     .withItemIngredients(Ingredient.of(CRItems.EMPTY_PAINT_PITCHER))
-                    .withFluidIngredients(palettesPaint(color, FluidUnits.bucket()))
+                    .withFluidIngredients(palettesPaint(color, PaintPitcherItem.FLUID_PER_LEVEL * PaintPitcherItem.MAX_LEVELS))
                     .withSingleItemOutput(CRItems.PAINT_PITCHERS.get(color).asStack())
                     .build()
             ));

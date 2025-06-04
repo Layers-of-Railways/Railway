@@ -63,7 +63,7 @@ import static com.railwayteam.railways.util.ItemUtils.oppositeHand;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class PaintPitcherItem extends Item {
-    public static final int MAX_LEVELS = 8;
+    public static final int MAX_LEVELS = 32;
     public static final long FLUID_PER_LEVEL = FluidUnits.bucket() / 8;
     protected final PalettesColor color;
 
@@ -271,8 +271,8 @@ public abstract class PaintPitcherItem extends Item {
 
         List<Pair<BlockPos, BlockState>> paintTargets = new ArrayList<>();
 
-        final int r = 8;
-        final int rActual = 4;
+        final int r = 16;
+        final int rActual = 5;
         for (int x0 = -r; x0 <= r; x0++) {
             for (int y0 = -r; y0 <= r; y0++) {
                 for (int z0 = -r; z0 <= r; z0++) {

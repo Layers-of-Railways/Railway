@@ -92,7 +92,7 @@ public class CRTagGen {
 		prov.addTag(AllItemTags.NOT_TRAIN_FUEL.tag);
 
 		prov.addTag(AllItemTags.BINDING_AGENTS.tag)
-			.add(Items.EGG);
+			.add(Items.CLAY_BALL);
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

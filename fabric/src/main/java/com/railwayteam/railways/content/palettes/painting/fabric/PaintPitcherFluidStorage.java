@@ -85,6 +85,7 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
 
         int currentLevels = getLevels();
         int levelCapacity = MAX_LEVELS - currentLevels;
+        if (levelCapacity <= 0) return 0;
         int filledLevels = (int) Math.min(maxAmount / FLUID_PER_LEVEL, levelCapacity);
         if (filledLevels <= 0) return 0;
 

@@ -122,6 +122,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
 
         int currentLevels = getLevels();
         int levelCapacity = PaintPitcherItem.MAX_LEVELS - currentLevels;
+        if (levelCapacity <= 0) return 0;
         int filledLevels = (int) Math.min(stack.getAmount() / PaintPitcherItem.FLUID_PER_LEVEL, levelCapacity);
         if (filledLevels <= 0) return 0;
 
