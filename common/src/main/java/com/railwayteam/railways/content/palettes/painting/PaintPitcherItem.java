@@ -19,12 +19,12 @@
 package com.railwayteam.railways.content.palettes.painting;
 
 import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.mixin_interfaces.ItemStackDuck;
 import com.railwayteam.railways.multiloader.fluid.FluidUnits;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRItems;
-import com.railwayteam.railways.registry.CRPalettes;
+import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Pair;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -45,11 +45,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -58,6 +54,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.railwayteam.railways.util.ItemUtils.copyStackData;
 import static com.railwayteam.railways.util.ItemUtils.oppositeHand;
 
 @MethodsReturnNonnullByDefault
@@ -65,6 +62,7 @@ import static com.railwayteam.railways.util.ItemUtils.oppositeHand;
 public abstract class PaintPitcherItem extends Item {
     public static final int MAX_LEVELS = 32;
     public static final long FLUID_PER_LEVEL = FluidUnits.bucket() / 8;
+    public static final int LEVELS_PER_CANNON_SHOT = 8;
     protected final PalettesColor color;
 
     public PaintPitcherItem(Properties properties, PalettesColor color) {
@@ -92,6 +90,10 @@ public abstract class PaintPitcherItem extends Item {
         return Math.round((float)getLevels(stack) * 13.0F / (float)MAX_LEVELS);
     }
 
+    protected boolean railways$shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged || newStack.getItem() != oldStack.getItem();
+    }
+
     public PalettesColor getColor() {
         return color;
     }
@@ -113,7 +115,7 @@ public abstract class PaintPitcherItem extends Item {
 
     private static void setLevels(ItemStack stack, int levels) {
         if (!(stack.getItem() instanceof PaintPitcherItem)) return;
-        if (levels <= 0 || levels > MAX_LEVELS) {
+        if (levels <= 0) {
             throw new IllegalArgumentException("Levels must be between 1 and " + MAX_LEVELS);
         }
 
@@ -136,17 +138,27 @@ public abstract class PaintPitcherItem extends Item {
     }
 
     public ItemStack copyAsFilledStack(ItemStack base, int levels) {
-        levels = Mth.clamp(levels, 0, MAX_LEVELS);
+        levels = Math.max(levels, 0);
         if (levels == 0) {
             ItemStack stack = CRItems.EMPTY_PAINT_PITCHER.asStack();
-            stack.setTag(base.getTag() != null ? base.getTag().copy() : null);
+            copyStackData(base, stack);
             stack.removeTagKey("FillLevel");
             return stack;
         } else {
             ItemStack stack = new ItemStack(this);
-            stack.setTag(base.getTag() != null ? base.getTag().copy() : null);
+            copyStackData(base, stack);
             setLevels(stack, levels);
             return stack;
+        }
+    }
+
+    public void setFillInPlace(ItemStack stack, int levels) {
+        if (levels <= 0) {
+            stack.removeTagKey("FillLevel");
+            ((ItemStackDuck) (Object) stack).railways$setItem(CRItems.EMPTY_PAINT_PITCHER.get());
+        } else {
+            ((ItemStackDuck) (Object) stack).railways$setItem(this);
+            setLevels(stack, levels);
         }
     }
 
@@ -162,7 +174,7 @@ public abstract class PaintPitcherItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (CRItems.PAINT_BRUSH.isIn(player.getItemInHand(oppositeHand(usedHand))))
+        if (CRTags.AllItemTags.PAINT_DRINK_BLOCKERS.matches(player.getItemInHand(oppositeHand(usedHand))))
             return InteractionResultHolder.pass(player.getItemInHand(usedHand));
 
         player.startUsingItem(usedHand);
@@ -198,50 +210,6 @@ public abstract class PaintPitcherItem extends Item {
         tooltipComponents.add(Components.translatable("item.railways.paint_pitcher.paint_level", levels, MAX_LEVELS));
     }
 
-    /**
-     * Repaints a block at the given position in the level.
-     * Returns true if the block was successfully repainted, false otherwise.
-     */
-    static boolean repaint(Level level, BlockPos pos, BlockState state, PalettesColor color) {
-        BlockState newState = CRPalettes.getPaintedState(state, color);
-        if (newState == null) return false;
-
-        if (newState.hasProperty(DoorBlock.HALF)) {
-            boolean lower = newState.getValue(DoorBlock.HALF) == DoubleBlockHalf.LOWER;
-            BlockPos otherPos = lower ? pos.above() : pos.below();
-            BlockState otherNewState = CRPalettes.getPaintedState(level.getBlockState(otherPos), color);
-            if (otherNewState == null) return false;
-
-            // To successfully repaint a door, we need to:
-            // 1. Clear the top block
-            // 2. Set the bottom block to the new state
-            // 3. Set the top block to the new state
-            if (lower) {
-                BlockPos tmp = pos;
-                pos = otherPos;
-                otherPos = tmp;
-
-                BlockState tmpState = newState;
-                newState = otherNewState;
-                otherNewState = tmpState;
-            }
-
-            level.setBlock(
-                pos,
-                level.isWaterAt(pos)
-                    ? Blocks.WATER.defaultBlockState()
-                    : Blocks.AIR.defaultBlockState(),
-                Block.UPDATE_KNOWN_SHAPE | Block.UPDATE_IMMEDIATE | Block.UPDATE_ALL
-            );
-
-            if (!level.setBlock(otherPos, otherNewState, Block.UPDATE_ALL)) {
-                return false;
-            }
-        }
-
-        return level.setBlock(pos, newState, Block.UPDATE_ALL);
-    }
-
     @SuppressWarnings("ConstantValue") // IntelliJ is hallucinating that the nested loops never terminate
     public void projectilePaint(ItemStack stack, Level level, BlockHitResult hit) {
         if (!(stack.getItem() == this)) return;
@@ -253,13 +221,13 @@ public abstract class PaintPitcherItem extends Item {
         final BlockPos hitPos = hit.getBlockPos();
         final BlockState hitState = level.getBlockState(hitPos);
 
-        final var hitStyle = CRPalettes.getStyleForBlock(hitState.getBlock());
-        PalettesColor hitColor = hitStyle == null ? null : hitStyle.getSecond();
+        final var hitTarget = RepaintingTarget.get(level, hitPos, hitState);
+        PalettesColor hitColor = hitTarget == null ? null : hitTarget.getColor();
         if (hitColor == color) hitColor = null;
 
         // start by painting the hit block
         if (hitColor != null) {
-            if (repaint(level, hitPos, hitState, color)) {
+            if (hitTarget.repaint(color)) {
                 if (--levels <= 0) {
                     return;
                 }
@@ -269,7 +237,7 @@ public abstract class PaintPitcherItem extends Item {
         final BlockPos splashSource = hitPos.relative(hit.getDirection());
         final Vec3 splashSourceVec = splashSource.getCenter();
 
-        List<Pair<BlockPos, BlockState>> paintTargets = new ArrayList<>();
+        List<RepaintingTarget> paintTargets = new ArrayList<>();
 
         final int r = 16;
         final int rActual = 5;
@@ -284,7 +252,7 @@ public abstract class PaintPitcherItem extends Item {
                     float dy = rActual * y0 / dist;
                     float dz = rActual * z0 / dist;
 
-                    BlockPos paintTarget = BlockGetter.traverseBlocks(
+                    BlockPos paintTargetPos = BlockGetter.traverseBlocks(
                         splashSourceVec,
                         splashSourceVec.add(dx, dy, dz),
                         level,
@@ -297,22 +265,22 @@ public abstract class PaintPitcherItem extends Item {
                         },
                         ($) -> null
                     );
-                    if (paintTarget == null) continue;
+                    if (paintTargetPos == null) continue;
 
-                    BlockState state = level.getBlockState(paintTarget);
-                    var style = CRPalettes.getStyleForBlock(state.getBlock());
+                    BlockState state = level.getBlockState(paintTargetPos);
+                    RepaintingTarget paintTarget = RepaintingTarget.get(level, paintTargetPos, state);
 
-                    if (style == null || style.getSecond() == color) continue;
-                    if (hitColor != null && hitColor != style.getSecond()) continue;
+                    if (paintTarget == null || paintTarget.getColor() == color) continue;
+                    if (hitColor != null && hitColor != paintTarget.getColor()) continue;
 
-                    paintTargets.add(Pair.of(paintTarget, state));
+                    paintTargets.add(paintTarget);
                 }
             }
         }
 
         paintTargets.sort((a, b) -> {
-            double distA = a.getFirst().distSqr(hitPos);
-            double distB = b.getFirst().distSqr(hitPos);
+            double distA = a.getPos().distSqr(hitPos);
+            double distB = b.getPos().distSqr(hitPos);
 
             int cmp = Double.compare(distA, distB);
             if (cmp != 0) return cmp;
@@ -321,11 +289,7 @@ public abstract class PaintPitcherItem extends Item {
         });
 
         for (int i = 0; i < paintTargets.size() && levels > 0; i++) {
-            Pair<BlockPos, BlockState> target = paintTargets.get(i);
-            BlockPos pos = target.getFirst();
-            BlockState state = target.getSecond();
-
-            if (repaint(level, pos, state, color)) {
+            if (paintTargets.get(i).repaint(color)) {
                 levels--;
             }
         }

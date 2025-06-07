@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-04T22:35:20.235881442	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2025-06-07T07:30:42.143647416	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 bb1be39b19559d8478399d8010fa8a4a348f79c1 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/dripstone_slashed_locometal.json
 a391c15af79e48e1a65ae3d1e3f6bcfb3b8d9338 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/limestone_slashed_locometal.json
 db9eb13f615ff9ae04f8ee4d4dca3a31632a7c24 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/pine_green_copper_wrapped_locometal.json
@@ -994,9 +994,9 @@ f21ee9ad8d75d2a1d975d3c06fda3ecfa9dba503 data/railways/advancements/recipes/misc
 bc5b8a4617e5b4dd2f2c0b6eb2dbf1a8451c2b35 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/blue_brass_wrapped_locometal.json
 60b25cf94af044ad7493a0825534cb419540a197 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/granite_brass_wrapped_locometal.json
 a82fb352cb3201bd5d69de142cd27e44285ee41e data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/red_copper_wrapped_locometal.json
+33aa6fe8ab45ae2cf2ae7291db3a0b51e59266d2 data/railways/recipes/stonecutting/palettes/cycling/gray_copper_wrapped_locometal.json
 9044552445fba96fb52864c3ce828437680e996d data/railways/recipes/stonecutting/palettes/cycling/royal_blue_locometal_pillar.json
 41d77b2f90e7d96c50e616db6595149de1642c52 data/railways/recipes/crafting/palettes/hazard_stripes_b/granite_hazard_stripes_diagonal_on_white.json
-33aa6fe8ab45ae2cf2ae7291db3a0b51e59266d2 data/railways/recipes/stonecutting/palettes/cycling/gray_copper_wrapped_locometal.json
 6460c87bb151298417523346b5ce276ee6e980e8 data/railways/recipes/stonecutting/palettes/cycling/pink_iron_wrapped_locometal_smokebox.json
 c9cd7e162035d5629862fddebe62d79ebf4d1720 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/tuff_iron_wrapped_locometal.json
 9c88d1c33154ad21657ef6dfe85cd0e162df9828 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/granite_slashed_locometal.json

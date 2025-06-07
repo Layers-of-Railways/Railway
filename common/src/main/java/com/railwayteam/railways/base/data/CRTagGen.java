@@ -19,10 +19,12 @@
 package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -93,6 +95,13 @@ public class CRTagGen {
 
 		prov.addTag(AllItemTags.BINDING_AGENTS.tag)
 			.add(Items.CLAY_BALL);
+
+		prov.addTag(AllItemTags.PAINT_DRINK_BLOCKERS.tag)
+			.add(CRItems.PAINT_BRUSH.get())
+			.add(AllItems.POTATO_CANNON.get());
+
+		prov.addTag(AllItemTags.PAINT_BRUSH_REPAIR_ITEMS.tag)
+			.add(Items.FEATHER);
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

@@ -19,6 +19,7 @@
 package com.railwayteam.railways.util;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
@@ -34,5 +35,14 @@ public class ItemUtils {
 
 	public static InteractionHand oppositeHand(InteractionHand hand) {
 		return hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+	}
+
+	public static void copyStackData(ItemStack source, ItemStack target) {
+		CompoundTag tag = source.getTag();
+		if (tag != null) {
+			target.setTag(tag.copy());
+		} else {
+			target.setTag(null);
+		}
 	}
 }

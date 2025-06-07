@@ -531,12 +531,20 @@ public class CRBlockPartials {
         }))
     );
 
+    public static final PalettesColorList<PartialModel> PAINT_BLOBS = new PalettesColorList<>(
+        color -> item("palettes/paint_blob/" + color.getSerializedName())
+    );
+
     private static PartialModel createBlock(String path) {
         return new PartialModel(Create.asResource("block/" + path));
     }
 
     private static PartialModel block(String path) {
         return new PartialModel(Railways.asResource("block/" + path));
+    }
+
+    private static PartialModel item(String path) {
+        return new PartialModel(Railways.asResource("item/" + path));
     }
 
     static {

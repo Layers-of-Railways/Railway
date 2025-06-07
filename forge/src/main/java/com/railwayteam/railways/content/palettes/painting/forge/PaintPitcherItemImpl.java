@@ -38,6 +38,11 @@ public class PaintPitcherItemImpl extends PaintPitcherItem {
         super(properties, color);
     }
 
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return railways$shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
+    }
+
     public static PaintPitcherItem create(Item.Properties properties, PalettesColor color) {
         return new PaintPitcherItemImpl(properties, color);
     }

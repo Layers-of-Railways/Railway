@@ -21,9 +21,11 @@ package com.railwayteam.railways.content.palettes.painting.fabric;
 import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import io.github.fabricators_of_create.porting_lib.item.ReequipAnimationItem;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -31,11 +33,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 @SuppressWarnings("UnstableApiUsage")
-public class PaintPitcherItemImpl extends PaintPitcherItem {
+public class PaintPitcherItemImpl extends PaintPitcherItem implements ReequipAnimationItem {
     public PaintPitcherItemImpl(Properties properties, PalettesColor color) {
         super(properties, color);
 
         FluidStorage.ITEM.registerForItems(($, context) -> new PaintPitcherFluidStorage(context), this);
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return railways$shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
     }
 
     public static PaintPitcherItem create(Item.Properties properties, PalettesColor color) {

@@ -19,10 +19,7 @@
 package com.railwayteam.railways.content.palettes.painting;
 
 import com.railwayteam.railways.content.palettes.PalettesColor;
-import com.railwayteam.railways.registry.CRPalettes;
-import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -47,6 +44,11 @@ public class PaintBrushItem extends Item implements Vanishable {
     }
 
     @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
+        return CRTags.AllItemTags.PAINT_BRUSH_REPAIR_ITEMS.matches(repairCandidate);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         Level level = context.getLevel();
@@ -59,16 +61,15 @@ public class PaintBrushItem extends Item implements Vanishable {
         if (!(offhandStack.getItem() instanceof PaintPitcherItem paintPitcher)) return InteractionResult.PASS;
 
         BlockState clickedState = level.getBlockState(clickedPos);
-        if (!CRTags.AllBlockTags.LOCOMETAL.matches(clickedState.getBlock())) return InteractionResult.PASS;
 
         PalettesColor pitcherColor = paintPitcher.getColor();
-        Pair<Styles, PalettesColor> info = CRPalettes.getStyleForBlock(clickedState.getBlock());
-        if (info == null) return InteractionResult.PASS;
-        if (info.getSecond() == pitcherColor) return InteractionResult.PASS;
+        RepaintingTarget target = RepaintingTarget.get(level, clickedPos, clickedState);
+        if (target == null) return InteractionResult.PASS;
+        if (target.getColor() == pitcherColor) return InteractionResult.PASS;
 
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
-        if (!PaintPitcherItem.repaint(level, clickedPos, clickedState, pitcherColor)) return InteractionResult.FAIL;
+        if (!target.repaint(pitcherColor)) return InteractionResult.FAIL;
 
         PaintPitcherItem.usePaint(player, InteractionHand.OFF_HAND);
         player.getMainHandItem().hurtAndBreak(1, player,
