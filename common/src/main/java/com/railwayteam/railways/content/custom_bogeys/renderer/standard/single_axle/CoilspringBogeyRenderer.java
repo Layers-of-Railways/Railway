@@ -24,31 +24,32 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
+import net.createmod.catnip.render.CachedBuffers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class CoilspringBogeyRenderer implements BogeyRenderer {
-    @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS);
-        createModelInstance(materialManager, COILSPRING_FRAME);
-    }
 
     @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-        getTransform(COILSPRING_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-        getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption)
+        CachedBuffers.partial(COILSPRING_FRAME, Blocks.AIR.defaultBlockState())
+                .light(packedLight)
+                .overlay(packedOverlay)
+                .renderInto(poseStack, buffer);
+
+        CachedBuffers.partial(SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState())
                 .translate(0, 12 / 16f, 0)
                 .rotateX(wheelAngle)
-                .render(ms, light, vb);
+                .light(packedLight)
+                .overlay(packedOverlay)
+                .renderInto(poseStack, buffer);
     }
 }

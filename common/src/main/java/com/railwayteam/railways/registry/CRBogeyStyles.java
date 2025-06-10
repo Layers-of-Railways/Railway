@@ -26,12 +26,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowDoub
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowScotchYokeBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowSmallBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ArchbarBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.BlombergBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.FreightBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ModernBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.PassengerBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.Y25BogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0100Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0120Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled040Renderer;
@@ -48,9 +43,7 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.M
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumSingleWheelRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumStandardRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumTripleWheelRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.CoilspringBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.LeafspringBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.SingleaxleBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.RadialBogeyRenderer;
