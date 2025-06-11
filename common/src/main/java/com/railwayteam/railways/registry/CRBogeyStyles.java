@@ -22,10 +22,9 @@ import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowDoubleScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowSmallBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.*;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0100Renderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0120Renderer;
@@ -47,9 +46,8 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_a
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.RadialBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideComicallyLargeScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideDefaultBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideScotchYokeBogeyRenderer;
+import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.RadialBogeyVisual;
+import com.railwayteam.railways.content.custom_bogeys.renderer.wide.*;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
@@ -256,7 +254,7 @@ public class CRBogeyStyles {
     // Handcar
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
         .size(BogeySizes.SMALL, CRBlocks.HANDCAR, () -> () -> new SizeRenderer(new HandcarBogeyRenderer(), HandcarBogeyVisual::new))
-        .soundType(AllSoundEvents.COGS.getId())
+        .soundEvent(AllSoundEvents.COGS::getMainEvent)
         .build();
 
     // Medium
