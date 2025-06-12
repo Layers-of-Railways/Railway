@@ -46,7 +46,7 @@ public class ModernBogeyRenderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
 
             wheel.translate(0, 12 / 16f, side)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -12 / 16f, 0)
                     .light(packedLight)
                     .overlay(packedOverlay)

@@ -54,7 +54,7 @@ public class LeafspringBogeyVisual implements BogeyVisual {
     @Override
     public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
         wheel.translate(0,12/16f,0)
-             .rotateX(wheelAngle)
+             .rotateXDegrees(wheelAngle)
              .setChanged();
         frame.setChanged();
     }

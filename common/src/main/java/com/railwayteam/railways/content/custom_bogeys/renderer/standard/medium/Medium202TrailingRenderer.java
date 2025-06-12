@@ -50,7 +50,7 @@ public class Medium202TrailingRenderer implements BogeyRenderer {
             primaryShafts
                     .translate(-.5f, .25f, i * -1)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -60,7 +60,7 @@ public class Medium202TrailingRenderer implements BogeyRenderer {
 
         CachedBuffers.partial(MEDIUM_SHARED_WHEELS, Blocks.AIR.defaultBlockState())
                 .translate(0, 13 / 16f, 0)
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .translate(0, -13 / 16f, 0)
                 .renderInto(poseStack, buffer);
     }

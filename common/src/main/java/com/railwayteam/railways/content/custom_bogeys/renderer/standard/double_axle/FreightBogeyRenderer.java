@@ -50,7 +50,7 @@ public class FreightBogeyRenderer implements BogeyRenderer {
             secondaryShafts
                     .translate(-.5f, .25f, i * -1)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .light(light)
                     .overlay(overlay)
@@ -63,7 +63,7 @@ public class FreightBogeyRenderer implements BogeyRenderer {
         SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
         for (int side = -1; side < 2; side++) {
             wheel.translate(0, 12 / 16f, side)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -12 / 16f, 0)
                     .light(light)
                     .overlay(overlay)

@@ -94,15 +94,15 @@ public class NarrowDoubleScotchYokeBogeyVisual implements BogeyVisual {
         for (int side : Iterate.positiveAndNegative) {
             wheels[(side + 1) / 2]
                     .translate(0, 14 / 16., side * (12 / 16.))
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 0, 0)
                     .setChanged();
 
             wheelPins[(side + 1) / 2]
                     .translate(0, 14 / 16., side * (12 / 16.))
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 1 / 4f, 0)
-                    .rotateX(-wheelAngle)
+                    .rotateXDegrees(-wheelAngle)
                     .setChanged();
         }
     }

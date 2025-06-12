@@ -77,15 +77,15 @@ public class NarrowDoubleScotchYokeBogeyRenderer implements BogeyRenderer {
 
             wheels
                 .translate(0, 14 / 16., side * (12 / 16.))
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .translate(0, 0, 0)
                 .renderInto(poseStack, buffer);
 
             pins
                 .translate(0, 14 / 16., side * (12 / 16.))
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .translate(0, 1 / 4f, 0)
-                .rotateX(-wheelAngle)
+                .rotateXDegrees(-wheelAngle)
                 .renderInto(poseStack, buffer);
         }
 

@@ -58,7 +58,7 @@ public class Y25BogeyRenderer implements BogeyRenderer {
         SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
         for (int side = -1; side < 2; side++) {
             wheel.translate(0, 12 / 16f, side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -12 / 16f, 0)
                     .renderInto(ms, buffer);
         }

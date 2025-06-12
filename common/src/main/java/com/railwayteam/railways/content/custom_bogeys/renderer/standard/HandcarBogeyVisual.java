@@ -108,18 +108,18 @@ public class HandcarBogeyVisual implements BogeyVisual {
         frame.translate(0, 5 / 16f, 0).setChanged();
         handle.translateY(39 / 16.f)
                 .rotateZDegrees(180)
-                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .rotateXDegrees((float)(handleAngle - Math.toRadians(90-32.5)))
                 .translateY(-34 / 16.f)
                 .setChanged()
         ;
         handleFirstPerson.translateY(39f / 16.f)
                 .rotateZDegrees(180)
-                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .rotateXDegrees((float)(handleAngle - Math.toRadians(90-32.5)))
                 .translateY(-34 / 16.f)
                 .setChanged();
 
         coupling.translate(coupling_pos)
-                .rotateX((float)-(couplingAngle - Mth.HALF_PI))
+                .rotateXDegrees((float)-(couplingAngle - Mth.HALF_PI))
                 .setChanged();
 
         largeCog.translate(-8 / 16f, 12 / 16f, -3.5 / 16f)

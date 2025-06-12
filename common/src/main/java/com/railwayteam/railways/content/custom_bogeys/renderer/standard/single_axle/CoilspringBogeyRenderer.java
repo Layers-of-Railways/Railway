@@ -47,7 +47,7 @@ public class CoilspringBogeyRenderer implements BogeyRenderer {
 
         CachedBuffers.partial(SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState())
                 .translate(0, 12 / 16f, 0)
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .light(packedLight)
                 .overlay(packedOverlay)
                 .renderInto(poseStack, buffer);

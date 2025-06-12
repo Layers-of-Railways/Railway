@@ -102,7 +102,7 @@ public class HandcarBogeyRenderer implements BogeyRenderer {
         CachedBuffers.partial(HANDCAR_HANDLE, Blocks.AIR.defaultBlockState())
                 .translateY(39 / 16.f)
                 .rotateZDegrees(180)
-                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .rotateXDegrees((float)(handleAngle - Math.toRadians(90-32.5)))
                 .translateY(-34 / 16.f)
                 .scale(firstPerson ? 0 : 1)
                 .renderInto(poseStack, buffer);
@@ -110,14 +110,14 @@ public class HandcarBogeyRenderer implements BogeyRenderer {
         CachedBuffers.partial(HANDCAR_HANDLE_FIRST_PERSON, Blocks.AIR.defaultBlockState())
                 .translateY(39f / 16.f)
                 .rotateZDegrees(180)
-                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .rotateXDegrees((float)(handleAngle - Math.toRadians(90-32.5)))
                 .translateY(-34 / 16.f)
                 .scale(firstPerson ? 0 : 1)
                 .renderInto(poseStack, buffer);
 
         CachedBuffers.partial(HANDCAR_COUPLING, Blocks.AIR.defaultBlockState())
                 .translate(coupling_pos)
-                .rotateX((float)-(couplingAngle - Mth.HALF_PI))
+                .rotateXDegrees((float)-(couplingAngle - Mth.HALF_PI))
                 .renderInto(poseStack, buffer);
 
         CachedBuffers.partial(HANDCAR_LARGE_COG, Blocks.AIR.defaultBlockState())

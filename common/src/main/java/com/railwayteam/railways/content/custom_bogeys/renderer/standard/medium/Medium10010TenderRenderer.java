@@ -50,7 +50,7 @@ public class Medium10010TenderRenderer implements BogeyRenderer {
             secondaryShafts
                     .translate(-.5f, .31f, 1.8f + side * -1.5)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -61,7 +61,7 @@ public class Medium10010TenderRenderer implements BogeyRenderer {
         SuperByteBuffer wheels = CachedBuffers.partial(MEDIUM_SHARED_WHEELS,Blocks.AIR.defaultBlockState());
         for (int side = -1; side < 4; side++) {
             wheels.translate(0, 13 / 16f, -1.5f + side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -13 / 16f, 0)
                     .renderInto(poseStack, buffer);
         }

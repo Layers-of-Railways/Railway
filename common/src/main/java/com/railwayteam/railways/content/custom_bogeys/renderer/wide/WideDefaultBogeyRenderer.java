@@ -60,7 +60,7 @@ public class WideDefaultBogeyRenderer implements BogeyRenderer {
         SuperByteBuffer wheel = CachedBuffers.partial(CR_WIDE_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
         for (int side = -1; side < 2; side++) {
             wheel.translate(0, 14 / 16., side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .renderInto(ms, buffer);
         }
     }

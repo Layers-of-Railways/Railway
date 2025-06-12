@@ -54,7 +54,7 @@ public class LargeCreateStyled0100Renderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
             primaryShafts.translate(-.5, .25, -.5f + side * 4.3675)
                     .center()
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -62,7 +62,7 @@ public class LargeCreateStyled0100Renderer implements BogeyRenderer {
         for (int side = -3; side < 3; side++) {
             middleShafts.translate(-.5f, .25f, -1.3f + side * -1.6)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -80,25 +80,25 @@ public class LargeCreateStyled0100Renderer implements BogeyRenderer {
 
         CachedBuffers.partial(LC_STYLE_FULL_BLIND_WHEELS,Blocks.AIR.defaultBlockState())
                 .translate(0, 1, 0)
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .translate(0, -1, 0)
                 .renderInto(poseStack, buffer);
 
         for (int side : Iterate.positiveAndNegative) {
             semiBlindWheels.translate(0, 1, side * 1.684)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -1, 0)
                     .renderInto(poseStack, buffer);
             wheels.translate(0, 1, side * 3.3684)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .renderInto(poseStack, buffer);
         }
 
         for (int side = -2; side < 3; side++) {
             pins.translate(0, 1, side * 1.6842)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 1 / 4f, 0)
-                    .rotateX(-wheelAngle)
+                    .rotateXDegrees(-wheelAngle)
                     .renderInto(poseStack, buffer);
         }
     }

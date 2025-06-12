@@ -73,7 +73,7 @@ public class MediumQuadrupleWheelVisual implements BogeyVisual {
         for (int side = -1; side < 3; side++) {
             wheels[side + 1]
                     .translate(0, 13 / 16f, -.75f + side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -13 / 16f, 0)
                     .setChanged();
         }

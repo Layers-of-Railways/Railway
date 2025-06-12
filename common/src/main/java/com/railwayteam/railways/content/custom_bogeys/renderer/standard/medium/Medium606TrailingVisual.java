@@ -73,7 +73,7 @@ public class Medium606TrailingVisual implements BogeyVisual {
         for (int side = -1; side < 2; side++) {
             wheels[side + 1]
                     .translate(0, 13 / 16f, side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -13 / 16f, 0)
                     .setChanged();
         }

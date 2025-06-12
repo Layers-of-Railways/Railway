@@ -52,12 +52,12 @@ public class LargeCreateStyled040Renderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
             secondaryShafts.translate(-.5f, .25f, -.5f + side * 1.87)
                     .center()
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
             middleShafts.translate(-.5f, .25f, -.5f + side * 1.2)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -75,13 +75,13 @@ public class LargeCreateStyled040Renderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
 
             wheels.translate(0, 1, side * .8732)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .renderInto(poseStack, buffer);
 
             pins.translate(0, 1, side * .8732)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 1 / 4f, 0)
-                    .rotateX(-wheelAngle)
+                    .rotateXDegrees(-wheelAngle)
                     .renderInto(poseStack, buffer);
         }
     }

@@ -56,7 +56,7 @@ public class RadialBogeyRenderer implements BogeyRenderer {
         SuperByteBuffer wheel = CachedBuffers.partial(SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
         for (int side = -1; side < 2; side++) {
             wheel.translate(0, 12 / 16f, side * 1.5)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -12 / 16f, 0)
                     .renderInto(poseStack, buffer);
         }

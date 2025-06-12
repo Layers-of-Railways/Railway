@@ -51,7 +51,7 @@ public class LargeCreateStyled080Renderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
             secondaryShafts.translate(-.5f, .25f, -.5f + side * 3.617)
                     .center()
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -60,7 +60,7 @@ public class LargeCreateStyled080Renderer implements BogeyRenderer {
             if (side == 0) continue;
             middleShafts.translate(-.5f, .25f, -.5f + side * -1.6)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -79,19 +79,19 @@ public class LargeCreateStyled080Renderer implements BogeyRenderer {
 
         for (int side : Iterate.positiveAndNegative) {
             wheels.translate(0, 1, side * 2.62)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .renderInto(poseStack, buffer);
             innerWheels.translate(0, 1, side * .8732)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -1, 0)
                     .renderInto(poseStack, buffer);
         }
 
         for (int side = 0; side < 4; side++) {
             pins.translate(0, 1, -2.62f + side * 1.7467)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 1 / 4f, 0)
-                    .rotateX(-wheelAngle)
+                    .rotateXDegrees(-wheelAngle)
                     .renderInto(poseStack, buffer);
         }
     }

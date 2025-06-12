@@ -52,7 +52,7 @@ public class Medium404TrailingRenderer implements BogeyRenderer {
             primaryShafts
                     .translate(-.5f, .25f, i * -1)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -63,7 +63,7 @@ public class Medium404TrailingRenderer implements BogeyRenderer {
         SuperByteBuffer wheels = CachedBuffers.partial(MEDIUM_SHARED_WHEELS,Blocks.AIR.defaultBlockState());
         for (int side : Iterate.positiveAndNegative) {
             wheels.translate(0, 13 / 16f, side * .75)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -13 / 16f, 0)
                     .renderInto(poseStack, buffer);
         }

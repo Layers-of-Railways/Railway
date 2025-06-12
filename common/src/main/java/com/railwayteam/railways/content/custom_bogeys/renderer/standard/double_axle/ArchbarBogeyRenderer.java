@@ -47,7 +47,7 @@ public class ArchbarBogeyRenderer implements BogeyRenderer {
             secondaryShaft
                     .translate(-.5f, .25f, i * -1)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .light(light)
                     .overlay(overlay)

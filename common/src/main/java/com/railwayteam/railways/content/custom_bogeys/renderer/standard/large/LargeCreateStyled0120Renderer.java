@@ -53,7 +53,7 @@ public class LargeCreateStyled0120Renderer implements BogeyRenderer {
         for (int side : Iterate.positiveAndNegative) {
             secondaryShafts.translate(-.5, .25, -.5f + side * 5.364)
                     .center()
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -62,7 +62,7 @@ public class LargeCreateStyled0120Renderer implements BogeyRenderer {
             if (side == 0) continue;
             middleShafts.translate(-.5f, .25f, -.5f + side * -1.7)
                     .center()
-                    .rotateZ(wheelAngle)
+                    .rotateZDegrees(wheelAngle)
                     .uncenter()
                     .renderInto(poseStack, buffer);
         }
@@ -81,25 +81,25 @@ public class LargeCreateStyled0120Renderer implements BogeyRenderer {
 
         for (int side : Iterate.positiveAndNegative) {
             fullBlindWheels.translate(0, 1, side * .8733)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -1, 0)
                     .renderInto(poseStack, buffer);
 
             semiBlindWheels.translate(0, 1, side * 2.62)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, -1, 0)
                     .renderInto(poseStack, buffer);
 
             wheels.translate(0, 1, side * 4.3665)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .renderInto(poseStack, buffer);
         }
 
         for (int side = -3; side < 3; side++) {
             pins.translate(0, 1, .8733f + side * 1.74657)
-                    .rotateX(wheelAngle)
+                    .rotateXDegrees(wheelAngle)
                     .translate(0, 1 / 4f, 0)
-                    .rotateX(-wheelAngle)
+                    .rotateXDegrees(-wheelAngle)
                     .renderInto(poseStack, buffer);
         }
     }
