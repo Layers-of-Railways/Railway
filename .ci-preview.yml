@@ -1,0 +1,16 @@
+minecraft_version: 1.20.1
+workflows: [".github/workflows/build.yml"]
+mod_version:
+  path: gradle.properties
+  regex: mod_version = (.*)
+  group: 1
+  format: ${mod_version}-mc${minecraft_version}-build.${build_number}
+buttons:
+  fabric:
+    style: link
+    url: https://maven.ithundxr.dev/snapshots/com/railwayteam/railways/Steam_Rails-fabric-${minecraft_version}/${mod_version}+fabric-mc${minecraft_version}-build.${build_number}/Steam_Rails-fabric-${minecraft_version}-${mod_version}+fabric-mc${minecraft_version}-build.${build_number}.jar
+    label: Fabric
+  forge:
+    style: link
+    url: https://maven.ithundxr.dev/snapshots/com/railwayteam/railways/Steam_Rails-forge-${minecraft_version}/${mod_version}+forge-mc${minecraft_version}-build.${build_number}/Steam_Rails-forge-${minecraft_version}-${mod_version}+forge-mc${minecraft_version}-build.${build_number}.jar
+    label: Forge

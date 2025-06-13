@@ -3,8 +3,8 @@
   "ambient_occlusion": false,
   "display": {
     "gui": {
-      "rotation": [30, 90, 0],
-      "scale": [0.4, 0.4, 0.4]
+      "rotation": [30, 45, 0],
+      "scale": [0.4125, 0.4125, 0.4125]
     }
   }
 }

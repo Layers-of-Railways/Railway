@@ -57,5 +57,7 @@ public class CRDevCaps {
         registerCustomSkin("TropheusJay", "tropheusjay");
 
         registerCustomCap("cshcrafter", "cshcrafter", true);
+
+        registerCustomCap("pride", "pride");
     }
 }

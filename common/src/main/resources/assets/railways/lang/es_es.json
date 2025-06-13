@@ -1,6 +1,8 @@
 {
+  "block.create.railway_casing.tooltip": "CAJA DE TREN",
   "block.create.track_station.tooltip": "ESTACIÓN DE TREN",
   "block.create.track_station.tooltip.summary": "Un _desplegador_ sujetando una _llave inglesa_ puede ensamblar y desensamblar automáticamente trenes interactuando con una _estación_. _Pista_: puedes usar una tolva para dar una llave inglesa a un desplegador.",
+  "block.railways.boiler.tooltip": "CALDERA",
   "block.railways.conductor_whistle": "Silbato de maquinista",
   "block.railways.mono_bogey": "Vagón de monorraíl",
   "block.railways.semaphore": "Semáforo",
