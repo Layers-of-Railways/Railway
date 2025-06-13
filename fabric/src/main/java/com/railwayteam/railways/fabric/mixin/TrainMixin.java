@@ -32,7 +32,7 @@ import java.util.Iterator;
 @Mixin(Train.class)
 public class TrainMixin {
     @SuppressWarnings("unchecked")
-    @ModifyExpressionValue(method = "burnFuel", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/Contraption$ContraptionInvWrapper;nonEmptyViews()Ljava/lang/Iterable;"), remap = false)
+    @ModifyExpressionValue(method = "burnFuel", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/api/contraption/storage/item/MountedItemStorageWrapper;nonEmptyViews()Ljava/lang/Iterable;"), remap = false)
     private <T> Iterable<? extends StorageView<T>> railways$disableFuelConsumptionBasedOnTag(Iterable<? extends StorageView<T>> original) {
         return () -> (Iterator<StorageView<T>>) Iterators.filter(original.iterator(), it ->
                 !((ItemVariant) it.getResource()).getItem().getDefaultInstance().is(CRTags.AllItemTags.NOT_TRAIN_FUEL.tag)

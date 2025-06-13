@@ -33,7 +33,6 @@ import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import net.createmod.ponder.foundation.PonderScene;
-import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.createmod.ponder.foundation.instruction.PonderInstruction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -117,8 +116,9 @@ public class DoorScenes {
         Vec3 blockSurface = util.vector().blockSurface(doorBottomPos, Direction.NORTH)
             .add(0, 1 / 16f, 0);
         scene.overlay().showFilterSlotInput(blockSurface, Direction.NORTH, 60);
-        scene.overlay().showControls(new InputWindowElement(blockSurface, Pointing.DOWN).scroll()
-            .withItem(AllItems.WRENCH.asStack()), 60);
+        scene.overlay().showControls(blockSurface, Pointing.DOWN, 60)
+            .scroll()
+            .withItem(AllItems.WRENCH.asStack());
         scene.idle(10);
         scene.overlay().showText(60)
             .pointAt(blockSurface)
@@ -135,7 +135,7 @@ public class DoorScenes {
             .placeNearTarget()
             .attachKeyFrame();
         scene.idle(30);
-        scene.overlay().showControls(new InputWindowElement(upperDoorSurface, Pointing.DOWN).rightClick(), 20);
+        scene.overlay().showControls(upperDoorSurface, Pointing.DOWN, 20).rightClick();
         scene.idle(10);
         openDoor(scene, doorBottomPos);
         scene.idle(30);
@@ -301,8 +301,8 @@ public class DoorScenes {
 
         scene.idle(30);
 
-        scene.overlay().showControls(new InputWindowElement(util.vector().topOf(elevatorDoorBottomPos.below(6))
-            .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick(), 60);
+        scene.overlay().showControls(util.vector().topOf(elevatorDoorBottomPos.below(6))
+            .add(8 / 16f, 0, 0), Pointing.DOWN, 60).rightClick();
         scene.overlay().showText(70)
             .colored(PonderPalette.RED)
             .text("Doors in special mode cannot be toggled simply by using them")
@@ -332,8 +332,8 @@ public class DoorScenes {
 
         scene.idle(15);
 
-        scene.overlay().showControls(new InputWindowElement(util.vector().topOf(elevatorDoorBottomPos.below(6))
-            .add(8 / 16f, 0, 0), Pointing.DOWN).rightClick().whileSneaking(), 50);
+        scene.overlay().showControls(util.vector().topOf(elevatorDoorBottomPos.below(6))
+            .add(8 / 16f, 0, 0), Pointing.DOWN, 50).rightClick().whileSneaking();
         scene.overlay().showText(60)
             .colored(PonderPalette.GREEN)
             .text("Sneaking, however, allows the player to toggle the door anyway")

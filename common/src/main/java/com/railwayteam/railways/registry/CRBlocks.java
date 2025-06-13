@@ -21,7 +21,13 @@ package com.railwayteam.railways.registry;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
-import com.railwayteam.railways.content.buffer.*;
+import com.railwayteam.railways.content.buffer.BlockStateBlockItem;
+import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
+import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.NarrowTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.StandardTrackBufferBlock;
+import com.railwayteam.railways.content.buffer.TrackBufferBlockItem;
+import com.railwayteam.railways.content.buffer.WideTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.HeadstockBlock;
@@ -32,7 +38,6 @@ import com.railwayteam.railways.content.conductor.vent.CopycatVentModel;
 import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleItem;
-import com.railwayteam.railways.content.coupling.TrackCouplerDisplaySource;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlockItem;
 import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeBogeyBlock;
@@ -40,8 +45,17 @@ import com.railwayteam.railways.content.custom_bogeys.blocks.narrow.NarrowGaugeB
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard.DoubleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard.SingleAxleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.standard.TripleAxleBogeyBlock;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.*;
-import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.*;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.LargeCreateStyle0100BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.LargeCreateStyle0120BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.LargeCreateStyle040BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.LargeCreateStyle060BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.large.LargeCreateStyle080BogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.Medium202TrailingBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.Medium404TrailingBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.MediumBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.MediumQuadrupleWheelBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.MediumQuintupleWheelBogeyBlock;
+import com.railwayteam.railways.content.custom_bogeys.blocks.standard.medium.MediumTripleWheelBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.wide.WideGaugeComicallyLargeBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
@@ -53,7 +67,6 @@ import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCr
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
-import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.handcar.HandcarControlsInteractionBehaviour;
 import com.railwayteam.railways.content.handcar.HandcarItem;
@@ -66,13 +79,11 @@ import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.FacingSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock.RotationType;
-import com.railwayteam.railways.content.switches.SwitchDisplaySource;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockItem;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllMovementBehaviours;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
@@ -82,7 +93,6 @@ import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
-import net.createmod.catnip.data.Couple;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.DataIngredient;
@@ -92,6 +102,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -104,14 +115,22 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
+import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
+import static com.simibubi.create.api.behaviour.display.DisplayTarget.displayTarget;
 import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.*;
+import static com.simibubi.create.foundation.data.TagGen.axeOnly;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 @SuppressWarnings("unused")
 public class CRBlocks {
@@ -238,7 +257,7 @@ public class CRBlocks {
         .transform(BuilderTransformers.semaphore())
             .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
+        .transform(displayTarget(CRDisplayTargets.SEMAPHORE))
         .item(SemaphoreItem::new).transform(customItemModel())
         .transform(axeOnly())
         .addLayer(() -> RenderType::translucent)
@@ -252,7 +271,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(BuilderTransformers.trackCoupler())
                     .transform(pickaxeOnly())
-                    .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
+                    .transform(displaySource(CRDisplaySources.TRACK_COUPLER_INFO))
                     .lang("Train Coupler")
                     .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
                     .transform(customItemModel("_", "block_both"))
@@ -266,7 +285,7 @@ public class CRBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+            .transform(displaySource(CRDisplaySources.TRACK_SWITCH))
             .onRegister(ItemUseOverrides::addBlock)
             .lang("Andesite Track Switch")
             .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
@@ -281,7 +300,7 @@ public class CRBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+            .transform(displaySource(CRDisplaySources.TRACK_SWITCH))
             .onRegister(ItemUseOverrides::addBlock)
             .lang("Brass Track Switch")
             .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))

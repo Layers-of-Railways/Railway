@@ -18,41 +18,49 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
-import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.simibubi.create.content.trains.track.*;
+import com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
+import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-//import static com.railwayteam.railways.content.coupling.CouplerOverlayType.getCouplerOverlayType;
 
 @Mixin(value = TrackBlock.class)
 public class MixinTrackBlockClient {
-
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target = "Lcom/jozufozu/flywheel/util/transform/TransformStack;translate(DDD)Ljava/lang/Object;", ordinal = 0),
-        locals = LocalCapture.CAPTURE_FAILSOFT, remap = false) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
-    private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint,
-                                         AxisDirection direction,PoseStack ms, RenderedTrackOverlayType type,
-                                         CallbackInfoReturnable<PartialModel> cir, TransformStack msr, Vec3 axis, Vec3 diff, Vec3 normal,
-                                         Vec3 offset,TrackBlockEntity trackTE, BezierConnection bc) {
+    @Inject(
+        method = "prepareTrackOverlay",
+        at = @At(
+            value = "INVOKE_ASSIGN",
+            target = "Ldev/engine_room/flywheel/lib/transform/PoseTransformStack;translate(Lnet/minecraft/world/phys/Vec3;)Ldev/engine_room/flywheel/lib/transform/Translate;",
+            ordinal = 0
+        ),
+        remap = false
+    ) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
+    private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
+                                         BezierTrackPointLocation bezierPoint, AxisDirection direction,
+                                         PoseStack ms, RenderedTrackOverlayType type,
+                                         CallbackInfoReturnable<PartialModel> cir, @Local BezierConnection bc,
+                                         @Local PoseTransformStack msr) {
         IHasTrackCasing casingBc = (IHasTrackCasing) bc;
         if (bc.getMaterial().trackType == CRTrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
@@ -68,9 +76,8 @@ public class MixinTrackBlockClient {
         }
     }
 
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true),
-        locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
-    private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, TransformStack msr) {
+    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true), remap = false)
+    private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, PoseStack ms, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, @Local PoseTransformStack msr) {
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             msr.translate(0, 14/16f, 0);
             return;

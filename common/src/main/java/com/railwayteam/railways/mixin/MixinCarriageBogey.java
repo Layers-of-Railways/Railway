@@ -51,7 +51,7 @@ public class MixinCarriageBogey {
         return value;
     }
 
-    @Inject(method = "updateCouplingAnchor", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Couple;set(ZLjava/lang/Object;)V"), cancellable = true)
+    @Inject(method = "updateCouplingAnchor", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Couple;set(ZLjava/lang/Object;)V"), cancellable = true)
     private void railways$hideInvisibleCoupler(Vec3 entityPos, float entityXRot, float entityYRot, int bogeySpacing,
                                           float partialTicks, boolean leading, CallbackInfo ci) {
         if (type instanceof InvisibleBogeyBlock || type instanceof InvisibleMonoBogeyBlock) {

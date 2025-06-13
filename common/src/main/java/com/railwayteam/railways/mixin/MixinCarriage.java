@@ -100,7 +100,7 @@ public abstract class MixinCarriage implements ICarriageConductors, ICarriageBuf
         railways$trailingBufferDistance = distance;
     }
 
-    @WrapOperation(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lcom/simibubi/create/foundation/utility/Couple;"))
+    @WrapOperation(method = "updateConductors", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;checkConductors()Lnet/createmod/catnip/data/Couple;"))
     private Couple<Boolean> addControllingConductors(CarriageContraptionEntity instance, Operation<Couple<Boolean>> original) {
         railways$controllingConductors.clear();
         if (instance.getContraption() instanceof CarriageContraption cc) {

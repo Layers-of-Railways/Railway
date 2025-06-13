@@ -26,11 +26,17 @@ import net.minecraft.resources.ResourceLocation;
 
 public class CRExtraRegistrationImpl {
     private static final ResourceLocation COPYCAT_ID = Create.asResource("copycat");
+    private static final ResourceLocation TRACK_SIGNAL_ID = Create.asResource("track_signal");
 
     public static void platformSpecificRegistration() {
         RegistryEntryAddedCallback.event(BuiltInRegistries.BLOCK_ENTITY_TYPE).register((rawId, id, blockEntityType) ->  {
             if (id == COPYCAT_ID)
                 CRExtraRegistration.addVentAsCopycat(blockEntityType);
+        });
+        
+        RegistryEntryAddedCallback.event(BuiltInRegistries.BLOCK).register((rawId, id, block) -> {
+            if (id == TRACK_SIGNAL_ID)
+                CRExtraRegistration.addSignalSource(block);
         });
     }
 }

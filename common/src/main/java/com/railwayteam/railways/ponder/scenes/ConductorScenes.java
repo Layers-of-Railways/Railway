@@ -30,7 +30,6 @@ import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.EntityElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -145,9 +144,9 @@ public class ConductorScenes {
 
     scene.idle(20);
 
-    scene.overlay().showControls(new InputWindowElement(util.vector().blockSurface(casing, Direction.UP), Pointing.DOWN)
+    scene.overlay().showControls(util.vector().blockSurface(casing, Direction.UP), Pointing.DOWN, 40)
         .rightClick()
-        .withItem(CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED).asStack()), 40);
+        .withItem(CRItems.ITEM_CONDUCTOR_CAP.get(DyeColor.RED).asStack());
 
     scene.idle(50);
     scene.world().showSection(util.select().position(deployer), Direction.DOWN);
@@ -391,7 +390,9 @@ public class ConductorScenes {
 
     ItemStack toolboxStack = AllBlocks.TOOLBOXES.get(DyeColor.LIME).asStack();
 
-    scene.overlay().showControls(new InputWindowElement(util.vector().topOf(conductorPos), Pointing.DOWN).rightClick().withItem(toolboxStack), 40);
+    scene.overlay().showControls(util.vector().topOf(conductorPos), Pointing.DOWN, 40)
+            .rightClick()
+            .withItem(toolboxStack);
 
     scene.idle(35);
 
@@ -410,7 +411,9 @@ public class ConductorScenes {
       scene.idle(1);
     }
 
-    scene.overlay().showControls(new InputWindowElement(util.vector().topOf(conductorPos), Pointing.DOWN).rightClick().whileSneaking(), 20);
+    scene.overlay().showControls(util.vector().topOf(conductorPos), Pointing.DOWN, 20)
+            .rightClick()
+            .whileSneaking();
 
     scene.idle(15);
 

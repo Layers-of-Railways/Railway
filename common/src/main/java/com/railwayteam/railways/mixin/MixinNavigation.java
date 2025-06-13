@@ -102,7 +102,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return original.call(instance, side) && !railways$isWaypointMode();
     }
 
-    @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lcom/simibubi/create/foundation/utility/Pair;"),
+    @WrapOperation(method = "tick", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lcom/simibubi/create/content/trains/entity/Navigation;waitingForSignal:Lnet/createmod/catnip/data/Pair;"),
     slice = @Slice(
         from = @At(value = "CONSTANT", args = {"doubleValue=0.25d"}),
         to = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;leaveStation()V")
@@ -390,7 +390,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         railways$bufferDistance.set(Double.MAX_VALUE);
     }
 
-    @Inject(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Pair;getFirst()Ljava/lang/Object;"))
+    @Inject(method = "lambda$tick$0", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Pair;getFirst()Ljava/lang/Object;"))
     private void storeBufferSlowdown(MutableObject<Pair<UUID, Boolean>> trackingCrossSignal, double scanDistance,
                                      MutableDouble crossSignalDistanceTracker, double brakingDistanceNoFlicker,
                                      Double distance, Pair<TrackEdgePoint, Couple<TrackNode>> couple,

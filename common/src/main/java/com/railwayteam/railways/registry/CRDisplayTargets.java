@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,21 +18,19 @@
 
 package com.railwayteam.railways.registry;
 
-import com.simibubi.create.AllMovementBehaviours;
-import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.distant_signals.SemaphoreDisplayTarget;
+import com.simibubi.create.api.behaviour.display.DisplayTarget;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 
-public class CRMovementBehaviours {
-    public static void register() {
-        // Flywheel movement behaviour is added via MixinAllBlocks.java
-    }
+import java.util.function.Supplier;
 
-    private static void add(Block block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
-    }
+public class CRDisplayTargets {
+	public static RegistryEntry<SemaphoreDisplayTarget> SEMAPHORE = simple("semaphore", SemaphoreDisplayTarget::new);
 
-    private static void add(ResourceLocation block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
-    }
+	private static <T extends DisplayTarget> RegistryEntry<T> simple(String name, Supplier<T> supplier) {
+		return Railways.registrate().displayTarget(name, supplier).register();
+	}
+
+	public static void register() {}
 }

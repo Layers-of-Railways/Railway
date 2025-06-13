@@ -19,8 +19,10 @@
 package com.railwayteam.railways.ponder;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.registry.CRPonderTags;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,5 +35,10 @@ public class CRPonderPlugin implements PonderPlugin {
     @Override
     public void registerScenes(@NotNull PonderSceneRegistrationHelper<ResourceLocation> helper) {
         CRPonderIndex.register(helper);
+    }
+
+    @Override
+    public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
+        CRPonderTags.register(helper);
     }
 }

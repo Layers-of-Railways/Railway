@@ -19,15 +19,21 @@
 package com.railwayteam.railways.registry;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.minecraft.resources.ResourceLocation;
 
-public class CRExtraDisplayTags {
-    public static void register() {
-        PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_SOURCES)
+public class CRPonderTags {
+    public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
+        PonderTagRegistrationHelper<RegistryEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+
+        HELPER.addToTag(AllCreatePonderTags.DISPLAY_SOURCES)
             .add(AllBlocks.TRACK_SIGNAL)
             .add(CRBlocks.TRACK_COUPLER)
             .add(CRBlocks.ANDESITE_SWITCH)
             .add(CRBlocks.BRASS_SWITCH);
-        PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_TARGETS)
+        HELPER.addToTag(AllCreatePonderTags.DISPLAY_TARGETS)
             .add(CRBlocks.SEMAPHORE);
     }
 }

@@ -67,7 +67,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.HashSet;
 import java.util.List;
@@ -252,11 +251,10 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         tag.putBoolean("IsHandcar", railways$isHandcar);
     }
 
-    @Inject(method = "read", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void readOccupiedCouplers(CompoundTag tag, Map<UUID, TrackGraph> trackNetworks, DimensionPalette dimensions, CallbackInfoReturnable<Train> cir,
-                                             UUID id, UUID owner, UUID graphId, TrackGraph graph, List<Carriage> carriages, List<Double> carriageSpacing,
-                                             boolean doubleEnded, Train train) {
-
+    @Inject(method = "read", at = @At("RETURN"))
+    private static void readOccupiedCouplers(CompoundTag tag, Map<UUID, TrackGraph> trackNetworks,
+                                             DimensionPalette dimensions, CallbackInfoReturnable<Train> cir,
+                                             @Local Train train) {
         NBTHelper.iterateCompoundList(tag.getList("OccupiedCouplers", Tag.TAG_COMPOUND),
             c -> ((IOccupiedCouplers) train).railways$getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).railways$setIndex(tag.getInt("ScheduleHolderIndex"));

@@ -41,7 +41,7 @@ public abstract class MixinTrackBlockOutline {
     @ModifyExpressionValue(method = "pickCurves",
             at = @At(
                     value = "INVOKE",
-                target = "Lcom/simibubi/create/foundation/utility/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+                target = "Lnet/createmod/catnip/math/VoxelShaper;get(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
                 remap = true
             )
     )

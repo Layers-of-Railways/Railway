@@ -30,16 +30,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ConfigHelper.class, remap = false)
 public class MixinConfigHelper {
-    @Inject(method = {
-        "hasAnyConfig",
-        "hasAnyForgeConfig"
-    }, at = @At("HEAD"), cancellable = true)
+    @Inject(method = "hasAnyForgeConfig", at = @At("HEAD"), cancellable = true)
     private static void markSNRConfig(String modID, CallbackInfoReturnable<Boolean> cir) {
         if (modID.equals(Railways.MOD_ID))
             cir.setReturnValue(true);
     }
 
-    @Inject(method = "findConfigSpecFor", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "findForgeConfigSpecFor", at = @At("HEAD"), cancellable = true)
     private static void returnSNRConfig(ModConfig.Type type, String modID, CallbackInfoReturnable<IConfigSpec<?>> cir) {
         if (modID.equals(Railways.MOD_ID)) {
             cir.setReturnValue(CRConfigs.byType(type).specification);

@@ -23,7 +23,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
 import com.railwayteam.railways.content.conductor.fabric.ConductorCapItemRenderer;
 import com.railwayteam.railways.fabric.events.ClientEventsFabric;
-import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -34,6 +33,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -44,7 +44,6 @@ public class RailwaysClientImpl implements ClientModInitializer {
 		RailwaysClient.init();
 		ClientEventsFabric.init();
 		ConductorCapItemRenderer.register();
-		CRExtraDisplayTags.register();
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"}) // jank!

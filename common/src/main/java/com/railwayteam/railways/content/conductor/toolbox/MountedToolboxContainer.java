@@ -26,6 +26,7 @@ import com.simibubi.create.content.equipment.toolbox.ToolboxMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -40,7 +41,8 @@ public class MountedToolboxContainer extends ToolboxMenu {
 
   public MountedToolboxContainer(MenuType<?> type, int id, Inventory inv, MountedToolbox toolbox) {
     super(type, id, inv, toolbox);
-    toolbox.startOpen(player);
+    if (player instanceof ServerPlayer serverPlayer)
+      MountedToolbox.openMenu(serverPlayer, toolbox);
   }
 
   public static MountedToolboxContainer create(int id, Inventory inv, MountedToolbox toolbox) {

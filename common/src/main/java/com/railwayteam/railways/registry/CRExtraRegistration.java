@@ -19,9 +19,11 @@
 package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableSet;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
-import com.simibubi.create.Create;
+import com.simibubi.create.api.behaviour.display.DisplaySource;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,12 +33,6 @@ import java.util.Set;
 public class CRExtraRegistration {
     public static boolean registeredSignalSource = false;
     public static boolean registeredVentAsCopycat = false;
-
-    // register the source, working independently of mod loading order
-    public static void register() {
-        platformSpecificRegistration();
-        addSignalSource();
-    }
 
     public static void addVentAsCopycat(BlockEntityType<?> object) {
         if (registeredVentAsCopycat) return;
@@ -55,10 +51,10 @@ public class CRExtraRegistration {
         registeredVentAsCopycat = true;
     }
 
-    public static void addSignalSource() {
+    public static void addSignalSource(Block block) {
         if (registeredSignalSource) return;
-        DisplayBehaviour signalDisplaySource = AllDisplayBehaviours.register(Create.asResource("track_signal_source"), new SignalDisplaySource());
-        AllDisplayBehaviours.assignBlock(signalDisplaySource, Create.asResource("track_signal"));
+        RegistryEntry<SignalDisplaySource> source = Railways.registrate().displaySource("track_signal_source", SignalDisplaySource::new).register();
+        DisplaySource.BY_BLOCK.add(block, source.get());
         registeredSignalSource = true;
     }
 

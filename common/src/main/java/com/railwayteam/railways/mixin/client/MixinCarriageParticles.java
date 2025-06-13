@@ -20,6 +20,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.CarriageParticles;
 import net.minecraft.core.particles.ParticleOptions;

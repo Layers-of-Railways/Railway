@@ -396,12 +396,10 @@ fun calculateGitHash(): String {
 
 fun calculateGitBranch(): String {
     try {
-        val stdout = ByteArrayOutputStream()
-        exec {
+        val output = providers.exec {
             commandLine("git", "rev-parse", "--abbrev-ref", "HEAD")
-            standardOutput = stdout
         }
-        return stdout.toString().trim()
+        return output.standardOutput.asText.get().trim()
     } catch(ignored: Throwable) {
         return "unknown"
     }

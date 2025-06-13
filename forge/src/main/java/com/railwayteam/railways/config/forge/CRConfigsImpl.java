@@ -19,7 +19,7 @@
 package com.railwayteam.railways.config.forge;
 
 import com.railwayteam.railways.config.CRConfigs;
-import com.simibubi.create.foundation.config.ConfigBase;
+import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;

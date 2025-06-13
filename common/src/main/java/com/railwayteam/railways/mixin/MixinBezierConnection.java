@@ -24,7 +24,6 @@ import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -48,7 +47,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = BezierConnection.class, remap = false)
 public abstract class MixinBezierConnection implements IHasTrackCasing {
-  @Shadow public Couple<BlockPos> tePositions;
+  @Shadow public Couple<BlockPos> bePositions;
 
   @Shadow public abstract Vec3 getPosition(double t);
 
@@ -105,7 +104,7 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
   private void nbtConstructor(CompoundTag compound, BlockPos localTo, CallbackInfo ci) {
     if (compound.contains("Casing", Tag.TAG_STRING)) {
       if (compound.getString("Casing").equals("minecraft:block")) {
-        Railways.LOGGER.error("NBTCtor trackCasing was minecraft:block!!! for BezierConnection: primary="+tePositions.getFirst()+", secondary="+tePositions.getSecond());
+		  Railways.LOGGER.error("NBTCtor trackCasing was minecraft:block!!! for BezierConnection: primary={}, secondary={}", bePositions.getFirst(), bePositions.getSecond());
       }
       //Railways.LOGGER.warn("NBTCtor: Casing="+compound.getString("Casing"));
       setTrackCasing((SlabBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.of(compound.getString("Casing"), ':')));
@@ -130,7 +129,7 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
   @Inject(method = "spawnItems", at = @At("TAIL"))
   private void spawnCasing(Level level, CallbackInfo ci) {
     if (this.getTrackCasing() != null) {
-      Vec3 origin = Vec3.atLowerCornerOf(tePositions.getFirst());
+      Vec3 origin = Vec3.atLowerCornerOf(bePositions.getFirst());
       Vec3 spawnPos = this.getPosition(0.5);
       ItemEntity entity = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(this.getTrackCasing()));
       entity.setDefaultPickUpDelay();

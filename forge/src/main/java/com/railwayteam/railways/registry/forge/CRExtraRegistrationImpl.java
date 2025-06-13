@@ -25,5 +25,6 @@ import net.minecraft.core.registries.Registries;
 public class CRExtraRegistrationImpl {
     public static void platformSpecificRegistration() {
         Create.REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
+        Create.REGISTRATE.addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
     }
 }

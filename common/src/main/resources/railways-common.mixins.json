@@ -145,7 +145,7 @@
     "client.MixinTrackTargetingClient",
     "client.MixinTrackVisual",
     "client.MixinTrackVisual$BezierTrackVisual",
-    "client.MixinTrainHatArmorLayer",
+    "client.MixinEntityHats",
     "client.MixinTrainHUD",
     "client.MixinTrainPacket",
     "compat.malilib.MixinGuiTextFieldGeneric",

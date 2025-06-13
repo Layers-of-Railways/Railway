@@ -47,6 +47,8 @@ public class ModSetup {
     CRCreativeModeTabs.register();
     CRItems.register();
     CRSpriteShifts.register();
+    CRDisplaySources.register();
+    CRDisplayTargets.register();
     CRBlockEntities.register();
     CRBlocks.register();
     CRPalettes.register();
@@ -57,10 +59,9 @@ public class ModSetup {
     CREdgePointTypes.register();
     CRSchedule.register();
     CRDataFixers.register();
-    CRExtraRegistration.register();
+    CRExtraRegistration.platformSpecificRegistration();
     CasingCollisionUtils.register();
     CRInteractionBehaviours.register();
-    CRMovementBehaviours.register();
     CRPortalTracks.register();
 
     // Compat

@@ -23,10 +23,10 @@ import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRShapes;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
+import net.createmod.catnip.ghostblock.GhostBlocks;
 import net.createmod.catnip.placement.IPlacementHelper;
 import net.createmod.catnip.placement.PlacementHelpers;
 import net.createmod.catnip.placement.PlacementOffset;
@@ -162,7 +162,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
 
 
         if (world.getBlockState(context.getClickedPos()) != state)
-            playRotateSound(world, context.getClickedPos());
+            IWrenchable.playRotateSound(world, context.getClickedPos());
 
         return InteractionResult.SUCCESS;
     }
@@ -248,7 +248,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             if (!offset.hasGhostState())
                 return;
 
-            CreateClient.GHOST_BLOCKS.showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL,true)))
+            GhostBlocks.getInstance().showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL,true)))
                     .at(offset.getBlockPos())
                     .breathingAlpha();
         }
