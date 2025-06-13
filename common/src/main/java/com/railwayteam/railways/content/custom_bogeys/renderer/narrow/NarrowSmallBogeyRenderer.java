@@ -20,58 +20,57 @@ package com.railwayteam.railways.content.custom_bogeys.renderer.narrow;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_FRAME;
-import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_SCOTCH_PINS;
 
 public class NarrowSmallBogeyRenderer implements BogeyRenderer {
-    @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, NARROW_FRAME);
-        createModelInstance(materialManager, NARROW_WHEELS, 2);
-        createModelInstance(materialManager, AllPartialModels.SHAFT_HALF, 2);
-    }
+
 
     @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-
-        BogeyModelData[] secondaryShafts = getTransform(AllPartialModels.SHAFT_HALF, ms, inInstancedContraption, 2);
-
+        SuperByteBuffer primaryShaft = CachedBuffers.partial(NARROW_WHEELS, Blocks.AIR.defaultBlockState());
         for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i].translate(-.5, 1 / 16., -(18 / 16.) + (i * 12 / 16.))
-                    .centre()
-                    .rotateZ(wheelAngle)
-                    .unCentre()
-                    .render(ms, light, vb);
+            primaryShaft.translate(-.5, 1 / 16., -(18 / 16.) + (i * 12 / 16.))
+                    .center()
+                    .rotateZDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
         }
 
-        getTransform(NARROW_FRAME, ms, inInstancedContraption)
+        CachedBuffers.partial(NARROW_FRAME, Blocks.AIR.defaultBlockState())
                 .translate(0, 5 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
-        BogeyModelData[] wheels = getTransform(NARROW_WHEELS, ms, inInstancedContraption, 2);
-        for (int side : Iterate.positiveAndNegative) {
-            if (!inInstancedContraption)
-                ms.pushPose();
-            BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 11 / 16., side * (10 / 16.))
-                    .rotateX(wheelAngle)
-                    .translate(0, 0, 0)
-                    .render(ms, light, vb);
-            if (!inInstancedContraption)
-                ms.popPose();
+        SuperByteBuffer wheels  =  CachedBuffers.partial(NARROW_WHEELS, Blocks.AIR.defaultBlockState());
+            for (int side : Iterate.positiveAndNegative) {
+                 wheels
+                    .translate(0, 11 / 16., side * (10 / 16.))
+                    .rotateXDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
         }
+
+
+
+
+
     }
 }

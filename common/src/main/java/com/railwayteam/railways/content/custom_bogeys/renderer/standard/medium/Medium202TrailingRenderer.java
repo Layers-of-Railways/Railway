@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium;
 
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
@@ -26,47 +27,41 @@ import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class Medium202TrailingRenderer implements BogeyRenderer {
-    @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, MEDIUM_2_0_2_TRAILING_FRAME);
-        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
-    }
 
     @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-
-        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
+        SuperByteBuffer primaryShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
 
         for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i]
+            primaryShafts
                     .translate(-.5f, .25f, i * -1)
-                    .centre()
-                    .rotateZ(wheelAngle)
-                    .unCentre()
-                    .render(ms, light, vb);
+                    .center()
+                    .rotateZDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
         }
 
-        getTransform(MEDIUM_2_0_2_TRAILING_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+        CachedBuffers.partial(MEDIUM_2_0_2_TRAILING_FRAME,Blocks.AIR.defaultBlockState())
+                .renderInto(poseStack, buffer);
 
-        getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)
+        CachedBuffers.partial(MEDIUM_SHARED_WHEELS, Blocks.AIR.defaultBlockState())
                 .translate(0, 13 / 16f, 0)
-                .rotateX(wheelAngle)
+                .rotateXDegrees(wheelAngle)
                 .translate(0, -13 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
     }
 }

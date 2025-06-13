@@ -26,82 +26,69 @@ import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_SCOTCH_PINS;
+import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class WideScotchYokeBogeyRenderer implements BogeyRenderer {
     @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, WIDE_SCOTCH_FRAME, WIDE_SCOTCH_WHEELS,
-                WIDE_SCOTCH_PINS, WIDE_SCOTCH_PISTONS);
-        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
-        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.X), 4);
-    }
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-    @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.LARGE;
-    }
-
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-
-        BogeyModelData[] primaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
-
+        SuperByteBuffer primaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
         for (int i : Iterate.zeroAndOne) {
-            primaryShafts[i].translate(-.5, 4 / 16., i * -1)
-                    .centre()
-                    .rotateZ(wheelAngle)
-                    .unCentre()
-                    .render(ms, light, vb);
+            primaryShaft.translate(-.5f, .25f, .5f + i * -2)
+                    .center()
+                    .rotateZDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
         }
 
-        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.X), ms, inInstancedContraption, 4);
 
+        SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.X));
         for (int i : Iterate.zeroAndOne) {
             for (int side : Iterate.zeroAndOne) {
-                secondaryShafts[i + (side * 2)]
-                        .translate(-1 + side, 4 / 16., (10 / 16.) + i * -(36 / 16.))
-                        .centre()
-                        .rotateX(wheelAngle)
-                        .unCentre()
-                        .render(ms, light, vb);
-            }
+            secondaryShaft.translate(-1 + side, 4 / 16., (10 / 16.) + i * -(36 / 16.))
+                    .center()
+                    .rotateXDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
+        }
         }
 
-        getTransform(WIDE_SCOTCH_FRAME, ms, inInstancedContraption)
-                .translate(0, 0, 0)
-                .render(ms, light, vb);
 
-        getTransform(WIDE_SCOTCH_PISTONS, ms, inInstancedContraption)
+        CachedBuffers.partial(WIDE_SCOTCH_FRAME, Blocks.AIR.defaultBlockState())
+                .renderInto(poseStack, buffer);
+
+        CachedBuffers.partial(WIDE_SCOTCH_PISTONS, Blocks.AIR.defaultBlockState())
                 .translate(0, 1, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
-        if (!inInstancedContraption)
-            ms.pushPose();
 
-        getTransform(WIDE_SCOTCH_WHEELS, ms, inInstancedContraption)
-                .translate(0, 1, 0)// 14/16
-                .rotateX(wheelAngle)
-                .translate(0, 0, 0)
-                .render(ms, light, vb);
+        CachedBuffers.partial(WIDE_SCOTCH_WHEELS, Blocks.AIR.defaultBlockState())
+                    .translate(0, 1, 0)
+                    .rotateXDegrees(wheelAngle)
+                    .translate(0, 0, 0)
+                    .renderInto(poseStack, buffer);
 
-        getTransform(WIDE_SCOTCH_PINS, ms, inInstancedContraption)
-                .translate(0, 1, 0)
-                .rotateX(wheelAngle)
-                .translate(0, 1 / 4f, 0)
-                .rotateX(-wheelAngle)
-                .render(ms, light, vb);
+        CachedBuffers.partial(WIDE_SCOTCH_PINS, Blocks.AIR.defaultBlockState())
+            .translate(0, 1, 0)
+                    .rotateXDegrees(wheelAngle)
+                    .translate(0, 1 / 4f, 0)
+                    .rotateXDegrees(-wheelAngle)
+                    .renderInto(poseStack, buffer);
 
-        if (!inInstancedContraption)
-            ms.popPose();
     }
 }
+
