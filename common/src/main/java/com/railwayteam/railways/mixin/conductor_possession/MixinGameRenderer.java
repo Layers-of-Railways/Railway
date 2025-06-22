@@ -40,9 +40,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(GameRenderer.class)
 public abstract class MixinGameRenderer {
-    @Shadow @Final private Minecraft minecraft;
+    @Shadow @Final
+	Minecraft minecraft;
 
-    @Shadow protected abstract void loadEffect(ResourceLocation resourceLocation);
+    @Shadow
+	abstract void loadEffect(ResourceLocation resourceLocation);
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
     private void railways$bobView(PoseStack matrixStack, float partialTicks, CallbackInfo ci) {

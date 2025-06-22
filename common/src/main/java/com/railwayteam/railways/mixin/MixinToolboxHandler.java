@@ -18,12 +18,12 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.toolbox.MountedToolbox;
 import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
 import com.simibubi.create.content.equipment.toolbox.ToolboxHandler;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,7 +40,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 import java.util.Set;
@@ -67,12 +66,11 @@ public abstract class MixinToolboxHandler {
                   value = "INVOKE",
                   target = "Lnet/minecraft/world/level/Level;isLoaded(Lnet/minecraft/core/BlockPos;)Z",
                   remap = true
-          ),
-          locals = LocalCapture.CAPTURE_FAILHARD
+          )
   )
   private static void railways$connectConductorToolboxes(Entity entity, Level world, CallbackInfo ci,
-                                     ServerPlayer player, boolean sendData, CompoundTag compound, int i,
-                                     String key, CompoundTag data, BlockPos pos, int slot) {
+                                                         @Local ServerPlayer player, @Local(ordinal = 0) CompoundTag compound, @Local(ordinal = 0) int i,
+                                                         @Local String key, @Local(ordinal = 1) CompoundTag data, @Local(ordinal = 1) int slot) {
     if (!data.hasUUID("EntityUUID") || !(world instanceof ServerLevel level))
       return;
     UUID uuid = data.getUUID("EntityUUID");

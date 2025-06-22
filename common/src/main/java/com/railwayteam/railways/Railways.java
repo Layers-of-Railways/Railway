@@ -32,9 +32,8 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.util.MethodVarHandleUtils;
 import com.railwayteam.railways.util.Utils;
-import com.simibubi.create.Create;
+import com.simibubi.create.CreateBuildInfo;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
@@ -90,8 +89,7 @@ public class Railways {
   }
 
   public static void init() {
-    String createVersion = MethodVarHandleUtils.getStaticField(Create.class, "VERSION", String.class, "UNKNOWN");
-    LOGGER.info("{} v{} initializing! Commit hash: {} on Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, createVersion, Loader.getFormatted());
+    LOGGER.info("{} v{} initializing! Commit hash: {} on Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, CreateBuildInfo.VERSION, Loader.getFormatted());
     
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MOD_ID + "-client.toml");
@@ -106,7 +104,8 @@ public class Railways {
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
+    // TODO - Forge entirely breaks with mixin audit, truly incredible
+    if (Utils.isDevEnv() && !Loader.FORGE.isCurrent() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 

@@ -22,7 +22,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
 import com.railwayteam.railways.base.data.recipe.DyedRecipeList.NullableDyedRecipeList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
-import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeBuilder;
+import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.PackOutput;
@@ -37,7 +37,6 @@ import java.util.function.UnaryOperator;
 
 @SuppressWarnings("unused")
 public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipeProvider {
-
     DyedRecipeList BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.BOILER.get(color).get())
         .returns(4)
         .setEmiDefault(color == null)

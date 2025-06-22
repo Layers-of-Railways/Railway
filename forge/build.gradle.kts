@@ -112,7 +112,7 @@ publishMods {
     file = tasks.remapJar.get().archiveFile
     version.set(project.version.toString())
     changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = STABLE
+    type = ALPHA
     displayName = "Steam 'n' Rails ${"mod_version"()} Forge ${"minecraft_version"()}"
     modLoaders.add("forge")
     modLoaders.add("neoforge")

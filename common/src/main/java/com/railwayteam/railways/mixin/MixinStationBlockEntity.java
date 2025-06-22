@@ -119,7 +119,8 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
         dropScheduleTrain = null;
     }
 
-    @ModifyExpressionValue(method = "dropSchedule", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"), require = 0)
+    // FIXME - PORTING
+    @ModifyExpressionValue(method = "dropSchedule", at = @At("HEAD"), require = 0)
     private Train returnOverridenTrain(Train original) {
         Train train = original != null ? original : dropScheduleTrain;
         dropScheduleTrain = null;

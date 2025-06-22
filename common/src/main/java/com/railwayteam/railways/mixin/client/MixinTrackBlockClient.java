@@ -19,7 +19,6 @@
 package com.railwayteam.railways.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.phantom.PhantomSpriteManager;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
@@ -31,12 +30,10 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
+import dev.engine_room.flywheel.lib.transform.Affine;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,35 +48,31 @@ public class MixinTrackBlockClient {
         method = "prepareTrackOverlay",
         at = @At(
             value = "INVOKE_ASSIGN",
-            target = "Ldev/engine_room/flywheel/lib/transform/PoseTransformStack;translate(Lnet/minecraft/world/phys/Vec3;)Ldev/engine_room/flywheel/lib/transform/Translate;",
+            target = "Ldev/engine_room/flywheel/lib/transform/Affine;translate(FFF)Ldev/engine_room/flywheel/lib/transform/Translate;",
             ordinal = 0
         ),
         remap = false
     ) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
-    private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
-                                         BezierTrackPointLocation bezierPoint, AxisDirection direction,
-                                         PoseStack ms, RenderedTrackOverlayType type,
-                                         CallbackInfoReturnable<PartialModel> cir, @Local BezierConnection bc,
-                                         @Local PoseTransformStack msr) {
+    private <Self extends Affine<Self>> void bezierShiftTrackOverlay(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, @Local BezierConnection bc) {
         IHasTrackCasing casingBc = (IHasTrackCasing) bc;
         if (bc.getMaterial().trackType == CRTrackType.MONORAIL) {
-            msr.translate(0, 14/16f, 0);
+            affine.translate(0, 14/16f, 0);
             return;
         }
         // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
         if (casingBc.getTrackCasing() != null) {
             if (bc.bePositions.getFirst().getY() == bc.bePositions.getSecond().getY()) {
-                msr.translate(0, 1 / 16f, 0);
+                affine.translate(0, 1 / 16f, 0);
             } else if (!casingBc.isAlternate()) {
-                msr.translate(0, 4 / 16f, 0);
+                affine.translate(0, 4 / 16f, 0);
             }
         }
     }
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true), remap = false)
-    private void blockShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, PoseStack ms, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, @Local PoseTransformStack msr) {
+    private <Self extends Affine<Self>> void blockShiftTrackOverlay(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir) {
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            msr.translate(0, 14/16f, 0);
+            affine.translate(0, 14/16f, 0);
             return;
         }
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
@@ -89,7 +82,7 @@ public class MixinTrackBlockClient {
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
-                    msr.translate(
+                    affine.translate(
                         spec.getXShift(trackType),
                         (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2)/16f,
                         spec.getZShift(trackType)
@@ -99,7 +92,7 @@ public class MixinTrackBlockClient {
     }
 
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Mth;floor(D)I"), cancellable = true)
-    private void skipInvisiblePhantoms(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, @Local BezierConnection bc) {
+    private <Self extends Affine<Self>> void skipInvisiblePhantoms(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir, @Local BezierConnection bc) {
         if (bc.getMaterial() == CRTrackMaterials.PHANTOM && !PhantomSpriteManager.isVisible())
             cir.setReturnValue(null);
     }

@@ -20,11 +20,12 @@ package com.railwayteam.railways.registry.forge;
 
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.simibubi.create.Create;
+import com.simibubi.create.api.registrate.CreateRegistrateRegistrationCallback;
 import net.minecraft.core.registries.Registries;
 
 public class CRExtraRegistrationImpl {
     public static void platformSpecificRegistration() {
-        Create.REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
-        Create.REGISTRATE.addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
+        CreateRegistrateRegistrationCallback.register(Registries.BLOCK_ENTITY_TYPE, Create.asResource("copycat"), CRExtraRegistration::addVentAsCopycat);
+        CreateRegistrateRegistrationCallback.register(Registries.BLOCK, Create.asResource("track_signal"), CRExtraRegistration::addSignalSource);
     }
 }

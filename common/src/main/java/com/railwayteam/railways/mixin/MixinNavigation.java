@@ -119,6 +119,7 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
         return original.call(instance);
     }
 
+    // FIXME - PORTING
     @WrapOperation(method = "search(DDZLjava/util/ArrayList;Lcom/simibubi/create/content/trains/entity/Navigation$StationTest;)V", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/station/GlobalStation;getPresentTrain()Lcom/simibubi/create/content/trains/entity/Train;"))
     private Train replacePresentTrain(GlobalStation instance, Operation<Train> original) {
         return ((ILimitedGlobalStation) instance).orDisablingTrain(original.call(instance), train);

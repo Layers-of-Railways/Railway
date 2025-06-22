@@ -375,11 +375,7 @@ fun Project.setupRepositories() {
                 includeGroupByRegex("com.github.*")
             }
         }
-        
-        // temp
-        flatDir {
-            dirs = setOf(rootProject.file("libs"))
-        }
+        maven("$rootDir/local-maven")
     }
 }
 

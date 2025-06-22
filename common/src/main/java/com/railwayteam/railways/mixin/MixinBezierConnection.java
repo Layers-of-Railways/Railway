@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRTags;
@@ -43,7 +44,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(value = BezierConnection.class, remap = false)
 public abstract class MixinBezierConnection implements IHasTrackCasing {
@@ -78,8 +78,8 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
 
 
   @Inject(method = "write(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/nbt/CompoundTag;", at = @At("RETURN"),
-      cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD, remap = true)
-  private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, Couple<BlockPos> tePositions, Couple<Vec3> starts, CompoundTag compound) {
+          cancellable = true, remap = true)
+  private void write(BlockPos localTo, CallbackInfoReturnable<CompoundTag> cir, @Local(ordinal = 0) Couple<BlockPos> tePositions, @Local(ordinal = 1) Couple<Vec3> starts, @Local CompoundTag compound) {
     if (getTrackCasing() != null) {
       if (BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
         Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());

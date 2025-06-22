@@ -37,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = ScheduleRuntime.class, remap = false)
 public abstract class MixinScheduleRuntime {
     @Shadow
-    Schedule schedule;
+	public Schedule schedule;
 
     @Shadow public int currentEntry;
 
@@ -47,7 +47,8 @@ public abstract class MixinScheduleRuntime {
 
     @Shadow public abstract void discardSchedule();
 
-    @Shadow Train train;
+    @Shadow
+	public Train train;
 
     @Inject(method = "tickConditions", at = @At("HEAD"), cancellable = true)
     private void tickWhenNoConditions(Level level, CallbackInfo ci) {
@@ -58,6 +59,7 @@ public abstract class MixinScheduleRuntime {
         }
     }
 
+    // FIXME - PORTING
     @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void discardAutoSchedule(Level level, CallbackInfo ci) {
         if (isAutoSchedule) {

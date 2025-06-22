@@ -204,6 +204,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         });
     }
 
+    // FIXME - PORTING
     @Inject(
             method = {
                     "lambda$backSignalListener$12", // fabric
@@ -224,6 +225,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         railways$occupiedCouplers.clear();
     }
 
+    // FIXME - PORTING
     @Inject(
             method = {
                     "lambda$collectInitiallyOccupiedSignalBlocks$20", // fabric

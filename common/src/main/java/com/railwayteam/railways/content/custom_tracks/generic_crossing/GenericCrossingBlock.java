@@ -34,10 +34,11 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackPropagator;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.Affine;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.math.VecHelper;
 import net.fabricmc.api.EnvType;
@@ -45,6 +46,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -150,9 +152,8 @@ public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBl
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack transform, TrackTargetingBehaviour.RenderedTrackOverlayType type) {
-        return AllBlocks.TRACK.get().prepareTrackOverlay(world, pos, state, bezierPoint, direction, transform, type);
+    public <Self extends Affine<Self>> PartialModel prepareTrackOverlay(Affine<Self> affine, BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, BezierTrackPointLocation bezierTrackPointLocation, AxisDirection axisDirection, RenderedTrackOverlayType renderedTrackOverlayType) {
+        return AllBlocks.TRACK.get().prepareTrackOverlay(affine, blockGetter, blockPos, blockState, bezierTrackPointLocation, axisDirection, renderedTrackOverlayType);
     }
 
     @Override

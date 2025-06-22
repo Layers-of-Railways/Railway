@@ -253,6 +253,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
         }
     }
 
+    // FIXME - PORTING
     @Inject(method = "tickContraption", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Couple;getFirst()Ljava/lang/Object;"))
     private void railways$storeDistanceTravelled(CallbackInfo ci, @Local(name = "distanceTo", ordinal = 0) double distanceTo) {
         railways$distanceTravelled = distanceTo;
