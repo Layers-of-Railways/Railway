@@ -175,7 +175,7 @@ public class RedstoneLinkInstruction extends ScheduleInstruction {
     @Override
     public @Nullable DiscoveredPath start(ScheduleRuntime runtime, Level level) {
         Train train = ((AccessorScheduleRuntime) runtime).getTrain();
-        Carriage carriage = train.carriages.getFirst();
+        Carriage carriage = train.carriages.get(0);
         CustomRedstoneActor actor = new CustomRedstoneActor(carriage);
         Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(level, actor);
         customActors.get(level).add(actor);
