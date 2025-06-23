@@ -118,8 +118,7 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
     private void clearDropTrain(ServerPlayer sender, CallbackInfoReturnable<Boolean> cir) {
         dropScheduleTrain = null;
     }
-
-    // FIXME - PORTING
+    
     @ModifyExpressionValue(method = "dropSchedule", at = @At("HEAD"), require = 0)
     private Train returnOverridenTrain(Train original) {
         Train train = original != null ? original : dropScheduleTrain;

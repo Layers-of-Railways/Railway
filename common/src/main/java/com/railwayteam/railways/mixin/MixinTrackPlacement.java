@@ -98,8 +98,7 @@ public class MixinTrackPlacement {
             }
         }
     }
-
-    // FIXME - PORTING
+    
     @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", shift = At.Shift.AFTER))
     private static void maybePlaceCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                            BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
