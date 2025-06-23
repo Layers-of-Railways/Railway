@@ -183,8 +183,7 @@ public class CRBogeyStyles {
         Optional<BogeyStyle> mapped = getMapped(from, toType);
         if (!forceFit || (toType == TrackType.STANDARD && mapped.isEmpty()))
             return mapped;
-        if (mapped.isEmpty() || (mapped.get().getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock
-            && !bogeyBlock.getValidPathfindingTypes(mapped.get()).contains(toType))) { // if no (suitable) style found
+        if (mapped.isEmpty() || !mapped.get().getNextBlock(BogeySizes.LARGE).getValidPathfindingTypes(mapped.get()).contains(toType)) { // if no (suitable) style found
             return AllBogeyStyles.BOGEY_STYLES.values().stream().filter((style) -> styleFitsTrack(style, toType)).findFirst();
         }
         return mapped;
