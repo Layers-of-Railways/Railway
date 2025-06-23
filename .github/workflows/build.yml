@@ -23,7 +23,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-home-cache-cleanup: true
-          cache-read-only: ${{ !endsWith(github.ref_name, '/dev') }}
+          cache-disabled: false
+          cache-read-only: false
 
       - name: Validate Gradle Wrapper Integrity
         uses: gradle/wrapper-validation-action@v2
