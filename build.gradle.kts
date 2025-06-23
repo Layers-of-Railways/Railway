@@ -71,7 +71,7 @@ allprojects {
     val build = buildNumber?.let { "-build.${it}" } ?: "-local"
 
     var gitBranchLabel = "";
-    if ("mod_version"().endsWith("-alpha")) {
+    if (!isRelease && "mod_version"().endsWith("-alpha")) {
         // gitBranchLabel should be "-" + the current git branch (replacing any slashes with underscores)
         gitBranchLabel = "-" + calculateGitBranch().replace("/", "_")
     }
