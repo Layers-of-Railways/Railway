@@ -138,4 +138,9 @@ public class Railways {
   public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
     throw new AssertionError();
   }
+
+  @ExpectPlatform
+  public static void platformBasedRegistration() {
+    throw new AssertionError();
+  }
 }

@@ -25,10 +25,8 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
-import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,69 +35,87 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.LARGE_CREATE_STYLED_0_10_0_FRAME;
+import static com.railwayteam.railways.registry.CRBlockPartials.LARGE_CREATE_STYLED_0_10_0_PISTON;
+import static com.railwayteam.railways.registry.CRBlockPartials.LC_STYLE_FULL_BLIND_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.LC_STYLE_SEMI_BLIND_WHEELS;
 
 public class LargeCreateStyled0100Renderer implements BogeyRenderer {
 
 
+	@Override
+	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+		SuperByteBuffer primaryShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+				.setValue(ShaftBlock.AXIS, Direction.Axis.X));
+		SuperByteBuffer middleShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
-        SuperByteBuffer primaryShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.X));
-        SuperByteBuffer middleShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+		for (int side : Iterate.positiveAndNegative) {
+			primaryShafts.translate(-.5, .25, -.5f + side * 4.3675)
+					.center()
+					.rotateXDegrees(wheelAngle)
+					.uncenter()
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
 
-        for (int side : Iterate.positiveAndNegative) {
-            primaryShafts.translate(-.5, .25, -.5f + side * 4.3675)
-                    .center()
-                    .rotateXDegrees(wheelAngle)
-                    .uncenter()
-                    .renderInto(poseStack, buffer);
-        }
+		for (int side = -3; side < 3; side++) {
+			middleShafts.translate(-.5f, .25f, -1.3f + side * -1.6)
+					.center()
+					.rotateZDegrees(wheelAngle)
+					.uncenter()
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
 
-        for (int side = -3; side < 3; side++) {
-            middleShafts.translate(-.5f, .25f, -1.3f + side * -1.6)
-                    .center()
-                    .rotateZDegrees(wheelAngle)
-                    .uncenter()
-                    .renderInto(poseStack, buffer);
-        }
+		CachedBuffers.partial(LARGE_CREATE_STYLED_0_10_0_FRAME, Blocks.AIR.defaultBlockState())
+				.light(light)
+				.overlay(overlay)
+				.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(LARGE_CREATE_STYLED_0_10_0_FRAME,Blocks.AIR.defaultBlockState())
-                .renderInto(poseStack, buffer);
+		CachedBuffers.partial(LARGE_CREATE_STYLED_0_10_0_PISTON, Blocks.AIR.defaultBlockState())
+				.translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
+				.light(light)
+				.overlay(overlay)
+				.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(LARGE_CREATE_STYLED_0_10_0_PISTON, Blocks.AIR.defaultBlockState())
-                .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .renderInto(poseStack, buffer);
+		SuperByteBuffer semiBlindWheels = CachedBuffers.partial(LC_STYLE_SEMI_BLIND_WHEELS, Blocks.AIR.defaultBlockState());
+		SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.LARGE_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
+		SuperByteBuffer pins = CachedBuffers.partial(AllPartialModels.BOGEY_PIN, Blocks.AIR.defaultBlockState());
 
-        SuperByteBuffer semiBlindWheels = CachedBuffers.partial(LC_STYLE_SEMI_BLIND_WHEELS,Blocks.AIR.defaultBlockState());
-        SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.LARGE_BOGEY_WHEELS,Blocks.AIR.defaultBlockState());
-        SuperByteBuffer pins = CachedBuffers.partial(AllPartialModels.BOGEY_PIN,Blocks.AIR.defaultBlockState());
+		CachedBuffers.partial(LC_STYLE_FULL_BLIND_WHEELS, Blocks.AIR.defaultBlockState())
+				.translate(0, 1, 0)
+				.rotateXDegrees(wheelAngle)
+				.translate(0, -1, 0)
+				.light(light)
+				.overlay(overlay)
+				.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(LC_STYLE_FULL_BLIND_WHEELS,Blocks.AIR.defaultBlockState())
-                .translate(0, 1, 0)
-                .rotateXDegrees(wheelAngle)
-                .translate(0, -1, 0)
-                .renderInto(poseStack, buffer);
+		for (int side : Iterate.positiveAndNegative) {
+			semiBlindWheels.translate(0, 1, side * 1.684)
+					.rotateXDegrees(wheelAngle)
+					.translate(0, -1, 0)
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+			wheels.translate(0, 1, side * 3.3684)
+					.rotateXDegrees(wheelAngle)
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
 
-        for (int side : Iterate.positiveAndNegative) {
-            semiBlindWheels.translate(0, 1, side * 1.684)
-                    .rotateXDegrees(wheelAngle)
-                    .translate(0, -1, 0)
-                    .renderInto(poseStack, buffer);
-            wheels.translate(0, 1, side * 3.3684)
-                    .rotateXDegrees(wheelAngle)
-                    .renderInto(poseStack, buffer);
-        }
-
-        for (int side = -2; side < 3; side++) {
-            pins.translate(0, 1, side * 1.6842)
-                    .rotateXDegrees(wheelAngle)
-                    .translate(0, 1 / 4f, 0)
-                    .rotateXDegrees(-wheelAngle)
-                    .renderInto(poseStack, buffer);
-        }
-    }
+		for (int side = -2; side < 3; side++) {
+			pins.translate(0, 1, side * 1.6842)
+					.rotateXDegrees(wheelAngle)
+					.translate(0, 1 / 4f, 0)
+					.rotateXDegrees(-wheelAngle)
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
+	}
 }

@@ -155,7 +155,7 @@ public class CRBogeyStyles {
     }
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
-        AbstractBogeyBlock<?> bogeyBlock = style.getNextBlock(BogeySizes.LARGE);
+        AbstractBogeyBlock<?> bogeyBlock = getNextBlock(style);
         return bogeyBlock.getValidPathfindingTypes(style).contains(trackType) &&
                 (trackType != CRTrackType.MONORAIL ^ bogeyBlock instanceof InvisibleMonoBogeyBlock);
     }
@@ -165,7 +165,7 @@ public class CRBogeyStyles {
     }
 
     private static Optional<BogeyStyle> getMappedRecursive(BogeyStyle from, TrackType toType, boolean recursive) {
-        if (from.getNextBlock(BogeySizes.LARGE).getValidPathfindingTypes(from).contains(toType))
+        if (getNextBlock(from).getValidPathfindingTypes(from).contains(toType))
             return Optional.of(from);
         Pair<BogeyStyle, TrackType> key = Pair.of(from, toType);
         if (STYLES_FOR_GAUGES.containsKey(key)) {
@@ -183,10 +183,14 @@ public class CRBogeyStyles {
         Optional<BogeyStyle> mapped = getMapped(from, toType);
         if (!forceFit || (toType == TrackType.STANDARD && mapped.isEmpty()))
             return mapped;
-        if (mapped.isEmpty() || !mapped.get().getNextBlock(BogeySizes.LARGE).getValidPathfindingTypes(mapped.get()).contains(toType)) { // if no (suitable) style found
+        if (mapped.isEmpty() || !getNextBlock(mapped.get()).getValidPathfindingTypes(mapped.get()).contains(toType)) { // if no (suitable) style found
             return AllBogeyStyles.BOGEY_STYLES.values().stream().filter((style) -> styleFitsTrack(style, toType)).findFirst();
         }
         return mapped;
+    }
+    
+    public static AbstractBogeyBlock<?> getNextBlock(BogeyStyle style) {
+        return style.getNextBlock(style.validSizes().stream().findFirst().orElseThrow());
     }
 
     private static final Set<BogeyStyle> SUB_LISTED_STYLES = new HashSet<>();
@@ -387,7 +391,7 @@ public class CRBogeyStyles {
     }
 
     public static CategoryEntry registerCategory(ResourceLocation id) {
-        return registerCategory(id.getPath(), id.getNamespace());
+        return registerCategory(id.getNamespace(), id.getPath());
     }
 
     public static CategoryEntry registerCategory(String modid, String name) {

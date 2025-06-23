@@ -34,51 +34,52 @@ import static com.railwayteam.railways.registry.CRBlockPartials.COILSPRING_FRAME
 import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class CoilspringBogeyVisual implements BogeyVisual {
-    private final TransformedInstance frame;
-    private final TransformedInstance wheel;
+	private final TransformedInstance frame;
+	private final TransformedInstance wheel;
 
-    private final boolean inContraption;
+	private final boolean inContraption;
 
 
-    public CoilspringBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption){
-        this.inContraption = inContraption;
-        frame = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(COILSPRING_FRAME))
-                .createInstance();
-        wheel = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
-                .createInstance();
-    }
-    @Override
-    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
+	public CoilspringBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
+		this.inContraption = inContraption;
+		frame = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(COILSPRING_FRAME))
+				.createInstance();
+		wheel = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
+				.createInstance();
+	}
 
-        wheel.translate(0, 12 / 16f, 0)
-                .rotateXDegrees(wheelAngle)
-                .setChanged();
-        frame.setChanged();
-    }
+	@Override
+	public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
 
-    @Override
-    public void hide() {
-        frame.setZeroTransform().setChanged();
-        wheel.setZeroTransform().setChanged();
-    }
+		wheel.translate(0, 12 / 16f, 0)
+				.rotateXDegrees(wheelAngle)
+				.setChanged();
+		frame.setChanged();
+	}
 
-    @Override
-    public void updateLight(int packedLight) {
-        frame.light(packedLight);
-        wheel.light(packedLight);
-    }
+	@Override
+	public void hide() {
+		frame.setZeroTransform().setChanged();
+		wheel.setZeroTransform().setChanged();
+	}
 
-    @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        consumer.accept(frame);
-        consumer.accept(wheel);
-    }
+	@Override
+	public void updateLight(int packedLight) {
+		frame.light(packedLight);
+		wheel.light(packedLight);
+	}
 
-    @Override
-    public void delete() {
-        frame.delete();
-        wheel.delete();
-    }
+	@Override
+	public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+		consumer.accept(frame);
+		consumer.accept(wheel);
+	}
+
+	@Override
+	public void delete() {
+		frame.delete();
+		wheel.delete();
+	}
 }

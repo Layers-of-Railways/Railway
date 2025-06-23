@@ -18,14 +18,9 @@
 
 package com.railwayteam.railways.content.fuel.psi;
 
-import com.railwayteam.railways.mixin.AccessorCarriageContraption;
 import com.railwayteam.railways.mixin_interfaces.IContraptionFuel;
-import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.simibubi.create.content.contraptions.Contraption;
-import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlockEntity;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -47,15 +42,8 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
-        CombinedTankWrapper ctw = ((IContraptionFuel) contraption).railways$getSharedFuelTanks();
-        if (contraption instanceof CarriageContraption carriageContraption) {
-            MountedStorageManager storageProxy = ((AccessorCarriageContraption) carriageContraption).railways$getStorageProxy();
-            ctw = ((IFuelInventory) storageProxy).railways$getFuelFluids();
-        }
-        CombinedTankWrapper finalCtw = ctw;
-
         LazyOptional<IFluidHandler> oldcap = capability;
-        capability = LazyOptional.of(() -> new InterfaceFluidHandler(finalCtw));
+        capability = LazyOptional.of(() -> new InterfaceFluidHandler(((IContraptionFuel) contraption).railways$getFluidFuels()));
         oldcap.invalidate();
         super.startTransferringTo(contraption, distance);
     }

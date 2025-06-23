@@ -101,7 +101,6 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
@@ -773,12 +772,7 @@ public class CRBlocks {
             .lang("Generic Crossing")
             .register();
 
-    @ExpectPlatform
-    public static void platformBasedRegistration() {
-        throw new AssertionError();
-    }
 
-    public static void register() {
-        platformBasedRegistration();
-    }
+
+    public static void register() {}
 }

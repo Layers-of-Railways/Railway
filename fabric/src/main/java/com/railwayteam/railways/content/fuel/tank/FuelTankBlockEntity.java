@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.content.fuel.tank;
 
+import com.railwayteam.railways.content.fuel.FuelTankBlockEntityBase;
 import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
@@ -56,7 +57,7 @@ import java.util.function.Consumer;
 
 import static java.lang.Math.abs;
 
-public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IMultiBlockEntityContainer.Fluid, CustomRenderBoundingBoxBlockEntity, SidedStorageBlockEntity {
+public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IMultiBlockEntityContainer.Fluid, CustomRenderBoundingBoxBlockEntity, SidedStorageBlockEntity, FuelTankBlockEntityBase {
     private static final int MAX_SIZE = 3;
 
     protected boolean forceFluidLevelUpdate;
@@ -624,7 +625,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         }
 
         public boolean isFluidValid(FluidVariant stack) {
-            return LiquidFuelTrainHandler.isFuel(stack.getFluid());
+            return LiquidFuelTrainHandler.isFuelForTanks(stack.getFluid());
         }
 
         @Override

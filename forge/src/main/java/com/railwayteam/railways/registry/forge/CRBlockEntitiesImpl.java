@@ -43,5 +43,5 @@ public class CRBlockEntitiesImpl {
             .renderer(() -> PortableStorageInterfaceRenderer::new)
             .register();
 
-    public static void platformBasedRegistration() {}
+    public static void init() {}
 }

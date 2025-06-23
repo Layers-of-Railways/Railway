@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,15 +16,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.registry.fabric;
 
-import com.simibubi.create.content.contraptions.MountedStorageManager;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.fuel.tank.FuelTankMountedStorageType;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 
-@Mixin(CarriageContraption.class)
-public interface AccessorCarriageContraption {
-    @Accessor(value = "storageProxy", remap = false)
-    MountedStorageManager railways$getStorageProxy();
+public class CRMountedStorageTypesImpl {
+	public static RegistryEntry<FuelTankMountedStorageType> FUEL_TANK = Railways.registrate()
+			.mountedFluidStorage("fuel_tank", FuelTankMountedStorageType::new)
+			.register();
+
+	public static void init() {}
 }

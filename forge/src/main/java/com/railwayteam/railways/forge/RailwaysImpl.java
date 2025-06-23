@@ -21,11 +21,22 @@ package com.railwayteam.railways.forge;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.forge.CRConfigsImpl;
+import com.railwayteam.railways.content.fuel.tank.FuelTankBlock;
 import com.railwayteam.railways.multiloader.Env;
+import com.railwayteam.railways.registry.forge.CRBlockEntitiesImpl;
+import com.railwayteam.railways.registry.forge.CRBlocksImpl;
 import com.railwayteam.railways.registry.forge.CRCreativeModeTabsImpl;
+import com.railwayteam.railways.registry.forge.CRMountedStorageTypesImpl;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
+import com.simibubi.create.api.connectivity.ConnectivityHandler;
+import com.simibubi.create.api.contraption.BlockMovementChecks;
+import com.simibubi.create.api.contraption.BlockMovementChecks.CheckResult;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -67,5 +78,17 @@ public class RailwaysImpl {
 		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
 		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
+	}
+
+	public static void platformBasedRegistration() {
+		BlockMovementChecks.registerAttachedCheck((BlockState state, Level world, BlockPos pos, Direction direction) -> {
+			if (state.getBlock() instanceof FuelTankBlock && ConnectivityHandler.isConnected(world, pos, pos.relative(direction)))
+				return CheckResult.SUCCESS;
+			return CheckResult.PASS;
+		});
+
+		CRMountedStorageTypesImpl.init();
+		CRBlocksImpl.init();
+		CRBlockEntitiesImpl.init();
 	}
 }

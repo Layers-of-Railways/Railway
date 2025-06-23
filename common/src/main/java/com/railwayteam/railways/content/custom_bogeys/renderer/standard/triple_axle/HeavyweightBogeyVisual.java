@@ -39,7 +39,7 @@ public class HeavyweightBogeyVisual implements BogeyVisual {
 	private final TransformedInstance[] wheels = new TransformedInstance[3];
 	private final TransformedInstance frame;
 	private final TransformedInstance[] shafts = new TransformedInstance[2];
-	
+
 	public HeavyweightBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
 		ctx.instancerProvider()
 				.instancer(InstanceTypes.TRANSFORMED, Models.partial(LONG_SHAFTED_WHEELS))

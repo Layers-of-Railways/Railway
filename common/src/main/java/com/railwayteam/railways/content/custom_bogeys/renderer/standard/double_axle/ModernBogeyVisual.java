@@ -30,69 +30,68 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.LONG_SHAFTED_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.MODERN_FRAME;
 
 public class ModernBogeyVisual implements BogeyVisual {
 
-    private final TransformedInstance[] wheels = new TransformedInstance[2];
-    private final TransformedInstance frame;
+	private final TransformedInstance[] wheels = new TransformedInstance[2];
+	private final TransformedInstance frame;
 
 
+	public ModernBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
 
-    public ModernBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption)
-    {
+		frame = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(MODERN_FRAME))
+				.createInstance();
 
-        frame = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(MODERN_FRAME))
-                .createInstance();
+		ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(LONG_SHAFTED_WHEELS))
+				.createInstances(wheels);
 
-        ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(LONG_SHAFTED_WHEELS))
-                .createInstances(wheels);
+	}
 
-    }
+	@Override
+	public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
+		for (int side = -1; side < 2; side++) {
+			wheels[side + 1]
+					.translate(0, 12 / 16f, side)
+					.rotateXDegrees(wheelAngle)
+					.translate(0, -12 / 16f, 0)
+					.setChanged();
+		}
+		frame.setChanged();
+	}
 
-    @Override
-    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
-        for (int side = -1; side < 2; side++) {
-            wheels[side + 1]
-                    .translate(0, 12 / 16f, side)
-                    .rotateXDegrees(wheelAngle)
-                    .translate(0, -12 / 16f, 0)
-                    .setChanged();
-        }
-        frame.setChanged();
-    }
+	@Override
+	public void hide() {
+		for (TransformedInstance wheel : wheels)
+			wheel.setZeroTransform().setChanged();
+		frame.setZeroTransform().setChanged();
 
-    @Override
-    public void hide() {
-        for (TransformedInstance wheel : wheels)
-            wheel.setZeroTransform().setChanged();
-        frame.setZeroTransform().setChanged();
+	}
 
-    }
+	@Override
+	public void updateLight(int packedLight) {
+		for (TransformedInstance wheel : wheels)
+			wheel.light(packedLight);
+		frame.light(packedLight);
 
-    @Override
-    public void updateLight(int packedLight) {
-        for (TransformedInstance wheel : wheels)
-            wheel.light(packedLight);
-        frame.light(packedLight);
+	}
 
-    }
+	@Override
+	public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+		for (TransformedInstance wheel : wheels)
+			consumer.accept(wheel);
+		consumer.accept(frame);
 
-    @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        for (TransformedInstance wheel : wheels)
-            consumer.accept(wheel);
-        consumer.accept(frame);
+	}
 
-    }
+	@Override
+	public void delete() {
+		for (TransformedInstance wheel : wheels)
+			wheel.delete();
+		frame.delete();
 
-    @Override
-    public void delete() {
-        for (TransformedInstance wheel : wheels)
-            wheel.delete();
-        frame.delete();
-
-    }
+	}
 }

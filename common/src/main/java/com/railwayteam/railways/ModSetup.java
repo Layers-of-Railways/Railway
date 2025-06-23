@@ -51,6 +51,7 @@ public class ModSetup {
     CRDisplayTargets.register();
     CRBlockEntities.register();
     CRBlocks.register();
+    Railways.platformBasedRegistration();
     CRPalettes.register();
     CRContainerTypes.register();
     CREntities.register();

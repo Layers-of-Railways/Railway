@@ -28,14 +28,16 @@ import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackVisual;
 import dev.engine_room.flywheel.api.instance.InstancerProvider;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
+import dev.engine_room.flywheel.lib.visual.AbstractVisual;
 import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -50,7 +52,11 @@ import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT
 
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.trains.track.TrackVisual$BezierTrackVisual", remap = false)
-public abstract class MixinTrackVisual$BezierTrackVisual {
+public abstract class MixinTrackVisual$BezierTrackVisual extends AbstractVisual {
+    public MixinTrackVisual$BezierTrackVisual(VisualizationContext ctx, Level level, float partialTick) {
+        super(ctx, level, partialTick);
+    }
+    
     @Mutable
     @Shadow(remap = false)
     @Final
@@ -85,8 +91,7 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
         //Use ties for center section
         //use left for bottom section
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            BlockPos tePosition = bc.bePositions.getFirst();
-            PoseStack pose = new PoseStack();
+			PoseStack pose = new PoseStack();
             TransformStack.of(pose)
                 .translate(trackInstance.getVisualPosition())
                 .nudge((int) bc.bePositions.getFirst()
@@ -125,8 +130,6 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
                         .setChanged();
                 }
             }
-
-            updateLight();
         }
     }
 }

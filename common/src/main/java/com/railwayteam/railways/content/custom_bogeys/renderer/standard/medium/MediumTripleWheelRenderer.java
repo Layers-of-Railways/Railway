@@ -24,8 +24,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -35,36 +33,43 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_SHARED_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_TRIPLE_WHEEL_FRAME;
 
 public class MediumTripleWheelRenderer implements BogeyRenderer {
 
-    
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-        SuperByteBuffer primaryShaft = CachedBuffers.block((AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z)));
+	@Override
+	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-        for (int i : Iterate.zeroAndOne) {
-            primaryShaft
-                    .translate(-.5f, .31f, .5f + i * -2)
-                    .center()
-                    .rotateZDegrees(wheelAngle)
-                    .uncenter()
-                    .renderInto(poseStack, buffer);
-        }
+		SuperByteBuffer primaryShaft = CachedBuffers.block((AllBlocks.SHAFT.getDefaultState()
+				.setValue(ShaftBlock.AXIS, Direction.Axis.Z)));
 
-        CachedBuffers.partial(MEDIUM_TRIPLE_WHEEL_FRAME, Blocks.AIR.defaultBlockState())
-                .renderInto(poseStack, buffer);
+		for (int i : Iterate.zeroAndOne) {
+			primaryShaft
+					.translate(-.5f, .31f, .5f + i * -2)
+					.center()
+					.rotateZDegrees(wheelAngle)
+					.uncenter()
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
 
-        SuperByteBuffer wheels = CachedBuffers.partial(MEDIUM_SHARED_WHEELS,Blocks.AIR.defaultBlockState());
-        for (int side = -1; side < 2; side++) {
-            wheels.translate(0, 13 / 16f, side * 1.5)
-                    .rotateXDegrees(wheelAngle)
-                    .translate(0, -13 / 16f, 0)
-                    .renderInto(poseStack, buffer);
-        }
-    }
+		CachedBuffers.partial(MEDIUM_TRIPLE_WHEEL_FRAME, Blocks.AIR.defaultBlockState())
+				.light(light)
+				.overlay(overlay)
+				.renderInto(poseStack, buffer);
+
+		SuperByteBuffer wheels = CachedBuffers.partial(MEDIUM_SHARED_WHEELS, Blocks.AIR.defaultBlockState());
+		for (int side = -1; side < 2; side++) {
+			wheels.translate(0, 13 / 16f, side * 1.5)
+					.rotateXDegrees(wheelAngle)
+					.translate(0, -13 / 16f, 0)
+					.light(light)
+					.overlay(overlay)
+					.renderInto(poseStack, buffer);
+		}
+	}
 }

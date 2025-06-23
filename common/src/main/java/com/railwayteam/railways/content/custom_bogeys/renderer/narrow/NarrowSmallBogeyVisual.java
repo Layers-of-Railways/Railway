@@ -32,81 +32,82 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_FRAME;
+import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_WHEELS;
 
 public class NarrowSmallBogeyVisual implements BogeyVisual {
-    private final TransformedInstance frame;
-    private final TransformedInstance[] shafts = new TransformedInstance[2];
-    private final TransformedInstance[] wheels = new TransformedInstance[4];
+	private final TransformedInstance frame;
+	private final TransformedInstance[] shafts = new TransformedInstance[2];
+	private final TransformedInstance[] wheels = new TransformedInstance[4];
 
-    public NarrowSmallBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
-        ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(NARROW_WHEELS))
-                .createInstances(wheels);
-        frame = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(NARROW_FRAME))
-                .createInstance();
-        ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT_HALF))
-                .createInstances(shafts);
-    }
+	public NarrowSmallBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
+		ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(NARROW_WHEELS))
+				.createInstances(wheels);
+		frame = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(NARROW_FRAME))
+				.createInstance();
+		ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT_HALF))
+				.createInstances(shafts);
+	}
 
-    @Override
-    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
-        for (int i : Iterate.zeroAndOne) {
-            shafts[i]
-                    .translate(-.5, 1 / 16., -(18 / 16.) + (i * 12 / 16.))
-                    .center()
-                    .rotateZDegrees(wheelAngle)
-                    .uncenter()
-                    .setChanged();
-        }
-        frame.translate(0, 5 / 16f, 0)
-                .setChanged();
-        for (int side : Iterate.positiveAndNegative) {
-            wheels[(side +1)/2]
-                    .translate(0, 11 / 16., side * (10 / 16.))
-                    .rotateXDegrees(wheelAngle)
-                    .uncenter()
-                    .setChanged();
-        }
+	@Override
+	public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
+		for (int i : Iterate.zeroAndOne) {
+			shafts[i]
+					.translate(-.5, 1 / 16., -(18 / 16.) + (i * 12 / 16.))
+					.center()
+					.rotateZDegrees(wheelAngle)
+					.uncenter()
+					.setChanged();
+		}
+		frame.translate(0, 5 / 16f, 0)
+				.setChanged();
+		for (int side : Iterate.positiveAndNegative) {
+			wheels[(side + 1) / 2]
+					.translate(0, 11 / 16., side * (10 / 16.))
+					.rotateXDegrees(wheelAngle)
+					.uncenter()
+					.setChanged();
+		}
 
-    }
+	}
 
 
-    @Override
-    public void hide() {
-        frame.setZeroTransform().setChanged();
-        for (TransformedInstance shaft : shafts)
-            shaft.setZeroTransform().setChanged();
-        for (TransformedInstance wheel : wheels)
-            wheel.setZeroTransform().setChanged();
-    }
+	@Override
+	public void hide() {
+		frame.setZeroTransform().setChanged();
+		for (TransformedInstance shaft : shafts)
+			shaft.setZeroTransform().setChanged();
+		for (TransformedInstance wheel : wheels)
+			wheel.setZeroTransform().setChanged();
+	}
 
-    @Override
-    public void updateLight(int packedLight) {
-        frame.light(packedLight);
-        for (TransformedInstance shaft : shafts)
-            shaft.light(packedLight);
-        for (TransformedInstance wheel : wheels)
-            wheel.light(packedLight);
-    }
+	@Override
+	public void updateLight(int packedLight) {
+		frame.light(packedLight);
+		for (TransformedInstance shaft : shafts)
+			shaft.light(packedLight);
+		for (TransformedInstance wheel : wheels)
+			wheel.light(packedLight);
+	}
 
-    @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        consumer.accept(frame);
-        for (TransformedInstance shaft : shafts)
-            consumer.accept(shaft);
-        for (TransformedInstance wheel : wheels)
-            consumer.accept(wheel);
-    }
+	@Override
+	public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+		consumer.accept(frame);
+		for (TransformedInstance shaft : shafts)
+			consumer.accept(shaft);
+		for (TransformedInstance wheel : wheels)
+			consumer.accept(wheel);
+	}
 
-    @Override
-    public void delete() {
-        frame.delete();
-        for (TransformedInstance shaft : shafts)
-            shaft.delete();
-        for (TransformedInstance wheel : wheels)
-            wheel.delete();
-    }
+	@Override
+	public void delete() {
+		frame.delete();
+		for (TransformedInstance shaft : shafts)
+			shaft.delete();
+		for (TransformedInstance wheel : wheels)
+			wheel.delete();
+	}
 }

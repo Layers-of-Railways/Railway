@@ -19,12 +19,12 @@
 package com.railwayteam.railways.content.fuel.forge;
 
 import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class LiquidFuelTrainHandlerImpl {
-    public static int handleFuelDraining(CombinedTankWrapper fuelFluids) {
+    public static int handleFuelDraining(MountedFluidStorageWrapper fuelFluids) {
         for (int tanks = 0; tanks < fuelFluids.getTanks(); tanks++) {
             FluidStack fluidStack = fuelFluids.drain(100, IFluidHandler.FluidAction.SIMULATE);
 

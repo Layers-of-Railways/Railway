@@ -462,7 +462,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         registerAwardables(behaviours, AllAdvancements.STEAM_ENGINE_MAXED, AllAdvancements.PIPE_ORGAN);
     }
 
-    public IFluidTank getTankInventory() {
+    public FluidTank getTankInventory() {
         return tankInventory;
     }
 
@@ -599,7 +599,7 @@ public class FuelTankBlockEntity extends SmartBlockEntity implements IHaveGoggle
         }
 
         public boolean isFluidValid(FluidStack stack) {
-            return LiquidFuelTrainHandler.isFuel(stack.getFluid());
+            return LiquidFuelTrainHandler.isFuelForTanks(stack.getFluid());
         }
 
         @Override

@@ -19,8 +19,11 @@
 package com.railwayteam.railways.util.fabric;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
+import com.railwayteam.railways.content.fuel.tank.FuelTankMountedStorageType;
 import com.railwayteam.railways.registry.fabric.CRBlockEntitiesImpl;
 import com.railwayteam.railways.registry.fabric.CRBlocksImpl;
+import com.railwayteam.railways.registry.fabric.CRMountedStorageTypesImpl;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -43,5 +46,9 @@ public class AbstractionUtilsImpl {
 
     public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
         return blockEntity instanceof FuelTankBlockEntity;
+    }
+
+    public static boolean isInstanceOfFuelTankMountedStorageType(MountedFluidStorageType<?> type) {
+        return CRMountedStorageTypesImpl.FUEL_TANK.is(type);
     }
 }

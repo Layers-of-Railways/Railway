@@ -21,8 +21,6 @@ package com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -31,26 +29,28 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.LONG_SHAFTED_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.MODERN_FRAME;
 
 public class ModernBogeyRenderer implements BogeyRenderer {
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+	@Override
+	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
+		CachedBuffers.partial(MODERN_FRAME, Blocks.AIR.defaultBlockState())
+				.light(packedLight)
+				.overlay(packedOverlay)
+				.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(MODERN_FRAME, Blocks.AIR.defaultBlockState())
-                .renderInto(poseStack, buffer);
+		SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
+		for (int side : Iterate.positiveAndNegative) {
 
-        SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
-        for (int side : Iterate.positiveAndNegative) {
-
-            wheel.translate(0, 12 / 16f, side)
-                    .rotateXDegrees(wheelAngle)
-                    .translate(0, -12 / 16f, 0)
-                    .light(packedLight)
-                    .overlay(packedOverlay)
-                    .renderInto(poseStack, buffer);
-        }
-    }
+			wheel.translate(0, 12 / 16f, side)
+					.rotateXDegrees(wheelAngle)
+					.translate(0, -12 / 16f, 0)
+					.light(packedLight)
+					.overlay(packedOverlay)
+					.renderInto(poseStack, buffer);
+		}
+	}
 }

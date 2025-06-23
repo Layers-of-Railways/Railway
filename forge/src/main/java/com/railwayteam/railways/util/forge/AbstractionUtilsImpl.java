@@ -20,6 +20,8 @@ package com.railwayteam.railways.util.forge;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.registry.forge.CRBlocksImpl;
+import com.railwayteam.railways.registry.forge.CRMountedStorageTypesImpl;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,5 +41,9 @@ public class AbstractionUtilsImpl {
 
     public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
         return blockEntity instanceof FuelTankBlockEntity;
+    }
+    
+    public static boolean isInstanceOfFuelTankMountedStorageType(MountedFluidStorageType<?> type) {
+        return CRMountedStorageTypesImpl.FUEL_TANK.is(type);
     }
 }

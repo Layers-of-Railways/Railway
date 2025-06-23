@@ -18,8 +18,8 @@
 
 package com.railwayteam.railways.mixin_interfaces;
 
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 
 public interface IContraptionFuel {
-    CombinedTankWrapper railways$getSharedFuelTanks();
+    MountedFluidStorageWrapper railways$getFluidFuels();
 }

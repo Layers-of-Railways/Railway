@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.util;
 
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,6 +36,11 @@ public class AbstractionUtils {
 
     @ExpectPlatform
     public static boolean isInstanceOfFuelTankBlockEntity(BlockEntity blockEntity) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isInstanceOfFuelTankMountedStorageType(MountedFluidStorageType<?> type) {
         throw new AssertionError();
     }
 

@@ -37,14 +37,13 @@ import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCr
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
-import com.railwayteam.railways.content.smokestack.block.renderer.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
-import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
+import com.railwayteam.railways.content.smokestack.block.renderer.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
+import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 
 public class CRBlockEntities {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
@@ -147,12 +146,5 @@ public class CRBlockEntities {
         .validBlocks(CRBlocks.COPYCAT_HEADSTOCK)
         .register();
 
-    @ExpectPlatform
-    public static void platformBasedRegistration() {
-        throw new AssertionError();
-    }
-
-    public static void register() {
-        platformBasedRegistration();
-    }
+    public static void register() {}
 }

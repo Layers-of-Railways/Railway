@@ -19,7 +19,6 @@
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.bogey.BogeyVisual;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
@@ -35,52 +34,51 @@ import static com.railwayteam.railways.registry.CRBlockPartials.LEAFSPRING_FRAME
 import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class LeafspringBogeyVisual implements BogeyVisual {
-    private final TransformedInstance frame;
-    private final TransformedInstance wheel;
+	private final TransformedInstance frame;
+	private final TransformedInstance wheel;
 
-    private final boolean inContraption;
+	private final boolean inContraption;
 
-    public LeafspringBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption)
-    {
-        this.inContraption = inContraption;
-        frame = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(LEAFSPRING_FRAME))
-                .createInstance();
-        wheel = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
-                .createInstance();
-    }
+	public LeafspringBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
+		this.inContraption = inContraption;
+		frame = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(LEAFSPRING_FRAME))
+				.createInstance();
+		wheel = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
+				.createInstance();
+	}
 
-    @Override
-    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
-        wheel.translate(0,12/16f,0)
-             .rotateXDegrees(wheelAngle)
-             .setChanged();
-        frame.setChanged();
-    }
+	@Override
+	public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
+		wheel.translate(0, 12 / 16f, 0)
+				.rotateXDegrees(wheelAngle)
+				.setChanged();
+		frame.setChanged();
+	}
 
-    @Override
-    public void hide() {
-        frame.setZeroTransform().setChanged();
-        wheel.setZeroTransform().setChanged();
+	@Override
+	public void hide() {
+		frame.setZeroTransform().setChanged();
+		wheel.setZeroTransform().setChanged();
 
-    }
+	}
 
-    @Override
-    public void updateLight(int packedLight) {
-        frame.light(packedLight);
-        wheel.light(packedLight);
-    }
+	@Override
+	public void updateLight(int packedLight) {
+		frame.light(packedLight);
+		wheel.light(packedLight);
+	}
 
-    @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        consumer.accept(frame);
-        consumer.accept(wheel);
-    }
+	@Override
+	public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+		consumer.accept(frame);
+		consumer.accept(wheel);
+	}
 
-    @Override
-    public void delete() {
-        frame.delete();
-        wheel.delete();
-    }
+	@Override
+	public void delete() {
+		frame.delete();
+		wheel.delete();
+	}
 }

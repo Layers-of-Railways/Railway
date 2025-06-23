@@ -33,61 +33,70 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
+import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_DOUBLE_SCOTCH_FRAME;
+import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_DOUBLE_SCOTCH_PISTONS;
+import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_SCOTCH_WHEELS;
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_SCOTCH_WHEEL_PINS;
 
 public class NarrowDoubleScotchYokeBogeyRenderer implements BogeyRenderer {
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+	@Override
+	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-        SuperByteBuffer primaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
-        for (int i : Iterate.zeroAndOne) {
-            primaryShaft.translate(-.5, 1 / 16., (7/16.) + i * -(30 / 16.))
-                    .center()
-                    .rotateZDegrees(wheelAngle)
-                    .uncenter()
-                    .renderInto(poseStack, buffer);
-        }
+		SuperByteBuffer primaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+		for (int i : Iterate.zeroAndOne) {
+			primaryShaft.translate(-.5, 1 / 16., (7 / 16.) + i * -(30 / 16.))
+					.center()
+					.rotateZDegrees(wheelAngle)
+					.uncenter()
+					.light(packedLight)
+					.overlay(packedOverlay)
+					.renderInto(poseStack, buffer);
+		}
 
+		SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+				.setValue(ShaftBlock.AXIS, Direction.Axis.X));
+		for (int i : Iterate.zeroAndOne) {
+			secondaryShaft.translate(-.5f, 6 / 16., (18 / 16.) + i * -(52 / 16.))
+					.center()
+					.rotateXDegrees(wheelAngle)
+					.uncenter()
+					.light(packedLight)
+					.overlay(packedOverlay)
+					.renderInto(poseStack, buffer);
+		}
 
-        SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.X));
-        for (int i : Iterate.zeroAndOne) {
-                secondaryShaft.translate(-.5f, 6 / 16., (18 / 16.) + i * -(52 / 16.))
-                        .center()
-                        .rotateXDegrees(wheelAngle)
-                        .uncenter()
-                        .renderInto(poseStack, buffer);
-        }
+		CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_FRAME, Blocks.AIR.defaultBlockState())
+				.translate(0, 5 / 16f, 0)
+				.light(packedLight)
+				.overlay(packedOverlay)
+				.renderInto(poseStack, buffer);
 
+		CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_PISTONS, Blocks.AIR.defaultBlockState())
+				.translate(0, 14 / 16f, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
+				.light(packedLight)
+				.overlay(packedOverlay)
+				.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_FRAME, Blocks.AIR.defaultBlockState())
-                .renderInto(poseStack, buffer);
+		SuperByteBuffer wheels = CachedBuffers.partial(NARROW_SCOTCH_WHEELS, Blocks.AIR.defaultBlockState());
+		SuperByteBuffer pins = CachedBuffers.partial(NARROW_SCOTCH_WHEEL_PINS, Blocks.AIR.defaultBlockState());
+		for (int side : Iterate.positiveAndNegative) {
+			wheels.translate(0, 14 / 16., side * (12 / 16.))
+					.rotateXDegrees(wheelAngle)
+					.translate(0, 0, 0)
+					.light(packedLight)
+					.overlay(packedOverlay)
+					.renderInto(poseStack, buffer);
 
-        CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_PISTONS, Blocks.AIR.defaultBlockState())
-                .translate(0, 1, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .renderInto(poseStack, buffer);
-
-        SuperByteBuffer wheels = CachedBuffers.partial(NARROW_SCOTCH_WHEELS, Blocks.AIR.defaultBlockState());
-        SuperByteBuffer pins = CachedBuffers.partial(NARROW_SCOTCH_WHEEL_PINS, Blocks.AIR.defaultBlockState());
-        for (int side : Iterate.positiveAndNegative) {
-
-            wheels
-                .translate(0, 14 / 16., side * (12 / 16.))
-                .rotateXDegrees(wheelAngle)
-                .translate(0, 0, 0)
-                .renderInto(poseStack, buffer);
-
-            pins
-                .translate(0, 14 / 16., side * (12 / 16.))
-                .rotateXDegrees(wheelAngle)
-                .translate(0, 1 / 4f, 0)
-                .rotateXDegrees(-wheelAngle)
-                .renderInto(poseStack, buffer);
-        }
-
-    }
+			pins.translate(0, 14 / 16., side * (12 / 16.))
+					.rotateXDegrees(wheelAngle)
+					.translate(0, 1 / 4f, 0)
+					.rotateXDegrees(-wheelAngle)
+					.light(packedLight)
+					.overlay(packedOverlay)
+					.renderInto(poseStack, buffer);
+		}
+	}
 }

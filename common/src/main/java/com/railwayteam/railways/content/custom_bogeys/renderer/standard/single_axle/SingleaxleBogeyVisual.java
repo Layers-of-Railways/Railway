@@ -31,55 +31,54 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.SINGLEAXLE_FRAME;
 import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
-import static com.simibubi.create.content.trains.entity.CarriageBogey.UPSIDE_DOWN_KEY;
 
 public class SingleaxleBogeyVisual implements BogeyVisual {
-    private final TransformedInstance wheel;
-    private final TransformedInstance frame;
+	private final TransformedInstance wheel;
+	private final TransformedInstance frame;
 
-    private final boolean inContraption;
+	private final boolean inContraption;
 
-    public SingleaxleBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
-        wheel = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
-                .createInstance();
-        frame = ctx.instancerProvider()
-                .instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT))
-                .createInstance();
-        this.inContraption = inContraption;
+	public SingleaxleBogeyVisual(VisualizationContext ctx, float partialTick, boolean inContraption) {
+		wheel = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(SMALL_BOGEY_WHEELS))
+				.createInstance();
+		frame = ctx.instancerProvider()
+				.instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.SHAFT))
+				.createInstance();
+		this.inContraption = inContraption;
 
-    }
-    @Override
-    public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
-        wheel.translate(0, 12 / 16f, 0)
-                .rotateXDegrees(wheelAngle)
-                .setChanged();
-        frame.setChanged();
-    }
+	}
 
-    @Override
-    public void hide() {
-        wheel.setZeroTransform().setChanged();
-        frame.setZeroTransform().setChanged();
-    }
+	@Override
+	public void update(CompoundTag bogeyData, float wheelAngle, PoseStack poseStack) {
+		wheel.translate(0, 12 / 16f, 0)
+				.rotateXDegrees(wheelAngle)
+				.setChanged();
+		frame.setChanged();
+	}
 
-    @Override
-    public void updateLight(int packedLight) {
-        wheel.light(packedLight);
-        frame.light(packedLight);
-    }
+	@Override
+	public void hide() {
+		wheel.setZeroTransform().setChanged();
+		frame.setZeroTransform().setChanged();
+	}
 
-    @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-        consumer.accept(wheel);
-        consumer.accept(frame);
-    }
+	@Override
+	public void updateLight(int packedLight) {
+		wheel.light(packedLight);
+		frame.light(packedLight);
+	}
 
-    @Override
-    public void delete() {
-        wheel.delete();
-        frame.delete();
-    }
+	@Override
+	public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+		consumer.accept(wheel);
+		consumer.accept(frame);
+	}
+
+	@Override
+	public void delete() {
+		wheel.delete();
+		frame.delete();
+	}
 }

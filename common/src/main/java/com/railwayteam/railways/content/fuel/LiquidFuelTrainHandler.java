@@ -21,13 +21,13 @@ package com.railwayteam.railways.content.fuel;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.PlatformAbstractionHelper;
 import com.railwayteam.railways.util.FluidUtils;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.material.Fluid;
 
 public class LiquidFuelTrainHandler {
     @ExpectPlatform
-    public static int handleFuelDraining(CombinedTankWrapper fuelFluids) {
+    public static int handleFuelDraining(MountedFluidStorageWrapper fluidFuels) {
         throw new AssertionError();
     }
 
@@ -52,20 +52,18 @@ public class LiquidFuelTrainHandler {
     }
 
     public static boolean isFuel(Fluid fluid) {
-        // If realistic fuel tanks are enabled, check if the fluid/item is valid fuel
-        if (CRConfigs.server().realism.realisticFuelTanks.get()) {
+        LiquidFuelType fuelType = getType(fluid);
 
-            LiquidFuelType fuelType = getType(fluid);
-
-            if (fuelType != null) {
-                return true;
-            } else {
-                return PlatformAbstractionHelper.getBurnTime(fluid.getBucket()) > 0;
-            }
+        if (fuelType != null) {
+            return true;
+        } else {
+            return PlatformAbstractionHelper.getBurnTime(fluid.getBucket()) > 0;
         }
+    }
 
-        // else just return true
-        return true;
+    public static boolean isFuelForTanks(Fluid fluid) {
+        // If realistic fuel tanks are enabled, check if the fluid/item is valid fuel
+        return !CRConfigs.server().realism.realisticFuelTanks.get() || isFuel(fluid);
     }
 
     public static LiquidFuelType getType(Fluid fluid) {

@@ -22,34 +22,29 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.*;
-import static com.simibubi.create.content.trains.entity.CarriageBogey.UPSIDE_DOWN_KEY;
+import static com.railwayteam.railways.registry.CRBlockPartials.SINGLEAXLE_FRAME;
 
 public class SingleaxleBogeyRenderer implements BogeyRenderer {
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+	@Override
+	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+		CachedBuffers.partial(SINGLEAXLE_FRAME, Blocks.AIR.defaultBlockState())
+				.light(packedLight)
+				.overlay(packedOverlay)
+				.renderInto(poseStack, buffer);
 
-
-        CachedBuffers.partial(SINGLEAXLE_FRAME, Blocks.AIR.defaultBlockState())
-                .light(packedLight)
-                .overlay(packedOverlay)
-                .renderInto(poseStack, buffer);
-
-        CachedBuffers.partial(AllPartialModels.SMALL_BOGEY_WHEELS,Blocks.AIR.defaultBlockState())
-                .translate(0, 12 / 16f, 0)
-                .rotateXDegrees(wheelAngle)
-                .light(packedLight)
-                .overlay(packedOverlay)
-                .renderInto(poseStack, buffer);
-    }
+		CachedBuffers.partial(AllPartialModels.SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState())
+				.translate(0, 12 / 16f, 0)
+				.rotateXDegrees(wheelAngle)
+				.light(packedLight)
+				.overlay(packedOverlay)
+				.renderInto(poseStack, buffer);
+	}
 }

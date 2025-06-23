@@ -22,11 +22,11 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.mixin_interfaces.IContraptionFuel;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.railwayteam.railways.mixin_interfaces.IPreAssembleCallback;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -55,7 +55,7 @@ public abstract class MixinContraption implements IContraptionFuel {
     }
 
     @Override
-    public CombinedTankWrapper railways$getSharedFuelTanks() {
-        return ((IFuelInventory) storage).railways$getFuelFluids();
+    public MountedFluidStorageWrapper railways$getFluidFuels() {
+        return ((IFuelInventory) storage).railways$getFluidFuels();
     }
 }

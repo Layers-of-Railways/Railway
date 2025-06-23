@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,10 +16,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin_interfaces;
+package com.railwayteam.railways.registry.forge;
 
-import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.fuel.tank.FuelTankMountedStorageType;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 
-public interface IFuelInventory {
-    MountedFluidStorageWrapper railways$getFluidFuels();
+public class CRMountedStorageTypesImpl {
+	public static RegistryEntry<FuelTankMountedStorageType> FUEL_TANK = Railways.registrate()
+			.mountedFluidStorage("fuel_tank", FuelTankMountedStorageType::new)
+			.register();
+	
+	public static void init() {}
 }
