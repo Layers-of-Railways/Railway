@@ -86,7 +86,7 @@ public class MixinTrackBlock {
     if (style == AllBogeyStyles.STANDARD)
       return;
 
-    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.allSortedIncreasing().getFirst();
+    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.allSortedIncreasing().get(0);
     int escape = BogeySizes.allSortedIncreasing().size();
     while (!style.validSizes().contains(size)) {
       if (escape < 0)
