@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.6.11 alpha
+------------------------------------------------------
+Bug Fixes
+- Fix issues with liquid fuel system causing crashes #615 #612 #598 #599 #595
+- Fix crash when opening bogey menu #614 #610 #602 #601 #597 #591
+- Fixed derailed trains causing crashes #607
+- Fix track casing not showing up on world join #609
+- Fix tieless tracks and monorail tracks missing proper lighting #608 #613 #603
+------------------------------------------------------
 Steam 'n' Rails 1.6.10 alpha
 ------------------------------------------------------
 Changes
