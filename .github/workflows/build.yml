@@ -26,9 +26,6 @@ jobs:
           cache-disabled: false
           cache-read-only: false
 
-      - name: Validate Gradle Wrapper Integrity
-        uses: gradle/wrapper-validation-action@v2
-
       - name: Build & Publish to Maven
         env:
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
