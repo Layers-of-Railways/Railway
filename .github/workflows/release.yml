@@ -34,9 +34,6 @@ jobs:
           gradle-home-cache-cleanup: true
           cache-read-only: true
 
-      - name: Validate Gradle Wrapper Integrity
-        uses: gradle/wrapper-validation-action@v2
-
       - name: Build & Publish
         env:
           RELEASE_BUILD: true
