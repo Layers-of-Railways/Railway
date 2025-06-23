@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.railwayteam.railways.Railways;
@@ -119,9 +119,10 @@ public abstract class MixinStationBlockEntity extends SmartBlockEntity {
         dropScheduleTrain = null;
     }
     
-    @ModifyExpressionValue(method = "dropSchedule", at = @At("HEAD"), require = 0)
-    private Train returnOverridenTrain(Train original) {
-        Train train = original != null ? original : dropScheduleTrain;
+    // TODO - Checkover
+    @ModifyReceiver(method = "dropSchedule", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;runtime:Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;"), require = 0)
+    private Train returnOverridenTrain(Train instance) {
+        Train train = instance != null ? instance : dropScheduleTrain;
         dropScheduleTrain = null;
         return train;
     }

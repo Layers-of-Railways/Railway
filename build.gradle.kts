@@ -345,7 +345,7 @@ tasks.register("railwaysPublish") {
 fun Project.setupRepositories() {
     repositories {
         mavenCentral()
-        maven("https://maven.createmod.net") // Catnip, Ponder
+        maven("https://maven.createmod.net") // Create, Ponder, Flywheel
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
@@ -354,11 +354,9 @@ fun Project.setupRepositories() {
         exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU, JourneyMap
         exclusiveMaven("https://cursemaven.com", "curse.maven")
         maven("https://maven.theillusivec4.top/") // Curios
-        maven("https://maven.tterrag.com/") { // Flywheel, Registrate, Create
+        maven("https://maven.ithundxr.dev/mirror") { // Registrate
             content {
-                includeGroup("com.simibubi.create")
                 includeGroup("com.tterrag.registrate")
-                includeGroup("dev.engine-room.flywheel")
             }
         }
         maven("https://maven.maxhenkel.de/repository/public") // Simple Voice Chat
