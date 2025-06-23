@@ -81,6 +81,11 @@ public abstract class MixinTrackVisual extends AbstractBlockEntityVisual<TrackBl
     public @Nullable BezierConnection getBezierConnection() {
         return bezierConnection;
     }
+    
+    @Inject(method = "<init>", at = @At("RETURN"))
+    private void onCtor(VisualizationContext context, TrackBlockEntity track, float partialTick, CallbackInfo ci) {
+        railways$makeCasingData(true);
+    }
 
     @Inject(method = "createInstance", at = @At("HEAD"))
     private void preCreateInstance(BezierConnection bc, CallbackInfoReturnable<?> cir) {

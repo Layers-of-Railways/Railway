@@ -27,17 +27,14 @@ import com.railwayteam.railways.mixin_interfaces.IMonorailBezier.MonorailAngles;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackVisual;
+import com.simibubi.create.foundation.render.SpecialModels;
 import dev.engine_room.flywheel.api.instance.InstancerProvider;
-import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
-import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
-import dev.engine_room.flywheel.lib.visual.AbstractVisual;
 import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -52,11 +49,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT
 
 @Environment(EnvType.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.trains.track.TrackVisual$BezierTrackVisual", remap = false)
-public abstract class MixinTrackVisual$BezierTrackVisual extends AbstractVisual {
-    public MixinTrackVisual$BezierTrackVisual(VisualizationContext ctx, Level level, float partialTick) {
-        super(ctx, level, partialTick);
-    }
-    
+public abstract class MixinTrackVisual$BezierTrackVisual {
     @Mutable
     @Shadow(remap = false)
     @Final
@@ -109,9 +102,9 @@ public abstract class MixinTrackVisual$BezierTrackVisual extends AbstractVisual 
 
             InstancerProvider provider = ((AccessorAbstractVisual) trackInstance).railways$getInstancerProvider();
 
-            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_TOP)).createInstances(top);
-            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_MIDDLE)).createInstances(middle);
-            provider.instancer(InstanceTypes.TRANSFORMED, Models.partial(MONORAIL_SEGMENT_BOTTOM)).createInstances(bottom);
+            provider.instancer(InstanceTypes.TRANSFORMED, SpecialModels.flatChunk(MONORAIL_SEGMENT_TOP)).createInstances(top);
+            provider.instancer(InstanceTypes.TRANSFORMED, SpecialModels.flatChunk(MONORAIL_SEGMENT_MIDDLE)).createInstances(middle);
+            provider.instancer(InstanceTypes.TRANSFORMED, SpecialModels.flatChunk(MONORAIL_SEGMENT_BOTTOM)).createInstances(bottom);
 
             for (int i = 1; i < monorails.length; i++) {
                 MonorailAngles segment = monorails[i];
