@@ -152,6 +152,7 @@ public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBl
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public <Self extends Affine<Self>> PartialModel prepareTrackOverlay(Affine<Self> affine, BlockGetter blockGetter, BlockPos blockPos, BlockState blockState, BezierTrackPointLocation bezierTrackPointLocation, AxisDirection axisDirection, RenderedTrackOverlayType renderedTrackOverlayType) {
         return AllBlocks.TRACK.get().prepareTrackOverlay(affine, blockGetter, blockPos, blockState, bezierTrackPointLocation, axisDirection, renderedTrackOverlayType);
     }

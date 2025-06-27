@@ -7,6 +7,7 @@ Bug Fixes
 - Fixed derailed trains causing crashes #607
 - Fix track casing not showing up on world join #609
 - Fix tieless tracks and monorail tracks missing proper lighting #608 #613 #603
+- Fix narrow, wide, and phantom tracks rendering black boxes on transparent models #613 #637
 ------------------------------------------------------
 Steam 'n' Rails 1.6.10 alpha
 ------------------------------------------------------

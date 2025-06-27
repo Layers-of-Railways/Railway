@@ -2,6 +2,7 @@ package com.railwayteam.railways.content.custom_tracks.fabric;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.TransparentSegmentTrackBlock;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -10,6 +11,7 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
 import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockModelBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -67,12 +69,16 @@ public class CustomTrackBlockStateGeneratorImpl extends CustomTrackBlockStateGen
             builder = builder.texture(k, Railways.asResource(prefix + textureMap.get(k) + material.resourceName()));
         }
         for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
-            prov.models()
+            var model = prov.models()
                 .withExistingParent(prefix + k,
                     Create.asResource("block/track/" + k))
                 .texture("0", prefix + "standard_track_" + material.resourceName())
                 .texture("1", prefix + "standard_track_mip_" + material.resourceName())
                 .texture("particle", material.particle);
+
+            if (!k.equals("tie") && state.getBlock() instanceof TransparentSegmentTrackBlock) {
+                model.renderType(new ResourceLocation("cutout_mipped"));
+            }
         }
         return builder;
     }

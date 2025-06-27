@@ -19,22 +19,26 @@
 package com.railwayteam.railways.content.custom_tracks.phantom;
 
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
+import com.railwayteam.railways.content.custom_tracks.TransparentSegmentTrackBlock;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class PhantomTrackBlock extends NoCollisionCustomTrackBlock {
+public class PhantomTrackBlock extends NoCollisionCustomTrackBlock implements TransparentSegmentTrackBlock {
     public PhantomTrackBlock(Properties properties, TrackMaterial material) {
         super(properties, material);
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public <Self extends Affine<Self>> PartialModel prepareTrackOverlay(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type) {
         if (bezierPoint == null && !PhantomSpriteManager.isVisible())
             return null;
