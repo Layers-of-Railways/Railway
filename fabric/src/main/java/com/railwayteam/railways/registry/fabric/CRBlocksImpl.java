@@ -20,7 +20,11 @@ package com.railwayteam.railways.registry.fabric;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.fuel.psi.PortableFuelInterfaceBlock;
-import com.railwayteam.railways.content.fuel.tank.*;
+import com.railwayteam.railways.content.fuel.tank.FuelTankBlock;
+import com.railwayteam.railways.content.fuel.tank.FuelTankGenerator;
+import com.railwayteam.railways.content.fuel.tank.FuelTankItem;
+import com.railwayteam.railways.content.fuel.tank.FuelTankModel;
+import com.railwayteam.railways.content.fuel.tank.FuelTankMovementBehavior;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
