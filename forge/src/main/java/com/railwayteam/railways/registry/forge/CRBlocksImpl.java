@@ -23,7 +23,9 @@ import com.railwayteam.railways.content.fuel.psi.PortableFuelInterfaceBlock;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlock;
 import com.railwayteam.railways.content.fuel.tank.FuelTankItem;
 import com.railwayteam.railways.content.fuel.tank.FuelTankModel;
+import com.railwayteam.railways.content.fuel.tank.FuelTankMovementBehavior;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceMovement;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -51,6 +53,7 @@ public class CRBlocksImpl {
             //.blockstate(new FuelTankGenerator()::generate) Handled by fabric subproject
             .onRegister(CreateRegistrate.blockModel(() -> FuelTankModel::standard))
             .transform(MountedFluidStorageType.mountedFluidStorage(CRMountedStorageTypesImpl.FUEL_TANK))
+            .onRegister(MovementBehaviour.movementBehaviour(new FuelTankMovementBehavior()))
             .addLayer(() -> RenderType::cutoutMipped)
             .item(FuelTankItem::new)
             .model(AssetLookup.customBlockItemModel("_", "block_single_window"))

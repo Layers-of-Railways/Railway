@@ -19,6 +19,7 @@
 package com.railwayteam.railways.content.fuel.psi;
 
 import com.railwayteam.railways.mixin_interfaces.IContraptionFuel;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlockEntity;
 import com.simibubi.create.foundation.utility.fabric.ListeningStorageView;
@@ -49,7 +50,8 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
 
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
-        capability.setWrapped(((IContraptionFuel) contraption).railways$getFluidFuels());
+        MountedFluidStorageWrapper fuels = ((IContraptionFuel) contraption).railways$getFluidFuels();
+        capability.setWrapped(fuels != null ? fuels : Storage.empty());
         super.startTransferringTo(contraption, distance);
     }
 

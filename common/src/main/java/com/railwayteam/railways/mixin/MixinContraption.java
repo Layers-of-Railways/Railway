@@ -38,7 +38,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Contraption.class)
 public abstract class MixinContraption implements IContraptionFuel {
-    @Shadow(remap = false) protected MountedStorageManager storage;
+
+    @Shadow public abstract MountedStorageManager getStorage();
 
     @Inject(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
     private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {
@@ -56,6 +57,6 @@ public abstract class MixinContraption implements IContraptionFuel {
 
     @Override
     public MountedFluidStorageWrapper railways$getFluidFuels() {
-        return ((IFuelInventory) storage).railways$getFluidFuels();
+        return ((IFuelInventory) getStorage()).railways$getFluidFuels();
     }
 }
