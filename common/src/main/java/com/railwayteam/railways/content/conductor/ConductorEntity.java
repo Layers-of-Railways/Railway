@@ -763,6 +763,16 @@ public class ConductorEntity extends AbstractGolem {
     return forwardListener.receivedStrength;
   }
 
+  public int getThrottle() {
+    int forwardStrength;
+    int backwardStrength;
+    if (forwardListener == null) forwardStrength = 0;
+    else forwardStrength = forwardListener.receivedStrength;
+    if (backwardListener == null) backwardStrength = 0;
+    else backwardStrength = backwardListener.receivedStrength;
+    return forwardStrength - backwardStrength;
+  }
+
   private List<ItemStack> getHeldSchedules() {
     if (heldSchedules == null) {
       heldSchedules = new ArrayList<>();
@@ -1261,17 +1271,29 @@ public class ConductorEntity extends AbstractGolem {
           return;
         }
         Set<Integer> controls = getControls();
-        if (reverseControlsPos != null && controls.contains(1) && !controls.contains(0)) { // go backwards quickly
-          controls.remove(1);
-          controls.add(0);
+
+        boolean isSprintKeyPressed = controls.remove(5);
+        Set<Integer> fakeControls = new HashSet<>(controls);
+        int throttle = conductor.getThrottle();
+        //remove old controls
+        fakeControls.remove(0); // forward
+        fakeControls.remove(1); // backward
+        //add new controls depending on the signal difference of the throttle
+        if (throttle > 0) {
+          fakeControls.add(0);
+        } else if (throttle < 0) {
+          fakeControls.add(1);
+        }
+        if (reverseControlsPos != null && fakeControls.contains(1)) { // go backwards quickly
+          fakeControls.remove(1);
+          fakeControls.add(0);
           /*boolean left = controls.remove(2);
           boolean right = controls.remove(3);
           if (left) controls.add(3);
           if (right) controls.add(2);*/
           controlsPos = reverseControlsPos;
         }
-        boolean isSprintKeyPressed = controls.remove(5);
-        cce.control(controlsPos, controls, conductor.fakePlayer);
+        cce.control(controlsPos, fakeControls, conductor.fakePlayer);
 
         Train train = cce.getCarriage().train;
         if (isSprintKeyPressed && honkPacketCooldown-- <= 0) {

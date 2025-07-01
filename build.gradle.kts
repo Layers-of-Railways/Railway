@@ -346,6 +346,7 @@ tasks.create("railwaysPublish") {
 fun Project.setupRepositories() {
     repositories {
         mavenCentral()
+        maven("https://modmaven.dev/")
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
