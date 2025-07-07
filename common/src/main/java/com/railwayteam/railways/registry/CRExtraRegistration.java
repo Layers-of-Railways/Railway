@@ -23,7 +23,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.simibubi.create.api.behaviour.display.DisplaySource;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -53,8 +52,9 @@ public class CRExtraRegistration {
 
     public static void addSignalSource(Block block) {
         if (registeredSignalSource) return;
-        RegistryEntry<SignalDisplaySource> source = Railways.registrate().displaySource("track_signal_source", SignalDisplaySource::new).register();
-        DisplaySource.BY_BLOCK.add(block, source.get());
+        SignalDisplaySource source = new SignalDisplaySource();
+        Railways.registrate().displaySource("track_signal_source", () -> source).register();
+        DisplaySource.BY_BLOCK.add(block, source);
         registeredSignalSource = true;
     }
 

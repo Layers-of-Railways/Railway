@@ -18,14 +18,38 @@
 
 package com.railwayteam.railways.registry.forge;
 
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRExtraRegistration;
 import com.simibubi.create.Create;
-import com.simibubi.create.api.registrate.CreateRegistrateRegistrationCallback;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.core.registries.Registries;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+
 public class CRExtraRegistrationImpl {
+    private static final CreateRegistrate REGISTRATE;
+    
+    static {
+        CreateRegistrate localRegistrate = null;
+        
+        try {
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            MethodHandles.Lookup privateLookup = MethodHandles.privateLookupIn(Create.class, lookup);
+
+            VarHandle handle = privateLookup.findStaticVarHandle(Create.class, "REGISTRATE", CreateRegistrate.class);
+            localRegistrate = (CreateRegistrate) handle.get();
+        } catch (Exception e) {
+            Railways.LOGGER.error("Failed to get Create's Registrate Instance, This should not happen!!", e);
+        }
+        
+        REGISTRATE = localRegistrate;
+	}
+    
     public static void platformSpecificRegistration() {
-        CreateRegistrateRegistrationCallback.register(Registries.BLOCK_ENTITY_TYPE, Create.asResource("copycat"), CRExtraRegistration::addVentAsCopycat);
-        CreateRegistrateRegistrationCallback.register(Registries.BLOCK, Create.asResource("track_signal"), CRExtraRegistration::addSignalSource);
+        if (REGISTRATE != null) {
+            REGISTRATE.addRegisterCallback("copycat", Registries.BLOCK_ENTITY_TYPE, CRExtraRegistration::addVentAsCopycat);
+            REGISTRATE.addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
+        }
     }
 }
