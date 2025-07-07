@@ -78,13 +78,14 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
         return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? new BezierConnection.SegmentAngles[0] : original.call(instance);
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     @Inject(method = "<init>", at = @At("RETURN"))
     private void addActualMonorail(TrackVisual trackInstance, BezierConnection bc, CallbackInfo ci) {
         //Use right for top section
         //Use ties for center section
         //use left for bottom section
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-			PoseStack pose = new PoseStack();
+            PoseStack pose = new PoseStack();
             TransformStack.of(pose)
                 .translate(trackInstance.getVisualPosition())
                 .nudge((int) bc.bePositions.getFirst()

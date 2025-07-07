@@ -92,7 +92,7 @@ public class SemaphoreRenderer extends SafeBlockEntityRenderer<SemaphoreBlockEnt
 		}
 		CachedBuffers.partial(arm, blockState)
 				.light(light)
-				.rotateCenteredDegrees(angle * (upside_down ? -1 : 1), Direction.EAST)
+				.rotateCentered(angle * (upside_down ? -1 : 1), Direction.EAST)
 				.renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
 		float renderTime = AnimationTickHolder.getRenderTime(te.getLevel());

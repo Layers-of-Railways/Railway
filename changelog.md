@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.6.12 alpha
+------------------------------------------------------
+Bug Fixes
+- Fix narrow, wide, and phantom tracks rendering black boxes on transparent models #613 #637
+- Fix crash when pumping fluids through a portable fuel interface #638 #644
+- Fix semaphore arm rendering #622
+------------------------------------------------------
 Steam 'n' Rails 1.6.11 alpha
 ------------------------------------------------------
 Bug Fixes

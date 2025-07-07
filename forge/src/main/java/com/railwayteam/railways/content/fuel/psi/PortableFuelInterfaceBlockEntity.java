@@ -19,6 +19,7 @@
 package com.railwayteam.railways.content.fuel.psi;
 
 import com.railwayteam.railways.mixin_interfaces.IContraptionFuel;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -43,7 +44,10 @@ public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBl
     @Override
     public void startTransferringTo(Contraption contraption, float distance) {
         LazyOptional<IFluidHandler> oldcap = capability;
-        capability = LazyOptional.of(() -> new InterfaceFluidHandler(((IContraptionFuel) contraption).railways$getFluidFuels()));
+        capability = LazyOptional.of(() -> {
+            MountedFluidStorageWrapper fuels = ((IContraptionFuel) contraption).railways$getFluidFuels();
+            return new InterfaceFluidHandler(fuels != null ? fuels : new FluidTank(0));
+        });
         oldcap.invalidate();
         super.startTransferringTo(contraption, distance);
     }
