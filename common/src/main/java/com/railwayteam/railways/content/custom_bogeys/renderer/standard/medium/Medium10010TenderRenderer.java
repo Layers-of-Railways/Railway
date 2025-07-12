@@ -18,57 +18,62 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium;
 
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import net.createmod.catnip.render.CachedBuffers;
-import net.createmod.catnip.render.SuperByteBuffer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_10_0_10_TENDER_FRAME;
-import static com.railwayteam.railways.registry.CRBlockPartials.MEDIUM_SHARED_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class Medium10010TenderRenderer implements BogeyRenderer {
+    @Override
+    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+        createModelInstance(materialManager, MEDIUM_SHARED_WHEELS, 5);
+        createModelInstance(materialManager, MEDIUM_10_0_10_TENDER_FRAME);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 4);
+    }
 
+    @Override
+    public BogeySizes.BogeySize getSize() {
+        return BogeySizes.SMALL;
+    }
 
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+        boolean inInstancedContraption = vb == null;
 
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
-		SuperByteBuffer secondaryShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 4);
 
-		for (int side = 0; side < 4; side++) {
-			secondaryShafts
-					.translate(-.5f, .31f, 1.8f + side * -1.5)
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+        for (int side = 0; side < 4; side++) {
+            secondaryShafts[side]
+                    .translate(-.5f, .31f, 1.8f + side * -1.5)
+                    .centre()
+                    .rotateZ(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
 
-		CachedBuffers.partial(MEDIUM_10_0_10_TENDER_FRAME, Blocks.AIR.defaultBlockState())
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
+        getTransform(MEDIUM_10_0_10_TENDER_FRAME, ms, inInstancedContraption)
+                .render(ms, light, vb);
 
-		SuperByteBuffer wheels = CachedBuffers.partial(MEDIUM_SHARED_WHEELS, Blocks.AIR.defaultBlockState());
-		for (int side = -1; side < 4; side++) {
-			wheels.translate(0, 13 / 16f, -1.5f + side * 1.5)
-					.rotateXDegrees(wheelAngle)
-					.translate(0, -13 / 16f, 0)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
-	}
+        BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 5);
+        for (int side = -1; side < 4; side++) {
+            if (!inInstancedContraption)
+                ms.pushPose();
+            BogeyModelData wheel = wheels[side + 1];
+            wheel.translate(0, 13 / 16f, -1.5f + side * 1.5)
+                    .rotateX(wheelAngle)
+                    .translate(0, -13 / 16f, 0)
+                    .render(ms, light, vb);
+            if (!inInstancedContraption)
+                ms.popPose();
+        }
+    }
 }

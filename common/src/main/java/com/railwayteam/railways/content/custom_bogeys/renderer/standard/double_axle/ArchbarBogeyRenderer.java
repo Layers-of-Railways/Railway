@@ -36,36 +36,36 @@ import net.minecraft.world.level.block.Blocks;
 import static com.railwayteam.railways.registry.CRBlockPartials.ARCHBAR_FRAME;
 
 public class ArchbarBogeyRenderer implements BogeyRenderer {
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+        
+        SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
 
-		SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+        for (int i : Iterate.zeroAndOne) {
+            secondaryShaft
+                    .translate(-.5f, .25f, i * -1)
+                    .center()
+                    .rotateZ(wheelAngle)
+                    .uncenter()
+                    .light(light)
+                    .overlay(overlay)
+                    .renderInto(poseStack, buffer);
+        }
 
-		for (int i : Iterate.zeroAndOne) {
-			secondaryShaft
-					.translate(-.5f, .25f, i * -1)
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+        CachedBuffers.partial(ARCHBAR_FRAME, Blocks.AIR.defaultBlockState())
+                .light(light)
+                .overlay(overlay)
+                .renderInto(poseStack, buffer);
 
-		CachedBuffers.partial(ARCHBAR_FRAME, Blocks.AIR.defaultBlockState())
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
-
-		SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
-		for (int side : Iterate.positiveAndNegative) {
-			wheels.translate(0, 11.975 / 16f, side * 0.998)
-					.rotateXDegrees(wheelAngle)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
-	}
+        SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
+        for (int side : Iterate.positiveAndNegative) {
+            wheels.translate(0, 11.975 / 16f, side * 0.998)
+                    .rotateXDegrees(wheelAngle)
+                    .light(light)
+                    .overlay(overlay)
+                    .renderInto(poseStack, buffer);
+        }
+    }
 }

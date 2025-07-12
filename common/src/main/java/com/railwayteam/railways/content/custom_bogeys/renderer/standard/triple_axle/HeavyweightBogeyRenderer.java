@@ -36,35 +36,29 @@ import static com.railwayteam.railways.registry.CRBlockPartials.HEAVYWEIGHT_FRAM
 import static com.railwayteam.railways.registry.CRBlockPartials.LONG_SHAFTED_WHEELS;
 
 public class HeavyweightBogeyRenderer implements BogeyRenderer {
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack ms, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
 
-		SuperByteBuffer shaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
-		for (int i : Iterate.zeroAndOne) {
-			shaft.translate(-.5f, .25f, .5f + i * -2)
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(ms, buffer);
-		}
+        SuperByteBuffer shaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+        for (int i : Iterate.zeroAndOne) {
+            shaft.translate(-.5f, .25f, .5f + i * -2)
+                    .center()
+                    .rotateZDegrees(wheelAngle)
+                    .uncenter()
+                    .renderInto(ms, buffer);
+        }
 
-		CachedBuffers.partial(HEAVYWEIGHT_FRAME, Blocks.AIR.defaultBlockState())
-				.light(light)
-				.overlay(overlay)
-				.renderInto(ms, buffer);
+        CachedBuffers.partial(HEAVYWEIGHT_FRAME, Blocks.AIR.defaultBlockState())
+                .renderInto(ms, buffer);
 
-		SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
-		for (int side = -1; side < 2; side++) {
-			wheel.translate(0, 12 / 16f, side * 1.5)
-					.rotateXDegrees(wheelAngle)
-					.translate(0, -12 / 16f, 0)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(ms, buffer);
-		}
-	}
+        SuperByteBuffer wheel = CachedBuffers.partial(LONG_SHAFTED_WHEELS, Blocks.AIR.defaultBlockState());
+        for (int side = -1; side < 2; side++) {
+            wheel.translate(0, 12 / 16f, side * 1.5)
+                    .rotateX(wheelAngle)
+                    .translate(0, -12 / 16f, 0)
+                    .renderInto(ms, buffer);
+        }
+    }
 }

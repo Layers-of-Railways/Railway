@@ -21,49 +21,59 @@ package com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import net.createmod.catnip.data.Iterate;
-import net.createmod.catnip.render.CachedBuffers;
-import net.createmod.catnip.render.SuperByteBuffer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
+import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.RADIAL_FRAME;
-import static com.simibubi.create.AllPartialModels.SMALL_BOGEY_WHEELS;
 
 public class RadialBogeyRenderer implements BogeyRenderer {
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+    @Override
+    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+        createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 3);
+        createModelInstance(materialManager, RADIAL_FRAME);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
+    }
 
-		SuperByteBuffer shaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
-		for (int i : Iterate.zeroAndOne) {
-			shaft.translate(-.5f, .25f, .5f + i * -2)
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+    @Override
+    public BogeySizes.BogeySize getSize() {
+        return BogeySizes.SMALL;
+    }
 
-		CachedBuffers.partial(RADIAL_FRAME, Blocks.AIR.defaultBlockState())
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+        boolean inInstancedContraption = vb == null;
+        getTransform(RADIAL_FRAME, ms, inInstancedContraption)
+                .render(ms, light, vb);
 
-		SuperByteBuffer wheel = CachedBuffers.partial(SMALL_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
-		for (int side = -1; side < 2; side++) {
-			wheel.translate(0, 12 / 16f, side * 1.5)
-					.rotateXDegrees(wheelAngle)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
-	}
+        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
+
+        for (int i : Iterate.zeroAndOne) {
+            secondaryShafts[i]
+                    .translate(-.5f, .25f, .5f + i * -2)
+                    .centre()
+                    .rotateZ(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
+
+        BogeyModelData[] wheels = getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption, 3);
+        for (int side = -1; side < 2; side++) {
+            if (!inInstancedContraption)
+                ms.pushPose();
+            BogeyModelData wheel = wheels[side + 1];
+            wheel.translate(0, 12 / 16f, side * 1.5)
+                    .rotateX(wheelAngle)
+                    .render(ms, light, vb);
+            if (!inInstancedContraption)
+                ms.popPose();
+        }
+    }
 }

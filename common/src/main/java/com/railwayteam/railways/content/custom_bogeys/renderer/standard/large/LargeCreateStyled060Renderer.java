@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,95 +18,100 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard.large;
 
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
-import net.createmod.catnip.math.AngleHelper;
-import net.createmod.catnip.render.CachedBuffers;
-import net.createmod.catnip.render.SuperByteBuffer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.LARGE_CREATE_STYLED_0_6_0_FRAME;
-import static com.railwayteam.railways.registry.CRBlockPartials.LARGE_CREATE_STYLED_0_6_0_PISTON;
-import static com.railwayteam.railways.registry.CRBlockPartials.LC_STYLE_SEMI_BLIND_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
 public class LargeCreateStyled060Renderer implements BogeyRenderer {
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
-		SuperByteBuffer secondaryShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.X));
-		SuperByteBuffer middleShafts = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
+    @Override
+    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+        createModelInstance(materialManager, LC_STYLE_SEMI_BLIND_WHEELS, LARGE_CREATE_STYLED_0_6_0_FRAME, LARGE_CREATE_STYLED_0_6_0_PISTON);
+        createModelInstance(materialManager, AllPartialModels.LARGE_BOGEY_WHEELS, 2);
+        createModelInstance(materialManager, AllPartialModels.BOGEY_PIN, 3);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.X), 2);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 4);
+    }
 
-		for (int side : Iterate.positiveAndNegative) {
-			secondaryShafts.translate(-.5f, .25f, -.5f + side * 2.681)
-					.center()
-					.rotateXDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+    @Override
+    public BogeySizes.BogeySize getSize() {
+        return BogeySizes.LARGE;
+    }
 
-		for (int side = -2; side < 3; side++) {
-			if (side == 0) continue;
-			middleShafts.translate(-.5f, .25f, -.5f + side)
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+        boolean inInstancedContraption = vb == null;
 
-		CachedBuffers.partial(LARGE_CREATE_STYLED_0_6_0_FRAME, Blocks.AIR.defaultBlockState())
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
+        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.X), ms, inInstancedContraption, 2);
+        BogeyModelData[] middleShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 4);
 
-		CachedBuffers.partial(LARGE_CREATE_STYLED_0_6_0_PISTON, Blocks.AIR.defaultBlockState())
-				.translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
+        for (int side : Iterate.positiveAndNegative) {
+            BogeyModelData shaft = secondaryShafts[(side + 1) / 2];
+            shaft.translate(-.5f, .25f, -.5f + side * 2.681)
+                    .centre()
+                    .rotateX(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
 
-		SuperByteBuffer wheels = CachedBuffers.partial(AllPartialModels.LARGE_BOGEY_WHEELS, Blocks.AIR.defaultBlockState());
-		SuperByteBuffer pins = CachedBuffers.partial(AllPartialModels.BOGEY_PIN, Blocks.AIR.defaultBlockState());
+        for (int side = -2; side < 3; side++) {
+            if (side == 0) continue;
+            int shaftNum = side > 0 ? side + 1 : side + 2;
+            BogeyModelData shaft = middleShafts[shaftNum];
+            shaft.translate(-.5f, .25f, -.5f + side)
+                    .centre()
+                    .rotateZ(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
 
-		CachedBuffers.partial(LC_STYLE_SEMI_BLIND_WHEELS, Blocks.AIR.defaultBlockState())
-				.translate(0, 1, 0)
-				.rotateXDegrees(wheelAngle)
-				.translate(0, -1, 0)
-				.light(light)
-				.overlay(overlay)
-				.renderInto(poseStack, buffer);
+        getTransform(LARGE_CREATE_STYLED_0_6_0_FRAME, ms, inInstancedContraption)
+                .render(ms, light, vb);
 
-		for (int side : Iterate.positiveAndNegative) {
-			wheels.translate(0, 1, side * 1.6842)
-					.rotateXDegrees(wheelAngle)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
+        getTransform(LARGE_CREATE_STYLED_0_6_0_PISTON, ms, inInstancedContraption)
+                .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
+                .render(ms, light, vb);
 
-		for (int side = -1; side < 2; side++) {
-			pins.translate(0, 1, side * 1.6842)
-					.rotateXDegrees(wheelAngle)
-					.translate(0, 1 / 4f, 0)
-					.rotateXDegrees(-wheelAngle)
-					.light(light)
-					.overlay(overlay)
-					.renderInto(poseStack, buffer);
-		}
-	}
+        BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 3);
+
+        if (!inInstancedContraption) ms.pushPose();
+
+        getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption)
+                .translate(0, 1, 0)
+                .rotateX(wheelAngle)
+                .translate(0, -1, 0)
+                .render(ms, light, vb);
+
+        for (int side : Iterate.positiveAndNegative) {
+            BogeyModelData wheel = wheels[(side + 1) / 2];
+            wheel.translate(0, 1, side * 1.6842)
+                    .rotateX(wheelAngle)
+                    .render(ms, light, vb);
+        }
+
+        for (int side = -1; side < 2; side++) {
+            BogeyModelData pin = pins[side + 1];
+            pin.translate(0, 1, side * 1.6842)
+                    .rotateX(wheelAngle)
+                    .translate(0, 1 / 4f, 0)
+                    .rotateX(-wheelAngle)
+                    .render(ms, light, vb);
+        }
+
+        if (!inInstancedContraption) ms.popPose();
+    }
 }

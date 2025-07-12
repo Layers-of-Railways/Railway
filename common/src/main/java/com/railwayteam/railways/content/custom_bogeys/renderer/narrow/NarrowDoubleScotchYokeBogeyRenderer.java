@@ -23,80 +23,89 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
+import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.entity.CarriageBogey;
 import net.createmod.catnip.data.Iterate;
-import net.createmod.catnip.math.AngleHelper;
-import net.createmod.catnip.render.CachedBuffers;
-import net.createmod.catnip.render.SuperByteBuffer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Blocks;
 
-import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_DOUBLE_SCOTCH_FRAME;
-import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_DOUBLE_SCOTCH_PISTONS;
-import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_SCOTCH_WHEELS;
+import static com.railwayteam.railways.registry.CRBlockPartials.*;
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_SCOTCH_WHEEL_PINS;
 
 public class NarrowDoubleScotchYokeBogeyRenderer implements BogeyRenderer {
+    @Override
+    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
+        createModelInstance(materialManager, NARROW_DOUBLE_SCOTCH_FRAME, NARROW_DOUBLE_SCOTCH_PISTONS);
+        createModelInstance(materialManager, NARROW_SCOTCH_WHEELS, 2);
+        createModelInstance(materialManager, NARROW_SCOTCH_WHEEL_PINS, 2);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
+        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.X), 2);
+    }
 
-	@Override
-	public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, boolean inContraption) {
-		VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+    @Override
+    public BogeySizes.BogeySize getSize() {
+        return BogeySizes.LARGE;
+    }
 
-		SuperByteBuffer primaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.Z));
-		for (int i : Iterate.zeroAndOne) {
-			primaryShaft.translate(-.5, 1 / 16., (7 / 16.) + i * -(30 / 16.))
-					.center()
-					.rotateZDegrees(wheelAngle)
-					.uncenter()
-					.light(packedLight)
-					.overlay(packedOverlay)
-					.renderInto(poseStack, buffer);
-		}
+    @Override
+    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+        boolean inInstancedContraption = vb == null;
 
-		SuperByteBuffer secondaryShaft = CachedBuffers.block(AllBlocks.SHAFT.getDefaultState()
-				.setValue(ShaftBlock.AXIS, Direction.Axis.X));
-		for (int i : Iterate.zeroAndOne) {
-			secondaryShaft.translate(-.5f, 6 / 16., (18 / 16.) + i * -(52 / 16.))
-					.center()
-					.rotateXDegrees(wheelAngle)
-					.uncenter()
-					.light(packedLight)
-					.overlay(packedOverlay)
-					.renderInto(poseStack, buffer);
-		}
+        BogeyModelData[] primaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
 
-		CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_FRAME, Blocks.AIR.defaultBlockState())
-				.translate(0, 5 / 16f, 0)
-				.light(packedLight)
-				.overlay(packedOverlay)
-				.renderInto(poseStack, buffer);
+        for (int i : Iterate.zeroAndOne) {
+            primaryShafts[i].translate(-.5, 1 / 16., (7/16.) + i * -(30 / 16.))
+                    .centre()
+                    .rotateZ(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
 
-		CachedBuffers.partial(NARROW_DOUBLE_SCOTCH_PISTONS, Blocks.AIR.defaultBlockState())
-				.translate(0, 14 / 16f, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-				.light(packedLight)
-				.overlay(packedOverlay)
-				.renderInto(poseStack, buffer);
+        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.X), ms, inInstancedContraption, 2);
 
-		SuperByteBuffer wheels = CachedBuffers.partial(NARROW_SCOTCH_WHEELS, Blocks.AIR.defaultBlockState());
-		SuperByteBuffer pins = CachedBuffers.partial(NARROW_SCOTCH_WHEEL_PINS, Blocks.AIR.defaultBlockState());
-		for (int side : Iterate.positiveAndNegative) {
-			wheels.translate(0, 14 / 16., side * (12 / 16.))
-					.rotateXDegrees(wheelAngle)
-					.translate(0, 0, 0)
-					.light(packedLight)
-					.overlay(packedOverlay)
-					.renderInto(poseStack, buffer);
+        for (int i : Iterate.zeroAndOne) {
+            secondaryShafts[i]
+                    .translate(-.5f, 6 / 16., (18 / 16.) + i * -(52 / 16.))
+                    .centre()
+                    .rotateX(wheelAngle)
+                    .unCentre()
+                    .render(ms, light, vb);
+        }
 
-			pins.translate(0, 14 / 16., side * (12 / 16.))
-					.rotateXDegrees(wheelAngle)
-					.translate(0, 1 / 4f, 0)
-					.rotateXDegrees(-wheelAngle)
-					.light(packedLight)
-					.overlay(packedOverlay)
-					.renderInto(poseStack, buffer);
-		}
-	}
+        getTransform(NARROW_DOUBLE_SCOTCH_FRAME, ms, inInstancedContraption)
+                .translate(0, 5 / 16f, 0)
+                .render(ms, light, vb);
+
+        getTransform(NARROW_DOUBLE_SCOTCH_PISTONS, ms, inInstancedContraption)
+                .translate(0, 14 / 16f, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
+                .render(ms, light, vb);
+
+        BogeyModelData[] wheels = getTransform(NARROW_SCOTCH_WHEELS, ms, inInstancedContraption, 2);
+        BogeyModelData[] pins = getTransform(NARROW_SCOTCH_WHEEL_PINS, ms, inInstancedContraption, 2);
+
+        for (int side : Iterate.positiveAndNegative) {
+            if (!inInstancedContraption)
+                ms.pushPose();
+
+            wheels[(side + 1) / 2]
+                    .translate(0, 14 / 16., side * (12 / 16.))
+                    .rotateX(wheelAngle)
+                    .translate(0, 0, 0)
+                    .render(ms, light, vb);
+
+            pins[(side + 1) / 2]
+                    .translate(0, 14 / 16., side * (12 / 16.))
+                    .rotateX(wheelAngle)
+                    .translate(0, 1 / 4f, 0)
+                    .rotateX(-wheelAngle)
+                    .render(ms, light, vb);
+
+            if (!inInstancedContraption)
+                ms.popPose();
+        }
+    }
 }

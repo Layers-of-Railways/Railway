@@ -23,73 +23,40 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.api.bogeymenu.v0.BogeyMenuManager;
 import com.railwayteam.railways.api.bogeymenu.v0.entry.CategoryEntry;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowDoubleScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowDoubleScotchYokeBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowScotchYokeBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowSmallBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.narrow.NarrowSmallBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.HandcarBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ArchbarBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ArchbarBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.BlombergBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.BlombergBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.FreightBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.FreightBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ModernBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.ModernBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.PassengerBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.PassengerBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.Y25BogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.double_axle.Y25BogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0100Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0100Visual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0120Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled0120Visual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled040Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled040Visual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled060Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled060Visual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled080Renderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.large.LargeCreateStyled080Visual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium10010TenderRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium10010TenderVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium202TrailingRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium202TrailingVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium404TrailingRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium404TrailingVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TenderRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TenderVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TrailingRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium606TrailingVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium808TenderRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.Medium808TenderVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuadrupleWheelRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuadrupleWheelVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuintupleWheelRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumQuintupleWheelVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumSingleWheelRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumSingleWheelVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumStandardRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumStandardVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumTripleWheelRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.medium.MediumTripleWheelVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.CoilspringBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.CoilspringBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.LeafspringBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.LeafspringBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.SingleaxleBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.single_axle.SingleaxleBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.HeavyweightBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.RadialBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.standard.triple_axle.RadialBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideComicallyLargeScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideComicallyLargeScotchYokeBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideDefaultBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideDefaultBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideScotchYokeBogeyRenderer;
-import com.railwayteam.railways.content.custom_bogeys.renderer.wide.WideScotchYokeBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyRenderer;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyVisual;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
@@ -155,7 +122,7 @@ public class CRBogeyStyles {
     }
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
-        AbstractBogeyBlock<?> bogeyBlock = getNextBlock(style);
+        AbstractBogeyBlock<?> bogeyBlock = style.getNextBlock(BogeySizes.LARGE);
         return bogeyBlock.getValidPathfindingTypes(style).contains(trackType) &&
                 (trackType != CRTrackType.MONORAIL ^ bogeyBlock instanceof InvisibleMonoBogeyBlock);
     }
@@ -165,7 +132,7 @@ public class CRBogeyStyles {
     }
 
     private static Optional<BogeyStyle> getMappedRecursive(BogeyStyle from, TrackType toType, boolean recursive) {
-        if (getNextBlock(from).getValidPathfindingTypes(from).contains(toType))
+        if (from.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock && bogeyBlock.getValidPathfindingTypes(from).contains(toType))
             return Optional.of(from);
         Pair<BogeyStyle, TrackType> key = Pair.of(from, toType);
         if (STYLES_FOR_GAUGES.containsKey(key)) {
@@ -183,14 +150,11 @@ public class CRBogeyStyles {
         Optional<BogeyStyle> mapped = getMapped(from, toType);
         if (!forceFit || (toType == TrackType.STANDARD && mapped.isEmpty()))
             return mapped;
-        if (mapped.isEmpty() || !getNextBlock(mapped.get()).getValidPathfindingTypes(mapped.get()).contains(toType)) { // if no (suitable) style found
+        if (mapped.isEmpty() || (mapped.get().getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock
+            && !bogeyBlock.getValidPathfindingTypes(mapped.get()).contains(toType))) { // if no (suitable) style found
             return AllBogeyStyles.BOGEY_STYLES.values().stream().filter((style) -> styleFitsTrack(style, toType)).findFirst();
         }
         return mapped;
-    }
-    
-    public static AbstractBogeyBlock<?> getNextBlock(BogeyStyle style) {
-        return style.getNextBlock(style.validSizes().stream().findFirst().orElseThrow());
     }
 
     private static final Set<BogeyStyle> SUB_LISTED_STYLES = new HashSet<>();
@@ -299,7 +263,7 @@ public class CRBogeyStyles {
     // Handcar
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
         .size(BogeySizes.SMALL, CRBlocks.HANDCAR, () -> () -> new SizeRenderer(new HandcarBogeyRenderer(), HandcarBogeyVisual::new))
-        .soundEvent(AllSoundEvents.COGS::getMainEvent)
+        .soundType(AllSoundEvents.COGS.getId())
         .build();
 
     // Medium
@@ -391,7 +355,7 @@ public class CRBogeyStyles {
     }
 
     public static CategoryEntry registerCategory(ResourceLocation id) {
-        return registerCategory(id.getNamespace(), id.getPath());
+        return registerCategory(id.getPath(), id.getNamespace());
     }
 
     public static CategoryEntry registerCategory(String modid, String name) {
