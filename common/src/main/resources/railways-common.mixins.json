@@ -101,6 +101,7 @@
     "conductor_possession.TrackedEntityMixin"
   ],
   "client": [
+    "client.AccessorBogeyStyle",
     "client.AccessorControlsHandler",
     "client.AccessorEntity",
     "client.AccessorLevelRenderer",
@@ -116,7 +117,9 @@
     "client.MixinBlockElement_Deserializer",
     "client.MixinBogeyBlockEntityRenderer",
     "client.MixinCarriageContraptionEntity",
+    "client.MixinCarriageContraptionEntityRenderer",
     "client.MixinCarriageContraptionInstance",
+    "client.MixinCarriageContraptionVisual",
     "client.MixinCarriageParticles",
     "client.MixinCarriageSounds",
     "client.MixinCurvedTrackInteraction",
