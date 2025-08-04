@@ -20,6 +20,8 @@ package com.railwayteam.railways.content.custom_bogeys.renderer.unified;
 
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.render.SpriteShiftEntry;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +43,8 @@ public interface ElementProvider<T extends Affine<T>> {
             System.arraycopy(all, starts[i], out[i], 0, out[i].length);
         }
     }
+
+    @NotNull Pair<Affine<T>, ScrollHandle> createScrolling(@NotNull PartialModel model, @NotNull SpriteShiftEntry shift);
 
     void freeze();
 }

@@ -5,6 +5,8 @@ newmtl m_frame
 map_Kd #frame
 newmtl m_wheel
 map_Kd #wheel
+newmtl m_belt
+map_Kd #belt
 newmtl m_broad_piston
 map_Kd #broad_piston
 newmtl m_broad_connector

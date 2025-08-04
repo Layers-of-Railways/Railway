@@ -19,12 +19,17 @@
 package com.railwayteam.railways.content.custom_bogeys.renderer.unified.impl;
 
 import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ElementProvider;
+import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ScrollHandle;
+import com.simibubi.create.content.processing.burner.ScrollTransformedInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.render.SpriteShiftEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -74,7 +79,29 @@ class VisualElementProvider implements ElementProvider<TransformedInstance> {
     }
 
     @Override
+    public @NotNull Pair<Affine<TransformedInstance>, ScrollHandle> createScrolling(@NotNull PartialModel model, @NotNull SpriteShiftEntry shift) {
+        if (ctx == null) {
+            throw new IllegalStateException("Cannot create elements after build");
+        }
+
+        ScrollTransformedInstance result = ctx.instancerProvider()
+            .instancer(AllInstanceTypes.SCROLLING_TRANSFORMED, Models.partial(model))
+            .createInstance()
+            .setSpriteShift(shift);
+        instances.add(result);
+
+        return Pair.of(result, new VisualScrollHandle(result));
+    }
+
+    @Override
     public void freeze() {
         ctx = null;
+    }
+
+    private record VisualScrollHandle(ScrollTransformedInstance instance) implements ScrollHandle {
+        @Override
+        public void scroll(float shiftV) {
+            instance.offset(0, shiftV);
+        }
     }
 }

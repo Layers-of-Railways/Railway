@@ -446,6 +446,7 @@ public class CRBlockPartials {
 
     public static final PartialModel
         WIDE_SCOTCH_FRAME = block("bogey/wide/scotch_yoke/frame"),
+        WIDE_SCOTCH_BELT = block("bogey/wide/scotch_yoke/belt"), // FIXME: UVs are rotated 180 degrees right now
         WIDE_SCOTCH_PINS = block("bogey/wide/scotch_yoke/pins"),
         WIDE_SCOTCH_PISTONS = block("bogey/wide/scotch_yoke/pistons"),
         WIDE_SCOTCH_WHEELS = block("bogey/wide/scotch_yoke/wheels")

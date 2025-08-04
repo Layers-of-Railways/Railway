@@ -19,8 +19,10 @@
 package com.railwayteam.railways.content.custom_bogeys.renderer.unified.impl;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ScrollHandle;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
+import net.createmod.catnip.render.SpriteShiftEntry;
 import org.joml.AxisAngle4f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionfc;
@@ -130,4 +132,22 @@ class RenderedElement implements Affine<RenderedElement> {
 
     record Single(RenderedElement element, PartialModel model) {}
     record Multiple(RenderedElement[] elements, PartialModel model) {}
+
+    static class Scrolling implements ScrollHandle {
+        final RenderedElement element;
+        final PartialModel model;
+        final SpriteShiftEntry entry;
+        float shiftV;
+
+        Scrolling(RenderedElement element, PartialModel model, SpriteShiftEntry entry) {
+            this.element = element;
+            this.model = model;
+            this.entry = entry;
+        }
+
+        @Override
+        public void scroll(float shiftV) {
+            this.shiftV = shiftV;
+        }
+    }
 }

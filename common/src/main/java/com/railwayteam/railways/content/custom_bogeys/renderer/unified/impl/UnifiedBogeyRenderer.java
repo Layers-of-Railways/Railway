@@ -29,6 +29,7 @@ import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.ApiStatus;
@@ -104,6 +105,24 @@ public class UnifiedBogeyRenderer implements BogeyRenderer, BogeyDisplayHolder {
             }
         }
 
+        for (RenderedElement.Scrolling element : renderer.scrollingElements) {
+            var mat = element.element.pose;
+            ms.last().pose().set(mat);
+            ms.last().normal().set(mat);
+
+            float spriteSize = element.entry.getTarget().getV1() - element.entry.getTarget().getV0();
+
+            float scrollV = element.shiftV;
+            scrollV = scrollV - Mth.floor(scrollV);
+            scrollV = scrollV * spriteSize * 0.5f;
+
+            CachedBuffers.partial(element.model, air)
+                .light(packedLight)
+                .overlay(packedOverlay)
+                .shiftUVScrolling(element.entry, scrollV)
+                .renderInto(ms, buffer);
+        }
+
         if (customRenderer != null) {
             customRenderer.render(bogeyData, wheelAngle, partialTick, poseStack, bufferSource, packedLight, packedOverlay, inContraption);
         }
@@ -113,21 +132,24 @@ public class UnifiedBogeyRenderer implements BogeyRenderer, BogeyDisplayHolder {
         BogeyDisplay display,
         List<RenderedElement.Single> singleElements,
         List<RenderedElement.Multiple> multipleElements,
+        List<RenderedElement.Scrolling> scrollingElements,
         List<RenderedElement> allElements
     ) {
         private static Renderer create(BogeyDisplay.Factory factory, boolean inContraption) {
             ArrayList<RenderedElement.Single> singleElements = new ArrayList<>();
             ArrayList<RenderedElement.Multiple> multipleElements = new ArrayList<>();
+            ArrayList<RenderedElement.Scrolling> scrollingElements = new ArrayList<>();
 
-            var prov = new RenderedElementProvider(singleElements, multipleElements);
+            var prov = new RenderedElementProvider(singleElements, multipleElements, scrollingElements);
             BogeyDisplay display = factory.create(prov, inContraption);
             prov.freeze();
 
             List<RenderedElement> allElements = new ArrayList<>();
             singleElements.forEach(s -> allElements.add(s.element()));
             multipleElements.forEach(m -> Collections.addAll(allElements, m.elements()));
+            scrollingElements.forEach(s -> allElements.add(s.element));
 
-            return new Renderer(display, singleElements, multipleElements, allElements);
+            return new Renderer(display, singleElements, multipleElements, scrollingElements, allElements);
         }
     }
 }

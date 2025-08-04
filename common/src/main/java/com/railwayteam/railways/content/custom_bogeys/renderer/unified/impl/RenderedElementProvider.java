@@ -19,8 +19,11 @@
 package com.railwayteam.railways.content.custom_bogeys.renderer.unified.impl;
 
 import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ElementProvider;
+import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ScrollHandle;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.render.SpriteShiftEntry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -28,11 +31,13 @@ import java.util.List;
 class RenderedElementProvider implements ElementProvider<RenderedElement> {
     private final List<RenderedElement.Single> singleElements;
     private final List<RenderedElement.Multiple> multipleElements;
+    private final List<RenderedElement.Scrolling> scrollingElements;
     private boolean frozen = false;
 
-    RenderedElementProvider(List<RenderedElement.Single> singleElements, List<RenderedElement.Multiple> multipleElements) {
+    RenderedElementProvider(List<RenderedElement.Single> singleElements, List<RenderedElement.Multiple> multipleElements, List<RenderedElement.Scrolling> scrollingElements) {
         this.singleElements = singleElements;
         this.multipleElements = multipleElements;
+        this.scrollingElements = scrollingElements;
     }
 
     @Override
@@ -58,6 +63,14 @@ class RenderedElementProvider implements ElementProvider<RenderedElement> {
         }
         multipleElements.add(new RenderedElement.Multiple(elements, model));
         return elements;
+    }
+
+    @Override
+    public @NotNull Pair<Affine<RenderedElement>, ScrollHandle> createScrolling(@NotNull PartialModel model, @NotNull SpriteShiftEntry shift) {
+        RenderedElement element = new RenderedElement();
+        RenderedElement.Scrolling scrolling = new RenderedElement.Scrolling(element, model, shift);
+        scrollingElements.add(scrolling);
+        return Pair.of(element, scrolling);
     }
 
     @Override
