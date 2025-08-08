@@ -109,32 +109,6 @@ dependencies {
     annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
 }
 
-publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = ReleaseType.valueOf(System.getenv().getOrDefault("RELEASE_TYPE", "STABLE"))
-    displayName = "Steam 'n' Rails ${"mod_version"()} Forge ${"minecraft_version"()}"
-    modLoaders.add("forge")
-    modLoaders.add("neoforge")
-
-    curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("create")
-    }
-
-    modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("create")
-    }
-}
-
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String
         ?: throw IllegalStateException("Property $this is not defined")

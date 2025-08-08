@@ -20,6 +20,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.architectury.plugin.ArchitectPluginExtension
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import me.modmuss50.mpp.ModPublishExtension
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.fabricmc.loom.task.RemapJarTask
 import org.objectweb.asm.ClassReader
@@ -32,6 +33,8 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.Deflater
+import dev.ithundxr.silk.ChangelogText
+import me.modmuss50.mpp.ReleaseType
 
 plugins {
     java
@@ -163,7 +166,7 @@ subprojects {
         platformSetupLoomIde()
     }
 
-    tasks.named<RemapJarTask>("remapJar") {
+    val remapJar = tasks.named<RemapJarTask>("remapJar") {
         from("${rootProject.projectDir}/LICENSE")
         val shadowJar = project.tasks.named<ShadowJar>("shadowJar").get()
         inputFile.set(shadowJar.archiveFile)
@@ -246,6 +249,51 @@ subprojects {
     components.getByName<AdhocComponentWithVariants>("java") {
         withVariantsFromConfiguration(project.configurations["shadowRuntimeElements"]) {
             skip()
+        }
+    }
+
+    val isFabric = project.name == "fabric"
+    val releaseType = 
+        if (version.toString().contains("alpha")) {
+            ReleaseType.ALPHA;
+        } else if (version.toString().contains("beta")) {
+            ReleaseType.BETA;
+        } else {
+            ReleaseType.STABLE;
+        }
+    configure<ModPublishExtension> {
+        file.set(remapJar.get().archiveFile)
+        version.set(project.version.toString())
+        changelog = ChangelogText.getChangelogText(rootProject).toString()
+        type = releaseType
+        displayName = "Steam 'n' Rails ${"mod_version"()} $capitalizedName ${"minecraft_version"()}"
+        if (isFabric) {
+            modLoaders.add("fabric")
+            modLoaders.add("quilt")
+        } else {
+            modLoaders.add("forge")
+            modLoaders.add("neoforge")
+        }
+
+        val createVersionType = if (project.name == "fabric") "create-fabric" else "create"
+        curseforge {
+            projectId = "curseforge_id"()
+            accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+            minecraftVersions.add("minecraft_version"())
+
+            requires {
+                slug = createVersionType
+            }
+        }
+
+        modrinth {
+            projectId = "modrinth_id"()
+            accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+            minecraftVersions.add("minecraft_version"())
+
+            requires {
+                slug = createVersionType
+            }
         }
     }
 }
@@ -383,7 +431,7 @@ fun calculateGitHash(): String {
             commandLine("git", "rev-parse", "HEAD")
         }
         return output.standardOutput.asText.get().trim()
-    } catch(ignored: Throwable) {
+    } catch(_: Throwable) {
         return "unknown"
     }
 }
@@ -394,7 +442,7 @@ fun calculateGitBranch(): String {
             commandLine("git", "rev-parse", "--abbrev-ref", "HEAD")
         }
         return output.standardOutput.asText.get().trim()
-    } catch(ignored: Throwable) {
+    } catch(_: Throwable) {
         return "unknown"
     }
 }
@@ -408,7 +456,7 @@ fun hasUnstaged(): Boolean {
         if (result.isNotEmpty())
             println("Found stageable results:\n${result}\n")
         return result.isNotEmpty()
-    }  catch(ignored: Throwable) {
+    }  catch(_: Throwable) {
         return false
     }
 }

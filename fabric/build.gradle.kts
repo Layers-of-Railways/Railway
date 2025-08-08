@@ -108,34 +108,6 @@ dependencies {
     }
 }
 
-publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = ReleaseType.valueOf(System.getenv().getOrDefault("RELEASE_TYPE", "STABLE"))
-    displayName = "Steam 'n' Rails ${"mod_version"()} Fabric ${"minecraft_version"()}"
-    modLoaders.add("fabric")
-    modLoaders.add("quilt")
-
-    curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("fabric-api")
-        requires("create-fabric")
-    }
-
-    modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("fabric-api")
-        requires("create-fabric")
-    }
-}
-
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String
         ?: throw IllegalStateException("Property $this is not defined")
