@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -110,32 +110,6 @@ dependencies {
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)!!
     implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!
-}
-
-publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = STABLE
-    displayName = "Steam 'n' Rails ${"mod_version"()} Forge ${"minecraft_version"()}"
-    modLoaders.add("forge")
-    modLoaders.add("neoforge")
-
-    curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("create")
-    }
-
-    modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("create")
-    }
 }
 
 operator fun String.invoke(): String {

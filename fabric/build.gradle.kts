@@ -16,8 +16,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import dev.ithundxr.silk.ChangelogText
-
 architectury.fabric()
 
 loom {
@@ -103,34 +101,6 @@ dependencies {
         modLocalRuntime("maven.modrinth:iris:${"iris_version"()}")
         modLocalRuntime("org.anarres:jcpp:1.4.14")
         modLocalRuntime("io.github.douira:glsl-transformer:2.0.0-pre13")
-    }
-}
-
-publishMods {
-    file = tasks.remapJar.get().archiveFile
-    version.set(project.version.toString())
-    changelog = ChangelogText.getChangelogText(rootProject).toString()
-    type = STABLE
-    displayName = "Steam 'n' Rails ${"mod_version"()} Fabric ${"minecraft_version"()}"
-    modLoaders.add("fabric")
-    modLoaders.add("quilt")
-
-    curseforge {
-        projectId = "curseforge_id"()
-        accessToken = System.getenv("CURSEFORGE_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("fabric-api")
-        requires("create-fabric")
-    }
-
-    modrinth {
-        projectId = "modrinth_id"()
-        accessToken = System.getenv("MODRINTH_TOKEN")
-        minecraftVersions.add("minecraft_version"())
-
-        requires("fabric-api")
-        requires("create-fabric")
     }
 }
 
