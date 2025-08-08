@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.6.13 alpha
+------------------------------------------------------
+Bug Fixes
+- Fix a startup crash that was apparent in larger modpacks
+- Fix bogey rendering being broken
+------------------------------------------------------
 Steam 'n' Rails 1.6.12 alpha
 ------------------------------------------------------
 Bug Fixes
