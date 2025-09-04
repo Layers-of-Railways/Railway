@@ -1,7 +1,6 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.13 alpha
 ------------------------------------------------------
-<!-- This is the next unreleased version. -->
 Bug Fixes
 - Fix instanced carriage rendering after (de)coupling #690
 - Fix wide scotch yoke bogey model #686
