@@ -82,7 +82,7 @@ public class ConductorToolboxLayer<T extends ConductorEntity, M extends EntityMo
           .rotateY((float) rotate)
           .uncenter()
           .translate(0, 6 / 16f, 12 / 16f)
-          .rotateX(60 * lidAngle)
+          .rotateXDegrees(60 * lidAngle)
           .translate(0, -6 / 16f, -12 / 16f)
           .light(packedLight)
           .renderInto(poseStack, builder);

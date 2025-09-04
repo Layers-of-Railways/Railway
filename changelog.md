@@ -6,6 +6,7 @@ Bug Fixes
 - Fix instanced carriage rendering after (de)coupling #690
 - Fix wide scotch yoke bogey model #686
 - Fix conductor toolbox crash #671
+- Fix conductor toolbox lid rendering
 ------------------------------------------------------
 Steam 'n' Rails 1.6.12 alpha
 ------------------------------------------------------
