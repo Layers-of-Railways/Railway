@@ -109,6 +109,7 @@
     "client.AccessorPartialModel",
     "client.AccessorToolboxHandlerClient",
     "client.AccessorTrackBlockOutline",
+    "client.AccessorVisualizedBogey",
     "client.AccessorWalkAnimationState",
     "client.AccessorWarningScreen",
     "client.HotbarStorageMixin",

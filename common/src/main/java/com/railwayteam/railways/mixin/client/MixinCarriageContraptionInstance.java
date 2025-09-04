@@ -20,11 +20,11 @@ package com.railwayteam.railways.mixin.client;
 
 import com.railwayteam.railways.mixin_interfaces.IUpdateCount;
 import com.simibubi.create.content.contraptions.render.ContraptionVisual;
-import com.simibubi.create.content.trains.bogey.BogeyVisual;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.CarriageContraptionVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import net.createmod.catnip.data.Couple;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -57,7 +57,7 @@ public abstract class MixinCarriageContraptionInstance extends ContraptionVisual
     }
 
     @Shadow(remap = false)
-    private Couple<BogeyVisual> bogeys;
+    private @Nullable Couple<AccessorVisualizedBogey> bogeys;
 
     @Inject(method = "beginFrame", at = @At("HEAD"), remap = false)
     private void railways$refreshBogeys(CallbackInfo ci) {
@@ -65,7 +65,7 @@ public abstract class MixinCarriageContraptionInstance extends ContraptionVisual
             if (bogeys != null) {
                 bogeys.forEach(visual -> {
                     if (visual != null) {
-                        visual.delete();
+                        visual.getVisual().delete();
                     }
                 });
                 bogeys = null;
