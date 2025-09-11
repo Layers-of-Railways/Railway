@@ -56,6 +56,6 @@ public class MediumSingleWheelDisplay implements BogeyDisplay {
         wheels
             .translate(0, 12 / 16f, 0)
             .rotateXDegrees(wheelAngle)
-            .translate(0, -13 / 16f, 0);
+            .translate(0, -12 / 16f, 0);
     }
 }
