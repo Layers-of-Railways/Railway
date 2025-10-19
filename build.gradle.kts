@@ -111,8 +111,10 @@ subprojects {
         }
     }
 
+    // Fabric loader is used in common for annotations; if fabric module is removed, keep resolution neutral
     configurations.configureEach {
         resolutionStrategy {
+            // Keep if fabric annotations are present; safe no-op if not resolved
             force("net.fabricmc:fabric-loader:${"fabric_loader_version"()}")
         }
     }
@@ -223,7 +225,7 @@ subprojects {
 
         inputs.properties(properties)
 
-        filesMatching(listOf("fabric.mod.json", "META-INF/mods.toml")) {
+        filesMatching(listOf("META-INF/mods.toml")) {
             expand(properties)
         }
     }
@@ -252,7 +254,7 @@ subprojects {
         }
     }
 
-    val isFabric = project.name == "fabric"
+    val isFabric = project.name == "fabric" // module removed in settings for 1.21 port; keep logic harmless
     val releaseType = 
         if (version.toString().contains("alpha")) {
             ReleaseType.ALPHA;
@@ -267,15 +269,12 @@ subprojects {
         changelog = ChangelogText.getChangelogText(rootProject).toString()
         type = releaseType
         displayName = "Steam 'n' Rails ${"mod_version"()} $capitalizedName ${"minecraft_version"()}"
-        if (isFabric) {
-            modLoaders.add("fabric")
-            modLoaders.add("quilt")
-        } else {
+        if (!isFabric) {
             modLoaders.add("forge")
             modLoaders.add("neoforge")
         }
 
-        val createVersionType = if (project.name == "fabric") "create-fabric" else "create"
+    val createVersionType = "create"
         curseforge {
             projectId = "curseforge_id"()
             accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
@@ -382,10 +381,10 @@ fun <T> getValueFromAnnotation(annotation: AnnotationNode?, key: String): T? {
 tasks.register("railwaysPublish") {
     when (val platform = System.getenv("PLATFORM")) {
         "both" -> {
-            dependsOn(tasks.build, ":fabric:publish", ":forge:publish", ":common:publish", ":fabric:publishMods", ":forge:publishMods")
+            dependsOn(tasks.build, ":forge:publish", ":common:publish", ":forge:publishMods")
         }
-        "fabric", "forge" -> {
-            dependsOn("${platform}:build", "${platform}:publish", "${platform}:publishMods")
+        "forge" -> {
+            dependsOn(":forge:build", ":forge:publish", ":forge:publishMods")
         }
     }
 }
