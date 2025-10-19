@@ -29,6 +29,7 @@ import org.objectweb.asm.tree.AnnotationNode
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
@@ -87,6 +88,7 @@ allprojects {
 
     java {
         withSourcesJar()
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
@@ -125,7 +127,8 @@ subprojects {
         // layered mappings - Mojmap names, parchment docs and parameters
         "mappings"(loom.layered {
             officialMojangMappings { nameSyntheticMembers = false }
-            parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
+            // Temporarily disable Parchment until a 1.21.1-compatible version is set
+            // parchment("org.parchmentmc.data:parchment-${"minecraft_version"()}:${"parchment_version"()}@zip")
         })
 
         // Used to decompile mixin dumps, needs to be on the classpath
@@ -212,16 +215,15 @@ subprojects {
         //val createFabricVersion: String = Regex("(\\d+\\.\\d+\\.\\d+-\\w)").find("create_fabric_version"())?.value.toString()
 
         // set up properties for filling into metadata
-        val properties = mapOf(
-                "version" to version,
-                "minecraft_version" to "minecraft_version"(),
-                "fabric_api_version" to "fabric_api_version"(),
-                "fabric_loader_version" to "fabric_loader_version"(),
-                "voicechat_api_version" to "voicechat_api_version"(),
-                "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
-                "create_forge_version" to "create_forge_version"().split("-")[0],
-                "create_fabric_version" to "create_fabric_version"()
-        )
+    val properties = mapOf(
+        "version" to version,
+        "minecraft_version" to "minecraft_version"(),
+        // Keep loader for common annotations
+        "fabric_loader_version" to "fabric_loader_version"(),
+        "voicechat_api_version" to "voicechat_api_version"(),
+        "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
+        "create_forge_version" to "create_forge_version"().split("-")[0]
+    )
 
         inputs.properties(properties)
 

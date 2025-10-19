@@ -34,15 +34,19 @@ dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation("net.fabricmc:fabric-loader:${"fabric_loader_version"()}")
-    // Compile against Create Fabric in common
-    // beware of differences across platforms!
-    // dependencies must also be pulled in to minimize problems, from remapping issues to compile errors.
-    // All dependencies except Flywheel and Registrate are NOT safe to use!
-    // Flywheel and Registrate must also be used carefully due to differences.
-    modCompileOnly("com.simibubi.create:create-fabric-${"minecraft_version"()}:${"create_fabric_version"()}")
-
-    // required for proper remapping and compiling
-    modCompileOnly("net.fabricmc.fabric-api:fabric-api:${"fabric_api_version"()}")
+    
+    // JSR 305 annotations (javax.annotation.*)
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+    
+    // Compile against Create Forge API in common to match the port's Forge focus
+    // Use slim classifier for API-only where applicable
+    modCompileOnly("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") {
+        exclude(group = "dev.ftb.mods")
+    }
+    modCompileOnly("net.createmod.ponder:Ponder-Common-${"minecraft_version"()}:${"ponder_version"()}")
+    modCompileOnly("net.createmod.catnip:Catnip-Common-${"minecraft_version"()}:${"catnip_version"()}")
+    modCompileOnly("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
+    modCompileOnly("dev.engine-room.flywheel:flywheel-common-mojmap-api-${"minecraft_version"()}:${"flywheel_version"()}")
 
     // JourneyMap compat
     modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-fabric-SNAPSHOT")
