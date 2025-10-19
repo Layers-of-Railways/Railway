@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "railways",
+  "version": "${version}",
+  "name": "Create: Steam 'n' Rails",
+  "description": "Customization and extension of Create rail systems and steam system",
+  "authors": [
+    "The Railways Team"
+  ],
+  "contact": {
+    "sources": "https://github.com/Layers-of-Railways/Railway/"
+  },
+  "license": ["MIT"],
+  "icon": "assets/railways/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.railwayteam.railways.fabric.RailwaysImpl"
+    ],
+    "client": [
+      "com.railwayteam.railways.fabric.RailwaysClientImpl"
+    ],
+    "fabric-datagen": [
+      "com.railwayteam.railways.fabric.RailwaysDataFabric"
+    ],
+    "journeymap": [
+      "com.railwayteam.railways.compat.journeymap.RailwayMapPlugin"
+    ],
+    "mm:early_risers": [
+      "com.railwayteam.railways.fabric.EarlyRiser"
+    ]
+  },
+  "mixins": [
+    "railways.mixins.json",
+    "railways-common.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "${minecraft_version}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_api_version}",
+    "create": "${create_fabric_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Modrinth": "https://modrinth.com/mod/create-steam-n-rails",
+        "CurseForge": "https://curseforge.com/minecraft/mc-mods/create-steam-n-rails",
+        "Discord": "https://discord.gg/md78MGbEfK"
+      }
+    }
+  }
+}
