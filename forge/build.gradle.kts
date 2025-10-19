@@ -41,18 +41,33 @@ loom {
 dependencies {
     forge("net.minecraftforge:forge:${"minecraft_version"()}-${"forge_version"()}")
 
-    // Create and its dependencies
-    modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
-    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}")
+    // Create and its dependencies (Forge)
+    // Use full (non-slim) artifact to include bundled Flywheel and other dependencies
+    modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}") {
+        exclude(group = "dev.ftb.mods")
+    }
+    // Catnip utilities (NeoForge build) required by Create/Ponder
+    // Exclude Flywheel since Create provides it
+    modImplementation("net.createmod.catnip:Catnip-NeoForge-1.21.1:${"catnip_version"()}") {
+        exclude(group = "dev.engine_room.flywheel")
+    }
+    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}") {
+        exclude(group = "dev.engine_room.flywheel", module = "flywheel-neoforge-${"minecraft_version"()}")
+    }
     modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
-    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${"minecraft_version"()}:${"flywheel_version"()}")
-    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_version"()}")
+    // Flywheel does not publish Forge artifacts for 1.21.1 on Create maven; Create 1.21.x handles rendering
+    //modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${"minecraft_version"()}:${"flywheel_version"()}")
+    //modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_version"()}")
 
-    // Development QOL
-    modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
+    // Development QOL (toggleable if resolution causes issues)
+    if (System.getenv("ENABLE_EMI")?.toBoolean() != false) {
+        modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
+    }
 
     // Test with JourneyMap in dev
-    modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
+    if (System.getenv("ENABLE_JM")?.toBoolean() != false) {
+        modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
+    }
     modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-SNAPSHOT") // for some reason this is needed explicitly
 
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
