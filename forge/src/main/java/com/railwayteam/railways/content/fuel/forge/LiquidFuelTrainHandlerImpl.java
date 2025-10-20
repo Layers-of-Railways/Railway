@@ -20,8 +20,8 @@ package com.railwayteam.railways.content.fuel.forge;
 
 import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageWrapper;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class LiquidFuelTrainHandlerImpl {
     public static int handleFuelDraining(MountedFluidStorageWrapper fuelFluids) {

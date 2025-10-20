@@ -22,7 +22,7 @@ import com.simibubi.create.content.equipment.toolbox.ItemReturnInvWrapper;
 import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 public class MountedToolboxEquipPacketImpl {
 	public static void doEquip(ServerPlayer player, int hotbarSlot, ItemStack held, ToolboxInventory inv) {

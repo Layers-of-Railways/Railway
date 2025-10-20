@@ -16,109 +16,76 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import dev.ithundxr.silk.ChangelogText
-import me.modmuss50.mpp.ReleaseType
-
-architectury.forge()
-
-loom {
-    val common = project(":common")
-    accessWidenerPath = common.loom.accessWidenerPath
-
-    forge {
-        mixinConfig("railways-common.mixins.json")
-        mixinConfig("railways.mixins.json")
-
-        convertAccessWideners = true
-        extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
-    }
-
-    runs.configureEach {
-        programArg("-mixin.config=create.mixins.json")
-    }
+plugins {
+    id("net.neoforged.gradle.userdev")
+    id("net.kyori.blossom")
 }
+
+operator fun String.invoke(): String = rootProject.ext[this] as? String ?: error("Property $this not found")
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    mavenCentral()
+    maven("https://maven.neoforged.net/releases")
+    maven("https://maven.createmod.net")
+    maven("https://mvn.devos.one/snapshots/")
+    maven("https://maven.blamejared.com/")
+    maven("https://maven.tterrag.com/")
+}
+
+
 
 dependencies {
-    forge("net.minecraftforge:forge:${"minecraft_version"()}-${"forge_version"()}")
+    implementation("net.neoforged:neoforge:${"neoforge_version"()}")
 
-    // Create and its dependencies (Forge)
-    modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") {
-        exclude(group = "dev.ftb.mods")
+    // Create and its dependencies (NeoForge)
+    // Create 1.21.1 includes Flywheel integration internally
+    implementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}") {
+        // Enable transitive dependencies temporarily to resolve missing classes
     }
-    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}") {
-        exclude(group = "dev.engine_room.flywheel", module = "flywheel-neoforge-${"minecraft_version"()}")
+    implementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}") {
+        // Enable transitive dependencies temporarily to resolve missing classes
     }
-    modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
-    // Flywheel does not publish Forge artifacts for 1.21.1 on Create maven; Create 1.21.x handles rendering
-    //modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${"minecraft_version"()}:${"flywheel_version"()}")
-    //modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_version"()}")
-
-    // Development QOL (toggleable if resolution causes issues)
-    if (System.getenv("ENABLE_EMI")?.toBoolean() != false) {
-        modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
-    }
-
-    // Test with JourneyMap in dev
-    if (System.getenv("ENABLE_JM")?.toBoolean() != false) {
-        modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
-    }
-    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-SNAPSHOT") // for some reason this is needed explicitly
-
-    modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
-
-    if ("enable_simple_voice_chat"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:simple-voice-chat:forge-${"voicechat_version"()}")
-    }
-
-    // mod compat for tracks
-    if ("enable_hexcasting"().toBoolean()) {
-        modLocalRuntime("at.petra-k.paucal:paucal-forge-${"minecraft_version"()}:${"paucal_version"()}")
-        modLocalRuntime("at.petra-k.hexcasting:hexcasting-forge-${"minecraft_version"()}:${"hexcasting_version"()}") {
-            exclude(group = "com.github.Virtuoel", module = "Pehkui")
-            exclude(group = "net.minecraftforge", module = "forge")
-            exclude(group = "top.theillusivec4.curios", module = "curios-forge")
-            exclude(group = "mezz.jei", module = "jei-1.19.2-forge")
-        }
-        //modApi("com.github.Virtuoel:Pehkui:${pehkui_version}-${minecraft_version}-forge") // probably not needed
-        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}")
-        modLocalRuntime("thedarkcolour:kotlinforforge:${"kotlin_for_forge_version"()}")
-    }
-
-    if ("enable_byg"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:biomesyougo:${"byg_version"()}-forge")
-    }
-    if ("enable_byg"().toBoolean() || "enable_bop"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:terrablender:${"terrablender_version_forge"()}")
-    }
-    if ("enable_bop"().toBoolean()) {
-        modLocalRuntime("curse.maven:biomesoplenty-220318:${"bop_version"()}")
-    }
-    if ("enable_dnd"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:create-dreams-and-desires:${"dnd_version"()}")
-    }
-    if ("enable_quark"().toBoolean()) {
-        modLocalRuntime("org.violetmoon.quark:Quark:${"quark_version"()}")
-        modLocalRuntime("org.violetmoon.zeta:zeta:${"zeta_version"()}")
-    }
-
-    if ("enable_tfc"().toBoolean()) {
-        modLocalRuntime("vazkii.patchouli:Patchouli:${"minecraft_version"()}-${"patchouli_version"()}-FORGE")
-        modLocalRuntime("maven.modrinth:terrafirmacraft:${"tfc_version"()}")
-    }
-
-    if ("enable_sodium_rubidium"().toBoolean()) {
-        modLocalRuntime("maven.modrinth:rubidium:${"rubidium_version"()}")
-    }
-
-    if ("enable_sc"().toBoolean()) {
-        modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
-    }
-
-    compileOnly("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")
-    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
+    
+    // Catnip (required for Create API) - Common variant only available for 1.21.1
+    // Note: Some Forge-specific Catnip APIs may not be available
+    implementation("net.createmod.catnip:Catnip-Common-${"minecraft_version"()}:${"catnip_version"()}")
+    
+    // Registrate
+    implementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
+    
+    // MixinExtras
+    implementation("io.github.llamalad7:mixinextras-neoforge:${"mixin_extras_version"()}")
+    
+    // Annotations
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+    
+    // Note: @ExpectPlatform from Architectury no longer used
+    // Platform-specific implementations are directly in forge/ package
 }
 
-operator fun String.invoke(): String {
-    return rootProject.ext[this] as? String
-        ?: throw IllegalStateException("Property $this is not defined")
+sourceSets.main {
+    resources.srcDir("src/generated/resources")
+}
+
+tasks.processResources {
+    val props = mapOf(
+        "version" to project.version.toString(),
+        "minecraft_version" to "minecraft_version"(),
+        "neoforge_version" to "neoforge_version"(),
+        "mod_id" to "mod_id"(),
+        "mod_name" to "mod_name"()
+    )
+    inputs.properties(props)
+    filesMatching("META-INF/mods.toml") { expand(props) }
+}
+
+tasks.jar {
+    manifest {
+        attributes(mapOf(
+            "Specification-Title" to "railways",
+            "Implementation-Version" to project.version
+        ))
+    }
 }

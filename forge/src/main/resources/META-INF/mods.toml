@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[${forge_version},)"
+loaderVersion = "[${neoforge_version},)"
 issueTrackerURL = "https://github.com/Layers-of-Railways/Railway/issues"
 license = "MIT"
 
@@ -16,9 +16,9 @@ description = '''Customization and extension of Create rail systems and steam sy
 logoFile = "icon.png"
 
 [[dependencies.railways]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
-versionRange = "[${forge_version},)"
+versionRange = "[${neoforge_version},)"
 ordering = "NONE"
 side = "BOTH"
 

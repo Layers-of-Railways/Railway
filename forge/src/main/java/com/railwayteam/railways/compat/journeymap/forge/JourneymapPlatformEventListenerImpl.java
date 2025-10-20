@@ -20,7 +20,7 @@ package com.railwayteam.railways.compat.journeymap.forge;
 
 import com.railwayteam.railways.compat.journeymap.JourneymapPlatformEventListener;
 import journeymap.client.api.event.forge.FullscreenDisplayEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.MinecraftForge;
 
 public class JourneymapPlatformEventListenerImpl extends JourneymapPlatformEventListener {
 
