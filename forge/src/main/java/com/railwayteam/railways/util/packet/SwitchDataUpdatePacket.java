@@ -21,8 +21,8 @@ package com.railwayteam.railways.util.packet;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.content.switches.TrainHUDSwitchExtension;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -81,7 +81,7 @@ public class SwitchDataUpdatePacket implements S2CPacket {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void handle(Minecraft mc) {
         if (clear) {
             TrainHUDSwitchExtension.switchState = null;

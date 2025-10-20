@@ -35,8 +35,8 @@ import com.simibubi.create.content.trains.track.TrackBlockOutline.BezierPointSel
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import net.createmod.catnip.outliner.Outliner;
 import net.createmod.catnip.theme.Color;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -51,7 +51,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.ArrayList;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class TrackEdgePointHighlighter {
     private static class HolderSet {
         final Object BLOCK_BOX = new Object();

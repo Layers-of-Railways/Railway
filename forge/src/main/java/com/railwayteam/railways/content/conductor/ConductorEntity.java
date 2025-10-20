@@ -47,8 +47,8 @@ import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.data.WorldAttached;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -564,16 +564,16 @@ public class ConductorEntity extends AbstractGolem {
   public float bob;
 
   @Override
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public float getViewXRot(float partialTicks) {
     if (ClientHandler.isPossessed(this))
       return this.getXRot();
     return super.getViewXRot(partialTicks);
   }
 
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public PlayerModel<?> visualBaseModel;
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public Player visualBaseEntity;
 
   @Override
@@ -583,7 +583,7 @@ public class ConductorEntity extends AbstractGolem {
 
   // make public
   @Override
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void setSharedFlag(int flag, boolean set) {
     super.setSharedFlag(flag, set);
   }
@@ -614,7 +614,7 @@ public class ConductorEntity extends AbstractGolem {
   }
 
   @Override
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public float getViewYRot(float partialTick) {
     return this.isPassenger() || !isPossessed() ? super.getViewYRot(partialTick) : this.getYRot();
   }
@@ -667,7 +667,7 @@ public class ConductorEntity extends AbstractGolem {
     return input ? 1.0f : -1.0f;
   }
 
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   private void _updatePossessionInputs() {
     this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED));
     this.zza = calculateImpulse(wasUpPressed(), wasDownPressed());

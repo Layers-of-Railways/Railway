@@ -21,8 +21,8 @@ package com.railwayteam.railways.content.buffer;
 import com.railwayteam.railways.Railways;
 import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.catnip.render.StitchedSprite;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -39,7 +39,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class BufferModelUtils {
     public static final StitchedSprite SPRUCE_PLANKS_TEMPLATE = new StitchedSprite(new ResourceLocation("block/spruce_planks"));
     public static final StitchedSprite BIG_BUFFER_TEMPLATE = new StitchedSprite(Railways.asResource("block/buffer/big_buffer"));

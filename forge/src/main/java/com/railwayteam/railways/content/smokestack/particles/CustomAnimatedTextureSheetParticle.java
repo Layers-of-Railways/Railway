@@ -18,12 +18,12 @@
 
 package com.railwayteam.railways.content.smokestack.particles;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.TextureSheetParticle;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public abstract class CustomAnimatedTextureSheetParticle extends TextureSheetParticle {
     protected CustomAnimatedTextureSheetParticle(ClientLevel clientLevel, double d, double e, double f) {
         super(clientLevel, d, e, f);

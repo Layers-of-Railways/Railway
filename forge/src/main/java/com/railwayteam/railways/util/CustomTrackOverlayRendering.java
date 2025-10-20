@@ -42,8 +42,8 @@ import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.levelWrappers.SchematicLevel;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.ponder.api.level.PonderLevel;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -66,7 +66,7 @@ public class CustomTrackOverlayRendering {
         CUSTOM_OVERLAYS.put(edgePointType, model);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                                      BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
                                      EdgePointType<?> type, float scale) {
@@ -74,7 +74,7 @@ public class CustomTrackOverlayRendering {
             renderOverlay(level, pos, direction, bezier, ms, buffer, light, overlay, CUSTOM_OVERLAYS.get(type), scale, false);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                                      BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
                                      PartialModel model, float scale) {
@@ -82,7 +82,7 @@ public class CustomTrackOverlayRendering {
     }
 
     //Copied from TrackTargetingBehaviour
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                               BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
                               PartialModel model, float scale, boolean offsetToSide) {
@@ -109,7 +109,7 @@ public class CustomTrackOverlayRendering {
     }
 
     //Copied from TrackBlock
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
                                                    BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction,
                                                    PoseStack ms, PartialModel model) {

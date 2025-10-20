@@ -22,8 +22,8 @@ import com.railwayteam.railways.mixin.AccessorTrain;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.entity.Train;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -59,7 +59,7 @@ public class AddTrainEndPacket implements S2CPacket {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void handle(Minecraft mc) {
         Level level = mc.level;
         if (level != null) {

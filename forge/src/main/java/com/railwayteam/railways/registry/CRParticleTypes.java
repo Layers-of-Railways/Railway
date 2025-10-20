@@ -23,8 +23,8 @@ import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticl
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
 import com.simibubi.create.foundation.particle.ICustomParticleData;
 import net.createmod.catnip.lang.Lang;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.particles.ParticleOptions;
@@ -57,7 +57,7 @@ public enum CRParticleTypes {
 
 	public static void init() {}
 
-	@Environment(EnvType.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public static void registerFactories() {
 		for (CRParticleTypes particle : values())
 			particle.entry.registerFactory(Minecraft.getInstance().particleEngine);
@@ -80,12 +80,12 @@ public enum CRParticleTypes {
 			throw new AssertionError();//REGISTER.register(id, supplier);
 		}
 
-		@Environment(EnvType.CLIENT)
+		@OnlyIn(Dist.CLIENT)
 		public void registerFactory(ParticleEngine engine) {
 			registerFactory(object, engine, typeFactory.get());
 		}
 
-		@Environment(EnvType.CLIENT)		private static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
+		@OnlyIn(Dist.CLIENT)		private static <T extends ParticleOptions> void registerFactory(ParticleType<T> object, ParticleEngine engine, ICustomParticleData<T> customParticleData) {
 			throw new AssertionError();
 		}
 	}

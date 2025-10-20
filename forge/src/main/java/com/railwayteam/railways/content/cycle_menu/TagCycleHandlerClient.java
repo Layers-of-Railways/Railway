@@ -25,8 +25,8 @@ import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.util.EntityUtils;
 import com.railwayteam.railways.util.packet.TagCycleSelectionPacket;
 import net.createmod.catnip.gui.ScreenOpener;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +37,7 @@ import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class TagCycleHandlerClient {
     public static final TagCycleTracker CYCLE_TRACKER = new TagCycleTracker();
     @ApiStatus.Internal

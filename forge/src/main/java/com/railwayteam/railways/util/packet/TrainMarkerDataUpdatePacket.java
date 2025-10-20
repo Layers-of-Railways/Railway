@@ -22,8 +22,8 @@ import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.compat.journeymap.TrainMarkerData;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.simibubi.create.content.trains.entity.Train;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -75,7 +75,7 @@ public class TrainMarkerDataUpdatePacket implements S2CPacket { //TODO partial s
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void handle(Minecraft mc) {
         if (!data.incomplete())
             DummyRailwayMarkerHandler.getInstance().registerData(id, data);

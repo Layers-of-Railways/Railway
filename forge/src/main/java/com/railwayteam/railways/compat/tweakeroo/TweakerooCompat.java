@@ -19,14 +19,14 @@
 package com.railwayteam.railways.compat.tweakeroo;
 
 import com.railwayteam.railways.Railways;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class TweakerooCompat {
     private static final MethodHandles.Lookup lookup = MethodHandles.lookup();
 

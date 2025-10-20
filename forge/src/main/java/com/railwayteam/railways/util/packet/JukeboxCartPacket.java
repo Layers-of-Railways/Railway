@@ -20,8 +20,8 @@ package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.multiloader.S2CPacket;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -49,7 +49,7 @@ public class JukeboxCartPacket implements S2CPacket {
   }
 
   @Override
-  @Environment(EnvType.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void handle(Minecraft mc) {
     Level level = mc.level;
     if (level != null) {

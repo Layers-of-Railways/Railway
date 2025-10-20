@@ -28,7 +28,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -54,8 +54,8 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
 
   @Override
-  public void buildRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
-    all.forEach(c -> c.register(finishedRecipeConsumer));
+  public void buildRecipes(@NotNull RecipeOutput RecipeOutputConsumer) {
+    all.forEach(c -> c.register(RecipeOutputConsumer));
     Railways.LOGGER.info(getName() + " registered " + all.size() + " recipe" + (all.size() == 1 ? "" : "s"));
   }
 
@@ -66,7 +66,7 @@ public abstract class RailwaysRecipeProvider extends RecipeProvider {
 
   @FunctionalInterface
   public interface GeneratedRecipe {
-    void register(Consumer<FinishedRecipe> consumer);
+    void register(RecipeOutput consumer);
   }
 
   @SuppressWarnings("SameReturnValue")

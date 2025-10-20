@@ -20,8 +20,8 @@ package com.railwayteam.railways.util;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.debug.DebugRenderer;
@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class DebugRendererExtensions {
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public enum Renderers {
         PATHFINDING(d -> d.pathfindingRenderer),
         WATER(d -> d.waterDebugRenderer),
@@ -64,7 +64,7 @@ public class DebugRendererExtensions {
 
     private static final Set<Renderers> EMPTY = ImmutableSet.of();
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static Set<Renderers> getEnabledRenderers() {
         if (!Utils.isDevEnv())
             return EMPTY;
@@ -75,7 +75,7 @@ public class DebugRendererExtensions {
         );
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void render(PoseStack poseStack, MultiBufferSource.BufferSource bufferSource, double camX, double camY, double camZ) {
         for (Renderers renderer : getEnabledRenderers())
             renderer.getRenderer().render(poseStack, bufferSource, camX, camY, camZ);

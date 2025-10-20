@@ -18,8 +18,8 @@
 
 package com.railwayteam.railways.multiloader;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -28,6 +28,6 @@ import net.minecraft.network.FriendlyByteBuf;
  */
 public interface S2CPacket {
 	void write(FriendlyByteBuf buffer);
-	@Environment(EnvType.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	void handle(Minecraft mc);
 }

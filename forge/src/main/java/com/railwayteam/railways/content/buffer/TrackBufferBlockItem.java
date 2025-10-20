@@ -31,8 +31,8 @@ import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.simibubi.create.foundation.utility.CreateLang;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import net.createmod.catnip.data.Pair;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -179,7 +179,7 @@ public class TrackBufferBlockItem extends TrackTargetingBlockItem {
         return InteractionResult.PASS;
     }
     
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) {
         Minecraft mc = Minecraft.getInstance();

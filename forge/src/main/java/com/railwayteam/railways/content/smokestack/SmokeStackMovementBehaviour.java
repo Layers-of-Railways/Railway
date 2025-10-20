@@ -35,8 +35,8 @@ import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.animation.LerpedFloat;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleRenderType;
@@ -81,10 +81,10 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             return context.world.getGameTime() - movementStartTick;
         }
 
-        @Environment(EnvType.CLIENT)
+        @OnlyIn(Dist.CLIENT)
         private List<ChimneyPushParticle> pushParticles;
 
-        @Environment(EnvType.CLIENT)
+        @OnlyIn(Dist.CLIENT)
         void moveParticles(MovementContext context) {
             if (pushParticles == null) return;
 
@@ -101,12 +101,12 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             }
         }
 
-        @Environment(EnvType.CLIENT)
+        @OnlyIn(Dist.CLIENT)
         List<ChimneyPushParticle> getPushParticles() {
             return pushParticles == null ? Collections.emptyList() : pushParticles;
         }
 
-        @Environment(EnvType.CLIENT)
+        @OnlyIn(Dist.CLIENT)
         @SuppressWarnings("SameParameterValue")
         void addAndTrackParticle(ChimneyPushParticleData<?> particleType, boolean force, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             if (pushParticles == null) pushParticles = new ArrayList<>();
@@ -155,7 +155,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
         if (!(context.temporaryData instanceof TemporaryData temporaryData)) {

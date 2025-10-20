@@ -40,16 +40,16 @@ dependencies {
     implementation("net.neoforged:neoforge:${"neoforge_version"()}")
 
     // Create and its dependencies (NeoForge)
-    // Create 1.21.1 includes Flywheel and Ponder transitively
     implementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}")
     
-    // Flywheel - required for compile-time access to Flywheel APIs
-    // Note: Create includes this at runtime, but we need it at compile time
-    implementation("dev.engine-room.flywheel:flywheel-neoforge-${"minecraft_version"()}:${"flywheel_version"()}")
+    // Catnip - Create utility library (must be added explicitly, shaded into Create)
+    implementation("net.createmod.catnip:Catnip-NeoForge-${"minecraft_version"()}:${"catnip_version"()}")
     
-    // Catnip - Create utility APIs
-    // Note: Create bundles Catnip transitively; we just need compile-time access
-    // Don't override Create's version to avoid conflicts
+    // Ponder - Create's in-game documentation system (must be added explicitly)
+    implementation("net.createmod.ponder:Ponder-NeoForge-${"minecraft_version"()}:${"ponder_version"()}")
+    
+    // Flywheel - rendering engine (must be added explicitly)
+    implementation("dev.engine-room.flywheel:flywheel-neoforge-${"minecraft_version"()}:${"flywheel_version"()}")
     
     // Registrate
     implementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")

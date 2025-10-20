@@ -21,8 +21,8 @@ package com.railwayteam.railways.content.smokestack.particles.chimneypush;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.content.smokestack.particles.CustomAnimatedTextureSheetParticle;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
@@ -37,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
     protected final boolean leadOnly;
     protected final RandomSource random;
@@ -146,7 +146,7 @@ public class ChimneyPushParticle extends CustomAnimatedTextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static class Factory<T extends ChimneyPushParticleData<T>> implements ParticleProvider<T> {
         private final SpriteSet spriteSet;
         public Factory(SpriteSet spriteSet) {

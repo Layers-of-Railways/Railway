@@ -50,8 +50,8 @@ import com.simibubi.create.content.trains.track.TrackTargetingBlockItem.OverlapR
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.levelWrappers.SchematicLevel;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -177,7 +177,7 @@ public class HandcarItem extends BlockItem implements IDeployAnywayBlockItem {
         return true;
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean useOnCurve(TrackBlockOutline.BezierPointSelection selection, ItemStack stack) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;

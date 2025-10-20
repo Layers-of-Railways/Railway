@@ -25,8 +25,8 @@ import com.railwayteam.railways.Railways;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.gui.element.DelegatedStencilElement;
 import net.createmod.catnip.theme.Color;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -84,18 +84,18 @@ public class CRIcons extends AllIcons {
         return new CRIcons(x = 0, ++y);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void bind() {
         RenderSystem.setShaderTexture(0, ICON_ATLAS);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void render(GuiGraphics graphics, int x, int y) {
         graphics.blit(ICON_ATLAS, x, y, 0, iconX, iconY, 16, 16, 256, 256);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void render(PoseStack ms, MultiBufferSource buffer, int color) {
         VertexConsumer builder = buffer.getBuffer(RenderType.text(ICON_ATLAS));
         Matrix4f matrix = ms.last().pose();
@@ -118,7 +118,7 @@ public class CRIcons extends AllIcons {
         vertex(builder, matrix, vec4, rgb, u2, v1, light);
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void vertex(VertexConsumer builder, Matrix4f matrix, Vec3 vec, Color rgb, float u, float v, int light) {
         builder.vertex(matrix, (float) vec.x, (float) vec.y, (float) vec.z)
                 .color(rgb.getRed(), rgb.getGreen(), rgb.getBlue(), 255)
@@ -127,7 +127,7 @@ public class CRIcons extends AllIcons {
                 .endVertex();
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public DelegatedStencilElement asStencil() {
         return new DelegatedStencilElement().withStencilRenderer((ms, w, h, alpha) -> this.render(ms, 0, 0)).withBounds(16, 16);
     }

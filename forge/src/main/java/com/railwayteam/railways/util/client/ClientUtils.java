@@ -19,11 +19,11 @@
 package com.railwayteam.railways.util.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.KeyMapping;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ClientUtils {    public static boolean isActiveAndMatches(KeyMapping mapping, InputConstants.Key keyCode) {
         throw new AssertionError();
     }

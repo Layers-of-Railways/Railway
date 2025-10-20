@@ -19,8 +19,8 @@
 package com.railwayteam.railways.util.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -33,7 +33,7 @@ public class ClientTextUtils {
      * and it'll return a component that if it overflows after the cutoff,
      * it will remove the extra text and add `...` at the end
      */
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static Component getComponentWithWidthCutoff(Component component, int maxWidth) {
         Font font = Minecraft.getInstance().font;
         if (font.width(component) > maxWidth) {
@@ -48,7 +48,7 @@ public class ClientTextUtils {
         return component;
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderMultilineDebugText(PoseStack poseStack, MultiBufferSource buffer, int packedLight,
                                                 double baseY, boolean transparent, String... lines) {
         double y = baseY + (lines.length/4.0D);
@@ -58,7 +58,7 @@ public class ClientTextUtils {
         }
     }
 
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void renderDebugText(PoseStack poseStack, MultiBufferSource pBuffer, int pPackedLight,
                                        double y, boolean transparent, String text) {
         poseStack.pushPose();

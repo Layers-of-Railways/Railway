@@ -31,8 +31,8 @@ import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.placement.IPlacementHelper;
 import net.createmod.catnip.placement.PlacementHelpers;
 import net.createmod.catnip.placement.PlacementOffset;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -180,7 +180,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void customOutline(PoseStack poseStack, VertexConsumer consumer, BlockState state) {
         double offset = state.getValue(RAISED) ? 8 : 0;
 
@@ -217,7 +217,7 @@ public class BoilerBlock extends Block implements IWrenchable, IHasCustomOutline
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void matrixRotation(PoseStack poseStack, BlockState state) {
         if (state.getValue(HORIZONTAL_AXIS) == Axis.X)
             poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));

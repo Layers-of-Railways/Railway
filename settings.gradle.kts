@@ -23,7 +23,8 @@ pluginManagement {
     }
 }
 
-// Single-loader NeoForge mod - no common module needed
+// Single-loader NeoForge mod with common/ for shared game logic
+include("common")
 include("forge")
 
 rootProject.name = "Railway"

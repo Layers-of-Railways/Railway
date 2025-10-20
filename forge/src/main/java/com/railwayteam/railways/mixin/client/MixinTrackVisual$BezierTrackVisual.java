@@ -33,8 +33,8 @@ import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.data.Iterate;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -47,7 +47,7 @@ import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT
 import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_MIDDLE;
 import static com.railwayteam.railways.registry.CRBlockPartials.MONORAIL_SEGMENT_TOP;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 @Mixin(targets = "com.simibubi.create.content.trains.track.TrackVisual$BezierTrackVisual", remap = false)
 public abstract class MixinTrackVisual$BezierTrackVisual {
     @Mutable
