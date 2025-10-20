@@ -28,10 +28,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.common.ForgeHooks;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.bus.api.Event.Result;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 public class EntityUtilsImpl {
 	public static CompoundTag getPersistentData(Entity entity) {

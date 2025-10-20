@@ -19,7 +19,7 @@
 package com.railwayteam.railways.forge.asm;
 
 import cpw.mods.modlauncher.api.INameMappingService;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.neoforge.common.util.ObfuscationReflectionHelper;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;

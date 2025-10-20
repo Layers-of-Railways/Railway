@@ -20,7 +20,7 @@ package com.railwayteam.railways.forge.mixin.client;
 
 import com.railwayteam.railways.content.custom_tracks.monorail.CustomTrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackBlockOutline;
-import net.minecraftforge.client.event.RenderHighlightEvent;
+import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

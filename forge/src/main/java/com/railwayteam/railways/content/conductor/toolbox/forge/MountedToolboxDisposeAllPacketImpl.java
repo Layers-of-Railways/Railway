@@ -27,7 +27,7 @@ import com.simibubi.create.content.equipment.toolbox.ToolboxInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import java.util.UUID;

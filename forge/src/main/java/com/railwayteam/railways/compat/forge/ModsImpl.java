@@ -18,8 +18,8 @@
 
 package com.railwayteam.railways.compat.forge;
 
-import net.minecraftforge.fml.loading.LoadingModList;
-import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
+import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.fml.loading.moddiscovery.ModInfo;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

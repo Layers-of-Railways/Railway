@@ -19,7 +19,7 @@
 package com.railwayteam.railways.multiloader.forge;
 
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.ForgeHooks;
 
 public class PlatformAbstractionHelperImpl {
     public static int getBurnTime(Item item) {
