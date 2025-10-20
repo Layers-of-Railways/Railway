@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Steam 'n' Rails
  * Copyright (c) 2022-2025 The Railways Team
  *
