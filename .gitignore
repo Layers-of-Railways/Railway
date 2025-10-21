@@ -32,6 +32,7 @@ jars/
 **/changelog.html
 **/recent_changelog.html
 .DS_Store
+.vscode/
 
 ##################
 # Dev's Personal #
@@ -42,3 +43,8 @@ jars/
 /development_assets/venv/
 /common/src/main/resources/assets/minecraft/textures/block/
 /.architectury-transformer/
+
+# Local debugging/temp files
+*.pom
+create.pom.xml
+catnip-neoforge.pom
