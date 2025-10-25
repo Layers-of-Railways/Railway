@@ -4,7 +4,7 @@ mod_version:
   path: gradle.properties
   regex: mod_version = (.*)
   group: 1
-  format: ${mod_version}-mc${minecraft_version}-build.${build_number}
+  format: ${mod_version}+mc${minecraft_version}-build.${build_number}
 buttons:
   fabric:
     style: link
