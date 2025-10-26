@@ -32,11 +32,9 @@ import com.simibubi.create.content.trains.track.TrackVisual;
 import dev.engine_room.flywheel.api.visual.BlockEntityVisual;
 import dev.engine_room.flywheel.api.visual.ShaderLightVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
-import dev.engine_room.flywheel.lib.instance.FlatLit;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
-import dev.engine_room.flywheel.lib.visual.AbstractBlockEntityVisual;
 import dev.engine_room.flywheel.lib.visual.AbstractVisual;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
@@ -44,6 +42,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -74,12 +73,15 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
 	@Shadow
 	@Final
 	protected TrackBlockEntity blockEntity;
+	
 	@Shadow
 	@Final
 	protected BlockPos visualPos;
+	
 	@Shadow
 	@Final
 	protected BlockPos pos;
+	
 	@Nullable
     private BezierConnection bezierConnection = null;
 
@@ -111,11 +113,6 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
         railways$makeCasingData(true);
     }
 
-    @Inject(method = "updateLight(F)V", at = @At("HEAD"))
-    private void railways$updateLight(CallbackInfo ci) {
-        casingData.forEach((data) -> updateLight(data.getFirst(), this.level, data.getSecond()));
-    }
-
     @Inject(method = "_delete", at = @At("HEAD"))
     private void railways$_delete(CallbackInfo ci) {
         casingData.forEach((data) -> data.getFirst().delete());
@@ -131,12 +128,14 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
 
         SlabBlock casingBlock = ((IHasTrackCasing) this.blockEntity).getTrackCasing();
         if (casingBlock != null) {
-            TrackShape shape = this.blockState.getValue(TrackBlock.SHAPE);
+			BlockState state = blockEntity.getBlockState();
+			
+            TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (CRBlockPartials.TRACK_CASINGS.containsKey(shape)) {
                 ms.pushPose();
                 if (this.blockEntity.isTilted()) {
                     double angle = this.blockEntity.tilt.smoothingAngle.get();
-                    switch (this.blockEntity.getBlockState().getValue(TrackBlock.SHAPE)) {
+                    switch (state.getValue(TrackBlock.SHAPE)) {
                         case ZO -> TransformStack.of(ms)
                             .rotateXDegrees((float) -angle);
                         case XO -> TransformStack.of(ms)
@@ -144,7 +143,7 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                     }
                 }
                 TrackType trackType = null;
-                if (this.blockState.getBlock() instanceof TrackBlock trackBlock)
+                if (state.getBlock() instanceof TrackBlock trackBlock)
                     trackType = trackBlock.getMaterial().trackType;
 
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
@@ -161,7 +160,6 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                     .rotateY(transform.ry())
                     .rotateZ(transform.rz())
                     .translate(transform.x(), transform.y(), transform.z());
-                updateLight(casingInstance, this.level, this.pos);
                 casingData.add(Pair.of(casingInstance, this.pos));
 
                 for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
@@ -171,7 +169,6 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                         .rotateY(additionalTransform.ry())
                         .rotateZ(additionalTransform.rz())
                         .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z());
-                    updateLight(additionalInstance, this.level, this.pos);
                     casingData.add(Pair.of(additionalInstance, this.pos.offset(Mth.floor(additionalTransform.x()), Mth.floor(additionalTransform.y()), Mth.floor(additionalTransform.z()))));
                 }
                 ms.popPose();
@@ -194,7 +191,6 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                                 .translate(pos.x, pos.y, pos.z)
                                 .scale(1.001f);
                             BlockPos relativePos = BlockPos.containing(this.pos.getX() + pos.x, this.pos.getY() + pos.y, this.pos.getZ() + pos.z);
-                            updateLight(casingInstance, this.level, relativePos);
                             casingData.add(Pair.of(casingInstance, relativePos));
                         }
                     } else {
@@ -202,7 +198,6 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
 
                         for (int i = 1; i < segments.length; i++) {
                             if (i % 2 == 0) continue;
-                            BezierConnection.SegmentAngles segment = segments[i];
 
                             TransformedInstance casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :
                                 CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, instancerProvider());
@@ -211,15 +206,14 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                                 .translate(0, (i % 4) * 0.001f, 0)
                                 .translate(0, shiftDown, 0)
                                 .scale(1.001f);
-                            BlockPos relativePos = segment.lightPosition[i].offset(this.pos);
-                            updateLight(casingInstance, this.level, relativePos);
+                            BlockPos relativePos = segments.lightPosition[i].offset(this.pos);
                             casingData.add(Pair.of(casingInstance, relativePos));
 
                             TrackType trackType = bc.getMaterial().trackType;
                             if (trackType == WIDE_GAUGE) {
                                 for (boolean first : Iterate.trueAndFalse) {
                                     for (boolean inner : Iterate.trueAndFalse) {
-                                        PoseStack.Pose transform = segment.railTransforms[i].get(first);
+                                        PoseStack.Pose transform = segments.railTransforms[i].get(first);
 
                                         TransformedInstance casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff == 0 ? CRBlockPartials.TRACK_CASING_FLAT :
                                             CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, instancerProvider());
@@ -227,14 +221,13 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                                             .mul(transform)
                                             .translate(0, (i % 4) * 0.001f, 0)
                                             .translate((first ? -(61 / 64.) : -(1 / 32.)) + (inner ? 0 : (first ? 1 : -1)), shiftDown, 0);
-                                        BlockPos relativePos2 = segment.lightPosition[i].offset(this.pos);
-                                        updateLight(casingInstance2, this.level, relativePos2);
+                                        BlockPos relativePos2 = segments.lightPosition[i].offset(this.pos);
                                         casingData.add(Pair.of(casingInstance2, relativePos2));
                                     }
                                 }
                             } else {
                                 for (boolean first : Iterate.trueAndFalse) {
-                                    PoseStack.Pose transform = segment.railTransforms[i].get(first);
+                                    PoseStack.Pose transform = segments.railTransforms[i].get(first);
 
                                     TransformedInstance casingInstance2 = CasingRenderUtils.makeCasingInstance(heightDiff == 0 ? CRBlockPartials.TRACK_CASING_FLAT :
                                         CRBlockPartials.TRACK_CASING_FLAT_THICK, casingBlock, instancerProvider());
@@ -242,8 +235,7 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                                         .mul(transform)
                                         .translate(0, (i % 4) * 0.001f, 0)
                                         .translate(-0.5 + (trackType == NARROW_GAUGE ? (first ? 0.5 : -0.5) : 0), shiftDown, 0);
-                                    BlockPos relativePos2 = segment.lightPosition[i].offset(this.pos);
-                                    updateLight(casingInstance2, this.level, relativePos2);
+                                    BlockPos relativePos2 = segments.lightPosition[i].offset(this.pos);
                                     casingData.add(Pair.of(casingInstance2, relativePos2));
                                 }
                             }

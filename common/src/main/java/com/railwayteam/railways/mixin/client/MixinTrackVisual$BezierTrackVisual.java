@@ -80,14 +80,14 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
 
     @SuppressWarnings("SuspiciousNameCombination")
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void addActualMonorail(TrackVisual trackInstance, BezierConnection bc, CallbackInfo ci) {
+    private void addActualMonorail(TrackVisual trackVisual, BezierConnection bc, CallbackInfo ci) {
         //Use right for top section
         //Use ties for center section
         //use left for bottom section
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             PoseStack pose = new PoseStack();
             TransformStack.of(pose)
-                .translate(trackInstance.getVisualPosition())
+                .translate(((AccessorTrackVisual) trackVisual).railways$getVisualPos())
                 .nudge((int) bc.bePositions.getFirst()
                     .asLong());
 
@@ -101,7 +101,7 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
             TransformedInstance[] middle = ties;
             TransformedInstance[] bottom = left;
 
-            InstancerProvider provider = ((AccessorAbstractVisual) trackInstance).railways$getInstancerProvider();
+            InstancerProvider provider = ((AccessorAbstractVisual) trackVisual).railways$getInstancerProvider();
 
             provider.instancer(InstanceTypes.TRANSFORMED, SpecialModels.flatChunk(MONORAIL_SEGMENT_TOP)).createInstances(top);
             provider.instancer(InstanceTypes.TRANSFORMED, SpecialModels.flatChunk(MONORAIL_SEGMENT_MIDDLE)).createInstances(middle);

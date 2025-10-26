@@ -101,20 +101,19 @@ public abstract class CasingRenderUtils {
         } else {
             ms.pushPose();
             BlockPos tePosition = bc.bePositions.getFirst();
-            SegmentAngles[] segments = bc.getBakedSegments();
+            SegmentAngles segments = bc.getBakedSegments();
 
             TransformStack.of(ms)
                     .nudge((int) tePosition.asLong());
 
             for (int i = 1; i < segments.length; i++) {
                 if (i % 2 == 0) continue;
-                SegmentAngles segment = segments[i];
-                int light = LevelRenderer.getLightColor(level, segment.lightPosition.offset(tePosition));
-                Matrix4f pose = copy(segment.tieTransform.pose());
+                int light = LevelRenderer.getLightColor(level, segments.lightPosition[i].offset(tePosition));
+                Matrix4f pose = copy(segments.tieTransform[i].pose());
                 pose.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
                 CachedBuffers.partial(texturedPartial, state)
                         .mulPose(pose)
-                        .mulNormal(segment.tieTransform.normal())
+                        .mulNormal(segments.tieTransform[i].normal())
                         .translate(0, shiftDown, 0)
                         .scale(1.02f)
                         .light(light)
@@ -124,7 +123,7 @@ public abstract class CasingRenderUtils {
                 if (trackType == WIDE_GAUGE) {
                     for (boolean first : Iterate.trueAndFalse) {
                         for (boolean inner : Iterate.trueAndFalse) {
-                            Pose transform = segment.railTransforms.get(first);
+                            Pose transform = segments.railTransforms[i].get(first);
                             Matrix4f pose2 = copy(transform.pose());
                             pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
                             CachedBuffers.partial(texturedPartial, state)
@@ -137,7 +136,7 @@ public abstract class CasingRenderUtils {
                     }
                 } else {
                     for (boolean first : Iterate.trueAndFalse) {
-                        Pose transform = segment.railTransforms.get(first);
+                        Pose transform = segments.railTransforms[i].get(first);
                         Matrix4f pose2 = copy(transform.pose());
                         pose2.translate(new Vector3f(0, (i % 4) * 0.001f, 0));
                         CachedBuffers.partial(texturedPartial, state)
