@@ -209,7 +209,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         float chanceModifierTarget = (Math.abs(context.getAnimationSpeed()) + 100) / 800;
         chanceModifierTarget = chanceModifierTarget * chanceModifierTarget;
 
-        if (context.contraption.presentBlockEntities.get(context.localPos) instanceof ISpeedNotifiable notifiable) {
+        if (context.contraption.getOrCreateClientContraptionLazy().getBlockEntity(context.localPos) instanceof ISpeedNotifiable notifiable) {
             notifiable.notifySpeed(chanceModifierTarget);
         }
 

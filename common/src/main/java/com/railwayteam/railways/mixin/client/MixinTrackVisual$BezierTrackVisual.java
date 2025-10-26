@@ -65,19 +65,17 @@ public abstract class MixinTrackVisual$BezierTrackVisual {
     @Mutable
     private TransformedInstance[] left;
 
-    @Shadow(remap = false)
-    abstract void updateLight();
-
     @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getSegmentCount()I"))
     private int railways$messWithCtor(BezierConnection instance, Operation<Integer> original) {
         return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? 0 : original.call(instance);
     }
 
-    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getBakedSegments()[Lcom/simibubi/create/content/trains/track/BezierConnection$SegmentAngles;"))
-    private BezierConnection.SegmentAngles[] railways$messWithCtor2(BezierConnection instance, Operation<BezierConnection.SegmentAngles[]> original) {
-        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? new BezierConnection.SegmentAngles[0] : original.call(instance);
-    }
-
+	// TODO: Fix me
+//    @WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/BezierConnection;getBakedSegments()Lcom/simibubi/create/content/trains/track/BezierConnection$SegmentAngles;"))
+//    private SegmentAngles railways$messWithCtor2(BezierConnection instance, Operation<SegmentAngles> original) {
+//        return instance.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL ? new BezierConnection.SegmentAngles(instance) : original.call(instance);
+//    }
+	
     @SuppressWarnings("SuspiciousNameCombination")
     @Inject(method = "<init>", at = @At("RETURN"))
     private void addActualMonorail(TrackVisual trackVisual, BezierConnection bc, CallbackInfo ci) {
