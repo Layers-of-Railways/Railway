@@ -27,7 +27,6 @@ import com.railwayteam.railways.base.data.lang.CRLangGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
-import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRCommands;
@@ -46,7 +45,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -105,8 +103,8 @@ public class Railways {
     CRPackets.PACKETS.registerC2SListener();
 
     // TODO - Forge entirely breaks with mixin audit, truly incredible
-    if (Utils.isDevEnv() && !Loader.FORGE.isCurrent() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
-      MixinEnvironment.getCurrentEnvironment().audit();
+//    if (Utils.isDevEnv() && !Loader.FORGE.isCurrent() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
+//      MixinEnvironment.getCurrentEnvironment().audit();
   }
 
   public static ResourceLocation asResource(String name) {

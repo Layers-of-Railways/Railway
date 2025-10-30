@@ -23,20 +23,65 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_bogeys.renderer.unified.BogeyDisplay;
 import com.railwayteam.railways.content.custom_bogeys.renderer.unified.BogeyDisplayHolder;
+import com.railwayteam.railways.mixin_interfaces.IUpdateCount;
 import com.simibubi.create.content.contraptions.render.ContraptionVisual;
 import com.simibubi.create.content.trains.bogey.BogeyVisual;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.CarriageContraptionVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import net.minecraft.nbt.CompoundTag;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CarriageContraptionVisual.class)
-public abstract class MixinCarriageContraptionVisual extends ContraptionVisual<CarriageContraptionEntity> {
-    private MixinCarriageContraptionVisual(VisualizationContext ctx, CarriageContraptionEntity entity, float partialTick) {
+public abstract class MixinCarriageContraptionVisual extends ContraptionVisual<CarriageContraptionEntity> implements IUpdateCount {
+	private MixinCarriageContraptionVisual(VisualizationContext ctx, CarriageContraptionEntity entity, float partialTick) {
         super(ctx, entity, partialTick);
     }
+
+	@Shadow
+	@Final
+	public static int MAX_NUM_BOGEYS;
+	
+	@Mutable
+	@Shadow
+	@Final
+	private BogeyVisual[] visuals;
+
+	@Unique
+	private int railways$updateCount = 0;
+
+	@Override
+	public int railways$getUpdateCount() {
+		return railways$updateCount;
+	}
+
+	@Override
+	public void railways$fromParent(IUpdateCount parent) {
+		railways$updateCount = parent.railways$getUpdateCount();
+	}
+
+	@Override
+	public void railways$markUpdate() {
+		railways$updateCount++;
+	}
+
+	@Inject(method = "beginFrame", at = @At("HEAD"), remap = false)
+	private void railways$refreshBogeys(CallbackInfo ci) {
+		if (IUpdateCount.outOfSync(this, (IUpdateCount) this.entity)) {
+			for (BogeyVisual visual : visuals) {
+				visual.delete();
+			}
+			visuals = new BogeyVisual[MAX_NUM_BOGEYS];
+			this.railways$fromParent((IUpdateCount) this.entity);
+		}
+	}
 
     @WrapOperation(method = "animate", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/bogey/BogeyVisual;update(Lnet/minecraft/nbt/CompoundTag;FLcom/mojang/blaze3d/vertex/PoseStack;)V"))
     private void updateEntity(BogeyVisual instance, CompoundTag compoundTag, float v, PoseStack poseStack, Operation<Void> original) {

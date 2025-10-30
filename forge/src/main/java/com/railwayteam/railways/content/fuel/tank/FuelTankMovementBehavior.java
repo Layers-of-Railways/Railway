@@ -33,7 +33,7 @@ public class FuelTankMovementBehavior implements MovementBehaviour {
         if(!context.world.isClientSide)
             return;
 
-        BlockEntity be = context.contraption.presentBlockEntities.get(context.localPos);
+        BlockEntity be = context.contraption.getOrCreateClientContraptionLazy().getBlockEntity(context.localPos);
         if(be instanceof FuelTankBlockEntity fuelTank) {
             fuelTank.getFluidLevel().tickChaser();
         }

@@ -28,8 +28,11 @@ import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.BezierConnection.SegmentAngles;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import dev.engine_room.flywheel.api.instance.InstancerProvider;
+import dev.engine_room.flywheel.api.material.CardinalLightingMode;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
+import dev.engine_room.flywheel.lib.material.LightShaders;
+import dev.engine_room.flywheel.lib.material.SimpleMaterial;
 import dev.engine_room.flywheel.lib.model.ModelUtil;
 import dev.engine_room.flywheel.lib.model.SimpleModel;
 import dev.engine_room.flywheel.lib.model.baked.BakedModelBuilder;
@@ -185,7 +188,12 @@ public abstract class CasingRenderUtils {
     public static TransformedInstance makeCasingInstance(PartialModel baseModel, SlabBlock slabBlock, InstancerProvider instancerProvider) {
         PartialModel texturedPartial = reTexture(baseModel, slabBlock);
         SimpleModel model = BakedModelBuilder.create(texturedPartial.get())
-                .materialFunc((renderType, aBoolean) -> ModelUtil.getMaterial(RenderType.cutoutMipped(), aBoolean))
+                .materialFunc((renderType, shaded) ->
+					SimpleMaterial.builderOf(ModelUtil.getMaterial(RenderType.cutoutMipped(), shaded))
+						.light(LightShaders.FLAT)
+						.cardinalLightingMode(shaded ? CardinalLightingMode.CHUNK : CardinalLightingMode.OFF)
+						.build()
+				)
                 .build();
         return instancerProvider.instancer(InstanceTypes.TRANSFORMED, model)
                 .createInstance();
