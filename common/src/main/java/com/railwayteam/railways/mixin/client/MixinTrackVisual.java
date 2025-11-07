@@ -20,7 +20,6 @@ package com.railwayteam.railways.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
-import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.trains.track.BezierConnection;
@@ -44,7 +43,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -52,7 +50,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,44 +59,31 @@ import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.NAR
 import static com.railwayteam.railways.registry.CRTrackMaterials.CRTrackType.WIDE_GAUGE;
 
 @Mixin(value = TrackVisual.class, remap = false)
-public abstract class MixinTrackVisual extends AbstractVisual implements BlockEntityVisual<TrackBlockEntity>, ShaderLightVisual, IGetBezierConnection {
-	public MixinTrackVisual(VisualizationContext ctx, Level level, float partialTick) {
-		super(ctx, level, partialTick);
-	}
+public abstract class MixinTrackVisual extends AbstractVisual implements BlockEntityVisual<TrackBlockEntity>, ShaderLightVisual {
+    public MixinTrackVisual(VisualizationContext ctx, Level level, float partialTick) {
+        super(ctx, level, partialTick);
+    }
 
-	@Shadow
+    @Shadow
     public abstract void _delete();
 
-	@Shadow
-	@Final
-	protected TrackBlockEntity blockEntity;
-	
-	@Shadow
-	@Final
-	protected BlockPos visualPos;
-	
-	@Shadow
-	@Final
-	protected BlockPos pos;
-	
-	@Nullable
-    private BezierConnection bezierConnection = null;
+    @Shadow
+    @Final
+    protected TrackBlockEntity blockEntity;
+
+    @Shadow
+    @Final
+    protected BlockPos visualPos;
+
+    @Shadow
+    @Final
+    protected BlockPos pos;
 
     private final List<Pair<TransformedInstance, BlockPos>> casingData = new ArrayList<>();
 
-    @Override
-    public @Nullable BezierConnection getBezierConnection() {
-        return bezierConnection;
-    }
-    
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onCtor(VisualizationContext context, TrackBlockEntity track, float partialTick, CallbackInfo ci) {
         railways$makeCasingData(true);
-    }
-
-    @Inject(method = "createInstance", at = @At("HEAD"))
-    private void preCreateInstance(BezierConnection bc, CallbackInfoReturnable<?> cir) {
-        this.bezierConnection = bc;
     }
 
     @Inject(method = "update", at = @At(value = "RETURN", ordinal = 0))
