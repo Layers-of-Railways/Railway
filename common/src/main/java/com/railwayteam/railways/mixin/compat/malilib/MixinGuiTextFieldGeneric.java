@@ -37,7 +37,8 @@ public abstract class MixinGuiTextFieldGeneric extends EditBox {
         super(font, x, y, width, height, message);
     }
 
-    @Inject(method = "setCursorPosition", at = @At("HEAD"), cancellable = true)
+    @SuppressWarnings("UnresolvedMixinReference")
+    @Inject(method = "setCursorPosition", at = @At("HEAD"), cancellable = true, remap = false)
     private void fixCursorPosition(int pos, CallbackInfo ci) {
         super.setCursorPosition(pos);
         ci.cancel();

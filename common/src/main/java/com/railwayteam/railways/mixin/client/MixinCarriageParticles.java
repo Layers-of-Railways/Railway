@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinCarriageParticles {
     @Unique private boolean railways$isHandcar;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     private void railways$checkIfHandcar(CarriageContraptionEntity entity, CallbackInfo ci) {
         railways$isHandcar = entity.getCarriage().bogeys.both(b -> b == null || b.getStyle() == CRBogeyStyles.HANDCAR);
     }

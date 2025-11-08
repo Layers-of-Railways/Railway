@@ -38,7 +38,7 @@ import java.util.function.Predicate;
 
 @Mixin(MountedStorageManager.class)
 public abstract class MixinMountedStorageManager implements IFuelInventory {
-	@Shadow
+	@Shadow(remap = false)
 	private static <K, V> ImmutableMap<K, V> subMap(Map<K, V> map, Predicate<V> predicate) {
 		throw new AssertionError();
 	}

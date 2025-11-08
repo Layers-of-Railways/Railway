@@ -45,12 +45,12 @@ public abstract class MixinCarriageContraptionVisual extends ContraptionVisual<C
         super(ctx, entity, partialTick);
     }
 
-	@Shadow
+	@Shadow(remap = false)
 	@Final
 	public static int MAX_NUM_BOGEYS;
 	
 	@Mutable
-	@Shadow
+	@Shadow(remap = false)
 	@Final
 	private BogeyVisual[] visuals;
 

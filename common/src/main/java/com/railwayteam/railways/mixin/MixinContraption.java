@@ -39,7 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Contraption.class)
 public abstract class MixinContraption implements IContraptionFuel {
 
-    @Shadow public abstract MountedStorageManager getStorage();
+    @Shadow(remap = false) public abstract MountedStorageManager getStorage();
 
     @Inject(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
     private void applyPreTransformCallback(Level world, BlockPos offset, CallbackInfo ci, @Local(name="add") BlockPos add) {

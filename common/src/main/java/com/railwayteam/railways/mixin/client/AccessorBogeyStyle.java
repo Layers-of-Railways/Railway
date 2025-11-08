@@ -27,6 +27,6 @@ import java.util.Map;
 
 @Mixin(BogeyStyle.class)
 public interface AccessorBogeyStyle {
-    @Accessor
+    @Accessor(remap = false)
     Map<BogeySizes.BogeySize, BogeyStyle.SizeRenderer> getSizeRenderers();
 }

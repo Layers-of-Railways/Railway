@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(TrainRelocator.class)
 public class MixinTrainRelocator {
-    @Inject(method = "relocate", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;collectInitiallyOccupiedSignalBlocks()V", shift = At.Shift.AFTER))
+    @Inject(method = "relocate", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;collectInitiallyOccupiedSignalBlocks()V", shift = At.Shift.AFTER, remap = false))
     private static void tryToApproachStation(Train train, Level level, BlockPos pos, BezierTrackPointLocation bezier,
                                              boolean bezierDirection, Vec3 lookAngle, boolean simulate,
                                              CallbackInfoReturnable<Boolean> cir) {

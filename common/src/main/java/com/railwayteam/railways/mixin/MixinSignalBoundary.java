@@ -37,7 +37,7 @@ import java.util.Map;
 
 @Mixin(value = SignalBoundary.class, priority = 1023) // random priority to ensure consistent injection order
 public class MixinSignalBoundary {
-    @Shadow public Couple<Map<BlockPos, Boolean>> blockEntities;
+    @Shadow(remap = false) public Couple<Map<BlockPos, Boolean>> blockEntities;
 
     @Inject(method = "canCoexistWith", at = @At("RETURN"), cancellable = true, remap = false)
     private void railways$switchOrCouplerCanCoexist(EdgePointType<?> otherType, boolean front, CallbackInfoReturnable<Boolean> cir) {
