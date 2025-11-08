@@ -10,7 +10,7 @@
   "contact": {
     "sources": "https://github.com/Layers-of-Railways/Railway/"
   },
-  "license": ["MIT"],
+  "license": ["LGPL v3"],
   "icon": "assets/railways/icon.png",
   "environment": "*",
   "entrypoints": {
