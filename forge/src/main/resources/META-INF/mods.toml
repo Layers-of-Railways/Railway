@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[${forge_version},)"
 issueTrackerURL = "https://github.com/Layers-of-Railways/Railway/issues"
-license = "MIT"
+license = "LGPL v3"
 
 [[mods]]
 modId = "railways"
