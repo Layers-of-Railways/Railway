@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "quark:block/track/blossom/standard_track_blossom",
     "1": "quark:block/track/blossom/standard_track_mip_blossom",

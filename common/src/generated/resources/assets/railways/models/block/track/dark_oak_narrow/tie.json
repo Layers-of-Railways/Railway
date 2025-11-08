@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/narrow_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "railways:block/track/dark_oak/standard_track_dark_oak",
     "1": "railways:block/track/dark_oak/standard_track_mip_dark_oak",

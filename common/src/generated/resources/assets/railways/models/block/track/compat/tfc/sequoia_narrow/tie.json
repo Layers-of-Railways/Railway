@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/narrow_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "tfc:block/track/sequoia/standard_track_sequoia",
     "1": "tfc:block/track/sequoia/standard_track_mip_sequoia",

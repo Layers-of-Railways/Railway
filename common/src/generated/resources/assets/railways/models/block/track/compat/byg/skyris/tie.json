@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "byg:block/track/skyris/standard_track_skyris",
     "1": "byg:block/track/skyris/standard_track_mip_skyris",

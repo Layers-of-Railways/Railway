@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "railways:block/track/stripped_bamboo/standard_track_stripped_bamboo",
     "1": "railways:block/track/stripped_bamboo/standard_track_mip_stripped_bamboo",

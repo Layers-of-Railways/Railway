@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "natures_spirit:block/track/redwood/standard_track_redwood",
     "1": "natures_spirit:block/track/redwood/standard_track_mip_redwood",

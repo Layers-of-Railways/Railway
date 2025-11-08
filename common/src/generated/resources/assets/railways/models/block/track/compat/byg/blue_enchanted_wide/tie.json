@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "byg:block/track/blue_enchanted/standard_track_blue_enchanted",
     "1": "byg:block/track/blue_enchanted/standard_track_mip_blue_enchanted",

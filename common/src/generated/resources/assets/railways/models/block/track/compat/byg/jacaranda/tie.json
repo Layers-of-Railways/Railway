@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "byg:block/track/jacaranda/standard_track_jacaranda",
     "1": "byg:block/track/jacaranda/standard_track_mip_jacaranda",

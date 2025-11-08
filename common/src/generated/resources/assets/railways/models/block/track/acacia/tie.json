@@ -1,9 +1,9 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "railways:block/track/acacia/standard_track_acacia",
     "1": "railways:block/track/acacia/standard_track_mip_acacia",
     "particle": "minecraft:block/acacia_planks"
-  },
-  "render_type": "minecraft:cutout_mipped"
+  }
 }

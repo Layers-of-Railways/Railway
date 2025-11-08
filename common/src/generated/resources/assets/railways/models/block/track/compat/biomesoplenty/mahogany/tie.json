@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "biomesoplenty:block/track/mahogany/standard_track_mahogany",
     "1": "biomesoplenty:block/track/mahogany/standard_track_mip_mahogany",

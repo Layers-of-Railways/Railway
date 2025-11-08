@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "twilightforest:block/track/transwood/standard_track_transwood",
     "1": "twilightforest:block/track/transwood/standard_track_mip_transwood",

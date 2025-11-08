@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/narrow_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "byg:block/track/white_mangrove/standard_track_white_mangrove",
     "1": "byg:block/track/white_mangrove/standard_track_mip_white_mangrove",

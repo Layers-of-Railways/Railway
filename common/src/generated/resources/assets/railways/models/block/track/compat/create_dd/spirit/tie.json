@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "create_dd:block/track/spirit/standard_track_spirit",
     "1": "create_dd:block/track/spirit/standard_track_mip_spirit",

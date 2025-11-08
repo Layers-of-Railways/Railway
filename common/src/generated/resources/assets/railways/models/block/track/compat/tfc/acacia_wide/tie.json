@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "tfc:block/track/acacia/standard_track_acacia",
     "1": "tfc:block/track/acacia/standard_track_mip_acacia",

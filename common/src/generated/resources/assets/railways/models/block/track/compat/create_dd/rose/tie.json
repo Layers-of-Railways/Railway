@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "create_dd:block/track/rose/standard_track_rose",
     "1": "create_dd:block/track/rose/standard_track_mip_rose",

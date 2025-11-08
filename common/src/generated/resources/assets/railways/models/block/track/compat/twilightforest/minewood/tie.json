@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "twilightforest:block/track/minewood/standard_track_minewood",
     "1": "twilightforest:block/track/minewood/standard_track_mip_minewood",

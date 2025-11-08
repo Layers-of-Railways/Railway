@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "railways:block/track/warped/standard_track_warped",
     "1": "railways:block/track/warped/standard_track_mip_warped",

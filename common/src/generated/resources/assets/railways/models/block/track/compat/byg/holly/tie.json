@@ -1,5 +1,6 @@
 {
   "parent": "create:block/track/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "byg:block/track/holly/standard_track_holly",
     "1": "byg:block/track/holly/standard_track_mip_holly",

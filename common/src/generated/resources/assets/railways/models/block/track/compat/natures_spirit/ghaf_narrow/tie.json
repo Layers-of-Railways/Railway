@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/narrow_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "natures_spirit:block/track/ghaf/standard_track_ghaf",
     "1": "natures_spirit:block/track/ghaf/standard_track_mip_ghaf",
