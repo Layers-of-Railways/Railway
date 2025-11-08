@@ -1,3 +1,9 @@
 {
-  "parent": "railways:block/narrow_gauge_base/teleport"
+  "parent": "railways:block/narrow_gauge_base/teleport",
+  "textures": {
+    "1": "create:block/portal_track",
+    "2": "create:block/portal_track_mip",
+    "3": "create:block/standard_track",
+    "particle": "create:block/palettes/stone_types/polished/andesite_cut_polished"
+  }
 }
