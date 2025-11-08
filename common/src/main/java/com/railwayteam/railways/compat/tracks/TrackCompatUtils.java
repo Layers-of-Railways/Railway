@@ -19,6 +19,10 @@
 package com.railwayteam.railways.compat.tracks;
 
 import com.google.common.collect.ImmutableSet;
+import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.gen_template.OutputPrefixer;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TextureMaps;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TrackGenTemplate;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
@@ -90,11 +94,19 @@ public abstract class TrackCompatUtils {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, CompatTrackBlockStateGenerator.create()::generate);
+        return makeTrack(material, CustomTrackBlockStateGenerator.create(
+            OutputPrefixer.COMPAT,
+            TrackGenTemplate.DEFAULT,
+            TextureMaps.STANDARD.map
+        )::generate);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, boolean hideInCreativeTabs) {
-        return makeTrack(material, CompatTrackBlockStateGenerator.create()::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
+        return makeTrack(material, CustomTrackBlockStateGenerator.create(
+            OutputPrefixer.COMPAT,
+            TrackGenTemplate.DEFAULT,
+            TextureMaps.STANDARD.map
+        )::generate, (t) -> {}, (p) -> p, hideInCreativeTabs);
     }
 
     public static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {

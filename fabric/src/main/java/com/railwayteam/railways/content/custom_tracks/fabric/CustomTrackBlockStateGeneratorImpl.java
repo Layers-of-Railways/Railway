@@ -1,9 +1,29 @@
+/*
+ * Steam 'n' Rails
+ * Copyright (c) 2023-2025 The Railways Team
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package com.railwayteam.railways.content.custom_tracks.fabric;
 
-import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.TransparentSegmentTrackBlock;
-import com.simibubi.create.Create;
+import com.railwayteam.railways.content.custom_tracks.gen_template.OutputPrefixer;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TextureKey;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TrackGenTemplate;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
@@ -15,71 +35,61 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.HashMap;
 import java.util.Map;
 
+@ImplClass
 public class CustomTrackBlockStateGeneratorImpl extends CustomTrackBlockStateGenerator {
-    public static CustomTrackBlockStateGenerator create() {
-        return new CustomTrackBlockStateGeneratorImpl();
+    protected CustomTrackBlockStateGeneratorImpl(
+        OutputPrefixer outputPrefixer,
+        TrackGenTemplate template,
+        Map<TrackShape, Map<String, TextureKey>> textureMap
+    ) {
+        super(outputPrefixer, template, textureMap);
+    }
+
+    public static CustomTrackBlockStateGenerator create(
+        OutputPrefixer outputPrefixer,
+        TrackGenTemplate template,
+        Map<TrackShape, Map<String, TextureKey>> textureMap
+    ) {
+        return new CustomTrackBlockStateGeneratorImpl(outputPrefixer, template, textureMap);
     }
 
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
-        TrackShape value = state.getValue(TrackBlock.SHAPE);
+        TrackShape shape = state.getValue(TrackBlock.SHAPE);
         TrackMaterial material = ((TrackBlock) ctx.getEntry()).getMaterial();
-        //Railways.LOGGER.warn("TrackShape: "+value.name()+", material: "+material.langName);
-        if (value == TrackShape.NONE) {
+
+        String outputPrefix = outputPrefixer.getOutputPrefix(material);
+
+        if (shape == TrackShape.NONE) {
+            // special models guarded by TrackShape.NONE to prevent repeat generation
+            for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
+                var model = prov.models()
+                    .withExistingParent(outputPrefix + k, template.getParentModel(material, k))
+                    .texture("0", template.getTexture(material, TextureKey.STANDARD_TRACK))
+                    .texture("1", template.getTexture(material, TextureKey.STANDARD_TRACK_MIP))
+                    .texture("particle", template.getTexture(material, TextureKey.PARTICLE));
+
+                if (!k.equals("tie") && state.getBlock() instanceof TransparentSegmentTrackBlock) {
+                    // fixme change the above to `if (k.equals("tie") || ...)` (not done yet to keep datagen diffs readable)
+                    model.renderType(new ResourceLocation("cutout_mipped"));
+                }
+            }
+
             return prov.models()
                 .getExistingFile(prov.mcLoc("block/air"));
         }
-        String prefix = "block/track/" + material.resourceName() + "/";
-        Map<String, String> textureMap = new HashMap<>();//prefix + get() + material.resName()
-        switch (value) {
-            case TE, TN, TS, TW -> {
-                //portal 1, 2, 3 portal, portal_mip, standard
-                textureMap.put("1", "portal_track_");
-                textureMap.put("2", "portal_track_mip_");
-                textureMap.put("3", "standard_track_");
-            }
-            case AE, AW, AN, AS -> {
-                //ascending 0, 1 standard, mip
-                textureMap.put("0", "standard_track_");
-                textureMap.put("1", "standard_track_mip_");
-            }
-            case CR_O, XO, ZO -> {
-                //cross ortho 1, 2, 3, standard, mip, crossing
-                //normal (x/z)_ortho 1, 2, standard mip
-                textureMap.put("1", "standard_track_");
-                textureMap.put("2", "standard_track_mip_");
-                textureMap.put("3", "standard_track_crossing_");
-            }
-            default -> {
-                //obj_track, 0, 1, 2, standard, mip, crossing
-                textureMap.put("0", "standard_track_");
-                textureMap.put("1", "standard_track_mip_");
-                textureMap.put("2", "standard_track_crossing_");
-            }
-        }
 
         BlockModelBuilder builder = prov.models()
-            .withExistingParent(prefix + value.getModel(),
-                Create.asResource("block/track/" + value.getModel()))
-            .texture("particle", material.particle);
-        for (String k : textureMap.keySet()) {
-            builder = builder.texture(k, Railways.asResource(prefix + textureMap.get(k) + material.resourceName()));
-        }
-        for (String k : new String[]{"segment_left", "segment_right", "tie"}) { // obj_track
-            var model = prov.models()
-                .withExistingParent(prefix + k,
-                    Create.asResource("block/track/" + k))
-                .texture("0", prefix + "standard_track_" + material.resourceName())
-                .texture("1", prefix + "standard_track_mip_" + material.resourceName())
-                .texture("particle", material.particle);
+            .withExistingParent(outputPrefix + shape.getModel(),
+                template.getParentModel(material, shape.getModel()))
+            .texture("particle", template.getTexture(material, TextureKey.PARTICLE));
 
-            if (!k.equals("tie") && state.getBlock() instanceof TransparentSegmentTrackBlock) {
-                model.renderType(new ResourceLocation("cutout_mipped"));
-            }
+        for (var entry : textureMap.get(shape).entrySet()) {
+            builder = builder.texture(entry.getKey(), template.getTexture(material, entry.getValue()));
         }
+
         return builder;
     }
 }

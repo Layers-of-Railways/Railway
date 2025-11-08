@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,10 @@ import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
+import com.railwayteam.railways.content.custom_tracks.gen_template.OutputPrefixer;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TextureMaps;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TrackGenTemplate;
 import com.railwayteam.railways.mixin.AccessorIngredient$TagValue;
 import com.railwayteam.railways.multiloader.CommonTags;
 import com.railwayteam.railways.registry.CRBlocks;
@@ -115,7 +119,11 @@ public class GenericTrackCompat {
             CRTrackMaterials.WIDE_GAUGE.put(standardMaterial, wideMaterial);
             CRTrackMaterials.WIDE_GAUGE_REVERSE.put(wideMaterial, standardMaterial);
 
-            NonNullSupplier<TrackBlock> wideBlock = makeTrack(wideMaterial, WideGaugeCompatTrackBlockStateGenerator.create()::generate);
+            NonNullSupplier<TrackBlock> wideBlock = makeTrack(wideMaterial, CustomTrackBlockStateGenerator.create(
+                OutputPrefixer.COMPAT,
+                TrackGenTemplate.DEFAULT,
+                TextureMaps.WIDE.map
+            )::generate);
             CRBlocks.WIDE_GAUGE_TRACKS.put(wideMaterial, wideBlock);
             BLOCKS.put(name+"_wide", wideBlock);
 
@@ -130,7 +138,11 @@ public class GenericTrackCompat {
             CRTrackMaterials.NARROW_GAUGE.put(standardMaterial, narrowMaterial);
             CRTrackMaterials.NARROW_GAUGE_REVERSE.put(narrowMaterial, standardMaterial);
 
-            NonNullSupplier<TrackBlock> narrowBlock = makeTrack(narrowMaterial, NarrowGaugeCompatTrackBlockStateGenerator.create()::generate);
+            NonNullSupplier<TrackBlock> narrowBlock = makeTrack(narrowMaterial, CustomTrackBlockStateGenerator.create(
+                OutputPrefixer.COMPAT,
+                TrackGenTemplate.DEFAULT,
+                TextureMaps.NARROW.map
+            )::generate);
             CRBlocks.NARROW_GAUGE_TRACKS.put(narrowMaterial, narrowBlock);
             BLOCKS.put(name+"_narrow", narrowBlock);
 

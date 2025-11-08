@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,28 +18,51 @@
 
 package com.railwayteam.railways.content.custom_tracks;
 
+import com.railwayteam.railways.content.custom_tracks.gen_template.OutputPrefixer;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TextureKey;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TrackGenTemplate;
 import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Map;
+
 public abstract class CustomTrackBlockStateGenerator extends SpecialBlockStateGen {
+    protected final OutputPrefixer outputPrefixer;
+    protected final TrackGenTemplate template;
+    protected final Map<TrackShape, Map<String, TextureKey>> textureMap;
 
-  @ExpectPlatform
-  public static CustomTrackBlockStateGenerator create() {
-    throw new AssertionError();
-  }
+    protected CustomTrackBlockStateGenerator(
+        OutputPrefixer outputPrefixer,
+        TrackGenTemplate template,
+        Map<TrackShape, Map<String, TextureKey>> textureMap
+    ) {
+        this.outputPrefixer = outputPrefixer;
+        this.template = template;
+        this.textureMap = textureMap;
+    }
 
-  @Override
-  protected int getXRotation(BlockState state) {
-    return 0;
-  }
+    @ExpectPlatform
+    public static CustomTrackBlockStateGenerator create(
+        OutputPrefixer outputPrefixer,
+        TrackGenTemplate template,
+        Map<TrackShape, Map<String, TextureKey>> textureMap
+    ) {
+        throw new AssertionError();
+    }
 
-  @Override
-  protected int getYRotation(BlockState state) {
-    return state.getValue(TrackBlock.SHAPE)
-        .getModelRotation();
-  }
+    @Override
+    protected int getXRotation(BlockState state) {
+        return 0;
+    }
+
+    @Override
+    protected int getYRotation(BlockState state) {
+        return state.getValue(TrackBlock.SHAPE)
+            .getModelRotation();
+    }
 }
 
 /*

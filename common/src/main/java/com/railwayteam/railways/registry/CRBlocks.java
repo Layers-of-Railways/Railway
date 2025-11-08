@@ -63,10 +63,11 @@ import com.railwayteam.railways.content.custom_bogeys.special.monobogey.Invisibl
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
 import com.railwayteam.railways.content.custom_tracks.CustomTrackBlockStateGenerator;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
+import com.railwayteam.railways.content.custom_tracks.gen_template.OutputPrefixer;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TextureMaps;
+import com.railwayteam.railways.content.custom_tracks.gen_template.TrackGenTemplate;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailBlockStateGenerator;
-import com.railwayteam.railways.content.custom_tracks.narrow_gauge.NarrowGaugeTrackBlockStateGenerator;
-import com.railwayteam.railways.content.custom_tracks.wide_gauge.WideGaugeTrackBlockStateGenerator;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.handcar.HandcarControlsInteractionBehaviour;
 import com.railwayteam.railways.content.handcar.HandcarItem;
@@ -137,7 +138,11 @@ public class CRBlocks {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material) {
-        return makeTrack(material, CustomTrackBlockStateGenerator.create()::generate);
+        return makeTrack(material, CustomTrackBlockStateGenerator.create(
+            OutputPrefixer.DEFAULT,
+            TrackGenTemplate.DEFAULT,
+            TextureMaps.STANDARD.map
+        )::generate);
     }
 
     private static BlockEntry<TrackBlock> makeTrack(TrackMaterial material, NonNullBiConsumer<DataGenContext<Block, TrackBlock>, RegistrateBlockstateProvider> blockstateGen) {
@@ -343,13 +348,21 @@ public class CRBlocks {
         List<TrackMaterial> wideMaterials = new ArrayList<>(CRTrackMaterials.WIDE_GAUGE.values());
         wideMaterials.sort(Comparator.comparing((t -> t.id)));
         for (TrackMaterial wideMaterial : wideMaterials) {
-            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, WideGaugeTrackBlockStateGenerator.create()::generate));
+            WIDE_GAUGE_TRACKS.put(wideMaterial, makeTrack(wideMaterial, CustomTrackBlockStateGenerator.create(
+                OutputPrefixer.DEFAULT,
+                TrackGenTemplate.DEFAULT,
+                TextureMaps.WIDE.map
+            )::generate));
         }
 
         List<TrackMaterial> narrowMaterials = new ArrayList<>(CRTrackMaterials.NARROW_GAUGE.values());
         narrowMaterials.sort(Comparator.comparing((t -> t.id)));
         for (TrackMaterial narrowMaterial : narrowMaterials) {
-            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, NarrowGaugeTrackBlockStateGenerator.create()::generate));
+            NARROW_GAUGE_TRACKS.put(narrowMaterial, makeTrack(narrowMaterial, CustomTrackBlockStateGenerator.create(
+                OutputPrefixer.DEFAULT,
+                TrackGenTemplate.DEFAULT,
+                TextureMaps.NARROW.map
+            )::generate));
         }
     }
 
