@@ -68,6 +68,6 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
 
     @Override
     public MutableComponent getWaitingStatus(Level level, Train train, CompoundTag tag) {
-        return Component.translatable("railways.schedule.condition.unloaded.status");
+        return Component.translatable("railways.schedule.condition.loaded.status");
     }
 }
