@@ -29,6 +29,7 @@ import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.content.trains.track.TrackMaterial;
+import com.simibubi.create.foundation.data.recipe.CommonMetal;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -116,10 +117,8 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
                     Ingredient railsIngredient = baseMaterial.railsIngredient;
                     if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
                         return value instanceof Ingredient.TagValue tagValue
-                            && (((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
-                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
-                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
-                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+                            && (((AccessorIngredient$TagValue)tagValue).getTag().equals(CommonMetal.IRON.nuggets)
+                            || ((AccessorIngredient$TagValue)tagValue).getTag().equals(CommonMetal.ZINC.nuggets));
                     })) {
                         railsIngredient = Ingredient.fromValues(Stream.of(
                             AccessorIngredient$TagValue.railways$create(Ingredients.ironNugget()),
@@ -145,10 +144,8 @@ public class RailwaysSequencedAssemblyRecipeGen extends RailwaysRecipeProvider {
             Ingredient railsIngredient = material.railsIngredient;
             if (railsIngredient.values.length == 2 && Arrays.stream(railsIngredient.values).allMatch((value) -> {
                 return value instanceof Ingredient.TagValue tagValue
-                    && (((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/iron"))
-                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("nuggets/zinc"))
-                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("iron_nuggets"))
-                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(AllTags.forgeItemTag("zinc_nuggets"))); // TODO wait until create fabric merge such difference between 1.18 and 1.19
+                    && (((AccessorIngredient$TagValue) tagValue).getTag().equals(CommonMetal.ZINC.nuggets)
+                    || ((AccessorIngredient$TagValue) tagValue).getTag().equals(CommonMetal.IRON.nuggets));
             })) {
                 railsIngredient = Ingredient.fromValues(Stream.of(
                     AccessorIngredient$TagValue.railways$create(Ingredients.ironNugget()),
