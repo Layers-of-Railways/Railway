@@ -63,9 +63,9 @@ public class GenericCrossingModel implements BakedModel, FabricBakedModel {
             Pair<TrackMaterial, TrackShape> piece2 = genericCrossing.railways$getSecondCrossingPiece();
 
             if (piece1 != null)
-                context.bakedModelConsumer().accept(IGenericCrossingTrackBE.getModel(piece1), state);
+                IGenericCrossingTrackBE.getModel(piece1).emitBlockQuads(blockView, state, pos, randomSupplier, context);
             if (piece2 != null)
-                context.bakedModelConsumer().accept(IGenericCrossingTrackBE.getModel(piece2), state);
+                IGenericCrossingTrackBE.getModel(piece2).emitBlockQuads(blockView, state, pos, randomSupplier, context);
         }
     }
 

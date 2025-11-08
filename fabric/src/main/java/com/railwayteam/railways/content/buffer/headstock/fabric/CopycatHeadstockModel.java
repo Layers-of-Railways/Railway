@@ -127,9 +127,9 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
         }
 
         if (colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(colorSwapper, CopycatHeadstockModel::filterCopycatParts), state);
+            new SpriteReplacingBakedModel(colorSwapper, CopycatHeadstockModel::filterCopycatParts).emitBlockQuads(blockView, state, pos, randomSupplier, context);
         } else {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(CopycatHeadstockModel::filterCopycatParts), state);
+            new SpriteReplacingBakedModel(CopycatHeadstockModel::filterCopycatParts).emitBlockQuads(blockView, state, pos, randomSupplier, context);
         }
 
         // copycat model face emission
@@ -277,9 +277,9 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
             }
         }
         if (colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(colorSwapper, CopycatHeadstockModel::filterCopycatParts));
+            new SpriteReplacingBakedModel(colorSwapper, CopycatHeadstockModel::filterCopycatParts).emitItemQuads(stack, randomSupplier, context);
         } else {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(CopycatHeadstockModel::filterCopycatParts));
+            new SpriteReplacingBakedModel(CopycatHeadstockModel::filterCopycatParts).emitItemQuads(stack, randomSupplier, context);
         }
 
         // copycat model face emission
