@@ -71,8 +71,7 @@ public class CustomTrackBlockStateGeneratorImpl extends CustomTrackBlockStateGen
                     .texture("1", template.getTexture(material, TextureKey.STANDARD_TRACK_MIP))
                     .texture("particle", template.getTexture(material, TextureKey.PARTICLE));
 
-                if (!k.equals("tie") && state.getBlock() instanceof TransparentSegmentTrackBlock) {
-                    // fixme change the above to `if (k.equals("tie") || ...)` (not done yet to keep datagen diffs readable)
+                if (k.equals("tie") || state.getBlock() instanceof TransparentSegmentTrackBlock) {
                     model.renderType(new ResourceLocation("cutout_mipped"));
                 }
             }
