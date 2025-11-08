@@ -218,7 +218,8 @@ subprojects {
                 "voicechat_api_version" to "voicechat_api_version"(),
                 "forge_version" to "forge_version"().split(".")[0], // only specify major version of forge
                 "create_forge_version" to "create_forge_version"().split("-")[0],
-                "create_fabric_version" to "create_fabric_version"()
+                "create_fabric_version" to "create_fabric_version"(),
+                "create_fabric_version_range" to "create_fabric_version_range"(),
         )
 
         inputs.properties(properties)
