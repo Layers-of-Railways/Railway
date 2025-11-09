@@ -1,7 +1,6 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.6.14 beta
 ------------------------------------------------------
-<!-- This is the next unreleased version. -->
 Changes
 - Update to Create 6.0.7 and 6.0.8
 
