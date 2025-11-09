@@ -22,10 +22,10 @@ import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ElementPr
 import com.railwayteam.railways.content.custom_bogeys.renderer.unified.ScrollHandle;
 import com.simibubi.create.content.processing.burner.ScrollTransformedInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
+import com.simibubi.create.foundation.render.SpecialModels;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.TransformedInstance;
-import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.Affine;
 import net.createmod.catnip.data.Pair;
@@ -54,7 +54,7 @@ class VisualElementProvider implements ElementProvider<TransformedInstance> {
         }
 
         TransformedInstance instance = ctx.instancerProvider()
-            .instancer(InstanceTypes.TRANSFORMED, Models.partial(model))
+            .instancer(InstanceTypes.TRANSFORMED, SpecialModels.smoothLit(model))
             .createInstance();
         instances.add(instance);
         return instance;
@@ -72,7 +72,7 @@ class VisualElementProvider implements ElementProvider<TransformedInstance> {
 
         TransformedInstance[] result = new TransformedInstance[count];
         ctx.instancerProvider()
-            .instancer(InstanceTypes.TRANSFORMED, Models.partial(model))
+            .instancer(InstanceTypes.TRANSFORMED, SpecialModels.smoothLit(model))
             .createInstances(result);
         instances.addAll(Arrays.asList(result));
         return result;
@@ -85,7 +85,7 @@ class VisualElementProvider implements ElementProvider<TransformedInstance> {
         }
 
         ScrollTransformedInstance result = ctx.instancerProvider()
-            .instancer(AllInstanceTypes.SCROLLING_TRANSFORMED, Models.partial(model))
+            .instancer(AllInstanceTypes.SCROLLING_TRANSFORMED, SpecialModels.smoothLit(model))
             .createInstance()
             .setSpriteShift(shift);
         instances.add(result);
