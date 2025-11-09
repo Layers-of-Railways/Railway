@@ -110,9 +110,6 @@ public class CRConfigs {
         m.put("trainSmokeLifetime", "smoke.smokeLifetime");
         m.put("smokeTextureQuality", "smoke.smokeQuality");
 
-        m.put("journeymapObsolescenceCheckTicks", "journeymap.removeObsoleteRate");
-        m.put("journeymapUpdateTicks", "journeymap.updateRate");
-
         Map<String, String> trueMap = new HashMap<>();
         for (Map.Entry<String, String> entry : m.entrySet()) {
             trueMap.put("general."+entry.getKey(), "client."+entry.getValue());

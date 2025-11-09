@@ -26,7 +26,7 @@ import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.util.packet.*;
 
 public class CRPackets {
-    public static final PacketSet PACKETS = PacketSet.builder(Railways.MOD_ID, 12) // increment version on changes
+    public static final PacketSet PACKETS = PacketSet.builder(Railways.MOD_ID, 13) // increment version on changes
 
         .c2s(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new)
         .c2s(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new)
@@ -35,7 +35,6 @@ public class CRPackets {
         .c2s(DismountCameraPacket.class, DismountCameraPacket::new)
         .c2s(CameraMovePacket.class, CameraMovePacket::new)
         .c2s(SpyConductorInteractPacket.class, SpyConductorInteractPacket::new)
-        .c2s(JourneymapConfigurePacket.class, JourneymapConfigurePacket::new)
         .c2s(ConfigureDevCapeC2SPacket.class, ConfigureDevCapeC2SPacket::new)
         .c2s(TagCycleSelectionPacket.class, TagCycleSelectionPacket::new)
         .c2s(CurvedTrackHandcarPlacementPacket.class, CurvedTrackHandcarPlacementPacket::new)
@@ -47,7 +46,6 @@ public class CRPackets {
         .s2c(ChopTrainEndPacket.class, ChopTrainEndPacket::new)
         .s2c(AddTrainEndPacket.class, AddTrainEndPacket::new)
         .s2c(TrackCouplerClientInfoPacket.class, TrackCouplerClientInfoPacket::new)
-        .s2c(TrainMarkerDataUpdatePacket.class, TrainMarkerDataUpdatePacket::new)
         .s2c(OverridableSignalPacket.class, OverridableSignalPacket::new)
         .s2c(SwitchDataUpdatePacket.class, SwitchDataUpdatePacket::new)
         .s2c(SetCameraViewPacket.class, SetCameraViewPacket::new)

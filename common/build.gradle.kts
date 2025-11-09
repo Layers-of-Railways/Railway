@@ -44,9 +44,6 @@ dependencies {
     // required for proper remapping and compiling
     modCompileOnly("net.fabricmc.fabric-api:fabric-api:${"fabric_api_version"()}")
 
-    // JourneyMap compat
-    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-fabric-SNAPSHOT")
-
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
     modCompileOnly("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
 

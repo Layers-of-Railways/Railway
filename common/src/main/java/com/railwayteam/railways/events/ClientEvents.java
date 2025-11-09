@@ -19,7 +19,6 @@
 package com.railwayteam.railways.events;
 
 import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
-import com.railwayteam.railways.compat.journeymap.DummyRailwayMarkerHandler;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandler;
 import com.railwayteam.railways.content.conductor.ConductorPossessionController;
@@ -49,17 +48,6 @@ public class ClientEvents {
             CRPackets.PACKETS.send(new ConfigureDevCapeC2SPacket(previousDevCapeSetting));
         }
 
-        if (DummyRailwayMarkerHandler.getInstance() != null) {
-            if (ticks % CRConfigs.client().journeymapRemoveObsoleteTicks.get() == 0) {
-                DummyRailwayMarkerHandler.getInstance().removeObsolete();
-                DummyRailwayMarkerHandler.getInstance().reloadMarkers();
-            }
-
-            if (ticks % CRConfigs.client().journeymapUpdateTicks.get() == 0) {
-                DummyRailwayMarkerHandler.getInstance().runUpdates();
-            }
-        }
-
         if (isGameActive()) {
             BogeyMenuEventsHandler.clientTick();
             TagCycleHandlerClient.clientTick();
@@ -77,7 +65,6 @@ public class ClientEvents {
 
     @MultiLoaderEvent
     public static void onClientWorldLoad(Level level) {
-        DummyRailwayMarkerHandler.getInstance().onJoinWorld();
         PhantomSpriteManager.firstRun = true;
     }
 

@@ -62,11 +62,6 @@ dependencies {
 
     modLocalRuntime("dev.emi:emi-fabric:${"emi_version"()}")
 
-    modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-fabric") // Test with JourneyMap in dev
-    modLocalRuntime("info.journeymap:journeymap-api:${"journeymap_api_version"()}-fabric-SNAPSHOT") // API is a JiJ on fabric, add manually
-
-    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-fabric-SNAPSHOT") // for some reason this is needed explicitly
-
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
 
     if ("enable_simple_voice_chat"().toBoolean()) {

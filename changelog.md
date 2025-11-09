@@ -4,6 +4,9 @@ Steam 'n' Rails 1.6.14 beta
 <!-- This is the next unreleased version. -->
 Changes
 - Update to Create 6.0.7
+
+Removals
+- Journeymap compatibility (Create has native support now)
 ------------------------------------------------------
 Steam 'n' Rails 1.6.13 alpha
 ------------------------------------------------------

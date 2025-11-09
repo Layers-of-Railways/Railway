@@ -20,7 +20,6 @@ package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysBuildInfo;
-import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.multiloader.S2CPacket;
@@ -55,7 +54,6 @@ public record ModVersionPacket(String version) implements S2CPacket {
               false
       );
     }
-    CRPackets.PACKETS.send(new JourneymapConfigurePacket(Mods.JOURNEYMAP.isLoaded));
     boolean useDevCape = CRConfigs.client().useDevCape.get();
     CRPackets.PACKETS.send(new ConfigureDevCapeC2SPacket(useDevCape));
     ClientEvents.previousDevCapeSetting = useDevCape;

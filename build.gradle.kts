@@ -405,8 +405,7 @@ fun Project.setupRepositories() {
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings
         exclusiveMaven("https://maven.quiltmc.org/repository/release", "org.quiltmc") // Quilt Mappings
-        maven("https://jm.gserv.me/repository/maven-public/") // JourneyMap API
-        exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU, JourneyMap
+        exclusiveMaven("https://api.modrinth.com/maven", "maven.modrinth") // LazyDFU
         exclusiveMaven("https://cursemaven.com", "curse.maven")
         maven("https://maven.theillusivec4.top/") // Curios
         maven("https://maven.ithundxr.dev/mirror") { // Registrate

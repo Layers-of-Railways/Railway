@@ -51,11 +51,6 @@ public class CClient extends ConfigBase {
     public final ConfigBool spawnFasterPuffs = b(true, "spawnFasterPuffs", Comments.spawnFasterPuffs);
     public final ConfigBool spawnSteam = b(false, "spawnSteam", Comments.spawnSteam);
 
-    // journeymap
-    public final ConfigGroup journeymap = group(1, "journeymap", Comments.journeymap);
-    public final ConfigInt journeymapUpdateTicks = i(1, 1, 600, "updateRate", Comments.inTicks, Comments.journeymapUpdateTicks);
-    public final ConfigInt journeymapRemoveObsoleteTicks = i(200, 10, 1200, "removeObsoleteRate", Comments.inTicks, Comments.journeymapRemoveObsoleteTicks);
-
 
     @Override
     public String getName() {
@@ -86,9 +81,5 @@ public class CClient extends ConfigBase {
         static String cartoonSmoke = "Cartoon-style Smoke Settings";
         static String spawnFasterPuffs = "Spawn faster-rising small puffs of smoke on an interval";
         static String spawnSteam = "Spawn steam on an interval";
-
-        static String journeymap = "Journeymap Settings";
-        static String journeymapUpdateTicks = "Journeymap train overlay update time";
-        static String journeymapRemoveObsoleteTicks = "Journeymap train overlay old marker removal check time";
     }
 }

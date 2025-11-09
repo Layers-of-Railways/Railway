@@ -51,10 +51,6 @@ dependencies {
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
 
-    // Test with JourneyMap in dev
-    modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-forge")
-    modCompileOnly("info.journeymap:journeymap-api:${"journeymap_api_version"()}-SNAPSHOT") // for some reason this is needed explicitly
-
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
 
     if ("enable_simple_voice_chat"().toBoolean()) {

@@ -149,7 +149,6 @@
     "client.MixinTrackTargetingClient",
     "client.MixinTrackVisual",
     "client.MixinTrainHUD",
-    "client.MixinTrainPacket",
     "compat.malilib.MixinGuiTextFieldGeneric",
     "compat.voicechat.FreecamUtilMixin",
     "conductor_possession.AccessorKeyMapping",
