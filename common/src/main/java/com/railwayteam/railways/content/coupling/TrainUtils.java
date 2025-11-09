@@ -323,10 +323,10 @@ public class TrainUtils {
             StructureTransform transform = ((AccessorOrientedContraptionEntity) entity).railways$makeStructureTransform();
 
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(entity), new ContraptionDisassemblyPacket(entity.getId(), transform));
-            entity.getContraption().addPassengersToWorld(entity.level, transform, entity.getPassengers());
+            //entity.getContraption().addPassengersToWorld(entity.level, transform, entity.getPassengers()); // this just re-seats passengers, we want to eject them
             ((AccessorAbstractContraptionEntity) entity).railways$setSkipActorStop(true);
-            entity.discard();
             entity.ejectPassengers();
+            entity.discard();
             ((AccessorAbstractContraptionEntity) entity).railways$moveCollidedEntitiesOnDisassembly(transform);
         }
         train.invalid = true; // don't remove yet, otherwise concurrent modification exceptions happen

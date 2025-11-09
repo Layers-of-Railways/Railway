@@ -4,6 +4,9 @@ Steam 'n' Rails 1.6.14 beta
 Changes
 - Update to Create 6.0.7 and 6.0.8
 
+Bug Fixes
+- Fix residual `ForgeData.ContraptionDismountLocation` field in passengers of crashed handcars #714
+
 Removals
 - Journeymap compatibility (Create has native support now)
 ------------------------------------------------------
