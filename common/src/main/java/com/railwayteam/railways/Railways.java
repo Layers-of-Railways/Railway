@@ -62,6 +62,7 @@ public class Railways {
   public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
   // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
   public static final int DATA_FIXER_VERSION = 2;
+  private static final boolean FORCE_MIXIN_AUDIT = Boolean.getBoolean("railways.force_mixin_audit");
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
@@ -105,7 +106,7 @@ public class Railways {
     CRPackets.PACKETS.registerC2SListener();
 
     // TODO - Forge entirely breaks with mixin audit, truly incredible
-    if (Utils.isDevEnv() && !Loader.FORGE.isCurrent() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
+    if (FORCE_MIXIN_AUDIT || Utils.isDevEnv() && !Loader.FORGE.isCurrent() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 
