@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
@@ -35,9 +36,11 @@ import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import dev.engine_room.flywheel.lib.visual.AbstractVisual;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SlabBlock;
@@ -101,6 +104,16 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
     private void railways$_delete(CallbackInfo ci) {
         casingData.forEach((data) -> data.getFirst().delete());
         casingData.clear();
+    }
+
+    @ModifyReturnValue(method = "collectLightSections", at = @At("RETURN"))
+    private LongSet collectCasingLightSections(LongSet original) {
+        if (original.isEmpty()) {
+            return LongSet.of(SectionPos.asLong(blockEntity.getBlockPos()));
+        } else {
+            original.add(SectionPos.asLong(blockEntity.getBlockPos()));
+            return original;
+        }
     }
 
     @Unique
