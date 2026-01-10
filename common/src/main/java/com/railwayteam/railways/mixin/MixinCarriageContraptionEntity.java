@@ -94,7 +94,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))
     private double conductorSpeedControl(Train instance, Operation<Double> original, BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player) {
         if (player instanceof IConductorHoldingFakePlayer conductorHolder && conductorHolder.getConductor() != null) {
-            return conductorHolder.getConductor().getForwardSignalStrength() / 15.0d;
+            return Math.abs(conductorHolder.getConductor().getThrottle()) / 15.0d;
         }
         return original.call(instance);
     }
