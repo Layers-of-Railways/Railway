@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.6.15 beta
+------------------------------------------------------
+Bug Fixes
+- Fix train visuals after (de)coupling #726
+- Fix unlit casing visuals in subchunks without other visuals #722 #733
+- Fix fuel tanks preventing carriage rendering (pr #732 by femboypato) #721
+- Fix reversing handcars restoring exhaustion #716
+- Fix single-wheel medium bogey offset #702
+------------------------------------------------------
 Steam 'n' Rails 1.6.14 beta
 ------------------------------------------------------
 Changes
