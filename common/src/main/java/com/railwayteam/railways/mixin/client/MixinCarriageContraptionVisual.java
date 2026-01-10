@@ -54,6 +54,7 @@ public abstract class MixinCarriageContraptionVisual extends ContraptionVisual<C
 	@Final
 	private BogeyVisual[] visuals;
 
+	@Shadow private int numBogeys;
 	@Unique
 	private int railways$updateCount = 0;
 
@@ -76,9 +77,12 @@ public abstract class MixinCarriageContraptionVisual extends ContraptionVisual<C
 	private void railways$refreshBogeys(CallbackInfo ci) {
 		if (IUpdateCount.outOfSync(this, (IUpdateCount) this.entity)) {
 			for (BogeyVisual visual : visuals) {
-				visual.delete();
+				if (visual != null) {
+					visual.delete();
+				}
 			}
 			visuals = new BogeyVisual[MAX_NUM_BOGEYS];
+			numBogeys = 0;
 			this.railways$fromParent((IUpdateCount) this.entity);
 		}
 	}
