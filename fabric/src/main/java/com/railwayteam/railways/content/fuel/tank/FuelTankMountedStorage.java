@@ -80,7 +80,7 @@ public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> 
 
 	@Override
 	public void afterSync(Contraption contraption, BlockPos localPos) {
-		BlockEntity be = contraption.getOrCreateClientContraptionLazy().getBlockEntity(localPos);
+		BlockEntity be = contraption.getBlockEntityClientSide(localPos);
 		if (!(be instanceof FuelTankBlockEntity tank))
 			return;
 
