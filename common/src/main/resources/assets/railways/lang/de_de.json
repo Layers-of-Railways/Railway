@@ -1,6 +1,6 @@
 {
   "block.create.railway_casing.tooltip": "ZUGRAHMEN",
-  "block.create.railway_casing.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select the _bogey style_ to place.",
+  "block.create.railway_casing.tooltip.summary": "Press and hold the _Open Bogey Menu_ key (default _ALT_) to select the _bogey style_ to place.",
   "block.create.track_station.tooltip": "BAHNHOF",
   "block.create.track_station.tooltip.summary": "Ein _Einsatzgerät_ mit _Schraubenschlüssel_ kann Züge automatisch zusammenbauen und zerlegen, indem er auf einen _Bahnhof_ klickt. Trichter können verwendet werden, um einen Schraubenschlüssel in ein Einsatzgerät zu legen.",
   "block.railways.big_buffer": "Großer Prellbock",

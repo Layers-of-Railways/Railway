@@ -22,7 +22,7 @@
   "block.railways.generic_radial.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block.",
 
   "block.railways.smokestack.tooltip": "SMOKESTACK",
-  "block.railways.smokestack.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select variants of this block.",
+  "block.railways.smokestack.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block.",
   "block.railways.smokestack.tooltip.condition1": "When you use a dye item on a smokestack",
   "block.railways.smokestack.tooltip.behaviour1": "The _emitted smoke_ will change color",
   "block.railways.smokestack.tooltip.condition2": "When you use soul sand or soul soil on a smokestack",
