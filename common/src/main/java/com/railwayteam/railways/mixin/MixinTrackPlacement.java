@@ -32,6 +32,7 @@ import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackPlacement;
 import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -110,5 +111,28 @@ public class MixinTrackPlacement {
             genericCrossingBE.initFrom(crossingData);
         }
         crossingDataRef.set(null);
+    }
+
+    @Inject(method = "placeTracks", at = @At("HEAD"), cancellable = true)
+    private static void preventCurveIntoJunction(
+        Level level, TrackPlacement.PlacementInfo info,
+        BlockState state1, BlockState state2,
+        BlockPos targetPos1, BlockPos targetPos2,
+        boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir
+    ) {
+        if (((AccessorTrackPlacement$PlacementInfo) info).railways$getCurve() == null)
+            return;
+
+        for (boolean first : Iterate.trueAndFalse) {
+            BlockState state = level.getBlockState(first ? targetPos1 : targetPos2);
+            // this isn't *really* valid for any junctions, but we don't want
+            // to interfere with Create and this is good enough to prevent #511
+            if (state.getBlock() instanceof GenericCrossingBlock) {
+                info.withMessage("junction_start");
+                ((AccessorTrackPlacement$PlacementInfo) info).railways$setValid(false);
+                cir.setReturnValue(info);
+                return;
+            }
+        }
     }
 }

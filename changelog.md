@@ -12,6 +12,7 @@ Fixes
 - Fix client-side track switch crash #536
 - Fix diagonal coupling #539
 - Rollers on upside down monorails now break/place at the correct height #470
+- Prevent creation of turns ending in generic crossings #511
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------
