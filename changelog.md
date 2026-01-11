@@ -13,6 +13,7 @@ Fixes
 - Fix diagonal coupling #539
 - Rollers on upside down monorails now break/place at the correct height #470
 - Prevent creation of turns ending in generic crossings #511
+- Fix copycat headstock connectivity #512
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------
