@@ -4,6 +4,7 @@ Steam 'n' Rails 1.7.0
 <!--this is the next unreleased version-->
 Fixes
 - Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
+- Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------
