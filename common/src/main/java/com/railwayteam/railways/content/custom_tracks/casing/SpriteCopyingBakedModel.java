@@ -19,6 +19,7 @@
 package com.railwayteam.railways.content.custom_tracks.casing;
 
 import com.railwayteam.railways.Railways;
+import com.simibubi.create.foundation.model.BakedQuadHelper;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -31,6 +32,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.simibubi.create.foundation.block.render.SpriteShiftEntry.getUnInterpolatedU;
+import static com.simibubi.create.foundation.block.render.SpriteShiftEntry.getUnInterpolatedV;
 
 public class SpriteCopyingBakedModel implements BakedModel {
 
@@ -72,9 +76,11 @@ public class SpriteCopyingBakedModel implements BakedModel {
   private int[] transformVertices(int[] baseVertices, TextureAtlasSprite baseSprite, BakedQuad uvSource) {
     TextureAtlasSprite goalSprite = uvSource.getSprite();
     int[] newVertices = baseVertices.clone();
-    for (int i = 0; i < baseVertices.length; i += 8) {
-      newVertices[i + 4] = Float.floatToRawIntBits(Float.intBitsToFloat(baseVertices[i + 4]) - baseSprite.getU0() + goalSprite.getU0());
-      newVertices[i + 5] = Float.floatToRawIntBits(Float.intBitsToFloat(baseVertices[i + 5]) - baseSprite.getV0() + goalSprite.getV0());
+    for (int vertex = 0; vertex < 4; vertex++) {
+      float u = BakedQuadHelper.getU(newVertices, vertex);
+      float v = BakedQuadHelper.getV(newVertices, vertex);
+      BakedQuadHelper.setU(newVertices, vertex, goalSprite.getU(getUnInterpolatedU(baseSprite, u)));
+      BakedQuadHelper.setV(newVertices, vertex, goalSprite.getV(getUnInterpolatedV(baseSprite, v)));
     }
     return newVertices;
   }
