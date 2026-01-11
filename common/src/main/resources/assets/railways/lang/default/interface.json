@@ -152,6 +152,7 @@
 
   "railways.smokestack.goggle.tooltip": "Selected Style: %s",
   "railways.smokestack.goggle.tooltip.color": "Selected Dye Color: %s",
+  "railways.smokestack.goggle.tooltip.style.soul": "Soul",
 
   "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
 
