@@ -18,10 +18,14 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.content.roller_extensions.TrackReplacePaver;
 import com.simibubi.create.content.contraptions.actors.roller.PaveTask;
 import com.simibubi.create.content.contraptions.actors.roller.RollerMovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
+import com.simibubi.create.content.trains.entity.TravellingPoint;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
@@ -49,5 +53,13 @@ public abstract class MixinRollerMovementBehaviour {
         } else if (stateToPaveWith.getBlock() instanceof ITrackBlock) {
             ci.cancel();
         }
+    }
+
+    @WrapOperation(method = "createHeightProfileForTracks", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/roller/PaveTask;put(IIF)V"))
+    private void setUpsideDown(PaveTask instance, int x, int z, float y, Operation<Void> original, @Local(name = "point") TravellingPoint point) {
+        if(point.upsideDown)
+            y -= 2;
+
+        original.call(instance, x, z, y);
     }
 }
