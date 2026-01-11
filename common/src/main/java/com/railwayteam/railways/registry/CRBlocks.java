@@ -217,15 +217,23 @@ public class CRBlocks {
             .onRegisterAfter(Registries.ITEM, v -> {
                 if (!variant.equals("caboosestyle"))
                     ItemDescription.useKey(v, "block.railways.smokestack");
+                else
+                    ItemDescription.useKey(v, "block.railways.smokestack_caboosestyle");
             })
             .build()
             .register();
 
         if (!variant.equals("caboosestyle")) {
-            BlockStateBlockItemGroup<Couple<String>, SmokestackStyle> group = new BlockStateBlockItemGroup<>(Couple.create("smokestack_" + variant + "_", description), SmokeStackBlock.STYLE, SmokestackStyle.values(), BLOCK,
-                i -> i.tab(null)
-                    .onRegisterAfter(Registries.ITEM, v -> ItemDescription.useKey(v, "block.railways.smokestack")),
-                cycleTag, SmokestackStyle.STEEL, null);
+            BlockStateBlockItemGroup<Couple<String>, SmokestackStyle> group = new BlockStateBlockItemGroup<>(
+                Couple.create("smokestack_" + variant + "_", description),
+                SmokeStackBlock.STYLE,
+                SmokestackStyle.values(),
+                BLOCK,
+                i -> i.tab(null),
+                cycleTag,
+                SmokestackStyle.STEEL,
+                "block.railways.smokestack"
+            );
             SMOKESTACK_GROUP.put(variant, group);
             group.registerDefaultEntry(SmokestackStyle.STEEL, ItemEntry.cast(REGISTRATE.get("smokestack_" + variant, Registries.ITEM)));
         }
