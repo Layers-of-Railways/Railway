@@ -18,9 +18,6 @@
 
 package com.railwayteam.railways.mixin;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
@@ -54,6 +51,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -266,58 +264,29 @@ public abstract class MixinStationBlock {
             .addFreshEntity(itemEntity);
     }
 
-//    @Inject(method = "use"
-//          , at = @At(value = "INVOKE"
-//                   , target = "Lcom/simibubi/create/content/trains/station/StationBlock;onBlockEntityUse(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Ljava/util/function/Function;)Lnet/minecraft/world/InteractionResult;"
-//                   , ordinal = 1)
-//          , cancellable = true
-//          , remap = false)
     @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
     private void deployersNameTag(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemInHand = pPlayer.getItemInHand(pHand);
-        if (!pLevel.isClientSide
-         && pPlayer instanceof DeployerFakePlayer deployerFakePlayer
-         && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe
-         && itemInHand.getItem() instanceof net.minecraft.world.item.NameTagItem)
-        {
+        if (!pLevel.isClientSide && pPlayer instanceof DeployerFakePlayer
+            && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe
+            && itemInHand.getItem() instanceof NameTagItem
+        ) {
             cir.setReturnValue(InteractionResult.CONSUME);
             GlobalStation station = stationBe.getStation();
-            if (station != null && station.getPresentTrain() != null) {
-                Train train = station.getPresentTrain();
-                if (itemInHand.hasTag() && itemInHand.getTag().contains("display")) {
-                    CompoundTag displayTag = itemInHand.getTag().getCompound("display");
-                    if (displayTag.contains("Name")) {
-                        // Set the train name
-                        JsonObject json = JsonParser.parseString(displayTag.getString("Name")).getAsJsonObject();
-                        String newName = json.get("text").getAsString();
+            if (station == null || station.getPresentTrain() == null) return;
 
-                        if (train.name.getString().equals(newName)) return;
+            Train train = station.getPresentTrain();
+            if (itemInHand.hasCustomHoverName()) { // Set the train name
+                String newName = itemInHand.getHoverName().getString();
+                if (train.name.getString().equals(newName)) return;
 
-                        if (pLevel.getServer().isDedicatedServer()) {
-                            train.name = Components.literal(newName);
-                            AllPackets.getChannel()
-                                      .sendToClientsInServer(new TrainEditPacket
-                                                                .TrainEditReturnPacket(train.id, newName, train.icon.getId())
-                                                           , pLevel.getServer());
-                        }
-                        else
-                            AllPackets.getChannel()
-                                      .sendToServer(new TrainEditPacket(train.id, newName, train.icon.getId()));
-                    }
-                }
-                else {
-                    // Get the trains name and put it on the nametag
-                    JsonObject displayNameJson = new JsonObject();
-                    displayNameJson.addProperty("text", train.name.getString());
-
-                    CompoundTag tag = itemInHand.getOrCreateTag();
-                    CompoundTag displayTag = tag.contains("display", 10)
-                                           ? tag.getCompound("display")
-                                           : new CompoundTag();
-                    displayTag.putString("Name", displayNameJson.toString());
-                    tag.put("display", displayTag);
-                    itemInHand.setTag(tag);
-                }
+                train.name = Components.literal(newName);
+                AllPackets.getChannel().sendToClientsInServer(
+                    new TrainEditPacket.TrainEditReturnPacket(train.id, newName, train.icon.getId()),
+                    pLevel.getServer()
+                );
+            } else { // Get the train's name and put it on the nametag
+                itemInHand.setHoverName(Components.literal(train.name.getString()));
             }
         }
     }
