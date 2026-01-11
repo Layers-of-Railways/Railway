@@ -658,6 +658,7 @@
   "create.sliding_door.mode.normal": "Normal (Default)",
   "create.sliding_door.mode.special": "Special",
   "create.sliding_door.mode.special_inverted": "Special Inverted",
+  "create.track_target.not_straight": "Targeted track must be straight",
   "entity.railways.benchcart": "Minecart with Workbench",
   "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",

@@ -13,6 +13,8 @@
   "railways.coupler.mode.decoupling": "-> Decoupling",
   "railways.coupler.mode.both": "-> Coupling & Decoupling",
 
+  "create.track_target.not_straight": "Targeted track must be straight",
+
   "railways.schedule.instruction.redstone_link": "Power Redstone Link",
   "railways.schedule.instruction.redstone_link.power": "Power Level: %s",
   "railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
