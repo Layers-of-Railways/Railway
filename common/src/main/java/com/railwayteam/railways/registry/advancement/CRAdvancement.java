@@ -25,8 +25,14 @@ import com.simibubi.create.foundation.utility.Components;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.NbtPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -39,6 +45,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class CRAdvancement {
@@ -47,13 +54,14 @@ public class CRAdvancement {
 	static final String LANG = "advancement." + Railways.MOD_ID + ".";
 	static final String SECRET_SUFFIX = "\n\u00A77(Hidden Advancement)";
 
-	private Advancement.Builder builder;
+	private final Advancement.Builder builder;
+	private final Supplier<DisplayInfo> displayInfo;
 	private SimpleRailwaysTrigger builtinTrigger;
 	private CRAdvancement parent;
 
 	Advancement datagenResult;
 
-	private String id;
+	private final String id;
 	private String title;
 	private String description;
 
@@ -69,9 +77,11 @@ public class CRAdvancement {
 			builder.addCriterion("0", builtinTrigger.instance());
 		}
 
-		builder.display(t.icon, Components.translatable(titleKey()),
+		this.displayInfo = () -> new DisplayInfo(
+			t.icon.get(), Components.translatable(titleKey()),
 			Components.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
-			id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide);
+			id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide
+		);
 
 		if (t.type == TaskType.SECRET)
 			description += SECRET_SUFFIX;
@@ -111,6 +121,7 @@ public class CRAdvancement {
 
 	@ApiStatus.Internal
 	public void save(Consumer<Advancement> t) {
+		builder.display(displayInfo.get());
 		if (parent != null)
 			builder.parent(parent.datagenResult);
 		datagenResult = builder.save(t, Railways.asResource(id)
@@ -153,7 +164,7 @@ public class CRAdvancement {
 		private TaskType type = TaskType.NORMAL;
 		private boolean externalTrigger;
 		private int keyIndex;
-		private ItemStack icon;
+		private Supplier<ItemStack> icon;
 
 		@ApiStatus.Internal
 		public Builder special(TaskType type) {
@@ -169,17 +180,22 @@ public class CRAdvancement {
 
 		@ApiStatus.Internal
 		public Builder icon(ItemProviderEntry<?> item) {
-			return icon(item.asStack());
+			return icon(() -> item.asStack());
 		}
 
 		@ApiStatus.Internal
 		public Builder icon(ItemLike item) {
-			return icon(new ItemStack(item));
+			return icon(() -> new ItemStack(item));
 		}
 
 		@ApiStatus.Internal
 		public Builder icon(ItemStack stack) {
-			icon = stack;
+			return icon(() -> stack);
+		}
+
+		@ApiStatus.Internal
+		public Builder icon(Supplier<ItemStack> stackSupplier) {
+			icon = stackSupplier;
 			return this;
 		}
 
@@ -202,7 +218,7 @@ public class CRAdvancement {
 
 		@ApiStatus.Internal
 		public Builder whenIconCollected() {
-			return externalTrigger(InventoryChangeTrigger.TriggerInstance.hasItems(icon.getItem()));
+			return externalTrigger(InventoryChangeTrigger.TriggerInstance.hasItems(icon.get().getItem()));
 		}
 
 		@ApiStatus.Internal
