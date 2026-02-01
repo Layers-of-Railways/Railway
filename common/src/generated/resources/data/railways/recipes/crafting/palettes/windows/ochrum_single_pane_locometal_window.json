@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "railways:internal/glass/colorless"
+    },
+    {
+      "item": "railways:ochrum_riveted_locometal"
+    }
+  ],
+  "result": {
+    "item": "railways:ochrum_single_pane_locometal_window"
+  }
+}
