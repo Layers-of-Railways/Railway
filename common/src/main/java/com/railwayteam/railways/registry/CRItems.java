@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.registry;
 
+import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.ModSetup;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.BuilderTransformers;
@@ -53,6 +54,7 @@ import net.minecraft.world.item.MinecartItem;
 
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -158,6 +160,14 @@ public class CRItems {
         .tag(AllTags.AllItemTags.UPRIGHT_ON_BELT.tag)
         .register();
 
+    public static final ItemEntry<? extends PaintPitcherItem> SANDY_PITCHER = REGISTRATE.item("sandy_paint_pitcher", p -> PaintPitcherItem.create(p, null))
+        .transform(BuilderTransformers.paintPitcher())
+        .properties(p -> p.stacksTo(1))
+        .tag(AllTags.AllItemTags.UPRIGHT_ON_BELT.tag)
+        .tag(CRTags.AllItemTags.FILLED_PAINT_PITCHERS.tag)
+        .lang("Sandy Paint Pitcher")
+        .register();
+
     public static final DyedOnlyPalettesColorList<ItemEntry<? extends PaintPitcherItem>> PAINT_PITCHERS = new DyedOnlyPalettesColorList<>((color) -> {
         String colorReg  = color.getSerializedName();
         String colorName = snakeCaseToTitleCase(colorReg);
@@ -169,6 +179,11 @@ public class CRItems {
             .lang(colorName + " Paint Pitcher")
             .register();
     });
+
+    public static final List<ItemEntry<? extends PaintPitcherItem>> FILLED_PITCHERS = ImmutableList.<ItemEntry<? extends PaintPitcherItem>>builder()
+        .addAll(PAINT_PITCHERS)
+        .add(SANDY_PITCHER)
+        .build();
 
     static {
         ModSetup.useBaseTab();

@@ -603,10 +603,15 @@ public class BuilderTransformersImpl {
     }
 
     public static <I extends PaintPitcherItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> paintPitcher() {
-        return i -> i.model((c, p) -> p.blockSprite(
-            c,
-            p.modLoc("block/palettes/" + TextUtils.prefixToFolder(c.getName(), c.get().getColor().getSerializedName()))
-        ));
+        return i -> i.model((c, p) -> {
+            PalettesColor color = c.get().getColor();
+            p.blockSprite(
+                c,
+                color == null
+                    ? p.modLoc("block/palettes/sandy_pitcher")
+                    : p.modLoc("block/palettes/" + TextUtils.prefixToFolder(c.getName(), color.getSerializedName()))
+            );
+        });
     }
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> variantBuffer() {

@@ -18,9 +18,11 @@
 
 package com.railwayteam.railways.mixin.client;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileRenderer;
@@ -55,8 +57,10 @@ public class MixinPotatoProjectileRenderer {
         Operation<Void> original
     ) {
         if (stack.getItem() instanceof PaintPitcherItem item) {
+            PalettesColor color = item.getColor();
+            PartialModel model = color == null ? CRBlockPartials.PAINT_STRIPPER_BLOB : CRBlockPartials.PAINT_BLOBS.get(color);
             PartialItemModelRenderer.of(stack, displayContext, poseStack, buffer, combinedOverlay)
-                .render(CRBlockPartials.PAINT_BLOBS.get(item.getColor()).get(), combinedLight);
+                .render(model.get(), combinedLight);
         } else {
             original.call(instance, stack, displayContext, combinedLight, combinedOverlay, poseStack, buffer, level, seed);
         }

@@ -34,7 +34,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class PaintPitcherItemImpl extends PaintPitcherItem {
-    public PaintPitcherItemImpl(Properties properties, PalettesColor color) {
+    public PaintPitcherItemImpl(Properties properties, @Nullable PalettesColor color) {
         super(properties, color);
     }
 
@@ -43,7 +43,7 @@ public class PaintPitcherItemImpl extends PaintPitcherItem {
         return railways$shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
     }
 
-    public static PaintPitcherItem create(Item.Properties properties, PalettesColor color) {
+    public static PaintPitcherItem create(Item.Properties properties, @Nullable PalettesColor color) {
         return new PaintPitcherItemImpl(properties, color);
     }
 

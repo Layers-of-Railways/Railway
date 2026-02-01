@@ -63,15 +63,15 @@ public abstract class PaintPitcherItem extends Item {
     public static final int MAX_LEVELS = 32;
     public static final long FLUID_PER_LEVEL = FluidUnits.bucket() / 8;
     public static final int LEVELS_PER_CANNON_SHOT = 8;
-    protected final PalettesColor color;
+    protected final @Nullable PalettesColor color;
 
-    public PaintPitcherItem(Properties properties, PalettesColor color) {
+    public PaintPitcherItem(Properties properties, @Nullable PalettesColor color) {
         super(properties);
         this.color = color;
     }
 
     @ExpectPlatform
-    public static PaintPitcherItem create(Properties properties, PalettesColor color) {
+    public static PaintPitcherItem create(Properties properties, @Nullable PalettesColor color) {
         throw new AssertionError();
     }
 
@@ -82,7 +82,7 @@ public abstract class PaintPitcherItem extends Item {
 
     @Override
     public int getBarColor(ItemStack stack) {
-        return color.getDiffuseColor();
+        return color == null ? 0xfffdcb : color.getDiffuseColor();
     }
 
     @Override
@@ -94,7 +94,7 @@ public abstract class PaintPitcherItem extends Item {
         return slotChanged || newStack.getItem() != oldStack.getItem();
     }
 
-    public PalettesColor getColor() {
+    public @Nullable PalettesColor getColor() {
         return color;
     }
 
@@ -186,7 +186,7 @@ public abstract class PaintPitcherItem extends Item {
         if (livingEntity instanceof ServerPlayer serverPlayer)
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide && color != null) {
             int levels = getLevels(stack);
             livingEntity.addEffect(new MobEffectInstance(
                 MobEffects.POISON, levels * 20, 0,
@@ -212,6 +212,8 @@ public abstract class PaintPitcherItem extends Item {
 
     @SuppressWarnings("ConstantValue") // IntelliJ is hallucinating that the nested loops never terminate
     public void projectilePaint(ItemStack stack, Level level, BlockHitResult hit) {
+        final PalettesColor color = this.color == null ? PalettesColor.NETHERITE : this.color;
+
         if (!(stack.getItem() == this)) return;
         if (level.isClientSide()) return;
 

@@ -26,6 +26,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -34,7 +35,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @SuppressWarnings("UnstableApiUsage")
 public class PaintPitcherItemImpl extends PaintPitcherItem implements ReequipAnimationItem {
-    public PaintPitcherItemImpl(Properties properties, PalettesColor color) {
+    public PaintPitcherItemImpl(Properties properties, @Nullable PalettesColor color) {
         super(properties, color);
 
         FluidStorage.ITEM.registerForItems(($, context) -> new PaintPitcherFluidStorage(context), this);
@@ -45,7 +46,7 @@ public class PaintPitcherItemImpl extends PaintPitcherItem implements ReequipAni
         return railways$shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
     }
 
-    public static PaintPitcherItem create(Item.Properties properties, PalettesColor color) {
+    public static PaintPitcherItem create(Item.Properties properties, @Nullable PalettesColor color) {
         return new PaintPitcherItemImpl(properties, color);
     }
 }

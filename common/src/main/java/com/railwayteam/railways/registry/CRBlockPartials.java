@@ -531,6 +531,8 @@ public class CRBlockPartials {
         }))
     );
 
+    public static final PartialModel PAINT_STRIPPER_BLOB = item("palettes/paint_blob/sand");
+
     public static final PalettesColorList<PartialModel> PAINT_BLOBS = new PalettesColorList<>(
         color -> item("palettes/paint_blob/" + color.getSerializedName())
     );

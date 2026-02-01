@@ -21,10 +21,11 @@ package com.railwayteam.railways.content.palettes.painting.forge;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import com.railwayteam.railways.content.palettes.painting.PitcherColor;
 import com.railwayteam.railways.registry.CRFluids;
-import com.railwayteam.railways.registry.CRItems;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -60,16 +61,19 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
         return 1;
     }
 
-    private static FluidStack makeFluidStack(PalettesColor color, int amount) {
+    private static FluidStack makeFluidStack(PitcherColor color, int amount) {
+        if (color.isSandyWater())
+            return new FluidStack(Fluids.WATER, amount);
+
         FluidStack fluidStack = new FluidStack(CRFluids.PAINT.get().getSource(), amount);
-        PaintFluid.setColor(fluidStack.getOrCreateTag(), color);
+        PaintFluid.setColor(fluidStack.getOrCreateTag(), color.color());
         return fluidStack;
     }
 
     @Override
     public @NotNull FluidStack getFluidInTank(int tank) {
         if (container.getItem() instanceof PaintPitcherItem item) {
-            return makeFluidStack(item.getColor(), (int) item.getFluidAmount(container));
+            return makeFluidStack(new PitcherColor(item.getColor()), (int) item.getFluidAmount(container));
         }
         return FluidStack.EMPTY;
     }
@@ -80,9 +84,9 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
     }
 
     @Nullable
-    private PalettesColor getColor() {
+    private PitcherColor getColor() {
         if (container.getItem() instanceof PaintPitcherItem item) {
-            return item.getColor();
+            return new PitcherColor(item.getColor());
         }
         return null;
     }
@@ -92,22 +96,36 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
         return item.getLevels(container);
     }
 
-    @Nullable
-    private PalettesColor getColorIfValid(@NotNull FluidStack stack) {
-        if (!CRFluids.PAINT.get().isSame(stack.getFluid())) return null;
-        PalettesColor color = getColor();
+    private static @Nullable PitcherColor getFluidStackColor(@NotNull FluidStack stack) {
+        if (Fluids.WATER.isSame(stack.getFluid()))
+            return PitcherColor.SANDY_WATER;
+
+        if (!CRFluids.PAINT.get().isSame(stack.getFluid()))
+            return null;
+
         PalettesColor fluidColor = PaintFluid.getColor(stack.getTag()).orElse(null);
+        if (fluidColor == null)
+            return null;
+
+        return new PitcherColor(fluidColor);
+    }
+
+    @Nullable
+    private PitcherColor getColorIfValid(@NotNull FluidStack stack) {
+        PitcherColor color = getColor();
+        PitcherColor fluidColor = getFluidStackColor(stack);
+        if (fluidColor == null) return null;
 
         // Color mismatches can never be inserted or extracted
-        if (color != null && fluidColor != null && color != fluidColor) {
+        if (color != null && color != fluidColor) {
             return null;
         }
 
         return color == null ? fluidColor : color;
     }
 
-    private ItemStack makeFilledStack(PalettesColor color, int levels) {
-        return CRItems.PAINT_PITCHERS.get(color).get().copyAsFilledStack(container, levels);
+    private ItemStack makeFilledStack(PitcherColor color, int levels) {
+        return color.getItemEntry().get().copyAsFilledStack(container, levels);
     }
 
     @Override
@@ -117,7 +135,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
 
     @Override
     public int fill(FluidStack stack, FluidAction action) {
-        PalettesColor color = getColorIfValid(stack);
+        PitcherColor color = getColorIfValid(stack);
         if (color == null) return 0;
 
         int currentLevels = getLevels();
@@ -133,7 +151,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
         return (int) (filledLevels * PaintPitcherItem.FLUID_PER_LEVEL);
     }
 
-    private int drain(PalettesColor color, int maxDrain, FluidAction action) {
+    private int drain(PitcherColor color, int maxDrain, FluidAction action) {
         int currentLevels = getLevels();
         int drainedLevels = (int) Math.min(maxDrain / PaintPitcherItem.FLUID_PER_LEVEL, currentLevels);
         if (drainedLevels <= 0) return 0;
@@ -147,7 +165,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
 
     @Override
     public @NotNull FluidStack drain(FluidStack stack, FluidAction action) {
-        PalettesColor color = getColorIfValid(stack);
+        PitcherColor color = getColorIfValid(stack);
         if (color == null) return FluidStack.EMPTY;
 
         int drained = drain(color, stack.getAmount(), action);
@@ -160,7 +178,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
 
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-        PalettesColor color = getColor();
+        PitcherColor color = getColor();
         if (color == null) return FluidStack.EMPTY;
 
         int drained = drain(color, maxDrain, action);

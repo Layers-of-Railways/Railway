@@ -42,7 +42,7 @@ public class CRPotatoProjectileTypes {
         .renderTumbling()
         .onEntityHit(potion(MobEffects.POISON, 1, 100, false))
         .onBlockHit(($, $$) -> true) // actual hit logic handled by mixin
-        .registerAndAssign(CRItems.PAINT_PITCHERS.toArray(ItemEntry[]::new));
+        .registerAndAssign(CRItems.FILLED_PITCHERS.toArray(ItemEntry[]::new));
 
     private static PotatoCannonProjectileType.Builder create(String name) {
         return new PotatoCannonProjectileType.Builder(Railways.asResource(name));

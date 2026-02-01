@@ -21,8 +21,8 @@ package com.railwayteam.railways.content.palettes.painting.fabric;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import com.railwayteam.railways.content.palettes.painting.PitcherColor;
 import com.railwayteam.railways.registry.CRFluids;
-import com.railwayteam.railways.registry.CRItems;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -31,6 +31,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
 import static com.railwayteam.railways.content.palettes.painting.PaintPitcherItem.FLUID_PER_LEVEL;
@@ -44,9 +45,9 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
         this.context = context;
     }
 
-    private @Nullable PalettesColor getColor() {
+    private @Nullable PitcherColor getColor() {
         if (context.getItemVariant().getItem() instanceof PaintPitcherItem item) {
-            return item.getColor();
+            return new PitcherColor(item.getColor());
         }
         return null;
     }
@@ -57,22 +58,36 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
         return item.getLevels(stack);
     }
 
-    @Nullable
-    private PalettesColor getColorIfValid(FluidVariant resource) {
-        if (!CRFluids.PAINT.get().isSame(resource.getFluid())) return null;
-        PalettesColor color = getColor();
+    private static @Nullable PitcherColor getVariantColor(FluidVariant resource) {
+        if (Fluids.WATER.isSame(resource.getFluid()))
+            return PitcherColor.SANDY_WATER;
+
+        if (!CRFluids.PAINT.get().isSame(resource.getFluid()))
+            return null;
+
         PalettesColor fluidColor = PaintFluid.getColor(resource.getNbt()).orElse(null);
+        if (fluidColor == null)
+            return null;
+
+        return new PitcherColor(fluidColor);
+    }
+
+    @Nullable
+    private PitcherColor getColorIfValid(FluidVariant resource) {
+        PitcherColor color = getColor();
+        PitcherColor fluidColor = getVariantColor(resource);
+        if (fluidColor == null) return null;
 
         // Color mismatches can never be inserted or extracted
-        if (color != null && fluidColor != null && color != fluidColor) {
+        if (color != null && color != fluidColor) {
             return null;
         }
 
         return color == null ? fluidColor : color;
     }
 
-    private ItemVariant makeFilledVariant(PalettesColor color, int levels) {
-        return ItemVariant.of(CRItems.PAINT_PITCHERS.get(color).get()
+    private ItemVariant makeFilledVariant(PitcherColor color, int levels) {
+        return ItemVariant.of(color.getItemEntry().get()
             .copyAsFilledStack(context.getItemVariant().toStack(), levels));
     }
 
@@ -80,7 +95,7 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
     public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
         StoragePreconditions.notBlankNotNegative(resource, maxAmount);
 
-        PalettesColor color = getColorIfValid(resource);
+        PitcherColor color = getColorIfValid(resource);
         if (color == null) return 0;
 
         int currentLevels = getLevels();
@@ -102,7 +117,7 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
     public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
         StoragePreconditions.notBlankNotNegative(resource, maxAmount);
 
-        PalettesColor color = getColorIfValid(resource);
+        PitcherColor color = getColorIfValid(resource);
         if (color == null) return 0;
 
         int currentLevels = getLevels();
@@ -129,7 +144,8 @@ class PaintPitcherFluidStorage implements SingleSlotStorage<FluidVariant> {
         if (!(stack.getItem() instanceof PaintPitcherItem item)) return FluidVariant.blank();
         if (item.getLevels(stack) == 0) return FluidVariant.blank();
 
-        return FluidVariant.of(
+        PalettesColor color = item.getColor();
+        return color == null ? FluidVariant.of(Fluids.WATER) : FluidVariant.of(
             CRFluids.PAINT.get().getSource(),
             PaintFluid.setColor(new CompoundTag(), item.getColor())
         );

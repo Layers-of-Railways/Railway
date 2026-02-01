@@ -63,6 +63,8 @@ public class PaintBrushItem extends Item implements Vanishable {
         BlockState clickedState = level.getBlockState(clickedPos);
 
         PalettesColor pitcherColor = paintPitcher.getColor();
+        if (pitcherColor == null) return InteractionResult.PASS;
+
         RepaintingTarget target = RepaintingTarget.get(level, clickedPos, clickedState);
         if (target == null) return InteractionResult.PASS;
         if (target.getColor() == pitcherColor) return InteractionResult.PASS;
