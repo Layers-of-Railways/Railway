@@ -282,7 +282,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
     );
 
     PalettesRecipeList LOCOMETAL_WINDOWS = new PalettesRecipeList(color ->
-        new GeneratedRecipeBuilder("palettes/windows", Styles.ROUND_PANE_WINDOW.get(color))
+        new GeneratedRecipeBuilder("palettes/windows", Styles.SINGLE_PANE_WINDOW.get(color))
             .setEmiDefault(color.isNetherite())
             .unlockedByTag(Ingredients::colorlessGlass)
             .viaShapeless(b -> b
