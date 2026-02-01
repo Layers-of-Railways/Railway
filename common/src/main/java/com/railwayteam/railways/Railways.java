@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -68,6 +68,7 @@ public class Railways {
   // Only used for datafixers, bump whenever a block changes id etc.
   // Should be bumped up to the next multiple of 10 the first time it is bumped after a release, then by 1 for each subsequent change.
   public static final int DATA_FIXER_VERSION = 10;
+  private static final boolean FORCE_MIXIN_AUDIT = Boolean.getBoolean("railways.force_mixin_audit");
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
@@ -114,7 +115,7 @@ public class Railways {
     // everything should be registered (or at least loaded) by now.
     MultiRegistryCallback.enableFinalizers();
 
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
+    if (FORCE_MIXIN_AUDIT || Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
   }
 

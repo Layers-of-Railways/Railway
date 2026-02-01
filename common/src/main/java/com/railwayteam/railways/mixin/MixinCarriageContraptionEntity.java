@@ -94,7 +94,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     @WrapOperation(method = "control", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;throttle:D", opcode = Opcodes.GETFIELD))
     private double conductorSpeedControl(Train instance, Operation<Double> original, BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player) {
         if (player instanceof IConductorHoldingFakePlayer conductorHolder && conductorHolder.getConductor() != null) {
-            return conductorHolder.getConductor().getForwardSignalStrength() / 15.0d;
+            return Math.abs(conductorHolder.getConductor().getThrottle()) / 15.0d;
         }
         return original.call(instance);
     }
@@ -153,7 +153,7 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
     private void railways$handcarHungerDepletion(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player, CallbackInfoReturnable<Boolean> cir) {
         if (((IHandcarTrain) this.carriage.train).railways$isHandcar()
                 && !player.getItemInHand(InteractionHand.MAIN_HAND).is(AllItems.EXTENDO_GRIP.get()))
-            player.causeFoodExhaustion((float) carriage.train.speed * CRConfigs.server().handcarHungerMultiplier.getF());
+            player.causeFoodExhaustion((float) Math.abs(carriage.train.speed) * CRConfigs.server().handcarHungerMultiplier.getF());
     }
 
     @Unique

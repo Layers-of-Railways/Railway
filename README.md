@@ -2,15 +2,19 @@
   <img src=".idea/icon.png" width="192" height="192" alt="Logo of mod">
   <h1>Create Steam 'n' Rails</h1>
 
-[![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/create-steam-n-rails-706277846389227612)
+[![discord-plural](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/UKFkg5NQzu)
 </div>
 
 **Create Steam 'n' Rails** is an addon mod for Create that aims to extend Create's train and steam systems. Current features include custom tracks, semaphores, and conductors.
 
+## Contributing (for translators):
+We use [Crowdin](https://crowdin.com/project/create-steam-n-rails-official) as our translation platform. Please use the [translator's chat](https://discord.com/channels/706277846389227612/1049156352553000970) on our Discord to ask questions or request a new language.  
+Please DM [`@slimeistdev`](https://discord.com/users/880626913813598219) on Discord to request access to the translator's chat.
+
 ## Contributing (for team members):
-1. Create a new branch for your feature (named `1.19/<feat>`)
-2. Write your feature
-3. Make a pull request
+1. Create a new branch for your feature (named `1.20/<feat>`). This branch should probably be in the [development repo](https://github.com/Layers-of-Railways/RailwaySecretDev)
+2. Make a pull request so that it doesn't get lost
+3. Write your feature
 4. Have somebody review it, and merge
 
 ## Contributing (for community members):

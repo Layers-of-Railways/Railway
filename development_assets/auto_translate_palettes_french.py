@@ -1,3 +1,19 @@
+#  Steam 'n' Rails
+#  Copyright (c) 2025 The Railways Team
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 # Please do not run this unless you are Slimeist (techno-sam), the author of the script (or he has explained it to you)
 
 import os
@@ -5,46 +21,49 @@ import json
 
 prefix = "block.railways."
 
-CAPITALIZE_FIRST_ONLY = False
+CAPITALIZE_FIRST_ONLY = True
+NON_CAPITALIZED_WORDS = {
+    "en",
+    "de"
+}
 
 colors: dict[str, str] = {
-    "black": "zwarte",
-    "blue": "blauwe",
-    "brown": "bruine",
-    "gray": "grijze",
-    "green": "groene",
-    "light_blue": "lichtblauwe",
-    "light_gray": "lichtgrijze",
-    "lime": "limoengroene",
+    "black": "noir",
+    "blue": "bleu",
+    "brown": "marron",
+    "gray": "gris",
+    "green": "vert",
+    "light_blue": "bleu claire",
+    "light_gray": "gris claire",
+    "lime": "vert citron",
     "magenta": "magenta",
-    "orange": "oranje",
-    "pink": "roze",
-    "purple": "paarse",
-    "red": "rode",
-    "white": "witte",
-    "yellow": "gele",
-    "cyan": "turquoise",
+    "orange": "orange",
+    "pink": "rose",
+    "purple": "violet",
+    "red": "rouge",
+    "white": "blanc",
+    "yellow": "jaune",
     "": ""
 }
 
 color_keys = colors.keys()
 
 wrapping_names: dict[str, str] = {
-    "brass": "messing",
-    "copper": "koper",
-    "iron": "ijzer"
+    "brass": "laiton",
+    "copper": "cuivre",
+    "iron": "fer"
 }
 
 type_names = {
-    "slashed": "gestreept lokometaal",
-    "riveted": "geklonken lokometaal",
-    "plated": "lokometaalplaat"
+    "slashed": "coupé",
+    "riveted": "riveté",
+    "plated": "plaqué"
 }
 
 
 def capitalize(s: str) -> str:
     s = s.lower()
-    if len(s) > 0:
+    if len(s) > 0 and s.lower() not in NON_CAPITALIZED_WORDS:
         return s[0].upper() + s[1:]
     else:
         return s
@@ -71,7 +90,13 @@ def join_with_title_case(*parts: str | tuple[str, bool]) -> str:
 
 def mk_boiler(wrapping: str | None) -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], wrapping_names.get(wrapping, ""), ("bekleden", wrapping is not None), "lokometaalen stoomketel")
+        return join_with_title_case(
+            "chaudière",
+            colors[color],
+            "en locométal",
+            ("enveloppée de", wrapping is not None),
+            wrapping_names.get(wrapping, ""),
+        )
     return f
 
 
@@ -83,20 +108,26 @@ def mk_locometal(wrapping: str | None, flat: bool, typ: str | None) -> callable:
     :return:
     """
     def f(color: str) -> str:
-        return join_with_title_case(("platte", flat), colors[color], wrapping_names.get(wrapping, ""),
-                                    ("bekleden", wrapping is not None), type_names.get(typ, "lokometaal"))
+        return join_with_title_case(
+            "locométal",
+            ("plat", flat),
+            type_names.get(typ, ""),
+            ("enveloppée de", wrapping is not None),
+            wrapping_names.get(wrapping, ""),
+            colors[color],
+        )
     return f
 
 
 def mk_pillar() -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], "lokometaalpilaar")
+        return join_with_title_case("pilier en locométal", colors[color])
     return f
 
 
 def mk_smokebox() -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], "lokometaalen rookkast")
+        return join_with_title_case("boîte de fumée en locométal", colors[color])
     return f
 
 
@@ -124,7 +155,7 @@ with open("../common/src/generated/resources/assets/railways/lang/en_us.json", "
     source_strings = json.load(f)
 source_strings: dict[str, str]
 
-lang = "nl_nl"
+lang = "fr_fr"
 
 with open(f"../common/src/main/resources/assets/railways/lang/{lang}.json", "r") as f:
     existing_translated_strings = json.load(f)
@@ -132,22 +163,6 @@ existing_translated_strings: dict[str, str]
 
 new_translated_strings: dict[str, str] = {}
 
-#for string in source_strings:
-#    if sum(1 for exc in exclude if exc in string) != 0:
-#        continue
-#    if not string.startswith(prefix):
-#        continue
-#    if string not in existing_translated_strings:
-#        continue
-#
-#    for suffix, format_string in conversions.items():
-#        new_string = string + suffix
-#        if new_string in existing_translated_strings:
-#            continue
-#        if new_string not in source_strings:
-#            # print("OOPS", new_string)
-#            continue
-#        new_translated_strings[new_string] = format_string.format(existing_translated_strings[string])
 for string, formatter in translations.items():
     string = "<COLOR>_" + string
     for color_name in color_keys:

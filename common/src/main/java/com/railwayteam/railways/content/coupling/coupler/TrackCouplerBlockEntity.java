@@ -83,6 +83,8 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
     public TrackTargetingBehaviour<TrackCoupler> secondEdgePoint;
     protected ScrollValueBehaviour edgeSpacingScroll;
 
+    protected int cachedEffectiveEdgeSpacing = 5;
+
     public TrackCouplerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -169,7 +171,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
                 Train backTrain = info.backCarriage.train;
                 if (frontTrain == backTrain)
                     break;
-                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing());
+                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, cachedEffectiveEdgeSpacing);
             }
             case NONE -> {
             }
@@ -193,7 +195,9 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
             return Optional.empty();
 
         double distance = -getEdgeSpacing() * edgePoint.getTargetDirection().getStep();
-        Vec3 offset = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0).scale(distance);
+        Vec3 axis = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0);
+        Vec3 offset = axis.scale(distance);
+        cachedEffectiveEdgeSpacing = (int) Math.round(edgeSpacing * axis.length());
         return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset(Mth.floor(offset.x), Mth.floor(offset.y), Mth.floor(offset.z)));
     }
 

@@ -102,7 +102,7 @@ public class BufferModel extends ForwardingBakedModel {
         }
 
         if (materialSwapper != null || colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)), state);
+            new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)).emitBlockQuads(blockView, state, pos, randomSupplier, context);
         } else {
             super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
         }
@@ -134,7 +134,7 @@ public class BufferModel extends ForwardingBakedModel {
             }
         }
         if (materialSwapper != null || colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)));
+            new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)).emitItemQuads(stack, randomSupplier, context);
         } else {
             super.emitItemQuads(stack, randomSupplier, context);
         }

@@ -1,0 +1,13 @@
+{
+  "parent": "railways:item/conductor_cap",
+  "textures": {
+    "cap": "railways:item/dev_caps/pride"
+  },
+  "display": {
+    "head": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 14, 0],
+      "scale": [1.6, 1.6, 1.6]
+    }
+  }
+}

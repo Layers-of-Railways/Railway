@@ -28,7 +28,11 @@
                 "en_GB": "en_gb",
                 "tr_TR": "tr_tr",
                 "ro_RO": "ro_ro",
-                "th_TH": "th_th"
+                "th_TH": "th_th",
+                "es_MX": "es_mx",
+                "hi_IN": "hi_in",
+                "fi_FI": "fi_fi",
+                "pt_PT": "pt_pt"
             }
         }
     }

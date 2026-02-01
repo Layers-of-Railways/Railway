@@ -1,4 +1,21 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.7.0
+------------------------------------------------------
+<!--this is the next unreleased version-->
+Additions
+- Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
+- Translation for create.track_target.not_straight #522
+
+Fixes
+- Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
+- 32x resource packs now work properly #549
+- Fix client-side track switch crash #536
+- Fix diagonal coupling #539
+- Rollers on upside down monorails now break/place at the correct height #470
+- Prevent creation of turns ending in generic crossings #511
+- Fix copycat headstock connectivity #512
+- Fix handcar/phantom track tooltips #658
+------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------
 Changes
