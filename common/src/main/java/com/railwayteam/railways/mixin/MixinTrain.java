@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,13 +18,23 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.coupling.coupler.TrackCoupler;
 import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
-import com.railwayteam.railways.mixin_interfaces.*;
+import com.railwayteam.railways.mixin_interfaces.IBufferBlockedTrain;
+import com.railwayteam.railways.mixin_interfaces.ICrashAdvancement;
+import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
+import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
+import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
+import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
+import com.railwayteam.railways.mixin_interfaces.IStrictSignalTrain;
+import com.railwayteam.railways.mixin_interfaces.ITrueMaxSpeedTrain;
+import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.simibubi.create.Create;
@@ -62,10 +72,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement, ITrueMaxSpeedTrain {
     @Shadow public TrackGraph graph;
     @Shadow public Navigation navigation;
     @Shadow public abstract void arriveAt(GlobalStation station);
@@ -81,6 +96,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Unique protected boolean railways$isStrictSignalTrain = false;
     @Unique protected int railways$controlBlockedTicks = -1;
     @Unique protected int railways$controlBlockedSign = 0;
+    @Unique protected boolean railways$skipRealismSpeedLimit = false;
 
     @Override
     public boolean railways$isControlBlocked() {
@@ -296,26 +312,35 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         }
     }
 
+    @Override
+    public void railways$setLimitBypass(boolean shouldBypass) {
+        railways$skipRealismSpeedLimit = shouldBypass;
+    }
+
     @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
-    public void maxSpeed(CallbackInfoReturnable<Float> cir) {
+    private void limitMaxSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
-        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+        else if (!railways$skipRealismSpeedLimit && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
-    public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
+    private void limitMaxTurnSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
-        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+        else if (!railways$skipRealismSpeedLimit && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20 * 20));
     }
 
-    @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
-    public void acceleration(CallbackInfoReturnable<Float> cir) {
-        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
-            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
+    @WrapOperation(method = "approachTargetSpeed", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;acceleration()F"))
+    private float limitAcceleration(Train instance, Operation<Float> original, @Local(name = "actualTarget") double actualTarget) {
+        if (Math.abs(actualTarget) > speed && !railways$isHandcar && !railways$skipRealismSpeedLimit
+            && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get()) {
+            return original.call(instance) / 20;
+        } else {
+            return original.call(instance);
+        }
     }
 
     // Award crash advancements when a train has crashed with a handcar
