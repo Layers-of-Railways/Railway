@@ -32,14 +32,18 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
 import com.railwayteam.railways.mixin_interfaces.IGetBezierConnection;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.TrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
+import com.simibubi.create.content.trains.track.TrackInstance;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
+import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
@@ -123,7 +127,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
             .translate(getInstancePosition())
             .nudge((int) this.pos.asLong());
 
-        SlabBlock casingBlock = ((IHasTrackCasing) this.blockEntity).getTrackCasing();
+        Block casingBlock = ((IHasTrackCasing) this.blockEntity).railways$getTrackCasing();
         if (casingBlock != null) {
             TrackShape shape = this.blockState.getValue(TrackBlock.SHAPE);
             if (CRBlockPartials.TRACK_CASINGS.containsKey(shape)) {
@@ -142,7 +146,7 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
                     trackType = trackBlock.getMaterial().trackType;
 
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
-                if (((IHasTrackCasing) this.blockEntity).isAlternate())
+                if (((IHasTrackCasing) this.blockEntity).railways$isAlternate())
                     spec = spec.getNonNullAltSpec(trackType);
                 else
                     spec = spec.getFor(trackType);
@@ -175,10 +179,10 @@ public abstract class MixinTrackInstance extends BlockEntityInstance<TrackBlockE
         if (connections) {
             for (BezierConnection bc : this.blockEntity.getConnections().values()) {
                 if (!bc.isPrimary()) continue;
-                casingBlock = ((IHasTrackCasing) bc).getTrackCasing();
+                casingBlock = ((IHasTrackCasing) bc).railways$getTrackCasing();
                 if (casingBlock != null) {
                     int heightDiff = Math.abs(bc.tePositions.get(false).getY() - bc.tePositions.get(true).getY());
-                    double shiftDown = ((IHasTrackCasing) bc).isAlternate() && heightDiff > 0 ? -0.25 : 0;
+                    double shiftDown = ((IHasTrackCasing) bc).railways$isAlternate() && heightDiff > 0 ? -0.25 : 0;
                     if (heightDiff / bc.getLength() <= 4 / 30d) {
                         for (Vec3 pos : casingPositions(bc)) {
                             ModelData casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :

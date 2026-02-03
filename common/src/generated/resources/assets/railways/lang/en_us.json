@@ -1256,6 +1256,7 @@
   "tag.block.railways.locometal_boilers": "Locometal boilers",
   "tag.block.railways.semaphore_poles": "Semaphore poles",
   "tag.block.railways.track_casing_blacklist": "Track casing blacklist",
+  "tag.block.railways.track_casing_whitelist": "Track casing whitelist",
   "tag.item.forge.string": "String",
   "tag.item.railways.caboosestyle_stack": "Caboosestyle Stack",
   "tag.item.railways.coalburner_stack": "Coalburner Stack",

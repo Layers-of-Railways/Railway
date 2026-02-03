@@ -18,11 +18,11 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.railwayteam.railways.content.custom_tracks.casing.CasingChecker;
 import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtils;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlock;
@@ -35,12 +35,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -52,26 +52,28 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
     @Shadow
     Map<BlockPos, BezierConnection> connections;
 
-    protected SlabBlock trackCasing;
-    protected boolean isAlternateModel;
+    @Unique
+    protected Block railways$trackCasing;
+    @Unique
+    protected boolean railways$isAlternateModel;
 
     protected MixinTrackBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public @Nullable SlabBlock getTrackCasing() {
-        return trackCasing;
+    public @Nullable Block railways$getTrackCasing() {
+        return railways$trackCasing;
     }
 
     @Override
-    public void setTrackCasing(@Nullable SlabBlock trackCasing) {
-        if (trackCasing != null && CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(trackCasing)) //sanity check
+    public void railways$setTrackCasing(@Nullable Block trackCasing) {
+        if (trackCasing != null && !CasingChecker.isValid(trackCasing)) //sanity check
             return;
-        this.trackCasing = trackCasing;
+        this.railways$trackCasing = trackCasing;
         notifyUpdate();
         if (this.level != null) {
-            if (this.trackCasing == null) { //Clean up the tile entity if it is no longer needed
+            if (this.railways$trackCasing == null) { //Clean up the tile entity if it is no longer needed
                 CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, true);
                 if (!this.level.isClientSide) {
                     if (!this.connections.isEmpty() || getBlockState().getOptionalValue(TrackBlock.SHAPE)
@@ -84,24 +86,24 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
                     if (!(this.level instanceof SchematicWorld))
                         CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveBlockEntityPacket(worldPosition));
                 }
-            } else if (trackCasing != null && !isAlternateModel) {
+            } else if (trackCasing != null && !railways$isAlternateModel) {
                 CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, false);
             }
         }
     }
 
     @Override
-    public boolean isAlternate() {
-        return isAlternateModel;
+    public boolean railways$isAlternate() {
+        return railways$isAlternateModel;
     }
 
     @Override
-    public void setAlternate(boolean alternate) {
+    public void railways$setAlternate(boolean alternate) {
         if (getBlockState().getValue(TrackBlock.SHAPE).getModel().equals("ascending")) {
             alternate = false;
         }
-        this.isAlternateModel = alternate;
-        if (trackCasing != null) {
+        this.railways$isAlternateModel = alternate;
+        if (railways$trackCasing != null) {
             CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, alternate);
         }
         notifyUpdate();
@@ -118,7 +120,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
         cancellable = true
     )
     private void preventTileRemoval(BlockPos target, CallbackInfo ci) {
-        if (getTrackCasing() != null) {
+        if (railways$getTrackCasing() != null) {
             notifyUpdate();
             ci.cancel();
         }
@@ -134,7 +136,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
         cancellable = true
     )
     private void preventTileRemoval2(CallbackInfo ci) {
-        if (getTrackCasing() != null) {
+        if (railways$getTrackCasing() != null) {
             notifyUpdate();
             ci.cancel();
         }
@@ -142,36 +144,34 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
 
     @Inject(method = "write", at = @At("RETURN"))
     private void writeCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
-        if (this.getTrackCasing() != null) {
-            tag.putString("TrackCasing", BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString());
+        Block casing = railways$getTrackCasing();
+        if (casing != null) {
+            tag.putString("TrackCasing", BuiltInRegistries.BLOCK.getKey(casing).toString());
         }
-        tag.putBoolean("AlternateModel", this.isAlternate());
+        tag.putBoolean("AlternateModel", this.railways$isAlternate());
     }
 
     @Inject(method = "read", at = @At("RETURN"))
     private void readCasing(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         if (tag.contains("AlternateModel")) {
-            this.setAlternate(tag.getBoolean("AlternateModel"));
+            this.railways$setAlternate(tag.getBoolean("AlternateModel"));
         } else {
-            this.setAlternate(false);
+            this.railways$setAlternate(false);
         }
 
         if (tag.contains("TrackCasing")) {
             ResourceLocation casingName = ResourceLocation.of(tag.getString("TrackCasing"), ':');
             if (BuiltInRegistries.BLOCK.containsKey(casingName)) {
-                Block casingBlock = BuiltInRegistries.BLOCK.get(casingName);
-                if (casingBlock instanceof SlabBlock slab) {
-                    this.setTrackCasing(slab);
-                    return;
-                }
+                this.railways$setTrackCasing(BuiltInRegistries.BLOCK.get(casingName));
+                return;
             }
         }
-        this.setTrackCasing(null);
+        this.railways$setTrackCasing(null);
     }
 
     @Inject(method = "lazyTick", at = @At("HEAD"))
     private void manageCasingCollisions(CallbackInfo ci) {
-        if (trackCasing == null || isAlternateModel) return;
+        if (railways$trackCasing == null || railways$isAlternateModel) return;
         CasingCollisionUtils.manageTracks((TrackBlockEntity) (Object) this, false);
     }
 }

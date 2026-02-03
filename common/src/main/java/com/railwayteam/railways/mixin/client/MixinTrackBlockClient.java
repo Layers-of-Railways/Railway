@@ -56,10 +56,10 @@ public class MixinTrackBlockClient {
             return;
         }
         // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
-        if (casingBc.getTrackCasing() != null) {
+        if (casingBc.railways$getTrackCasing() != null) {
             if (bc.tePositions.getFirst().getY() == bc.tePositions.getSecond().getY()) {
                 msr.translate(0, 1 / 16f, 0);
-            } else if (!casingBc.isAlternate()) {
+            } else if (!casingBc.railways$isAlternate()) {
                 msr.translate(0, 4 / 16f, 0);
             }
         }
@@ -75,13 +75,13 @@ public class MixinTrackBlockClient {
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
-            if (casingTE.getTrackCasing() != null) {
+            if (casingTE.railways$getTrackCasing() != null) {
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
                     msr.translate(
                         spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2)/16f,
+                        (spec.getTopSurfacePixelHeight(trackType, casingTE.railways$isAlternate()) - 2)/16f,
                         spec.getZShift(trackType)
                     );
             }

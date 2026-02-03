@@ -41,8 +41,8 @@ public class MixinBlockBehaviour {
   private void addTrackCasingDrops(BlockState state, LootParams.Builder params, CallbackInfoReturnable<List<ItemStack>> cir) {
     // superList is mutable, so we don't need to cir.setReturnValue() (it doesnt stack)
     List<ItemStack> superList = cir.getReturnValue();
-    if (params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
-      superList.add(new ItemStack(casing.getTrackCasing()));
+    if (params.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof IHasTrackCasing casing && casing.railways$getTrackCasing() != null) {
+      superList.add(new ItemStack(casing.railways$getTrackCasing()));
     }
   }
 }

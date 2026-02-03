@@ -18,13 +18,17 @@
 
 package com.railwayteam.railways.mixin.client;
 
+import com.railwayteam.railways.content.custom_tracks.casing.CasingChecker;
 import com.railwayteam.railways.content.custom_tracks.casing.SlabUseOnCurvePacket;
 import com.railwayteam.railways.content.handcar.HandcarItem;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.railwayteam.railways.util.AdventureUtils;
-import com.simibubi.create.content.trains.track.*;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.content.trains.track.CurvedTrackInteraction;
+import com.simibubi.create.content.trains.track.TrackBlockEntity;
+import com.simibubi.create.content.trains.track.TrackBlockOutline;
 import com.simibubi.create.content.trains.track.TrackBlockOutline.BezierPointSelection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -32,7 +36,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.SlabBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -77,9 +80,7 @@ public abstract class MixinCurvedTrackInteraction {
             if (!held.isEmpty()) {
                 if (!(held.getItem() instanceof BlockItem block))
                     return;
-                if (!(block.getBlock() instanceof SlabBlock slab))
-                    return;
-                if (AllBlockTags.TRACK_CASING_BLACKLIST.matches(slab))
+                if (!CasingChecker.isValid(block.getBlock()))
                     return;
             }
 

@@ -20,8 +20,8 @@ package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingChecker;
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
-import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.core.BlockPos;
@@ -35,11 +35,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -51,29 +52,31 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
 
     @Shadow public abstract Vec3 getPosition(double t);
 
-    protected SlabBlock trackCasing;
-    protected boolean isShiftedDown;
+    @Unique
+    protected Block railways$trackCasing;
+    @Unique
+    protected boolean railways$isShiftedDown;
 
     @Override
-    public @Nullable SlabBlock getTrackCasing() {
-        return trackCasing;
+    public @Nullable Block railways$getTrackCasing() {
+        return railways$trackCasing;
     }
 
     @Override
-    public void setTrackCasing(@Nullable SlabBlock trackCasing) {
-        if (trackCasing != null && CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.matches(trackCasing)) //sanity check
+    public void railways$setTrackCasing(@Nullable Block trackCasing) {
+        if (trackCasing != null && !CasingChecker.isValid(trackCasing)) //sanity check
             return;
-        this.trackCasing = trackCasing;
+        this.railways$trackCasing = trackCasing;
     }
 
     @Override
-    public boolean isAlternate() {
-        return isShiftedDown;
+    public boolean railways$isAlternate() {
+        return railways$isShiftedDown;
     }
 
     @Override
-    public void setAlternate(boolean alternate) {
-        this.isShiftedDown = alternate;
+    public void railways$setAlternate(boolean alternate) {
+        this.railways$isShiftedDown = alternate;
     }
 
 
@@ -88,23 +91,25 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
                        @Local(name = "starts") Couple<Vec3> starts,
                        @Local(name = "compound") CompoundTag compound
     ) {
-        if (getTrackCasing() != null) {
-            if (BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString().equals("minecraft:block")) {
-                Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + getTrackCasing());
+        Block casing = railways$getTrackCasing();
+        if (casing != null) {
+            if (BuiltInRegistries.BLOCK.getKey(casing).toString().equals("minecraft:block")) {
+                Railways.LOGGER.error("NBTwrite trackCasing was minecraft:block!!! for BezierConnection: starts=" + starts + ", primary=" + tePositions.getFirst() + ", secondary=" + tePositions.getSecond() + ", casing: " + casing);
             } else {
-                compound.putString("Casing", BuiltInRegistries.BLOCK.getKey(getTrackCasing()).toString());
+                compound.putString("Casing", BuiltInRegistries.BLOCK.getKey(casing).toString());
             }
         }
-        compound.putBoolean("ShiftDown", isAlternate());
+        compound.putBoolean("ShiftDown", railways$isAlternate());
         cir.setReturnValue(compound);
     }
 
     @Inject(method = "write(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
     private void netWrite(FriendlyByteBuf buffer, CallbackInfo ci) {
-        buffer.writeBoolean(getTrackCasing() != null);
-        if (getTrackCasing() != null) {
-            buffer.writeResourceLocation(BuiltInRegistries.BLOCK.getKey(getTrackCasing()));
-            buffer.writeBoolean(isAlternate());
+        Block casing = railways$getTrackCasing();
+        buffer.writeBoolean(casing != null);
+        if (casing != null) {
+            buffer.writeResourceLocation(BuiltInRegistries.BLOCK.getKey(casing));
+            buffer.writeBoolean(railways$isAlternate());
         }
     }
 
@@ -115,31 +120,32 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
                 Railways.LOGGER.error("NBTCtor trackCasing was minecraft:block!!! for BezierConnection: primary="+tePositions.getFirst()+", secondary="+tePositions.getSecond());
             }
             //Railways.LOGGER.warn("NBTCtor: Casing="+compound.getString("Casing"));
-            setTrackCasing((SlabBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.of(compound.getString("Casing"), ':')));
+            railways$setTrackCasing(BuiltInRegistries.BLOCK.get(ResourceLocation.of(compound.getString("Casing"), ':')));
         }
         if (compound.contains("ShiftDown", Tag.TAG_BYTE)) {
-            setAlternate(compound.getBoolean("ShiftDown"));
+            railways$setAlternate(compound.getBoolean("ShiftDown"));
         } else {
-            setAlternate(false);
+            railways$setAlternate(false);
         }
     }
 
     @Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"), remap = true)
     private void byteBufConstructor(FriendlyByteBuf buffer, CallbackInfo ci) {
         if (buffer.readBoolean()) {
-            setTrackCasing((SlabBlock) BuiltInRegistries.BLOCK.get(buffer.readResourceLocation()));
-            setAlternate(buffer.readBoolean());
+            railways$setTrackCasing(BuiltInRegistries.BLOCK.get(buffer.readResourceLocation()));
+            railways$setAlternate(buffer.readBoolean());
         } else {
-            setTrackCasing(null);
+            railways$setTrackCasing(null);
         }
     }
 
     @Inject(method = "spawnItems", at = @At("TAIL"))
     private void spawnCasing(Level level, CallbackInfo ci) {
-        if (this.getTrackCasing() != null) {
+        Block casing = this.railways$getTrackCasing();
+        if (casing != null) {
             Vec3 origin = Vec3.atLowerCornerOf(tePositions.getFirst());
             Vec3 spawnPos = this.getPosition(0.5);
-            ItemEntity entity = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(this.getTrackCasing()));
+            ItemEntity entity = new ItemEntity(level, spawnPos.x, spawnPos.y, spawnPos.z, new ItemStack(casing));
             entity.setDefaultPickUpDelay();
             level.addFreshEntity(entity);
         }
@@ -147,9 +153,10 @@ public abstract class MixinBezierConnection implements IHasTrackCasing {
 
     @Inject(method = "addItemsToPlayer", at = @At("TAIL"))
     private void addCasingItem(Player player, CallbackInfo ci) {
-        if (this.getTrackCasing() != null) {
+        Block casing = this.railways$getTrackCasing();
+        if (casing != null) {
             Inventory inv = player.getInventory();
-            inv.placeItemBackInInventory(new ItemStack(this.getTrackCasing()));
+            inv.placeItemBackInInventory(new ItemStack(casing));
         }
     }
 }
