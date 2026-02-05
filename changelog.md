@@ -18,6 +18,7 @@ Fixes
 - Fix unfueled trains being unstoppable when realism is enabled #535
 - Fix coupler spacing value board not handling minimum value
 - Fix potential invalid signal state caused by relocation of single-carriage trains
+- Make conductors immune to fall damage again
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------

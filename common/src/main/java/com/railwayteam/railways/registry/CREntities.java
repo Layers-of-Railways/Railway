@@ -34,6 +34,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -64,6 +65,7 @@ public class CREntities {
             .renderer(() -> ConductorRenderer::new)
             .lang("Conductor")
             .properties(configure(c -> c.size(0.6f, 1.5f).fireImmune()))
+            .tag(EntityTypeTags.FALL_DAMAGE_IMMUNE)
             .loot((table, type) -> table.add(type, new LootTable.Builder().withPool(
                     LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1.0f))
