@@ -16,6 +16,7 @@ Fixes
 - Fix copycat headstock connectivity #512
 - Fix handcar/phantom track tooltips #658
 - Fix unfueled trains being unstoppable when realism is enabled #535
+- Fix coupler spacing value board not handling minimum value
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------

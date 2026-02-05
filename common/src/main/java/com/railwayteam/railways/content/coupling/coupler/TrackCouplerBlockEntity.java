@@ -26,6 +26,7 @@ import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.MinRespectingScrollValueBehaviour;
 import com.railwayteam.railways.util.packet.TrackCouplerClientInfoPacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
@@ -45,7 +46,12 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.*;
+import com.simibubi.create.foundation.utility.Components;
+import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -119,7 +125,12 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements ITransf
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
-        edgeSpacingScroll = new ScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
+        edgeSpacingScroll = new MinRespectingScrollValueBehaviour(Components.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true)) {
+            @Override
+            public String getClipboardKey() {
+                return "Coupler";
+            }
+        };
         edgeSpacingScroll.between(3, 15);
         edgeSpacingScroll.withFormatter(i -> String.valueOf(Components.translatable("railways.coupler.edge_spacing.meters")));
         edgeSpacingScroll.withFormatter(i -> i + "m");
