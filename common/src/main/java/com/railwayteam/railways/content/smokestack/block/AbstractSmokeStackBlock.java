@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,8 +18,6 @@
 
 package com.railwayteam.railways.content.smokestack.block;
 
-import com.railwayteam.railways.content.smokestack.SmokestackStyle;
-import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
@@ -33,7 +31,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -43,7 +40,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -57,19 +53,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extends Block implements ProperWaterloggedBlock, IWrenchable, IBE<T> {
-    public static final EnumProperty<SmokestackStyle> STYLE = EnumProperty.create("style", SmokestackStyle.class);
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     protected final ShapeWrapper shape;
-    final String variant;
 
-    public AbstractSmokeStackBlock(Properties properties, ShapeWrapper shape, String variant) {
+    public AbstractSmokeStackBlock(Properties properties, ShapeWrapper shape) {
         super(properties);
         this.registerDefaultState(this.makeDefaultState());
         this.shape = shape;
-        this.variant = variant;
     }
 
     @Override
@@ -80,7 +73,6 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
 
     protected BlockState makeDefaultState() {
         return this.defaultBlockState()
-            .setValue(STYLE, SmokestackStyle.STEEL)
             .setValue(ENABLED, true)
             .setValue(POWERED, false)
             .setValue(WATERLOGGED, false);
@@ -88,15 +80,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(STYLE).add(ENABLED).add(POWERED).add(WATERLOGGED);
-    }
-
-    @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
-        if (variant.equals("diesel") || variant.equals("caboosestyle"))
-            return super.getCloneItemStack(level, pos, state);
-        return CRBlocks.SMOKESTACK_GROUP.get(variant).get(state.getValue(STYLE)).asStack();
+        super.createBlockStateDefinition(builder.add(ENABLED, POWERED, WATERLOGGED));
     }
 
     @Override
@@ -110,8 +94,6 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = this.defaultBlockState();
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
-
-        blockstate = blockstate.setValue(STYLE, SmokestackStyle.STEEL);
 
         if (context.getLevel().hasNeighborSignal(context.getClickedPos())) {
             blockstate = blockstate.setValue(ENABLED, false).setValue(POWERED, true);
@@ -128,6 +110,7 @@ public abstract class AbstractSmokeStackBlock<T extends SmartBlockEntity> extend
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
                                  BlockHitResult pHit) {
         if (AllTags.AllItemTags.WRENCH.matches(pPlayer.getItemInHand(pHand))) {

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -29,18 +29,19 @@ import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
-import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
-import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.RotationType;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlock;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
@@ -117,11 +118,6 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static <B extends SmokeStackBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestack(boolean rotates, ResourceLocation modelLoc) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static <B extends SemaphoreBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> semaphore() {
         throw new AssertionError();
     }
@@ -152,7 +148,7 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, SmokeStackBlock.RotationType rotType) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, RotationType rotType) {
         throw new AssertionError();
     }
 

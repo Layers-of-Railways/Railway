@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,11 +16,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.content.smokestack.block.renderer;
+package com.railwayteam.railways.content.smokestack.block.diesel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;

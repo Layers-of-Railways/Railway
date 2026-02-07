@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -98,7 +98,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         if (isSoul) {
             Lang.builder(Railways.MOD_ID)
-                .translate("smokestack.goggle.tooltip", Component.translatable("smokestack.goggle.tooltip.style.soul"))
+                .translate("smokestack.goggle.tooltip", Component.translatable("railways.smokestack.goggle.tooltip.style.soul"))
                 .forGoggles(tooltip);
         } else {
             DyeColor color = this.color != null ? this.color : DyeColor.BLACK;
