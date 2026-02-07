@@ -1,183 +1,27 @@
 {
   "variants": {
-    "facing=down,style=brass": {
+    "facing=down": {
       "model": "railways:block/smokestack/block_diesel_case",
       "x": 180
     },
-    "facing=down,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=down,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=down,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=down,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=down,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=down,style=steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 180
-    },
-    "facing=east,style=brass": {
+    "facing=east": {
       "model": "railways:block/smokestack/block_diesel_case",
       "x": 90,
       "y": 90
     },
-    "facing=east,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=east,style=steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 90
-    },
-    "facing=north,style=brass": {
+    "facing=north": {
       "model": "railways:block/smokestack/block_diesel_case",
       "x": 90
     },
-    "facing=north,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=north,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=north,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=north,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=north,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=north,style=steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90
-    },
-    "facing=south,style=brass": {
+    "facing=south": {
       "model": "railways:block/smokestack/block_diesel_case",
       "x": 90,
       "y": 180
     },
-    "facing=south,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=south,style=steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 180
-    },
-    "facing=up,style=brass": {
+    "facing=up": {
       "model": "railways:block/smokestack/block_diesel_case"
     },
-    "facing=up,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=up,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=up,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=up,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=up,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=up,style=steel": {
-      "model": "railways:block/smokestack/block_diesel_case"
-    },
-    "facing=west,style=brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=brass_cap_copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=brass_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=copper": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=copper_cap_brass": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=copper_cap_steel": {
-      "model": "railways:block/smokestack/block_diesel_case",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,style=steel": {
+    "facing=west": {
       "model": "railways:block/smokestack/block_diesel_case",
       "x": 90,
       "y": 270

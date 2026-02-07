@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/long/single",
+  "textures": {
+    "0": "railways:block/smokestack/long/iron_cap_steel"
+  }
+}

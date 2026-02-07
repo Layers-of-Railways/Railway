@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "part=double,style=brass": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_double"
+    },
+    "part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_copper_double"
+    },
+    "part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_steel_double"
+    },
+    "part=double,style=copper": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_double"
+    },
+    "part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_brass_double"
+    },
+    "part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_steel_double"
+    },
+    "part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_brass_double"
+    },
+    "part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_copper_double"
+    },
+    "part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_steel_double"
+    },
+    "part=double,style=steel": {
+      "model": "railways:block/smokestack_coalburner_extension_steel_double"
+    },
+    "part=segment,style=brass": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_segment"
+    },
+    "part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_copper_segment"
+    },
+    "part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_steel_segment"
+    },
+    "part=segment,style=copper": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_segment"
+    },
+    "part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_brass_segment"
+    },
+    "part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_steel_segment"
+    },
+    "part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_brass_segment"
+    },
+    "part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_copper_segment"
+    },
+    "part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_steel_segment"
+    },
+    "part=segment,style=steel": {
+      "model": "railways:block/smokestack_coalburner_extension_steel_segment"
+    },
+    "part=single,style=brass": {
+      "model": "railways:block/smokestack_coalburner_extension_brass"
+    },
+    "part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_copper"
+    },
+    "part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_brass_cap_steel"
+    },
+    "part=single,style=copper": {
+      "model": "railways:block/smokestack_coalburner_extension_copper"
+    },
+    "part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_brass"
+    },
+    "part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_copper_cap_steel"
+    },
+    "part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_brass"
+    },
+    "part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_copper"
+    },
+    "part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_coalburner_extension_iron_cap_steel"
+    },
+    "part=single,style=steel": {
+      "model": "railways:block/smokestack_coalburner_extension_steel"
+    }
+  }
+}

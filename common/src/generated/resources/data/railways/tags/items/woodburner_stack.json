@@ -4,9 +4,12 @@
     "railways:smokestack_woodburner",
     "railways:smokestack_woodburner_brass_cap_steel",
     "railways:smokestack_woodburner_copper_cap_steel",
+    "railways:smokestack_woodburner_iron_cap_steel",
     "railways:smokestack_woodburner_brass",
     "railways:smokestack_woodburner_copper_cap_brass",
+    "railways:smokestack_woodburner_iron_cap_brass",
     "railways:smokestack_woodburner_copper",
-    "railways:smokestack_woodburner_brass_cap_copper"
+    "railways:smokestack_woodburner_brass_cap_copper",
+    "railways:smokestack_woodburner_iron_cap_copper"
   ]
 }

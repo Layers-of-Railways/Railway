@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/long/double",
+  "textures": {
+    "0": "railways:block/smokestack/long/brass_cap_copper"
+  }
+}
