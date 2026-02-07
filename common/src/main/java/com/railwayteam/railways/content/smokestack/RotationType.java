@@ -46,6 +46,7 @@ public interface RotationType {
 
     BlockState rotate(BlockState state, Rotation rot);
     BlockState mirror(BlockState state, Mirror mirror);
+    BlockState cloneRotation(BlockState state, BlockState rotationSource);
 
     VoxelShape getShape(BlockState state, ShapeWrapper shape);
     int getModelYRot(BlockState state);
@@ -71,6 +72,11 @@ public interface RotationType {
 
         @Override
         public BlockState mirror(BlockState state, Mirror mirror) {
+            return state;
+        }
+
+        @Override
+        public BlockState cloneRotation(BlockState state, BlockState rotationSource) {
             return state;
         }
 
@@ -120,6 +126,11 @@ public interface RotationType {
         }
 
         @Override
+        public BlockState cloneRotation(BlockState state, BlockState rotationSource) {
+            return state.setValue(AXIS, rotationSource.getValue(AXIS));
+        }
+
+        @Override
         public VoxelShape getShape(BlockState state, ShapeWrapper shape) {
             return shape.get(state.getValue(AXIS));
         }
@@ -161,6 +172,11 @@ public interface RotationType {
         @Override
         public BlockState mirror(BlockState state, Mirror mirror) {
             return rotate(state, mirror.getRotation(state.getValue(HORIZONTAL_FACING)));
+        }
+
+        @Override
+        public BlockState cloneRotation(BlockState state, BlockState rotationSource) {
+            return state.setValue(HORIZONTAL_FACING, rotationSource.getValue(HORIZONTAL_FACING));
         }
 
         @Override

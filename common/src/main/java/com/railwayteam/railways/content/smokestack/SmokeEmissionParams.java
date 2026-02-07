@@ -19,11 +19,9 @@
 package com.railwayteam.railways.content.smokestack;
 
 import com.railwayteam.railways.config.CRConfigs;
-import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticle;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -55,22 +53,6 @@ public record SmokeEmissionParams(
 
     public SmokeEmissionParams(Vec3 particleSpawnOffset, Vec3 particleSpawnDelta, int minParticles, int maxParticles) {
         this(particleSpawnOffset, particleSpawnDelta, 1.0F, minParticles, maxParticles);
-    }
-
-    public void makeParticlesStationary(Level level, BlockPos pos, boolean isSignalFire) {
-        DyeColor color = null;
-        boolean isSoul = false;
-        if (level.getBlockEntity(pos) instanceof SmokeStackBlockEntity be) {
-            isSoul = be.isSoul();
-            color = be.getColor();
-        }
-
-        makeParticles(
-            level, new Vec3(pos.getX(), pos.getY(), pos.getZ()),
-            isSignalFire,
-            1.0, true,
-            color, null, isSoul
-        );
     }
 
     public void makeParticles(Level level, Vec3 pos, boolean isSignalFire, double speedMultiplier, boolean stationary, @Nullable DyeColor color, @Nullable Boolean small, boolean isSoul) {

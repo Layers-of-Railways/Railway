@@ -23,10 +23,18 @@ import java.util.function.Supplier;
 public class FusedSupplier<T> implements Supplier<T> {
     private static final Object NULL = new Object();
 
+    private Supplier<T> supplier = null;
     private Object value = NULL;
 
+    public void prime(Supplier<T> supplier) {
+        if (this.supplier != null || this.value != NULL)
+            throw new IllegalStateException("Already primed");
+
+        this.supplier = supplier;
+    }
+
     public void prime(T value) {
-        if (this.value != NULL)
+        if (this.supplier != null || this.value != NULL)
             throw new IllegalStateException("Already primed");
 
         this.value = value;
@@ -35,6 +43,11 @@ public class FusedSupplier<T> implements Supplier<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T get() {
+        if (supplier != null) {
+            value = supplier.get();
+            supplier = null;
+        }
+
         if (value == NULL)
             throw new IllegalStateException("Not primed");
 

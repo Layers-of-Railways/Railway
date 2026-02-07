@@ -23,10 +23,10 @@ import com.railwayteam.railways.content.smokestack.SmokeEmissionParams;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.util.ShapeWrapper;
+import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -135,15 +135,10 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 
-    public void blockEntityAnimateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if (state.getValue(ENABLED)) {
-            if (createsStationarySmoke && random.nextFloat() < emissionParams.particleSpawnChance() * 1.5) {
-                int n = random.nextInt((emissionParams.maxParticles() - emissionParams.minParticles())) + emissionParams.minParticles();
-                for (int i = 0; i < n; ++i) {
-                    emissionParams.makeParticlesStationary(level, pos, random.nextBoolean());
-                }
-            }
-        }
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        IBE.onRemove(state, level, pos, newState);
     }
 
     @Override

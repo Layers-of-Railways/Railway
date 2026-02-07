@@ -114,7 +114,7 @@ public class CRBlockEntities {
         .register();
 
     public static final BlockEntityEntry<SmokeStackBlockEntity> SMOKE_STACK = REGISTRATE.blockEntity("smokestack", SmokeStackBlockEntity::new)
-        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACK, CRBlocks.COALBURNER_STACK, CRBlocks.OILBURNER_STACK, CRBlocks.STREAMLINED_STACK, CRBlocks.WOODBURNER_STACK)
+        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACKS.getFirst(), CRBlocks.COALBURNER_STACKS.getFirst(), CRBlocks.OILBURNER_STACKS.getFirst(), CRBlocks.STREAMLINED_STACKS.getFirst(), CRBlocks.WOODBURNER_STACK)
         .register();
 
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)

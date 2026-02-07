@@ -73,7 +73,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
                 .requires(Ingredients.eyeOfEnder())
                 .requires(Ingredients.brassSheet()));
 
-    GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACK)
+    GeneratedRecipe COALBURNER_STACK = create(CRBlocks.COALBURNER_STACKS.getFirst())
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('#', Ingredients.ironSheet())
             .define('+', Ingredients.campfire())
@@ -98,7 +98,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern(" + ")
         );
 
-    GeneratedRecipe OILBURNER_STACK = create(CRBlocks.OILBURNER_STACK)
+    GeneratedRecipe OILBURNER_STACK = create(CRBlocks.OILBURNER_STACKS.getFirst())
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('#', Ingredients.ironSheet())
             .define('+', Ingredients.campfire())
@@ -106,7 +106,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#+#")
         );
 
-    GeneratedRecipe STREAMLINED_STACK = create(CRBlocks.STREAMLINED_STACK)
+    GeneratedRecipe STREAMLINED_STACK = create(CRBlocks.STREAMLINED_STACKS.getFirst())
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('#', Ingredients.ironSheet())
             .define('+', Ingredients.campfire())
@@ -122,7 +122,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#+#")
         );
 
-    GeneratedRecipe LONG_STACK = create(CRBlocks.LONG_STACK)
+    GeneratedRecipe LONG_STACK = create(CRBlocks.LONG_STACKS.getFirst())
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('+', Ingredients.campfire())
             .define('.', Ingredients.ironNugget())
