@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-08T00:25:53.4195926	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2026-02-08T03:12:35.795373463	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 8f3d45ffc0f820e3090a01b4acebb41caf4086ea data/railways/recipes/stonecutting/palettes/cycling/pink_plated_locometal.json
 bd659f2672f722e440cf3ae318f05f9dd06d16f8 data/railways/advancements/recipes/misc/crafting/handcar.json
 c01da7ccb421202fb26ba09bdac3d37bc4aa793f data/railways/recipes/crafting/palettes/dyeing_8x/gray_flat_slashed_locometal.json
@@ -272,8 +272,8 @@ cf592dcec25b945b9a74668a42536d02140fcd95 data/railways/advancements/recipes/misc
 1ce452f1016736c1a3aa6cb92c9ce6d4192c6312 data/railways/recipes/crafting/palettes/dyeing_1x/gray_slashed_locometal.json
 021eac54db8fce08d6ec8087e3d3268fce20ea06 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/purple_locometal_pillar.json
 f2ff2cefaa8cf2112e5fec8b0b87a6eb5a907396 data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/red_brass_wrapped_locometal_boiler.json
-f72ba8cbb7bece9fb04bc799a232ac7a158b1926 data/railways/recipes/crafting/palettes/dyeing_8x/white_plated_locometal.json
 ca3981feab5f5c4187b65f70ed937a9aaa280a13 data/railways/recipes/crafting/remote_lens.json
+f72ba8cbb7bece9fb04bc799a232ac7a158b1926 data/railways/recipes/crafting/palettes/dyeing_8x/white_plated_locometal.json
 dfde42381c28fc9ceb7f70dfa5b6705842ce65cd data/railways/advancements/recipes/misc/crafting/palettes/dyeing_1x/red_iron_wrapped_locometal_boiler.json
 453eaf42dcfb6cc0a46dd70cfe8c1f97ac5fd2d1 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/orange_copper_wrapped_locometal.json
 bdbebaa6c194843fc2bd42a26c57ae8bb30723e7 data/railways/recipes/crafting/palettes/wrapping/green_copper_wrapped_locometal.json
@@ -1187,8 +1187,8 @@ b0e64f400b2602588f6e1fa6268a048bf1599245 data/railways/advancements/recipes/misc
 2d70e72086e17c515d3c85ab2c614d4fb0c20895 data/railways/recipes/crafting/palettes/wrapping/white_brass_wrapped_locometal.json
 03483e35d3f4170881c89a5ae652691507363c2b data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/orange_slashed_locometal.json
 a6ca335238514ee2b98030698852966fdb489f4f data/railways/recipes/crafting/palettes/dyeing_8x/magenta_riveted_locometal.json
-d105212bfb513beab5e95b2ebea8dc14da0b5571 data/railways/recipes/crafting/palettes/dyeing_1x/pink_locometal_smokebox.json
 ea3c5495a8642f281bbfe2bdfbe58cfbc441fe9e data/railways/recipes/crafting/palettes/dyeing_1x/white_slashed_locometal.json
+d105212bfb513beab5e95b2ebea8dc14da0b5571 data/railways/recipes/crafting/palettes/dyeing_1x/pink_locometal_smokebox.json
 debdd94320dce8d2288c218739cc0aaf8fe07200 data/railways/recipes/crafting/palettes/dyeing_8x/light_blue_locometal_pillar.json
 718ce679a2a59d800b4a45af69b3dbf722271d8e data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/purple_slashed_locometal.json
 0748235d2fea26884b9224d2942f7595f6333159 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/green_flat_riveted_locometal.json

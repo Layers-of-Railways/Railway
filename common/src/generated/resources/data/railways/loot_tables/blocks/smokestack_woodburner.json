@@ -5,6 +5,13 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "steel"
+          }
+        },
+        {
           "condition": "minecraft:survives_explosion"
         }
       ],
@@ -12,6 +19,204 @@
         {
           "type": "minecraft:item",
           "name": "railways:smokestack_woodburner"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "brass_cap_steel"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_brass_cap_steel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "copper_cap_steel"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_copper_cap_steel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "iron_cap_steel"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_iron_cap_steel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "brass"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_brass"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "copper_cap_brass"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_copper_cap_brass"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "iron_cap_brass"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_iron_cap_brass"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "copper"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_copper"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "brass_cap_copper"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_brass_cap_copper"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "railways:smokestack_woodburner",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "style": "iron_cap_copper"
+          }
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "railways:smokestack_woodburner_iron_cap_copper"
         }
       ],
       "rolls": 1.0
