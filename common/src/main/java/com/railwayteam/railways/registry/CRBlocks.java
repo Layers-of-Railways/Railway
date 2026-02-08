@@ -231,6 +231,7 @@ public class CRBlocks {
         TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
         BlockEntry<SmokeStackBlock> BLOCK = REGISTRATE.block("smokestack_" + variant, p -> blockFunction.create(p, rotType, emissionParams, shape, true, cycleGroupSupplier))
             .transform(BuilderTransformers.smokestack())
+            .transform(styled ? BuilderTransformers.smokestackLoot(cycleGroupSupplier) : b -> b)
             .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
             .blockstate(blockStateProvider)
             .lang(description)
@@ -284,6 +285,7 @@ public class CRBlocks {
         TagKey<Item> cycleTag = SmokestackStyle.variantToTagKey(variant);
         BlockEntry<VariableSmokeStackBlock> BASE = REGISTRATE.block("smokestack_" + variant, p -> new VariableSmokeStackBlock(p, rotType, emissionParams, shape, true, cycleGroupSupplier, extenderSupplier))
             .transform(BuilderTransformers.smokestack())
+            .transform(BuilderTransformers.smokestackLoot(cycleGroupSupplier))
             .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
             .blockstate(BuilderTransformers.variableSmokeStack(variant, rotType))
             .lang(description)

@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
@@ -40,17 +41,21 @@ import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
 import com.railwayteam.railways.content.smokestack.RotationType;
+import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.variable.VariableSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.variable.VariableStack;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.FusedSupplier;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -58,6 +63,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -70,7 +76,13 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -157,6 +169,26 @@ public class BuilderTransformers {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .addLayer(() -> RenderType::cutoutMipped)
             .transform(pickaxeOnly());
+    }
+
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroupSupplier) {
+        return bb -> bb
+            .loot((t, b) -> {
+                LootTable.Builder table = LootTable.lootTable();
+                for (SmokestackStyle style : SmokestackStyle.values()) {
+                    var pool = LootPool.lootPool()
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
+                            .setProperties(StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(VariableSmokeStackBlock.STYLE, style)
+                            )
+                        )
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(cycleGroupSupplier.get().get(style)));
+                    table.withPool(t.applyExplosionCondition(b, pool));
+                }
+
+                t.add(b, table);
+            });
     }
 
     @ExpectPlatform
