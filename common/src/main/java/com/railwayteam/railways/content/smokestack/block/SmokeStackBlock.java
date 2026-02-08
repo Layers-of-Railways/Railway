@@ -26,6 +26,7 @@ import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -149,5 +150,11 @@ public class SmokeStackBlock extends AbstractSmokeStackBlock<SmokeStackBlockEnti
     @Override
     public BlockEntityType<? extends SmokeStackBlockEntity> getBlockEntityType() {
         return CRBlockEntities.SMOKE_STACK.get();
+    }
+
+    @Override
+    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
+        if (targetedFace.getAxis() != Direction.Axis.Y) targetedFace = Direction.UP;
+        return super.getRotatedBlockState(originalState, targetedFace);
     }
 }

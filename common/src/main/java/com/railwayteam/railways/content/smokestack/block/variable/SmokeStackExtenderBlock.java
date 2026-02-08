@@ -22,7 +22,7 @@ import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.smokestack.RotationType;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.equipment.goggles.IProxyHoveringInformation;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Couple;
@@ -30,11 +30,13 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -58,7 +60,7 @@ import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public non-sealed class SmokeStackExtenderBlock extends Block implements ProperWaterloggedBlock, IWrenchable, VariableStack {
+public non-sealed class SmokeStackExtenderBlock extends Block implements ProperWaterloggedBlock, IWrenchable, VariableStack, IProxyHoveringInformation {
     public static final EnumProperty<SmokestackStyle> STYLE = VariableSmokeStackBlock.STYLE;
     public static final EnumProperty<VariableStackPart> PART = VariableSmokeStackBlock.PART;
 
@@ -138,11 +140,11 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
         return rotationType.getShape(state, shape.get(state.getValue(PART)));
     }
 
-    public static BlockPos findRoot(LevelAccessor pLevel, BlockPos pPos) {
+    public BlockPos findRoot(LevelAccessor pLevel, BlockPos pPos) {
         BlockPos currentPos = pPos.below();
         while (true) {
             BlockState blockState = pLevel.getBlockState(currentPos);
-            if (AllBlocks.STEAM_WHISTLE_EXTENSION.has(blockState)) {
+            if (blockState.is(this)) {
                 currentPos = currentPos.below();
                 continue;
             }
@@ -170,7 +172,7 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
     @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState below = level.getBlockState(pos.below());
-        return (below.is(this) || below.is(baseBlock())) && below.getValue(PART) != VariableStackPart.SINGLE && below.getValue(STYLE) == state.getValue(STYLE);
+        return (below.is(this) || below.is(baseBlock())) && below.getValue(PART) != VariableStackPart.SINGLE;
     }
 
     @Override
@@ -202,13 +204,54 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
     @SuppressWarnings("deprecation")
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         if (oldState.getBlock() != this || oldState.getValue(PART) != state.getValue(PART))
-            VariableSmokeStackBlock.queueHeightUpdate(level, pos);
+            VariableSmokeStackBlock.queueHeightUpdate(level, findRoot(level, pos));
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (newState.getBlock() != this)
-            VariableSmokeStackBlock.queueHeightUpdate(level, pos);
+            VariableSmokeStackBlock.queueHeightUpdate(level, findRoot(level, pos));
+    }
+
+    @Override
+    public BlockPos getInformationSource(Level level, BlockPos pos, BlockState state) {
+        return findRoot(level, pos);
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+
+        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || state.getValue(PART) == VariableStackPart.SINGLE)
+            return IWrenchable.super.onSneakWrenched(state, context);
+
+        if (!(world instanceof ServerLevel))
+            return InteractionResult.SUCCESS;
+
+        world.setBlock(pos, state.setValue(PART, VariableStackPart.SINGLE), 3);
+        playRemoveSound(world, pos);
+
+        return InteractionResult.SUCCESS;
+    }
+
+    protected UseOnContext relocateContext(UseOnContext context, BlockPos target) {
+        //noinspection DataFlowIssue
+        return new UseOnContext(context.getPlayer(), context.getHand(),
+            new BlockHitResult(context.getClickLocation(), context.getClickedFace(), target, context.isInside()));
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos rootPos = findRoot(level, context.getClickedPos());
+        BlockState rootState = level.getBlockState(rootPos);
+        VariableSmokeStackBlock baseBlock = baseBlock();
+
+        if (rootState.is(baseBlock))
+            return baseBlock.onWrenched(rootState, relocateContext(context, rootPos));
+
+        return IWrenchable.super.onWrenched(state, context);
     }
 }

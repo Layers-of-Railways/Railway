@@ -40,10 +40,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -91,12 +91,12 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
         return rotationType.getShape(state, shape.get(state.getValue(PART)));
     }
 
-    @Override
+    /*@Override
     @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState below = level.getBlockState(pos.below());
         return !(below.isAir() || below.is(this) || below.is(extenderBlock()));
-    }
+    }*/
 
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
@@ -155,21 +155,26 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
         BlockState base = level.getBlockState(pos);
         if (!(base.getBlock() instanceof VariableSmokeStackBlock baseBlock)) return;
 
+        SoundType soundtype = base.getSoundType();
+        float volume = (soundtype.getVolume() + 1.0F) / 2.0F;
+        SoundEvent growSound = SoundEvents.NOTE_BLOCK_XYLOPHONE.value();
+        SoundEvent hitSound = soundtype.getHitSound();
+
         VariableStackPart basePart = base.getValue(PART);
         if (basePart == VariableStackPart.SINGLE) {
             level.setBlock(pos, base.setValue(PART, VariableStackPart.DOUBLE), UPDATE_ALL);
+
+            float pitch = (float) Math.pow(2, 1 / 12.0);
+            level.playSound(null, pos, growSound, SoundSource.BLOCKS, volume / 4f, pitch);
+            level.playSound(null, pos, hitSound, SoundSource.BLOCKS, volume, pitch);
             return;
         }
 
         SmokeStackExtenderBlock extenderBlock = baseBlock.extenderBlock();
-        SoundType soundtype = base.getSoundType();
 
         MutableBlockPos currentPos = pos.mutable().move(Direction.UP);
         for (int i = 0; i <= 6; i++) {
             BlockState state = level.getBlockState(currentPos);
-            float volume = (soundtype.getVolume() + 1.0F) / 2.0F;
-            SoundEvent growSound = SoundEvents.NOTE_BLOCK_XYLOPHONE.value();
-            SoundEvent hitSound = soundtype.getHitSound();
 
             if (state.is(extenderBlock)) {
                 if (state.getValue(PART) == VariableStackPart.SINGLE) {
@@ -197,5 +202,22 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
             level.playSound(null, currentPos, hitSound, SoundSource.BLOCKS, volume, pitch);
             return;
         }
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+
+        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || state.getValue(PART) == VariableStackPart.SINGLE)
+            return super.onSneakWrenched(state, context);
+
+        if (!(world instanceof ServerLevel))
+            return InteractionResult.SUCCESS;
+
+        world.setBlock(pos, state.setValue(PART, VariableStackPart.SINGLE), 3);
+        playRemoveSound(world, pos);
+
+        return InteractionResult.SUCCESS;
     }
 }

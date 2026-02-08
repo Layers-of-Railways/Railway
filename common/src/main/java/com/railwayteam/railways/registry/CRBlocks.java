@@ -105,6 +105,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.DataIngredient;
@@ -126,6 +127,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -670,11 +672,27 @@ public class CRBlocks {
         true
     );
 
-    private static EnumMap<VariableStackPart, ShapeWrapper> lazyShapes(ShapeWrapper base) {
+    private static EnumMap<VariableStackPart, ShapeWrapper> variableShaper(VoxelShape singleShape, VoxelShape doubleShape, VoxelShape segmentShape) {
+        return variableShaper(
+            ShapeWrapper.wrapped(singleShape),
+            ShapeWrapper.wrapped(doubleShape),
+            ShapeWrapper.wrapped(segmentShape)
+        );
+    }
+
+    private static EnumMap<VariableStackPart, ShapeWrapper> variableShaper(VoxelShaper singleShaper, VoxelShaper doubleShaper, VoxelShaper segmentShaper) {
+        return variableShaper(
+            ShapeWrapper.wrapped(singleShaper),
+            ShapeWrapper.wrapped(doubleShaper),
+            ShapeWrapper.wrapped(segmentShaper)
+        );
+    }
+
+    private static EnumMap<VariableStackPart, ShapeWrapper> variableShaper(ShapeWrapper singleWrapped, ShapeWrapper doubleWrapped, ShapeWrapper segmentWrapped) {
         EnumMap<VariableStackPart, ShapeWrapper> map = new EnumMap<>(VariableStackPart.class);
-        for (VariableStackPart part : VariableStackPart.values()) {
-            map.put(part, base);
-        }
+        map.put(VariableStackPart.SINGLE, singleWrapped);
+        map.put(VariableStackPart.DOUBLE, doubleWrapped);
+        map.put(VariableStackPart.SEGMENT, segmentWrapped);
         return map;
     }
 
@@ -684,7 +702,7 @@ public class CRBlocks {
         new SmokeEmissionParams(0.5, 10 / 16.0d, 0.5),
         "Double Smokestack",
         RotationType.AXIS,
-        lazyShapes(ShapeWrapper.wrapped(CRShapes.LONG_STACK)),
+        variableShaper(CRShapes.LONG_STACK_SINGLE, CRShapes.LONG_STACK_DOUBLE, CRShapes.LONG_STACK_SEGMENT),
         true
     ),
 
@@ -693,7 +711,7 @@ public class CRBlocks {
         new SmokeEmissionParams(0.5, 1.0, 0.5),
         "Coalburner Smokestack",
         RotationType.NONE,
-        lazyShapes(ShapeWrapper.wrapped(CRShapes.COAL_STACK)),
+        variableShaper(CRShapes.COAL_STACK_SINGLE, CRShapes.COAL_STACK_DOUBLE, CRShapes.COAL_STACK_SEGMENT),
         true
     ),
 
@@ -702,7 +720,7 @@ public class CRBlocks {
         new SmokeEmissionParams(new Vec3(0.5, 0.4, 0.5), new Vec3(0.2, 0.2, 0.2)),
         "Oilburner Smokestack",
         RotationType.NONE,
-        lazyShapes(ShapeWrapper.wrapped(CRShapes.OIL_STACK)),
+        variableShaper(CRShapes.OIL_STACK_SINGLE, CRShapes.OIL_STACK_DOUBLE, CRShapes.OIL_STACK_SEGMENT),
         true
     ),
 
@@ -711,7 +729,7 @@ public class CRBlocks {
         new SmokeEmissionParams(new Vec3(0.5, 0.2, 0.5), new Vec3(0.25, 0.2, 0.25)),
         "Streamlined Smokestack",
         RotationType.FACING,
-        lazyShapes(ShapeWrapper.wrapped(CRShapes.STREAMLINED_STACK)),
+        variableShaper(CRShapes.STREAMLINED_STACK_SINGLE, CRShapes.STREAMLINED_STACK_DOUBLE, CRShapes.STREAMLINED_STACK_SEGMENT),
         true
     );
 
