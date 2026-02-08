@@ -22,6 +22,7 @@ package com.railwayteam.railways.content.smokestack;
 import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticle;
 import com.railwayteam.railways.content.smokestack.particles.chimneypush.ChimneyPushParticleData;
 import com.railwayteam.railways.mixin.client.AccessorLevelRenderer;
@@ -58,6 +59,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
         long movementStartTick;
         boolean wasStopped = true;
         int nextSmallPuffOffset = 0;
+        Vec3 offset = Vec3.ZERO;
 
         public TemporaryData(MovementContext context) {
             chanceChaser = LerpedFloat.linear();
@@ -82,7 +84,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             if (pushParticles == null) return;
 
             SmokeEmissionParams type = ((SmokeStackBlock) context.state.getBlock()).emissionParams;
-            Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(type.particleSpawnOffset());
+            Vec3 pos = context.position.add(offset).subtract(0.5, 0, 0.5).add(type.particleSpawnOffset());
 
             Iterator<ChimneyPushParticle> iterator = pushParticles.iterator();
             while (iterator.hasNext()) {
@@ -174,6 +176,12 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
             context.temporaryData = data;
         }
 
+        data.offset = Vec3.ZERO;
+        if (context.blockEntityData != null) {
+            int height = context.blockEntityData.getInt("height");
+            data.offset = context.rotation.apply(new Vec3(0, SmokeStackBlockEntity.getHeightOffset(height), 0));
+        }
+
         data.moveParticles(context);
 
         LerpedFloat chanceChaser = data.chanceChaser;
@@ -240,13 +248,13 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                     ? ChimneyPushParticleData.create(random.nextBoolean(), false, color)
                     : ChimneyPushParticleData.create(random.nextBoolean(), false);
 
-                Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(emissionParams.particleSpawnOffset());
+                Vec3 pos = context.position.add(data.offset).subtract(0.5, 0, 0.5).add(emissionParams.particleSpawnOffset());
                 data.addAndTrackParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
             } else if (movementTicks == 8) {
                 for (int i = 0; i < 3; i++) {
                     emissionParams.makeParticles(
                         context.world,
-                        context.position.subtract(0.5, 0, 0.5).subtract(
+                        context.position.add(data.offset).subtract(0.5, 0, 0.5).subtract(
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5),
@@ -272,7 +280,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                     boolean small = shouldPuffBeSmall(movementTicks, chanceModifier, random);
                     emissionParams.makeParticles(
                         context.world,
-                        context.position.subtract(0.5, 0, 0.5).subtract(
+                        context.position.add(data.offset).subtract(0.5, 0, 0.5).subtract(
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5),
@@ -300,7 +308,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                 for (int i = 0; i < count; ++i) {
                     emissionParams.makeParticles(
                         context.world,
-                        context.position.subtract(0.5, 0, 0.5).subtract(
+                        context.position.add(data.offset).subtract(0.5, 0, 0.5).subtract(
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5),
@@ -322,7 +330,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                 if (data.getPushParticles().isEmpty()) {
                     ChimneyPushParticleData<?> particleType = ChimneyPushParticleData.create(false, false, color);
 
-                    Vec3 pos = context.position.subtract(0.5, 0, 0.5).add(emissionParams.particleSpawnOffset());
+                    Vec3 pos = context.position.add(data.offset).subtract(0.5, 0, 0.5).add(emissionParams.particleSpawnOffset());
                     data.addAndTrackParticle(particleType, true, pos.x, pos.y, pos.z, context.motion.x, context.motion.y, context.motion.z);
                 }
 
@@ -333,7 +341,7 @@ public class SmokeStackMovementBehaviour implements MovementBehaviour {
                     boolean small = shouldPuffBeSmall(movementTicks, chanceModifier, random);
                     emissionParams.makeParticles(
                         context.world,
-                        context.position.subtract(0.5, 0, 0.5).subtract(
+                        context.position.add(data.offset).subtract(0.5, 0, 0.5).subtract(
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5,
                             (random.nextDouble() - 0.5) * 0.5),

@@ -179,6 +179,12 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
         setHeight(newHeight);
     }
 
+    public static double getHeightOffset(int height) {
+        // odd height is a double stack
+        int fullBlocks = height / 2;
+        return fullBlocks + (height % 2 == 1 ? 0.5 : 0);
+    }
+
     protected void animateTick() {
         if (level == null || !level.isClientSide) return;
 
@@ -190,9 +196,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
         if (!block.createsStationarySmoke) return;
         if (random.nextFloat() >= 0.11f) return;
 
-        // odd height is a double stack
-        int fullBlocks = (height + 1) / 2;
-        double heightOffset = fullBlocks + (height % 2 == 0 ? 0.5 : 0);
+        double heightOffset = getHeightOffset(height);
 
         SmokeEmissionParams emissionParams = block.emissionParams;
         if (random.nextFloat() < emissionParams.particleSpawnChance() * 1.5) {
