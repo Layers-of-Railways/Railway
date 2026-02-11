@@ -8,6 +8,7 @@ Additions
 
 Changes
 - Smokestacks can now be placed with a variable height, similar to whistles
+- Track edge point highlighting displays signal direction
 
 Fixes
 - Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
