@@ -35,6 +35,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +61,9 @@ public class CRTagGen {
 				.forceAddTag(BlockTags.FENCES);
 
 		prov.addTag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
+		prov.addTag(AllBlockTags.TRACK_CASING_WHITELIST.tag)
+			.add(Blocks.SNOW)
+			.add(Blocks.MOSS_CARPET);
 
 		CommonTags.COLORLESS_GLASS_B.generateCommon(prov);
 

@@ -31,7 +31,7 @@ import com.simibubi.create.foundation.utility.Pair;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.ApiStatus;
@@ -61,14 +61,14 @@ public class TrackReplacePaver {
             FilterItemStack filter = FilterItemStack.of(context.blockEntityData.getCompound("Filter"));
             if (replacedState.getBlock() != stateToPaveWith.getBlock()) {
                 boolean restoreBE = false;
-                Pair<SlabBlock, Boolean> casingData = null;
+                Pair<Block, Boolean> casingData = null;
                 Map<BlockPos, BezierConnection> connections = new HashMap<>();
                 if (replacedState.getOptionalValue(TrackBlock.HAS_BE).orElse(false)) {
                     if (context.world.getBlockEntity(trackPos) instanceof TrackBlockEntity trackBE) {
                         restoreBE = true;
                         casingData = Pair.of(
-                                ((IHasTrackCasing) trackBE).getTrackCasing(),
-                                ((IHasTrackCasing) trackBE).isAlternate());
+                                ((IHasTrackCasing) trackBE).railways$getTrackCasing(),
+                                ((IHasTrackCasing) trackBE).railways$isAlternate());
                         connections.putAll(trackBE.getConnections());
                         //trackBE.removeInboundConnections(false);
                         trackBE.getConnections().clear();
@@ -100,8 +100,8 @@ public class TrackReplacePaver {
                         }
                     }
                     if (casingData != null) {
-                        ((IHasTrackCasing) trackBE).setTrackCasing(casingData.getFirst());
-                        ((IHasTrackCasing) trackBE).setAlternate(casingData.getSecond());
+                        ((IHasTrackCasing) trackBE).railways$setTrackCasing(casingData.getFirst());
+                        ((IHasTrackCasing) trackBE).railways$setAlternate(casingData.getSecond());
                     }
 //                    trackBE.validateConnections();
 //                    trackBE.notifyUpdate();

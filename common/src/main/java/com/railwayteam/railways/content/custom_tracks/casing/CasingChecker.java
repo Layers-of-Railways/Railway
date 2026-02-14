@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2024-2026 The Railways Team
+ * Copyright (c) 2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,17 +16,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.base.reload;
+package com.railwayteam.railways.content.custom_tracks.casing;
 
-import com.railwayteam.railways.RailwaysClient;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 
-public class ClientResourceReloadListener implements ResourceManagerReloadListener {
-    public static final ClientResourceReloadListener INSTANCE = new ClientResourceReloadListener();
-    @Override
-    public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-        RailwaysClient.invalidateRenderers();
+import static com.railwayteam.railways.registry.CRTags.AllBlockTags.TRACK_CASING_BLACKLIST;
+import static com.railwayteam.railways.registry.CRTags.AllBlockTags.TRACK_CASING_WHITELIST;
+
+public class CasingChecker {
+    public static boolean isValid(Block block) {
+        return (block instanceof SlabBlock || TRACK_CASING_WHITELIST.matches(block)) && !TRACK_CASING_BLACKLIST.matches(block);
     }
 }

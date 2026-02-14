@@ -5,6 +5,8 @@ Steam 'n' Rails 1.7.0
 Additions
 - Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
 - Translation for create.track_target.not_straight #522
+- Allow moss carpets and snow to encase tracks (block tag railways:track_casing_whitelist)
+- Snow falls on tracks
 
 Fixes
 - Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
