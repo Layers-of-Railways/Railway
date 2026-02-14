@@ -1,0 +1,454 @@
+{
+  "variants": {
+    "facing=east,part=double,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_double",
+      "y": 90
+    },
+    "facing=east,part=double,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_double",
+      "y": 90
+    },
+    "facing=east,part=segment,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_segment",
+      "y": 90
+    },
+    "facing=east,part=segment,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_segment",
+      "y": 90
+    },
+    "facing=east,part=single,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass",
+      "y": 90
+    },
+    "facing=east,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper",
+      "y": 90
+    },
+    "facing=east,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel",
+      "y": 90
+    },
+    "facing=east,part=single,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper",
+      "y": 90
+    },
+    "facing=east,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass",
+      "y": 90
+    },
+    "facing=east,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel",
+      "y": 90
+    },
+    "facing=east,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass",
+      "y": 90
+    },
+    "facing=east,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper",
+      "y": 90
+    },
+    "facing=east,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel",
+      "y": 90
+    },
+    "facing=east,part=single,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel",
+      "y": 90
+    },
+    "facing=north,part=double,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_double"
+    },
+    "facing=north,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_double"
+    },
+    "facing=north,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_double"
+    },
+    "facing=north,part=double,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_double"
+    },
+    "facing=north,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_double"
+    },
+    "facing=north,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_double"
+    },
+    "facing=north,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_double"
+    },
+    "facing=north,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_double"
+    },
+    "facing=north,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_double"
+    },
+    "facing=north,part=double,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_double"
+    },
+    "facing=north,part=segment,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_segment"
+    },
+    "facing=north,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_segment"
+    },
+    "facing=north,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_segment"
+    },
+    "facing=north,part=segment,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_segment"
+    },
+    "facing=north,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_segment"
+    },
+    "facing=north,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_segment"
+    },
+    "facing=north,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_segment"
+    },
+    "facing=north,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_segment"
+    },
+    "facing=north,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_segment"
+    },
+    "facing=north,part=segment,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_segment"
+    },
+    "facing=north,part=single,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass"
+    },
+    "facing=north,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper"
+    },
+    "facing=north,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel"
+    },
+    "facing=north,part=single,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper"
+    },
+    "facing=north,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass"
+    },
+    "facing=north,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel"
+    },
+    "facing=north,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass"
+    },
+    "facing=north,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper"
+    },
+    "facing=north,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel"
+    },
+    "facing=north,part=single,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel"
+    },
+    "facing=south,part=double,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_double",
+      "y": 180
+    },
+    "facing=south,part=double,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_double",
+      "y": 180
+    },
+    "facing=south,part=segment,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_segment",
+      "y": 180
+    },
+    "facing=south,part=segment,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_segment",
+      "y": 180
+    },
+    "facing=south,part=single,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass",
+      "y": 180
+    },
+    "facing=south,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper",
+      "y": 180
+    },
+    "facing=south,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel",
+      "y": 180
+    },
+    "facing=south,part=single,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper",
+      "y": 180
+    },
+    "facing=south,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass",
+      "y": 180
+    },
+    "facing=south,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel",
+      "y": 180
+    },
+    "facing=south,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass",
+      "y": 180
+    },
+    "facing=south,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper",
+      "y": 180
+    },
+    "facing=south,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel",
+      "y": 180
+    },
+    "facing=south,part=single,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel",
+      "y": 180
+    },
+    "facing=west,part=double,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_double",
+      "y": 270
+    },
+    "facing=west,part=double,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_double",
+      "y": 270
+    },
+    "facing=west,part=segment,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel_segment",
+      "y": 270
+    },
+    "facing=west,part=segment,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel_segment",
+      "y": 270
+    },
+    "facing=west,part=single,style=brass": {
+      "model": "railways:block/smokestack_streamlined_extension_brass",
+      "y": 270
+    },
+    "facing=west,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_copper",
+      "y": 270
+    },
+    "facing=west,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_brass_cap_steel",
+      "y": 270
+    },
+    "facing=west,part=single,style=copper": {
+      "model": "railways:block/smokestack_streamlined_extension_copper",
+      "y": 270
+    },
+    "facing=west,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_brass",
+      "y": 270
+    },
+    "facing=west,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_copper_cap_steel",
+      "y": 270
+    },
+    "facing=west,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_brass",
+      "y": 270
+    },
+    "facing=west,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_copper",
+      "y": 270
+    },
+    "facing=west,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_streamlined_extension_iron_cap_steel",
+      "y": 270
+    },
+    "facing=west,part=single,style=steel": {
+      "model": "railways:block/smokestack_streamlined_extension_steel",
+      "y": 270
+    }
+  }
+}

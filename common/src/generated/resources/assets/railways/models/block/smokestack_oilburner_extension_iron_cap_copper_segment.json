@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/oilburner/segment",
+  "textures": {
+    "0": "railways:block/smokestack/oilburner/segment_copper"
+  }
+}

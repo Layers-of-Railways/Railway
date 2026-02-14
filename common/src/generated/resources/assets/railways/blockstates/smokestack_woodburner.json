@@ -18,6 +18,15 @@
     "style=copper_cap_steel": {
       "model": "railways:block/smokestack_woodburner_copper_cap_steel"
     },
+    "style=iron_cap_brass": {
+      "model": "railways:block/smokestack_woodburner_iron_cap_brass"
+    },
+    "style=iron_cap_copper": {
+      "model": "railways:block/smokestack_woodburner_iron_cap_copper"
+    },
+    "style=iron_cap_steel": {
+      "model": "railways:block/smokestack_woodburner_iron_cap_steel"
+    },
     "style=steel": {
       "model": "railways:block/smokestack_woodburner_steel"
     }

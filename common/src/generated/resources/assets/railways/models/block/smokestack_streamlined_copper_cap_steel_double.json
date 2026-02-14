@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/streamlined/double",
+  "textures": {
+    "0": "railways:block/smokestack/streamlined/copper_cap_steel"
+  }
+}

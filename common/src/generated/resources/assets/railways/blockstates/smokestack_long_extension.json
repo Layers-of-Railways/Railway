@@ -1,0 +1,214 @@
+{
+  "variants": {
+    "axis=x,part=double,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel_double",
+      "y": 90
+    },
+    "axis=x,part=double,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel_double",
+      "y": 90
+    },
+    "axis=x,part=segment,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel_segment",
+      "y": 90
+    },
+    "axis=x,part=segment,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel_segment",
+      "y": 90
+    },
+    "axis=x,part=single,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass",
+      "y": 90
+    },
+    "axis=x,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper",
+      "y": 90
+    },
+    "axis=x,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel",
+      "y": 90
+    },
+    "axis=x,part=single,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper",
+      "y": 90
+    },
+    "axis=x,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass",
+      "y": 90
+    },
+    "axis=x,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel",
+      "y": 90
+    },
+    "axis=x,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass",
+      "y": 90
+    },
+    "axis=x,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper",
+      "y": 90
+    },
+    "axis=x,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel",
+      "y": 90
+    },
+    "axis=x,part=single,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel",
+      "y": 90
+    },
+    "axis=z,part=double,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass_double"
+    },
+    "axis=z,part=double,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper_double"
+    },
+    "axis=z,part=double,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel_double"
+    },
+    "axis=z,part=double,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper_double"
+    },
+    "axis=z,part=double,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass_double"
+    },
+    "axis=z,part=double,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel_double"
+    },
+    "axis=z,part=double,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass_double"
+    },
+    "axis=z,part=double,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper_double"
+    },
+    "axis=z,part=double,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel_double"
+    },
+    "axis=z,part=double,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel_double"
+    },
+    "axis=z,part=segment,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass_segment"
+    },
+    "axis=z,part=segment,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper_segment"
+    },
+    "axis=z,part=segment,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel_segment"
+    },
+    "axis=z,part=segment,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper_segment"
+    },
+    "axis=z,part=segment,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass_segment"
+    },
+    "axis=z,part=segment,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel_segment"
+    },
+    "axis=z,part=segment,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass_segment"
+    },
+    "axis=z,part=segment,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper_segment"
+    },
+    "axis=z,part=segment,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel_segment"
+    },
+    "axis=z,part=segment,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel_segment"
+    },
+    "axis=z,part=single,style=brass": {
+      "model": "railways:block/smokestack_long_extension_brass"
+    },
+    "axis=z,part=single,style=brass_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_copper"
+    },
+    "axis=z,part=single,style=brass_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_brass_cap_steel"
+    },
+    "axis=z,part=single,style=copper": {
+      "model": "railways:block/smokestack_long_extension_copper"
+    },
+    "axis=z,part=single,style=copper_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_brass"
+    },
+    "axis=z,part=single,style=copper_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_copper_cap_steel"
+    },
+    "axis=z,part=single,style=iron_cap_brass": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_brass"
+    },
+    "axis=z,part=single,style=iron_cap_copper": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_copper"
+    },
+    "axis=z,part=single,style=iron_cap_steel": {
+      "model": "railways:block/smokestack_long_extension_iron_cap_steel"
+    },
+    "axis=z,part=single,style=steel": {
+      "model": "railways:block/smokestack_long_extension_steel"
+    }
+  }
+}

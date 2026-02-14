@@ -1,0 +1,33 @@
+{
+  "texture_size": [32, 32],
+  "textures": {
+    "particle": "#0"
+  },
+  "elements": [
+    {
+      "name": "cap",
+      "from": [3, 0, 1],
+      "to": [13, 16, 15],
+      "faces": {
+        "north": {"uv": [8, 0, 16, 5], "rotation": 90, "texture": "#0"},
+        "east": {"uv": [0, 7, 8, 0], "rotation": 90, "texture": "#0"},
+        "south": {"uv": [8, 0, 16, 5], "rotation": 90, "texture": "#0"},
+        "west": {"uv": [0, 7, 8, 0], "rotation": 90, "texture": "#0"},
+        "up": {"uv": [5.5, 8.5, 0.5, 15.5], "texture": "#0"},
+        "down": {"uv": [0.5, 15.5, 5.5, 8.5], "texture": "#0"}
+      }
+    },
+    {
+      "from": [2, 13, 0],
+      "to": [14, 15, 16],
+      "faces": {
+        "north": {"uv": [14, 10, 13, 16], "rotation": 90, "texture": "#0"},
+        "east": {"uv": [13, 16, 12, 8], "rotation": 90, "texture": "#0"},
+        "south": {"uv": [14, 10, 13, 16], "rotation": 90, "texture": "#0"},
+        "west": {"uv": [13, 8, 12, 16], "rotation": 90, "texture": "#0"},
+        "up": {"uv": [6, 8, 0, 16], "texture": "#0"},
+        "down": {"uv": [12, 8, 6, 16], "texture": "#0"}
+      }
+    }
+  ]
+}

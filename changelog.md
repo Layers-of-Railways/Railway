@@ -8,6 +8,9 @@ Additions
 - Allow moss carpets and snow to encase tracks (block tag railways:track_casing_whitelist)
 - Snow falls on tracks
 
+Changes
+- Smokestacks can now be placed with a variable height, similar to whistles
+
 Fixes
 - Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
 - 32x resource packs now work properly #549

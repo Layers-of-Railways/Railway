@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/coalburner/double",
+  "textures": {
+    "0": "railways:block/smokestack/coalburner/copper_cap_brass"
+  }
+}

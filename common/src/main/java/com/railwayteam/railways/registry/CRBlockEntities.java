@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -36,8 +36,8 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBloc
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlockEntity;
 import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
-import com.railwayteam.railways.content.smokestack.block.be.DieselSmokeStackBlockEntity;
-import com.railwayteam.railways.content.smokestack.block.renderer.DieselSmokeStackRenderer;
+import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlockEntity;
+import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
@@ -114,7 +114,7 @@ public class CRBlockEntities {
         .register();
 
     public static final BlockEntityEntry<SmokeStackBlockEntity> SMOKE_STACK = REGISTRATE.blockEntity("smokestack", SmokeStackBlockEntity::new)
-        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACK, CRBlocks.COALBURNER_STACK, CRBlocks.OILBURNER_STACK, CRBlocks.STREAMLINED_STACK, CRBlocks.WOODBURNER_STACK)
+        .validBlocks(CRBlocks.CABOOSESTYLE_STACK, CRBlocks.LONG_STACKS.getFirst(), CRBlocks.COALBURNER_STACKS.getFirst(), CRBlocks.OILBURNER_STACKS.getFirst(), CRBlocks.STREAMLINED_STACKS.getFirst(), CRBlocks.WOODBURNER_STACK)
         .register();
 
     public static final BlockEntityEntry<DieselSmokeStackBlockEntity> DIESEL_SMOKE_STACK = REGISTRATE.blockEntity("diesel_smokestack", DieselSmokeStackBlockEntity::new)
