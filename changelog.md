@@ -27,6 +27,7 @@ Fixes
 - Fix coupler spacing value board not handling minimum value
 - Fix potential invalid signal state caused by relocation of single-carriage trains
 - Make conductors immune to fall damage again
+- Skip unnecessary buffer scouting for stationary trains
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------

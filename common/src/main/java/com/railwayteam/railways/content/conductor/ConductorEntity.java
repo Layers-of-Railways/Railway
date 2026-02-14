@@ -1293,7 +1293,8 @@ public class ConductorEntity extends AbstractGolem {
           if (right) controls.add(2);*/
           controlsPos = reverseControlsPos;
         }
-        cce.control(controlsPos, fakeControls, conductor.fakePlayer);
+        if (!fakeControls.isEmpty())
+          cce.control(controlsPos, fakeControls, conductor.fakePlayer);
 
         Train train = cce.getCarriage().train;
         if (isSprintKeyPressed && honkPacketCooldown-- <= 0) {
