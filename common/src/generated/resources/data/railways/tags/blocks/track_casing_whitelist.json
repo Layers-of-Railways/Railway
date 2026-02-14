@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "minecraft:snow",
-    "minecraft:moss_carpet",
-    "minecraft:grass_block"
+    "minecraft:moss_carpet"
   ]
 }
