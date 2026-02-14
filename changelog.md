@@ -12,6 +12,12 @@ Additions
   - `/snr shadow_realm banish <train> <key>`: banish a train to the shadow realm
   - `/snr shadow_realm restore <key>`: restore a train from the shadow realm
   - `/snr shadow_realm kill <key>`: permanently delete a train from the shadow realm
+- Palettes Plus
+  - 16 new colors
+  - many new locometal blocks, including ladders, windows, and more
+  - fluid paint mixing
+  - potato cannon-launched paint projectiles
+  - sandpaper can now be used to remove paint from blocks
 
 Changes
 - Smokestacks can now be placed with a variable height, similar to whistles

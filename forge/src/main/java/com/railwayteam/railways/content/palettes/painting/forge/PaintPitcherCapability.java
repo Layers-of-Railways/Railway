@@ -117,7 +117,7 @@ class PaintPitcherCapability implements IFluidHandlerItem, ICapabilityProvider {
         if (fluidColor == null) return null;
 
         // Color mismatches can never be inserted or extracted
-        if (color != null && color != fluidColor) {
+        if (color != null && !color.equals(fluidColor)) {
             return null;
         }
 
