@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:flywheel"
+    },
+    {
+      "item": "railways:magenta_riveted_locometal"
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:magenta_locometal_flywheel"
+    }
+  ]
+}

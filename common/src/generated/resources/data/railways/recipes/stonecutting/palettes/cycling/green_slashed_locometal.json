@@ -2,7 +2,7 @@
   "type": "minecraft:stonecutting",
   "count": 1,
   "ingredient": {
-    "tag": "railways:palettes/cycle_groups/green"
+    "tag": "railways:palettes/cycle_groups/green/base"
   },
   "result": "railways:green_slashed_locometal"
 }

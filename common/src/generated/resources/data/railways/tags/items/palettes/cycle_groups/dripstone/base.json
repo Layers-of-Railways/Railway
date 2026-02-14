@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:dripstone_riveted_locometal",
+    "railways:dripstone_slashed_locometal",
+    "railways:dripstone_locometal_vent",
+    "railways:dripstone_flat_riveted_locometal",
+    "railways:dripstone_flat_slashed_locometal",
+    "railways:dripstone_plated_locometal",
+    "railways:dripstone_locometal_pillar",
+    "railways:dripstone_locometal_smokebox"
+  ]
+}

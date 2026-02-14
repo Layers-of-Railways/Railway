@@ -57,6 +57,7 @@ dependencies {
     modLocalRuntime("maven.modrinth:lazydfu:${"lazydfu_version"()}")
     modLocalRuntime("com.terraformersmc:modmenu:${"modmenu_version"()}")
 
+    modCompileOnly("dev.emi:emi-fabric:${"emi_version"()}:api") { isTransitive = false }
     modLocalRuntime("dev.emi:emi-fabric:${"emi_version"()}")
 
     modLocalRuntime("maven.modrinth:journeymap:${"journeymap_version"()}-fabric") // Test with JourneyMap in dev

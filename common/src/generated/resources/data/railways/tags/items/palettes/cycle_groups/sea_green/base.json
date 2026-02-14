@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:sea_green_riveted_locometal",
+    "railways:sea_green_slashed_locometal",
+    "railways:sea_green_locometal_vent",
+    "railways:sea_green_flat_riveted_locometal",
+    "railways:sea_green_flat_slashed_locometal",
+    "railways:sea_green_plated_locometal",
+    "railways:sea_green_locometal_pillar",
+    "railways:sea_green_locometal_smokebox"
+  ]
+}

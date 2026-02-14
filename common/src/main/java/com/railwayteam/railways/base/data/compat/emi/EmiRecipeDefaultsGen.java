@@ -19,7 +19,6 @@
 package com.railwayteam.railways.base.data.compat.emi;
 
 import com.google.gson.*;
-import com.railwayteam.railways.registry.CRPalettes;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -39,7 +38,6 @@ public class EmiRecipeDefaultsGen implements DataProvider {
     public static final List<ResourceLocation> DEFAULT_RECIPES = new ArrayList<>();
     public static final Map<TagKey<Item>, ResourceLocation> TAG_DEFAULTS = new LinkedHashMap<>(); // preserve insertion order
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final PackOutput packOutput;
 
     public EmiRecipeDefaultsGen(PackOutput packOutput) {
@@ -48,7 +46,7 @@ public class EmiRecipeDefaultsGen implements DataProvider {
 
     @SuppressWarnings("DuplicatedCode")
     @Override
-    public CompletableFuture<?> run(@NotNull CachedOutput output) {
+    public @NotNull CompletableFuture<?> run(@NotNull CachedOutput output) {
         Path path = this.packOutput.getOutputFolder()
             .resolve("assets/emi/recipe/defaults/railways.json");
 
@@ -62,7 +60,7 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         JsonObject tags = new JsonObject();
 
         DEFAULT_RECIPES.forEach(loc -> added.add(loc.toString()));
-        TAG_DEFAULTS.put(CRPalettes.CYCLE_GROUPS.get(null), CRPalettes.Styles.RIVETED.get(null).getId());
+
         TAG_DEFAULTS.forEach((tag, itemLoc) -> {
             String tagString = "#item:" + tag.location();
             String itemString = "item:" + itemLoc;

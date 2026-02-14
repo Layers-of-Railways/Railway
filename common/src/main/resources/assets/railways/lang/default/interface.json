@@ -103,6 +103,8 @@
   "create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
+  "item.railways.paint_pitcher.paint_level": "Paint level: %s / %s",
+
   "railways.bogeys.styles.handcar": "Handcar",
   
   "railways.bogeys.styles.invisible": "Invisible",

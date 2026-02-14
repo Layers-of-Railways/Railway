@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:flywheel"
+    },
+    {
+      "item": "railways:chartreuse_riveted_locometal"
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:chartreuse_locometal_flywheel"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/copper_wrapped_locometal"
+      "model": "railways:block/palettes/netherite/copper_wrapped_locometal"
     }
   }
 }

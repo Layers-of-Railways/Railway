@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:flywheel"
+    },
+    {
+      "item": "railways:diorite_riveted_locometal"
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:diorite_locometal_flywheel"
+    }
+  ]
+}

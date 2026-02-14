@@ -23,10 +23,7 @@ import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
-import com.railwayteam.railways.base.datafixers.CompatCherryTrackFix;
-import com.railwayteam.railways.base.datafixers.LocoMetalSmokeboxFacingFix;
-import com.railwayteam.railways.base.datafixers.StreamlinedSmokeStackFacingFix;
-import com.railwayteam.railways.base.datafixers.UpsideDownMonoBogeyFix;
+import com.railwayteam.railways.base.datafixers.*;
 import com.railwayteam.railways.config.CRConfigs;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
@@ -75,5 +72,10 @@ public class CRDataFixers {
         builder.addFixer(new CompatCherryTrackFix(schemaV2, "Convert Compat Cherry Tracks to Default Cherry Tracks"));
         builder.addFixer(new StreamlinedSmokeStackFacingFix(schemaV2, "Convert railways:smokestack_streamlined[axis=\"*\"] to railways:smokestack_streamlined[facing=\"*\"]"));
         builder.addFixer(new LocoMetalSmokeboxFacingFix(schemaV2, "Convert railways:${*}_locometal_smokebox[axis=\"*\"] to railways:${*}_locometal_smokebox[facing=\"*\"]"));
+
+        // For v10,
+        // need to change diagonal hazard stripes from HORIZONTAL_AXIS to HORIZONTAL_FACING
+        Schema schemaV10 = builder.addSchema(10, SAME_NAMESPACED);
+        builder.addFixer(new DiagonalHazardStripesFacingFix(schemaV10, "Convert railways:*_diagonal_hazard_stripes{black,white}[axis=\"*\"] to railways:*_diagonal_hazard_stripes{black,white}[facing=\"*\"]"));
     }
 }

@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.content.conductor;
 
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.tweakeroo.TweakerooCompat;
 import com.railwayteam.railways.registry.CRPackets;

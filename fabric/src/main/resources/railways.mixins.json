@@ -21,9 +21,10 @@
     "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
+    "SandPaperItemMixin",
     "TrainMixin",
     "self.BoilerBlockMixin",
-    "self.CasingResourceReloadListenerMixin",
+    "self.ClientResourceReloadListenerMixin",
     "self.LiquidFuelManagerReloadListenerMixin"
   ],
   "injectors": {

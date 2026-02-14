@@ -22,6 +22,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.RailwaysBuildInfo;
 import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
 import com.railwayteam.railways.registry.commands.PalettesDemoCommand;
 import com.railwayteam.railways.registry.commands.ReloadCasingCollisionCommand;
@@ -46,7 +47,7 @@ public class CRCommands {
                 .then(SplitTrainCommand.register())
                 .then(TrainInfoCommand.register());
 
-        if (Utils.isDevEnv()) {
+        if (Utils.isDevEnv() || RailwaysBuildInfo.INCLUDE_DEV_COMMANDS) {
             railwaysCommand = railwaysCommand
                     .then(TrackDemoCommand.register())
                     .then(ConductorDemoCommand.register())

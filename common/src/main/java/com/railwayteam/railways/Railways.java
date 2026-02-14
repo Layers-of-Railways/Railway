@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,9 +27,12 @@ import com.railwayteam.railways.base.data.lang.CRLangGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysMechanicalCraftingRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysSequencedAssemblyRecipeGen;
 import com.railwayteam.railways.base.data.recipe.RailwaysStandardRecipeGen;
+import com.railwayteam.railways.base.data.recipe.processing.RailwaysProcessingRecipeGen;
+import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.multiloader.Loader;
+import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRCommands;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.MethodVarHandleUtils;
@@ -62,8 +65,9 @@ public class Railways {
   public static final String ID_NAME = "Railways";
   public static final String NAME = "Steam 'n' Rails";
   public static final Logger LOGGER = LoggerFactory.getLogger(ID_NAME);
-  // Only used for datafixers, bump whenever a block changes id etc. (should not be bumped multiple times within a release)
-  public static final int DATA_FIXER_VERSION = 2;
+  // Only used for datafixers, bump whenever a block changes id etc.
+  // Should be bumped up to the next multiple of 10 the first time it is bumped after a release, then by 1 for each subsequent change.
+  public static final int DATA_FIXER_VERSION = 10;
   private static final boolean FORCE_MIXIN_AUDIT = Boolean.getBoolean("railways.force_mixin_audit");
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
@@ -94,22 +98,29 @@ public class Railways {
   public static void init() {
     String createVersion = MethodVarHandleUtils.getStaticField(Create.class, "VERSION", String.class, "UNKNOWN");
     LOGGER.info("{} v{} initializing! Commit hash: {} on Create version: {} on platform: {}", NAME, RailwaysBuildInfo.VERSION, RailwaysBuildInfo.GIT_COMMIT, createVersion, Loader.getFormatted());
-    
+
     Path configDir = Utils.configDir();
     Path clientConfigDir = configDir.resolve(MOD_ID + "-client.toml");
     migrateConfig(clientConfigDir, CRConfigs::migrateClient);
 
     Path commonConfigDir = configDir.resolve(MOD_ID + "-common.toml");
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
-    
+
     ModSetup.register();
     finalizeRegistrate();
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
+    // everything should be registered (or at least loaded) by now.
+    MultiRegistryCallback.enableFinalizers();
+
     if (FORCE_MIXIN_AUDIT || Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
       MixinEnvironment.getCurrentEnvironment().audit();
+  }
+
+  public static void postRegistrationInit() {
+    ModSetupLate.registerPostRegistration();
   }
 
   public static ResourceLocation asResource(String name) {
@@ -124,6 +135,9 @@ public class Railways {
     gen.addProvider(RailwaysSequencedAssemblyRecipeGen::new);
     gen.addProvider(RailwaysStandardRecipeGen::new);
     gen.addProvider(RailwaysMechanicalCraftingRecipeGen::create);
+    gen.addProvider(RailwaysProcessingRecipeGen::registerAll);
+
+    gen.addProvider(CRAdvancements::new);
     gen.addProvider(EmiExcludedTagGen::new);
     gen.addProvider(EmiRecipeDefaultsGen::new);
     gen.addProvider(RailwaysHatOffsetGenerator::new);

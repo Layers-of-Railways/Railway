@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/palettes/doors/fold_right",
+  "textures": {
+    "block_particle": "railways:block/palettes/brown/annexed_slashed",
+    "bottom": "railways:block/palettes/brown/folding_door_bottom",
+    "side": "railways:block/palettes/brown/folding_door_side",
+    "top": "railways:block/palettes/brown/folding_door_top"
+  }
+}

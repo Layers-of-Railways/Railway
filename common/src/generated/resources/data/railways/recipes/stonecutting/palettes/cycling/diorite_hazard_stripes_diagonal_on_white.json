@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/diorite/hazard_stripes_white"
+  },
+  "result": "railways:diorite_hazard_stripes_diagonal_on_white"
+}

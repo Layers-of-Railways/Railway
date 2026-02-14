@@ -18,24 +18,25 @@
 
 package com.railwayteam.railways.content.palettes.boiler;
 
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.simibubi.create.foundation.data.SpecialBlockStateGen;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class BoilerGenerator extends SpecialBlockStateGen {
-    protected final @Nullable DyeColor color;
+    protected final @NotNull PalettesColor color;
     protected final @Nullable Wrapping wrapping;
 
-    protected BoilerGenerator(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
+    protected BoilerGenerator(@NotNull PalettesColor color, @Nullable Wrapping wrapping) {
         this.color = color;
         this.wrapping = wrapping;
     }
 
     @ExpectPlatform
-    public static BoilerGenerator create(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
+    public static BoilerGenerator create(@NotNull PalettesColor color, @Nullable Wrapping wrapping) {
         throw new AssertionError();
     }
 

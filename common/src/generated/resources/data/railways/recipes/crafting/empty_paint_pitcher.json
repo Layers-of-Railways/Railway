@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "railways:internal/glass/colorless"
+    }
+  },
+  "pattern": [
+    "G G",
+    "G G",
+    " G "
+  ],
+  "result": {
+    "count": 5,
+    "item": "railways:empty_paint_pitcher"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:vermilion_riveted_locometal",
+    "railways:vermilion_slashed_locometal",
+    "railways:vermilion_locometal_vent",
+    "railways:vermilion_flat_riveted_locometal",
+    "railways:vermilion_flat_slashed_locometal",
+    "railways:vermilion_plated_locometal",
+    "railways:vermilion_locometal_pillar",
+    "railways:vermilion_locometal_smokebox"
+  ]
+}

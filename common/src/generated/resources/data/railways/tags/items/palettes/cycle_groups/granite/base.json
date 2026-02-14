@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:granite_riveted_locometal",
+    "railways:granite_slashed_locometal",
+    "railways:granite_locometal_vent",
+    "railways:granite_flat_riveted_locometal",
+    "railways:granite_flat_slashed_locometal",
+    "railways:granite_plated_locometal",
+    "railways:granite_locometal_pillar",
+    "railways:granite_locometal_smokebox"
+  ]
+}

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2025 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,11 +19,13 @@
 package com.railwayteam.railways;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.railwayteam.railways.base.reload.ClientResourceReloadCallback;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.compat.journeymap.RailwayMapPlugin;
 import com.railwayteam.railways.content.buffer.BufferModelUtils;
 import com.railwayteam.railways.content.conductor.ConductorCapModel;
 import com.railwayteam.railways.content.conductor.ConductorEntityModel;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingRenderUtils;
 import com.railwayteam.railways.registry.*;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.railwayteam.railways.util.DevCapeUtils;
@@ -32,10 +34,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.SharedSuggestionProvider;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class RailwaysClient {
+  private static final List<WeakReference<ClientResourceReloadCallback>> RELOAD_CALLBACKS = new ArrayList<>();
+
   public static void init() {
     registerModelLayer(ConductorEntityModel.LAYER_LOCATION, ConductorEntityModel::createBodyLayer);
     registerModelLayer(ConductorCapModel.LAYER_LOCATION, ConductorCapModel::createBodyLayer);
@@ -43,6 +50,7 @@ public class RailwaysClient {
     registerBuiltinPack("legacy_semaphore", "Steam 'n' Rails Legacy Semaphores");
     registerBuiltinPack("green_signals", "Steam 'n' Rails Green Signals");
     registerBuiltinPack("legacy_palettes", "Steam 'n' Rails Legacy Palettes Textures");
+    registerBuiltinPack("paint_pitchers", "Steam 'n' Rails Paint Pitchers");
 
     registerClientCommands(CRCommandsClient::register);
 
@@ -61,7 +69,31 @@ public class RailwaysClient {
     CRDevCaps.register();
     BufferModelUtils.register();
 
+    CRFluids.initRendering();
+
     DevCapeUtils.INSTANCE.init();
+  }
+
+  public static void registerReloadCallback(ClientResourceReloadCallback callback) {
+    synchronized (RELOAD_CALLBACKS) {
+      RELOAD_CALLBACKS.add(new WeakReference<>(callback));
+    }
+  }
+
+  public static void invalidateRenderers() {
+    CasingRenderUtils.clearModelCache();
+
+    synchronized (RELOAD_CALLBACKS) {
+      var iterator = RELOAD_CALLBACKS.iterator();
+      while (iterator.hasNext()) {
+        ClientResourceReloadCallback cb = iterator.next().get();
+        if (cb == null) {
+          iterator.remove();
+        } else {
+          cb.onResourceManagerReload();
+        }
+      }
+    }
   }
 
   @ExpectPlatform

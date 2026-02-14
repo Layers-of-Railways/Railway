@@ -18,11 +18,17 @@
 
 package com.railwayteam.railways.util.forge;
 
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
+@ImplClass
 public class FluidUtilsImpl {
     public static boolean canUseAsFuelStorage(BlockEntity be) {
         if (be instanceof FuelTankBlockEntity fuelTankBlockEntity)
@@ -35,5 +41,9 @@ public class FluidUtilsImpl {
             throw new IllegalArgumentException("FluidUtils#getFluid expected to get a FluidStack but got " + o.getClass().getName());
 
         return fluidStack.getFluid();
+    }
+
+    public static void addFluidOutput(ProcessingRecipeBuilder<ProcessingRecipe<?>> b, Fluid fluid, long amount, @Nullable CompoundTag nbt) {
+        b.output(new FluidStack(fluid, (int) amount, nbt));
     }
 }

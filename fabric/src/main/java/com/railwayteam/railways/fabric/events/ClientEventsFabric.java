@@ -19,7 +19,7 @@
 package com.railwayteam.railways.fabric.events;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.content.custom_tracks.casing.CasingResourceReloadListener;
+import com.railwayteam.railways.base.reload.ClientResourceReloadListener;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.registry.CRParticleTypes;
 import io.github.fabricators_of_create.porting_lib.event.client.ClientWorldEvents;
@@ -55,6 +55,6 @@ public class ClientEventsFabric {
 			}
 		});
 		
-		ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) CasingResourceReloadListener.INSTANCE);
+		ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) ClientResourceReloadListener.INSTANCE);
 	}
 }

@@ -1,6 +1,7 @@
 {
   "block": [
-    "railways:internal/relocation_not_supported"
+    "railways:internal/relocation_not_supported",
+    "railways:internal/glass/colorless"
   ],
   "item": [
     "railways:internal/string",
@@ -12,6 +13,7 @@
     "railways:internal/ingots/copper_ingots",
     "railways:internal/ingots/brass_ingots",
     "railways:internal/ingots/iron_ingots",
+    "railways:internal/glass/colorless",
     "railways:internal/workbench",
     "railways:internal/dyes/white_dyes",
     "railways:internal/dyes/orange_dyes",

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "railways:block/palettes/purple/hazard_stripes_chevron_on_black",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "railways:block/palettes/purple/hazard_stripes_chevron_on_black",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "railways:block/palettes/purple/hazard_stripes_chevron_on_black"
+    },
+    "facing=west": {
+      "model": "railways:block/palettes/purple/hazard_stripes_chevron_on_black",
+      "y": 90
+    }
+  }
+}

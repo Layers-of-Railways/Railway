@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/single_pane_window"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "green"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:green_single_pane_locometal_window"
+    }
+  ]
+}

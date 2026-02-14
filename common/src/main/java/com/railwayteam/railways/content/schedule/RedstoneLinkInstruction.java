@@ -20,7 +20,7 @@ package com.railwayteam.railways.content.schedule;
 
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.mixin.AccessorScheduleRuntime;
 import com.railwayteam.railways.mixin_interfaces.ICustomExecutableInstruction;
 import com.simibubi.create.AllBlocks;

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "railways:olive_green_hinged_locometal_door",
+    "railways:olive_green_sliding_locometal_door",
+    "railways:olive_green_folding_locometal_door"
+  ]
+}

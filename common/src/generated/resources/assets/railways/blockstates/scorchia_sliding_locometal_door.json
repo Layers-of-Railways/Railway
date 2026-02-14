@@ -1,0 +1,484 @@
+{
+  "variants": {
+    "facing=east,half=lower,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=east,half=lower,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=east,half=lower,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=east,half=lower,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=east,half=lower,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=east,half=lower,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=east,half=lower,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=east,half=lower,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=east,half=lower,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=east,half=lower,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=east,half=lower,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=east,half=lower,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=east,half=upper,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=east,half=upper,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=east,half=upper,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=east,half=upper,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=east,half=upper,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=east,half=upper,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=east,half=upper,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=east,half=upper,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=north,half=lower,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=north,half=lower,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=north,half=lower,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=north,half=lower,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=north,half=lower,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=north,half=lower,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=north,half=lower,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=north,half=upper,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=north,half=upper,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=north,half=upper,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=north,half=upper,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=south,half=lower,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=south,half=lower,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom"
+    },
+    "facing=south,half=lower,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed"
+    },
+    "facing=south,half=upper,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=south,half=upper,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=south,half=upper,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top"
+    },
+    "facing=south,half=upper,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed"
+    },
+    "facing=west,half=lower,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=west,half=lower,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=west,half=lower,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom",
+      "y": 90
+    },
+    "facing=west,half=lower,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_bottom_windowed",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=left,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=left,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=left,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=left,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=right,open=false,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=true,visible=false,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=right,open=true,visible=false,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=right,open=true,visible=true,windowed=false": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=right,open=true,visible=true,windowed=true": {
+      "model": "railways:block/palettes/scorchia/sliding_door/block_top_windowed",
+      "y": 90
+    }
+  }
+}

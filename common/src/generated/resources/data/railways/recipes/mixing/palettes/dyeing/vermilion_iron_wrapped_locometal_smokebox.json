@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/iron_wrapped_smokebox"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "vermilion"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:vermilion_iron_wrapped_locometal_smokebox"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_slashed"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "olive_green"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:olive_green_flat_slashed_locometal"
+    }
+  ]
+}

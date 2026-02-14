@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "railways:black_slashed_locometal"
+    },
+    ".": {
+      "item": "railways:limestone_slashed_locometal"
+    }
+  },
+  "pattern": [
+    ".#",
+    "#."
+  ],
+  "result": {
+    "count": 4,
+    "item": "railways:limestone_hazard_stripes_diagonal_on_black"
+  },
+  "show_notification": true
+}

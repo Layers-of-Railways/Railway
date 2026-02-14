@@ -19,6 +19,7 @@
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "RollingModeMixin",
+    "SandPaperItemMixin",
     "ServerGamePacketListenerImplMixin",
     "TrainMixin",
     "self.BoilerBlockMixin"

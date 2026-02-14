@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/palettes/trapdoors/template_orientable_trapdoor_top",
+  "textures": {
+    "side": "railways:block/palettes/maroon/hinged_door_side",
+    "texture": "railways:block/palettes/maroon/windowed_trapdoor"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "railways:pine_green_round_pane_locometal_window",
+    "railways:pine_green_single_pane_locometal_window",
+    "railways:pine_green_two_pane_locometal_window",
+    "railways:pine_green_four_pane_locometal_window"
+  ]
+}

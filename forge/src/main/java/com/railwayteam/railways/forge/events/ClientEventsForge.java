@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.forge.events;
 
-import com.railwayteam.railways.content.custom_tracks.casing.CasingResourceReloadListener;
+import com.railwayteam.railways.base.reload.ClientResourceReloadListener;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.registry.forge.CRKeysImpl;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,7 @@ public class ClientEventsForge {
 
 		@SubscribeEvent
 		public static void registerClientReloadListeners(RegisterClientReloadListenersEvent event) {
-			event.registerReloadListener(CasingResourceReloadListener.INSTANCE);
+			event.registerReloadListener(ClientResourceReloadListener.INSTANCE);
 		}
 	}
 }

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:diorite_riveted_locometal",
+    "railways:diorite_slashed_locometal",
+    "railways:diorite_locometal_vent",
+    "railways:diorite_flat_riveted_locometal",
+    "railways:diorite_flat_slashed_locometal",
+    "railways:diorite_plated_locometal",
+    "railways:diorite_locometal_pillar",
+    "railways:diorite_locometal_smokebox"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:pine_green_riveted_locometal",
+    "railways:pine_green_slashed_locometal",
+    "railways:pine_green_locometal_vent",
+    "railways:pine_green_flat_riveted_locometal",
+    "railways:pine_green_flat_slashed_locometal",
+    "railways:pine_green_plated_locometal",
+    "railways:pine_green_locometal_pillar",
+    "railways:pine_green_locometal_smokebox"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:ochrum_riveted_locometal",
+    "railways:ochrum_slashed_locometal",
+    "railways:ochrum_locometal_vent",
+    "railways:ochrum_flat_riveted_locometal",
+    "railways:ochrum_flat_slashed_locometal",
+    "railways:ochrum_plated_locometal",
+    "railways:ochrum_locometal_pillar",
+    "railways:ochrum_locometal_smokebox"
+  ]
+}
