@@ -1491,6 +1491,8 @@
   "create.sliding_door.mode.special": "Special",
   "create.sliding_door.mode.special_inverted": "Special Inverted",
   "create.track_target.not_straight": "Targeted track must be straight",
+  "create.train.status.railways.shadow_realm.banished": "Banished to the Shadow Realm",
+  "create.train.status.railways.shadow_realm.restored": "Restored from the Shadow Realm",
   "entity.railways.benchcart": "Minecart with Workbench",
   "entity.railways.conductor": "Conductor",
   "entity.railways.jukeboxcart": "Minecart with Jukebox",

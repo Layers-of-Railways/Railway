@@ -174,5 +174,8 @@
   "railways.gui.bogey_menu.category.quintupleaxles": "Quintuple Axles",
   "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles",
 
-  "railways.keyinfo.cycle_menu": "Open Cycle Menu"
+  "railways.keyinfo.cycle_menu": "Open Cycle Menu",
+
+  "create.train.status.railways.shadow_realm.banished": "Banished to the Shadow Realm",
+  "create.train.status.railways.shadow_realm.restored": "Restored from the Shadow Realm"
 }

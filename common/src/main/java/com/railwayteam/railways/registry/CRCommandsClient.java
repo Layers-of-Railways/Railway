@@ -24,6 +24,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.registry.commands.ClearCapCacheCommand;
 import com.railwayteam.railways.registry.commands.ClearCasingCacheCommand;
+import com.railwayteam.railways.registry.commands.IdentifyTrainCommand;
 import com.railwayteam.railways.registry.commands.MixinAuditCommand;
 import com.railwayteam.railways.registry.commands.ReloadDevCapesCommand;
 import com.railwayteam.railways.registry.commands.ReloadJourneymapCommand;
@@ -43,7 +44,8 @@ public class CRCommandsClient {
             .then(ClearCasingCacheCommand.register())
             .then(ClearCapCacheCommand.register())
             .then(ReloadJourneymapCommand.register())
-            .then(ReloadDevCapesCommand.register());
+            .then(ReloadDevCapesCommand.register())
+            .then(IdentifyTrainCommand.register());
 
         if (Utils.isDevEnv() || FORCE_MIXIN_AUDIT_COMMAND) {
             railwaysCommand.then(MixinAuditCommand.register());

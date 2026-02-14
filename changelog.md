@@ -7,6 +7,11 @@ Additions
 - Translation for create.track_target.not_straight #522
 - Allow moss carpets and snow to encase tracks (block tag railways:track_casing_whitelist)
 - Snow falls on tracks
+- `/snrc identify_train` command to get the name, uuid, and owner of the train you're looking at
+- Shadow Realm: a non-ticking, non-tangible storage for trains.
+  - `/snr shadow_realm banish <train> <key>`: banish a train to the shadow realm
+  - `/snr shadow_realm restore <key>`: restore a train from the shadow realm
+  - `/snr shadow_realm kill <key>`: permanently delete a train from the shadow realm
 
 Changes
 - Smokestacks can now be placed with a variable height, similar to whistles
@@ -25,6 +30,7 @@ Fixes
 - Fix coupler spacing value board not handling minimum value
 - Fix potential invalid signal state caused by relocation of single-carriage trains
 - Make conductors immune to fall damage again
+- Skip unnecessary buffer scouting for stationary trains
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------

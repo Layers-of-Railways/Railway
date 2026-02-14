@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,22 +18,13 @@
 
 package com.railwayteam.railways.mixin;
 
-
-import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.Carriage.DimensionalCarriageEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.entity.TrainPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.Map;
-
-@Mixin(value = Carriage.class, remap = false)
-public interface AccessorCarriage {
-	@Accessor
-	Map<Integer, CompoundTag> getSerialisedPassengers();
-
-	@Accessor("entities")
-	Map<ResourceKey<Level>, DimensionalCarriageEntity> railways$getEntities();
+@Mixin(TrainPacket.class)
+public interface AccessorTrainPacket {
+    @Accessor("train")
+    Train railways$getTrain();
 }

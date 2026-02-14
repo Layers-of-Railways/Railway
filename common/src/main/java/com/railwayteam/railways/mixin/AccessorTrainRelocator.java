@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,22 +18,27 @@
 
 package com.railwayteam.railways.mixin;
 
-
-import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.Carriage.DimensionalCarriageEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
+import com.simibubi.create.content.trains.entity.TrainRelocator;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.Map;
+import java.util.UUID;
 
-@Mixin(value = Carriage.class, remap = false)
-public interface AccessorCarriage {
-	@Accessor
-	Map<Integer, CompoundTag> getSerialisedPassengers();
+@Mixin(TrainRelocator.class)
+public interface AccessorTrainRelocator {
+    @Accessor("relocatingTrain")
+    static void railways$setRelocatingTrain(UUID trainId) {;
+        throw new AssertionError("Mixin failed to apply");
+    }
 
-	@Accessor("entities")
-	Map<ResourceKey<Level>, DimensionalCarriageEntity> railways$getEntities();
+    @Accessor("relocatingOrigin")
+    static void railways$setRelocatingOrigin(Vec3 origin) {
+        throw new AssertionError("Mixin failed to apply");
+    }
+
+    @Accessor("relocatingEntityId")
+    static void railways$setRelocatingEntityId(int entityId) {
+        throw new AssertionError("Mixin failed to apply");
+    }
 }
