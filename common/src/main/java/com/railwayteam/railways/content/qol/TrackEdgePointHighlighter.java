@@ -24,6 +24,7 @@ import com.railwayteam.railways.util.EntityUtils;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.equipment.wrench.WrenchItem;
 import com.simibubi.create.content.trains.graph.*;
+import com.simibubi.create.content.trains.signal.SignalBlockEntity;
 import com.simibubi.create.content.trains.signal.SignalBoundary;
 import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import com.simibubi.create.content.trains.track.ITrackBlock;
@@ -55,9 +56,11 @@ public class TrackEdgePointHighlighter {
         final Object TRACK_BOX = new Object();
         final Object CONNECTOR2 = new Object();
         final Object TRACK_BOX2 = new Object();
+        final Object ARROW_A = new Object();
+        final Object ARROW_B = new Object();
     }
 
-    private static final ArrayList<HolderSet> HOLDERS = new ArrayList();
+    private static final ArrayList<HolderSet> HOLDERS = new ArrayList<>();
 
     public static void clientTick(Minecraft mc) {
         LocalPlayer player = mc.player;
@@ -67,7 +70,7 @@ public class TrackEdgePointHighlighter {
         if (level != null && mc.hitResult instanceof BlockHitResult blockHit) {
             BlockPos pos = blockHit.getBlockPos();
             BlockEntity be = level.getBlockEntity(pos);
-            if (!showOutlinesFrom(be, pos, 0)) {
+            if (!showOutlinesFrom(be, pos, 0, false)) {
                 BlockState state = level.getBlockState(pos);
                 Vec3 lookAngle = player.getLookAngle();
                 TrackGraphLocation loc = null;
@@ -107,14 +110,14 @@ public class TrackEdgePointHighlighter {
                         }).filter(point -> Math.abs(point.getLocationOn(edge) - finalLoc.position) <= 0.5f)
                         .limit(1).forEach(point -> {
                             if (point instanceof SingleBlockEntityEdgePoint single && single.getBlockEntityPos() != null) {
-                                showOutlinesFrom(mc.level.getBlockEntity(single.getBlockEntityPos()), single.getBlockEntityPos(), 0);
+                                showOutlinesFrom(mc.level.getBlockEntity(single.getBlockEntityPos()), single.getBlockEntityPos(), 0, true);
                             } else if (point instanceof SignalBoundary signal) {
                                 MutableInt index = new MutableInt(0);
                                 //noinspection CodeBlock2Expr
                                 signal.blockEntities.forEach(positions -> {
                                     positions.keySet().forEach(pos2 -> {
                                         if (pos2 != null) {
-                                            showOutlinesFrom(mc.level.getBlockEntity(pos2), pos2, index.getAndAdd(1));
+                                            showOutlinesFrom(mc.level.getBlockEntity(pos2), pos2, index.getAndAdd(1), true);
                                         }
                                     });
                                 });
@@ -125,7 +128,7 @@ public class TrackEdgePointHighlighter {
         }
     }
 
-    private static boolean showOutlinesFrom(BlockEntity be, BlockPos pos, int index) {
+    private static boolean showOutlinesFrom(BlockEntity be, BlockPos pos, int index, boolean padHovered) {
         if (be instanceof TrackBufferBlockEntity)
             return false;
         HolderSet holder;
@@ -143,13 +146,53 @@ public class TrackEdgePointHighlighter {
                 .lineWidth(1 / 16f);
 
             AABB bb = new AABB(trackTarget1.getPositionForMapMarker()).contract(0, 10 / 16f, 0);
+            Vec3 bbCenter = bb.getCenter();
             CreateClient.OUTLINER.chaseAABB(holder.TRACK_BOX, bb)
                 .colored(Color.SPRING_GREEN)
                 .lineWidth(1 / 16f);
 
-            CreateClient.OUTLINER.showLine(holder.CONNECTOR, aa.getCenter(), bb.getCenter())
+            CreateClient.OUTLINER.showLine(holder.CONNECTOR, aa.getCenter(), bbCenter)
                 .colored(Color.SPRING_GREEN)
                 .lineWidth(1 / 16f);
+
+            Arrow: if (be instanceof SignalBlockEntity) {
+                TrackGraphLocation location = trackTarget1.determineGraphLocation();
+                if (location == null) break Arrow;
+
+                TrackEdge edge = location.graph.getConnection(location.edge.map(location.graph::locateNode));
+                if (edge == null) break Arrow;
+
+                Vec3 forward = edge.getDirectionAt(location.position);
+                Vec3 normal = edge.getNormal(location.graph, location.position);
+                Vec3 side = forward.cross(normal).normalize();
+
+                Vec3 point, sideA, sideB;
+
+                if (padHovered) {
+                    Vec3 arrowCenter = be.getBlockPos().getCenter().add(0, 0.625f, 0);
+                    Vec3 back = forward.scale(0.3f);
+                    Vec3 realSide = side.scale(0.45f + 0.3f + 0.5f);
+
+                    point = arrowCenter.add(forward.scale(0.5f + 0.45f));
+                    sideA = arrowCenter.add(realSide).subtract(back);
+                    sideB = arrowCenter.subtract(realSide).subtract(back);
+                } else {
+                    Vec3 arrowCenter = bbCenter.add(0, 1/8f, 0);
+                    Vec3 realSide = side.scale(0.45f);
+
+                    point = arrowCenter.add(forward.scale(0.45f));
+                    sideA = arrowCenter.add(realSide);
+                    sideB = arrowCenter.subtract(realSide);
+                }
+
+                CreateClient.OUTLINER.showLine(holder.ARROW_A, point, sideA)
+                    .colored(Color.SPRING_GREEN)
+                    .lineWidth(1 / 16f);
+
+                CreateClient.OUTLINER.showLine(holder.ARROW_B, point, sideB)
+                    .colored(Color.SPRING_GREEN)
+                    .lineWidth(1 / 16f);
+            }
 
             SecondaryTrackTargetingBehaviour<?> trackTarget2 = SecondaryTrackTargetingBehaviour.get(be, SecondaryTrackTargetingBehaviour.TYPE);
             if (trackTarget2 != null) {
@@ -158,7 +201,7 @@ public class TrackEdgePointHighlighter {
                     .colored(Color.GREEN)
                     .lineWidth(1 / 16f);
 
-                CreateClient.OUTLINER.showLine(holder.CONNECTOR2, bb.getCenter(), cc.getCenter())
+                CreateClient.OUTLINER.showLine(holder.CONNECTOR2, bbCenter, cc.getCenter())
                     .colored(Color.GREEN)
                     .lineWidth(1 / 16f);
             }
