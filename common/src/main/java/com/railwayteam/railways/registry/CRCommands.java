@@ -26,6 +26,7 @@ import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
 import com.railwayteam.railways.registry.commands.PalettesDemoCommand;
 import com.railwayteam.railways.registry.commands.ReloadCasingCollisionCommand;
 import com.railwayteam.railways.registry.commands.ReloadCreativeTabsCommand;
+import com.railwayteam.railways.registry.commands.ShadowRealmCommand;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrackDemoCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
@@ -41,18 +42,19 @@ public class CRCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
 
         var railwaysCommand = literal(Railways.MOD_ID)
-                .requires(cs -> cs.hasPermission(0))
-                //.then(ClearCasingCacheCommand.register())
-                .then(SplitTrainCommand.register())
-                .then(TrainInfoCommand.register());
+            .requires(cs -> cs.hasPermission(0))
+            //.then(ClearCasingCacheCommand.register())
+            .then(SplitTrainCommand.register())
+            .then(TrainInfoCommand.register())
+            .then(ShadowRealmCommand.register());
 
         if (Utils.isDevEnv()) {
             railwaysCommand = railwaysCommand
-                    .then(TrackDemoCommand.register())
-                    .then(ConductorDemoCommand.register())
-                    .then(ReloadCasingCollisionCommand.register())
-                    .then(ReloadCreativeTabsCommand.register())
-                    .then(PalettesDemoCommand.register());
+                .then(TrackDemoCommand.register())
+                .then(ConductorDemoCommand.register())
+                .then(ReloadCasingCollisionCommand.register())
+                .then(ReloadCreativeTabsCommand.register())
+                .then(PalettesDemoCommand.register());
         }
 
         LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(railwaysCommand);
@@ -62,6 +64,6 @@ public class CRCommands {
             return;
 
         dispatcher.getRoot()
-                .addChild(AllCommands.buildRedirect("snr", railwaysRoot));
+            .addChild(AllCommands.buildRedirect("snr", railwaysRoot));
     }
 }

@@ -5,6 +5,11 @@ Steam 'n' Rails 1.7.0
 Additions
 - Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
 - Translation for create.track_target.not_straight #522
+- `/snrc identify_train` command to get the name, uuid, and owner of the train you're looking at
+- Shadow Realm: a non-ticking, non-tangible storage for trains.
+  - `/snr shadow_realm banish <train> <key>`: banish a train to the shadow realm
+  - `/snr shadow_realm restore <key>`: restore a train from the shadow realm
+  - `/snr shadow_realm kill <key>`: permanently delete a train from the shadow realm
 
 Changes
 - Smokestacks can now be placed with a variable height, similar to whistles

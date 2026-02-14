@@ -26,7 +26,7 @@ import com.railwayteam.railways.multiloader.PacketSet;
 import com.railwayteam.railways.util.packet.*;
 
 public class CRPackets {
-    public static final PacketSet PACKETS = PacketSet.builder(Railways.MOD_ID, 12) // increment version on changes
+    public static final PacketSet PACKETS = PacketSet.builder(Railways.MOD_ID, 13) // increment version on changes
 
         .c2s(MountedToolboxDisposeAllPacket.class, MountedToolboxDisposeAllPacket::new)
         .c2s(MountedToolboxEquipPacket.class, MountedToolboxEquipPacket::new)
@@ -53,6 +53,7 @@ public class CRPackets {
         .s2c(SetCameraViewPacket.class, SetCameraViewPacket::new)
         .s2c(CameraMovePacket.class, CameraMovePacket::new)
         .s2c(ConfigureDevCapeS2CPacket.class, ConfigureDevCapeS2CPacket::new)
+        .s2c(ShadowTrainRestorePacket.class, ShadowTrainRestorePacket::new)
 
         .build();
 }
