@@ -30,6 +30,13 @@ loom {
 
         convertAccessWideners = true
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+
+        log4jConfigs.setFrom(project(":forge").file("log4j.xml"))
+
+        runs.configureEach {
+            // force proper color logs
+            vmArg("-Dterminal.jline=true")
+        }
     }
 }
 

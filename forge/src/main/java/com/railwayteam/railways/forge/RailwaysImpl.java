@@ -24,6 +24,7 @@ import com.railwayteam.railways.config.forge.CRConfigsImpl;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.forge.CRCreativeModeTabsImpl;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
+import com.railwayteam.railways.util.Utils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -33,7 +34,12 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.ConfigurationFactory;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -44,6 +50,7 @@ public class RailwaysImpl {
 	static IEventBus bus;
 
 	public RailwaysImpl() {
+		restoreLoggers();
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
 		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
 		Railways.init();
@@ -74,5 +81,21 @@ public class RailwaysImpl {
 		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
 		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
+	}
+
+	private static void restoreLoggers() {
+		if (Utils.isDevEnv()) {
+			// restore our logging config, since forge likes to nuke it for fun
+			for (String prop : new String[] {"log4j.configurationFile", "log4j2.configurationFile"}) {
+				String file = System.getProperty(prop);
+				if (file != null) {
+					Configurator.reconfigure(ConfigurationFactory.getInstance().getConfiguration(
+						LoggerContext.getContext(),
+						ConfigurationSource.fromUri(URI.create(file))
+					));
+					break;
+				}
+			}
+		}
 	}
 }
