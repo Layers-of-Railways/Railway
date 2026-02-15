@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(value = RollerMovementBehaviour.class, remap = false)
+@Mixin(RollerMovementBehaviour.class)
 public abstract class MixinRollerMovementBehaviour {
     @Shadow protected abstract BlockState getStateToPaveWith(MovementContext context);
 
@@ -99,7 +99,7 @@ public abstract class MixinRollerMovementBehaviour {
         return ret;
     }
 
-    @WrapOperation(method = "createHeightProfileForTracks", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/roller/PaveTask;put(IIF)V"))
+    @WrapOperation(method = "createHeightProfileForTracks", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/roller/PaveTask;put(IIF)V"), remap = false)
     private void setUpsideDown(PaveTask instance, int x, int z, float y, Operation<Void> original, @Local(name = "point") TravellingPoint point) {
         if(point.upsideDown)
             y -= 2;
