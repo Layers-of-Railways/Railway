@@ -21,10 +21,13 @@ package com.railwayteam.railways.mixin.client;
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.mixin_interfaces.ILimited;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainIconType;
-import com.simibubi.create.content.trains.station.*;
+import com.simibubi.create.content.trains.station.AbstractStationScreen;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.station.StationBlockEntity;
+import com.simibubi.create.content.trains.station.StationScreen;
+import com.simibubi.create.content.trains.station.TrainEditPacket;
 import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
@@ -84,8 +87,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             Train train = displayedTrain.get();
             if (train != null) {
                 train.icon = TrainIconType.byId(iconTypes.get(s));
-                Utils.sendCreatePacketToServer(
-                        new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId()));
+                CRPackets.PACKETS.send(new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId()));
             }
         });
         iconTypeScroll.active = false;

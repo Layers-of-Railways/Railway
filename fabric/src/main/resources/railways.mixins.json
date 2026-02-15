@@ -23,6 +23,7 @@
     "MountedStorageManagerMixin",
     "SandPaperItemMixin",
     "TrainMixin",
+    "TrainRelocationPacketMixin",
     "self.BoilerBlockMixin",
     "self.ClientResourceReloadListenerMixin",
     "self.LiquidFuelManagerReloadListenerMixin"

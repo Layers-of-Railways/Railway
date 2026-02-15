@@ -18,7 +18,11 @@
 
 package com.railwayteam.railways.base.data.compat.emi;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -50,7 +54,19 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         Path path = this.packOutput.getOutputFolder()
             .resolve("assets/emi/recipe/defaults/railways.json");
 
+        addMisc();
+
         return DataProvider.saveStable(output, run(), path);
+    }
+
+    private void addMisc() {
+        // (forge) JEI compat paint pitcher filling recipes
+        for (PalettesColor color : PalettesColor.values()) {
+            if (color.isNetherite()) continue;
+            String path = "create/filling/railways/empty_paint_pitcher/with/railways/paint/" + color.getSerializedName();
+            DEFAULT_RECIPES.add(new ResourceLocation("emi", path));
+            DEFAULT_RECIPES.add(jeiMangle(Railways.asResource(path)));
+        }
     }
 
     private JsonElement run() {
@@ -60,6 +76,11 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         JsonObject tags = new JsonObject();
 
         DEFAULT_RECIPES.forEach(loc -> added.add(loc.toString()));
+        for (ResourceLocation loc : DEFAULT_RECIPES) {
+            if (loc.getNamespace().equals("jei")) continue;
+            if (loc.getNamespace().equals("emi")) continue;
+            added.add(jeiMangle(loc).toString());
+        }
 
         TAG_DEFAULTS.forEach((tag, itemLoc) -> {
             String tagString = "#item:" + tag.location();
@@ -73,6 +94,10 @@ public class EmiRecipeDefaultsGen implements DataProvider {
         object.add("disabled", new JsonArray());
 
         return object;
+    }
+
+    private static ResourceLocation jeiMangle(ResourceLocation loc) {
+        return new ResourceLocation("jei", "/" + loc.getNamespace() + "/" + loc.getPath());
     }
 
     @Override

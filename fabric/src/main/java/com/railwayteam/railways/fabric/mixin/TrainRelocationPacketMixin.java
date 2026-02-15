@@ -16,19 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.fabric.mixin;
 
-import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.shadow_realm.ShadowRealm;
-import com.railwayteam.railways.mixin_interfaces.RailwaySavedDataDuck;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.trains.entity.Train;
+import com.railwayteam.railways.content.shadow_realm.ShadowRealm.RestorationTarget;
 import com.simibubi.create.content.trains.entity.TrainRelocationPacket;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import com.simibubi.create.foundation.networking.SimplePacketBase.Context;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.infrastructure.config.AllConfigs;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -41,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.UUID;
 
 @Mixin(TrainRelocationPacket.class)
-public class MixinTrainRelocationPacket {
+public class TrainRelocationPacketMixin {
     @Shadow
     UUID trainId;
 
@@ -57,38 +51,10 @@ public class MixinTrainRelocationPacket {
 
     @Inject(method = "lambda$handle$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/networking/SimplePacketBase$Context;getSender()Lnet/minecraft/server/level/ServerPlayer;"), cancellable = true)
     private void relocateShadowTrain(Context context, CallbackInfo ci) {
-        var savedData = ((AccessorGlobalRailwayManager) Create.RAILWAYS).railways$getSavedData();
-        if (savedData == null) return;
-
-        var shadowTrains = ((RailwaySavedDataDuck) savedData).railway$getShadowTrains();
-        Train shadowTrain = shadowTrains.get(trainId);
-        if (shadowTrain == null) return;
-
-        // don't bother trying to restore a shadow train
-        ci.cancel();
-
         ServerPlayer sender = context.getSender();
         if (sender == null) return;
 
-        String messagePrefix = sender.getName().getString() + " could not restore Train " + shadowTrain.name.getString();
-
-        if (!sender.hasPermissions(2)) {
-            Railways.LOGGER.warn("{}: player has insufficient permissions", messagePrefix);
-            return;
-        }
-
-        int verifyDistance = AllConfigs.server().trains.maxTrackPlacementLength.get() * 2;
-        if (!sender.position().closerThan(Vec3.atCenterOf(pos), verifyDistance)) {
-            Railways.LOGGER.warn("{}: player too far from clicked pos", messagePrefix);
-            return;
-        }
-
-        if (ShadowRealm.restoreTrain(savedData, shadowTrain, new ShadowRealm.RestorationTarget(sender.level(), pos, hoveredBezier, direction, lookAngle))) {
-            sender.displayClientMessage(Lang.translateDirect("train.relocate.success")
-                .withStyle(ChatFormatting.GREEN), false);
-            return;
-        }
-
-        Railways.LOGGER.warn("{}: restoration failed server-side", messagePrefix);
+        RestorationTarget target = new RestorationTarget(sender.level(), pos, hoveredBezier, direction, lookAngle);
+        ShadowRealm.handleTrainRelocationPacket(sender, trainId, target, ci);
     }
 }

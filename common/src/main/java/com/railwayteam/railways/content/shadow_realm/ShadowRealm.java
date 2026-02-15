@@ -20,11 +20,13 @@ package com.railwayteam.railways.content.shadow_realm;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.mixin.AccessorCarriage;
 import com.railwayteam.railways.mixin.AccessorGlobalRailwayManager;
 import com.railwayteam.railways.mixin_interfaces.IShadowTrain;
 import com.railwayteam.railways.mixin_interfaces.RailwaySavedDataDuck;
-import com.simibubi.create.AllPackets;
+import com.railwayteam.railways.multiloader.PlayerSelection;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.ContraptionRelocationPacket;
 import com.simibubi.create.content.trains.RailwaySavedData;
@@ -34,11 +36,16 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainPacket;
 import com.simibubi.create.content.trains.entity.TrainRelocator;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.infrastructure.config.AllConfigs;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.ApiStatus;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
@@ -76,6 +83,39 @@ public class ShadowRealm {
         train.status.displayInformation("railways.shadow_realm.banished", true);
     }
 
+    public static void handleTrainRelocationPacket(ServerPlayer sender, UUID trainId, RestorationTarget target, CallbackInfo ci) {
+        var savedData = ((AccessorGlobalRailwayManager) Create.RAILWAYS).railways$getSavedData();
+        if (savedData == null) return;
+
+        var shadowTrains = ((RailwaySavedDataDuck) savedData).railway$getShadowTrains();
+        Train shadowTrain = shadowTrains.get(trainId);
+        if (shadowTrain == null) return;
+
+        // don't bother trying to restore a shadow train
+        ci.cancel();
+
+        String messagePrefix = sender.getName().getString() + " could not restore Train " + shadowTrain.name.getString();
+
+        if (!sender.hasPermissions(2)) {
+            Railways.LOGGER.warn("{}: player has insufficient permissions", messagePrefix);
+            return;
+        }
+
+        int verifyDistance = AllConfigs.server().trains.maxTrackPlacementLength.get() * 2;
+        if (!sender.position().closerThan(Vec3.atCenterOf(target.pos), verifyDistance)) {
+            Railways.LOGGER.warn("{}: player too far from clicked pos", messagePrefix);
+            return;
+        }
+
+        if (ShadowRealm.restoreTrain(savedData, shadowTrain, target)) {
+            sender.displayClientMessage(Lang.translateDirect("train.relocate.success")
+                .withStyle(ChatFormatting.GREEN), false);
+            return;
+        }
+
+        Railways.LOGGER.warn("{}: restoration failed server-side", messagePrefix);
+    }
+
     public static boolean restoreTrain(RailwaySavedData savedData, Train train, RestorationTarget target) {
         IShadowTrain shadowTrain = (IShadowTrain) train;
         if (!shadowTrain.railways$isShadow()) return true;
@@ -89,7 +129,7 @@ public class ShadowRealm {
         Create.RAILWAYS.addTrain(train);
         savedData.setDirty();
 
-        AllPackets.getChannel().sendToClientsInCurrentServer(new TrainPacket(train, true));
+        CRPackets.PACKETS.sendTo(PlayerSelection.all(), new TrainPacket(train, true));
         train.status.displayInformation("railways.shadow_realm.restored", true);
         return true;
     }
@@ -107,7 +147,7 @@ public class ShadowRealm {
 
             train.carriages.forEach(c -> c.forEachPresentEntity(e -> {
                 e.nonDamageTicks = 10;
-                AllPackets.getChannel().sendToClientsTracking(new ContraptionRelocationPacket(e.getId()), e);
+                CRPackets.PACKETS.sendTo(PlayerSelection.tracking(e), new ContraptionRelocationPacket(e.getId()));
             }));
 
             return true;

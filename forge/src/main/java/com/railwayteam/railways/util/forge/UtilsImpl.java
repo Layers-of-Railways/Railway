@@ -21,7 +21,6 @@ package com.railwayteam.railways.util.forge;
 import com.simibubi.create.AllPackets;
 import com.simibubi.create.content.trains.HonkPacket;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.level.ChunkEvent;
@@ -39,10 +38,6 @@ public class UtilsImpl {
 	public static boolean isDevEnv() {
 		return !FMLLoader.isProduction();
 	}
-
-    public static void sendCreatePacketToServer(SimplePacketBase packet) {
-		AllPackets.getChannel().sendToServer(packet);
-    }
 
     public static void sendHonkPacket(Train train, boolean isHonk) {
 		AllPackets.getChannel().send(PacketDistributor.ALL.noArg(), new HonkPacket(train, isHonk));

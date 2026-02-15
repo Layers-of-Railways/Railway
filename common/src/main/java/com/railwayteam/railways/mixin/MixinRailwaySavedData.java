@@ -48,10 +48,10 @@ public class MixinRailwaySavedData implements RailwaySavedDataDuck {
     @Shadow private Map<UUID, Train> trains;
 
     @Unique
-    private Map<UUID, Train> railways$shadowTrains;
+    private Map<UUID, Train> railways$shadowTrains = new HashMap<>();
 
     @Unique
-    private Map<ResourceLocation, UUID> railways$shadowKeys;
+    private Map<ResourceLocation, UUID> railways$shadowKeys = new HashMap<>();
 
     @Override
     public Map<UUID, Train> railway$getShadowTrains() {

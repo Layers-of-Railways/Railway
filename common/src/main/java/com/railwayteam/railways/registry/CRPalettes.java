@@ -745,7 +745,7 @@ public class CRPalettes {
         WRAPPED_IRON("Iron Wrapped Locometal", () -> Styles.IRON_WRAPPED_SLASHED),
         LADDERS("Locometal Ladders", () -> Styles.END_LADDER),
         DOORS("Locometal Doors", () -> Styles.HINGED_DOOR),
-        WINDOWS("Locometal Windows", () -> Styles.ROUND_PANE_WINDOW),
+        WINDOWS("Locometal Windows", () -> Styles.SINGLE_PANE_WINDOW),
         HAZARD_STRIPES_BLACK("Hazard Stripes (Black Base)", () -> Styles.HAZARD_STRIPES_DIAGONAL_BLACK),
         HAZARD_STRIPES_WHITE("Hazard Stripes (White Base)", () -> Styles.HAZARD_STRIPES_DIAGONAL_WHITE),
         ;

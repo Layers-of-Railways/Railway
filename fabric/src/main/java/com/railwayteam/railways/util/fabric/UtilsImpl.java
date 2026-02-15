@@ -21,7 +21,6 @@ package com.railwayteam.railways.util.fabric;
 import com.simibubi.create.AllPackets;
 import com.simibubi.create.content.trains.HonkPacket;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
@@ -37,10 +36,6 @@ public class UtilsImpl {
 	public static boolean isDevEnv() {
 		return FabricLoader.getInstance().isDevelopmentEnvironment();
 	}
-
-    public static void sendCreatePacketToServer(SimplePacketBase packet) {
-		AllPackets.getChannel().sendToServer(packet);
-    }
 
     public static void sendHonkPacket(Train train, boolean isHonk) {
 		AllPackets.getChannel().sendToClientsInCurrentServer(new HonkPacket(train, isHonk));

@@ -22,6 +22,7 @@
     "SandPaperItemMixin",
     "ServerGamePacketListenerImplMixin",
     "TrainMixin",
+    "TrainRelocationPacketMixin",
     "self.BoilerBlockMixin"
   ],
   "injectors": {

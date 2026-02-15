@@ -21,9 +21,10 @@ package com.railwayteam.railways.mixin;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.mixin_interfaces.ICarriageConductors;
+import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREntities;
-import com.simibubi.create.AllPackets;
+import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.deployer.DeployerFakePlayer;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -281,10 +282,8 @@ public abstract class MixinStationBlock {
                 if (train.name.getString().equals(newName)) return;
 
                 train.name = Components.literal(newName);
-                AllPackets.getChannel().sendToClientsInServer(
-                    new TrainEditPacket.TrainEditReturnPacket(train.id, newName, train.icon.getId()),
-                    pLevel.getServer()
-                );
+                CRPackets.PACKETS.sendTo(PlayerSelection.all(),
+                    new TrainEditPacket.TrainEditReturnPacket(train.id, newName, train.icon.getId()));
             } else { // Get the train's name and put it on the nametag
                 itemInHand.setHoverName(Components.literal(train.name.getString()));
             }

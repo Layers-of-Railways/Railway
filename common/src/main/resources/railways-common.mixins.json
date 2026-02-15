@@ -99,7 +99,6 @@
     "MixinTrackTargetingBlockItem$MixinOverlapResult",
     "MixinTrain",
     "MixinTrainPacket",
-    "MixinTrainRelocationPacket",
     "MixinTrainRelocator",
     "MixinTrainStatus",
     "MixinTravellingPoint",
