@@ -23,7 +23,7 @@ import com.simibubi.create.foundation.block.connected.CTType;
 import com.simibubi.create.foundation.block.connected.CTTypeRegistry;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour.ContextRequirement;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 
 public enum CRCTTypes implements CTType {

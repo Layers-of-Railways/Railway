@@ -27,7 +27,6 @@ import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.registry.CRFluids;
 import com.simibubi.create.content.fluids.VirtualFluid;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.utility.Components;
 import com.tterrag.registrate.util.entry.FluidEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -50,7 +49,7 @@ public class CRFluidsImpl {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static FluidEntry<VirtualFluid> registerPaint() {
-        return REGISTRATE.virtualFluid("paint", VirtualFluid::new)
+        return REGISTRATE.virtualFluid("paint")
             .lang("Paint")
             .fluidAttributes(PaintFluidVariantAttributeHandler::new)
             .register();
@@ -68,7 +67,7 @@ public class CRFluidsImpl {
     public static class PaintFluidVariantAttributeHandler implements FluidVariantAttributeHandler {
         @Override
         public Component getName(FluidVariant fluidVariant) {
-            return Components.translatable(PaintFluid.getColor(fluidVariant.getNbt())
+            return Component.translatable(PaintFluid.getColor(fluidVariant.getNbt())
                 .map(PalettesColor::getPaintNameId)
                 .orElse("fluid.railways.paint"));
         }

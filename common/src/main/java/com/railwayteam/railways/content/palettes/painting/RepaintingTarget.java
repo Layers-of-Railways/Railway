@@ -25,10 +25,10 @@ import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.railwayteam.railways.registry.CRTags;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatBlockEntity;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoorBlock;
@@ -39,11 +39,11 @@ import org.jetbrains.annotations.Nullable;
 import static com.railwayteam.railways.util.ItemUtils.copyStackData;
 
 public abstract class RepaintingTarget {
-    protected final Level level;
+    protected final LevelAccessor level;
     protected final BlockPos pos;
     protected final BlockState state;
 
-    protected RepaintingTarget(Level level, BlockPos pos, BlockState state) {
+    protected RepaintingTarget(LevelAccessor level, BlockPos pos, BlockState state) {
         this.level = level;
         this.pos = pos;
         this.state = state;
@@ -56,7 +56,7 @@ public abstract class RepaintingTarget {
     public abstract PalettesColor getColor();
     public abstract boolean repaint(PalettesColor color);
 
-    public static @Nullable RepaintingTarget get(Level level, BlockPos pos, BlockState state) {
+    public static @Nullable RepaintingTarget get(LevelAccessor level, BlockPos pos, BlockState state) {
         if (CRTags.AllBlockTags.PAINTING_BLACKLIST.matches(state)) return null;
 
         Pair<Styles, PalettesColor> style = CRPalettes.getStyleForBlock(state.getBlock());
@@ -78,7 +78,7 @@ public abstract class RepaintingTarget {
     protected static class Simple extends RepaintingTarget {
         protected final Pair<Styles, PalettesColor> style;
 
-        protected Simple(Level level, BlockPos pos, BlockState state, Pair<Styles, PalettesColor> style) {
+        protected Simple(LevelAccessor level, BlockPos pos, BlockState state, Pair<Styles, PalettesColor> style) {
             super(level, pos, state);
             this.style = style;
         }
@@ -90,7 +90,7 @@ public abstract class RepaintingTarget {
 
         @Override
         public boolean repaint(PalettesColor color) {
-            if (level.isClientSide) return false;
+            if (level.isClientSide()) return false;
 
             BlockPos pos = this.pos;
 
@@ -139,7 +139,7 @@ public abstract class RepaintingTarget {
         protected final Pair<Styles, PalettesColor> materialStyle;
         protected final CopycatBlockEntity copycat;
 
-        public Copycat(Level level, BlockPos pos, BlockState state, BlockState material, Pair<Styles, PalettesColor> materialStyle, CopycatBlockEntity copycat) {
+        public Copycat(LevelAccessor level, BlockPos pos, BlockState state, BlockState material, Pair<Styles, PalettesColor> materialStyle, CopycatBlockEntity copycat) {
             super(level, pos, state);
             this.material = material;
             this.materialStyle = materialStyle;
@@ -153,7 +153,7 @@ public abstract class RepaintingTarget {
 
         @Override
         public boolean repaint(PalettesColor color) {
-            if (level.isClientSide) return false;
+            if (level.isClientSide()) return false;
 
             BlockState newMaterial = CRPalettes.getPaintedState(material, color);
             if (newMaterial == null) return false;

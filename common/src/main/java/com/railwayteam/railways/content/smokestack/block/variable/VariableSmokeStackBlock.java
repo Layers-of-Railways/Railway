@@ -25,7 +25,8 @@ import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.content.smokestack.block.StyledSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.foundation.utility.Couple;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -216,7 +217,7 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
             return InteractionResult.SUCCESS;
 
         world.setBlock(pos, state.setValue(PART, VariableStackPart.SINGLE), 3);
-        playRemoveSound(world, pos);
+        IWrenchable.playRemoveSound(world, pos);
 
         return InteractionResult.SUCCESS;
     }

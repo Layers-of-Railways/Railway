@@ -19,12 +19,11 @@
 package com.railwayteam.railways.registry.commands;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.railwayteam.railways.compat.journeymap.UsernameUtils;
+import com.railwayteam.railways.util.UsernameUtils;
 import com.simibubi.create.content.contraptions.ContraptionHandlerClient;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Couple;
+import net.createmod.catnip.data.Couple;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -71,7 +70,7 @@ public class IdentifyTrainCommand {
             var msg = Component.literal("Targeted train: '")
                 .append(train.name)
                 .append("' ")
-                .append(Components.literal(train.id.toString().substring(0, 5) + "[...]").withStyle(Style.EMPTY
+                .append(Component.literal(train.id.toString().substring(0, 5) + "[...]").withStyle(Style.EMPTY
                     .withColor(ChatFormatting.GRAY)
                     .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(train.id.toString())))
                 ));
@@ -80,7 +79,7 @@ public class IdentifyTrainCommand {
                 msg.append(" (owned by '" + UsernameUtils.INSTANCE.getName(train.owner) + "')");
             }
 
-            msg.append(Components.literal(" [Copy ID]").withStyle(Style.EMPTY
+            msg.append(Component.literal(" [Copy ID]").withStyle(Style.EMPTY
                 .withColor(ChatFormatting.GOLD)
                 .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, train.id.toString()))
             ));

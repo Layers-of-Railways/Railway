@@ -40,7 +40,7 @@ public class CRFluidsImpl {
     private static final CreateRegistrate REGISTRATE = Railways.registrate();
 
     public static FluidEntry<VirtualFluid> registerPaint() {
-        return REGISTRATE.virtualFluid("paint", PaintFluidType::new, VirtualFluid::new)
+        return REGISTRATE.virtualFluid("paint", PaintFluidType::new, VirtualFluid::createSource, VirtualFluid::createFlowing)
             .lang("Paint")
             .register();
     }

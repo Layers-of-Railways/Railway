@@ -67,7 +67,6 @@ public class Railways {
   // Should be bumped up to the next multiple of 10 the first time it is bumped after a release, then by 1 for each subsequent change.
   public static final int DATA_FIXER_VERSION = 10;
   private static final boolean FORCE_MIXIN_AUDIT = Boolean.getBoolean("railways.force_mixin_audit");
-  private static final boolean FORCE_MIXIN_AUDIT = Boolean.getBoolean("railways.force_mixin_audit");
 
   private static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 

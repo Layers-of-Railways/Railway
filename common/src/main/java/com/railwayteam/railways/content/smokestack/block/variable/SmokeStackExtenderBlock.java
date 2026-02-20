@@ -22,10 +22,10 @@ import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.smokestack.RotationType;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.content.equipment.goggles.IProxyHoveringInformation;
+import com.simibubi.create.api.equipment.goggles.IProxyHoveringInformation;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.utility.Couple;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -231,7 +231,7 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
             return InteractionResult.SUCCESS;
 
         world.setBlock(pos, state.setValue(PART, VariableStackPart.SINGLE), 3);
-        playRemoveSound(world, pos);
+        IWrenchable.playRemoveSound(world, pos);
 
         return InteractionResult.SUCCESS;
     }

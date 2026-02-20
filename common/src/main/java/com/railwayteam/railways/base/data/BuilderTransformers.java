@@ -63,7 +63,6 @@ import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -71,6 +70,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -101,7 +101,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 
-import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
+import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class BuilderTransformers {

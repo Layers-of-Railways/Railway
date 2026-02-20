@@ -21,7 +21,7 @@ package com.railwayteam.railways.content.palettes;
 import com.railwayteam.railways.content.palettes.painting.PaintFluid;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
@@ -153,7 +153,7 @@ public enum PalettesColor implements StringRepresentable {
     }
 
     public @NotNull MutableComponent getPaintName() {
-        return Components.translatable(getPaintNameId());
+        return Component.translatable(getPaintNameId());
     }
 
     @SuppressWarnings("unused")

@@ -21,7 +21,6 @@ package com.railwayteam.railways.registry.advancement;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRTriggers;
-import com.simibubi.create.foundation.utility.Components;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -33,6 +32,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -78,8 +78,8 @@ public class CRAdvancement {
 		}
 
 		this.displayInfo = () -> new DisplayInfo(
-			t.icon.get(), Components.translatable(titleKey()),
-			Components.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
+			t.icon.get(), Component.translatable(titleKey()),
+			Component.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
 			id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide
 		);
 

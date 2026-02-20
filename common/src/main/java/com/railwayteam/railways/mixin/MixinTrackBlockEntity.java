@@ -23,8 +23,6 @@ import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionUtil
 import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.content.schematics.SchematicWorld;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;

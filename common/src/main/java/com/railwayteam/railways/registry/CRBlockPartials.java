@@ -23,8 +23,8 @@ import com.railwayteam.railways.registry.CRPalettes.PalettesColorList;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.foundation.utility.Couple;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -552,7 +552,7 @@ public class CRBlockPartials {
     }
 
     private static PartialModel item(String path) {
-        return new PartialModel(Railways.asResource("item/" + path));
+        return PartialModel.of(Railways.asResource("item/" + path));
     }
 
     static {

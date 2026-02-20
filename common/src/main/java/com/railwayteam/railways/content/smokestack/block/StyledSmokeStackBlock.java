@@ -23,7 +23,7 @@ import com.railwayteam.railways.content.smokestack.RotationType;
 import com.railwayteam.railways.content.smokestack.SmokeEmissionParams;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.foundation.utility.Couple;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;

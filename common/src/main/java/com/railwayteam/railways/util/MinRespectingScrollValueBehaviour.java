@@ -24,7 +24,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
@@ -45,7 +44,7 @@ public class MinRespectingScrollValueBehaviour extends ScrollValueBehaviour {
     @Override
     public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
         return new ValueSettingsBoard(this.label, this.max - this.min, 1,
-            ImmutableList.of(Components.literal("Value")),
+            ImmutableList.of(Component.literal("Value")),
             new ValueSettingsFormatter(vs -> new ValueSettings(vs.row(), vs.value() + this.min).format()));
     }
 

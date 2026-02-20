@@ -37,13 +37,13 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlock;
 import com.simibubi.create.content.trains.station.StationBlockEntity;
 import com.simibubi.create.content.trains.station.TrainEditPacket;
-import com.simibubi.create.foundation.utility.Components;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -281,11 +281,11 @@ public abstract class MixinStationBlock {
                 String newName = itemInHand.getHoverName().getString();
                 if (train.name.getString().equals(newName)) return;
 
-                train.name = Components.literal(newName);
+                train.name = Component.literal(newName);
                 CRPackets.PACKETS.sendTo(PlayerSelection.all(),
-                    new TrainEditPacket.TrainEditReturnPacket(train.id, newName, train.icon.getId()));
+                    new TrainEditPacket.TrainEditReturnPacket(train.id, newName, train.icon.getId(), train.mapColorIndex));
             } else { // Get the train's name and put it on the nametag
-                itemInHand.setHoverName(Components.literal(train.name.getString()));
+                itemInHand.setHoverName(Component.literal(train.name.getString()));
             }
         }
     }

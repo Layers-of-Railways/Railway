@@ -19,10 +19,12 @@
 package com.railwayteam.railways.fabric;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.data.fabric.GeneratedEntriesProvider;
 import com.railwayteam.railways.compat.Mods;
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.core.RegistrySetBuilder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,5 +45,11 @@ public class RailwaysDataFabric implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = gen.createPack();
 		Railways.registrate().setupDatagen(pack, helper);
 		Railways.gatherData(pack);
+		pack.addProvider(GeneratedEntriesProvider::new);
+	}
+
+	@Override
+	public void buildRegistry(RegistrySetBuilder builder) {
+		GeneratedEntriesProvider.addBootstraps(builder);
 	}
 }

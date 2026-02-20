@@ -1,4 +1,4 @@
-// 1.20.1	2025-11-08T09:00:36.511747589	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
+// 1.20.1	2026-02-20T13:07:28.772175072	Create: Steam 'n' Rails/Railways' Sequenced Assembly Recipes
 6dc7b942e0df6738cd41c61667f4b36cb8aa86ad data/railways/recipes/sequenced_assembly/track_quark_ancient_narrow.json
 871ce86011b2893c9e7fe9a6d0fb7298e55d744b data/railways/recipes/sequenced_assembly/track_tfc_hickory_wide.json
 86548489d829e409459e9d514807cc1767a1a5ac data/railways/recipes/sequenced_assembly/track_quark_azalea_narrow.json
@@ -190,8 +190,8 @@ f64e5026ecbab266018be1ff5f97bc8b0d76b434 data/railways/recipes/sequenced_assembl
 a0b313c6c9d22d74e4514376b837e7b948ac36c7 data/railways/recipes/sequenced_assembly/track_byg_witch_hazel_narrow.json
 1bce475a297eb9b76333f4e5f1c11bc21179ec0c data/railways/recipes/sequenced_assembly/track_birch_wide.json
 73e5d0758e70c4a79d386f202dd47ab9448ed3f8 data/railways/recipes/sequenced_assembly/track_create_dd_rubber_wide.json
-83473e02da148ce53f7910ed4f8a1eca84378f38 data/railways/recipes/sequenced_assembly/track_byg_pine.json
 e9fc171b502e7b6f3985f64783b1eecb599c5c04 data/railways/recipes/sequenced_assembly/track_byg_fir_wide.json
+83473e02da148ce53f7910ed4f8a1eca84378f38 data/railways/recipes/sequenced_assembly/track_byg_pine.json
 6ca609b158a912a071f6cc5e01b4bea05d25006e data/railways/recipes/sequenced_assembly/track_natures_spirit_olive_narrow.json
 da5d37dfd9005f316eca4eeeb1b1d3e408cda6b5 data/railways/recipes/sequenced_assembly/track_byg_white_mangrove_narrow.json
 70ff74d9c89585284ee794fc5d65948a230e87cf data/railways/recipes/sequenced_assembly/track_byg_blue_enchanted.json

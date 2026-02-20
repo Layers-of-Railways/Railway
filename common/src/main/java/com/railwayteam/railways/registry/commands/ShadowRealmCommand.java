@@ -31,11 +31,11 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.util.packet.ShadowTrainRestorePacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.UuidArgument;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -68,21 +68,21 @@ public class ShadowRealmCommand {
     private static int $banish(CommandSourceStack source, UUID trainId, ResourceLocation shadowKey) throws CommandSyntaxException {
         Train train = Create.RAILWAYS.trains.get(trainId);
         if (train == null) {
-            source.sendFailure(Components.literal("No Train with id " + trainId.toString()
+            source.sendFailure(Component.literal("No Train with id " + trainId.toString()
                 .substring(0, 5) + "[...] was found"));
             return 0;
         }
 
         IShadowTrain shadowTrain = (IShadowTrain) train;
         if (shadowTrain.railways$isShadow()) {
-            source.sendFailure(Components.literal("Train '").append(train.name)
+            source.sendFailure(Component.literal("Train '").append(train.name)
                 .append("' is already a shadow train"));
             return 0;
         }
 
         ShadowRealm.banishTrain(train, shadowKey);
 
-        source.sendSuccess(() -> Components.literal("Train '").append(train.name)
+        source.sendSuccess(() -> Component.literal("Train '").append(train.name)
             .append("' banished to the shadow realm"), true);
         return 1;
     }
@@ -103,19 +103,19 @@ public class ShadowRealmCommand {
         var savedData = ((AccessorGlobalRailwayManager) Create.RAILWAYS).railways$getSavedData();
         UUID trainId = ((RailwaySavedDataDuck) savedData).railways$getShadowKeys().get(shadowKey);
         if (trainId == null) {
-            source.sendFailure(Components.literal("No shadow train with key '" + shadowKey + "' was found"));
+            source.sendFailure(Component.literal("No shadow train with key '" + shadowKey + "' was found"));
             return 0;
         }
 
         Train train = ((RailwaySavedDataDuck) savedData).railway$getShadowTrains().get(trainId);
         if (train == null) {
-            source.sendFailure(Components.literal("Shadow train with key '" + shadowKey + "' has disappeared"));
+            source.sendFailure(Component.literal("Shadow train with key '" + shadowKey + "' has disappeared"));
             return 0;
         }
 
         CRPackets.PACKETS.sendTo(player, new ShadowTrainRestorePacket(train));
 
-        source.sendSuccess(() -> Components.literal("Use a wrench on a a track to restore '").append(train.name).append("'"), true);
+        source.sendSuccess(() -> Component.literal("Use a wrench on a a track to restore '").append(train.name).append("'"), true);
         return 1;
     }
     
@@ -133,13 +133,13 @@ public class ShadowRealmCommand {
         var savedData = ((AccessorGlobalRailwayManager) Create.RAILWAYS).railways$getSavedData();
         UUID trainId = ((RailwaySavedDataDuck) savedData).railways$getShadowKeys().get(shadowKey);
         if (trainId == null) {
-            source.sendFailure(Components.literal("No shadow train with key '" + shadowKey + "' was found"));
+            source.sendFailure(Component.literal("No shadow train with key '" + shadowKey + "' was found"));
             return 0;
         }
 
         Train train = ((RailwaySavedDataDuck) savedData).railway$getShadowTrains().get(trainId);
         if (train == null) {
-            source.sendFailure(Components.literal("Shadow train with key '" + shadowKey + "' has disappeared"));
+            source.sendFailure(Component.literal("Shadow train with key '" + shadowKey + "' has disappeared"));
             return 0;
         }
 
@@ -147,7 +147,7 @@ public class ShadowRealmCommand {
         ((RailwaySavedDataDuck) savedData).railways$getShadowKeys().remove(shadowKey);
         savedData.setDirty();
 
-        source.sendSuccess(() -> Components.literal("Shadow train '").append(train.name).append("' has been permanently removed"), true);
+        source.sendSuccess(() -> Component.literal("Shadow train '").append(train.name).append("' has been permanently removed"), true);
         return 1;
     }
 

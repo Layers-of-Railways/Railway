@@ -24,7 +24,6 @@ import com.railwayteam.railways.multiloader.fluid.FluidUnits;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.foundation.utility.Components;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -45,6 +44,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -207,11 +207,11 @@ public abstract class PaintPitcherItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         int levels = getLevels(stack);
-        tooltipComponents.add(Components.translatable("item.railways.paint_pitcher.paint_level", levels, MAX_LEVELS));
+        tooltipComponents.add(Component.translatable("item.railways.paint_pitcher.paint_level", levels, MAX_LEVELS));
     }
 
     @SuppressWarnings("ConstantValue") // IntelliJ is hallucinating that the nested loops never terminate
-    public void projectilePaint(ItemStack stack, Level level, BlockHitResult hit) {
+    public void projectilePaint(ItemStack stack, LevelAccessor level, BlockHitResult hit) {
         final PalettesColor color = this.color == null ? PalettesColor.NETHERITE : this.color;
 
         if (!(stack.getItem() == this)) return;

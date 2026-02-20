@@ -24,15 +24,13 @@ import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
+import com.railwayteam.railways.mixin.AccessorCreate;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
-import com.simibubi.create.content.redstone.displayLink.DisplayBehaviour;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import com.simibubi.create.api.behaviour.display.DisplaySource;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -45,7 +43,8 @@ public class CRExtraRegistration {
 
     // register the source, working independently of mod loading order
     public static void register() {
-        addSignalSource();
+        // TODO: verify this works
+        AccessorCreate.railways$getRegistrate().addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
         addVentAsCopycat();
         addPalettesBlocks();
         MultiRegistryCallback.addFinalizer(CRExtraRegistration::finalizeBlockEntityTypes);
@@ -76,7 +75,7 @@ public class CRExtraRegistration {
 
     private static void addRailwaysBlockToCreateBlockEntity(BlockEntry<?> railwaysBlock, ResourceLocation createBE) {
         MultiRegistryCallback.create(
-            Create.REGISTRATE, Registries.BLOCK_ENTITY_TYPE, createBE,
+            AccessorCreate.railways$getRegistrate(), Registries.BLOCK_ENTITY_TYPE, createBE,
             Railways.registrate(), Registries.BLOCK, railwaysBlock.getId(),
             CRExtraRegistration::addBlockToBE
         );

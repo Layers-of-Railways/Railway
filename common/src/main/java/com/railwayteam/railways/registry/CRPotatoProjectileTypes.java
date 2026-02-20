@@ -18,55 +18,71 @@
 
 package com.railwayteam.railways.registry;
 
+import com.mojang.serialization.Codec;
 import com.railwayteam.railways.Railways;
-import com.simibubi.create.content.equipment.potatoCannon.PotatoCannonProjectileType;
+import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import com.simibubi.create.api.equipment.potatoCannon.PotatoCannonProjectileType;
+import com.simibubi.create.api.equipment.potatoCannon.PotatoProjectileBlockHitAction;
+import com.simibubi.create.api.registry.CreateBuiltInRegistries;
+import com.simibubi.create.api.registry.CreateRegistries;
+import com.simibubi.create.content.equipment.potatoCannon.AllPotatoProjectileEntityHitActions.PotionEffect;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.phys.EntityHitResult;
-
-import java.util.function.Predicate;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.phys.BlockHitResult;
 
 @SuppressWarnings("SameParameterValue")
 public class CRPotatoProjectileTypes {
-
-    @SuppressWarnings("unused")
-    public static final PotatoCannonProjectileType PAINT_PITCHER = create("paint_pitcher")
-        .damage(3)
-        .reloadTicks(15)
-        .velocity(1.25f)
-        .knockback(1.5f)
-        .renderTumbling()
-        .onEntityHit(potion(MobEffects.POISON, 1, 100, false))
-        .onBlockHit(($, $$) -> true) // actual hit logic handled by mixin
-        .registerAndAssign(CRItems.FILLED_PITCHERS.toArray(ItemEntry[]::new));
-
-    private static PotatoCannonProjectileType.Builder create(String name) {
-        return new PotatoCannonProjectileType.Builder(Railways.asResource(name));
+    public static void bootstrap(BootstapContext<PotatoCannonProjectileType> ctx) {
+        register(ctx, "paint_pitcher", builder()
+            .damage(3)
+            .reloadTicks(15)
+            .velocity(1.25f)
+            .knockback(1.5f)
+            .renderTumbling()
+            .onEntityHit(new PotionEffect(MobEffects.POISON, 1, 100, false))
+            .onBlockHit(PaintAction.INSTANCE)
+            .addItems(CRItems.FILLED_PITCHERS.toArray(ItemEntry[]::new))
+        );
     }
 
-    private static Predicate<EntityHitResult> potion(MobEffect effect, int level, int ticks, boolean recoverable) {
-        return ray -> {
-            Entity entity = ray.getEntity();
-            if (entity.level.isClientSide)
+    private static PotatoCannonProjectileType.Builder builder() {
+        return new PotatoCannonProjectileType.Builder();
+    }
+
+    private static void register(BootstapContext<PotatoCannonProjectileType> ctx, String name, PotatoCannonProjectileType.Builder builder) {
+        ctx.register(ResourceKey.create(CreateRegistries.POTATO_PROJECTILE_TYPE, Railways.asResource(name)), builder.build());
+    }
+
+    public enum PaintAction implements PotatoProjectileBlockHitAction {
+        INSTANCE;
+
+        public static final Codec<PaintAction> CODEC = Codec.unit(INSTANCE);
+
+        @Override
+        public boolean execute(LevelAccessor level, ItemStack projectile, BlockHitResult ray) {
+            if (projectile.getItem() instanceof PaintPitcherItem item) {
+                item.projectilePaint(projectile, level, ray);
                 return true;
-            if (entity instanceof LivingEntity)
-                applyEffect((LivingEntity) entity, new MobEffectInstance(effect, ticks, level - 1));
-            return !recoverable;
-        };
+            }
+            return false;
+        }
+
+        @Override
+        public Codec<? extends PotatoProjectileBlockHitAction> codec() {
+            return CODEC;
+        }
     }
 
-    private static void applyEffect(LivingEntity entity, MobEffectInstance effect) {
-        if (effect.getEffect()
-            .isInstantenous())
-            effect.getEffect()
-                .applyInstantenousEffect(null, null, entity, effect.getDuration(), 1.0);
-        else
-            entity.addEffect(effect);
+    private static void registerAction(String name, Codec<? extends PotatoProjectileBlockHitAction> codec) {
+        Registry.register(CreateBuiltInRegistries.POTATO_PROJECTILE_BLOCK_HIT_ACTION, Railways.asResource(name), codec);
     }
 
-    public static void register() {}
+    public static void register() {
+        registerAction("paint", PaintAction.CODEC);
+    }
 }

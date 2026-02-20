@@ -62,7 +62,7 @@ public class ModSetup {
     CREdgePointTypes.register();
     CRSchedule.register();
     CRDataFixers.register();
-    CRExtraRegistration.platformSpecificRegistration();
+    CRExtraRegistration.register();
     CasingCollisionUtils.register();
     CRInteractionBehaviours.register();
     CRPortalTracks.register();

@@ -23,6 +23,7 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRPalettes;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
@@ -30,6 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelReader;
@@ -102,7 +104,7 @@ public class PalettesDemoCommand {
                     final BlockPos finalCorner = origin.offset(bounds.getXSpan() - 1, bounds.getYSpan() - 1, bounds.getZSpan() - 1);
 
                     ctx.getSource().sendSuccess(() -> Component.literal("Placed palettes blocks. Click ")
-                        .append(Components.literal("[here]").withStyle(Style.EMPTY
+                        .append(Component.literal("[here]").withStyle(Style.EMPTY
                             .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.SUGGEST_COMMAND,
                                 "/fill " +
@@ -111,7 +113,7 @@ public class PalettesDemoCommand {
                             )
                             .withBold(true)
                         ))
-                        .append(Components.literal(" to clear.")), true);
+                        .append(Component.literal(" to clear.")), true);
                     return 1;
                 }));
     }

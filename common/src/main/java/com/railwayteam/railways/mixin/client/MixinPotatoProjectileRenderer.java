@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,6 +26,7 @@ import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemDisplayContext;

@@ -24,7 +24,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -78,7 +78,7 @@ public abstract class RailwaysProcessingRecipeGen extends RailwaysRecipeProvider
 			ItemLike itemLike = singleIngredient.get();
 			transform
 				.apply(new ProcessingRecipeBuilder<>(serializer.getFactory(),
-					new ResourceLocation(namespace, RegisteredObjects.getKeyOrThrow(itemLike.asItem())
+					new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem())
 						.getPath())).withItemIngredients(Ingredient.of(itemLike)))
 				.build(c);
 		};
@@ -131,7 +131,7 @@ public abstract class RailwaysProcessingRecipeGen extends RailwaysRecipeProvider
 
 	protected Supplier<ResourceLocation> idWithSuffix(Supplier<ItemLike> item, String suffix) {
 		return () -> {
-			ResourceLocation registryName = RegisteredObjects.getKeyOrThrow(item.get()
+			ResourceLocation registryName = CatnipServices.REGISTRIES.getKeyOrThrow(item.get()
 				.asItem());
 			return Railways.asResource(registryName.getPath() + suffix);
 		};

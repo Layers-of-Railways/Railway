@@ -34,7 +34,7 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.decoration.palettes.AllPaletteStoneTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +47,7 @@ public class RailwaysMixingRecipeGen extends RailwaysProcessingRecipeGen {
     StyledList<DyedOnlyPalettesRecipeList> LOCOMETAL_DYEING = new StyledList<>(style -> new DyedOnlyPalettesRecipeList(
         color -> createWithDeferredId(
             () -> {
-                ResourceLocation loc = Railways.asResource("palettes/dyeing/" + RegisteredObjects.getKeyOrThrow(style.get(color).asItem()).getPath());
+                ResourceLocation loc = Railways.asResource("palettes/dyeing/" + CatnipServices.REGISTRIES.getKeyOrThrow(style.get(color).asItem()).getPath());
                 if (style != CRPalettes.Styles.FLYWHEEL) {
                     EmiRecipeDefaultsGen.DEFAULT_RECIPES.add(Railways.asResource(getRecipeType().getId().getPath() + "/" + loc.getPath()));
                 }

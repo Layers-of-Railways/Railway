@@ -39,7 +39,6 @@ import com.railwayteam.railways.content.semaphore.SemaphoreRenderer;
 import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlockEntity;
 import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
-import com.railwayteam.railways.content.smokestack.block.renderer.DieselSmokeStackRenderer;
 import com.railwayteam.railways.content.switches.TrackSwitchBlockEntity;
 import com.railwayteam.railways.content.switches.TrackSwitchRenderer;
 import com.simibubi.create.content.trains.bogey.BogeyBlockEntityRenderer;

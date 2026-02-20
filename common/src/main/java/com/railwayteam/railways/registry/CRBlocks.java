@@ -91,7 +91,7 @@ import com.railwayteam.railways.util.FusedSupplier;
 import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.BlockMovementChecks;
+import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockItem;
 import com.simibubi.create.content.trains.track.TrackMaterial;
@@ -109,6 +109,8 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -139,9 +141,7 @@ import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBeh
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
-import static com.simibubi.create.foundation.data.TagGen.axeOnly;
-import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
-import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static com.simibubi.create.foundation.data.TagGen.*;
 
 @SuppressWarnings("unused")
 public class CRBlocks {
@@ -288,7 +288,7 @@ public class CRBlocks {
         BlockEntry<VariableSmokeStackBlock> BASE = REGISTRATE.block("smokestack_" + variant, p -> new VariableSmokeStackBlock(p, rotType, emissionParams, shape, true, cycleGroupSupplier, extenderSupplier))
             .transform(BuilderTransformers.smokestack())
             .transform(BuilderTransformers.smokestackLoot(cycleGroupSupplier))
-            .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
+            .onRegister(movementBehaviour(new SmokeStackMovementBehaviour(spawnExtraSmoke)))
             .blockstate(BuilderTransformers.variableSmokeStack(variant, rotType))
             .lang(description)
             .item(BlockStateBlockItem.create(StyledSmokeStackBlock.STYLE, SmokestackStyle.STEEL, true))

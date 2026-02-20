@@ -36,7 +36,7 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainPacket;
 import com.simibubi.create.content.trains.entity.TrainRelocator;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -108,7 +108,7 @@ public class ShadowRealm {
         }
 
         if (ShadowRealm.restoreTrain(savedData, shadowTrain, target)) {
-            sender.displayClientMessage(Lang.translateDirect("train.relocate.success")
+            sender.displayClientMessage(CreateLang.translateDirect("train.relocate.success")
                 .withStyle(ChatFormatting.GREEN), false);
             return;
         }

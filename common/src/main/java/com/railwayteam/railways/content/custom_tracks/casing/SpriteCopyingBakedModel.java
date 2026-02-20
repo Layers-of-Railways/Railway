@@ -33,8 +33,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.simibubi.create.foundation.block.render.SpriteShiftEntry.getUnInterpolatedU;
-import static com.simibubi.create.foundation.block.render.SpriteShiftEntry.getUnInterpolatedV;
+import static net.createmod.catnip.render.SpriteShiftEntry.getUnInterpolatedU;
+import static net.createmod.catnip.render.SpriteShiftEntry.getUnInterpolatedV;
 
 public class SpriteCopyingBakedModel implements BakedModel {
 

@@ -70,14 +70,11 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -87,6 +84,8 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import io.github.fabricators_of_create.porting_lib.models.generators.ConfiguredModel;
 import io.github.fabricators_of_create.porting_lib.models.generators.ModelFile;
 import io.github.fabricators_of_create.porting_lib.models.generators.block.BlockModelBuilder;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -94,7 +93,11 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -375,7 +378,7 @@ public class BuilderTransformersImpl {
         return b -> b.transform(locoMetalBase(color, null))
             .properties(p -> p.noOcclusion())
             .transform(axeOrPickaxe())
-            .transform(BlockStressDefaults.setNoImpact())
+            //.transform(BlockStressDefaults.setNoImpact())
             .blockstate((c, p) -> {
                 String modelName = join("/", "block", "palettes", "flywheel", color.getSerializedName(), "block");
                 ResourceLocation flywheelTex = p.modLoc(join("/", "block", "palettes", color.getSerializedName(), "flywheel"));
