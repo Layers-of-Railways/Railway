@@ -645,7 +645,7 @@
   "block.railways.yellow_riveted_locometal": "Жёлтый катаный блок локомотивного железа",
   "block.railways.yellow_slashed_locometal": "Жёлтый гофрированный блок локомотивного железа",
   "create.contraptions.roller_mode.track_replace": "Замена путей",
-  "create.display_source.track_signal_source": "Сигнал светофора",
+  "railways.display_source.track_signal_source": "Сигнал светофора",
   "create.gui.bogey_menu.category.standard": "Стандартные",
   "create.railways.semaphore.search_mode": "Режим поиска сигнала",
   "create.railways.semaphore.search_mode.search_down": "Снизу",

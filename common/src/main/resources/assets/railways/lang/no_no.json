@@ -591,7 +591,7 @@
   "block.railways.yellow_riveted_locometal": "Gul naglet lokometall",
   "block.railways.yellow_slashed_locometal": "Gul skravert lokometall",
   "create.contraptions.roller_mode.track_replace": "Erstatt skinner",
-  "create.display_source.track_signal_source": "Signalstatus",
+  "railways.display_source.track_signal_source": "Signalstatus",
   "create.gui.bogey_menu.category.standard": "Standard stiler",
   "create.railways.semaphore.search_mode": "Søkeretning for togsignal",
   "create.railways.semaphore.search_mode.search_down": "Senket",

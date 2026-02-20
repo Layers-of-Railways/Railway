@@ -644,7 +644,7 @@
   "block.railways.yellow_riveted_locometal": "Yellow Riveted Locometal",
   "block.railways.yellow_slashed_locometal": "Yellow Slashed Locometal",
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
-  "create.display_source.track_signal_source": "Signal State",
+  "railways.display_source.track_signal_source": "Signal State",
   "create.gui.bogey_menu.category.standard": "Standard Styles",
   "create.railways.semaphore.search_mode": "Signal Search Direction",
   "create.railways.semaphore.search_mode.search_down": "Down",

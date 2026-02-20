@@ -1477,7 +1477,7 @@
   "block.railways.yellow_two_pane_locometal_window": "Yellow Two Pane Locometal Window",
   "block.railways.yellow_wrapped_locometal_smokebox": "Yellow Brass Wrapped Locometal Smokebox",
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
-  "create.display_source.track_signal_source": "Signal State",
+  "railways.display_source.track_signal_source": "Signal State",
   "create.gui.bogey_menu.category.standard": "Standard Styles",
   "create.railways.semaphore.search_mode": "Signal Search Direction",
   "create.railways.semaphore.search_mode.search_down": "Down",

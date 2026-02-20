@@ -633,7 +633,7 @@
   "block.railways.yellow_riveted_locometal": "노란색 못 박은 기차금속",
   "block.railways.yellow_slashed_locometal": "노란색 자른 기차금속",
   "create.contraptions.roller_mode.track_replace": "선로 교체하기",
-  "create.display_source.track_signal_source": "신호 상태",
+  "railways.display_source.track_signal_source": "신호 상태",
   "create.gui.bogey_menu.category.standard": "기본 스타일",
   "create.railways.semaphore.search_mode": "기차 신호기를 탐색할 방향",
   "create.railways.semaphore.search_mode.search_down": "아래",

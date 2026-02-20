@@ -495,7 +495,7 @@
   "block.railways.yellow_riveted_locometal": "Żółty nitowany lokometal",
   "block.railways.yellow_slashed_locometal": "Żółty błyszczący lokometal",
   "create.contraptions.roller_mode.track_replace": "Zamień tory",
-  "create.display_source.track_signal_source": "Stan sygnału",
+  "railways.display_source.track_signal_source": "Stan sygnału",
   "create.gui.bogey_menu.category.standard": "Style standardowe",
   "create.railways.semaphore.search_mode": "Wyszukiwanie kierunku sygnału",
   "create.railways.semaphore.search_mode.search_down": "Dół",

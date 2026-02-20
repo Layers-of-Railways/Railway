@@ -21,16 +21,15 @@ package com.railwayteam.railways.registry;
 import com.google.common.collect.ImmutableSet;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.registration.MultiRegistryCallback;
-import com.railwayteam.railways.content.distant_signals.SignalDisplaySource;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
 import com.railwayteam.railways.mixin.AccessorCreate;
-import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.Create;
+import com.simibubi.create.api.behaviour.display.DisplaySource;
+import com.simibubi.create.api.registry.CreateRegistries;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import com.simibubi.create.api.behaviour.display.DisplaySource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -38,27 +37,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CRExtraRegistration {
-    private static boolean registeredSignalSource = false;
     private static Set<BlockEntityType<?>> modifiedTypes = new HashSet<>();
 
     // register the source, working independently of mod loading order
     public static void register() {
-        // TODO: verify this works
-        AccessorCreate.railways$getRegistrate().addRegisterCallback("track_signal", Registries.BLOCK, CRExtraRegistration::addSignalSource);
+        addSignalSource();
         addVentAsCopycat();
         addPalettesBlocks();
         MultiRegistryCallback.addFinalizer(CRExtraRegistration::finalizeBlockEntityTypes);
     }
 
-    public static void addSignalSource(Block block) {
-        if (registeredSignalSource) return;
-        SignalDisplaySource source = new SignalDisplaySource();
-        Railways.registrate().displaySource("track_signal_source", () -> source).register();
-        DisplaySource.BY_BLOCK.add(block, source);
-        if (Utils.isDevEnv()) {
-            Railways.LOGGER.info("Registered signal source");
-        }
-        registeredSignalSource = true;
+    private static void addSignalSource() {
+        MultiRegistryCallback.create(
+            AccessorCreate.railways$getRegistrate(), Registries.BLOCK_ENTITY_TYPE, Create.asResource("track_signal"),
+            Railways.registrate(), CreateRegistries.DISPLAY_SOURCE, CRDisplaySources.SIGNAL.getId(),
+            DisplaySource.BY_BLOCK_ENTITY::add
+        );
     }
 
     private static void addVentAsCopycat() {

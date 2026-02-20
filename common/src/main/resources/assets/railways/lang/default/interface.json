@@ -84,7 +84,7 @@
 
   "railways.journeymap.train_marker_toggle": "Toggle Train Markers",
 
-  "create.display_source.track_signal_source": "Signal State",
+  "railways.display_source.track_signal_source": "Signal State",
   "railways.display_source.signal.green": "Clear",
   "railways.display_source.signal.yellow": "Warning",
   "railways.display_source.signal.red": "Danger",

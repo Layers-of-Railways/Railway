@@ -93,10 +93,10 @@ public class MixinRailwaySavedData implements RailwaySavedDataDuck {
     }
 
     @WrapOperation(
-        method = "save",
+        method = "save(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
         at = @At(
             value = "INVOKE",
-            target = "Lcom/simibubi/create/foundation/utility/NBTHelper;writeCompoundList(Ljava/lang/Iterable;Ljava/util/function/Function;)Lnet/minecraft/nbt/ListTag;",
+            target = "Lnet/createmod/catnip/nbt/NBTHelper;writeCompoundList(Ljava/lang/Iterable;Ljava/util/function/Function;)Lnet/minecraft/nbt/ListTag;",
             ordinal = 2 // trains
         )
     )

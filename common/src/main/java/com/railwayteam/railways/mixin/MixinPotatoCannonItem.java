@@ -29,19 +29,20 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(PotatoCannonItem.class)
 public class MixinPotatoCannonItem {
-    @WrapOperation(method = "getAmmo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getProjectile(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;"))
-    private static ItemStack splitPitcher(Player instance, ItemStack weaponStack, Operation<ItemStack> original) {
-        ItemStack itemStack = original.call(instance, weaponStack);
+    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/equipment/potatoCannon/PotatoCannonItem;getAmmo(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/content/equipment/potatoCannon/PotatoCannonItem$Ammo;"))
+    private static PotatoCannonItem.Ammo splitPitcher(Player player, ItemStack heldStack, Operation<PotatoCannonItem.Ammo> original) {
+        var ammo = original.call(player, heldStack);
+        ItemStack itemStack = ammo.stack();
         if (itemStack.getItem() instanceof PaintPitcherItem item) {
             int levels = item.getLevels(itemStack);
             int usedLevels = Math.min(levels, PaintPitcherItem.LEVELS_PER_CANNON_SHOT);
 
             ItemStack returnStack = item.copyAsFilledStack(itemStack, usedLevels);
-            if (!instance.isCreative()) {
+            if (!player.isCreative()) {
                 item.setFillInPlace(itemStack, levels - usedLevels);
             }
-            return returnStack;
+            return new PotatoCannonItem.Ammo(returnStack, ammo.type());
         }
-        return itemStack;
+        return ammo;
     }
 }

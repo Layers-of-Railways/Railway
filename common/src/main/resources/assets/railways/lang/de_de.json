@@ -641,7 +641,7 @@
   "block.railways.yellow_riveted_locometal": "Genietetes gelbes Lokometall",
   "block.railways.yellow_slashed_locometal": "Gestreiftes gelbes Lokometall",
   "create.contraptions.roller_mode.track_replace": "Replace Tracks",
-  "create.display_source.track_signal_source": "Signal State",
+  "railways.display_source.track_signal_source": "Signal State",
   "create.gui.bogey_menu.category.standard": "Standard-Drehgestelle",
   "create.railways.semaphore.search_mode": "Signal Suchrichtung",
   "create.railways.semaphore.search_mode.search_down": "Unten",
