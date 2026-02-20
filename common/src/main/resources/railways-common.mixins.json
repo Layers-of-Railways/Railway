@@ -138,6 +138,7 @@
     "client.MixinCurvedTrackInteraction",
     "client.MixinDebugRenderer",
     "client.MixinEntityHats",
+    "client.MixinFlywheelVisual",
     "client.MixinGlobalRailwayManager",
     "client.MixinItemModelShaper",
     "client.MixinKeyBindsListKeyEntry",

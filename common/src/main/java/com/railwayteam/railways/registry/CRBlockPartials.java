@@ -543,6 +543,10 @@ public class CRBlockPartials {
         color -> item("palettes/paint_blob/" + color.getSerializedName())
     );
 
+    public static final PalettesColorList<PartialModel> FLYWHEELS = new PalettesColorList<>(
+        color -> block("palettes/flywheel/" + color.getSerializedName() + "/block")
+    );
+
     private static PartialModel createBlock(String path) {
         return PartialModel.of(Create.asResource("block/" + path));
     }
