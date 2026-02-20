@@ -16,9 +16,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import dev.ithundxr.silk.ChangelogText
-import me.modmuss50.mpp.ReleaseType
-
 architectury.fabric()
 
 loom {
