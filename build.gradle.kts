@@ -285,7 +285,7 @@ subprojects {
         version.set(project.version.toString())
         changelog = ChangelogText.getChangelogText(rootProject).toString()
         type = releaseType
-        displayName = "Steam 'n' Rails ${"mod_version"()} $capitalizedName ${"minecraft_version"()}"
+        displayName = "Steam 'n' Rails ${"mod_version"()} $capitalizedName ${"minecraft_version"()} C${"create_display_version"()}"
         if (isFabric) {
             modLoaders.add("fabric")
             modLoaders.add("quilt")
@@ -303,6 +303,10 @@ subprojects {
             requires {
                 slug = createVersionType
             }
+
+            if (isFabric) {
+                requires("fabric-api")
+            }
         }
 
         modrinth {
@@ -312,6 +316,10 @@ subprojects {
 
             requires {
                 slug = createVersionType
+            }
+
+            if (isFabric) {
+                requires("fabric-api")
             }
         }
     }
