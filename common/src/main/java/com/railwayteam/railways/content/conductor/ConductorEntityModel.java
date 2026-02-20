@@ -35,13 +35,17 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidModel<T> implements ArmedModel, HeadedModel {
   // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
   public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Railways.asResource("conductor"), "main");
 
+  public final @Nullable ModelPart realHat;
+
   public ConductorEntityModel (ModelPart root) {
     super(root);
+    this.realHat = root.hasChild("real_hat") ? root.getChild("real_hat") : null;
   }
 
   public static LayerDefinition createBodyLayer() {
@@ -49,6 +53,8 @@ public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidMod
     PartDefinition partdefinition = meshdefinition.getRoot();
 
     PartDefinition hat = partdefinition.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(0, 48).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.offsetAndRotation(0.0F, 10.0F, 0.0F, 0.1745F, 0.0F, 0.0F));
+
+    PartDefinition realHat = partdefinition.addOrReplaceChild("real_hat", CubeListBuilder.create().texOffs(32, 25).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.2F)), PartPose.offset(0.0F, 10.0F, 0.0F));
 
     PartDefinition head = partdefinition.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 10.0F, 0.0F));
 
@@ -87,6 +93,9 @@ public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidMod
     this.hat.x = (float) (Math.cos(this.head.xRot) * amt * Math.sin(this.head.yRot));
     this.hat.z = (float) (Math.cos(this.head.xRot) * amt * Math.cos(this.head.yRot));
     this.hat.y = ((entity.visualBaseModel != null && entity.visualBaseModel.crouching) ? 14.2f : 10.0f) - (float) (Math.sin(this.head.xRot) * amt);
+
+    if (this.realHat != null)
+      this.realHat.copyFrom(this.head);
 
     this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F * 2 + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F;
     this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F * 2) * 2.0F * limbSwingAmount * 0.5F;
@@ -193,5 +202,7 @@ public class ConductorEntityModel<T extends ConductorEntity> extends HumanoidMod
     rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     //hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    if (realHat != null)
+      realHat.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
   }
 }

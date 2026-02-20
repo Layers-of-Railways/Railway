@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/palettes/doors/block_top_right",
+  "textures": {
+    "block_particle": "railways:block/palettes/scorchia/annexed_slashed",
+    "side": "railways:block/palettes/scorchia/hinged_door_side",
+    "top": "railways:block/palettes/scorchia/hinged_door_top"
+  }
+}

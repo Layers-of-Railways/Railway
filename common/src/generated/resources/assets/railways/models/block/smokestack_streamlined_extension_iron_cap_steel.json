@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/streamlined/single",
+  "textures": {
+    "0": "railways:block/smokestack/streamlined/iron_cap_steel"
+  }
+}

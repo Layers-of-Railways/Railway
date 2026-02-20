@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/magenta/windows"
+  },
+  "result": "railways:magenta_single_pane_locometal_window"
+}

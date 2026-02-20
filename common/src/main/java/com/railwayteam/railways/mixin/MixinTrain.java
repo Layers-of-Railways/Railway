@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,6 +18,8 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.buffer.TrackBuffer;
@@ -30,7 +32,9 @@ import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
+import com.railwayteam.railways.mixin_interfaces.IShadowTrain;
 import com.railwayteam.railways.mixin_interfaces.IStrictSignalTrain;
+import com.railwayteam.railways.mixin_interfaces.ITrueMaxSpeedTrain;
 import com.railwayteam.railways.mixin_interfaces.IWaypointableNavigation;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CREdgePointTypes;
@@ -54,12 +58,15 @@ import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -76,7 +83,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Mixin(value = Train.class, remap = false)
-public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement {
+public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule, IHandcarTrain, IStrictSignalTrain, IBufferBlockedTrain, ICrashAdvancement, ITrueMaxSpeedTrain, IShadowTrain {
     @Shadow public TrackGraph graph;
     @Shadow public Navigation navigation;
     @Shadow public abstract void arriveAt(GlobalStation station);
@@ -92,6 +99,8 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Unique protected boolean railways$isStrictSignalTrain = false;
     @Unique protected int railways$controlBlockedTicks = -1;
     @Unique protected int railways$controlBlockedSign = 0;
+    @Unique protected boolean railways$skipRealismSpeedLimit = false;
+    @Unique protected @Nullable ResourceLocation railways$shadowKey = null;
 
     @Override
     public boolean railways$isControlBlocked() {
@@ -203,7 +212,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
             return originalListener.test(distance, couple);
         });
     }
-    
+
     @Inject(
             method = {
                     "lambda$backSignalListener$12", // fabric
@@ -223,7 +232,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     private void clearOccupiedCouplers(CallbackInfo ci) {
         railways$occupiedCouplers.clear();
     }
-    
+
     @Inject(
             method = {
                     "lambda$collectInitiallyOccupiedSignalBlocks$20", // fabric
@@ -249,6 +258,9 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         }));
         tag.putInt("ScheduleHolderIndex", railways$index);
         tag.putBoolean("IsHandcar", railways$isHandcar);
+        if (railways$shadowKey != null) {
+            tag.putString("ShadowKey", railways$shadowKey.toString());
+        }
     }
 
     @Inject(method = "read", at = @At("RETURN"))
@@ -259,6 +271,12 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
             c -> ((IOccupiedCouplers) train).railways$getOccupiedCouplers().add(c.getUUID("Id")));
         ((IIndexedSchedule) train).railways$setIndex(tag.getInt("ScheduleHolderIndex"));
         ((IHandcarTrain) train).railways$setHandcar(tag.getBoolean("IsHandcar"));
+
+        if (tag.contains("ShadowKey", Tag.TAG_STRING)) {
+            ((IShadowTrain) train).railways$setShadow(new ResourceLocation(tag.getString("ShadowKey")));
+        } else {
+            ((IShadowTrain) train).railways$clearShadow();
+        }
     }
 
     @Inject(method = "collideWithOtherTrains", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;crash()V", ordinal = 0), cancellable = true)
@@ -306,26 +324,35 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
         }
     }
 
+    @Override
+    public void railways$setLimitBypass(boolean shouldBypass) {
+        railways$skipRealismSpeedLimit = shouldBypass;
+    }
+
     @Inject(method = "maxSpeed", at = @At("RETURN"), cancellable = true)
-    public void maxSpeed(CallbackInfoReturnable<Float> cir) {
+    private void limitMaxSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.5f);
-        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+        else if (!railways$skipRealismSpeedLimit && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.trainTopSpeed.getF() / (20 * 20));
     }
 
     @Inject(method = "maxTurnSpeed", at = @At("RETURN"), cancellable = true)
-    public void maxTurnSpeed(CallbackInfoReturnable<Float> cir) {
+    private void limitMaxTurnSpeed(CallbackInfoReturnable<Float> cir) {
         if (railways$isHandcar)
             cir.setReturnValue(cir.getReturnValue() * 0.75f);
-        else if (CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
+        else if (!railways$skipRealismSpeedLimit && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get())
             cir.setReturnValue(AllConfigs.server().trains.trainTurningTopSpeed.getF() / (20 * 20));
     }
 
-    @Inject(method = "acceleration", at = @At("HEAD"), cancellable = true)
-    public void acceleration(CallbackInfoReturnable<Float> cir) {
-        if (!railways$isHandcar && CRConfigs.server().realism.realisticTrains.get() && fuelTicks <= 0)
-            cir.setReturnValue(AllConfigs.server().trains.trainAcceleration.getF() / (400 * 20));
+    @WrapOperation(method = "approachTargetSpeed", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/Train;acceleration()F"))
+    private float limitAcceleration(Train instance, Operation<Float> original, @Local(name = "actualTarget") double actualTarget) {
+        if (Math.abs(actualTarget) > speed && !railways$isHandcar && !railways$skipRealismSpeedLimit
+            && fuelTicks <= 0 && CRConfigs.server().realism.realisticTrains.get()) {
+            return original.call(instance) / 20;
+        } else {
+            return original.call(instance);
+        }
     }
 
     // Award crash advancements when a train has crashed with a handcar
@@ -345,5 +372,20 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
 
         if (backwardsDriver != null)
             AllAdvancements.TRAIN_CRASH_BACKWARDS.awardTo(backwardsDriver);
+    }
+
+    @Override
+    public void railways$setShadow(@NotNull ResourceLocation shadowKey) {
+        railways$shadowKey = shadowKey;
+    }
+
+    @Override
+    public void railways$clearShadow() {
+        railways$shadowKey = null;
+    }
+
+    @Override
+    public @Nullable ResourceLocation railways$getShadowKey() {
+        return railways$shadowKey;
     }
 }

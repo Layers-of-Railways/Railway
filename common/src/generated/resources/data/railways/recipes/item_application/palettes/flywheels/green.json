@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:flywheel"
+    },
+    {
+      "item": "railways:green_riveted_locometal"
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:green_locometal_flywheel"
+    }
+  ]
+}

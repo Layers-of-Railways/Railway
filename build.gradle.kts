@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -52,10 +52,22 @@ println("Steam 'n' Rails v${"mod_version"()}")
 
 val isRelease = System.getenv("RELEASE_BUILD")?.toBoolean() ?: false
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toInt()
+// whether dev mixins should be stripped, even if it's not a release build
 val removeDevMixinAnyway = System.getenv("REMOVE_DEV_MIXIN_ANYWAY")?.toBoolean() ?: false
+// whether the build should include dev commands, even in a non-dev environment
+val includeDevCommands = !isRelease && System.getenv("INCLUDE_DEV_COMMANDS")?.toBoolean() ?: false
 val gitHash = "\"${calculateGitHash() + (if (hasUnstaged()) "-modified" else "")}\""
 
+if (!isRelease && removeDevMixinAnyway) {
+    println("Removing dev mixins, even though it's not a release build")
+}
+
+if (includeDevCommands) {
+    println("Including dev commands in build")
+}
+
 extra["gitHash"] = gitHash
+extra["includeDevCommands"] = includeDevCommands
 
 architectury {
     minecraft = "minecraft_version"()
@@ -264,7 +276,7 @@ subprojects {
     }
 
     val isFabric = project.name == "fabric"
-    val releaseType = 
+    val releaseType =
         if (version.toString().contains("alpha")) {
             ReleaseType.ALPHA;
         } else if (version.toString().contains("beta")) {
@@ -405,6 +417,7 @@ fun Project.setupRepositories() {
     repositories {
         mavenCentral()
         maven("https://maven.createmod.net") // Create, Ponder, Flywheel
+        maven("https://modmaven.dev/") // flywheel fabric
         maven("https://maven.shedaniel.me/") // Cloth Config, REI
         maven("https://maven.blamejared.com/") // JEI, Hex Casting
         exclusiveMaven("https://maven.parchmentmc.org", "org.parchmentmc.data") // Parchment mappings

@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/end_ladder"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "light_gray"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:light_gray_locometal_end_ladder"
+    }
+  ]
+}

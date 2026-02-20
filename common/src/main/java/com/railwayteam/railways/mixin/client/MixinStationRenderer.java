@@ -45,7 +45,7 @@ public class MixinStationRenderer {
         ms.pushPose();
 
         if (trackState.getBlock() instanceof TrackBlock trackBlock
-            && be.getLevel().getBlockEntity(currentPos) instanceof IHasTrackCasing casing && casing.getTrackCasing() != null) {
+            && be.getLevel().getBlockEntity(currentPos) instanceof IHasTrackCasing casing && casing.railways$getTrackCasing() != null) {
             TrackShape shape = trackState.getValue(TrackBlock.SHAPE);
             CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
             TrackMaterial.TrackType trackType = trackBlock.getMaterial().trackType;
@@ -53,7 +53,7 @@ public class MixinStationRenderer {
                 TransformStack.of(ms)
                     .translate(
                         spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casing.isAlternate()) - 2) / 16f,
+                        (spec.getTopSurfacePixelHeight(trackType, casing.railways$isAlternate()) - 2) / 16f,
                         spec.getZShift(trackType)
                     );
         }

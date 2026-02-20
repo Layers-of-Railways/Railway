@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/black_brass_wrapped_locometal"
+      "model": "railways:block/palettes/black/brass_wrapped_locometal"
     }
   }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "railways:block/palettes/pine_green/folding_door"
+  }
+}

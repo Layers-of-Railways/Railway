@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "railways:block/palettes/chartreuse/hazard_stripes_diagonal_on_white",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "railways:block/palettes/chartreuse/hazard_stripes_diagonal_on_white",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "railways:block/palettes/chartreuse/hazard_stripes_diagonal_on_white"
+    },
+    "facing=west": {
+      "model": "railways:block/palettes/chartreuse/hazard_stripes_diagonal_on_white",
+      "y": 90
+    }
+  }
+}

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,8 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -29,9 +31,11 @@ import com.railwayteam.railways.content.custom_tracks.generic_crossing.TrackShap
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackPlacement;
 import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.foundation.utility.Iterate;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +45,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -98,7 +103,7 @@ public class MixinTrackPlacement {
             }
         }
     }
-    
+
     @Inject(method = "placeTracks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", shift = At.Shift.AFTER))
     private static void maybePlaceCrossing(Level level, TrackPlacement.PlacementInfo info, BlockState state1,
                                            BlockState state2, BlockPos targetPos1, BlockPos targetPos2, boolean simulate,
@@ -110,5 +115,33 @@ public class MixinTrackPlacement {
             genericCrossingBE.initFrom(crossingData);
         }
         crossingDataRef.set(null);
+    }
+
+    @Inject(method = "placeTracks", at = @At("HEAD"), cancellable = true)
+    private static void preventCurveIntoJunction(
+        Level level, TrackPlacement.PlacementInfo info,
+        BlockState state1, BlockState state2,
+        BlockPos targetPos1, BlockPos targetPos2,
+        boolean simulate, CallbackInfoReturnable<TrackPlacement.PlacementInfo> cir
+    ) {
+        if (((AccessorTrackPlacement$PlacementInfo) info).railways$getCurve() == null)
+            return;
+
+        for (boolean first : Iterate.trueAndFalse) {
+            BlockState state = level.getBlockState(first ? targetPos1 : targetPos2);
+            // this isn't *really* valid for any junctions, but we don't want
+            // to interfere with Create and this is good enough to prevent #511
+            if (state.getBlock() instanceof GenericCrossingBlock) {
+                info.withMessage("junction_start");
+                ((AccessorTrackPlacement$PlacementInfo) info).railways$setValid(false);
+                cir.setReturnValue(info);
+                return;
+            }
+        }
+    }
+
+    @WrapOperation(method = "clientTick", constant = @Constant(classValue = TrackBlock.class), remap = false)
+    private static boolean checkTrackBlock(Object object, Operation<Boolean> original) {
+        return object instanceof GenericCrossingBlock || original.call(object);
     }
 }

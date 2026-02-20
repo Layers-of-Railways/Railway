@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "minecraft:wooden_trapdoors"
+    },
+    {
+      "item": "railways:vermilion_riveted_locometal"
+    }
+  ],
+  "result": {
+    "item": "railways:vermilion_locometal_trapdoor"
+  }
+}

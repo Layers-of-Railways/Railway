@@ -59,9 +59,11 @@ public class CRTags {
   public enum AllBlockTags {
     SEMAPHORE_POLES,
     TRACK_CASING_BLACKLIST(MOD, MOD.optionalDefault,false),
+    TRACK_CASING_WHITELIST(MOD),
     CONDUCTOR_SPY_USABLE(MOD, MOD.optionalDefault,false), // so other mods / datapacks can make more blocks usable for conductor spies
     LOCOMETAL,
-    LOCOMETAL_BOILERS
+    LOCOMETAL_BOILERS,
+    PAINTING_BLACKLIST,
     ;
 
     public final TagKey<Block> tag;
@@ -117,6 +119,10 @@ public class CRTags {
     DECO_COUPLERS,
     WOODEN_HEADSTOCKS,
     COPYCAT_HEADSTOCKS,
+    FILLED_PAINT_PITCHERS,
+    BINDING_AGENTS,
+    PAINT_DRINK_BLOCKERS,
+    PAINT_BRUSH_REPAIR_ITEMS,
 
     CABOOSESTYLE_STACK,
     LONG_STACK,

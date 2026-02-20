@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/flywheel/block",
+  "textures": {
+    "0": "railways:block/palettes/vermilion/flywheel",
+    "particle": "railways:block/palettes/vermilion/flywheel"
+  }
+}

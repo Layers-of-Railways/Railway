@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -23,13 +23,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import org.apache.commons.lang3.StringUtils;
-import org.joml.Matrix4f;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TextUtils {
+    public static String snakeCaseToTitleCase(String inputString) {
+        return titleCaseConversion(inputString.replace("_", " "));
+    }
+
     public static String titleCaseConversion(String inputString) {
         if (StringUtils.isBlank(inputString)) {
             return "";
@@ -65,21 +70,39 @@ public class TextUtils {
         return Component.literal(partsStringBuilder.toString());
     }
 
-    public static String joinSpace(String... strings) {
+    public static String joinSpace(@Nullable String... strings) {
         return join(" ", strings);
     }
 
-    public static String joinUnderscore(String... strings) {
+    public static String joinUnderscore(@Nullable String... strings) {
         return join("_", strings);
     }
 
-    public static String join(String separator, final String... strings) {
-        String[] filtered = Stream.of(strings).filter(s -> !s.isEmpty()).toArray(String[]::new);
+    public static String join(final String separator, final @Nullable String... strings) {
+        String[] filtered = Stream.of(strings).filter(s -> s != null && !s.isEmpty()).toArray(String[]::new);
         StringBuilder out = new StringBuilder();
         for (int i = 0; i < filtered.length; i++) {
             out.append(filtered[i]);
             if (i < filtered.length - 1) out.append(separator);
         }
         return out.toString();
+    }
+
+    public static String stripPrefix(String string, String prefix) {
+        if (string.startsWith(prefix)) {
+            return string.substring(prefix.length());
+        }
+        return string;
+    }
+
+    public static String ensureEndsWith(String string, String suffix) {
+        if (!string.endsWith(suffix)) {
+            return string + suffix;
+        }
+        return string;
+    }
+
+    public static String prefixToFolder(String name, @NotNull String prefix) {
+        return prefix + "/" + stripPrefix(name, ensureEndsWith(prefix, "_"));
     }
 }

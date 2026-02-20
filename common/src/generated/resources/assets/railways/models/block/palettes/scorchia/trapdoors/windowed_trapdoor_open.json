@@ -1,0 +1,7 @@
+{
+  "parent": "railways:block/palettes/trapdoors/template_orientable_trapdoor_open",
+  "textures": {
+    "side": "railways:block/palettes/scorchia/hinged_door_side",
+    "texture": "railways:block/palettes/scorchia/windowed_trapdoor"
+  }
+}

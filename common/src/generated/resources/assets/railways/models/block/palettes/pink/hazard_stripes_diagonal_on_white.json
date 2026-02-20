@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/palettes/hazard_stripes/diagonal",
+  "textures": {
+    "texture": "railways:block/palettes/pink/hazard_stripes_diagonal_a_on_white"
+  }
+}

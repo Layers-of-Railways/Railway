@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/black_slashed_locometal"
+      "model": "railways:block/palettes/black/slashed_locometal"
     }
   }
 }

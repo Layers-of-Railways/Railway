@@ -1,0 +1,29 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "purple"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "pink"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "fluid": "railways:paint",
+      "nbt": "{Color:\"magenta\"}",
+      "railways:amount": 20250,
+      "railways:amount:unit": 81000
+    }
+  ]
+}

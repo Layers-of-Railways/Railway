@@ -20,7 +20,6 @@ package com.railwayteam.railways.util;
 
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.networking.SimplePacketBase;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.level.chunk.LevelChunk;
 import org.jetbrains.annotations.Nullable;
@@ -62,11 +61,6 @@ public class Utils {
 			Railways.LOGGER.warn("Caught a security exception while trying to access environment variable `{}`.", name);
 			return null;
 		}
-	}
-
-	@ExpectPlatform
-	public static void sendCreatePacketToServer(SimplePacketBase packet) {
-		throw new AssertionError();
 	}
 
 	@ExpectPlatform

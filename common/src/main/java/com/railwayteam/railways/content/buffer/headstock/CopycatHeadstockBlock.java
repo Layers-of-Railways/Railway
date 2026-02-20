@@ -115,9 +115,13 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
     @Override
     public boolean canConnectTexturesToward(BlockAndTintGetter reader, BlockPos fromPos, BlockPos toPos, BlockState state) {
         Direction facing = state.getValue(FACING);
+        boolean upsideDown = state.getValue(UPSIDE_DOWN);
         BlockState toState = reader.getBlockState(toPos);
 
         if (toPos.equals(fromPos.relative(facing)))
+            return false;
+
+        if (toPos.equals(upsideDown ? fromPos.above() : fromPos.below()))
             return false;
 
         BlockPos diff = fromPos.subtract(toPos);
@@ -128,8 +132,12 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
             return coord != -facing.getAxisDirection()
                 .getStep();
 
-        if (isOccluded(state, toState, facing.getOpposite()))
+//        if (isOccluded(state, toState, facing.getOpposite()))
+        Direction delta = Direction.fromDelta(diff.getX(), diff.getY(), diff.getZ());
+        if (isOccluded(state, toState, delta == null ? Direction.UP : delta))
             return true;
+        if ((state.getValue(UPSIDE_DOWN) ? Direction.UP : Direction.DOWN) == delta)
+            return false;
         if (toState.setValue(WATERLOGGED, false) == state.setValue(WATERLOGGED, false) && coord == 0)
             return true;
 
@@ -197,12 +205,14 @@ public class CopycatHeadstockBlock extends WaterloggedCopycatBlock implements Bl
         state = state.setValue(WATERLOGGED, false);
         other = other.setValue(WATERLOGGED, false);
         Direction facing = state.getValue(FACING);
-        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing)
+        boolean upsideDown = state.getValue(UPSIDE_DOWN);
+        boolean otherUpsideDown = other.getValue(UPSIDE_DOWN);
+        if (facing.getOpposite() == other.getValue(FACING) && pDirection == facing && upsideDown == otherUpsideDown)
             return true;
         if (other.getValue(FACING) != facing)
             return false;
-        if (other.getValue(UPSIDE_DOWN) != state.getValue(UPSIDE_DOWN))
-            return false;
+        if (otherUpsideDown != upsideDown)
+            return pDirection == (upsideDown ? Direction.UP : Direction.DOWN);
         return pDirection.getAxis() != facing.getAxis() && pDirection.getAxis().isHorizontal();
     }
 

@@ -20,7 +20,7 @@ package com.railwayteam.railways.base.data.recipe;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.data.compat.emi.EmiRecipeDefaultsGen;
-import com.railwayteam.railways.base.data.recipe.DyedRecipeList.NullableDyedRecipeList;
+import com.railwayteam.railways.base.data.recipe.EnumRecipeList.PalettesRecipeList;
 import com.railwayteam.railways.registry.CRPalettes.Styles;
 import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -37,9 +37,9 @@ import java.util.function.UnaryOperator;
 
 @SuppressWarnings("unused")
 public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipeProvider {
-    DyedRecipeList BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.BOILER.get(color).get())
+    PalettesRecipeList BOILERS = new PalettesRecipeList(color -> create(() -> Styles.BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color == null)
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -49,9 +49,9 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
             .patternLine(" #/# ")
             .patternLine("  #  ")));
 
-    DyedRecipeList BRASS_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.BRASS_WRAPPED_BOILER.get(color).get())
+    PalettesRecipeList BRASS_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.BRASS_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color == null)
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.BRASS_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -61,9 +61,9 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
             .patternLine(" #/# ")
             .patternLine("  #  ")));
 
-    DyedRecipeList COPPER_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.COPPER_WRAPPED_BOILER.get(color).get())
+    PalettesRecipeList COPPER_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.COPPER_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color == null)
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.COPPER_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)
@@ -73,9 +73,9 @@ public abstract class RailwaysMechanicalCraftingRecipeGen extends RailwaysRecipe
             .patternLine(" #/# ")
             .patternLine("  #  ")));
 
-    DyedRecipeList IRON_WRAPPED_BOILERS = new NullableDyedRecipeList(color -> create(() -> Styles.IRON_WRAPPED_BOILER.get(color).get())
+    PalettesRecipeList IRON_WRAPPED_BOILERS = new PalettesRecipeList(color -> create(() -> Styles.IRON_WRAPPED_BOILER.get(color).get())
         .returns(4)
-        .setEmiDefault(color == null)
+        .setEmiDefault(color.isNetherite())
         .recipe(b -> b.key('#', Styles.IRON_WRAPPED_SLASHED.get(color).get())
             .key('u', Items.BUCKET)
             .key('/', Items.BLAZE_ROD)

@@ -1,0 +1,24 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:internal/dyes/cyan_dyes"
+    },
+    {
+      "tag": "railways:binding_agents"
+    },
+    {
+      "fluidTag": "minecraft:water",
+      "railways:amount": 81000,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "fluid": "railways:paint",
+      "nbt": "{Color:\"cyan\"}",
+      "railways:amount": 81000,
+      "railways:amount:unit": 81000
+    }
+  ]
+}

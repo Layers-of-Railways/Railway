@@ -1,4 +1,43 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.7.0
+------------------------------------------------------
+<!--this is the next unreleased version-->
+Additions
+- Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
+- Translation for create.track_target.not_straight #522
+- Allow moss carpets and snow to encase tracks (block tag railways:track_casing_whitelist)
+- Snow falls on tracks
+- `/snrc identify_train` command to get the name, uuid, and owner of the train you're looking at
+- Shadow Realm: a non-ticking, non-tangible storage for trains.
+  - `/snr shadow_realm banish <train> <key>`: banish a train to the shadow realm
+  - `/snr shadow_realm restore <key>`: restore a train from the shadow realm
+  - `/snr shadow_realm kill <key>`: permanently delete a train from the shadow realm
+- Palettes Plus
+  - 16 new colors
+  - many new locometal blocks, including ladders, windows, and more
+  - fluid paint mixing
+  - potato cannon-launched paint projectiles
+  - sandpaper can now be used to remove paint from blocks
+
+Changes
+- Smokestacks can now be placed with a variable height, similar to whistles
+- Track edge point highlighting displays signal direction
+
+Fixes
+- Conductors can once again drive trains backwards via redstone link (pr#649 by konek101)
+- 32x resource packs now work properly #549
+- Fix client-side track switch crash #536
+- Fix diagonal coupling #539
+- Rollers on upside down monorails now break/place at the correct height #470
+- Prevent creation of turns ending in generic crossings #511
+- Fix copycat headstock connectivity #512
+- Fix handcar/phantom track tooltips #658
+- Fix unfueled trains being unstoppable when realism is enabled #535
+- Fix coupler spacing value board not handling minimum value
+- Fix potential invalid signal state caused by relocation of single-carriage trains
+- Make conductors immune to fall damage again
+- Skip unnecessary buffer scouting for stationary trains
+------------------------------------------------------
 Steam 'n' Rails 1.6.15 beta
 ------------------------------------------------------
 Bug Fixes

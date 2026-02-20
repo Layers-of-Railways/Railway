@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,13 @@ loom {
 
         convertAccessWideners = true
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+
+        log4jConfigs.setFrom(project(":forge").file("log4j.xml"))
+
+        runs.configureEach {
+            // force proper color logs
+            vmArg("-Dterminal.jline=true")
+        }
     }
 
     runs.configureEach {
@@ -50,6 +57,9 @@ dependencies {
 
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
+
+    modCompileOnly("mezz.jei:jei-${"minecraft_version"()}-forge-api:${"jei_forge_version"()}")
+    modLocalRuntime("mezz.jei:jei-${"minecraft_version"()}-forge:${"jei_forge_version"()}")
 
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
 
@@ -101,8 +111,8 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
 
-    compileOnly("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")
-    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)!!
+    implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!
 }
 
 operator fun String.invoke(): String {

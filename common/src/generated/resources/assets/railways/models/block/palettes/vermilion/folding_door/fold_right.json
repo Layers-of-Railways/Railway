@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/palettes/doors/fold_right",
+  "textures": {
+    "block_particle": "railways:block/palettes/vermilion/annexed_slashed",
+    "bottom": "railways:block/palettes/vermilion/folding_door_bottom",
+    "side": "railways:block/palettes/vermilion/folding_door_side",
+    "top": "railways:block/palettes/vermilion/folding_door_top"
+  }
+}

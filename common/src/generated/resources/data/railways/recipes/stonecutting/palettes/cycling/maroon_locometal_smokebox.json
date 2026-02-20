@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/maroon/base"
+  },
+  "result": "railways:maroon_locometal_smokebox"
+}

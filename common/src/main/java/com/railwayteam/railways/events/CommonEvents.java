@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.events;
 
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.content.cycle_menu.TagCycleHandlerServer;
 import com.railwayteam.railways.content.schedule.RedstoneLinkInstruction;
 import com.railwayteam.railways.util.packet.PacketSender;

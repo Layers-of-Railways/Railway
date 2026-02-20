@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/iron_wrapped_boiler"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "pink"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:pink_iron_wrapped_locometal_boiler"
+    }
+  ]
+}

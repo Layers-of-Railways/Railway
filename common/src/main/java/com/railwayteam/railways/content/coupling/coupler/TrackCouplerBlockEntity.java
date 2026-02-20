@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -26,6 +26,7 @@ import com.railwayteam.railways.mixin_interfaces.IOccupiedCouplers;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRPackets;
+import com.railwayteam.railways.util.MinRespectingScrollValueBehaviour;
 import com.railwayteam.railways.util.packet.TrackCouplerClientInfoPacket;
 import com.simibubi.create.Create;
 import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
@@ -88,6 +89,8 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements Transfo
     public TrackTargetingBehaviour<TrackCoupler> secondEdgePoint;
     protected ScrollValueBehaviour edgeSpacingScroll;
 
+    protected int cachedEffectiveEdgeSpacing = 5;
+
     public TrackCouplerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -122,7 +125,12 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements Transfo
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
         behaviours.add(secondEdgePoint = new SecondaryTrackTargetingBehaviour<>(this, CREdgePointTypes.COUPLER));
-        edgeSpacingScroll = new ScrollValueBehaviour(Component.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true));
+        edgeSpacingScroll = new MinRespectingScrollValueBehaviour(Component.translatable("railways.coupler.edge_spacing"), this, new TrackCouplerValueBoxTransform(true)) {
+            @Override
+            public String getClipboardKey() {
+                return "Coupler";
+            }
+        };
         edgeSpacingScroll.between(3, 15);
         edgeSpacingScroll.withFormatter(i -> String.valueOf(Component.translatable("railways.coupler.edge_spacing.meters")));
         edgeSpacingScroll.withFormatter(i -> i + "m");
@@ -174,7 +182,7 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements Transfo
                 Train backTrain = info.backCarriage.train;
                 if (frontTrain == backTrain)
                     break;
-                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, getEdgeSpacing());
+                TrainUtils.combineTrains(frontTrain, backTrain, getBlockPos().above(), level, cachedEffectiveEdgeSpacing);
             }
             case NONE -> {
             }
@@ -198,7 +206,9 @@ public class TrackCouplerBlockEntity extends SmartBlockEntity implements Transfo
             return Optional.empty();
 
         double distance = -getEdgeSpacing() * edgePoint.getTargetDirection().getStep();
-        Vec3 offset = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0).scale(distance);
+        Vec3 axis = trackState.getValue(TrackBlock.SHAPE).getAxes().get(0);
+        Vec3 offset = axis.scale(distance);
+        cachedEffectiveEdgeSpacing = (int) Math.round(edgeSpacing * axis.length());
         return Optional.of(((AccessorTrackTargetingBehavior) edgePoint).getTargetTrack().offset(Mth.floor(offset.x), Mth.floor(offset.y), Mth.floor(offset.z)));
     }
 

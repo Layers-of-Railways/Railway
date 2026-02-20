@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:purple_riveted_locometal",
+    "railways:purple_slashed_locometal",
+    "railways:purple_locometal_vent",
+    "railways:purple_flat_riveted_locometal",
+    "railways:purple_flat_slashed_locometal",
+    "railways:purple_plated_locometal",
+    "railways:purple_locometal_pillar",
+    "railways:purple_locometal_smokebox"
+  ]
+}

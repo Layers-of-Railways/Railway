@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used to mark loader-specific implementation classes that otherwise appear unused.
+ * Used to mark classes that are used via abstracted loader-specific methods.
  * <p>
  * Meant purely for documentation and does not exist at compile-time or runtime.
  */

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:maroon_riveted_locometal",
+    "railways:maroon_slashed_locometal",
+    "railways:maroon_locometal_vent",
+    "railways:maroon_flat_riveted_locometal",
+    "railways:maroon_flat_slashed_locometal",
+    "railways:maroon_plated_locometal",
+    "railways:maroon_locometal_pillar",
+    "railways:maroon_locometal_smokebox"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/black/hazard_stripes_black"
+  },
+  "result": "railways:black_hazard_stripes_diagonal_on_black"
+}

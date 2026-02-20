@@ -67,6 +67,7 @@ sourceSets.main {
     blossom.javaSources {
         property("version", "mod_version"())
         property("gitCommit", rootProject.extra["gitHash"].toString())
+        property("includeDevCommands", rootProject.extra["includeDevCommands"].toString())
     }
 }
 

@@ -435,6 +435,9 @@ public abstract class MixinNavigation implements IWaypointableNavigation, IGener
     private void railways$updateControlsBlockInternal(boolean simulate, boolean forceBackwards) {
         ((IBufferBlockedTrain) train).railways$setControlBlocked(false, forceBackwards);
         if (destination == null) {
+            if (!train.manualTick && Mth.equal(train.speed, 0))
+                return;
+
             double acceleration = train.acceleration();
             double brakingDistance = (train.speed * train.speed) / (2 * acceleration);
             boolean currentlyBackwards = train.speed < 0 || forceBackwards;

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:scorchia_riveted_locometal",
+    "railways:scorchia_slashed_locometal",
+    "railways:scorchia_locometal_vent",
+    "railways:scorchia_flat_riveted_locometal",
+    "railways:scorchia_flat_slashed_locometal",
+    "railways:scorchia_plated_locometal",
+    "railways:scorchia_locometal_pillar",
+    "railways:scorchia_locometal_smokebox"
+  ]
+}

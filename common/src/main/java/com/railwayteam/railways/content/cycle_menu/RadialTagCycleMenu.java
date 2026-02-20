@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -55,12 +55,14 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
     private final TagKey<Item> tag;
     private final List<Item> cycle;
     private final @Nullable CompoundTag stackTag;
+    private final int slotCount;
 
     RadialTagCycleMenu(TagKey<Item> tag, List<Item> cycle, @Nullable CompoundTag stackTag) {
         hoveredSlot = -1;
         this.cycle = cycle;
         this.tag = tag;
         this.stackTag = stackTag;
+        this.slotCount = Math.max(8, cycle.size());
     }
 
     @SuppressWarnings({"IntegerDivisionInFloatingPointContext", "DuplicatedCode"})
@@ -75,11 +77,16 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         float hoveredX = mouseX - window.getGuiScaledWidth() / 2;
         float hoveredY = mouseY - window.getGuiScaledHeight() / 2;
 
+        double interSlotAngle = 360. / slotCount;
+
         float distance = hoveredX * hoveredX + hoveredY * hoveredY;
-        if (distance > 25 && distance < 10000)
-            hoveredSlot =
-                    (Mth.floor((AngleHelper.deg(Mth.atan2(hoveredY, hoveredX)) + 360 + 180 - 22.5f)) % 360)
-                            / 45;
+        if (distance > 25 && distance < 10000) {
+            double offset = 90 - 1.5 * interSlotAngle;
+            hoveredSlot = (int) Math.floor(
+                (Mth.floor((AngleHelper.deg(Mth.atan2(hoveredY, hoveredX)) + 360 + 180 - offset)) % 360)
+                    / interSlotAngle
+            );
+        }
         if (scrollMode && distance > 150)
             scrollMode = false;
 
@@ -93,11 +100,10 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         core rendering
          */
 
-
-        for (int slot = 0; slot < 8; slot++) {
+        for (int slot = 0; slot < slotCount; slot++) {
             ms.pushPose();
-            double radius = -40 + (10 * (1 - fade) * (1 - fade));
-            double angle = slot * 45 - 45;
+            double radius = -(5 * slotCount) + (10 * (1 - fade) * (1 - fade));
+            double angle = slot * interSlotAngle - interSlotAngle;
             TransformStack.of(ms)
                     .rotateZDegrees((float) angle)
                     .translate(0, radius, 0)
@@ -220,14 +226,14 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         double distance = hoveredX * hoveredX + hoveredY * hoveredY;
         if (distance <= 150) {
             scrollMode = true;
-            scrollSlot = (((int) (scrollSlot - delta)) + 8) % 8;
+            scrollSlot = (((int) (scrollSlot - delta)) + slotCount) % slotCount;
             for (int i = 0; i < 10; i++) {
 
                 if (scrollSlot < cycle.size())
                     break;
 
                 scrollSlot -= Mth.sign(delta);
-                scrollSlot = (scrollSlot + 8) % 8;
+                scrollSlot = (scrollSlot + slotCount) % slotCount;
             }
             return true;
         }

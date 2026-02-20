@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "Steam_Rails-fabric-refmap.json",
   "client": [
+    "client.CopycatModelMixin",
     "client.LevelRendererMixin",
     "client.PortingLibModelsMixin",
     "client.PortingLibObjLoaderMixin",
@@ -18,9 +19,13 @@
     "EnderManMixin",
     "FluidNetworkMixin",
     "MixinLootDataManager",
+    "MountedFluidStorageMixin",
+    "MountedStorageManagerMixin",
+    "SandPaperItemMixin",
     "TrainMixin",
+    "TrainRelocationPacketMixin",
     "self.BoilerBlockMixin",
-    "self.CasingResourceReloadListenerMixin",
+    "self.ClientResourceReloadListenerMixin",
     "self.LiquidFuelManagerReloadListenerMixin"
   ],
   "injectors": {

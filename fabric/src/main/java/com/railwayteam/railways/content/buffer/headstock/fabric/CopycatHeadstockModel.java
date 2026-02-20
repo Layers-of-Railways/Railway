@@ -26,6 +26,7 @@ import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
 import com.simibubi.create.content.decoration.copycat.CopycatSpecialCases;
+import com.simibubi.create.content.decoration.copycat.FilteredBlockAndTintGetter;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import net.createmod.catnip.data.Iterate;
 import net.fabricmc.api.EnvType;
@@ -155,7 +156,14 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
         if (shouldTransform)
             context.pushTransform(MaterialFixer.create(material));
 
-        emitBlockQuadsInner(blockView, state, pos, randomSupplier, context, material, cullFaceRemovalData, occlusionData);
+        BlockAndTintGetter filteredView;
+        if (state.getBlock() instanceof CopycatBlock copycatBlock) {
+            filteredView = new FilteredBlockAndTintGetter(blockView, targetPos -> copycatBlock.canConnectTexturesToward(blockView, pos, targetPos, state));
+        } else {
+            filteredView = blockView;
+        }
+
+        emitBlockQuadsInner(filteredView, state, pos, randomSupplier, context, material, cullFaceRemovalData, occlusionData);
 
         // fabric: pop the material changer transform
         if (shouldTransform)

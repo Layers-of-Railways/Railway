@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/light_blue_riveted_locometal"
+      "model": "railways:block/palettes/light_blue/riveted_locometal"
     }
   }
 }

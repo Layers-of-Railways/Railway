@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:tuff_riveted_locometal",
+    "railways:tuff_slashed_locometal",
+    "railways:tuff_locometal_vent",
+    "railways:tuff_flat_riveted_locometal",
+    "railways:tuff_flat_slashed_locometal",
+    "railways:tuff_plated_locometal",
+    "railways:tuff_locometal_pillar",
+    "railways:tuff_locometal_smokebox"
+  ]
+}

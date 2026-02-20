@@ -3,4 +3,5 @@ package com.railwayteam.railways;
 public class RailwaysBuildInfo {
   public static final String VERSION = "{{ version }}";
   public static final String GIT_COMMIT = {{ gitCommit | default("unknown") }};
+  public static final boolean INCLUDE_DEV_COMMANDS = {{ includeDevCommands | default(false) }};
 }

@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/flat_riveted"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "limestone"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:limestone_flat_riveted_locometal"
+    }
+  ]
+}

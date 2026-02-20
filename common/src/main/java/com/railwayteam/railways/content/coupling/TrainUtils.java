@@ -61,6 +61,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class TrainUtils {
+    private static final int FIRST = 0, MIDDLE = 1, LAST = 2, BOTH = 3;
+
     /**
      * Splits the train into two trains, with the last carriage of the original train being the first carriage of the new train.
      * @param train The train to split.
@@ -134,10 +136,13 @@ public class TrainUtils {
             final double bufferDist = 0.1;
             Carriage leadingCarriage = newTrain.carriages.get(0);
             TravellingPoint returnPoint = copy(leadingCarriage.getLeadingPoint());
-            leadingCarriage.travel(null, newTrain.graph, -bufferDist, null, null, 0);
+            int leadingType = newTrain.carriages.size() == 1 ? BOTH : FIRST;
+
+            leadingCarriage.travel(null, newTrain.graph, -bufferDist, null, null, leadingType);
             newTrain.collectInitiallyOccupiedSignalBlocks();
             ((IStrictSignalTrain) newTrain).railways$setStrictSignals(true);
-            leadingCarriage.travel(null, newTrain.graph, bufferDist, returnPoint, null, 0);
+
+            leadingCarriage.travel(null, newTrain.graph, bufferDist, returnPoint, null, leadingType);
             ((IStrictSignalTrain) newTrain).railways$setStrictSignals(false);
             newTrain.collectInitiallyOccupiedSignalBlocks();
         }
@@ -191,7 +196,8 @@ public class TrainUtils {
         {
             final double offsetDist = 0.05;
             Carriage leadingCarriage = train.carriages.get(0);
-            leadingCarriage.travel(null, train.graph, -offsetDist, null, null, 0);
+            int leadingType = train.carriages.size() == 1 ? BOTH : FIRST;
+            leadingCarriage.travel(null, train.graph, -offsetDist, null, null, leadingType);
             TravellingPoint discoveryPoint = copy(leadingCarriage.getLeadingPoint());
             MutableObject<GlobalStation> targetStation = new MutableObject<>(null);
             double distance = discoveryPoint.travel(train.graph, maxDistance+offsetDist, discoveryPoint.steer(TravellingPoint.SteerDirection.NONE, new Vec3(0, 1, 0)), (Double a, Pair<TrackEdgePoint, Couple<TrackNode>> couple) -> {
@@ -209,14 +215,14 @@ public class TrainUtils {
                 train.navigation = new Navigation(train);
                 train.runtime = new ScheduleRuntime(train);
                 train.navigation.destination = targetStation.getValue();
-                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance)+offsetDist, discoveryPoint, null, 0);
+                leadingCarriage.travel(null, train.graph, Math.max(0.01, distance)+offsetDist, discoveryPoint, null, leadingType);
                 targetStation.getValue().reserveFor(train);
                 train.navigation.train = null; // prevent reference cycle
                 train.runtime = oldRuntime;
                 train.navigation = oldNavigation;
             } else {
                 ((IStrictSignalTrain) train).railways$setStrictSignals(true);
-                leadingCarriage.travel(null, train.graph, offsetDist, null, null, 0);
+                leadingCarriage.travel(null, train.graph, offsetDist, null, null, leadingType);
                 ((IStrictSignalTrain) train).railways$setStrictSignals(false);
             }
         }

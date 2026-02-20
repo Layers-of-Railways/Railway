@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/palettes/doors/block_top_left",
+  "textures": {
+    "block_particle": "railways:block/palettes/magenta/annexed_slashed",
+    "side": "railways:block/palettes/magenta/folding_windowed_door_side",
+    "top": "railways:block/palettes/magenta/folding_windowed_door_top"
+  }
+}

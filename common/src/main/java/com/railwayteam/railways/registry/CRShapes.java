@@ -205,29 +205,55 @@ public class CRShapes {
         .add(9, 8, 8 - 0.01, 16, 14, 8 + 0.01)
         .build();
 
+    public static final VoxelShaper
+        LONG_STACK_SINGLE = shape(1, 0, 3, 15, 8, 13)
+            .add(0, 5, 2, 16, 7, 14)
+            .forHorizontal(Direction.WEST),
+        LONG_STACK_DOUBLE = shape(1, 0, 3, 15, 16, 13)
+            .add(0, 13, 2, 16, 15, 14)
+            .forHorizontal(Direction.WEST),
+        LONG_STACK_SEGMENT = shape(1, 0, 3, 15, 16, 13)
+            .forHorizontal(Direction.WEST);
+
     public static final VoxelShape
-        COAL_STACK = shape(4, 0, 4, 12, 16, 12)
+        COAL_STACK_SINGLE = shape(4, 0, 4, 12, 8, 12)
+            .add(3, 4, 3, 13, 7, 13)
+            .build(),
+        COAL_STACK_DOUBLE = shape(4, 0, 4, 12, 16, 12)
             .add(3, 12, 3, 13, 15, 13)
             .build(),
-        OIL_STACK = shape(2, 0, 2, 14, 16, 14)
+        COAL_STACK_SEGMENT = cuboid(4, 0, 4, 12, 16, 12);
+
+    public static final VoxelShape
+        OIL_STACK_SINGLE = shape(2, 0, 2, 14, 8, 14)
+            .add(0, 3, 0, 16, 6, 16)
+            .build(),
+        OIL_STACK_DOUBLE = shape(2, 0, 2, 14, 16, 14)
             .add(0, 11, 0, 16, 14, 16)
             .build(),
+        OIL_STACK_SEGMENT = cuboid(2, 0, 2, 14, 16, 14);
+
+    public static final VoxelShaper
+        STREAMLINED_STACK_SINGLE = shape(1, 0, 3, 15, 2, 13)
+            .forHorizontal(Direction.EAST),
+        STREAMLINED_STACK_DOUBLE = shape(1, 0, 3, 15, 10, 13)
+            .forHorizontal(Direction.EAST),
+        STREAMLINED_STACK_SEGMENT = shape(1, 0, 3, 15, 16, 13)
+            .forHorizontal(Direction.EAST);
+
+    public static final VoxelShape
         WOOD_STACK = shape(4, 0, 4, 12, 4, 12)
             .add(2 ,4, 2, 14, 9, 14)
             .add(0 ,9, 0, 16, 14, 16)
             .add(2 ,14, 2, 14, 16, 14)
             .build();
+
     public static final VoxelShaper
         CABOOSE_STACK = shape(4, 0, 4, 12, 2, 12)
             .add(5, 2, 5, 11, 3, 11)
             .add(6, 3, 6, 10, 10, 10)
             .add(5, 10, 4, 11, 13, 12)
             .forHorizontalAxis(),
-        LONG_STACK = shape(1, 0, 3, 15, 5, 13)
-            .add(0, 2, 2, 16, 4, 14)
-            .forHorizontal(Direction.WEST),
-        STREAMLINED_STACK = shape(1, 0, 3, 15, 2, 13)
-            .forHorizontal(Direction.EAST),
         DIESEL_STACK = shape(0, 0, 0, 16, 4, 16)
             .forDirectional(Direction.UP);
 

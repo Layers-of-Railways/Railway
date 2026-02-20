@@ -19,7 +19,7 @@
 package com.railwayteam.railways.content.cycle_menu;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.registry.CRPalettes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/chartreuse/ladders"
+  },
+  "result": "railways:chartreuse_locometal_rung_ladder"
+}

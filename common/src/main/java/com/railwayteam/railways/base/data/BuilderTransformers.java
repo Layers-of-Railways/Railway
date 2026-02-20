@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,6 +18,7 @@
 
 package com.railwayteam.railways.base.data;
 
+import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.content.buffer.MonoTrackBufferBlock;
 import com.railwayteam.railways.content.buffer.TrackBufferBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
@@ -29,26 +30,40 @@ import com.railwayteam.railways.content.conductor.vent.VentBlock;
 import com.railwayteam.railways.content.conductor.whistle.ConductorWhistleFlagBlock;
 import com.railwayteam.railways.content.coupling.coupler.TrackCouplerBlock;
 import com.railwayteam.railways.content.custom_bogeys.blocks.base.CRBogeyBlock;
-import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.invisible.InvisibleBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.InvisibleMonoBogeyBlock;
 import com.railwayteam.railways.content.custom_bogeys.special.monobogey.MonoBogeyBlock;
+import com.railwayteam.railways.content.custom_tracks.casing.CasingCollisionBlock;
 import com.railwayteam.railways.content.custom_tracks.generic_crossing.GenericCrossingBlock;
 import com.railwayteam.railways.content.handcar.HandcarBlock;
+import com.railwayteam.railways.content.palettes.PalettesColor;
+import com.railwayteam.railways.content.palettes.RotatedPillarWindowBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerBlock;
 import com.railwayteam.railways.content.palettes.boiler.BoilerGenerator;
+import com.railwayteam.railways.content.palettes.hazard_stripes.HazardStripesBlock;
+import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
 import com.railwayteam.railways.content.palettes.smokebox.PalettesSmokeboxBlock;
+import com.railwayteam.railways.content.palettes.trapdoors.PalettesTrapDoorBlock;
 import com.railwayteam.railways.content.semaphore.SemaphoreBlock;
-import com.railwayteam.railways.content.smokestack.block.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.RotationType;
+import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.variable.VariableSmokeStackBlock;
+import com.railwayteam.railways.content.smokestack.block.variable.VariableStack;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
+import com.railwayteam.railways.registry.CRPalettes.WindowType;
 import com.railwayteam.railways.registry.CRPalettes.Wrapping;
 import com.railwayteam.railways.registry.CRTags;
-import com.railwayteam.railways.util.ColorUtils;
+import com.railwayteam.railways.util.FusedSupplier;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.contraptions.behaviour.DoorMovingInteraction;
+import com.simibubi.create.content.decoration.MetalLadderBlock;
+import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -56,23 +71,37 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
 import java.util.function.Function;
 
+import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class BuilderTransformers {
@@ -117,11 +146,6 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static <B extends SmokeStackBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestack(boolean rotates, ResourceLocation modelLoc) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static <B extends SemaphoreBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> semaphore() {
         throw new AssertionError();
     }
@@ -151,8 +175,43 @@ public class BuilderTransformers {
         throw new AssertionError();
     }
 
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestack() {
+        return b -> b
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
+            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(pickaxeOnly());
+    }
+
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroupSupplier) {
+        return bb -> bb
+            .loot((t, b) -> {
+                LootTable.Builder table = LootTable.lootTable();
+                for (SmokestackStyle style : SmokestackStyle.values()) {
+                    var pool = LootPool.lootPool()
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(b)
+                            .setProperties(StatePropertiesPredicate.Builder.properties()
+                                .hasProperty(VariableSmokeStackBlock.STYLE, style)
+                            )
+                        )
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(cycleGroupSupplier.get().get(style)));
+                    table.withPool(t.applyExplosionCondition(b, pool));
+                }
+
+                t.add(b, table);
+            });
+    }
+
     @ExpectPlatform
-    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, SmokeStackBlock.RotationType rotType) {
+    public static NonNullBiConsumer<DataGenContext<Block, SmokeStackBlock>, RegistrateBlockstateProvider> defaultSmokeStack(String variant, RotationType rotType) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends Block & VariableStack> NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> variableSmokeStack(String variant, RotationType rotType) {
         throw new AssertionError();
     }
 
@@ -172,24 +231,36 @@ public class BuilderTransformers {
     }
 
     @ExpectPlatform
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(@Nullable DyeColor color, @Nullable String type) {
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBase(PalettesColor color, @Nullable String type) {
         throw new AssertionError();
     }
 
     @ExpectPlatform
-    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(@Nullable DyeColor color) {
+    public static <B extends RotatedPillarBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalPillar(PalettesColor color) {
+        throw new AssertionError();
+    }
+
+    @SafeVarargs
+    @ExpectPlatform
+    public static <B extends MetalLadderBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalLadder(PalettesColor color, String ladderType, TagKey<Item>... tags) {
+        throw new AssertionError();
+    }
+
+    @SafeVarargs
+    @ExpectPlatform
+    public static <B extends FlywheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalFlywheel(PalettesColor color, TagKey<Item>... tags) {
         throw new AssertionError();
     }
 
     @ExpectPlatform
-    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(@Nullable DyeColor color) {
+    public static <B extends PalettesSmokeboxBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalSmokeBox(PalettesColor color, @Nullable Wrapping wrapping) {
         throw new AssertionError();
     }
 
-    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(@Nullable DyeColor color, @Nullable Wrapping wrapping) {
+    public static <B extends BoilerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locoMetalBoiler(PalettesColor color, @Nullable Wrapping wrapping) {
         return b -> b.initialProperties(SharedProperties::softMetal)
             .properties(p -> p
-                .mapColor(ColorUtils.mapColorFromDye(color, MapColor.COLOR_BLACK))
+                .mapColor(color.getMapColor())
                 .sound(SoundType.NETHERITE_BLOCK)
                 .noOcclusion()
             )
@@ -201,8 +272,75 @@ public class BuilderTransformers {
             .blockstate(BoilerGenerator.create(color, wrapping)::generate);
     }
 
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalDoor(PalettesColor color, String type, TagKey<Item>[] itemTags, TagKey<Block>[] blockTags) {
+        return b -> b
+            .transform(BuilderTransformers.locoMetalBase(color, null))
+            .properties(BlockBehaviour.Properties::noOcclusion)
+            .properties(p -> p.pushReaction(PushReaction.DESTROY))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .onRegister(interactionBehaviour(new DoorMovingInteraction()))
+            .tag(BlockTags.DOORS)
+            .tag(BlockTags.WOODEN_DOORS) // for villager AI
+            .tag(blockTags)
+            .loot((lr, block) -> lr.add(block, lr.createDoorTable(block)))
+            .item()
+            .tag(ItemTags.DOORS)
+            .tag(itemTags)
+            .transform(locometalDoorItemModel(color, type))
+            .build();
+    }
+
+    @ExpectPlatform
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalHingedDoorBlockState(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalSlidingDoorBlockState(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends DoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalFoldingDoorBlockState(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends RotatedPillarWindowBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalWindow(PalettesColor color, WindowType type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends PalettesTrapDoorBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> locometalTrapdoor(PalettesColor color) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <B extends HazardStripesBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> hazardStripes(boolean chevron) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends BlockItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> locometalDoorItemModel(PalettesColor color, String type) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends Item, P> NonNullUnaryOperator<ItemBuilder<I, P>> locoMetalItem(PalettesColor color) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static <I extends PaintPitcherItem, P> NonNullUnaryOperator<ItemBuilder<I, P>> paintPitcher() {
+        throw new AssertionError();
+    }
+
+    public static String colorNameUnderscore(@NotNull PalettesColor color) {
+        return color.isNetherite() ? "" : color.getSerializedName() + "_";
+    }
+
     public static String colorNameUnderscore(@Nullable DyeColor color) {
-        return color == null ? "" : color.name().toLowerCase(Locale.ROOT) + "_";
+        return color == null ? "" : color.getSerializedName() + "_";
     }
 
     @ExpectPlatform

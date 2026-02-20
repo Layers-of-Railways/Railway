@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "tag": "railways:palettes/cycle_groups/dripstone/wrapped_copper"
+  },
+  "result": "railways:dripstone_copper_wrapped_locometal"
+}

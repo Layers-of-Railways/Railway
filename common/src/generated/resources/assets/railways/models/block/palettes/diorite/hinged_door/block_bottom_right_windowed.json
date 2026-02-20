@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/palettes/doors/block_bottom_right",
+  "textures": {
+    "block_particle": "railways:block/palettes/diorite/annexed_slashed",
+    "bottom": "railways:block/palettes/diorite/hinged_windowed_door_bottom",
+    "side": "railways:block/palettes/diorite/hinged_windowed_door_side"
+  }
+}

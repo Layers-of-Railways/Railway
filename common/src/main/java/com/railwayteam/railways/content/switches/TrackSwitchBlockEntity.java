@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -281,6 +281,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
         TrackEdge edge = graph
                 .getConnectionsFrom(graph.locateNode(loc.edge.getFirst()))
                 .get(graph.locateNode(loc.edge.getSecond()));
+        if (edge == null) return;
 
         Set<TrackNodeLocation> exits = graph.getConnectionsFrom(edge.node2).values()
                 .stream()
@@ -470,8 +471,13 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
 
     public void clientLazyTick() {
         try {
-            if (getSwitch() != null && edgePoint.determineGraphLocation() != null)
-                getSwitch().updateEdges(edgePoint.determineGraphLocation().graph);
+            TrackSwitch sw = getSwitch();
+            if (sw == null) return;
+
+            TrackGraphLocation loc = edgePoint.determineGraphLocation();
+            if (loc == null) return;
+
+            sw.updateEdges(loc.graph);
         } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
     }
 
@@ -483,8 +489,13 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
 
     protected void restoreEdges() {
         try {
-            if (edgePoint.getEdgePoint() != null && edgePoint.determineGraphLocation() != null)
-                edgePoint.getEdgePoint().setEdgesActive(edgePoint.determineGraphLocation().graph);
+            TrackSwitch sw = getSwitch();
+            if (sw == null) return;
+
+            TrackGraphLocation loc = edgePoint.determineGraphLocation();
+            if (loc == null) return;
+
+            sw.setEdgesActive(loc.graph);
         } catch (ClassCastException ignored) {} // if we are targeting air, catch the crash
     }
 
@@ -503,8 +514,9 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if (getSwitch() != null) {
-            calculateExits(getSwitch());
+        TrackSwitch sw = getSwitch();
+        if (sw != null) {
+            calculateExits(sw);
         }
     }
 

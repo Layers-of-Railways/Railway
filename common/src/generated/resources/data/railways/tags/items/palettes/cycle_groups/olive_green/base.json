@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "railways:olive_green_riveted_locometal",
+    "railways:olive_green_slashed_locometal",
+    "railways:olive_green_locometal_vent",
+    "railways:olive_green_flat_riveted_locometal",
+    "railways:olive_green_flat_slashed_locometal",
+    "railways:olive_green_plated_locometal",
+    "railways:olive_green_locometal_pillar",
+    "railways:olive_green_locometal_smokebox"
+  ]
+}

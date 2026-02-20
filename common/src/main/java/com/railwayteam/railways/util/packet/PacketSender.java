@@ -19,7 +19,7 @@
 package com.railwayteam.railways.util.packet;
 
 import com.railwayteam.railways.RailwaysBuildInfo;
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.content.minecarts.MinecartJukebox;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;

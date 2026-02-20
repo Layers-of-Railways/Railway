@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "railways:chartreuse_hinged_locometal_door",
+    "railways:chartreuse_sliding_locometal_door",
+    "railways:chartreuse_folding_locometal_door"
+  ]
+}

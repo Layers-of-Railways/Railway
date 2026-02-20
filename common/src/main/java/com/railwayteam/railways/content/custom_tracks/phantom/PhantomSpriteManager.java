@@ -19,7 +19,7 @@
 package com.railwayteam.railways.content.custom_tracks.phantom;
 
 import com.railwayteam.railways.Railways;
-import com.railwayteam.railways.annotation.event.MultiLoaderEvent;
+import com.railwayteam.railways.annotation.multiloader.MultiLoaderEvent;
 import com.railwayteam.railways.mixin_interfaces.IPotentiallyInvisibleSpriteContents;
 import com.railwayteam.railways.registry.CRTags;
 import net.minecraft.client.Minecraft;

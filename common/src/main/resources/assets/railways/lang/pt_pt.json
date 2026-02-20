@@ -1,0 +1,21 @@
+{
+  "block.create.railway_casing.tooltip": "REVESTIMENTO DE COMBOIO",
+  "block.create.railway_casing.tooltip.summary": "Pressione a tecla _Abrir Bogey Menu_ (padrão _ALT_) para selecionar o _estilo bogey_ para colocar.",
+  "block.create.track_station.tooltip": "ESTAÇÃO DE COMBOIO",
+  "block.create.track_station.tooltip.summary": "Um _implantantador_ a segurar uma _chave inglesa_ pode montar e desmontar automaticamente comboios atingindo uma _estação_.  _Dica_: Funis podem ser usados para colocar uma _chave inglesa_ num implantador",
+  "block.railways.big_buffer": "Buffer Grande",
+  "block.railways.black_brass_wrapped_locometal": "Locometal de latão preto",
+  "block.railways.black_brass_wrapped_locometal_boiler": "Caldeira de locometal de latão preto",
+  "block.railways.black_copper_wrapped_locometal": "Locometal de cobre preto",
+  "block.railways.black_copper_wrapped_locometal_boiler": "Caldeira de locometal de cobre preto",
+  "block.railways.black_flat_riveted_locometal": "Locometal plano rebitado preto",
+  "block.railways.black_flat_slashed_locometal": "Locometal plano cortado preto",
+  "block.railways.black_iron_wrapped_locometal": "Locometal de ferro preto",
+  "block.railways.black_iron_wrapped_locometal_boiler": "Caldeira de locometal de ferro preto",
+  "block.railways.black_locometal_boiler": "Caldeira de locometal de latão preto",
+  "block.railways.black_locometal_pillar": "Pilar de locometal preto",
+  "block.railways.black_locometal_smokebox": "Smokebox de locometal preta",
+  "block.railways.black_plated_locometal": "Locometal placado preto",
+  "block.railways.black_riveted_locometal": "Locometal rebitado preto",
+  "block.railways.black_slashed_locometal": "Locometal cortado preto"
+}

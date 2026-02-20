@@ -12,6 +12,21 @@
     {
       "type": "single",
       "resource": "railways:entity/conductor"
+    },
+    {
+      "type": "directory",
+      "source": "fluid/paint_still",
+      "prefix": "fluid/paint_still/"
+    },
+    {
+      "type": "directory",
+      "source": "fluid/paint_flow",
+      "prefix": "fluid/paint_flow/"
+    },
+    {
+      "type": "directory",
+      "source": "fluid/paint_blob",
+      "prefix": "fluid/paint_blob/"
     }
   ]
 }

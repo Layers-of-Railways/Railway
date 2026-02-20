@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,10 +22,12 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.RailwaysBuildInfo;
 import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
 import com.railwayteam.railways.registry.commands.PalettesDemoCommand;
 import com.railwayteam.railways.registry.commands.ReloadCasingCollisionCommand;
 import com.railwayteam.railways.registry.commands.ReloadCreativeTabsCommand;
+import com.railwayteam.railways.registry.commands.ShadowRealmCommand;
 import com.railwayteam.railways.registry.commands.SplitTrainCommand;
 import com.railwayteam.railways.registry.commands.TrackDemoCommand;
 import com.railwayteam.railways.registry.commands.TrainInfoCommand;
@@ -41,18 +43,19 @@ public class CRCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
 
         var railwaysCommand = literal(Railways.MOD_ID)
-                .requires(cs -> cs.hasPermission(0))
-                //.then(ClearCasingCacheCommand.register())
-                .then(SplitTrainCommand.register())
-                .then(TrainInfoCommand.register());
+            .requires(cs -> cs.hasPermission(0))
+            //.then(ClearCasingCacheCommand.register())
+            .then(SplitTrainCommand.register())
+            .then(TrainInfoCommand.register())
+            .then(ShadowRealmCommand.register());
 
-        if (Utils.isDevEnv()) {
+        if (Utils.isDevEnv() || RailwaysBuildInfo.INCLUDE_DEV_COMMANDS) {
             railwaysCommand = railwaysCommand
-                    .then(TrackDemoCommand.register())
-                    .then(ConductorDemoCommand.register())
-                    .then(ReloadCasingCollisionCommand.register())
-                    .then(ReloadCreativeTabsCommand.register())
-                    .then(PalettesDemoCommand.register());
+                .then(TrackDemoCommand.register())
+                .then(ConductorDemoCommand.register())
+                .then(ReloadCasingCollisionCommand.register())
+                .then(ReloadCreativeTabsCommand.register())
+                .then(PalettesDemoCommand.register());
         }
 
         LiteralCommandNode<CommandSourceStack> railwaysRoot = dispatcher.register(railwaysCommand);

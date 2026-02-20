@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,7 @@ import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
+import com.simibubi.create.content.trains.track.TrackShape;
 import com.simibubi.create.content.trains.track.TrackVisual;
 import dev.engine_room.flywheel.api.visual.BlockEntityVisual;
 import dev.engine_room.flywheel.api.visual.ShaderLightVisual;
@@ -43,7 +44,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
@@ -123,10 +124,10 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
             .translate(visualPos)
             .nudge((int) this.pos.asLong());
 
-        SlabBlock casingBlock = ((IHasTrackCasing) this.blockEntity).getTrackCasing();
+        Block casingBlock = ((IHasTrackCasing) this.blockEntity).railways$getTrackCasing();
         if (casingBlock != null) {
 			BlockState state = blockEntity.getBlockState();
-			
+
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
             if (CRBlockPartials.TRACK_CASINGS.containsKey(shape)) {
                 ms.pushPose();
@@ -144,7 +145,7 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
                     trackType = trackBlock.getMaterial().trackType;
 
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
-                if (((IHasTrackCasing) this.blockEntity).isAlternate())
+                if (((IHasTrackCasing) this.blockEntity).railways$isAlternate())
                     spec = spec.getNonNullAltSpec(trackType);
                 else
                     spec = spec.getFor(trackType);
@@ -175,10 +176,10 @@ public abstract class MixinTrackVisual extends AbstractVisual implements BlockEn
         if (connections) {
             for (BezierConnection bc : this.blockEntity.getConnections().values()) {
                 if (!bc.isPrimary()) continue;
-                casingBlock = ((IHasTrackCasing) bc).getTrackCasing();
+                casingBlock = ((IHasTrackCasing) bc).railways$getTrackCasing();
                 if (casingBlock != null) {
                     int heightDiff = Math.abs(bc.bePositions.get(false).getY() - bc.bePositions.get(true).getY());
-                    double shiftDown = ((IHasTrackCasing) bc).isAlternate() && heightDiff > 0 ? -0.25 : 0;
+                    double shiftDown = ((IHasTrackCasing) bc).railways$isAlternate() && heightDiff > 0 ? -0.25 : 0;
                     if (heightDiff / bc.getLength() <= 4 / 30d) {
                         for (Vec3 pos : casingPositions(bc)) {
                             TransformedInstance casingInstance = CasingRenderUtils.makeCasingInstance(heightDiff==0 ? CRBlockPartials.TRACK_CASING_FLAT :

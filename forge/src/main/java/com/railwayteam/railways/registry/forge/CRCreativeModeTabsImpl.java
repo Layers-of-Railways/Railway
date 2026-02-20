@@ -19,6 +19,7 @@
 package com.railwayteam.railways.registry.forge;
 
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.RegistrateDisplayItemsGenerator;
 import com.railwayteam.railways.registry.CRCreativeModeTabs.Tabs;
@@ -63,7 +64,7 @@ public class CRCreativeModeTabsImpl {
         () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.railways_palettes"))
             .withTabsBefore(TRACKS_TAB.getKey())
-            .icon(() -> CRPalettes.Styles.BOILER.get(DyeColor.RED).asStack())
+            .icon(() -> CRPalettes.Styles.BOILER.get(PalettesColor.RED).asStack())
             .displayItems(new RegistrateDisplayItemsGenerator(Tabs.PALETTES))
             .build());
 

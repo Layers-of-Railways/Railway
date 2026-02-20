@@ -3,7 +3,7 @@
   "block.create.track_station.tooltip.summary": "A _deployer_ holding a _wrench_ can automatically assemble and disassemble trains by hitting a _station_. _Hint_: hoppers can be used to put a wrench in a deployer.",
 
   "block.railways.track_phantom.tooltip": "PHANTOM TRACK",
-  "block.railways.track_phantom.summary": "_Phantom Tracks_ are compatible with _all_ bogey types",
+  "block.railways.track_phantom.tooltip.summary": "_Phantom Tracks_ are compatible with _all_ bogey types",
   "block.railways.track_phantom.tooltip.condition1": "When you hold a Phantom Track in your hand",
   "block.railways.track_phantom.tooltip.behaviour1": "_Phantom Tracks_ in the world will be _visible_",
   "block.railways.track_phantom.tooltip.condition2": "When you don't hold a Phantom Track in your hand",
@@ -13,20 +13,27 @@
   "block.create.railway_casing.tooltip.summary": "Press the _Open Bogey Menu_ key (default _ALT_) to select the _bogey style_ to place.",
 
   "block.railways.handcar.tooltip": "HANDCAR",
-  "block.railways.handcar.summary": "Use a wrench to pick up.",
+  "block.railways.handcar.tooltip.summary": "Use a wrench to pick up.",
 
   "block.railways.boiler.tooltip": "BOILER",
-  "block.railways.boiler.tooltip.summary": "_Wrench_ the face of boiler to change it to a _smokebox door_, Sneak while placing to _raise_ the boiler up _half_ a block.",
+  "block.railways.boiler.tooltip.summary": "_Wrench_ the face of boiler to change it to a different _door style_, Sneak while placing to _raise_ the boiler up _half_ a block.",
 
   "block.railways.generic_radial.tooltip": "GENERIC RADIAL",
   "block.railways.generic_radial.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block.",
 
   "block.railways.smokestack.tooltip": "SMOKESTACK",
-  "block.railways.smokestack.tooltip.summary": "Press and hold the _Focus Schematic Overlay_ key (default _ALT_) to select variants of this block.",
+  "block.railways.smokestack.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block.",
   "block.railways.smokestack.tooltip.condition1": "When you use a dye item on a smokestack",
   "block.railways.smokestack.tooltip.behaviour1": "The _emitted smoke_ will change color",
   "block.railways.smokestack.tooltip.condition2": "When you use soul sand or soul soil on a smokestack",
   "block.railways.smokestack.tooltip.behaviour2": "The _emitted smoke_ will change to _soul smoke_",
+
+  "block.railways.smokestack_caboosestyle.tooltip": "CABOOSESTYLE SMOKESTACK",
+  "block.railways.smokestack_caboosestyle.tooltip.summary": "This smokestack is dyeable.",
+  "block.railways.smokestack_caboosestyle.tooltip.condition1": "When you use a dye item on a smokestack",
+  "block.railways.smokestack_caboosestyle.tooltip.behaviour1": "The _emitted smoke_ will change color",
+  "block.railways.smokestack_caboosestyle.tooltip.condition2": "When you use soul sand or soul soil on a smokestack",
+  "block.railways.smokestack_caboosestyle.tooltip.behaviour2": "The _emitted smoke_ will change to _soul smoke_",
 
   "block.railways.headstock.tooltip": "HEADSTOCK",
   "block.railways.headstock.tooltip.summary": "Press and hold the _Open Cycle Menu_ key (default _ALT_) to select variants of this block. Can be dyed by _clicking_ with dye.",

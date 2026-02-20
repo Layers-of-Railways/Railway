@@ -13,6 +13,8 @@
   "railways.coupler.mode.decoupling": "-> Decoupling",
   "railways.coupler.mode.both": "-> Coupling & Decoupling",
 
+  "create.track_target.not_straight": "Targeted track must be straight",
+
   "railways.schedule.instruction.redstone_link": "Power Redstone Link",
   "railways.schedule.instruction.redstone_link.power": "Power Level: %s",
   "railways.schedule.instruction.redstone_link.power_edit_box": "Power Level",
@@ -101,6 +103,8 @@
   "create.railways.switch.auto_mode.manual_only": "Manual Trains Only",
   "create.railways.switch.auto_mode.auto": "Manual & Scheduled Trains",
 
+  "item.railways.paint_pitcher.paint_level": "Paint level: %s / %s",
+
   "railways.bogeys.styles.handcar": "Handcar",
   
   "railways.bogeys.styles.invisible": "Invisible",
@@ -150,6 +154,7 @@
 
   "railways.smokestack.goggle.tooltip": "Selected Style: %s",
   "railways.smokestack.goggle.tooltip.color": "Selected Dye Color: %s",
+  "railways.smokestack.goggle.tooltip.style.soul": "Soul",
 
   "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
 
@@ -169,5 +174,8 @@
   "railways.gui.bogey_menu.category.quintupleaxles": "Quintuple Axles",
   "railways.gui.bogey_menu.category.sextupleaxles": "Sextuple Axles",
 
-  "railways.keyinfo.cycle_menu": "Open Cycle Menu"
+  "railways.keyinfo.cycle_menu": "Open Cycle Menu",
+
+  "create.train.status.railways.shadow_realm.banished": "Banished to the Shadow Realm",
+  "create.train.status.railways.shadow_realm.restored": "Restored from the Shadow Realm"
 }

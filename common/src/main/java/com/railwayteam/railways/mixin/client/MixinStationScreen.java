@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -21,7 +21,6 @@ package com.railwayteam.railways.mixin.client;
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.mixin_interfaces.ILimited;
 import com.railwayteam.railways.registry.CRPackets;
-import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainIconType;
 import com.simibubi.create.content.trains.station.AbstractStationScreen;
@@ -88,8 +87,7 @@ public abstract class MixinStationScreen extends AbstractStationScreen {
             Train train = displayedTrain.get();
             if (train != null) {
                 train.icon = TrainIconType.byId(iconTypes.get(s));
-                Utils.sendCreatePacketToServer(
-                        new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId(), train.mapColorIndex));
+                CRPackets.PACKETS.send(new TrainEditPacket(train.id, trainNameBox.getValue(), train.icon.getId(), train.mapColorIndex));
             }
         });
         iconTypeScroll.active = false;

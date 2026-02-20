@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "railways:palettes/dye_groups/copper_wrapped_smokebox"
+    },
+    {
+      "fluid": "railways:paint",
+      "nbt": {
+        "Color": "maroon"
+      },
+      "railways:amount": 10125,
+      "railways:amount:unit": 81000
+    }
+  ],
+  "results": [
+    {
+      "item": "railways:maroon_copper_wrapped_locometal_smokebox"
+    }
+  ]
+}

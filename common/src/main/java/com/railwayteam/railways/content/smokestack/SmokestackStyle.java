@@ -32,20 +32,38 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 
 public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemGroup.IStyle<Couple<String>> {
-    STEEL("steel", "Steel"),
-    BRASS_CAP_STEEL("brass_cap_steel", "Brass Capped Steel"),
-    COPPER_CAP_STEEL("copper_cap_steel", "Copper Capped Steel"),
-    BRASS("brass", "Brass"),
-    COPPER_CAP_BRASS("copper_cap_brass", "Copper Capped Brass"),
-    COPPER("copper", "Copper"),
-    BRASS_CAP_COPPER("brass_cap_copper", "Brass Capped Copper");
+    STEEL(Material.STEEL),
+    BRASS_CAP_STEEL(Material.STEEL, Material.BRASS),
+    COPPER_CAP_STEEL(Material.STEEL, Material.COPPER),
+    IRON_CAP_STEEL(Material.STEEL, Material.IRON),
+
+    BRASS(Material.BRASS),
+    COPPER_CAP_BRASS(Material.BRASS, Material.COPPER),
+    IRON_CAP_BRASS(Material.BRASS, Material.IRON),
+
+    COPPER(Material.COPPER),
+    BRASS_CAP_COPPER(Material.COPPER, Material.BRASS),
+    IRON_CAP_COPPER(Material.COPPER, Material.IRON);
 
     private final String model;
+    private final String segmentModel;
     private final String langName;
 
-    SmokestackStyle(String model, String langName) {
-        this.model = model;
-        this.langName = langName;
+    SmokestackStyle(Material material) {
+        assert !material.capOnly : "Material " + material.lang() + " is cap only and cannot be used for a full smokestack style!";
+
+        this.model = material.id();
+        this.segmentModel = material.id();
+        this.langName = material.lang();
+    }
+
+    SmokestackStyle(Material material, Material capMaterial) {
+        assert !material.capOnly : "Material " + material.lang() + " is cap only and cannot be used for a full smokestack style!";
+        assert material != capMaterial : "Material " + material.lang() + " cannot be used as both the cap and body material!";
+
+        this.model = capMaterial.id() + "_cap_" + material.id();
+        this.segmentModel = material.id();
+        this.langName = TextUtils.titleCaseConversion(capMaterial.lang() + " Capped " + material.lang());
     }
 
     @Override
@@ -57,6 +75,10 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
         if (!variant.equals("caboosestyle"))
             return Railways.asResource("block/smokestack/" + variant + "/" + model);
         return Railways.asResource("block/smokestack/caboosestyle");
+    }
+
+    public ResourceLocation getSegmentTexture(String variant) {
+        return Railways.asResource("block/smokestack/" + variant + "/segment_" + segmentModel);
     }
 
     @Override
@@ -88,5 +110,26 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
             case "woodburner" -> CRTags.AllItemTags.WOODBURNER_STACK.tag;
             default -> throw new IllegalArgumentException();
         };
+    }
+
+    private enum Material {
+        BRASS(false),
+        COPPER(false),
+        STEEL(false),
+        IRON(true);
+
+        public final boolean capOnly;
+
+        Material(boolean capOnly) {
+            this.capOnly = capOnly;
+        }
+
+        public String id() {
+            return name().toLowerCase(Locale.ROOT);
+        }
+
+        public String lang() {
+            return TextUtils.titleCaseConversion(name());
+        }
     }
 }

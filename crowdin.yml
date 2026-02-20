@@ -30,7 +30,9 @@
                 "ro_RO": "ro_ro",
                 "th_TH": "th_th",
                 "es_MX": "es_mx",
-                "hi_IN": "hi_in"
+                "hi_IN": "hi_in",
+                "fi_FI": "fi_fi",
+                "pt_PT": "pt_pt"
             }
         }
     }

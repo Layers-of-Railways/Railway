@@ -19,10 +19,12 @@
 package com.railwayteam.railways.base.data;
 
 import com.railwayteam.railways.multiloader.CommonTags;
+import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.registry.CRTags.AllBlockTags;
 import com.railwayteam.railways.registry.CRTags.AllItemTags;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -33,6 +35,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +61,11 @@ public class CRTagGen {
 				.forceAddTag(BlockTags.FENCES);
 
 		prov.addTag(CRTags.AllBlockTags.TRACK_CASING_BLACKLIST.tag);
+		prov.addTag(AllBlockTags.TRACK_CASING_WHITELIST.tag)
+			.add(Blocks.SNOW)
+			.add(Blocks.MOSS_CARPET);
 
-		// VALIDATE
+		CommonTags.COLORLESS_GLASS_B.generateCommon(prov);
 
 		for (CRTags.AllBlockTags tag : CRTags.AllBlockTags.values()) {
 			if (tag.alwaysDatagen) {
@@ -81,6 +87,7 @@ public class CRTagGen {
 		CommonTags.COPPER_INGOTS.generateCommon(prov);
 		CommonTags.BRASS_INGOTS.generateCommon(prov);
 		CommonTags.IRON_INGOTS.generateCommon(prov);
+		CommonTags.COLORLESS_GLASS_I.generateCommon(prov);
 		CommonTags.STRING.generateCommon(prov)
 			.generateBoth(prov, tag -> tag.add(Items.STRING.builtInRegistryHolder().key()));
 		CommonTags.IRON_PLATES.generateCommon(prov);
@@ -89,6 +96,16 @@ public class CRTagGen {
 				.generateBoth(prov, tag -> tag.add(Items.CRAFTING_TABLE.builtInRegistryHolder().key()));
 
 		prov.addTag(AllItemTags.NOT_TRAIN_FUEL.tag);
+
+		prov.addTag(AllItemTags.BINDING_AGENTS.tag)
+			.add(Items.CLAY_BALL);
+
+		prov.addTag(AllItemTags.PAINT_DRINK_BLOCKERS.tag)
+			.add(CRItems.PAINT_BRUSH.get())
+			.add(AllItems.POTATO_CANNON.get());
+
+		prov.addTag(AllItemTags.PAINT_BRUSH_REPAIR_ITEMS.tag)
+			.add(Items.FEATHER);
 
 		for (AllItemTags tag : AllItemTags.values()) {
 			if (tag.alwaysDatagen)

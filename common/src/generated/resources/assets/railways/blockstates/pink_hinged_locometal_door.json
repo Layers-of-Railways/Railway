@@ -1,0 +1,244 @@
+{
+  "variants": {
+    "facing=east,half=lower,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left"
+    },
+    "facing=east,half=lower,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed"
+    },
+    "facing=east,half=lower,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 90
+    },
+    "facing=east,half=lower,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right"
+    },
+    "facing=east,half=lower,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed"
+    },
+    "facing=east,half=lower,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 270
+    },
+    "facing=east,half=lower,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left"
+    },
+    "facing=east,half=upper,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed"
+    },
+    "facing=east,half=upper,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 90
+    },
+    "facing=east,half=upper,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right"
+    },
+    "facing=east,half=upper,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed"
+    },
+    "facing=east,half=upper,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 270
+    },
+    "facing=east,half=upper,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right"
+    },
+    "facing=north,half=lower,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed"
+    },
+    "facing=north,half=lower,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 180
+    },
+    "facing=north,half=lower,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right"
+    },
+    "facing=north,half=upper,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed"
+    },
+    "facing=north,half=upper,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 180
+    },
+    "facing=north,half=upper,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 180
+    },
+    "facing=south,half=lower,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left"
+    },
+    "facing=south,half=lower,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed"
+    },
+    "facing=south,half=upper,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 180
+    },
+    "facing=south,half=upper,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left"
+    },
+    "facing=south,half=upper,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed"
+    },
+    "facing=west,half=lower,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 270
+    },
+    "facing=west,half=lower,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_right_windowed",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left",
+      "y": 90
+    },
+    "facing=west,half=lower,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_bottom_left_windowed",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=left,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=left,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 270
+    },
+    "facing=west,half=upper,hinge=right,open=false,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_right_windowed",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=true,windowed=false": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left",
+      "y": 90
+    },
+    "facing=west,half=upper,hinge=right,open=true,windowed=true": {
+      "model": "railways:block/palettes/pink/hinged_door/block_top_left_windowed",
+      "y": 90
+    }
+  }
+}

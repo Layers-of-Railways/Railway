@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -60,16 +60,16 @@ public class MixinTrackBlockClient {
             return;
         }
         // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
-        if (casingBc.getTrackCasing() != null) {
+        if (casingBc.railways$getTrackCasing() != null) {
             if (bc.bePositions.getFirst().getY() == bc.bePositions.getSecond().getY()) {
                 affine.translate(0, 1 / 16f, 0);
-            } else if (!casingBc.isAlternate()) {
+            } else if (!casingBc.railways$isAlternate()) {
                 affine.translate(0, 4 / 16f, 0);
             }
         }
     }
 
-    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true), remap = false)
+    @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/track/TrackRenderer;getModelAngles(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;", remap = true), remap = true)
     private <Self extends Affine<Self>> void blockShiftTrackOverlay(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir) {
         if (bezierPoint == null && state.getBlock() instanceof TrackBlock trackBlock && trackBlock.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
             affine.translate(0, 14/16f, 0);
@@ -78,13 +78,13 @@ public class MixinTrackBlockClient {
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE && state.getBlock() instanceof TrackBlock trackBlock) {
             IHasTrackCasing casingTE = (IHasTrackCasing) trackTE;
             TrackShape shape = state.getValue(TrackBlock.SHAPE);
-            if (casingTE.getTrackCasing() != null) {
+            if (casingTE.railways$getTrackCasing() != null) {
                 CRBlockPartials.TrackCasingSpec spec = CRBlockPartials.TRACK_CASINGS.get(shape);
                 TrackType trackType = trackBlock.getMaterial().trackType;
                 if (spec != null)
                     affine.translate(
                         spec.getXShift(trackType),
-                        (spec.getTopSurfacePixelHeight(trackType, casingTE.isAlternate()) - 2)/16f,
+                        (spec.getTopSurfacePixelHeight(trackType, casingTE.railways$isAlternate()) - 2)/16f,
                         spec.getZShift(trackType)
                     );
             }

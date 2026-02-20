@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -30,17 +30,17 @@ public class RuntimeFakePartialModel {
     return new ResourceLocation(loc.getNamespace(), "runtime/" + Clock.systemUTC().millis() + "/" + model.hashCode() + "/" + loc.getPath());
   }
 
-  public static PartialModel make(ResourceLocation loc, BakedModel bakedModel) {
-    boolean tooLate = AccessorPartialModel.railways$getPopulateOnInit();
-    AccessorPartialModel.railways$setPopulateOnInit(false);
+    public static PartialModel make(ResourceLocation loc, BakedModel bakedModel) {
+        boolean tooLate = AccessorPartialModel.railways$getPopulateOnInit();
+        AccessorPartialModel.railways$setPopulateOnInit(false);
 
-    ResourceLocation id = runtime_ify(loc, bakedModel);
-    PartialModel partialModel = PartialModel.of(id);
-    ((AccessorPartialModel) (Object) partialModel).railways$setBakedModel(bakedModel);
+        ResourceLocation id = runtime_ify(loc, bakedModel);
+        PartialModel partialModel = PartialModel.of(id);
+        ((AccessorPartialModel) (Object) partialModel).railways$setBakedModel(bakedModel);
 
-    AccessorPartialModel.railways$getALL().remove(id);
-    AccessorPartialModel.railways$setPopulateOnInit(tooLate);
+        AccessorPartialModel.railways$getALL().remove(id);
+        AccessorPartialModel.railways$setPopulateOnInit(tooLate);
 
-    return partialModel;
-  }
+        return partialModel;
+    }
 }

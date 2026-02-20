@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -66,7 +66,7 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
         return Railways.asResource("loaded");
     }
 
-    @Override
+    @Override5
     public MutableComponent getWaitingStatus(Level level, Train train, CompoundTag tag) {
         return Component.translatable("railways.schedule.condition.loaded.status");
     }

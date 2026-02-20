@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/palettes/doors/block_bottom_left",
+  "textures": {
+    "block_particle": "railways:block/palettes/chartreuse/annexed_slashed",
+    "bottom": "railways:block/palettes/chartreuse/sliding_windowed_door_bottom",
+    "side": "railways:block/palettes/chartreuse/sliding_windowed_door_side"
+  }
+}

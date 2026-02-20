@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,7 @@ import com.railwayteam.railways.registry.forge.CRBlocksImpl;
 import com.railwayteam.railways.registry.forge.CRCreativeModeTabsImpl;
 import com.railwayteam.railways.registry.forge.CRMountedStorageTypesImpl;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
+import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.contraption.BlockMovementChecks.CheckResult;
@@ -42,8 +43,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.ConfigurationFactory;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -54,6 +61,7 @@ public class RailwaysImpl {
 	static IEventBus bus;
 
 	public RailwaysImpl() {
+		restoreLoggers();
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
 		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
 		Railways.init();
@@ -61,6 +69,12 @@ public class RailwaysImpl {
 		CRParticleTypesParticleEntryImpl.register(bus);
 		//noinspection Convert2MethodRef
 		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
+
+		bus.addListener(RailwaysImpl::onCommonSetup);
+	}
+
+	public static void onCommonSetup(final FMLCommonSetupEvent event) {
+		event.enqueueWork(Railways::postRegistrationInit);
 	}
 
 	public static void finalizeRegistrate() {
@@ -78,6 +92,22 @@ public class RailwaysImpl {
 		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
 		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
+	}
+
+	private static void restoreLoggers() {
+		if (Utils.isDevEnv()) {
+			// restore our logging config, since forge likes to nuke it for fun
+			for (String prop : new String[] {"log4j.configurationFile", "log4j2.configurationFile"}) {
+				String file = System.getProperty(prop);
+				if (file != null) {
+					Configurator.reconfigure(ConfigurationFactory.getInstance().getConfiguration(
+						LoggerContext.getContext(),
+						ConfigurationSource.fromUri(URI.create(file))
+					));
+					break;
+				}
+			}
+		}
 	}
 
 	public static void platformBasedRegistration() {

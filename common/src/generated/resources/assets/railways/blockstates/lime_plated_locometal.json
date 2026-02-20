@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "railways:block/lime_plated_locometal"
+      "model": "railways:block/palettes/lime/plated_locometal"
     }
   }
 }
