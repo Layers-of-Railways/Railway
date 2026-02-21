@@ -17,7 +17,7 @@
 package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
-import com.railwayteam.railways.base.datafixers.CompatCherryTrackFix;
+import com.railwayteam.railways.base.datafix.fixes.CompatCherryTrackFix;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2024 The Railways Team
+ * Copyright (c) 2024-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.base.datafixers;
+package com.railwayteam.railways.base.datafix.fixes;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.DSL;
@@ -27,7 +27,6 @@ import com.mojang.serialization.Dynamic;
 import com.railwayteam.railways.mixin.MixinTrackMaterial;
 import net.minecraft.util.datafix.fixes.References;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
