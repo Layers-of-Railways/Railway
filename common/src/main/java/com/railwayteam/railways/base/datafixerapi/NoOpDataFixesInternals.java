@@ -18,6 +18,7 @@ package com.railwayteam.railways.base.datafixerapi;
 
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
 import org.jetbrains.annotations.NotNull;
@@ -46,8 +47,8 @@ public class NoOpDataFixesInternals extends DataFixesInternals {
     }
 
     @Override
-    public @NotNull CompoundTag updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull CompoundTag compound) {
-        return compound.copy();
+    public @NotNull <T> Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic) {
+        return dynamic;
     }
 
     @Override

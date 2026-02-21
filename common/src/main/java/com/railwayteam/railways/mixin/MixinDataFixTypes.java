@@ -18,23 +18,19 @@
 
 package com.railwayteam.railways.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.datafixers.DataFixer;
+import com.mojang.serialization.Dynamic;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DataFixTypes.class)
 public class MixinDataFixTypes {
-    @Inject(
-        method = "update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;",
-        at = @At("RETURN"),
-        cancellable = true
-    )
-    private void updateDataWithFixers(DataFixer fixer, CompoundTag tag, int version, int newVersion, CallbackInfoReturnable<CompoundTag> cir) {
-        cir.setReturnValue(DataFixesInternals.get().updateWithAllFixers((DataFixTypes) (Object) this, cir.getReturnValue()));
+    @WrapMethod(method = "update(Lcom/mojang/datafixers/DataFixer;Lcom/mojang/serialization/Dynamic;II)Lcom/mojang/serialization/Dynamic;")
+    private <T> Dynamic<T> updateFixers(DataFixer fixer, Dynamic<T> input, int version, int newVersion, Operation<Dynamic<T>> original) {
+        Dynamic<T> vanillaFixed = original.call(fixer, input, version, newVersion);
+        return DataFixesInternals.get().updateWithAllFixers((DataFixTypes) (Object) this, vanillaFixed);
     }
 }
