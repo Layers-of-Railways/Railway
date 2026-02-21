@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,7 @@
 package com.railwayteam.railways.config;
 
 import com.simibubi.create.foundation.config.ConfigBase;
+import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
 
 @SuppressWarnings("unused")
 public class CServer extends ConfigBase {
@@ -31,6 +32,7 @@ public class CServer extends ConfigBase {
     public final ConfigBool explosiveTrackDamage = b(false, "creeperTrackDamage", Comments.explosiveTrackDamage);
     public final ConfigFloat handcarHungerMultiplier = f(.01f, 0, 1, "handcarHungerMultiplier", Comments.handcarHungerMultiplier);
     public final ConfigBool rollersClearSnow = b(true, "rollersClearSnow", Comments.rollersClearSnow);
+    public final ConfigBool unlimitedCreativeRelocation = b(false, "unlimitedCreativeRelocation", Comments.unlimitedCreativeRelocation, ConfigAnnotations.RequiresRelog.TRUE.asComment());
 
     public final CSemaphores semaphores = nested(0, CSemaphores::new, Comments.semaphores);
     public final CConductors conductors = nested(0, CConductors::new, Comments.conductors);
@@ -51,6 +53,7 @@ public class CServer extends ConfigBase {
         static String explosiveTrackDamage = "Allow creepers and ghast fireballs to damage tracks";
         static String handcarHungerMultiplier = "Multiplier used for calculating exhaustion from speed when a handcar is used.";
         static String rollersClearSnow = "Rollers clear snow-encased tracks when rolling over them.";
+        static String unlimitedCreativeRelocation = "Allow creative mode players to relocate trains without distance restrictions.";
 
         static String semaphores = "Semaphore settings";
         static String conductors = "Conductor settings";

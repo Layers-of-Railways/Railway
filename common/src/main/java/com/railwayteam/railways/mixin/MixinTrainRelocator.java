@@ -20,6 +20,8 @@ package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.railwayteam.railways.content.shadow_realm.ShadowRealm;
 import com.railwayteam.railways.mixin_interfaces.IHandcarTrain;
@@ -27,7 +29,9 @@ import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.entity.TrainRelocationPacket;
 import com.simibubi.create.content.trains.entity.TrainRelocator;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Position;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -71,5 +75,14 @@ public class MixinTrainRelocator {
             trainId = ShadowRealm.clientShadowRestoringTrain.id;
         }
         return original.call(trainId, pos, hoveredBezier, direction, lookAngle, entityId);
+    }
+
+    @WrapOperation(method = {"clientTick", "onClicked"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z"))
+    private static boolean unrestrictRange(Vec3 instance, Position pos, double distance, Operation<Boolean> original,
+                                           @Local(name = "player") LocalPlayer player) {
+        if (ShadowRealm.MARKER.equals(relocatingTrain) || (player.isCreative() && CRConfigs.server().unlimitedCreativeRelocation.get()))
+            return true;
+
+        return original.call(instance, pos, distance);
     }
 }
