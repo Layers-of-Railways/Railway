@@ -26,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
+import java.util.function.BiFunction;
+
 public class NoOpDataFixesInternals extends DataFixesInternals {
 
     private final Schema schema;
@@ -43,7 +45,7 @@ public class NoOpDataFixesInternals extends DataFixesInternals {
     }
 
     @Override
-    public @NotNull Schema createBaseSchema() {
+    public @NotNull Schema createBaseSchema(@NotNull BiFunction<Integer, Schema, Schema> factory) {
         return schema;
     }
 

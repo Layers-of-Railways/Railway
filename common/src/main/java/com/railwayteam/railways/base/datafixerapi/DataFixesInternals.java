@@ -39,11 +39,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 @ApiStatus.Internal
 public abstract class DataFixesInternals {
 
-    public static final BiFunction<Integer, Schema, Schema> BASE_SCHEMA = (version, parent) -> {
-        checkArgument(version == 0, "version must be 0");
-        checkArgument(parent == null, "parent must be null");
-        return get().createBaseSchema();
-    };
+    public static BiFunction<Integer, Schema, Schema> baseSchema(BiFunction<Integer, Schema, Schema> factory) {
+        return (version, parent) -> {
+            checkArgument(version == 0, "version must be 0");
+            checkArgument(parent == null, "parent must be null");
+            return get().createBaseSchema(factory);
+        };
+    }
 
     public record DataFixerEntry(DataFixer dataFixer, int currentVersion) {}
 
@@ -89,8 +91,8 @@ public abstract class DataFixesInternals {
 
     public abstract @Nullable DataFixerEntry getFixerEntry();
 
-    @Contract(value = "-> new", pure = true)
-    public abstract @NotNull Schema createBaseSchema();
+    @Contract(value = "_ -> new", pure = true)
+    public abstract @NotNull Schema createBaseSchema(@NotNull  BiFunction<Integer, Schema, Schema> factory);
 
     public abstract <T> @NotNull Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic);
 
