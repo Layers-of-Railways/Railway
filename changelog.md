@@ -39,6 +39,7 @@ Fixes
 - Fix potential invalid signal state caused by relocation of single-carriage trains
 - Make conductors immune to fall damage again
 - Skip unnecessary buffer scouting for stationary trains
+- Animated flywheels finally spin at the correct speed
 ------------------------------------------------------
 Steam 'n' Rails 1.6.9
 ------------------------------------------------------

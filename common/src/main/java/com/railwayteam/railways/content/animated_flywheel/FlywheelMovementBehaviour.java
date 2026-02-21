@@ -32,13 +32,25 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class FlywheelMovementBehaviour implements MovementBehaviour {
-    @Override public boolean renderAsNormalBlockEntity() { return true; }
+    @Override
+    public boolean renderAsNormalBlockEntity() {
+        return true;
+    }
+
+    private static class TemporaryData {
+        float wheelAngle0 = Float.NaN;
+        float wheelAngle1 = Float.NaN;
+    }
 
     @Override
-    public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
+    public void tick(MovementContext context) {
+        Object temporaryDataBackup = context.temporaryData;
+        context.temporaryData = null;
+
         // Early exit checks, don't mind them :)
         if (!CRConfigs.client().animatedFlywheels.get()) return;
         if (!context.world.isClientSide || Minecraft.getInstance().isPaused()) return;
@@ -56,16 +68,33 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
             case EAST, WEST -> { if (flwAxis == Direction.Axis.X) return; }
         }
 
+        TemporaryData td = temporaryDataBackup instanceof TemporaryData tempDat ? tempDat : new TemporaryData();
+        context.temporaryData = td;
+
         ICarriageFlywheel flywheel = ((ICarriageFlywheel) flywheelBlockEntity);
         double distanceTravelled = ((IDistanceTravelled) carriageContraptionEntity).railways$getDistanceTravelled();
 
-        double angleDiff = AnimationTickHolder.getPartialTicks() * (distanceTravelled / 2.8125) * (180 / Math.PI);
+        double wheelRadius = 1.4375;
+        double wheelCircumference = 2 * Math.PI * wheelRadius;
+        double angleDiff = 360 * (distanceTravelled / wheelCircumference);
 
         if (dir == Direction.SOUTH || dir == Direction.WEST)
             angleDiff = -angleDiff;
 
-        float newWheelAngle = (float) (flywheel.railways$getAngle() + angleDiff % 360);
+        float currentAngle = Float.isNaN(td.wheelAngle1) ? flywheel.railways$getAngle() : td.wheelAngle1;
+        td.wheelAngle0 = (currentAngle + 360) % 360;
+        td.wheelAngle1 = (float) (td.wheelAngle0 + angleDiff);
+    }
 
-        flywheel.railways$setAngle(newWheelAngle);
+    @Override
+    public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
+        if (!(context.contraption.presentBlockEntities.get(context.localPos) instanceof FlywheelBlockEntity flywheelBlockEntity)) return;
+        if (!(context.temporaryData instanceof TemporaryData temporaryData)) return;
+
+        ((ICarriageFlywheel) flywheelBlockEntity).railways$setAngle(Mth.lerp(
+            AnimationTickHolder.getPartialTicks(),
+            temporaryData.wheelAngle0,
+            temporaryData.wheelAngle1
+        ));
     }
 }
