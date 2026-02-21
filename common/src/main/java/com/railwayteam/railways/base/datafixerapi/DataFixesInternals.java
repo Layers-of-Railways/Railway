@@ -16,6 +16,7 @@
  */
 package com.railwayteam.railways.base.datafixerapi;
 
+import com.mojang.datafixers.DSL.TypeReference;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
@@ -93,5 +94,7 @@ public abstract class DataFixesInternals {
 
     public abstract <T> @NotNull Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic);
 
-    public abstract @NotNull CompoundTag addModDataVersions(@NotNull CompoundTag compound);
+    public abstract <T> @NotNull Dynamic<T> updateWithAllFixers(@NotNull TypeReference rootType, @NotNull Dynamic<T> dynamic);
+
+    public abstract void addModDataVersions(@NotNull CompoundTag compound);
 }
