@@ -18,11 +18,16 @@
 
 package com.railwayteam.railways.forge.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.content.shadow_realm.ShadowRealm;
 import com.railwayteam.railways.content.shadow_realm.ShadowRealm.RestorationTarget;
 import com.simibubi.create.content.trains.entity.TrainRelocationPacket;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -48,6 +53,15 @@ public class TrainRelocationPacketMixin {
 
     @Shadow
     Vec3 lookAngle;
+
+    @WrapOperation(method = "lambda$handle$3", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;closerThan(Lnet/minecraft/core/Position;D)Z", ordinal = 1))
+    private boolean unrestrictRange(Vec3 instance, Position pos, double distance, Operation<Boolean> original,
+                                    @Local(name = "sender") ServerPlayer sender) {
+        if (sender.isCreative() && CRConfigs.server().unlimitedCreativeRelocation.get())
+            return true;
+
+        return original.call(instance, pos, distance);
+    }
 
     @Inject(method = "lambda$handle$3", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/network/NetworkEvent$Context;getSender()Lnet/minecraft/server/level/ServerPlayer;"), cancellable = true)
     private void relocateShadowTrain(Context context, CallbackInfo ci) {

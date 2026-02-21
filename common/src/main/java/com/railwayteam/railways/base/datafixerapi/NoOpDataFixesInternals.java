@@ -16,13 +16,17 @@
  */
 package com.railwayteam.railways.base.datafixerapi;
 
+import com.mojang.datafixers.DSL.TypeReference;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
+
+import java.util.function.BiFunction;
 
 public class NoOpDataFixesInternals extends DataFixesInternals {
 
@@ -41,17 +45,20 @@ public class NoOpDataFixesInternals extends DataFixesInternals {
     }
 
     @Override
-    public @NotNull Schema createBaseSchema() {
+    public @NotNull Schema createBaseSchema(@NotNull BiFunction<Integer, Schema, Schema> factory) {
         return schema;
     }
 
     @Override
-    public @NotNull CompoundTag updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull CompoundTag compound) {
-        return compound.copy();
+    public @NotNull <T> Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic) {
+        return dynamic;
     }
 
     @Override
-    public @NotNull CompoundTag addModDataVersions(@NotNull CompoundTag compound) {
-        return compound;
+    public @NotNull <T> Dynamic<T> updateWithAllFixers(@NotNull TypeReference rootType, @NotNull Dynamic<T> dynamic) {
+        return dynamic;
     }
+
+    @Override
+    public void addModDataVersions(@NotNull CompoundTag compound) {}
 }

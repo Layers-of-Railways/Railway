@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2024 The Railways Team
+ * Copyright (c) 2025-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,24 +16,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.base.datafixers;
+package com.railwayteam.railways.base.datafix.fixes;
 
 import com.mojang.datafixers.schemas.Schema;
 
-/*
- * Converts railways:smokestack_streamlined[axis="z"] to railways:smokestack_streamlined[facing="north"]
- * and converts railways:smokestack_streamlined[axis="x"] to railways:smokestack_streamlined[facing="east"]
- *
- * This is needed due to changing them from using axis to facing since streamlined smokestack's had a texture change
- */
-public class StreamlinedSmokeStackFacingFix extends HorizontalAxisToHorizontalFacingFix {
-
-    public StreamlinedSmokeStackFacingFix(Schema outputSchema, String name) {
+public class DiagonalHazardStripesFacingFix extends HorizontalAxisToHorizontalFacingFix {
+    public DiagonalHazardStripesFacingFix(Schema outputSchema, String name) {
         super(outputSchema, name);
     }
 
     @Override
     protected boolean applyToBlockState(String blockId) {
-        return blockId.equals("railways:smokestack_streamlined");
+        if (!blockId.startsWith("railways:")) return false;
+
+        return blockId.endsWith("_hazard_stripes_diagonal_on_black")
+            || blockId.endsWith("_hazard_stripes_diagonal_on_white");
     }
 }

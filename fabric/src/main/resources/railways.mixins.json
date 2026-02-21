@@ -19,7 +19,6 @@
     "EnderManMixin",
     "FluidNetworkMixin",
     "MixinLootDataManager",
-    "SandPaperItemMixin",
     "TrainMixin",
     "TrainRelocationPacketMixin",
     "self.BoilerBlockMixin",

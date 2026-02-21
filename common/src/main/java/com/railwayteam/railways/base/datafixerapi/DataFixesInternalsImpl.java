@@ -16,16 +16,19 @@
  */
 package com.railwayteam.railways.base.datafixerapi;
 
+import com.mojang.datafixers.DSL.TypeReference;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
+import com.railwayteam.railways.mixin.AccessorDataFixTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.datafix.DataFixTypes;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
+
+import java.util.function.BiFunction;
 
 @ApiStatus.Internal
 public final class DataFixesInternalsImpl extends DataFixesInternals {
@@ -55,27 +58,27 @@ public final class DataFixesInternalsImpl extends DataFixesInternals {
     }
 
     @Override
-    public @NotNull Schema createBaseSchema() {
-        return new Schema(0, this.latestVanillaSchema);
+    public @NotNull Schema createBaseSchema(@NotNull BiFunction<Integer, Schema, Schema> factory) {
+        return factory.apply(0, this.latestVanillaSchema);
     }
 
     @Override
-    public @NotNull CompoundTag updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull CompoundTag compound) {
-        var current = new Dynamic<>(NbtOps.INSTANCE, compound);
-
-        if (dataFixer != null) {
-            int modDataVersion = DataFixesInternals.getModDataVersion(compound);
-            current = dataFixTypes.update(dataFixer.dataFixer(), current, modDataVersion, dataFixer.currentVersion());
-        }
-
-        return (CompoundTag) current.getValue();
+    public @NotNull <T> Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic) {
+        return updateWithAllFixers(((AccessorDataFixTypes) (Object) dataFixTypes).railways$getType(), dynamic);
     }
 
     @Override
-    public @NotNull CompoundTag addModDataVersions(@NotNull CompoundTag compound) {
+    public @NotNull <T> Dynamic<T> updateWithAllFixers(@NotNull TypeReference rootType, @NotNull Dynamic<T> dynamic) {
+        if (dataFixer == null)
+            return dynamic;
+
+        int modDataVersion = DataFixesInternals.getModDataVersion(dynamic);
+        return dataFixer.dataFixer().update(rootType, dynamic, modDataVersion, dataFixer.currentVersion());
+    }
+
+    @Override
+    public void addModDataVersions(@NotNull CompoundTag compound) {
         if (dataFixer != null)
             compound.putInt("Railways_DataVersion", dataFixer.currentVersion());
-
-        return compound;
     }
 }

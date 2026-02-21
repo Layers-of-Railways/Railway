@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2025 The Railways Team
+ * Copyright (c) 2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,20 +16,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.base.datafixers;
+package com.railwayteam.railways.mixin.client;
 
-import com.mojang.datafixers.schemas.Schema;
+import net.minecraft.client.Minecraft;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
-public class DiagonalHazardStripesFacingFix extends HorizontalAxisToHorizontalFacingFix {
-    public DiagonalHazardStripesFacingFix(Schema outputSchema, String name) {
-        super(outputSchema, name);
-    }
-
-    @Override
-    protected boolean applyToBlockState(String blockId) {
-        if (!blockId.startsWith("railways:")) return false;
-
-        return blockId.endsWith("_hazard_stripes_diagonal_on_black")
-            || blockId.endsWith("_hazard_stripes_diagonal_on_white");
-    }
+@Mixin(Minecraft.class)
+public interface AccessorMinecraft {
+    @Invoker("openChatScreen")
+    void railways$openChatScreen(String defaultText);
 }

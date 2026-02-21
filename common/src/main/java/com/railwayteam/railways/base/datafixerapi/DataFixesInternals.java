@@ -16,15 +16,21 @@
  */
 package com.railwayteam.railways.base.datafixerapi;
 
+import com.mojang.datafixers.DSL.TypeReference;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.DataFixer;
 import com.mojang.datafixers.schemas.Schema;
+import com.mojang.serialization.Dynamic;
 import com.railwayteam.railways.Railways;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 import java.util.function.BiFunction;
 
@@ -33,11 +39,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 @ApiStatus.Internal
 public abstract class DataFixesInternals {
 
-    public static final BiFunction<Integer, Schema, Schema> BASE_SCHEMA = (version, parent) -> {
-        checkArgument(version == 0, "version must be 0");
-        checkArgument(parent == null, "parent must be null");
-        return get().createBaseSchema();
-    };
+    public static BiFunction<Integer, Schema, Schema> baseSchema(BiFunction<Integer, Schema, Schema> factory) {
+        return (version, parent) -> {
+            checkArgument(version == 0, "version must be 0");
+            checkArgument(parent == null, "parent must be null");
+            return get().createBaseSchema(factory);
+        };
+    }
 
     public record DataFixerEntry(DataFixer dataFixer, int currentVersion) {}
 
@@ -45,6 +53,12 @@ public abstract class DataFixesInternals {
     @Range(from = 0, to = Integer.MAX_VALUE)
     public static int getModDataVersion(@NotNull CompoundTag compound) {
         return compound.getInt("Railways_DataVersion");
+    }
+
+    @Contract(pure = true)
+    @Range(from = 0, to = Integer.MAX_VALUE)
+    public static <T> int getModDataVersion(@NotNull Dynamic<T> dynamic) {
+        return dynamic.get("Railways_DataVersion").asInt(0);
     }
 
     private static DataFixesInternals instance;
@@ -77,10 +91,12 @@ public abstract class DataFixesInternals {
 
     public abstract @Nullable DataFixerEntry getFixerEntry();
 
-    @Contract(value = "-> new", pure = true)
-    public abstract @NotNull Schema createBaseSchema();
+    @Contract(value = "_ -> new", pure = true)
+    public abstract @NotNull Schema createBaseSchema(@NotNull  BiFunction<Integer, Schema, Schema> factory);
 
-    public abstract @NotNull CompoundTag updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull CompoundTag compound);
+    public abstract <T> @NotNull Dynamic<T> updateWithAllFixers(@NotNull DataFixTypes dataFixTypes, @NotNull Dynamic<T> dynamic);
 
-    public abstract @NotNull CompoundTag addModDataVersions(@NotNull CompoundTag compound);
+    public abstract <T> @NotNull Dynamic<T> updateWithAllFixers(@NotNull TypeReference rootType, @NotNull Dynamic<T> dynamic);
+
+    public abstract void addModDataVersions(@NotNull CompoundTag compound);
 }

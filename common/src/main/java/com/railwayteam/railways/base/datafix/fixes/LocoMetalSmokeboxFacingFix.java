@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,51 +16,52 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.base.datafixers;
+package com.railwayteam.railways.base.datafix.fixes;
 
 import com.mojang.datafixers.DSL;
 import com.mojang.datafixers.DataFix;
 import com.mojang.datafixers.TypeRewriteRule;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
+import net.minecraft.core.Direction;
 import net.minecraft.util.datafix.fixes.References;
 
 import java.util.Optional;
 
 /*
- * Converts ?[axis="z"] to ?[facing="north"]
- * and converts ?[axis="x"] to ?[facing="east"]
+ * Converts railways:${color}_locometal_smokebox[axis="z"] to railways:${color}_locometal_smokebox[facing="north"]
+ * and converts railways:${color}_locometal_smokebox[axis="x"] to railways:${color}_locometal_smokebox[facing="east"]
+ *
+ * This is needed due to changing them from using axis to direction properties
  */
-public abstract class HorizontalAxisToHorizontalFacingFix extends DataFix {
-    protected final String name;
+public class LocoMetalSmokeboxFacingFix extends DataFix {
+    private final String name;
 
-    public HorizontalAxisToHorizontalFacingFix(Schema outputSchema, String name) {
+    public LocoMetalSmokeboxFacingFix(Schema outputSchema, String name) {
         super(outputSchema, false);
         this.name = name;
     }
-
-    protected abstract boolean applyToBlockState(String blockId);
 
     @Override
     public TypeRewriteRule makeRule() {
         return this.fixTypeEverywhereTyped(this.name + " for block_state", this.getInputSchema().getType(References.BLOCK_STATE), typed -> typed.update(DSL.remainderFinder(), dynamic -> {
             Optional<String> optional = dynamic.get("Name").asString().result();
-            if (optional.isPresent() && applyToBlockState(optional.get())) {
+            if (optional.isPresent() && optional.get().matches("railways:(.*)_locometal_smokebox")) {
                 // Conversions:
-                // Axis Z -> Facing North
                 // Axis X -> Facing East
+                // Axis Y -> Facing Up
+                // Axis Z -> Facing North
 
                 Dynamic<?> axis = dynamic.get("Properties").orElseEmptyMap().get("axis").orElseEmptyMap();
                 Dynamic<?> properties = dynamic.get("Properties").orElseEmptyMap();
 
-                // Returns either "z" or "x", Yes the quotations are included, therefore, when checking
-                // we need to make sure to escape it properly
-                String axisString = axis.getValue().toString();
+                // Returns x, y or z. As characters.
+                String axisString = axis.getValue().toString().replace("\"", "");
 
-                if (axisString.equals("\"z\"")) {
-                    properties = properties.set("facing", dynamic.createString("north"));
-                } else if (axisString.equals("\"x\"")) {
-                    properties = properties.set("facing", dynamic.createString("east"));
+                switch (Direction.Axis.valueOf(axisString)) {
+                    case X -> properties = properties.set("facing", dynamic.createString("east"));
+                    case Y -> properties = properties.set("facing", dynamic.createString("up"));
+                    case Z -> properties = properties.set("facing", dynamic.createString("north"));
                 }
 
                 dynamic = dynamic.set("Properties", properties);

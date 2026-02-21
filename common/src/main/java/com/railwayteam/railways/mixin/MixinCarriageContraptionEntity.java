@@ -252,10 +252,11 @@ public abstract class MixinCarriageContraptionEntity extends OrientedContraption
             }
         }
     }
-    
-    @Inject(method = "tickContraption", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Couple;getFirst()Ljava/lang/Object;"))
-    private void railways$storeDistanceTravelled(CallbackInfo ci, @Local(name = "distanceTo", ordinal = 0) double distanceTo) {
-        railways$distanceTravelled = distanceTo;
+
+    @WrapOperation(method = "tickContraption", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/entity/CarriageBogey;updateAngles(Lcom/simibubi/create/content/trains/entity/CarriageContraptionEntity;D)V", ordinal = 0))
+    private void storeDistanceTravelled(CarriageBogey instance, CarriageContraptionEntity entity, double distanceMoved, Operation<Void> original) {
+        original.call(instance, entity, distanceMoved);
+        railways$distanceTravelled = distanceMoved;
     }
 
     @Override

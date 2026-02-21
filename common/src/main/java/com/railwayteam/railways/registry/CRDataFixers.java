@@ -21,21 +21,31 @@ package com.railwayteam.railways.registry;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mojang.datafixers.DataFixerBuilder;
 import com.mojang.datafixers.schemas.Schema;
+import com.mojang.datafixers.util.Pair;
 import com.railwayteam.railways.Railways;
+import com.railwayteam.railways.base.datafix.fixes.CompatCherryTrackFix;
+import com.railwayteam.railways.base.datafix.fixes.DiagonalHazardStripesFacingFix;
+import com.railwayteam.railways.base.datafix.fixes.LocoMetalSmokeboxFacingFix;
+import com.railwayteam.railways.base.datafix.fixes.SmokestackPartFix;
+import com.railwayteam.railways.base.datafix.fixes.StreamlinedSmokeStackFacingFix;
+import com.railwayteam.railways.base.datafix.fixes.UpsideDownMonoBogeyFix;
+import com.railwayteam.railways.base.datafix.schemas.V0;
 import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
-import com.railwayteam.railways.base.datafixers.*;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.content.smokestack.block.variable.VariableStackPart;
 import net.minecraft.SharedConstants;
+import net.minecraft.util.datafix.fixes.AddNewChoices;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.BiFunction;
 
-import static com.railwayteam.railways.base.datafixerapi.DataFixesInternals.BASE_SCHEMA;
+import static com.railwayteam.railways.base.datafixerapi.DataFixesInternals.baseSchema;
 
 public class CRDataFixers {
-    private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
+    //private static final BiFunction<Integer, Schema, Schema> SAME = Schema::new;
     private static final BiFunction<Integer, Schema, Schema> SAME_NAMESPACED = NamespacedSchema::new;
 
     public static void register() {
@@ -56,7 +66,8 @@ public class CRDataFixers {
     }
 
     private static void addFixers(DataFixerBuilder builder) {
-        builder.addSchema(0, BASE_SCHEMA);
+        Schema schemaV0 = builder.addSchema(0, baseSchema(V0::new));
+        builder.addFixer(new AddNewChoices(schemaV0, "Added Create's Contraptions", References.ENTITY));
 
         // Register a schema, and then the fixes to get *to* that schema
 
@@ -77,5 +88,20 @@ public class CRDataFixers {
         // need to change diagonal hazard stripes from HORIZONTAL_AXIS to HORIZONTAL_FACING
         Schema schemaV10 = builder.addSchema(10, SAME_NAMESPACED);
         builder.addFixer(new DiagonalHazardStripesFacingFix(schemaV10, "Convert railways:*_diagonal_hazard_stripes{black,white}[axis=\"*\"] to railways:*_diagonal_hazard_stripes{black,white}[facing=\"*\"]"));
+
+        // For v11,
+        // need to convert simple stacks into variable stacks
+        Schema schemaV11 = builder.addSchema(11, SAME_NAMESPACED);
+        //noinspection unchecked
+        Pair<String, VariableStackPart>[] variableStacks = new Pair[] {
+            Pair.of("long", VariableStackPart.SINGLE),
+            Pair.of("coalburner", VariableStackPart.DOUBLE),
+            Pair.of("oilburner", VariableStackPart.DOUBLE),
+            Pair.of("streamlined", VariableStackPart.SINGLE),
+        };
+        for (var pair : variableStacks) {
+            String blockId = "railways:smokestack_" + pair.getFirst();
+            builder.addFixer(new SmokestackPartFix(schemaV11, "Fix part BlockState for "+blockId, blockId, pair.getSecond()));
+        }
     }
 }

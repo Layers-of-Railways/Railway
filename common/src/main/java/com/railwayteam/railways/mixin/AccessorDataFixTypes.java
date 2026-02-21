@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2024 The Railways Team
+ * Copyright (c) 2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,19 +18,13 @@
 
 package com.railwayteam.railways.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.mojang.datafixers.DataFixer;
-import com.mojang.serialization.Dynamic;
-import com.railwayteam.railways.base.datafixerapi.DataFixesInternals;
+import com.mojang.datafixers.DSL.TypeReference;
 import net.minecraft.util.datafix.DataFixTypes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(DataFixTypes.class)
-public class MixinDataFixTypes {
-    @WrapMethod(method = "update(Lcom/mojang/datafixers/DataFixer;Lcom/mojang/serialization/Dynamic;II)Lcom/mojang/serialization/Dynamic;")
-    private <T> Dynamic<T> updateFixers(DataFixer fixer, Dynamic<T> input, int version, int newVersion, Operation<Dynamic<T>> original) {
-        Dynamic<T> vanillaFixed = original.call(fixer, input, version, newVersion);
-        return DataFixesInternals.get().updateWithAllFixers((DataFixTypes) (Object) this, vanillaFixed);
-    }
+public interface AccessorDataFixTypes {
+    @Accessor("type")
+    TypeReference railways$getType();
 }

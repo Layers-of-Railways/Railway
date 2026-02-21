@@ -17,7 +17,6 @@
     "FluidNetworkMixin",
     "MixinLootDataManager",
     "RollingModeMixin",
-    "SandPaperItemMixin",
     "ServerGamePacketListenerImplMixin",
     "TrainMixin",
     "TrainRelocationPacketMixin",

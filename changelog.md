@@ -12,12 +12,14 @@ Additions
   - `/snr shadow_realm banish <train> <key>`: banish a train to the shadow realm
   - `/snr shadow_realm restore <key>`: restore a train from the shadow realm
   - `/snr shadow_realm kill <key>`: permanently delete a train from the shadow realm
+  - Wrenches with the NBT tag `ShadowHammer: 1b` will pre-fill the banish command when sneak-used on a train
 - Palettes Plus
   - 16 new colors
   - many new locometal blocks, including ladders, windows, and more
   - fluid paint mixing
   - potato cannon-launched paint projectiles
   - sandpaper can now be used to remove paint from blocks
+- New config option `unlimitedCreativeRelocation` to allow infinite-range train relocation for creative-mode players
 
 Changes
 - Smokestacks can now be placed with a variable height, similar to whistles
@@ -37,6 +39,7 @@ Fixes
 - Fix potential invalid signal state caused by relocation of single-carriage trains
 - Make conductors immune to fall damage again
 - Skip unnecessary buffer scouting for stationary trains
+- Animated flywheels finally spin at the correct speed
 ------------------------------------------------------
 Steam 'n' Rails 1.6.15 beta
 ------------------------------------------------------
