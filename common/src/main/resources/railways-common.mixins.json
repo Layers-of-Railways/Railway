@@ -73,6 +73,7 @@
     "MixinRailwaySavedData",
     "MixinRollerBlockEntity",
     "MixinRollerMovementBehaviour",
+    "MixinSandPaperItem",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
     "MixinSeatMovementBehaviour",

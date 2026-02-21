@@ -21,7 +21,6 @@
     "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
-    "SandPaperItemMixin",
     "TrainMixin",
     "TrainRelocationPacketMixin",
     "self.BoilerBlockMixin",

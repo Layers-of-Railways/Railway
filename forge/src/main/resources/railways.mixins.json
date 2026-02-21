@@ -19,7 +19,6 @@
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
     "RollingModeMixin",
-    "SandPaperItemMixin",
     "ServerGamePacketListenerImplMixin",
     "TrainMixin",
     "TrainRelocationPacketMixin",
