@@ -76,6 +76,7 @@
     "MixinSandPaperItem",
     "MixinScheduleItem",
     "MixinScheduleRuntime",
+    "MixinSchematicItem",
     "MixinSeatMovementBehaviour",
     "MixinServerLevel",
     "MixinSignalBoundary",
