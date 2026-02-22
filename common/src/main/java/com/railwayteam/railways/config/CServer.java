@@ -19,7 +19,7 @@
 package com.railwayteam.railways.config;
 
 import net.createmod.catnip.config.ConfigBase;
-import com.simibubi.create.foundation.config.ui.ConfigAnnotations;
+import net.createmod.catnip.config.ui.ConfigAnnotations;
 
 @SuppressWarnings("unused")
 public class CServer extends ConfigBase {

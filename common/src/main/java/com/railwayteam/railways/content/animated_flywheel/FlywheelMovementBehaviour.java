@@ -38,12 +38,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 public class FlywheelMovementBehaviour implements MovementBehaviour {
     @Override
     public boolean isActive(MovementContext context) {
-        return true;
-    }
-
-    @Override
-    public boolean renderAsNormalBlockEntity() {
-        return true;
+        return context.world.isClientSide;
     }
 
     private static class TemporaryData {
@@ -93,7 +88,7 @@ public class FlywheelMovementBehaviour implements MovementBehaviour {
 
     @Override
     public void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource buffer) {
-        if (!(context.contraption.presentBlockEntities.get(context.localPos) instanceof FlywheelBlockEntity flywheelBlockEntity)) return;
+        if (!(context.contraption.getOrCreateClientContraptionLazy().getBlockEntity(context.localPos) instanceof FlywheelBlockEntity flywheelBlockEntity)) return;
         if (!(context.temporaryData instanceof TemporaryData temporaryData)) return;
 
         ((ICarriageFlywheel) flywheelBlockEntity).railways$setAngle(Mth.lerp(
