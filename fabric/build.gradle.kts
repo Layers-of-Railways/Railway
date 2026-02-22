@@ -102,6 +102,9 @@ dependencies {
         modLocalRuntime("org.anarres:jcpp:1.4.14")
         modLocalRuntime("io.github.douira:glsl-transformer:2.0.0-pre13")
     }
+
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)!!
+    implementation(include("io.github.llamalad7:mixinextras-fabric:${"mixin_extras_version"()}")!!)!!
 }
 
 operator fun String.invoke(): String {
