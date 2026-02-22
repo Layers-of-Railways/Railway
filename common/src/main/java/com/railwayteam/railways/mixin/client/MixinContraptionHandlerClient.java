@@ -20,6 +20,7 @@ package com.railwayteam.railways.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.railwayteam.railways.config.CRConfigs;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.ContraptionHandlerClient;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
@@ -52,8 +53,10 @@ public class MixinContraptionHandlerClient {
 
         ItemStack stack = player.getItemInHand(interactionHand);
         CompoundTag tag = stack.getTag();
-        if (tag == null || !tag.getBoolean("ShadowHammer"))
-            return original.call(vec3, entity);
+        if (tag == null || !tag.getBoolean("ShadowHammer")) {
+            if (!(player.isCreative() && CRConfigs.client().universalShadowWrench.get()))
+                return original.call(vec3, entity);
+        }
 
         Minecraft mc = Minecraft.getInstance();
         ((AccessorMinecraft) mc).railways$openChatScreen("/snr shadow_realm banish " + entity.trainId + " ");

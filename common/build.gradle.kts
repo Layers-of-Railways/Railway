@@ -47,7 +47,7 @@ dependencies {
     modCompileOnly("de.maxhenkel.voicechat:voicechat-api:${"voicechat_api_version"()}")
     modCompileOnly("maven.modrinth:simple-voice-chat:fabric-${"voicechat_version"()}")
 
-    annotationProcessor(implementation("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
 }
 
 tasks.processResources {
