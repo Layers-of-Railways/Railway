@@ -19,8 +19,6 @@
 package com.railwayteam.railways.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
@@ -31,7 +29,6 @@ import com.railwayteam.railways.content.custom_tracks.generic_crossing.TrackShap
 import com.railwayteam.railways.registry.CRBlocks;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.content.trains.track.ITrackBlock;
-import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackPlacement;
 import com.simibubi.create.content.trains.track.TrackShape;
@@ -45,7 +42,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -138,10 +134,5 @@ public class MixinTrackPlacement {
                 return;
             }
         }
-    }
-
-    @WrapOperation(method = "clientTick", constant = @Constant(classValue = TrackBlock.class), remap = false)
-    private static boolean checkTrackBlock(Object object, Operation<Boolean> original) {
-        return object instanceof GenericCrossingBlock || original.call(object);
     }
 }
