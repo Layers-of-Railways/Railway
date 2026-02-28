@@ -18,23 +18,15 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.content.switches.TrackSwitch;
 import com.railwayteam.railways.content.switches.TrackSwitchDebugVisualizer;
 import com.railwayteam.railways.content.train_debug.TravellingPointVisualizer;
-import com.railwayteam.railways.mixin_interfaces.IShadowTrain;
-import com.railwayteam.railways.mixin_interfaces.RailwaySavedDataDuck;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.content.kinetics.KineticDebugger;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
-import com.simibubi.create.content.trains.RailwaySavedData;
-import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.TrackGraph;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -57,8 +49,6 @@ public abstract class MixinGlobalRailwayManager {
 
     @Shadow public Map<UUID, TrackGraph> trackNetworks;
 
-    @Shadow private RailwaySavedData savedData;
-
     @Inject(method = "clientTick", at = @At("HEAD"))
     private void showSwitchDebug(CallbackInfo ci) {
         if (KineticDebugger.isF3DebugModeActive()) {
@@ -68,21 +58,5 @@ public abstract class MixinGlobalRailwayManager {
                 }
             }
         }
-    }
-
-    @WrapOperation(method = "tickTrains", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/entity/Train;invalid:Z", opcode = Opcodes.GETFIELD))
-    private boolean removeShadowTrains(Train instance, Operation<Boolean> original) {
-        if (instance instanceof IShadowTrain shadowTrain && shadowTrain.railways$isShadow()) {
-            // write all carriages to store their entities
-            DimensionPalette dimensions = new DimensionPalette();
-            for (Carriage carriage : instance.carriages) {
-                carriage.write(dimensions);
-            }
-            ((RailwaySavedDataDuck) savedData).railway$getShadowTrains().put(instance.id, instance);
-            ((RailwaySavedDataDuck) savedData).railways$getShadowKeys().put(shadowTrain.railways$getShadowKey(), instance.id);
-            savedData.setDirty();
-            return true;
-        }
-        return original.call(instance);
     }
 }

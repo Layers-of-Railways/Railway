@@ -56,6 +56,7 @@
     "MixinEdgeData",
     "MixinExplosionDamageCalculator",
     "MixinFlywheelBlockEntity",
+    "MixinGlobalRailwayManager",
     "MixinGlobalStation",
     "MixinIOWorker",
     "MixinItemCombinerMenu",
