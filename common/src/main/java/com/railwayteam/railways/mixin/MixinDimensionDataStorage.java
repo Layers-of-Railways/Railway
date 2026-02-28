@@ -31,7 +31,8 @@ import net.minecraft.world.level.storage.DimensionDataStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(DimensionDataStorage.class)
+// Higher priority (applies later) for compatibility with [Plutonium](https://github.com/IThundxr/Plutonium)
+@Mixin(value = DimensionDataStorage.class, priority = 1200)
 public class MixinDimensionDataStorage {
     @WrapOperation(method = "readTagFromDisk", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/datafix/DataFixTypes;update(Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/nbt/CompoundTag;II)Lnet/minecraft/nbt/CompoundTag;"))
     private CompoundTag updateTracksData(DataFixTypes instance, DataFixer fixer, CompoundTag tag, int version,
