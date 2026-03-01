@@ -1,7 +1,6 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.7.0
 ------------------------------------------------------
-<!--this is the next unreleased version-->
 Additions
 - Deployers can copy train names to/from nametags (pr#576 by SofieBrink)
 - Translation for create.track_target.not_straight #522
