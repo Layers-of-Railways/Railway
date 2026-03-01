@@ -39,7 +39,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
-@Mixin(TrainRelocationPacket.class)
+// earlier priority to bypass OPAC protections, which freak out about there being no entity associated with the relocation
+@Mixin(value = TrainRelocationPacket.class, priority = 500)
 public class TrainRelocationPacketMixin {
     @Shadow
     UUID trainId;
@@ -63,7 +64,7 @@ public class TrainRelocationPacketMixin {
         return original.call(instance, pos, distance);
     }
 
-    @Inject(method = "lambda$handle$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/networking/SimplePacketBase$Context;getSender()Lnet/minecraft/server/level/ServerPlayer;"), cancellable = true)
+    @Inject(method = "lambda$handle$2", at = @At("HEAD"), cancellable = true, remap = false)
     private void relocateShadowTrain(Context context, CallbackInfo ci) {
         ServerPlayer sender = context.getSender();
         if (sender == null) {
