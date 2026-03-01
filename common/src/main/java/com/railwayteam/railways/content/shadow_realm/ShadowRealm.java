@@ -45,11 +45,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
 public class ShadowRealm {
+    public static final Logger LOGGER = LoggerFactory.getLogger(Railways.ID_NAME+"/ShadowRealm");
+
     @ApiStatus.Internal
     public static final UUID MARKER = UUID.fromString("b9347f13-e5b2-4519-b7a4-f34017e7080e");
 
@@ -85,11 +89,24 @@ public class ShadowRealm {
 
     public static void handleTrainRelocationPacket(ServerPlayer sender, UUID trainId, RestorationTarget target, CallbackInfo ci) {
         var savedData = ((AccessorGlobalRailwayManager) Create.RAILWAYS).railways$getSavedData();
-        if (savedData == null) return;
+        if (savedData == null) {
+            LOGGER.warn("Received TrainRelocationPacket but saved data was null");
+            return;
+        }
 
         var shadowTrains = ((RailwaySavedDataDuck) savedData).railway$getShadowTrains();
         Train shadowTrain = shadowTrains.get(trainId);
-        if (shadowTrain == null) return;
+        if (shadowTrain == null) {
+            LOGGER.warn("Received TrainRelocationPacket for train id {} but no shadow train was found", trainId);
+            Train train = Create.RAILWAYS.trains.get(trainId);
+            if (train == null) {
+                LOGGER.warn("No non-shadow train with id {} was found either", trainId);
+            } else {
+                LOGGER.warn("However, a train with id {} and shadow key [{}] was found: '{}'", trainId,
+                    ((IShadowTrain) train).railways$getShadowKey(), train.name.getString());
+            }
+            return;
+        }
 
         // don't bother trying to restore a shadow train
         ci.cancel();
@@ -97,23 +114,24 @@ public class ShadowRealm {
         String messagePrefix = sender.getName().getString() + " could not restore Train " + shadowTrain.name.getString();
 
         if (!sender.hasPermissions(2)) {
-            Railways.LOGGER.warn("{}: player has insufficient permissions", messagePrefix);
+            LOGGER.warn("{}: player has insufficient permissions", messagePrefix);
             return;
         }
 
         int verifyDistance = AllConfigs.server().trains.maxTrackPlacementLength.get() * 2;
         if (!sender.position().closerThan(Vec3.atCenterOf(target.pos), verifyDistance)) {
-            Railways.LOGGER.warn("{}: player too far from clicked pos", messagePrefix);
+            LOGGER.warn("{}: player too far from clicked pos", messagePrefix);
             return;
         }
 
         if (ShadowRealm.restoreTrain(savedData, shadowTrain, target)) {
             sender.displayClientMessage(CreateLang.translateDirect("train.relocate.success")
                 .withStyle(ChatFormatting.GREEN), false);
+            LOGGER.info("{} successfully restored '{}' from the shadow realm", sender.getName().getString(), shadowTrain.name.getString());
             return;
         }
 
-        Railways.LOGGER.warn("{}: restoration failed server-side", messagePrefix);
+        LOGGER.warn("{}: restoration failed server-side", messagePrefix);
     }
 
     public static boolean restoreTrain(RailwaySavedData savedData, Train train, RestorationTarget target) {

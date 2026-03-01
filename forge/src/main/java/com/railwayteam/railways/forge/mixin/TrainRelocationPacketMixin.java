@@ -39,7 +39,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
-@Mixin(TrainRelocationPacket.class)
+// earlier priority to bypass OPAC protections, which freak out about there being no entity associated with the relocation
+@Mixin(value = TrainRelocationPacket.class, priority = 500)
 public class TrainRelocationPacketMixin {
     @Shadow
     UUID trainId;
@@ -63,10 +64,13 @@ public class TrainRelocationPacketMixin {
         return original.call(instance, pos, distance);
     }
 
-    @Inject(method = "lambda$handle$3", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/network/NetworkEvent$Context;getSender()Lnet/minecraft/server/level/ServerPlayer;"), cancellable = true)
+    @Inject(method = "lambda$handle$3", at = @At("HEAD"), cancellable = true, remap = false)
     private void relocateShadowTrain(Context context, CallbackInfo ci) {
         ServerPlayer sender = context.getSender();
-        if (sender == null) return;
+        if (sender == null) {
+            ShadowRealm.LOGGER.warn("Received TrainRelocationPacket without sender, ignoring");
+            return;
+        }
 
         RestorationTarget target = new RestorationTarget(sender.level(), pos, hoveredBezier, direction, lookAngle);
         ShadowRealm.handleTrainRelocationPacket(sender, trainId, target, ci);
