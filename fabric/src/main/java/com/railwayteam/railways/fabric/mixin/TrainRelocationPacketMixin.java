@@ -66,7 +66,10 @@ public class TrainRelocationPacketMixin {
     @Inject(method = "lambda$handle$2", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/networking/SimplePacketBase$Context;getSender()Lnet/minecraft/server/level/ServerPlayer;"), cancellable = true)
     private void relocateShadowTrain(Context context, CallbackInfo ci) {
         ServerPlayer sender = context.getSender();
-        if (sender == null) return;
+        if (sender == null) {
+            ShadowRealm.LOGGER.warn("Received TrainRelocationPacket without sender, ignoring");
+            return;
+        }
 
         RestorationTarget target = new RestorationTarget(sender.level(), pos, hoveredBezier, direction, lookAngle);
         ShadowRealm.handleTrainRelocationPacket(sender, trainId, target, ci);
