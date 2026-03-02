@@ -60,7 +60,6 @@
     "MixinGlobalStation",
     "MixinIOWorker",
     "MixinItemCombinerMenu",
-    "MixinItemStack",
     "MixinLargeFireball",
     "MixinMountedStorageManager",
     "MixinNavigation",

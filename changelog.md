@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Steam 'n' Rails 1.7.2
+------------------------------------------------------
+<!--This is the next unreleased version-->
+Fixes
+- Fix infinite paint for projectiles launched from potato cannons on forge
+------------------------------------------------------
 Steam 'n' Rails 1.7.1
 ------------------------------------------------------
 Fixes

@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2025 The Railways Team
+ * Copyright (c) 2025-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -16,11 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.railwayteam.railways.mixin;
+package com.railwayteam.railways.forge.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.ItemStackDuck;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,12 +30,19 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ItemStack.class)
-public class MixinItemStack implements ItemStackDuck {
+public abstract class ItemStackMixin implements ItemStackDuck {
     @Mutable
-    @Shadow @Final @Deprecated private @Nullable Item item;
+    @Shadow @Final private @Nullable Item item;
+
+    @Mutable
+    @Shadow @Final private Holder.Reference<Item> delegate;
+
+    @Shadow protected abstract void forgeInit();
 
     @Override
     public void railways$setItem(Item item) {
         this.item = item;
+        this.delegate = ForgeRegistries.ITEMS.getDelegateOrThrow(item);
+        this.forgeInit();
     }
 }

@@ -15,6 +15,7 @@
     "ChunkMapAccessor$TrackedEntityAccessor",
     "ContainerLevelAccessMixin",
     "FluidNetworkMixin",
+    "ItemStackMixin",
     "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",

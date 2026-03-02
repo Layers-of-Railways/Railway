@@ -18,6 +18,7 @@
     "DetectorRailBlockMixin",
     "EnderManMixin",
     "FluidNetworkMixin",
+    "ItemStackMixin",
     "MixinLootDataManager",
     "MountedFluidStorageMixin",
     "MountedStorageManagerMixin",
