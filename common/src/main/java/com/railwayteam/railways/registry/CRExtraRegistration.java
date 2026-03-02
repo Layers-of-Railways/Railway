@@ -23,21 +23,41 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.content.palettes.PalettesColor;
 import com.railwayteam.railways.mixin.AccessorBlockEntityType;
-import com.railwayteam.railways.mixin.AccessorCreate;
 import com.simibubi.create.Create;
 import com.simibubi.create.api.behaviour.display.DisplaySource;
 import com.simibubi.create.api.registry.CreateRegistries;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
 import java.util.HashSet;
 import java.util.Set;
 
 public class CRExtraRegistration {
     private static Set<BlockEntityType<?>> modifiedTypes = new HashSet<>();
+
+    private static final CreateRegistrate CREATE_REGISTRATE;
+
+    static {
+        CreateRegistrate localRegistrate = null;
+
+        try {
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            MethodHandles.Lookup privateLookup = MethodHandles.privateLookupIn(Create.class, lookup);
+
+            VarHandle handle = privateLookup.findStaticVarHandle(Create.class, "REGISTRATE", CreateRegistrate.class);
+            localRegistrate = (CreateRegistrate) handle.get();
+        } catch (Exception e) {
+            Railways.LOGGER.error("Failed to get Create's Registrate Instance, This should not happen!!", e);
+        }
+
+        CREATE_REGISTRATE = localRegistrate;
+    }
 
     // register the source, working independently of mod loading order
     public static void register() {
@@ -49,7 +69,7 @@ public class CRExtraRegistration {
 
     private static void addSignalSource() {
         MultiRegistryCallback.create(
-            AccessorCreate.railways$getRegistrate(), Registries.BLOCK_ENTITY_TYPE, Create.asResource("track_signal"),
+            CREATE_REGISTRATE, Registries.BLOCK_ENTITY_TYPE, Create.asResource("track_signal"),
             Railways.registrate(), CreateRegistries.DISPLAY_SOURCE, CRDisplaySources.SIGNAL.getId(),
             DisplaySource.BY_BLOCK_ENTITY::add
         );
@@ -69,7 +89,7 @@ public class CRExtraRegistration {
 
     private static void addRailwaysBlockToCreateBlockEntity(BlockEntry<?> railwaysBlock, ResourceLocation createBE) {
         MultiRegistryCallback.create(
-            AccessorCreate.railways$getRegistrate(), Registries.BLOCK_ENTITY_TYPE, createBE,
+            CREATE_REGISTRATE, Registries.BLOCK_ENTITY_TYPE, createBE,
             Railways.registrate(), Registries.BLOCK, railwaysBlock.getId(),
             CRExtraRegistration::addBlockToBE
         );

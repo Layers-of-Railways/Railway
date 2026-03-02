@@ -3,6 +3,7 @@ Steam 'n' Rails 1.7.1
 ------------------------------------------------------
 Fixes
 - Fix datafixer that crashed on worlds that hadn't been loaded with an indev version of 1.7.0
+- Fix mixin to Create to access its registrate that crashed depending on mod load order on forge
 ------------------------------------------------------
 Steam 'n' Rails 1.7.0
 ------------------------------------------------------
