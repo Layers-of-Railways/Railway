@@ -26,7 +26,7 @@ import com.mojang.datafixers.schemas.Schema;
  *
  * This is needed due to changing them from using axis to facing since streamlined smokestack's had a texture change
  */
-public class StreamlinedSmokeStackFacingFix extends HorizontalAxisToHorizontalFacingFix {
+public class StreamlinedSmokeStackFacingFix extends AxisToFacingFix {
 
     public StreamlinedSmokeStackFacingFix(Schema outputSchema, String name) {
         super(outputSchema, name);

@@ -23,6 +23,7 @@ import com.mojang.datafixers.DataFix;
 import com.mojang.datafixers.TypeRewriteRule;
 import com.mojang.datafixers.schemas.Schema;
 import com.mojang.serialization.Dynamic;
+import net.minecraft.core.Direction;
 import net.minecraft.util.datafix.fixes.References;
 
 import java.util.Optional;
@@ -30,11 +31,12 @@ import java.util.Optional;
 /*
  * Converts ?[axis="z"] to ?[facing="north"]
  * and converts ?[axis="x"] to ?[facing="east"]
+ * and converts ?[axis="y"] to ?[facing="up"]
  */
-public abstract class HorizontalAxisToHorizontalFacingFix extends DataFix {
+public abstract class AxisToFacingFix extends DataFix {
     protected final String name;
 
-    public HorizontalAxisToHorizontalFacingFix(Schema outputSchema, String name) {
+    public AxisToFacingFix(Schema outputSchema, String name) {
         super(outputSchema, false);
         this.name = name;
     }
@@ -49,19 +51,22 @@ public abstract class HorizontalAxisToHorizontalFacingFix extends DataFix {
                 // Conversions:
                 // Axis Z -> Facing North
                 // Axis X -> Facing East
+                // Axis Y -> Facing Up
 
-                Dynamic<?> axis = dynamic.get("Properties").orElseEmptyMap().get("axis").orElseEmptyMap();
                 Dynamic<?> properties = dynamic.get("Properties").orElseEmptyMap();
 
-                // Returns either "z" or "x", Yes the quotations are included, therefore, when checking
-                // we need to make sure to escape it properly
-                String axisString = axis.getValue().toString();
+                Optional<String> maybeAxis = properties.get("axis").asString().result();
+                if (maybeAxis.isEmpty()) return dynamic;
 
-                if (axisString.equals("\"z\"")) {
-                    properties = properties.set("facing", dynamic.createString("north"));
-                } else if (axisString.equals("\"x\"")) {
-                    properties = properties.set("facing", dynamic.createString("east"));
+                Direction.Axis axis = Direction.Axis.byName(maybeAxis.get());
+                if (axis == null) return dynamic;
+
+                switch (axis) {
+                    case X -> properties = properties.set("facing", dynamic.createString("east"));
+                    case Y -> properties = properties.set("facing", dynamic.createString("up"));
+                    case Z -> properties = properties.set("facing", dynamic.createString("north"));
                 }
+                properties = properties.remove("axis");
 
                 dynamic = dynamic.set("Properties", properties);
                 return dynamic;

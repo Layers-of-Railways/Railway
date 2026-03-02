@@ -20,7 +20,7 @@ package com.railwayteam.railways.base.datafix.fixes;
 
 import com.mojang.datafixers.schemas.Schema;
 
-public class DiagonalHazardStripesFacingFix extends HorizontalAxisToHorizontalFacingFix {
+public class DiagonalHazardStripesFacingFix extends AxisToFacingFix {
     public DiagonalHazardStripesFacingFix(Schema outputSchema, String name) {
         super(outputSchema, name);
     }
