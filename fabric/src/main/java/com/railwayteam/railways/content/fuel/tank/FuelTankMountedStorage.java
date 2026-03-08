@@ -36,13 +36,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.Optional;
 
 public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> implements SyncedMountedStorage {
 	public static final Codec<FuelTankMountedStorage> CODEC = RecordCodecBuilder.create(i -> i.group(
 			CreateCodecs.NON_NEGATIVE_LONG.fieldOf("capacity").forGetter(FuelTankMountedStorage::getCapacity),
-			FluidStack.CODEC.fieldOf("fluid").forGetter(FuelTankMountedStorage::getFluid)
-	).apply(i, FuelTankMountedStorage::new));
+			net.minecraft.nbt.CompoundTag.CODEC.optionalFieldOf("fluid").forGetter(s -> {
+				FluidStack fluid = s.getFluid();
+				if (fluid == null || fluid.isEmpty()) return Optional.empty();
+				return Optional.of(fluid.writeToNBT(new net.minecraft.nbt.CompoundTag()));
+			})
+	).apply(i, (capacity, opt) -> new FuelTankMountedStorage(capacity,
+			opt.map(FluidStack::loadFluidStackFromNBT).orElse(FluidStack.EMPTY))));
 
 	private boolean dirty;
 
@@ -61,7 +66,8 @@ public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> 
 	}
 
 	public FluidStack getFluid() {
-		return Objects.requireNonNull(this.wrapped.getFluid());
+		FluidStack fluid = this.wrapped.getFluid();
+		return fluid != null ? fluid : FluidStack.EMPTY;
 	}
 
 	public long getCapacity() {
@@ -110,8 +116,7 @@ public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> 
 
 		public Handler(long capacity, FluidStack stack) {
 			super(capacity);
-			Objects.requireNonNull(stack);
-			this.setFluid(stack);
+			this.setFluid(stack != null ? stack : FluidStack.EMPTY);
 		}
 
 		@Override
