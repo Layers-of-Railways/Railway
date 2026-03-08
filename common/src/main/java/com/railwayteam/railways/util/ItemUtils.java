@@ -45,4 +45,10 @@ public class ItemUtils {
 			target.setTag(null);
 		}
 	}
+
+	public static boolean isUnbreakable(ItemStack stack) {
+		if (stack.isEmpty()) return false;
+		CompoundTag tag = stack.getTag();
+		return tag != null && tag.getBoolean("Unbreakable");
+	}
 }

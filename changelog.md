@@ -2,6 +2,8 @@
 Steam 'n' Rails 1.7.2
 ------------------------------------------------------
 <!--This is the next unreleased version-->
+Additions
+- - `Unbreakable: 1b` tag on paint pitchers makes them infinite-use for potato cannons and paintbrushes
 Fixes
 - Fix infinite paint for projectiles launched from potato cannons on forge
 ------------------------------------------------------

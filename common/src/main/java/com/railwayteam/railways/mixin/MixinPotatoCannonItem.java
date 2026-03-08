@@ -23,6 +23,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import com.railwayteam.railways.util.ItemUtils;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoCannonItem;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileEntity;
 import net.minecraft.world.InteractionHand;
@@ -52,7 +53,7 @@ public class MixinPotatoCannonItem {
             int usedLevels = Math.min(levels, PaintPitcherItem.LEVELS_PER_CANNON_SHOT);
 
             itemStack$.set(item.copyAsFilledStack(itemStack, usedLevels));
-            if (!player.isCreative()) {
+            if (!player.isCreative() && !ItemUtils.isUnbreakable(itemStack)) {
                 item.setFillInPlace(itemStack, levels - usedLevels);
             }
         }
