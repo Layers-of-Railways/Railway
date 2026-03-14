@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-14T20:47:56.72020205	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
+// 1.20.1	2026-03-14T21:55:48.023122756	Create: Steam 'n' Rails/Steam 'n' Rails Standard Recipes
 bb1be39b19559d8478399d8010fa8a4a348f79c1 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/dripstone_slashed_locometal.json
 a391c15af79e48e1a65ae3d1e3f6bcfb3b8d9338 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/limestone_slashed_locometal.json
 db9eb13f615ff9ae04f8ee4d4dca3a31632a7c24 data/railways/advancements/recipes/misc/crafting/palettes/wrapping/pine_green_copper_wrapped_locometal.json
@@ -304,8 +304,8 @@ e3eee5bc3e543ccab15b7b59596ed3b0992b0267 data/railways/advancements/recipes/misc
 360518380c9bfd8379d5ec193bbaa6c84942d209 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/scorchia_hinged_locometal_door.json
 dc504792b15216d5be7bfd10e92a29e9ffcbed80 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/gray_hazard_stripes_chevron_on_white.json
 1f5155ad9822c8065df7ca64dcc25ff723a10acb data/railways/recipes/stonecutting/palettes/cycling/turquoise_locometal_pillar.json
-cfcbf53cf26e8edac8f8584a1a74460d4cbe31c1 data/railways/recipes/stonecutting/palettes/cycling/granite_flat_riveted_locometal.json
 cdfbfb6b4616afb9cabb4dd20c9243c7cd3202e3 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/diorite_flat_riveted_locometal.json
+cfcbf53cf26e8edac8f8584a1a74460d4cbe31c1 data/railways/recipes/stonecutting/palettes/cycling/granite_flat_riveted_locometal.json
 87cd7c0c5397bc124ab32c3df2ea09f8e2081a86 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/light_gray_sliding_locometal_door.json
 401b01be5422940c3ae9e5e7faa78d9be7fb9711 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/maroon_hazard_stripes_chevron_on_white.json
 e312c1f3d1a47976661431fcbfa0ad6533b12d63 data/railways/advancements/recipes/misc/stonecutting/palettes/cycling/brown_four_pane_locometal_window.json

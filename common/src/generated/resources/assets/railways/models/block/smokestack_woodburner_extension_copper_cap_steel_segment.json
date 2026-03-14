@@ -1,0 +1,6 @@
+{
+  "parent": "railways:block/smokestack/woodburner/segment",
+  "textures": {
+    "0": "railways:block/smokestack/woodburner/segment_steel"
+  }
+}

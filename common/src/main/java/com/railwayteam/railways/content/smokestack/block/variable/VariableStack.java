@@ -18,5 +18,11 @@
 
 package com.railwayteam.railways.content.smokestack.block.variable;
 
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+
 /** Marker interface */
-public sealed interface VariableStack permits VariableSmokeStackBlock, SmokeStackExtenderBlock {}
+public sealed interface VariableStack permits VariableSmokeStackBlock, SmokeStackExtenderBlock {
+    EnumProperty<VariableStackPart> partProperty();
+
+    VariableStackPart defaultPart();
+}

@@ -63,7 +63,6 @@ import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.kinetics.flywheel.FlywheelBlock;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -185,7 +184,7 @@ public class BuilderTransformers {
             .transform(pickaxeOnly());
     }
 
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroupSupplier) {
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroupSupplier) {
         return bb -> bb
             .loot((t, b) -> {
                 LootTable.Builder table = LootTable.lootTable();

@@ -25,7 +25,6 @@ import com.railwayteam.railways.util.ShapeWrapper;
 import com.simibubi.create.content.equipment.goggles.IProxyHoveringInformation;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -62,32 +61,48 @@ import java.util.function.Supplier;
 @ParametersAreNonnullByDefault
 public non-sealed class SmokeStackExtenderBlock extends Block implements ProperWaterloggedBlock, IWrenchable, VariableStack, IProxyHoveringInformation {
     public static final EnumProperty<SmokestackStyle> STYLE = VariableSmokeStackBlock.STYLE;
-    public static final EnumProperty<VariableStackPart> PART = VariableSmokeStackBlock.PART;
 
     protected final RotationType rotationType;
     protected final EnumMap<VariableStackPart, ShapeWrapper> shape;
-    protected final Supplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroup;
+    protected final Supplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroup;
     protected final Supplier<VariableSmokeStackBlock> baseBlock;
+    protected final EnumProperty<VariableStackPart> partProperty;
+    protected final VariableStackPart defaultPart;
 
     // because createBlockStateDefinition is called from the super constructor, and it needs a rotation type
     private static final ThreadLocal<RotationType> definitionRotationType = new ThreadLocal<>();
+    // ditto
+    private static final ThreadLocal<EnumProperty<VariableStackPart>> definitionPartProperty = new ThreadLocal<>();
 
-    private static Properties setDefinitionRotationType(Properties properties, RotationType rotationType) {
+    private static Properties setDefinitionValues(Properties properties, RotationType rotationType, EnumProperty<VariableStackPart> partProperty) {
         definitionRotationType.set(rotationType);
+        definitionPartProperty.set(partProperty);
         return properties;
     }
 
-    public SmokeStackExtenderBlock(Properties properties, RotationType rotationType, EnumMap<VariableStackPart, ShapeWrapper> shape, Supplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroup, Supplier<VariableSmokeStackBlock> baseBlock) {
-        super(setDefinitionRotationType(properties, rotationType));
+    public SmokeStackExtenderBlock(Properties properties, RotationType rotationType, EnumMap<VariableStackPart, ShapeWrapper> shape, Supplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroup, Supplier<VariableSmokeStackBlock> baseBlock, EnumProperty<VariableStackPart> partProperty, VariableStackPart defaultPart) {
+        super(setDefinitionValues(properties, rotationType, partProperty));
         this.rotationType = rotationType;
         this.shape = shape;
         this.cycleGroup = cycleGroup;
         this.baseBlock = baseBlock;
+        this.partProperty = partProperty;
+        this.defaultPart = defaultPart;
 
         registerDefaultState(defaultBlockState()
             .setValue(WATERLOGGED, false)
             .setValue(STYLE, SmokestackStyle.STEEL)
-            .setValue(PART, VariableStackPart.SINGLE));
+            .setValue(partProperty, defaultPart));
+    }
+
+    @Override
+    public EnumProperty<VariableStackPart> partProperty() {
+        return partProperty;
+    }
+
+    @Override
+    public VariableStackPart defaultPart() {
+        return defaultPart;
     }
 
     public VariableSmokeStackBlock baseBlock() {
@@ -98,9 +113,13 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
         return rotationType != null ? rotationType : definitionRotationType.get();
     }
 
+    protected EnumProperty<VariableStackPart> getConstructSafePartProperty() {
+        return partProperty != null ? partProperty : definitionPartProperty.get();
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(WATERLOGGED, STYLE, PART));
+        super.createBlockStateDefinition(builder.add(WATERLOGGED, STYLE, getConstructSafePartProperty()));
         getConstructSafeRotationType().createBlockStateDefinition(builder);
     }
 
@@ -137,7 +156,7 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
     @Override
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return rotationType.getShape(state, shape.get(state.getValue(PART)));
+        return rotationType.getShape(state, shape.get(state.getValue(partProperty)));
     }
 
     public BlockPos findRoot(LevelAccessor pLevel, BlockPos pPos) {
@@ -172,7 +191,7 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
     @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState below = level.getBlockState(pos.below());
-        return (below.is(this) || below.is(baseBlock())) && below.getValue(PART) != VariableStackPart.SINGLE;
+        return (below.is(this) || below.is(baseBlock())) && below.getValue(partProperty).isFullHeight();
     }
 
     @Override
@@ -184,12 +203,12 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
             return state;
 
         if (direction == Direction.UP) {
-            boolean connected = state.getValue(PART).isSegment();
+            boolean connected = state.getValue(partProperty).isSegment();
             boolean shouldConnect = level.getBlockState(currentPos.above()).is(this);
             if (!connected && shouldConnect)
-                return state.setValue(PART, VariableStackPart.SEGMENT);
+                return state.setValue(partProperty, VariableStackPart.SEGMENT);
             if (connected && !shouldConnect)
-                return state.setValue(PART, VariableStackPart.DOUBLE);
+                return state.setValue(partProperty, VariableStackPart.DOUBLE);
             return state;
         }
 
@@ -203,7 +222,7 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
     @Override
     @SuppressWarnings("deprecation")
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        if (oldState.getBlock() != this || oldState.getValue(PART) != state.getValue(PART))
+        if (oldState.getBlock() != this || oldState.getValue(partProperty) != state.getValue(partProperty))
             VariableSmokeStackBlock.queueHeightUpdate(level, findRoot(level, pos));
     }
 
@@ -224,13 +243,13 @@ public non-sealed class SmokeStackExtenderBlock extends Block implements ProperW
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || state.getValue(PART) == VariableStackPart.SINGLE)
+        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || defaultPart.isFullHeight() || state.getValue(partProperty) == VariableStackPart.SINGLE)
             return IWrenchable.super.onSneakWrenched(state, context);
 
         if (!(world instanceof ServerLevel))
             return InteractionResult.SUCCESS;
 
-        world.setBlock(pos, state.setValue(PART, VariableStackPart.SINGLE), 3);
+        world.setBlock(pos, state.setValue(partProperty, VariableStackPart.SINGLE), 3);
         playRemoveSound(world, pos);
 
         return InteractionResult.SUCCESS;

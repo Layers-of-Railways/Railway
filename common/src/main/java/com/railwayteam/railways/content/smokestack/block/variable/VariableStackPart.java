@@ -19,19 +19,22 @@
 package com.railwayteam.railways.content.smokestack.block.variable;
 
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 
 public enum VariableStackPart implements StringRepresentable {
-    SINGLE("single", true),
-    DOUBLE("double", true),
-    SEGMENT("segment", false);
+    SINGLE("single", true, false),
+    DOUBLE("double", true, true),
+    SEGMENT("segment", false, true);
 
     private final String name;
     private final boolean top;
+    private final boolean fullHeight;
 
-    VariableStackPart(String name, boolean top) {
+    VariableStackPart(String name, boolean top, boolean fullHeight) {
         this.name = name;
         this.top = top;
+        this.fullHeight = fullHeight;
     }
 
     public boolean isTop() {
@@ -40,6 +43,10 @@ public enum VariableStackPart implements StringRepresentable {
 
     public boolean isSegment() {
         return this == SEGMENT;
+    }
+
+    public boolean isFullHeight() {
+        return fullHeight;
     }
 
     @Override
@@ -58,5 +65,21 @@ public enum VariableStackPart implements StringRepresentable {
             case DOUBLE -> "_double";
             case SEGMENT -> "_segment";
         };
+    }
+
+    public enum Type {
+        STANDARD(VariableSmokeStackBlock.PART, VariableStackPart.SINGLE, ""),
+        NO_HALF(VariableSmokeStackBlock.PART_NO_HALF, VariableStackPart.DOUBLE, "_double")
+        ;
+
+        public final EnumProperty<VariableStackPart> property;
+        public final VariableStackPart defaultPart;
+        public final String modelSuffix;
+
+        Type(EnumProperty<VariableStackPart> property, VariableStackPart defaultPart, String modelSuffix) {
+            this.property = property;
+            this.defaultPart = defaultPart;
+            this.modelSuffix = modelSuffix;
+        }
     }
 }

@@ -24,7 +24,6 @@ import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.variable.SmokeStackExtenderBlock;
 import com.railwayteam.railways.content.smokestack.block.variable.VariableSmokeStackBlock;
 import com.railwayteam.railways.util.ColorUtils;
-import com.railwayteam.railways.util.TextUtils;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -145,7 +144,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
             return;
         }
 
-        switch (getBlockState().getValue(VariableSmokeStackBlock.PART)) {
+        switch (getBlockState().getValue(baseBlock.partProperty())) {
             case SINGLE -> {
                 setHeight(0);
                 return;
@@ -163,7 +162,7 @@ public class SmokeStackBlockEntity extends SmartBlockEntity implements IHaveGogg
             BlockState state = level.getBlockState(currentPos);
             if (!state.is(extenderBlock)) break;
 
-            switch (state.getValue(VariableSmokeStackBlock.PART)) {
+            switch (state.getValue(extenderBlock.partProperty())) {
                 case SINGLE -> {
                     newHeight += 1;
                     break Loop;

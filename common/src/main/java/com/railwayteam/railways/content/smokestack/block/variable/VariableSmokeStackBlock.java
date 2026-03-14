@@ -25,7 +25,6 @@ import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.content.smokestack.block.StyledSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.be.SmokeStackBlockEntity;
 import com.railwayteam.railways.util.ShapeWrapper;
-import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -62,33 +61,66 @@ import java.util.function.Supplier;
 @ParametersAreNonnullByDefault
 public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock implements VariableStack {
     public static final EnumProperty<VariableStackPart> PART = EnumProperty.create("part", VariableStackPart.class);
+    public static final EnumProperty<VariableStackPart> PART_NO_HALF = EnumProperty.create("part", VariableStackPart.class, VariableStackPart::isFullHeight);
 
     protected final EnumMap<VariableStackPart, ShapeWrapper> shape;
     protected final Supplier<SmokeStackExtenderBlock> extenderBlock;
+    protected final EnumProperty<VariableStackPart> partProperty;
+    protected final VariableStackPart defaultPart;
 
-    public VariableSmokeStackBlock(Properties properties, RotationType rotationType, SmokeEmissionParams emissionParams, EnumMap<VariableStackPart, ShapeWrapper> shape, boolean createsStationarySmoke, Supplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroup, Supplier<SmokeStackExtenderBlock> extenderBlock) {
-        super(properties, rotationType, emissionParams, shape.get(VariableStackPart.SINGLE), createsStationarySmoke, cycleGroup);
+    // because createBlockStateDefinition is called from the super constructor, and it needs a part property
+    private static final ThreadLocal<EnumProperty<VariableStackPart>> definitionPartProperty = new ThreadLocal<>();
+    private static final ThreadLocal<VariableStackPart> definitionDefaultPart = new ThreadLocal<>();
+
+    private static Properties setDefinitionValues(Properties properties, EnumProperty<VariableStackPart> partProperty, VariableStackPart defaultPart) {
+        definitionPartProperty.set(partProperty);
+        definitionDefaultPart.set(defaultPart);
+        return properties;
+    }
+
+    public VariableSmokeStackBlock(Properties properties, RotationType rotationType, SmokeEmissionParams emissionParams, EnumMap<VariableStackPart, ShapeWrapper> shape, boolean createsStationarySmoke, Supplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroup, Supplier<SmokeStackExtenderBlock> extenderBlock, EnumProperty<VariableStackPart> partProperty, VariableStackPart defaultPart) {
+        super(setDefinitionValues(properties, partProperty, defaultPart), rotationType, emissionParams, shape.get(defaultPart), createsStationarySmoke, cycleGroup);
         this.shape = shape;
         this.extenderBlock = extenderBlock;
+        this.partProperty = partProperty;
+        this.defaultPart = defaultPart;
+    }
+
+    @Override
+    public EnumProperty<VariableStackPart> partProperty() {
+        return partProperty;
+    }
+
+    @Override
+    public VariableStackPart defaultPart() {
+        return defaultPart;
     }
 
     public SmokeStackExtenderBlock extenderBlock() {
         return extenderBlock.get();
     }
 
+    protected EnumProperty<VariableStackPart> getConstructSafePartProperty() {
+        return partProperty != null ? partProperty : definitionPartProperty.get();
+    }
+
+    protected VariableStackPart getConstructSafeDefaultPart() {
+        return defaultPart != null ? defaultPart : definitionDefaultPart.get();
+    }
+
     @Override
     protected BlockState makeDefaultState() {
-        return super.makeDefaultState().setValue(PART, VariableStackPart.SINGLE);
+        return super.makeDefaultState().setValue(getConstructSafePartProperty(), getConstructSafeDefaultPart());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder.add(PART));
+        super.createBlockStateDefinition(builder.add(getConstructSafePartProperty()));
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return rotationType.getShape(state, shape.get(state.getValue(PART)));
+        return rotationType.getShape(state, shape.get(state.getValue(partProperty)));
     }
 
     /*@Override
@@ -106,13 +138,13 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
             return state;
 
         if (direction == Direction.UP) {
-            boolean connected = state.getValue(PART).isSegment();
+            boolean connected = state.getValue(partProperty).isSegment();
             BlockState above = level.getBlockState(currentPos.above());
             boolean shouldConnect = above.is(extenderBlock());
             if (!connected && shouldConnect)
-                return state.setValue(PART, VariableStackPart.SEGMENT);
+                return state.setValue(partProperty, VariableStackPart.SEGMENT);
             if (connected && !shouldConnect)
-                return state.setValue(PART, VariableStackPart.DOUBLE);
+                return state.setValue(partProperty, VariableStackPart.DOUBLE);
         }
 
         return state.canSurvive(level, currentPos) ? state : Blocks.AIR.defaultBlockState();
@@ -134,7 +166,7 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
     @SuppressWarnings("deprecation")
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-        if (oldState.getBlock() != this || oldState.getValue(PART) != state.getValue(PART))
+        if (oldState.getBlock() != this || oldState.getValue(partProperty) != state.getValue(partProperty))
             queueHeightUpdate(level, pos);
     }
 
@@ -160,9 +192,10 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
         SoundEvent growSound = SoundEvents.NOTE_BLOCK_XYLOPHONE.value();
         SoundEvent hitSound = soundtype.getHitSound();
 
-        VariableStackPart basePart = base.getValue(PART);
+        EnumProperty<VariableStackPart> basePartProperty = baseBlock.partProperty();
+        VariableStackPart basePart = base.getValue(basePartProperty);
         if (basePart == VariableStackPart.SINGLE) {
-            level.setBlock(pos, base.setValue(PART, VariableStackPart.DOUBLE), UPDATE_ALL);
+            level.setBlock(pos, base.setValue(basePartProperty, VariableStackPart.DOUBLE), UPDATE_ALL);
 
             float pitch = (float) Math.pow(2, 1 / 12.0);
             level.playSound(null, pos, growSound, SoundSource.BLOCKS, volume / 4f, pitch);
@@ -171,14 +204,15 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
         }
 
         SmokeStackExtenderBlock extenderBlock = baseBlock.extenderBlock();
+        EnumProperty<VariableStackPart> extenderPartProperty = extenderBlock.partProperty();
 
         MutableBlockPos currentPos = pos.mutable().move(Direction.UP);
         for (int i = 0; i <= 6; i++) {
             BlockState state = level.getBlockState(currentPos);
 
             if (state.is(extenderBlock)) {
-                if (state.getValue(PART) == VariableStackPart.SINGLE) {
-                    level.setBlock(currentPos, state.setValue(PART, VariableStackPart.DOUBLE), UPDATE_ALL);
+                if (state.getValue(extenderPartProperty) == VariableStackPart.SINGLE) {
+                    level.setBlock(currentPos, state.setValue(extenderPartProperty, VariableStackPart.DOUBLE), UPDATE_ALL);
 
                     float pitch = (float) Math.pow(2, -(i * 2) / 12.0);
                     level.playSound(null, currentPos, growSound, SoundSource.BLOCKS, volume / 4f, pitch);
@@ -193,7 +227,7 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
                 return;
 
             BlockState newState = extenderBlock.defaultBlockState()
-                .setValue(PART, VariableStackPart.SINGLE)
+                .setValue(extenderPartProperty, extenderBlock.defaultPart())
                 .setValue(STYLE, base.getValue(STYLE));
             level.setBlock(currentPos, baseBlock.rotationType.cloneRotation(newState, base), UPDATE_ALL);
 
@@ -209,7 +243,7 @@ public non-sealed class VariableSmokeStackBlock extends StyledSmokeStackBlock im
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || state.getValue(PART) == VariableStackPart.SINGLE)
+        if (context.getClickLocation().y < context.getClickedPos().getY() + .5f || defaultPart.isFullHeight() || state.getValue(partProperty) == VariableStackPart.SINGLE)
             return super.onSneakWrenched(state, context);
 
         if (!(world instanceof ServerLevel))

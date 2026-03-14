@@ -7,6 +7,7 @@ Additions
 - `/snr fill_paint` command to mass-recolor a volume of blocks, optionally filtered by block state or color
 Fixes
 - Fix infinite paint for projectiles launched from potato cannons on forge
+- Make woodburner smokestacks stackable in full block increments
 ------------------------------------------------------
 Steam 'n' Rails 1.7.1
 ------------------------------------------------------
