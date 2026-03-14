@@ -156,6 +156,7 @@ public class TrackEdgePointHighlighter {
                 .lineWidth(1 / 16f);
 
             Arrow: if (be instanceof SignalBlockEntity) {
+                if (!trackTarget1.hasValidTrack()) break Arrow;
                 TrackGraphLocation location = trackTarget1.determineGraphLocation();
                 if (location == null) break Arrow;
 
