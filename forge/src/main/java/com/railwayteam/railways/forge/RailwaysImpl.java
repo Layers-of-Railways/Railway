@@ -18,9 +18,9 @@
 
 package com.railwayteam.railways.forge;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.forge.CRConfigsImpl;
+import com.railwayteam.railways.multiloader.CommandRegistrar;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlock;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.forge.CRBlockEntitiesImpl;
@@ -32,7 +32,6 @@ import com.railwayteam.railways.util.Utils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.api.contraption.BlockMovementChecks.CheckResult;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,7 +52,6 @@ import org.apache.logging.log4j.core.config.Configurator;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 @Mod(Railways.MOD_ID)
 @Mod.EventBusSubscriber
@@ -81,17 +79,17 @@ public class RailwaysImpl {
 		Railways.registrate().registerEventListeners(bus);
 	}
 
-	private static final Set<BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean>> commandConsumers = new HashSet<>();
+	private static final Set<CommandRegistrar> commandRegistrars = new HashSet<>();
 
-	public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
-		commandConsumers.add(consumer);
+	public static void registerCommands(CommandRegistrar registrar) {
+		commandRegistrars.add(registrar);
 	}
 
 	@SubscribeEvent
 	public static void onCommandRegistration(RegisterCommandsEvent event) {
 		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
-		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
+		commandRegistrars.forEach(registrar -> registrar.register(event.getDispatcher(), dedicated, event.getBuildContext()));
 	}
 
 	private static void restoreLoggers() {

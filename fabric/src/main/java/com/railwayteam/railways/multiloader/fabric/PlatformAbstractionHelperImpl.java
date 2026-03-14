@@ -18,12 +18,20 @@
 
 package com.railwayteam.railways.multiloader.fabric;
 
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
+import io.github.fabricators_of_create.porting_lib.command.EnumArgument;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.world.item.Item;
 
+@ImplClass
 public class PlatformAbstractionHelperImpl {
     public static int getBurnTime(Item item) {
         Integer time = FuelRegistry.INSTANCE.get(item);
         return time != null ? time : 0;
+    }
+
+    public static <T extends Enum<T>> ArgumentType<T> enumArgument(Class<T> enumClass) {
+        return EnumArgument.enumArgument(enumClass);
     }
 }

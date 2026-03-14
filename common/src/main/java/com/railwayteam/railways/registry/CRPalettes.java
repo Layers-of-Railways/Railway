@@ -125,6 +125,7 @@ public class CRPalettes {
 
         for (Styles style : Styles.values()) {
             consumer.accept("tag.item.railways.palettes.dye_groups."+style.name().toLowerCase(Locale.ROOT), style.dyeGroupLang);
+            consumer.accept("tag.block.railways.palettes.dye_groups."+style.name().toLowerCase(Locale.ROOT), style.dyeGroupLang);
         }
 
         for (PalettesColor color : PalettesColor.values()) {
@@ -205,6 +206,7 @@ public class CRPalettes {
         private final Map<PalettesColor, BlockEntry<?>> blocks = new HashMap<>(17, 2);
         private final PaletteBlockRegistrar registrar;
         public final TagKey<Item> dyeGroupTag;
+        public final TagKey<Block> dyeGroupBlockTag;
         public final @Nullable CycleGroupCategory cycleGroupCategory;
         public final String dyeGroupLang;
 
@@ -216,6 +218,7 @@ public class CRPalettes {
             this.registrar = registrar;
             this.dyeGroupLang = dyeGroupLang;
             this.dyeGroupTag = CRTags.optionalTag(BuiltInRegistries.ITEM, Railways.asResource("palettes/dye_groups/" + name().toLowerCase(Locale.ROOT)));
+            this.dyeGroupBlockTag = CRTags.optionalTag(BuiltInRegistries.BLOCK, Railways.asResource("palettes/dye_groups/" + name().toLowerCase(Locale.ROOT)));
             this.cycleGroupCategory = cycleGroupCategory;
         }
 
@@ -223,7 +226,7 @@ public class CRPalettes {
         private void register(PalettesColor palettesColor) {
             // we inject this transformer so that every registered block can be reverse-looked up
             // in the future we can of course extend this to apply any other transformations to all palettes blocks
-            TransformerProvider transformer = new ChildTransformer(palettesColor);
+            TransformerProvider transformer = new ChildTransformer(palettesColor, dyeGroupBlockTag);
 
             BlockEntry<?> registered = cycleGroupCategory != null
                 ? registrar.register(transformer, palettesColor, dyeGroupTag, CYCLE_GROUPS.get(Pair.of(palettesColor, cycleGroupCategory)))
@@ -250,14 +253,17 @@ public class CRPalettes {
 
         private class ChildTransformer implements TransformerProvider {
             private final PalettesColor color;
+            private final TagKey<Block>[] blockTags;
 
-            private ChildTransformer(PalettesColor color) {
+            @SafeVarargs
+            private ChildTransformer(PalettesColor color, TagKey<Block>... blockTags) {
                 this.color = color;
+                this.blockTags = blockTags;
             }
 
             @Override
             public <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> get() {
-                return b -> b.onRegister(this::onRegister);
+                return b -> b.onRegister(this::onRegister).tag(blockTags);
             }
 
             private void onRegister(Block block) {

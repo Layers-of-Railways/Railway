@@ -23,7 +23,6 @@ import com.railwayteam.railways.content.smokestack.RotationType;
 import com.railwayteam.railways.content.smokestack.SmokeEmissionParams;
 import com.railwayteam.railways.content.smokestack.SmokestackStyle;
 import com.railwayteam.railways.util.ShapeWrapper;
-import net.createmod.catnip.data.Couple;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -41,9 +40,9 @@ import java.util.function.Supplier;
 public class StyledSmokeStackBlock extends SmokeStackBlock {
     public static final EnumProperty<SmokestackStyle> STYLE = EnumProperty.create("style", SmokestackStyle.class);
 
-    private final Supplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroup;
+    private final Supplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroup;
 
-    public StyledSmokeStackBlock(Properties properties, RotationType rotationType, SmokeEmissionParams emissionParams, ShapeWrapper shape, boolean createsStationarySmoke, Supplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroup) {
+    public StyledSmokeStackBlock(Properties properties, RotationType rotationType, SmokeEmissionParams emissionParams, ShapeWrapper shape, boolean createsStationarySmoke, Supplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroup) {
         super(properties, rotationType, emissionParams, shape, createsStationarySmoke);
         this.cycleGroup = cycleGroup;
     }

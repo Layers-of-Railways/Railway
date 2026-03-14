@@ -21,6 +21,7 @@ package com.railwayteam.railways.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.railwayteam.railways.content.palettes.painting.PaintPitcherItem;
+import com.railwayteam.railways.util.ItemUtils;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoCannonItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +39,7 @@ public class MixinPotatoCannonItem {
             int usedLevels = Math.min(levels, PaintPitcherItem.LEVELS_PER_CANNON_SHOT);
 
             ItemStack returnStack = item.copyAsFilledStack(itemStack, usedLevels);
-            if (!player.isCreative()) {
+            if (!player.isCreative() && !ItemUtils.isUnbreakable(itemStack)) {
                 item.setFillInPlace(itemStack, levels - usedLevels);
             }
             return new PotatoCannonItem.Ammo(returnStack, ammo.type());

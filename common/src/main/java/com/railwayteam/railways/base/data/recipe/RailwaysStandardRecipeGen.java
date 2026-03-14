@@ -121,7 +121,7 @@ public class RailwaysStandardRecipeGen extends RailwaysRecipeProvider {
             .pattern("#+#")
         );
 
-    GeneratedRecipe WOODBURNER_STACK = create(CRBlocks.WOODBURNER_STACK)
+    GeneratedRecipe WOODBURNER_STACK = create(CRBlocks.WOODBURNER_STACKS.getFirst())
         .unlockedBy(Ingredients::campfire)
         .viaShaped(b -> b.define('#', Ingredients.ironSheet())
             .define('+', Ingredients.campfire())

@@ -56,7 +56,6 @@ import com.railwayteam.railways.content.smokestack.block.AbstractSmokeStackBlock
 import com.railwayteam.railways.content.smokestack.block.SmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.StyledSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.diesel.DieselSmokeStackBlock;
-import com.railwayteam.railways.content.smokestack.block.variable.VariableSmokeStackBlock;
 import com.railwayteam.railways.content.smokestack.block.variable.VariableStack;
 import com.railwayteam.railways.content.smokestack.block.variable.VariableStackPart;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock;
@@ -238,8 +237,8 @@ public class BuilderTransformersImpl {
     public static <B extends Block & VariableStack> NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> variableSmokeStack(String variant, RotationType rotType) {
         return (c, p) -> p.getVariantBuilder(c.get())
             .forAllStatesExcept(state -> {
-                    VariableStackPart part = state.getValue(VariableSmokeStackBlock.PART);
-                        SmokestackStyle style = state.getValue(StyledSmokeStackBlock.STYLE);
+                    VariableStackPart part = state.getValue(c.get().partProperty());
+                    SmokestackStyle style = state.getValue(StyledSmokeStackBlock.STYLE);
 
                     BlockModelBuilder model = p.models().withExistingParent(
                         c.getName() + "_" + style.getBlockId() + part.generatedModelName(),

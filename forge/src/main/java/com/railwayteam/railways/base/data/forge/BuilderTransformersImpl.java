@@ -239,7 +239,7 @@ public class BuilderTransformersImpl {
     public static <B extends Block & VariableStack> NonNullBiConsumer<DataGenContext<Block, B>, RegistrateBlockstateProvider> variableSmokeStack(String variant, RotationType rotType) {
         return (c, p) -> p.getVariantBuilder(c.get())
             .forAllStatesExcept(state -> {
-                    VariableStackPart part = state.getValue(VariableSmokeStackBlock.PART);
+                    VariableStackPart part = state.getValue(c.get().partProperty());
                     SmokestackStyle style = state.getValue(StyledSmokeStackBlock.STYLE);
 
                     BlockModelBuilder model = p.models().withExistingParent(

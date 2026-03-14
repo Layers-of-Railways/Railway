@@ -1,6 +1,6 @@
 /*
  * Steam 'n' Rails
- * Copyright (c) 2022-2025 The Railways Team
+ * Copyright (c) 2022-2026 The Railways Team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.buffer.BlockStateBlockItemGroup;
 import com.railwayteam.railways.registry.CRTags;
 import com.railwayteam.railways.util.TextUtils;
-import net.createmod.catnip.data.Couple;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
@@ -31,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemGroup.IStyle<Couple<String>> {
+public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemGroup.IStyle<SmokestackStyle.Context> {
     STEEL(Material.STEEL),
     BRASS_CAP_STEEL(Material.STEEL, Material.BRASS),
     COPPER_CAP_STEEL(Material.STEEL, Material.COPPER),
@@ -67,8 +66,8 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
     }
 
     @Override
-    public ResourceLocation getModel(Couple<String> context) {
-        return Railways.asResource("block/" + context.getFirst() + model);
+    public ResourceLocation getModel(Context context) {
+        return Railways.asResource("block/" + context.prefix + model + context.modelSuffix);
     }
 
     public ResourceLocation getTexture(String variant) {
@@ -87,13 +86,13 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
     }
 
     @Override
-    public String getLangName(Couple<String> context) {
-        return langName + " " + TextUtils.titleCaseConversion(context.getSecond());
+    public String getLangName(Context context) {
+        return langName + " " + TextUtils.titleCaseConversion(context.description);
     }
 
     @Override
-    public String getBlockId(Couple<String> context) {
-        return context.getFirst() + model;
+    public String getBlockId(Context context) {
+        return context.prefix + model;
     }
 
     public String getBlockId() {
@@ -132,4 +131,6 @@ public enum SmokestackStyle implements StringRepresentable, BlockStateBlockItemG
             return TextUtils.titleCaseConversion(name());
         }
     }
+
+    public record Context(String prefix, String description, String modelSuffix) {}
 }

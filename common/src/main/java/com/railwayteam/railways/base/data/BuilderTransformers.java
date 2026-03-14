@@ -185,7 +185,7 @@ public class BuilderTransformers {
             .transform(pickaxeOnly());
     }
 
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<Couple<String>, SmokestackStyle>> cycleGroupSupplier) {
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> smokestackLoot(@NotNull FusedSupplier<BlockStateBlockItemGroup<SmokestackStyle.Context, SmokestackStyle>> cycleGroupSupplier) {
         return bb -> bb
             .loot((t, b) -> {
                 LootTable.Builder table = LootTable.lootTable();

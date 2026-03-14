@@ -18,11 +18,19 @@
 
 package com.railwayteam.railways.multiloader.forge;
 
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.railwayteam.railways.annotation.multiloader.ImplClass;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.server.command.EnumArgument;
 
+@ImplClass
 public class PlatformAbstractionHelperImpl {
     public static int getBurnTime(Item item) {
         return ForgeHooks.getBurnTime(item.getDefaultInstance(), null);
+    }
+
+    public static <T extends Enum<T>> ArgumentType<T> enumArgument(Class<T> enumClass) {
+        return EnumArgument.enumArgument(enumClass);
     }
 }

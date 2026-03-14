@@ -98,6 +98,7 @@ public class CRDataFixers {
             Pair.of("coalburner", VariableStackPart.DOUBLE),
             Pair.of("oilburner", VariableStackPart.DOUBLE),
             Pair.of("streamlined", VariableStackPart.SINGLE),
+            Pair.of("woodburner", VariableStackPart.DOUBLE)
         };
         for (var pair : variableStacks) {
             String blockId = "railways:smokestack_" + pair.getFirst();

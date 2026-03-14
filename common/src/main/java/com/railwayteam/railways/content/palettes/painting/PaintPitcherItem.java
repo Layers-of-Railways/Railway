@@ -24,6 +24,7 @@ import com.railwayteam.railways.multiloader.fluid.FluidUnits;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRItems;
 import com.railwayteam.railways.registry.CRTags;
+import com.railwayteam.railways.util.ItemUtils;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -104,6 +105,7 @@ public abstract class PaintPitcherItem extends Item {
 
         ItemStack stack = player.getItemInHand(hand);
         if (!(stack.getItem() instanceof PaintPitcherItem item)) return;
+        if (ItemUtils.isUnbreakable(stack)) return;
 
         int levels = item.getLevels(stack) - 1;
         if (levels <= 0) {
