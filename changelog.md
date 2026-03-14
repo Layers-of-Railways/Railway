@@ -12,6 +12,7 @@ Fixes
 - Fix client crash when rendering signal highlighter for signal without a track #744
 - Fix KubeJS incompatibility with fluid amount mangling #746
 - Fix crash when using a potato cannon without ammunition #743
+- Fix fuel tank crash
 ------------------------------------------------------
 Steam 'n' Rails 1.7.1
 ------------------------------------------------------

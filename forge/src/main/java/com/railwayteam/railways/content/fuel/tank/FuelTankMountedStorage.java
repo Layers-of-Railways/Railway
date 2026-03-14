@@ -25,6 +25,7 @@ import com.railwayteam.railways.registry.forge.CRMountedStorageTypesImpl;
 import com.simibubi.create.api.contraption.storage.SyncedMountedStorage;
 import com.simibubi.create.api.contraption.storage.fluid.WrapperMountedFluidStorage;
 import com.simibubi.create.content.contraptions.Contraption;
+import com.simibubi.create.foundation.utility.CreateCodecs;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -40,8 +41,8 @@ import java.util.Objects;
 
 public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> implements SyncedMountedStorage {
 	public static final Codec<FuelTankMountedStorage> CODEC = RecordCodecBuilder.create(i -> i.group(
-			ExtraCodecs.NON_NEGATIVE_INT.fieldOf("capacity").forGetter(FuelTankMountedStorage::getCapacity),
-			FluidStack.CODEC.fieldOf("fluid").forGetter(FuelTankMountedStorage::getFluid)
+		ExtraCodecs.NON_NEGATIVE_INT.fieldOf("capacity").forGetter(FuelTankMountedStorage::getCapacity),
+		CreateCodecs.FLUID_STACK_CODEC.fieldOf("fluid").forGetter(FuelTankMountedStorage::getFluid)
 	).apply(i, FuelTankMountedStorage::new));
 
 	private boolean dirty;

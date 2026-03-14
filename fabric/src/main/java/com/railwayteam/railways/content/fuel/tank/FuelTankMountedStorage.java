@@ -41,7 +41,7 @@ import java.util.Objects;
 public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> implements SyncedMountedStorage {
 	public static final Codec<FuelTankMountedStorage> CODEC = RecordCodecBuilder.create(i -> i.group(
 			CreateCodecs.NON_NEGATIVE_LONG.fieldOf("capacity").forGetter(FuelTankMountedStorage::getCapacity),
-			FluidStack.CODEC.fieldOf("fluid").forGetter(FuelTankMountedStorage::getFluid)
+			CreateCodecs.FLUID_STACK_CODEC.fieldOf("fluid").forGetter(FuelTankMountedStorage::getFluid)
 	).apply(i, FuelTankMountedStorage::new));
 
 	private boolean dirty;
