@@ -1,11 +1,11 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.7.2
 ------------------------------------------------------
-<!--This is the next unreleased version-->
 Additions
 - `Unbreakable: 1b` tag on paint pitchers makes them infinite-use for potato cannons and paintbrushes
 - `/snr fill_paint` command to mass-recolor a volume of blocks, optionally filtered by block state or color
 - `/snr count_paint` command to count the number of blocks of a certain color in a volume, optionally filtered by block state
+
 Fixes
 - Fix infinite paint for projectiles launched from potato cannons on forge
 - Make woodburner smokestacks stackable in full block increments
