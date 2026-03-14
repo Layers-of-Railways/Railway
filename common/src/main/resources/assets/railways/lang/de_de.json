@@ -1,6 +1,6 @@
 {
   "block.create.railway_casing.tooltip": "ZUGRAHMEN",
-  "block.create.railway_casing.tooltip.summary": "Press and hold the _Open Bogey Menu_ key (default _ALT_) to select the _bogey style_ to place.",
+  "block.create.railway_casing.tooltip.summary": "Drücke die _Öffne Drehgestell Menü_ Taste (Standard _ALT_) um den _Drehgestell Stil_ auszuwählen.",
   "block.create.track_station.tooltip": "BAHNHOF",
   "block.create.track_station.tooltip.summary": "Ein _Einsatzgerät_ mit _Schraubenschlüssel_ kann Züge automatisch zusammenbauen und zerlegen, indem er auf einen _Bahnhof_ klickt. Trichter können verwendet werden, um einen Schraubenschlüssel in ein Einsatzgerät zu legen.",
   "block.railways.big_buffer": "Großer Prellbock",
@@ -1029,8 +1029,8 @@
   "railways.bogeys.styles.freight": "Freight",
   "railways.bogeys.styles.handcar": "Draisine",
   "railways.bogeys.styles.heavyweight": "Heavyweight",
-  "railways.bogeys.styles.invisible": "Invisible",
-  "railways.bogeys.styles.invisible_monobogey": "Invisible Monobogey",
+  "railways.bogeys.styles.invisible": "Unsichtbar",
+  "railways.bogeys.styles.invisible_monobogey": "Unsichtbarer Monobogey",
   "railways.bogeys.styles.leafspring": "Leafspring",
   "railways.bogeys.styles.modern": "Modern",
   "railways.bogeys.styles.monobogey": "Monobogey",
