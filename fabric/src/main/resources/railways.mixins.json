@@ -17,6 +17,7 @@
     "ContainerLevelAccessMixin",
     "DetectorRailBlockMixin",
     "EnderManMixin",
+    "FluidHelperMixin",
     "FluidNetworkMixin",
     "ItemStackMixin",
     "MixinLootDataManager",

@@ -55,6 +55,7 @@
     "MixinDoorMovingInteraction",
     "MixinEdgeData",
     "MixinExplosionDamageCalculator",
+    "MixinFluidIngredient",
     "MixinFlywheelBlockEntity",
     "MixinGlobalRailwayManager",
     "MixinGlobalStation",

@@ -9,6 +9,7 @@ Fixes
 - Fix infinite paint for projectiles launched from potato cannons on forge
 - Make woodburner smokestacks stackable in full block increments
 - Fix client crash when rendering signal highlighter for signal without a track #744
+- Fix KubeJS incompatibility with fluid amount mangling #746
 ------------------------------------------------------
 Steam 'n' Rails 1.7.1
 ------------------------------------------------------
