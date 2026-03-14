@@ -2033,6 +2033,7 @@
   "railways.bogeys.styles.wide_default": "Wide",
   "railways.bogeys.styles.y25": "Y25",
   "railways.buffer.invalid_shape": "Buffers must be placed on a straight track",
+  "railways.commands.count_paint.success": "Found %s painted block(s).",
   "railways.coupler.edge_spacing": "Carriage Spacing",
   "railways.coupler.edge_spacing.meters": "Meters",
   "railways.coupler.mode.both": "-> Coupling & Decoupling",

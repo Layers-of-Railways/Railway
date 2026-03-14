@@ -35,6 +35,7 @@ public class CRLangGen {
 
         provideDefaultLang("interface", langConsumer);
         provideDefaultLang("tooltips", langConsumer);
+        provideDefaultLang("commands", langConsumer);
         CRAdvancements.provideLang(langConsumer);
         CRTags.provideLangEntries(langConsumer);
         CRPalettes.provideLangEntries(langConsumer);

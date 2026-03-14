@@ -24,6 +24,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysBuildInfo;
 import com.railwayteam.railways.registry.commands.ConductorDemoCommand;
+import com.railwayteam.railways.registry.commands.CountPaintCommand;
 import com.railwayteam.railways.registry.commands.FillPaintCommand;
 import com.railwayteam.railways.registry.commands.PalettesDemoCommand;
 import com.railwayteam.railways.registry.commands.ReloadCasingCollisionCommand;
@@ -50,7 +51,8 @@ public class CRCommands {
             .then(SplitTrainCommand.register())
             .then(TrainInfoCommand.register())
             .then(ShadowRealmCommand.register())
-            .then(FillPaintCommand.register(context));
+            .then(FillPaintCommand.register(context))
+            .then(CountPaintCommand.register(context));
 
         if (Utils.isDevEnv() || RailwaysBuildInfo.INCLUDE_DEV_COMMANDS) {
             railwaysCommand = railwaysCommand
