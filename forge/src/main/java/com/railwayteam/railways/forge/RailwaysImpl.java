@@ -18,14 +18,13 @@
 
 package com.railwayteam.railways.forge;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.config.forge.CRConfigsImpl;
+import com.railwayteam.railways.multiloader.CommandRegistrar;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.forge.CRCreativeModeTabsImpl;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
 import com.railwayteam.railways.util.Utils;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -42,7 +41,6 @@ import org.apache.logging.log4j.core.config.Configurator;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 @Mod(Railways.MOD_ID)
 @Mod.EventBusSubscriber
@@ -70,17 +68,17 @@ public class RailwaysImpl {
 		Railways.registrate().registerEventListeners(bus);
 	}
 
-	private static final Set<BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean>> commandConsumers = new HashSet<>();
+	private static final Set<CommandRegistrar> commandRegistrars = new HashSet<>();
 
-	public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
-		commandConsumers.add(consumer);
+	public static void registerCommands(CommandRegistrar registrar) {
+		commandRegistrars.add(registrar);
 	}
 
 	@SubscribeEvent
 	public static void onCommandRegistration(RegisterCommandsEvent event) {
 		CommandSelection selection = event.getCommandSelection();
 		boolean dedicated = selection == CommandSelection.ALL || selection == CommandSelection.DEDICATED;
-		commandConsumers.forEach(consumer -> consumer.accept(event.getDispatcher(), dedicated));
+		commandRegistrars.forEach(registrar -> registrar.register(event.getDispatcher(), dedicated, event.getBuildContext()));
 	}
 
 	private static void restoreLoggers() {

@@ -18,7 +18,6 @@
 
 package com.railwayteam.railways;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.base.data.CRTagGen;
 import com.railwayteam.railways.base.data.RailwaysHatOffsetGenerator;
 import com.railwayteam.railways.base.data.compat.emi.EmiExcludedTagGen;
@@ -31,6 +30,7 @@ import com.railwayteam.railways.base.data.recipe.processing.RailwaysProcessingRe
 import com.railwayteam.railways.base.registration.MultiRegistryCallback;
 import com.railwayteam.railways.compat.Mods;
 import com.railwayteam.railways.config.CRConfigs;
+import com.railwayteam.railways.multiloader.CommandRegistrar;
 import com.railwayteam.railways.multiloader.Loader;
 import com.railwayteam.railways.registry.CRAdvancements;
 import com.railwayteam.railways.registry.CRCommands;
@@ -46,7 +46,6 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.simibubi.create.foundation.ponder.PonderLocalization;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -57,7 +56,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class Railways {
@@ -158,7 +156,7 @@ public class Railways {
   }
 
   @ExpectPlatform
-  public static void registerCommands(BiConsumer<CommandDispatcher<CommandSourceStack>, Boolean> consumer) {
+  public static void registerCommands(CommandRegistrar registrar) {
     throw new AssertionError();
   }
 }

@@ -3,7 +3,8 @@ Steam 'n' Rails 1.7.2
 ------------------------------------------------------
 <!--This is the next unreleased version-->
 Additions
-- - `Unbreakable: 1b` tag on paint pitchers makes them infinite-use for potato cannons and paintbrushes
+- `Unbreakable: 1b` tag on paint pitchers makes them infinite-use for potato cannons and paintbrushes
+- `/snr fill_paint` command to mass-recolor a volume of blocks, optionally filtered by block state or color
 Fixes
 - Fix infinite paint for projectiles launched from potato cannons on forge
 ------------------------------------------------------
