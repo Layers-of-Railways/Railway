@@ -33,6 +33,9 @@ public class MixinPotatoCannonItem {
     @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/equipment/potatoCannon/PotatoCannonItem;getAmmo(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)Lcom/simibubi/create/content/equipment/potatoCannon/PotatoCannonItem$Ammo;"))
     private static PotatoCannonItem.Ammo splitPitcher(Player player, ItemStack heldStack, Operation<PotatoCannonItem.Ammo> original) {
         var ammo = original.call(player, heldStack);
+        if (ammo == null)
+            return null;
+
         ItemStack itemStack = ammo.stack();
         if (itemStack.getItem() instanceof PaintPitcherItem item) {
             int levels = item.getLevels(itemStack);
