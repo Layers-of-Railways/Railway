@@ -1,0 +1,8 @@
+{
+  "parent": "railways:block/narrow_gauge_base/segment_left",
+  "textures": {
+    "0": "biomesoplenty:block/track/pine/standard_track_pine",
+    "1": "biomesoplenty:block/track/pine/standard_track_mip_pine",
+    "particle": "biomesoplenty:block/track/pine/standard_track_crossing_pine"
+  }
+}

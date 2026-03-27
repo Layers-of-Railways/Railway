@@ -37,12 +37,15 @@ public class BiomesOPlentyTrackCompat extends GenericTrackCompat {
         Railways.LOGGER.info("Registering tracks for Biomes O' Plenty");
         new BiomesOPlentyTrackCompat().register(
             "dead",
+            "empyreal",
             "fir",
             "hellbark",
             "jacaranda",
             "magic",
             "mahogany",
+            "maple",
             "palm",
+            "pine",
             "redwood",
             "umbran",
             "willow"
