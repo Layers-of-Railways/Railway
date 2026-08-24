@@ -37,7 +37,6 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
 @Mixin(CopycatModel.class)
 public class CopycatModelMixin {
     @WrapOperation(method = "emitBlockQuads", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/decoration/copycat/CopycatModel;emitBlockQuadsInner(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;Lnet/minecraft/world/level/block/state/BlockState;Lcom/simibubi/create/content/decoration/copycat/CopycatModel$CullFaceRemovalData;Lcom/simibubi/create/content/decoration/copycat/CopycatModel$OcclusionData;)V"))
@@ -48,6 +47,7 @@ public class CopycatModelMixin {
         BlockAndTintGetter filteredView;
         if (state.getBlock() instanceof CopycatBlock copycatBlock) {
             Predicate<BlockPos> filter = targetPos -> copycatBlock.canConnectTexturesToward(blockView, pos, targetPos, state);
+            //noinspection deprecation
             if (blockView instanceof RenderAttachedBlockView renderAttachedBlockView) {
                 filteredView = new FilteredRenderAttachedBlockView(renderAttachedBlockView, filter);
             } else {
