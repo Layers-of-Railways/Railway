@@ -1,0 +1,9 @@
+{
+  "parent": "railways:block/wide_gauge_base/teleport",
+  "textures": {
+    "1": "biomesoplenty:block/track/empyreal/portal_track_empyreal",
+    "2": "biomesoplenty:block/track/empyreal/portal_track_mip_empyreal",
+    "3": "biomesoplenty:block/track/empyreal/standard_track_empyreal",
+    "particle": "biomesoplenty:block/track/empyreal/standard_track_crossing_empyreal"
+  }
+}

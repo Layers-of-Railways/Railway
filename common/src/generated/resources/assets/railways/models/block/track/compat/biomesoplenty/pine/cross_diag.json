@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_diag",
+  "textures": {
+    "0": "biomesoplenty:block/track/pine/standard_track_pine",
+    "1": "biomesoplenty:block/track/pine/standard_track_mip_pine",
+    "2": "biomesoplenty:block/track/pine/standard_track_crossing_pine",
+    "particle": "biomesoplenty:block/track/pine/standard_track_crossing_pine"
+  }
+}

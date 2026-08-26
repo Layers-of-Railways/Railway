@@ -10,7 +10,7 @@
       {
         "type": "file",
         "attenuation_distance": 128,
-        "name": "create:cogs"
+        "name": "railways:handcar_cogs"
       }
     ],
     "subtitle": "create.subtitle.cogs"
