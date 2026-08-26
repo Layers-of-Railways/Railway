@@ -25,7 +25,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
-import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -117,7 +116,14 @@ public interface RotationType {
 
         @Override
         public BlockState rotate(BlockState state, Rotation rot) {
-            return RotatedPillarBlock.rotatePillar(state, rot);
+            return switch (rot) {
+                case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.getValue(AXIS)) {
+                    case X -> state.setValue(AXIS, Axis.Z);
+                    case Z -> state.setValue(AXIS, Axis.X);
+                    default -> state;
+                };
+                default -> state;
+            };
         }
 
         @Override
