@@ -1,0 +1,73 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "biomesoplenty"
+      ]
+    }
+  ],
+  "type": "create:sequenced_assembly",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "biomesoplenty"
+    }
+  ],
+  "ingredient": {
+    "item": "railways:track_biomesoplenty_empyreal"
+  },
+  "loops": 1,
+  "results": [
+    {
+      "item": "railways:track_biomesoplenty_empyreal_wide"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:cutting",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        },
+        {
+          "item": "biomesoplenty:empyreal_slab"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        }
+      ]
+    },
+    {
+      "type": "create:pressing",
+      "ingredients": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        }
+      ],
+      "results": [
+        {
+          "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "railways:track_incomplete_biomesoplenty_empyreal_wide"
+  }
+}

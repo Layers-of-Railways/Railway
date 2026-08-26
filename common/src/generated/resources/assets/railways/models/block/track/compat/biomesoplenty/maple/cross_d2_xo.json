@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/track/cross_d2_xo",
+  "textures": {
+    "0": "biomesoplenty:block/track/maple/standard_track_maple",
+    "1": "biomesoplenty:block/track/maple/standard_track_mip_maple",
+    "2": "biomesoplenty:block/track/maple/standard_track_crossing_maple",
+    "particle": "biomesoplenty:block/track/maple/standard_track_crossing_maple"
+  }
+}
