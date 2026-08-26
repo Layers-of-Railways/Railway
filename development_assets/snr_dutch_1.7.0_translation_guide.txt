@@ -1,0 +1,107 @@
+Colours:
+
+Info:
+In Dutch, colours behave like adjectives and follow the rule where
+"de"-words + plurals get an -e (I call this Var2) and "het" words get nothing
+(I call this Var1).
+
+Materials:
+SnR contains "Colours" that are actually materials, these behave differently 
+as they are technically not colours (duh). Materials (typically) end with the noun + "-en",
+note words like "Steen" (Stone) turn into "Sten(en)" due to how vowels behave as well. 
+(I'll list these words under Var2)
+One exception: in the "<COLOUR> on Black/White" collections, they should be the normal noun.
+(I'll list these under Var1)
+
+English        |Dutch                               |
+               |Var1               |Var2            |
+Brown           Bruin               Bruine
+Maroon          Kastanjebruin       Kastanjebruine
+Red             Rood                Rode
+Vermilion       Vermiljoen          Vermiljoen
+Orange          Oranje              Oranje
+Granite         Graniet             Granieten       (MATERIAL)
+Dripstone       Druipsteen          Druipstenen     (MATERIAL)
+Ochrum          Oker                Okeren          (MATERIAL)
+Yellow          Geel                Gele 
+Chartreuse      Chartreuse          Chartreuse
+Olive Green     Olijfgroen          Olijfgroene
+Lime            Limoengroen         Limoengroene
+Green           Groen               Groene
+Pine Green      Dennengroen         Dennengroene
+Cyan            Cyaan               Cyane
+Sea Green       Zeegroen            Zeegroene
+Turqouise       Turkoois            Turkooizen
+Light Blue      Lichtblauw          Lichtblauwe
+Blue            Blauw               Blauwe
+Royal Blue      Koningsblauw        Koningsblauwe
+Purple          Paars               Paarse
+Magenta         Magenta             Magenta
+Pink            Roze                Roze
+White           Wit                 Witte 
+Diorite         Dioriet             Diorieten       (MATERIAL)
+Limestone       Kalksteen           Kalkstenen      (MATERIAL)
+Light Gray      Lichtgrijs          Lichtgrijze
+Tuff            Tufsteen            Tufstenen       (MATERIAL)
+Gray            Grijs               Grijze
+Scorchia        Scorchia            Scorchia        (MATERIAL)
+Black           Zwart               Zwarte
+
+Translations:
+
+I took Brown as an example here. Also added some comments underneath
+some translations where clarification might be nice.
+
+After each translation I put (Var1) or (Var2) to signal which 
+variant of the colour translation to use accordingly. If it's a 
+material (as explained before) you always use Var2, unless explicitly
+stated otherwise indicated by "MVar1"
+
+Brown Riveted Locometal > Bruin Geklonken Locometaal                        (Var1)
+Brown Slashed Locometal > Bruin Gesneden Locometaal                         (Var1)
+Brown Brass Wrapped Locometal > Bruin met Messing Bekleed Locometaal        (Var1)
+Brown Copper Wrapped Locometal > Bruin met Koper Bekleed Locometaal         (Var1)
+Brown Iron Wrapped Locometal > Bruin met IJzer Bekleed Locometaal           (Var1)
+Brown Locometal Vent > Bruine Locometalen Ventilatie                        (Var2)
+Flat Brown Riveted Locometal > Plat Bruin Geklonken Locometaal              (Var1)
+Flat Brown Slashed Locometal > Plat Bruin Gesneden Locometaal               (Var1)
+Plated Brown Locometal > Geplateerd Bruin Locometaal                        (Var1)
+    Comment: "Geplateerd" is a really "weird" word, although it exists, it may be 
+        better to freely translate this block as "Brown Locometal Plates", resulting In 
+        the following:
+                       > Bruine Locometalen Platen                          (Var2!)
+Brown Locometal Pillar > Bruine Locometalen Pilaar                          (Var2)
+Brown Locometal Smokebox > Bruine Locometalen Rookkast                      (Var2)
+Brown Brass Wrapped Locometal Smokebox > Bruine met Messing Beklede Locometalen Rookkast    (Var2)
+Brown Copper Wrapped Locometal Smokebox > Bruine met Koper Beklede Locometalen Rookkast     (Var2)
+Brown Iron Wrapped Locometal Smokebox > Bruine met IJzer Beklede Locometalen Rookkast       (Var2)
+Brown Locometal Boiler > Bruine Locometalen Stoomketel                                      (Var2)
+Brown Brass Wrapped Locometal Boiler > Bruine met Messing Beklede Locometalen Stoomketel    (Var2)
+Brown Copper Wrapped Locometal Boiler > Bruine met Koper Beklede Locometalen Stoomketel     (Var2)
+Brown Iron Wrapped Locometal Boiler > Bruine met IJzer Beklede Locometalen Stoomketel       (Var2)
+Brown Locometal Flywheel > Bruin Locometalen Vliegwiel                      (Var1)
+Brown Locometal End Ladder > Bruin Locometalen Laddereind                   (Var1)
+Brown Locometal Rung Ladder > Bruine Locometalen Sportladder                (Var2)
+    Comment: In Dutch we barely call a rung ladder a rung ladder, and just a ladder
+        because there's viable enough difference between a rung ladder and, for instance,
+        a step ladder. If you don't have to explicitly call it a "Rung" ladder, call
+        it the following instead:
+                            > Bruine Locometalen Ladder                     (Var2)
+Brown Locometal Trapdoor > Bruin Locometalen Valluik                        (Var1)
+Brown Hinged Locometal Door > Gescharnierde Bruine Locometalen Deur         (Var2)
+    Comment: Similar to "Rung", and "Geplateerd", "Gescharnierd" is a very "weird"
+        way to express what type of door this is. So again, if you don't have to 
+        explicitly call it a "Hinged" door, and just a door call it the following instead:
+                            > Bruine Locometalen Deur                       (Var2)
+        Alternatively, you could call it a "Normal" door instead:
+                            > Normale Bruine Locometalen Deur               (Var2)
+Brown Sliding Locometal Door > Bruine Locometalen Schuifdeur                (Var2)
+Brown Folding Locometal Door > Bruine Locometalen Vouwdeur                  (Var2)
+Brown Round Pane Locometal Window > Bruin Rond Geruit Locometalen Raam      (Var1)
+Brown Single Pane Locometal Window > Bruin Eenmalig Geruit Locometalen Raam (Var1)
+Brown Two Pane Locometal Window > Bruin Tweemalig Geruit Locometalen Raam   (Var1)
+Brown Four Pane Locometal Window > Bruin Viermalig Geruit Locometalen Raam  (Var1)
+Brown on Black Hazard Stripes > Bruin-op-zwarte Gevarenstrepen              (Var1, MVar1)
+Brown on Black Chevron > Bruin-op-zwarte Chevron                            (Var1, MVar1)
+Brown on White Hazard Stripes > Bruin-op-witte Gevarenstrepen               (Var1, MVar1)
+Brown on White Chevron > Bruin-op-witte Chevron                             (Var1, MVar1)
