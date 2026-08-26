@@ -6,28 +6,81 @@ import json
 prefix = "block.railways."
 
 CAPITALIZE_FIRST_ONLY = False
+NON_CAPITALIZED_WORDS = {
+    "met"
+}
 
-colors: dict[str, str] = {
-    "black": "zwarte",
-    "blue": "blauwe",
-    "brown": "bruine",
-    "gray": "grijze",
-    "green": "groene",
-    "light_blue": "lichtblauwe",
-    "light_gray": "lichtgrijze",
-    "lime": "limoengroene",
-    "magenta": "magenta",
+colors1: dict[str, str] = {
+    "brown": "bruin",
+    "maroon": "kastanjebruin",
+    "red": "rood",
+    "vermilion": "vermiljoen",
     "orange": "oranje",
+    "granite": "graniet",
+    "dripstone": "druipsteen",
+    "ochrum": "oker",
+    "yellow": "geel",
+    "chartreuse": "chartreuse",
+    "olive_green": "olijfgroen",
+    "lime": "limoengroen",
+    "green": "groen",
+    "pine_green": "dennengroen",
+    "cyan": "cyaan",
+    "sea_green": "zeegroen",
+    "turquoise": "turkoois",
+    "light_blue": "lichtblauw",
+    "blue": "blauw",
+    "royal_blue": "koningsblauw",
+    "purple": "paars",
+    "magenta": "magenta",
     "pink": "roze",
-    "purple": "paarse",
-    "red": "rode",
-    "white": "witte",
-    "yellow": "gele",
-    "cyan": "turquoise",
+    "white": "wit",
+    "diorite": "dioriet",
+    "limestone": "kalksteen",
+    "light_gray": "lichtgrijs",
+    "tuff": "tufsteen",
+    "gray": "grijs",
+    "scorchia": "scorchia",
+    "black": "zwart",
     "": ""
 }
 
-color_keys = colors.keys()
+colors2: dict[str, str] = {
+    "brown": "bruine",
+    "maroon": "kastanjebruine",
+    "red": "rode",
+    "vermilion": "vermiljoen",
+    "orange": "oranje",
+    "granite": "granieten",
+    "dripstone": "druipstenen",
+    "ochrum": "okeren",
+    "yellow": "gele",
+    "chartreuse": "chartreuse",
+    "olive_green": "olijfgroene",
+    "lime": "limoengroene",
+    "green": "groene",
+    "pine_green": "dennengroene",
+    "cyan": "cyane",
+    "sea_green": "zeegroene",
+    "turquoise": "turkooizen",
+    "light_blue": "lichtblauwe",
+    "blue": "blauwe",
+    "royal_blue": "koningsblauwe",
+    "purple": "paarse",
+    "magenta": "magenta",
+    "pink": "roze",
+    "white": "witte",
+    "diorite": "diorieten",
+    "limestone": "kalkstenen",
+    "light_gray": "lichtgrijze",
+    "tuff": "tufstenen",
+    "gray": "grijze",
+    "scorchia": "scorchia",
+    "black": "zwarte",
+    "": ""
+}
+
+color_keys = colors1.keys()
 
 wrapping_names: dict[str, str] = {
     "brass": "messing",
@@ -36,15 +89,24 @@ wrapping_names: dict[str, str] = {
 }
 
 type_names = {
-    "slashed": "gestreept lokometaal",
-    "riveted": "geklonken lokometaal",
-    "plated": "lokometaalplaat"
+    "slashed": "gesneden locometaal",
+    "riveted": "geklonken locometaal",
+    "plated": "locometalen platen"
+}
+
+type_colors = {
+    "slashed": colors1,
+    "riveted": colors1,
+    "plated": colors2,
+    None: colors1,
 }
 
 
 def capitalize(s: str) -> str:
     s = s.lower()
-    if len(s) > 0:
+    if len(s) > 0 and s.lower() not in NON_CAPITALIZED_WORDS:
+        if s.startswith("ij"):
+            return "IJ" + s[2:]
         return s[0].upper() + s[1:]
     else:
         return s
@@ -71,7 +133,13 @@ def join_with_title_case(*parts: str | tuple[str, bool]) -> str:
 
 def mk_boiler(wrapping: str | None) -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], wrapping_names.get(wrapping, ""), ("bekleden", wrapping is not None), "lokometaalen stoomketel")
+        return join_with_title_case(colors2[color],
+
+                                    ("met", wrapping is not None),
+                                    wrapping_names.get(wrapping, ""),
+                                    ("beklede", wrapping is not None),
+
+                                    "locometalen stoomketel")
     return f
 
 
@@ -83,20 +151,118 @@ def mk_locometal(wrapping: str | None, flat: bool, typ: str | None) -> callable:
     :return:
     """
     def f(color: str) -> str:
-        return join_with_title_case(("platte", flat), colors[color], wrapping_names.get(wrapping, ""),
-                                    ("bekleden", wrapping is not None), type_names.get(typ, "lokometaal"))
+        return join_with_title_case(("plat", flat),
+                                    type_colors[typ][color],
+
+                                    ("met", wrapping is not None),
+                                    wrapping_names.get(wrapping, ""),
+                                    ("beklede" if type_colors[typ] == colors2 else "bekleed", wrapping is not None),
+
+                                    type_names.get(typ, "locometaal"))
     return f
 
 
 def mk_pillar() -> callable:
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], "lokometaalpilaar")
+        return join_with_title_case(colors2[color], "locometalen pilaar")
+    return f
+
+def mk_smokebox(wrapping: str | None) -> callable:
+    """
+    :param wrapping: None, copper, iron
+    :return:
+    """
+    def f(color: str) -> str:
+        return join_with_title_case(colors2[color],
+
+                                    ("met", wrapping is not None),
+                                    wrapping_names.get(wrapping, ""),
+                                    ("beklede", wrapping is not None),
+
+                                    "locometalen rookkast")
+    return f
+
+def mk_vent() -> callable:
+    def f(color: str) -> str:
+        return join_with_title_case(colors2[color], "Locometalen Ventilatie")
     return f
 
 
-def mk_smokebox() -> callable:
+def mk_flywheel() -> callable:
+    def f(color: str):
+        return join_with_title_case(colors1[color], "Locometalen Vliegwiel")
+    return f
+
+def mk_ladder(typ: str) -> callable:
+    """
+    :param typ: end, rung
+    :return:
+    """
+    ladder_types = {
+        "end": "Laddereind",
+        "rung": "Ladder"
+    }
+    ladder_colors = {
+        "end": colors1,
+        "rung": colors2
+    }
     def f(color: str) -> str:
-        return join_with_title_case(colors[color], "lokometaalen rookkast")
+        return join_with_title_case(ladder_colors[typ][color],
+                                    "Locometalen",
+                                    ladder_types[typ])
+    return f
+
+def mk_trapdoor() -> callable:
+    def f(color: str) -> str:
+        return join_with_title_case(colors1[color], "Locometalen Valluik")
+    return f
+
+def mk_door(typ: str) -> callable:
+    """
+    :param typ: hinged, sliding, folding
+    :return:
+    """
+    door_types = {
+        "hinged": "deur",
+        "sliding": "schuifdeur",
+        "folding": "vouwdeur"
+    }
+    def f(color: str) -> str:
+        return join_with_title_case(colors2[color],
+                                    "Locometalen",
+                                    door_types[typ])
+    return f
+
+def mk_window(typ: str) -> callable:
+    """
+    :param typ: round, single, two, four
+    :return:
+    """
+    window_types = {
+        "round": "rond",
+        "single": "eenmalig",
+        "two": "tweemalig",
+        "four": "viermalig"
+    }
+    def f(color: str) -> str:
+        return join_with_title_case(colors1[color],
+                                    window_types[typ],
+                                    "Geruit Locometalen Raam")
+    return f
+
+def mk_hazard(typ: str, on: str) -> callable:
+    """
+    :param typ: stripe, chevron
+    :param on: black,white
+    :return:
+    """
+    design_patterns = {
+        "stripe": "gevarenstrepen",
+        "chevron": "chevron"
+    }
+    def f(color: str) -> str:
+        c = colors1[color] if color != "" else "Locometaal"
+        return join_with_title_case(f'{c}-op-{colors2[on]}', design_patterns[typ])
     return f
 
 
@@ -104,7 +270,11 @@ translations: dict[str, callable] = {
     "slashed_locometal": mk_locometal(None, False, "slashed"),
     "riveted_locometal": mk_locometal(None, False, "riveted"),
     "locometal_pillar": mk_pillar(),
-    "locometal_smokebox": mk_smokebox(),
+
+    "locometal_smokebox": mk_smokebox(None),
+    "copper_wrapped_locometal_smokebox": mk_smokebox("copper"),
+    "iron_wrapped_locometal_smokebox": mk_smokebox("iron"),
+
     "plated_locometal": mk_locometal(None, False, "plated"),
     "flat_slashed_locometal": mk_locometal(None, True, "slashed"),
     "flat_riveted_locometal": mk_locometal(None, True, "riveted"),
@@ -117,6 +287,27 @@ translations: dict[str, callable] = {
     "brass_wrapped_locometal_boiler": mk_boiler("brass"),
     "copper_wrapped_locometal_boiler": mk_boiler("copper"),
     "iron_wrapped_locometal_boiler": mk_boiler("iron"),
+
+    "locometal_vent": mk_vent(),
+    "locometal_flywheel": mk_flywheel(),
+
+    "locometal_end_ladder": mk_ladder("end"),
+    "locometal_rung_ladder": mk_ladder("rung"),
+
+    "locometal_trapdoor": mk_trapdoor(),
+    "hinged_locometal_door": mk_door("hinged"),
+    "sliding_locometal_door": mk_door("sliding"),
+    "folding_locometal_door": mk_door("folding"),
+
+    "round_pane_locometal_window": mk_window("round"),
+    "single_pane_locometal_window": mk_window("single"),
+    "two_pane_locometal_window": mk_window("two"),
+    "four_pane_locometal_window": mk_window("four"),
+
+    "hazard_stripes_chevron_on_black": mk_hazard("chevron", "black"),
+    "hazard_stripes_chevron_on_white": mk_hazard("chevron", "white"),
+    "hazard_stripes_diagonal_on_black": mk_hazard("stripe", "black"),
+    "hazard_stripes_diagonal_on_white": mk_hazard("stripe", "white"),
 }
 
 
@@ -156,8 +347,8 @@ for string, formatter in translations.items():
             print("OOPS", s)
             continue
         if s in existing_translated_strings:
-            print("Already translated", s)
-            continue
+            print("Already translated", s, "replacing")
+            #continue
         new_translated_strings[s] = formatter(color_name)
 
 print(f"New translations for {lang}")

@@ -42,7 +42,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class PlayerListMixin {
 	@SuppressWarnings("InvalidInjectorMethodSignature")
 	@Inject(method = "broadcast", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/server/level/ServerPlayer;getZ()D"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, require = 0)
-	private void securitycraft$broadcastToCameras(@Nullable Player except, double x, double y, double z, double radius, ResourceKey<Level> dimension, Packet<?> packet, CallbackInfo callback, int iteration, ServerPlayer serverPlayer) {
+	private void railways$securitycraft$broadcastToCameras(@Nullable Player except, double x, double y, double z, double radius, ResourceKey<Level> dimension, Packet<?> packet, CallbackInfo callback, int iteration, ServerPlayer serverPlayer) {
 		if (serverPlayer.getCamera() instanceof ConductorEntity conductor) {
 			double dX = x - conductor.getX();
 			double dY = y - conductor.getY();

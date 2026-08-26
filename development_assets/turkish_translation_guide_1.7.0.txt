@@ -1,0 +1,112 @@
+colors are:
+    black: Siyah
+    blue: Mavi
+    brown: Kahverengi
+    chartreuse: Şartröz
+    cyan: Camgöbeği
+    diorite: Diyorit
+    dripstone: Damla Taşı
+    granite: Granit
+    gray: Gri
+    green: Yeşil
+    light blue: Açık Mavi
+    light gray: Açık Gri
+    lime: Açık Yeşil
+    limestone: Kireç
+    magenta: Eflatun
+    maroon: Bordo
+    netherite: Netherit
+    ochrum: Okrum # in create mod's turkish, its called "Okrum" so ill go with that
+    olive green: Zeytin Yeşili
+    orange: Turuncu
+    pine green: Çam Yeşili
+    pink: Pembe
+    purple: Mor
+    red: Kırmızı
+    royal blue: Koyu Mavi
+    scorchia: Korza # same story as "ochrum"
+    sea green: Deniz Yeşili
+    tuff: Tüf
+    turquoise: Turkuaz
+    vermilion: Parlak Kırmızı 
+    white: Beyaz
+    yellow: Sarı
+
+wrap_materials are:
+    brass: Pirinç
+    copper: Bakır
+    iron: Demir
+
+types are:
+    slashed: Kesik
+    riveted: Perçinlenmiş
+    plated: Kaplanmış
+
+normal locometal blocks are:
+  "{Düz ve}(only if flat) {wrap_material?} {Sarılı}(only if wrapped) {type?} {color?} Lokometal"
+
+>boiler is:
+>  "{color?} {wrap_material?} {Sarılı}(only if wrapped) Lokometal Kazan"
+
+pillars:
+  "{color?} Lokometal Sütunu"
+
+#i think you used smokebox as exhaust, chimney so smokebox should be "baca" but if you really used it as smoke box it should be "duman kutusu".
+>smokeboxes:
+>  "{color?} Lokometal Baca"
+
+>wrapped smokeboxes:
+>  "{color} {wrap_material} {Sarılı}(only if wrapped) Lokometal Baca"
+
+# COLOR Locometal Vent
+vent:
+  "{color} Lokometal Havalandırma Bloğu"
+
+# COLOR Locometal Flywheel
+flywheel:
+  "{color} Lokometal Volan"
+
+# COLOR Locometal {End,Rung} Ladder
+ladder_types are:
+  end_ladder: Kancalı Merdiven
+  rung_ladder: Menhol Basamakları
+{end,rung}_ladder:
+  "{color} Lokometal {ladder_type}"
+
+# COLOR Locometal Trapdoor
+trapdoor:
+  "{color} Lokometal Tuzak Kapısı"
+
+# COLOR {Hinged,Sliding,Folding} Locometal Door
+door_types are:
+  hinged: Menteşeli
+  sliding: Sürgülü
+  folding: Katlanır
+{hinged,sliding,folding}_door:
+ "{color} {door_type} Lokometal Kapı"
+
+# COLOR {Round,Single,Two,Four} Pane Locometal Window
+window_types are:
+  round_pane: Yuvarlak Camlı
+  single_pane: Tek Bölmeli
+  two_pane: Çift Bölmeli
+  four_pane: Dört Bölmeli
+{round_pane,single_pane,two_pane,four_pane}_window:
+ "{color} {window_type} Lokometal Pencere"
+
+# COLOR on {Black,White} {Hazard Stripes,Chevron}
+design_patterns are:
+  hazard_stripes: Uyarı Şeritli Blok
+  chevron: Şevron Desenli Blok
+hazard_stripes_{diagonal,chevron}_{black,white}:
+  "{Siyah,Beyaz} Üzerine {color} {design_pattern}"
+
+#for future reference, here are the scrapped translations:
+#chartreuse: leave it as is
+#vermilion: vermilyon/çin kırmızısı/nar çiçeği/zincifre
+#vent: havalandırma
+#rung: basamaklı/kuyu tipi merdiven/baca merdiveni
+#end: çatı merdiveni/çengelli merdiven/çengel tipi merdiven
+#window: cam
+#chevron: nişan işlemeli/kıvrımlı/kıvrım desenli
+#hazard stripes: tehlike şeridi/uyarı şeridi desenli/tehlike şeridi desenli

@@ -56,7 +56,7 @@ public abstract class ChunkMapMixin {
 			"getPlayers",
 			"lambda$setViewDistance$0", "m_ntjylyau", "method_17219" // these 3 all refer to the same thing with different mappings
 	}, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getLastSectionPos()Lnet/minecraft/core/SectionPos;"))
-	private SectionPos securitycraft$getCameraSectionPos(ServerPlayer player) {
+	private SectionPos railways$securitycraft$getCameraSectionPos(ServerPlayer player) {
 		if (ConductorPossessionController.isPossessingConductor(player) || player.getCamera().getClass().getName().equals("net.geforcemods.securitycraft.entity.camera.SecurityCamera"))
 			return SectionPos.of(player.getCamera());
 
@@ -68,7 +68,7 @@ public abstract class ChunkMapMixin {
 	 * when they stop viewing a camera
 	 */
 	@Inject(method = "move", at = @At(value = "TAIL"))
-	private void securitycraft$trackCameraLoadedChunks(ServerPlayer player, CallbackInfo callback) {
+	private void railways$securitycraft$trackCameraLoadedChunks(ServerPlayer player, CallbackInfo callback) {
 		if (player.getCamera() instanceof ConductorEntity camera) {
 			if (!camera.hasSentChunks()) {
 				SectionPos oldPos = camera.oldSectionPos;

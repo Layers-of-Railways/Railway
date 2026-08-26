@@ -1,0 +1,43 @@
+[-] riveted
+[-] slashed
+[-] brass_wrapped_slashed
+[-] copper_wrapped_slashed
+[-] iron_wrapped_slashed
+[-] flat_riveted
+[-] flat_slashed
+[-] plated
+
+[ ] vent
+
+[-] pillar
+
+[-] smokebox
+[ ] brass_wrapped_smokebox
+[ ] copper_wrapped_smokebox
+[ ] iron_wrapped_smokebox
+
+[-] boiler
+[-] brass_wrapped_boiler
+[-] copper_wrapped_boiler
+[-] iron_wrapped_boiler
+
+[ ] flywheel
+
+[ ] end_ladder
+[ ] rung_ladder
+
+[ ] trapdoor
+
+[ ] hinged_door
+[ ] sliding_door
+[ ] folding_door
+
+[ ] round_pane_window
+[ ] single_pane_window
+[ ] two_pane_window
+[ ] four_pane_window
+
+[ ] hazard_stripes_diagonal_black
+[ ] hazard_stripes_chevron_black
+[ ] hazard_stripes_diagonal_white
+[ ] hazard_stripes_chevron_white

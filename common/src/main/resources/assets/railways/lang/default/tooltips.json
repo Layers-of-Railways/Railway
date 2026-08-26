@@ -45,5 +45,16 @@
   "block.railways.buffer.tooltip.summary": "Can be dyed by _clicking_ with dye.",
 
   "block.railways.track_buffer.tooltip": "TRACK BUFFER",
-  "block.railways.track_buffer.tooltip.summary": "_Variant_ can be changed by _wrenching the front face_, can be dyed by _clicking_ with dye and the wood board can be changed by _clicking_ with planks."
+  "block.railways.track_buffer.tooltip.summary": "_Variant_ can be changed by _wrenching the front face_, can be dyed by _clicking_ with dye and the wood board can be changed by _clicking_ with planks.",
+
+  "block.railways.conductor_whistle.tooltip": "CONDUCTOR WHISTLE",
+  "block.railways.conductor_whistle.tooltip.summary": "Blow the whistle and the train will arrive shortly! The _bound Conductor_ will _drive_ to the selected destination _ignoring_ its schedule.",
+  "block.railways.conductor_whistle.tooltip.condition1": "R-Click on Conductor riding a train",
+  "block.railways.conductor_whistle.tooltip.behaviour1": "_Binds_ the Whistle to _both_ the _Conductor_ and its _train_.",
+  "block.railways.conductor_whistle.tooltip.condition2": "R-Click on Train Track or Train Station",
+  "block.railways.conductor_whistle.tooltip.behaviour2": "_Instructs_ the _bound Conductor_ to drive to the selected _Train Track_ or _Station_.",
+  "block.railways.conductor_whistle.tooltip.condition3": "Deployer-use on Train Station",
+  "block.railways.conductor_whistle.tooltip.behaviour3": "_Instructs_ the _bound Conductor_ to drive to the selected _Station_.",
+  "block.railways.conductor_whistle.tooltip.condition4": "Deployer-use on Air",
+  "block.railways.conductor_whistle.tooltip.behaviour4": "_Dismisses_ the auto schedule of the _bound train_."
 }
