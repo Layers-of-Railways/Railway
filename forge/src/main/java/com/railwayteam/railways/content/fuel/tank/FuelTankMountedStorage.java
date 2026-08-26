@@ -20,6 +20,7 @@ package com.railwayteam.railways.content.fuel.tank;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.railwayteam.railways.content.fuel.LiquidFuelTrainHandler;
 import com.railwayteam.railways.content.fuel.tank.FuelTankMountedStorage.Handler;
 import com.railwayteam.railways.registry.forge.CRMountedStorageTypesImpl;
 import com.simibubi.create.api.contraption.storage.SyncedMountedStorage;
@@ -110,7 +111,7 @@ public class FuelTankMountedStorage extends WrapperMountedFluidStorage<Handler> 
 		private Runnable onChange = () -> {};
 
 		public Handler(int capacity, FluidStack stack) {
-			super(capacity);
+			super(capacity, fluid -> LiquidFuelTrainHandler.isFuelForTanks(fluid.getFluid()));
 			Objects.requireNonNull(stack);
 			this.setFluid(stack);
 		}
