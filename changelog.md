@@ -1,6 +1,9 @@
 ------------------------------------------------------
 Steam 'n' Rails 1.7.3
 ------------------------------------------------------
+Changes
+- new Conductor Whistle tooltip format by VladisCrafter
+
 Fixes
 - rotation of axial smokestacks no longer crashes #753
 - handcar audio is mono #544

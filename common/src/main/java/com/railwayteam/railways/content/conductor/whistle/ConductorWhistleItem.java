@@ -112,14 +112,22 @@ public class ConductorWhistleItem extends TrackTargetingBlockItem {
             if (railways != null && railways.trains.containsKey(trainId))
                 trainName = railways.trains.get(trainId).name.getString();
 
-            tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
-            tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.conductor_id", conductorId.toString().substring(0, 5)));
-            tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.train_id", trainName, trainId.toString().substring(0, 5)));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_usage"));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_usage"));
-            tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_clear"));
+            if (CRConfigs.client().modernWhistleTooltip.get()) {
+                tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.bound2", conductorId.toString().substring(0, 5), trainName, trainId.toString().substring(0, 5)));
+            } else {
+                tooltip.add(Components.translatable("railways.whistle.tool.bound").withStyle(ChatFormatting.DARK_GREEN));
+                tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.conductor_id", conductorId.toString().substring(0, 5)));
+                tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.train_id", trainName, trainId.toString().substring(0, 5)));
+                tooltip.add(Components.translatable("railways.whistle.tool.bound_usage"));
+                tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_usage"));
+                tooltip.add(Components.translatable("railways.whistle.tool.bound_auto_clear"));
+            }
         } else {
-            tooltip.add(Components.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
+            if (CRConfigs.client().modernWhistleTooltip.get()) {
+                tooltip.add(TextUtils.translateWithFormatting("railways.whistle.tool.not_bound2"));
+            } else {
+                tooltip.add(Components.translatable("railways.whistle.tool.not_bound").withStyle(ChatFormatting.DARK_RED));
+            }
         }
     }
 
