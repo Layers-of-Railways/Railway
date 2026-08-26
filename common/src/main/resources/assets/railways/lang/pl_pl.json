@@ -1,4 +1,8 @@
 {
+  "advancement.railways.root": "Witamy w Steam 'n' Rails",
+  "advancement.railways.root.desc": "Tu Być Lokomotywa",
+  "advancement.railways.strange_tea": "To nie jest Earl Grey",
+  "advancement.railways.strange_tea.desc": "Wypij przypadkowo farbę§7(Ukryte osiągnięcie)",
   "block.create.railway_casing.tooltip": "OBUDOWA KOLEJOWA",
   "block.create.railway_casing.tooltip.summary": "Naciśnij i przytrzymaj klawisz _Otwórz menu wózków_ (domyślnie _ALT_), aby wybrać _styl wózka_ do umieszczenia.",
   "block.create.track_station.tooltip": "STACJA KOLEJOWA",
