@@ -40,8 +40,10 @@ public class PhantomTrackBlock extends NoCollisionCustomTrackBlock implements Tr
     @Override
     @Environment(EnvType.CLIENT)
     public <Self extends Affine<Self>> PartialModel prepareTrackOverlay(Affine<Self> affine, BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, AxisDirection direction, RenderedTrackOverlayType type) {
-        if (bezierPoint == null && !PhantomSpriteManager.isVisible())
+        if (bezierPoint == null && !PhantomSpriteManager.isVisible()) {
+            affine.scale(0);
             return null;
+        }
         return super.prepareTrackOverlay(affine, world, pos, state, bezierPoint, direction, type);
     }
 }

@@ -4,6 +4,7 @@ Steam 'n' Rails 1.7.3
 Fixes
 - rotation of axial smokestacks no longer crashes #753
 - handcar audio is mono #544
+- correct rendering of track pads on phantom tracks #755
 ------------------------------------------------------
 Steam 'n' Rails 1.7.2
 ------------------------------------------------------
