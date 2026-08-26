@@ -54,7 +54,7 @@ public abstract class MixinMountedStorageManager implements IFuelInventory {
 		this.railways$fluidFuels = fuelMap.isEmpty() ? null : new MountedFluidStorageWrapper(fuelMap);
 	}
 
-	@Inject(method = "reset", at = @At("RETURN"))
+	@Inject(method = "reset", at = @At("RETURN"), remap = false)
 	private void railways$resetFluidFuels(CallbackInfo ci) {
 		this.railways$fluidFuels = null;
 	}

@@ -1,5 +1,6 @@
 {
   "parent": "railways:block/wide_gauge_base/tie",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "0": "biomesoplenty:block/track/empyreal/standard_track_empyreal",
     "1": "biomesoplenty:block/track/empyreal/standard_track_mip_empyreal",
