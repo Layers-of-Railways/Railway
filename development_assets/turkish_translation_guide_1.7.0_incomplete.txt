@@ -1,0 +1,86 @@
+colors are:
+    black: siyah
+    blue: mavi
+    brown: kahverengi
+>   chartreuse: 
+>   cyan: 
+>   diorite: 
+>   dripstone: 
+>   granite: 
+    gray: gri
+    green: yeşil
+    light blue: açık mavi
+    light gray: açık gri
+    lime: açık yeşil
+>   limestone: 
+    magenta: eflatun
+>   maroon: 
+>   netherite: 
+>   ochrum: 
+>   olive green: 
+    orange: turuncu
+>   pine green: 
+    pink: pembe
+    purple: mor
+    red: kırmızı
+>   royal blue: 
+>   scorchia: 
+>   sea green: 
+>   tuff: 
+>   turquoise: 
+>   vermilion: 
+    white: beyaz
+    yellow: sarı
+
+wrap_materials are:
+    brass: pirinç
+    copper: bakır
+    iron: demir
+
+types are:
+    slashed: kesik
+    riveted: perçinlenmiş
+    plated: kaplanmış
+
+normal locometal blocks are:
+  "{Düz ve}(only if flat) {wrap_material?} {sarılmış}(only if wrapped) {type?} {color?} lokometal"
+
+boiler is:
+  "{color?} {wrap_material?} {sarılmış}(only if wrapped) lokomotif kazanı"
+
+pillars:
+  "{color?} lokometal sütunu"
+
+# i fell into a dilemma but i think you used smokebox as exhaust, chimney so smokebox should be "baca" but if you really used it as smoke box it should be "duman kutusu". but for now, i'll use "baca"
+smokeboxes:
+  "{color?} lokomotif bacası"
+wrapped smokeboxes:
+> ???
+
+# COLOR Locometal Vent
+vent:
+> ???
+
+# COLOR Locometal Flywheel
+flywheel:
+> ???
+
+# COLOR Locometal {End,Rung} Ladder
+{end,rung}_ladder:
+> ???
+
+# COLOR Locometal Trapdoor
+trapdoor:
+> ???
+
+# COLOR {Hinged,Sliding,Folding} Locometal Door
+{hinged,sliding,folding}_door:
+> ???
+
+# COLOR {Round,Single,Two,Four} Pane Locometal Window
+{round_pane,single_pane,two_pane,four_pane}_window:
+> ???
+
+# COLOR on {Black,White} {Hazard Stripes,Chevron}
+hazard_stripes_{diagonal,chevron}_{black,white}:
+> ???
