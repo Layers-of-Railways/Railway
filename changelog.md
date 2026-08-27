@@ -9,6 +9,7 @@ Fixes
 - handcar audio is mono #544
 - correct rendering of track pads on phantom tracks #755
 - fuel tanks on contraptions once again filter properly
+- paint is stored properly on contraptions (mixin-fix of Fabricators-of-Create/Create#1918)
 ------------------------------------------------------
 Steam 'n' Rails 1.7.2
 ------------------------------------------------------

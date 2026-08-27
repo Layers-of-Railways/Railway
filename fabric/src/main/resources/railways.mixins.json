@@ -19,6 +19,7 @@
     "EnderManMixin",
     "FluidHelperMixin",
     "FluidNetworkMixin",
+    "CreateCodecsMixin",
     "ItemStackMixin",
     "MixinLootDataManager",
     "TrainMixin",
