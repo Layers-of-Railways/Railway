@@ -27,7 +27,6 @@ import com.simibubi.create.content.trains.observer.TrackObserverVisual;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.Nullable;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,10 +36,11 @@ public class MixinTrackObserverVisual {
     @Unique
     private @Nullable Boolean railways$previousPhantomVisible = null;
 
-    @WrapOperation(method = "setupVisual", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/observer/TrackObserverVisual;oldTargetPos:Lnet/minecraft/core/BlockPos;", opcode = Opcodes.GETFIELD), remap = false)
-    private BlockPos updateOnPhantomChange(
-        TrackObserverVisual instance,
-        Operation<BlockPos> original,
+    @WrapOperation(method = "setupVisual", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/BlockPos;equals(Ljava/lang/Object;)Z", remap = true), remap = false)
+    private boolean updateOnPhantomChange(
+        BlockPos instance,
+        Object other,
+        Operation<Boolean> original,
         @Local(name = "trackBlock") ITrackBlock trackBlock
     ) {
         if (trackBlock instanceof PhantomTrackBlock) {
@@ -48,9 +48,9 @@ public class MixinTrackObserverVisual {
             Boolean visible = PhantomSpriteManager.isVisible();
             if (visible != railways$previousPhantomVisible) {
                 railways$previousPhantomVisible = visible;
-                return null;
+                return false;
             }
         }
-        return original.call(instance);
+        return original.call(instance, other);
     }
 }
