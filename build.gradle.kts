@@ -43,7 +43,7 @@ plugins {
     `maven-publish`
     id("architectury-plugin") version "3.4-SNAPSHOT"
     id("dev.architectury.loom") version "1.11.+" apply false
-    id("me.modmuss50.mod-publish-plugin") version "0.7.4" apply false // https://github.com/modmuss50/mod-publish-plugin
+    id("me.modmuss50.mod-publish-plugin") version "2.2.0" apply false // https://github.com/modmuss50/mod-publish-plugin
     id("com.github.johnrengelman.shadow") version "8.1.1" apply false
     id("dev.ithundxr.silk") version "0.11.15" // https://github.com/IThundxr/silk
     id("net.kyori.blossom") version "2.1.0" apply false // https://github.com/KyoriPowered/blossom
@@ -299,6 +299,8 @@ subprojects {
             projectId = "curseforge_id"()
             accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
             minecraftVersions.add("minecraft_version"())
+            client.set(true)
+            server.set(true)
 
             requires {
                 slug = createVersionType
@@ -313,6 +315,7 @@ subprojects {
             projectId = "modrinth_id"()
             accessToken = providers.environmentVariable("MODRINTH_TOKEN")
             minecraftVersions.add("minecraft_version"())
+            environment.set(CLIENT_AND_SERVER)
 
             requires {
                 slug = createVersionType
