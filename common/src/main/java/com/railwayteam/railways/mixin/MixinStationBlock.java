@@ -31,6 +31,7 @@ import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.Schedule;
 import com.simibubi.create.content.trains.schedule.ScheduleEntry;
+import com.simibubi.create.content.trains.schedule.ScheduleItem;
 import com.simibubi.create.content.trains.schedule.condition.ScheduledDelay;
 import com.simibubi.create.content.trains.schedule.destination.DestinationInstruction;
 import com.simibubi.create.content.trains.station.GlobalStation;
@@ -232,6 +233,29 @@ public abstract class MixinStationBlock {
                     stationBe.refreshAssemblyInfo();
                 }
                 cir.setReturnValue(InteractionResult.SUCCESS);
+            }
+        }
+    }
+
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true, remap = true)
+    private void deployerGiveSchedule(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
+        ItemStack item = pPlayer.getItemInHand(pHand);
+        if (!pLevel.isClientSide && pPlayer instanceof DeployerFakePlayer && pLevel.getBlockEntity(pPos) instanceof StationBlockEntity stationBe) {
+            if (stationBe.getStation() != null && stationBe.getStation().getPresentTrain() != null) {
+                Train train = stationBe.getStation().getPresentTrain();
+                if (train.runtime.getSchedule() == null) {
+                    Schedule schedule = ScheduleItem.getSchedule(item);
+                    if(schedule == null || schedule.entries.isEmpty())
+                        return;
+
+                    train.runtime.setSchedule(schedule, false);
+                    item.shrink(1);
+                    pPlayer.setItemInHand(pHand, item.isEmpty() ? ItemStack.EMPTY : item);
+                    cir.setReturnValue(InteractionResult.SUCCESS);
+                } else if(item.isEmpty()) {
+                    pPlayer.setItemInHand(pHand, train.runtime.returnSchedule());
+                    cir.setReturnValue(InteractionResult.SUCCESS);
+                }
             }
         }
     }
