@@ -22,6 +22,7 @@ import com.railwayteam.railways.content.buffer.IDyedBuffer;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBarsBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlock;
 import com.railwayteam.railways.content.buffer.headstock.CopycatHeadstockBlockEntity;
+import com.railwayteam.railways.fabric.FilteredRenderAttachedBlockView;
 import com.railwayteam.railways.registry.CRBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.copycat.CopycatBlock;
@@ -42,6 +43,7 @@ import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import net.fabricmc.fabric.api.rendering.data.v1.RenderAttachedBlockView;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -158,7 +160,14 @@ public class CopycatHeadstockModel extends ForwardingBakedModel {
 
         BlockAndTintGetter filteredView;
         if (state.getBlock() instanceof CopycatBlock copycatBlock) {
-            filteredView = new FilteredBlockAndTintGetter(blockView, targetPos -> copycatBlock.canConnectTexturesToward(blockView, pos, targetPos, state));
+            Predicate<BlockPos> filter = targetPos -> copycatBlock.canConnectTexturesToward(blockView, pos, targetPos, state);
+            //noinspection deprecation
+            if (blockView instanceof RenderAttachedBlockView) {
+                //noinspection deprecation
+                filteredView = new FilteredRenderAttachedBlockView((RenderAttachedBlockView) blockView, filter);
+            } else {
+                filteredView = new FilteredBlockAndTintGetter(blockView, filter);
+            }
         } else {
             filteredView = blockView;
         }
